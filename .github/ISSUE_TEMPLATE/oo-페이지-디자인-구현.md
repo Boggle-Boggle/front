@@ -1,9 +1,9 @@
 ---
 name: OO 페이지 디자인 구현
 about: 디자인 구현시 사용
-title: ''
+title: OO 페이지 디자인 구현
 labels: "\U0001F3A8 design"
-assignees: devkyoung2
+assignees: CutieYundung
 
 ---
 
