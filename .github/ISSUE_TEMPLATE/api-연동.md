@@ -1,9 +1,9 @@
 ---
-name: OO 페이지 디자인 구현
-about: 디자인 구현시 사용
-title: OO 페이지 디자인 구현
-labels: "\U0001F3A8 design"
-assignees: CutieYundung
+name: API 연동
+about: API 연동시 사용
+title: OO API 연동
+labels: "✨ feat, ⚪ front"
+assignees: devkyoung2
 
 ---
 
@@ -11,9 +11,8 @@ assignees: CutieYundung
 
 - [ ] TODO
 - [ ] TODO
-- [ ] TODO
 
-### 주의사항(선택)
+## 주의사항(선택)
 
 <!-- 해당 내용이 없으면 삭제해주세요 -->
 
@@ -24,5 +23,4 @@ assignees: CutieYundung
 
 <!-- 해당 내용이 없으면 삭제해주세요 -->
 
-- 참고자료
 - 참고자료
