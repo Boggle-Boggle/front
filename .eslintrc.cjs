@@ -18,7 +18,7 @@ module.exports = {
     'airbnb-typescript',
     'prettier',
   ],
-  ignorePatterns: ['dist', '.eslintrc.cjs', 'vite.config.ts'],
+  ignorePatterns: ['dist', '.eslintrc.cjs', 'vite.config.ts', 'tailwind.config.cjs'],
   plugins: ['@typescript-eslint', 'react-refresh'],
   rules: {
     'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
@@ -32,15 +32,12 @@ module.exports = {
       'error',
       {
         groups: ['builtin', 'external', 'internal', 'parent', 'sibling', 'index', 'object', 'type'],
-      },
-      {
         pathGroups: [
           {
             pattern: '{@*,@**/*}',
             group: 'external',
             position: 'before',
           },
-
           {
             pattern: '{react*}',
             group: 'external',
@@ -48,7 +45,7 @@ module.exports = {
           },
           {
             pattern:
-              '{pages,pages/*,pages/**/*,layouts,layouts/*,layouts/**/*,components,components/*,components/**/*,stories,stories/*,stories/**/*}',
+              '{pages,pages/*,pages/**/*,layouts,layouts/*,layouts/**/*,components,components/*,components/**/*}',
             group: 'internal',
             position: 'before',
           },
@@ -74,9 +71,12 @@ module.exports = {
             position: 'before',
           },
         ],
+        'newlines-between': 'always',
+        alphabetize: {
+          order: 'asc',
+        },
       },
     ],
-
     'arrow-body-style': 'off',
     'react/react-in-jsx-scope': 'off',
   },
