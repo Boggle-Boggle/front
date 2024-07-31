@@ -9,35 +9,35 @@ export default defineConfig({
   resolve: {
     alias: [
       {
-        find: '@assets',
+        find: 'assets',
         replacement: path.resolve(__dirname, 'src/assets'),
       },
       {
-        find: '@components',
+        find: 'components',
         replacement: path.resolve(__dirname, 'src/components'),
       },
       {
-        find: '@hooks',
+        find: 'hooks',
         replacement: path.resolve(__dirname, 'src/hooks'),
       },
       {
-        find: '@layouts',
+        find: 'layouts',
         replacement: path.resolve(__dirname, 'src/layouts'),
       },
       {
-        find: '@pages',
+        find: 'pages',
         replacement: path.resolve(__dirname, 'src/pages'),
       },
       {
-        find: '@services',
+        find: 'services',
         replacement: path.resolve(__dirname, 'src/services'),
       },
       {
-        find: '@types',
+        find: 'types',
         replacement: path.resolve(__dirname, 'src/types'),
       },
       {
-        find: '@utils',
+        find: 'utils',
         replacement: path.resolve(__dirname, 'src/utils'),
       },
     ],

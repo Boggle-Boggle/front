@@ -18,7 +18,7 @@ module.exports = {
     'airbnb-typescript',
     'prettier',
   ],
-  ignorePatterns: ['dist', '.eslintrc.cjs', 'vite.config.ts', 'tailwind.config.cjs'],
+  ignorePatterns: ['dist', '.eslintrc.cjs', 'vite.config.js', 'tailwind.config.cjs'],
   plugins: ['@typescript-eslint', 'react-refresh'],
   rules: {
     'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
@@ -31,7 +31,7 @@ module.exports = {
     'import/order': [
       'error',
       {
-        groups: ['builtin', 'external', 'internal', 'parent', 'sibling', 'index', 'object', 'type'],
+        groups: ['builtin', 'external', 'internal'],
         pathGroups: [
           {
             pattern: '{@*,@**/*}',
@@ -66,12 +66,18 @@ module.exports = {
             position: 'before',
           },
           {
-            pattern: '{assets,assets/*,assets/**/*,}',
+            pattern: '{assets,assets/*,assets/**/*,**/**/css}',
             group: 'internal',
             position: 'before',
           },
+          {
+            pattern: '{./*.module,./*.module.scss,*.css,*.scss}',
+            group: 'sibling',
+            position: 'after',
+          },
         ],
         'newlines-between': 'always',
+        pathGroupsExcludedImportTypes: [],
         alphabetize: {
           order: 'asc',
         },
