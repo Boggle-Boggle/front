@@ -8,7 +8,15 @@ import App from './App';
 import './main.css';
 
 const router = createBrowserRouter([
-  { path: '/', element: <App /> },
+  {
+    path: '/',
+    element: <App />,
+    children: [
+      { path: 'home', element: <div>홈</div> },
+      { path: 'library', element: <div>서재</div> },
+      { path: 'myPage', element: <div>마이페이지</div> },
+    ],
+  },
   { path: '/login', element: <Login /> },
 ]);
 
