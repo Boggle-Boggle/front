@@ -8,6 +8,10 @@ module.exports = {
         main2: '#DCD7D6',
         font: '#387156',
       },
+
+      boxShadow: {
+        navigator: '0 -3px 6px -2px rgba(0, 0, 0, 0.1)',
+      },
     },
   },
   plugins: [],

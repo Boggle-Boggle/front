@@ -1,12 +1,14 @@
 import { Outlet } from 'react-router-dom';
 
+import BottomNavigator from 'components/ui/BottomNavigator';
+
 const App = () => {
   return (
-    <>
+    <div>
       <div>헤더</div>
       <Outlet />
-      <div>푸터</div>
-    </>
+      <BottomNavigator />
+    </div>
   );
 };
 
