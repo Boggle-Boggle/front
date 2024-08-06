@@ -4,6 +4,7 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 
 import Library from 'pages/Library';
 import Login from 'pages/Login';
+import Search from 'pages/Search';
 
 import App from './App';
 import './main.css';
@@ -17,6 +18,7 @@ const router = createBrowserRouter([
       { path: 'home', element: <div>홈</div> },
       { path: 'library', element: <Library /> },
       { path: 'myPage', element: <div>마이페이지</div> },
+      { path: 'search', element: <Search /> },
     ],
   },
   { path: '/login', element: <Login /> },

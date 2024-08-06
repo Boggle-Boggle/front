@@ -1,11 +1,13 @@
 import { BsThreeDotsVertical } from 'react-icons/bs';
 import { HiPlus } from 'react-icons/hi';
+import { useNavigate } from 'react-router-dom';
 
 import Header from 'components/ui/Header';
 
 const Library = () => {
+  const navigate = useNavigate();
   const handleAddBook = () => {
-    console.log('책 검색 페이지로 이동');
+    navigate('/search');
   };
 
   const handleToggle = () => {
