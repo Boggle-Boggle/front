@@ -5,7 +5,6 @@ import BottomNavigator from 'components/ui/BottomNavigator';
 const App = () => {
   return (
     <div>
-      <div>헤더</div>
       <Outlet />
       <BottomNavigator />
     </div>

@@ -21,6 +21,7 @@ module.exports = {
   ignorePatterns: ['dist', '.eslintrc.cjs', 'vite.config.js', 'tailwind.config.cjs'],
   plugins: ['@typescript-eslint', 'react-refresh'],
   rules: {
+    'react/require-default-props': 'off',
     'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
     'react/function-component-definition': [
       'error',
