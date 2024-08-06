@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 
+import Library from 'pages/Library';
 import Login from 'pages/Login';
 
 import App from './App';
@@ -12,8 +13,9 @@ const router = createBrowserRouter([
     path: '/',
     element: <App />,
     children: [
+      { path: '/', element: <div>홈</div> },
       { path: 'home', element: <div>홈</div> },
-      { path: 'library', element: <div>서재</div> },
+      { path: 'library', element: <Library /> },
       { path: 'myPage', element: <div>마이페이지</div> },
     ],
   },
