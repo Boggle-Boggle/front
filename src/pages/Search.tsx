@@ -3,6 +3,7 @@ import { IoArrowBackOutline } from 'react-icons/io5';
 import { TbCameraSearch } from 'react-icons/tb';
 import { useNavigate } from 'react-router-dom';
 
+import SearchHistory from 'components/feat/SearchHistory';
 import Header from 'components/ui/Header';
 import SearchBar from 'components/ui/SearchBar';
 
@@ -27,7 +28,7 @@ const Search = () => {
         }}
       />
       <SearchBar placeholder="읽고 싶은 책을 검색해 보세요!" />
-      <div>최근검색어</div>
+      <SearchHistory />
       <div className="flex flex-col items-center justify-center pt-28">
         <TbCameraSearch style={{ width: '137px', height: '137px', opacity: '30%' }} />
         <p className="pt-4 text-center">

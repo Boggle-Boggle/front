@@ -17,7 +17,7 @@ const SearchBar = ({ placeholder }: SearchBarProps) => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="mx-5 my-3 flex items-center rounded-xl border border-solid px-3 py-1"
+      className="mx-7 my-3 flex items-center rounded-xl border border-solid px-3"
     >
       <span className="mr-1">
         <FcSearch style={{ width: '28px', height: '28px' }} />
