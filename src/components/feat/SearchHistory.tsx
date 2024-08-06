@@ -19,14 +19,16 @@ const SearchHistory = () => {
   return (
     <section className="relative px-4 py-2 text-base">
       최근검색어
-      <button
-        className="absolute right-2 text-xs"
-        aria-label="clear button"
-        type="button"
-        onClick={handleClear}
-      >
-        전체삭제
-      </button>
+      {histories.length !== 0 && (
+        <button
+          className="absolute right-2 text-xs"
+          aria-label="clear button"
+          type="button"
+          onClick={handleClear}
+        >
+          전체삭제
+        </button>
+      )}
       <ul className="flex pt-4">
         {histories.map((history) => (
           // TODO : 검색 결과 페이지로 이동
