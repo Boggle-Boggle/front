@@ -4,12 +4,22 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 
 import Auth from 'pages/Auth';
 import Login from 'pages/Login';
+import PrivateRoute from 'pages/PrivateRoute';
 
 import App from './App';
 import './main.css';
 
 const router = createBrowserRouter([
-  { path: '/', element: <App /> },
+  {
+    path: '/',
+    element: <PrivateRoute />,
+    children: [
+      {
+        path: '/',
+        element: <App />,
+      },
+    ],
+  },
   { path: '/login', element: <Login /> },
   { path: '/oauth/redirect', element: <Auth /> },
 ]);
