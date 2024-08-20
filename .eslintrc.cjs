@@ -72,6 +72,11 @@ module.exports = {
             position: 'before',
           },
           {
+            pattern: '{constants,constants/*,constants/**/*}',
+            group: 'internal',
+            position: 'after',
+          },
+          {
             pattern: '{./*.module,./*.module.scss,*.css,*.scss}',
             group: 'sibling',
             position: 'after',
