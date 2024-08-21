@@ -19,7 +19,7 @@ const SignUpFlow = () => {
         />
       )}
       {step === '약관동의' && <TermsAgreement onNext={() => setStep('가입완료')} />}
-      {step === '가입완료' && <div>가입완료</div>}
+      {step === '가입완료' && <div>가입완료다냥</div>}
     </>
   );
 };
