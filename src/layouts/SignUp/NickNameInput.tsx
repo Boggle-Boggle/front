@@ -65,7 +65,7 @@ const NickNameInput = ({ nickName, setNickName, onNext }: NickNameInputProps) =>
             <p className={`mt-2 ${isValid ? 'text-blue-600' : 'text-red-600'}`}>{message}</p>
           </div>
           <div className={`absolute bottom-0 w-full ${!isValid && 'opacity-30'}`}>
-            <SignUpBtn onClick={handleNext} />
+            <SignUpBtn onClick={handleNext} type="닉네임입력" />
           </div>
         </form>
       </section>

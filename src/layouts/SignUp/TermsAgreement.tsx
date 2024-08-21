@@ -126,7 +126,7 @@ const TermsAgreement = ({ onNext }: TermsAgreementProps) => {
             ))}
           </ul>
           <div className={`absolute bottom-0 w-full ${!isAllChecked && 'opacity-30'}`}>
-            <SignUpBtn onClick={handleNext} />
+            <SignUpBtn onClick={handleNext} type="약관동의" />
           </div>
         </form>
       </section>
