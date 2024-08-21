@@ -6,7 +6,13 @@
   .centered {
     @apply flex items-center justify-center;
   }
-  .height-with-header {
+  .height-without-header {
     height: calc(100vh - 64px);
+  }
+  .height-without-footer {
+    height: calc(100vh - 84px);
+  }
+  .height-content {
+    height: calc(100vh - 84px - 64px);
   }
 }

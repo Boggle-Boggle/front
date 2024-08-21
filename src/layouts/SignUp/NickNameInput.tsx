@@ -45,7 +45,7 @@ const NickNameInput = ({ nickName, setNickName, onNext }: NickNameInputProps) =>
           handleLeftBtnClick,
         }}
       />
-      <section className="height-with-header flex w-full flex-col p-9">
+      <section className="height-without-header flex w-full flex-col p-9">
         <h1 className="text-decoration: solid #888888; text-[32px] font-semibold underline">
           빼곡에서
           <br /> 사용할 닉네임을
