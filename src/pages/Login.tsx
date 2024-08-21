@@ -2,12 +2,12 @@ import LoginBtn from 'layouts/Login/LoginBtn';
 
 const Login = () => {
   return (
-    <div className="flex h-screen flex-col items-center justify-center bg-main p-7">
-      <h1 className="text-font text-center text-[32px]">
+    <div className="bottom-3 flex h-screen flex-col items-center justify-center bg-main p-7">
+      <h1 className="text-center text-[32px] text-font">
         <span className="font-bold">빼곡</span>하게 채우는 <br /> 나만의
         <span className="font-bold"> 책장</span>
       </h1>
-      <div className="bg-main2 mb-20 mt-7 h-[400px] w-[230px]">책장</div>
+      <div className="mb-20 mt-7 h-[400px] w-[230px] bg-main2">책장</div>
       <div className="grid gap-y-3">
         <LoginBtn type="kakao" />
       </div>

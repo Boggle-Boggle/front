@@ -15,7 +15,7 @@ type HeaderProps = {
 
 const Header = ({ leftBtn, title, rightBtn }: HeaderProps) => {
   return (
-    <div className="relative flex h-16 items-center bg-slate-300">
+    <div className="relative flex h-16 items-center">
       {leftBtn && (
         <button type="button" onClick={leftBtn.handleLeftBtnClick} className="absolute left-0 px-3">
           <span>{leftBtn.icon}</span>
