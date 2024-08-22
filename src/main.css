@@ -6,4 +6,7 @@
   .centered {
     @apply flex items-center justify-center;
   }
+  .height-with-header {
+    height: calc(100vh - 64px);
+  }
 }

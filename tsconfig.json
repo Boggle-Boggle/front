@@ -24,7 +24,8 @@
       "services/*": ["src/services/*"],
       "types/*": ["src/types/*"],
       "utils/*": ["src/utils/*"],
-      "stores/*": ["src/stores/*"]
+      "stores/*": ["src/stores/*"],
+      "constants/*": ["src/constants/*"]
     },
 
     /* Linting */

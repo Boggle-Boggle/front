@@ -21,6 +21,7 @@ module.exports = {
   ignorePatterns: ['dist', '.eslintrc.cjs', 'vite.config.js', 'tailwind.config.cjs'],
   plugins: ['@typescript-eslint', 'react-refresh'],
   rules: {
+    'react/require-default-props': 'off',
     'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
     'react/function-component-definition': [
       'error',
@@ -69,6 +70,11 @@ module.exports = {
             pattern: '{assets,assets/*,assets/**/*,**/**/css}',
             group: 'internal',
             position: 'before',
+          },
+          {
+            pattern: '{constants,constants/*,constants/**/*}',
+            group: 'internal',
+            position: 'after',
           },
           {
             pattern: '{./*.module,./*.module.scss,*.css,*.scss}',
