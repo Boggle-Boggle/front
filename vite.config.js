@@ -44,6 +44,10 @@ export default defineConfig({
         find: 'constants',
         replacement: path.resolve(__dirname, 'src/constants'),
       },
+      {
+        find: 'stores',
+        replacement: path.resolve(__dirname, 'src/stores'),
+      },
     ],
   },
 });
