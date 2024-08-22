@@ -1,14 +1,9 @@
 import formatDateAndTime from 'utils/format';
 
+import { Book } from 'types/book';
+
 type SearchBookResultProps = {
-  book: {
-    title: string;
-    isbn: string;
-    author: string;
-    pubDate: string;
-    cover: string;
-    publisher: string;
-  };
+  book: Book;
 };
 const SearchBookResult = ({ book }: SearchBookResultProps) => {
   const { yy, mm, dd } = formatDateAndTime(book.pubDate);
