@@ -17,7 +17,10 @@ const LoginBtn = ({ type }: LoginBtnProps) => {
   const { title, imgUrl, color } = LOGIN_TYPE[type];
 
   const handleClick = () => {
-    console.log(title);
+    const baseUrl = import.meta.env.VITE_SERVER_BASE_URL;
+    const apiPath = `/oauth2/authorization/kakao?redirect_uri=${import.meta.env.VITE_KAKAO_REDIRECT_URL}`;
+
+    window.location.href = baseUrl + apiPath;
   };
 
   return (
