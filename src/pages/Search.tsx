@@ -103,7 +103,7 @@ const bookList = [
 
 const Search = () => {
   const [value, setValue] = useState<string>('');
-  const [bookData, setBookData] = useState<null | Book[]>(null);
+  const [bookData, setBookData] = useState<null | Book[]>([]);
   const navigate = useNavigate();
 
   const handleGoBack = () => {
@@ -137,12 +137,16 @@ const Search = () => {
       />
       {bookData !== null ? (
         <ul className="height-content absolute bottom-0 mb-[80px] w-full overflow-y-auto rounded-tl-3xl bg-white p-6">
-          {bookData.map((book) => (
-            <li>
-              <SearchBookResult book={book} />
-              <hr />
-            </li>
-          ))}
+          {bookData.length > 0 ? (
+            bookData.map((book) => (
+              <li>
+                <SearchBookResult book={book} />
+                <hr />
+              </li>
+            ))
+          ) : (
+            <div>아이템 없슴!~!!</div>
+          )}
         </ul>
       ) : (
         <>
