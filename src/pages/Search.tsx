@@ -1,4 +1,6 @@
-import { useState } from 'react';
+import { useQuery } from '@tanstack/react-query';
+
+import { useEffect, useState } from 'react';
 import { BiScan } from 'react-icons/bi';
 import { IoArrowBackOutline } from 'react-icons/io5';
 import { TbCameraSearch } from 'react-icons/tb';
@@ -9,12 +11,20 @@ import Header from 'components/ui/Header';
 import SearchBar from 'components/ui/SearchBar';
 import SearchBookResult from 'layouts/Search/SearchBookResult';
 
+import getSearchBooks from 'services/search';
+
 import { Book } from 'types/book';
 
 const Search = () => {
   const [value, setValue] = useState<string>('');
-  const [books, setBooks] = useState<null | Book[]>([]);
+  const [books, setBooks] = useState<null | Book[]>(null);
   const navigate = useNavigate();
+
+  const { data, refetch } = useQuery({
+    queryKey: ['searchBooks', value],
+    queryFn: () => getSearchBooks(value),
+    enabled: false,
+  });
 
   const handleGoBack = () => {
     navigate(-1);
@@ -22,9 +32,17 @@ const Search = () => {
 
   const handleReadBarcode = () => {};
 
-  const handleSubmit = () => {
-    console.log('API 요청');
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+
+    refetch();
   };
+
+  useEffect(() => {
+    if (data) {
+      setBooks(data.items);
+    }
+  }, [data]);
 
   return (
     <div className="relative h-screen bg-[#DCD7D6]">
@@ -43,7 +61,7 @@ const Search = () => {
         placeholder="읽고 싶은 책을 검색해 보세요!"
         value={value}
         setValue={setValue}
-        handleSubmit={handleSubmit}
+        handleSubmit={(e) => handleSubmit(e)}
       />
       {books !== null ? (
         <ul className="height-content absolute bottom-0 mb-[80px] w-full overflow-y-auto rounded-tl-3xl bg-white p-6">
@@ -55,7 +73,7 @@ const Search = () => {
               </li>
             ))
           ) : (
-            <div>아이템 없슴!~!!</div>
+            <div>아이템 없슴~!!</div>
           )}
         </ul>
       ) : (

@@ -5,7 +5,7 @@ type SearchBarProps = {
   placeholder: string;
   value: string;
   setValue: React.Dispatch<React.SetStateAction<string>>;
-  handleSubmit: () => void;
+  handleSubmit: (e: React.FormEvent) => void;
 };
 
 const SearchBar = ({ placeholder, value, setValue, handleSubmit }: SearchBarProps) => {
