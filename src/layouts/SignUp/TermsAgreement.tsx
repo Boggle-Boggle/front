@@ -79,7 +79,7 @@ const TermsAgreement = ({ onNext }: TermsAgreementProps) => {
           handleLeftBtnClick,
         }}
       />
-      <section className="height-with-header flex w-full flex-col p-9">
+      <section className="height-without-header flex w-full flex-col p-9">
         <h1 className="text-decoration: solid #888888; text-[32px] font-semibold">
           빼곡을
           <br /> 이용하기 전{' '}

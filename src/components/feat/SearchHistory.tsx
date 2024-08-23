@@ -32,7 +32,10 @@ const SearchHistory = () => {
       <ul className="flex pt-4">
         {histories.map((history) => (
           // TODO : 검색 결과 페이지로 이동
-          <li className="mr-2 inline-flex rounded-full border px-2 text-[11px]" key={history}>
+          <li
+            className="mr-2 inline-flex rounded-full border border-black px-2 text-[11px]"
+            key={history}
+          >
             <Link to="/" className="flex items-center">
               {history}
               <button

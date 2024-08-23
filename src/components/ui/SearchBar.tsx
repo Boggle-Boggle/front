@@ -1,23 +1,20 @@
-import { useState } from 'react';
 import { BiX } from 'react-icons/bi';
 import { FcSearch } from 'react-icons/fc';
 
 type SearchBarProps = {
   placeholder: string;
+  value: string;
+  setValue: React.Dispatch<React.SetStateAction<string>>;
+  handleSubmit: (e: React.FormEvent) => void;
 };
 
-const SearchBar = ({ placeholder }: SearchBarProps) => {
-  const [value, setValue] = useState<string>('');
-
+const SearchBar = ({ placeholder, value, setValue, handleSubmit }: SearchBarProps) => {
   const handleClear = () => setValue('');
 
-  const handleSubmit = () => {
-    console.log('API 요청');
-  };
   return (
     <form
       onSubmit={handleSubmit}
-      className="mx-7 my-3 flex items-center rounded-xl border border-solid px-3"
+      className="mx-7 my-3 flex items-center rounded-xl border border-solid bg-white px-3"
     >
       <span className="mr-1">
         <FcSearch style={{ width: '28px', height: '28px' }} />
