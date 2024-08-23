@@ -1,6 +1,6 @@
-import { useQuery } from '@tanstack/react-query';
+import { useInfiniteQuery } from '@tanstack/react-query';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { BiScan } from 'react-icons/bi';
 import { IoArrowBackOutline } from 'react-icons/io5';
 import { TbCameraSearch } from 'react-icons/tb';
@@ -13,16 +13,21 @@ import SearchBookResult from 'layouts/Search/SearchBookResult';
 
 import getSearchBooks from 'services/search';
 
-import { Book } from 'types/book';
-
 const Search = () => {
   const [value, setValue] = useState<string>('');
-  const [books, setBooks] = useState<null | Book[]>(null);
+  const [searchQueryEnabled, setSearchQueryEnabled] = useState<boolean>(false);
   const navigate = useNavigate();
 
-  const { data, refetch } = useQuery({
+  const { data, fetchNextPage, hasNextPage, refetch } = useInfiniteQuery({
     queryKey: ['searchBooks', value],
-    queryFn: () => getSearchBooks(value),
+    queryFn: ({ pageParam = 1 }) => getSearchBooks(value, pageParam as number),
+    getNextPageParam: (lastPage) => {
+      if (lastPage.pageNum < Math.ceil(lastPage.totalResultCnt / lastPage.itemsPerPage)) {
+        return lastPage.pageNum + 1;
+      }
+      return undefined;
+    },
+    initialPageParam: 1,
     enabled: false,
   });
 
@@ -34,15 +39,38 @@ const Search = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-
+    getSearchBooks(value, 1);
+    setSearchQueryEnabled(true);
     refetch();
   };
 
+  const observerTarget = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
-    if (data) {
-      setBooks(data.items);
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && hasNextPage) {
+          fetchNextPage();
+        }
+      },
+      {
+        threshold: 1.0,
+      },
+    );
+
+    if (observerTarget.current) {
+      observer.observe(observerTarget.current);
     }
-  }, [data]);
+    return () => {
+      if (observerTarget.current) {
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        observer.unobserve(observerTarget.current);
+      }
+    };
+  }, [fetchNextPage, hasNextPage]);
+
+  const allBooks = data?.pages.flatMap((page) => page.items) || [];
+  const hasBooks = allBooks.length > 0;
 
   return (
     <div className="relative h-screen bg-[#DCD7D6]">
@@ -63,19 +91,22 @@ const Search = () => {
         setValue={setValue}
         handleSubmit={(e) => handleSubmit(e)}
       />
-      {books !== null ? (
-        <ul className="height-content absolute bottom-0 mb-[80px] w-full overflow-y-auto rounded-tl-3xl bg-white p-6">
-          {books.length > 0 ? (
-            books.map((book) => (
-              <li>
+
+      {/* eslint-disable-next-line no-nested-ternary */}
+      {searchQueryEnabled ? (
+        hasBooks ? (
+          <ul className="height-content absolute bottom-0 mb-[80px] w-full overflow-y-auto rounded-tl-3xl bg-white p-6">
+            {allBooks.map((book) => (
+              <li key={book.isbn}>
                 <SearchBookResult book={book} />
                 <hr />
               </li>
-            ))
-          ) : (
-            <div>아이템 없슴~!!</div>
-          )}
-        </ul>
+            ))}
+            <div ref={observerTarget} />
+          </ul>
+        ) : (
+          <div>아이템 없슴~!!</div>
+        )
       ) : (
         <>
           <SearchHistory />

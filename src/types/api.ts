@@ -8,6 +8,6 @@ export type Response<T> = {
 export type PaginationResponse<T> = {
   pageNum: number;
   totalResultCnt: number;
-  cntPerPage: number;
+  itemsPerPage: number;
   items: T;
 };
