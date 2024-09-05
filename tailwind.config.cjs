@@ -4,11 +4,11 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        main: '#CBBAB9',
-        main2: '#DCD7D6',
-        font: '#387156',
+        main: '#EEEDEB',
+        accent: '#E6B9A6',
+        sub: '#939185',
+        text: '#2F3645',
       },
-
       boxShadow: {
         navigator: '0 -3px 6px -2px rgba(0, 0, 0, 0.1)',
       },
