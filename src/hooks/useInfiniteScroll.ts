@@ -9,19 +9,18 @@ const useInfiniteScroll = <T>(
   queryFn: ({ pageParam }: { pageParam: number }) => Promise<PaginationResponse<T>>,
   enabled: boolean,
 ) => {
-  const { data, fetchNextPage, hasNextPage, refetch, isLoading, isFetchingNextPage } =
-    useInfiniteQuery({
-      queryKey,
-      queryFn,
-      getNextPageParam: (lastPage) => {
-        if (lastPage.pageNum < Math.ceil(lastPage.totalResultCnt / lastPage.itemsPerPage)) {
-          return lastPage.pageNum + 1;
-        }
-        return undefined;
-      },
-      initialPageParam: 1,
-      enabled,
-    });
+  const { data, fetchNextPage, hasNextPage, refetch, isFetchingNextPage } = useInfiniteQuery({
+    queryKey,
+    queryFn,
+    getNextPageParam: (lastPage) => {
+      if (lastPage.pageNum < Math.ceil(lastPage.totalResultCnt / lastPage.itemsPerPage)) {
+        return lastPage.pageNum + 1;
+      }
+      return undefined;
+    },
+    initialPageParam: 1,
+    enabled,
+  });
 
   const observerTarget = useRef<HTMLDivElement>(null);
 

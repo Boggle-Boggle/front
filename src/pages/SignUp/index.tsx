@@ -1,11 +1,11 @@
 import { useState } from 'react';
 
-import NickNameInput from 'layouts/SignUp/NickNameInput';
-import TermsAgreement from 'layouts/SignUp/TermsAgreement';
+import NickNameInput from './NickNameInput';
+import TermsAgreement from './TermsAgreement';
 
 type StepType = '닉네임입력' | '약관동의' | '가입완료';
 
-const SignUpFlow = () => {
+const SignUp = () => {
   const [nickName, setNickName] = useState<string>('');
   const [step, setStep] = useState<StepType>('닉네임입력');
 
@@ -24,4 +24,4 @@ const SignUpFlow = () => {
   );
 };
 
-export default SignUpFlow;
+export default SignUp;

@@ -21,10 +21,6 @@ export default defineConfig({
         replacement: path.resolve(__dirname, 'src/hooks'),
       },
       {
-        find: 'layouts',
-        replacement: path.resolve(__dirname, 'src/layouts'),
-      },
-      {
         find: 'pages',
         replacement: path.resolve(__dirname, 'src/pages'),
       },

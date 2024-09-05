@@ -1,4 +1,4 @@
-import LoginBtn from 'layouts/Login/LoginBtn';
+import LoginBtn from './LoginBtn';
 
 const Login = () => {
   return (

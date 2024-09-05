@@ -6,6 +6,7 @@ const useNickNameInput = () => {
 
   const validateNickName = (name: string) => {
     // 벨리데이션 체크
+    console.log(name);
 
     // 중복체크
     // if ('중복확인') {
@@ -16,6 +17,7 @@ const useNickNameInput = () => {
 
     setMessage('️사용 가능한 닉네임이에요!');
     setIsValid(true);
+
     return true;
   };
 
