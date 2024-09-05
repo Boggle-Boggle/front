@@ -80,30 +80,29 @@ const TermsAgreement = ({ onNext }: TermsAgreementProps) => {
         }}
       />
       <section className="height-without-header flex w-full flex-col p-9">
-        <h1 className="text-decoration: solid #888888; text-[32px] font-semibold">
+        <h1 className="text-[32px] font-semibold">
           빼곡을
           <br /> 이용하기 전{' '}
-          <span className="relative">
-            몇 가지 <span className="absolute bottom-0 left-0 h-4 w-full bg-[#939185] opacity-50" />
-            <span className="absolute bottom-0 right-0 h-4 w-1 bg-[#939185] opacity-50" />
+          <span className="relative inline-block">
+            <span className="relative z-10">몇 가지</span>
+            <span className="bg-accent absolute bottom-1 left-0 h-3 w-full opacity-50" />
+            <span className="bg-accent absolute bottom-1 right-0 h-3 w-1 opacity-50" />
           </span>
           <br />
-          <span className="relative">
-            동의
-            <span className="absolute bottom-0 left-0 h-4 w-full bg-[#939185] opacity-50" />
-            <span className="absolute bottom-0 right-0 h-4 w-1 bg-[#939185] opacity-50" />
+          <span className="relative inline-block">
+            <span className="relative z-10">동의</span>
+            <span className="bg-accent absolute bottom-1 left-0 h-3 w-full opacity-50" />
+            <span className="bg-accent absolute bottom-1 right-0 h-3 w-1 opacity-50" />
           </span>
           가 필요해요
         </h1>
-        <p className="pb-10 pt-2 text-[13px] text-neutral-500">
-          원활한 사용을 위해 약관에 동의해주세요
-        </p>
+        <p className="text-sub pb-10 pt-2 text-sm">원활한 사용을 위해 약관에 동의해주세요</p>
         <form onSubmit={handleNext} className="relative flex-grow">
           <label
             htmlFor="termsAllAgreement"
-            className="flex h-[50px] cursor-pointer items-center rounded-lg bg-[#EEED] p-4"
+            className="bg-sub flex h-[50px] cursor-pointer items-center rounded-lg p-4"
           >
-            <span className="mr-3 flex h-6 w-6 items-center justify-center rounded-sm bg-[#747264]">
+            <span className="bg-accent mr-3 flex h-6 w-6 items-center justify-center rounded-sm">
               <input
                 type="checkbox"
                 id="termsAllAgreement"
@@ -115,7 +114,6 @@ const TermsAgreement = ({ onNext }: TermsAgreementProps) => {
                 <FaCheck style={{ width: '20px', height: '20px', color: 'white' }} />
               )}
             </span>
-
             <p className="text-base font-semibold">모든 약관에 동의합니다</p>
           </label>
           <ul className="pt-6">

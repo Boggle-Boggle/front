@@ -9,12 +9,12 @@ const SignUpBtn = ({ onClick, type }: SignUpBtnType) => {
   return (
     <button
       type="submit"
-      className="flex h-[50px] w-full border-spacing-3 items-center justify-center rounded-lg bg-[#747264] drop-shadow"
+      className="bg-accent flex h-[50px] w-full items-center justify-center rounded-lg drop-shadow"
       onClick={onClick}
     >
       {type === '닉네임입력' && (
         <>
-          <p className="font-semibold text-white">다음</p>
+          <p className="font-semibold text-white">다 음</p>
           <span>
             <GoChevronRight style={{ color: 'white' }} />
           </span>

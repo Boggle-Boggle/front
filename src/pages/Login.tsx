@@ -2,8 +2,8 @@ import LoginBtn from 'layouts/Login/LoginBtn';
 
 const Login = () => {
   return (
-    <div className="bottom-3 flex h-screen flex-col items-center justify-center bg-main p-7">
-      <h1 className="text-center text-[32px] text-font">
+    <div className="bottom-3 flex h-screen flex-col items-center justify-center bg-[#CBBAB9] p-7">
+      <h1 className="text-center text-[32px] text-font text-main">
         <span className="font-bold">빼곡</span>하게 채우는 <br /> 나만의
         <span className="font-bold"> 책장</span>
       </h1>
@@ -11,7 +11,7 @@ const Login = () => {
       <div className="grid gap-y-3">
         <LoginBtn type="kakao" />
       </div>
-      <a href="/" className="absolute bottom-5 text-xs text-neutral-500 underline">
+      <a href="/" className="text-sub absolute bottom-5 text-xs underline">
         (아이콘) 가입/로그인 오류 문의
       </a>
     </div>

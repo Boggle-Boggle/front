@@ -7,7 +7,7 @@ type StepType = '닉네임입력' | '약관동의' | '가입완료';
 
 const SignUpFlow = () => {
   const [nickName, setNickName] = useState<string>('');
-  const [step, setStep] = useState<StepType>('약관동의');
+  const [step, setStep] = useState<StepType>('닉네임입력');
 
   return (
     <>
