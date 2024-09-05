@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  body {
+    @apply text-text;
+  }
+}
+
 @layer utilities {
   .centered {
     @apply flex items-center justify-center;

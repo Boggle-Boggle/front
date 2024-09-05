@@ -20,7 +20,7 @@ const TermsItem = ({ term, handleCheckboxChange }: TermsItemProps) => {
       htmlFor={`termsAgreement-${term.id}`}
       className="relative flex h-[50px] cursor-pointer items-center p-4"
     >
-      <span className="mr-3 flex h-6 w-6 items-center justify-center rounded-sm bg-[#747264]">
+      <span className="bg-accent mr-3 flex h-6 w-6 items-center justify-center rounded-sm">
         <input
           type="checkbox"
           id={`termsAgreement-${term.id}`}
@@ -30,7 +30,7 @@ const TermsItem = ({ term, handleCheckboxChange }: TermsItemProps) => {
         />
         {term.isChecked && <FaCheck style={{ width: '20px', height: '20px', color: 'white' }} />}
       </span>
-      <p className="text-sm text-[#939185]">(필수)</p>
+      <p className="text-sub text-sm">(필수)</p>
       <p className="mx-1 text-sm">{term.title}</p>
       <span className="absolute right-0">
         <GoChevronRight style={{ color: '#2F3645' }} />
