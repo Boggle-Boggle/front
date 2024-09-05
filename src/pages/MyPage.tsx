@@ -1,6 +1,6 @@
 import useAuthStore from 'stores/useAuthStore';
 
-import LogoutBtn from 'layouts/Login/LogoutBtn';
+import LogoutBtn from './Login/LogoutBtn';
 
 const MyPage = () => {
   const { isAuthenticated } = useAuthStore();

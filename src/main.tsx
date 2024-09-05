@@ -10,7 +10,7 @@ import Login from 'pages/Login';
 import MyPage from 'pages/MyPage';
 import PrivateRoute from 'pages/PrivateRoute';
 import Search from 'pages/Search';
-import SignUpFlow from 'pages/SignUpFlow';
+import SignUp from 'pages/SignUp';
 
 import App from './App';
 import './main.css';
@@ -33,7 +33,7 @@ const router = createBrowserRouter([
       },
     ],
   },
-  { path: 'signUp', element: <SignUpFlow /> },
+  { path: 'signUp', element: <SignUp /> },
   { path: '/login', element: <Login /> },
   { path: '/oauth/redirect', element: <Auth /> },
 ]);

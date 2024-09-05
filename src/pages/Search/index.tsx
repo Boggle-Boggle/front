@@ -7,10 +7,11 @@ import { useNavigate } from 'react-router-dom';
 import SearchHistory from 'components/feat/SearchHistory';
 import Header from 'components/ui/Header';
 import SearchBar from 'components/ui/SearchBar';
-import SearchBookResult from 'layouts/Search/SearchBookResult';
 
 import useInfiniteScroll from 'hooks/useInfiniteScroll';
 import getSearchBooks from 'services/search';
+
+import SearchBookResult from './SearchBookResult';
 
 const Search = () => {
   const [value, setValue] = useState<string>('');
