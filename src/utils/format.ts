@@ -7,4 +7,8 @@ export const formatDateAndTime = (dateTime: string) => {
   return { yy, mm, dd, h, m, s };
 };
 
-export default formatDateAndTime;
+export const formatBookJenre = (jenre: string) => {
+  const formattedJenre = jenre.split('>');
+
+  return formattedJenre[2];
+};

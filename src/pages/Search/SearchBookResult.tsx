@@ -1,4 +1,4 @@
-import formatDateAndTime from 'utils/format';
+import { formatDateAndTime } from 'utils/format';
 
 import { Book } from 'types/book';
 
