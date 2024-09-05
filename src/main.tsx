@@ -5,6 +5,7 @@ import ReactDOM from 'react-dom/client';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 
 import Auth from 'pages/Auth';
+import BookDetail from 'pages/BookDetail';
 import Library from 'pages/Library';
 import Login from 'pages/Login';
 import MyPage from 'pages/MyPage';
@@ -29,6 +30,7 @@ const router = createBrowserRouter([
           { path: 'library', element: <Library /> },
           { path: 'myPage', element: <MyPage /> },
           { path: 'search', element: <Search /> },
+          { path: 'detail/:detailId', element: <BookDetail /> },
         ],
       },
     ],
