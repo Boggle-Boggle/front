@@ -5,12 +5,14 @@ import { NavLink } from 'react-router-dom';
 
 const BottomNavigator = () => {
   return (
-    <ul className="shadow-navigator fixed bottom-0 grid h-[84px] w-full max-w-screen-sm grid-cols-3 items-center rounded-t-xl bg-[#F9F9F9]">
+    <ul className="fixed bottom-0 grid h-[84px] w-full max-w-screen-sm grid-cols-3 items-center rounded-t-xl bg-white shadow-navigator">
       <li className="m-auto">
         <NavLink
           to="/home"
           className={({ isActive }) =>
-            isActive ? 'flex flex-col items-center font-bold' : 'flex flex-col items-center'
+            isActive
+              ? 'flex flex-col items-center text-xs font-bold'
+              : 'flex flex-col items-center text-xs'
           }
         >
           <LuHome style={{ width: '29px', height: '29px', marginBottom: '6px' }} />홈
@@ -20,7 +22,9 @@ const BottomNavigator = () => {
         <NavLink
           to="/library"
           className={({ isActive }) =>
-            isActive ? 'flex flex-col items-center font-bold' : 'flex flex-col items-center'
+            isActive
+              ? 'flex flex-col items-center text-xs font-bold'
+              : 'flex flex-col items-center text-xs'
           }
         >
           <PiBooksDuotone style={{ width: '29px', height: '29px', marginBottom: '6px' }} />
@@ -31,7 +35,9 @@ const BottomNavigator = () => {
         <NavLink
           to="/myPage"
           className={({ isActive }) =>
-            isActive ? 'flex flex-col items-center font-bold' : 'flex flex-col items-center'
+            isActive
+              ? 'flex flex-col items-center text-xs font-bold'
+              : 'flex flex-col items-center text-xs'
           }
         >
           <FaRegUserCircle style={{ width: '29px', height: '29px', marginBottom: '6px' }} />

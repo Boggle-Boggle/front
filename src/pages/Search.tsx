@@ -43,7 +43,7 @@ const Search = () => {
   }
 
   return (
-    <div className="relative h-screen bg-[#DCD7D6]">
+    <div className="relative h-screen bg-main">
       <Header
         title={{ text: '도서 검색' }}
         leftBtn={{
@@ -61,7 +61,6 @@ const Search = () => {
         setValue={setValue}
         handleSubmit={(e) => handleSubmit(e)}
       />
-
       {/* eslint-disable-next-line no-nested-ternary */}
       {searchQueryEnabled ? (
         hasBooks ? (
@@ -80,7 +79,7 @@ const Search = () => {
       ) : (
         <>
           <SearchHistory />
-          <div className="flex flex-col items-center justify-center pt-28">
+          <div className="text-sub flex flex-col items-center justify-center pt-28">
             <TbCameraSearch style={{ width: '137px', height: '137px', opacity: '30%' }} />
             <p className="pt-4 text-center">
               오른쪽 상단의 아이콘을 클릭하면 <br />

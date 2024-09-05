@@ -17,11 +17,11 @@ const SearchHistory = () => {
   };
 
   return (
-    <section className="relative px-4 py-2 text-base">
+    <section className="relative px-4 py-2 text-base font-semibold">
       최근검색어
       {histories.length !== 0 && (
         <button
-          className="absolute right-2 text-xs"
+          className="text-sub absolute right-4 top-3 text-xs"
           aria-label="clear button"
           type="button"
           onClick={handleClear}
@@ -33,7 +33,7 @@ const SearchHistory = () => {
         {histories.map((history) => (
           // TODO : 검색 결과 페이지로 이동
           <li
-            className="mr-2 inline-flex rounded-full border border-black px-2 text-[11px]"
+            className="text-sub border-sub mr-2 inline-flex rounded-full border px-2 py-1 text-xs"
             key={history}
           >
             <Link to="/" className="flex items-center">
