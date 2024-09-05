@@ -1,14 +1,13 @@
 import { useEffect } from 'react';
-import { GoArrowLeft } from 'react-icons/go';
+import { GoArrowLeft, GoChevronRight } from 'react-icons/go';
 import { useNavigate } from 'react-router-dom';
 
+import Button from 'components/ui/Button';
 import Header from 'components/ui/Header';
 
 import useNickNameInput from 'hooks/useNickNameInput';
 
 import { MAX_KOR_NICKNAME_LEN, MAX_ENG_NICKNAME_LEN } from 'constants/index';
-
-import SignUpBtn from './SignUpBtn';
 
 type NickNameInputProps = {
   nickName: string;
@@ -92,7 +91,12 @@ const NickNameInput = ({ nickName, setNickName, onNext }: NickNameInputProps) =>
             </p>
           </div>
           <div className="absolute bottom-0 w-full">
-            <SignUpBtn onClick={handleNext} type="닉네임입력" />
+            <Button handleClick={handleNext} disabled={!isValid}>
+              다음
+              <span>
+                <GoChevronRight style={{ color: 'white' }} />
+              </span>
+            </Button>
           </div>
         </form>
       </section>

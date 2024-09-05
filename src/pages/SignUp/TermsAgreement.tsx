@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { FaCheck } from 'react-icons/fa6';
-import { GoArrowLeft } from 'react-icons/go';
+import { GoArrowLeft, GoChevronRight } from 'react-icons/go';
 import { useNavigate } from 'react-router-dom';
 
+import Button from 'components/ui/Button';
 import Header from 'components/ui/Header';
 
-import SignUpBtn from './SignUpBtn';
 import TermsItem from './TermsItem';
 
 const TERMS = [
@@ -123,8 +123,13 @@ const TermsAgreement = ({ onNext }: TermsAgreementProps) => {
               </li>
             ))}
           </ul>
-          <div className={`absolute bottom-0 w-full ${!isAllChecked && 'opacity-30'}`}>
-            <SignUpBtn onClick={handleNext} type="약관동의" />
+          <div className="absolute bottom-0 w-full">
+            <Button handleClick={handleNext} disabled={!isAllChecked}>
+              빼곡 시작하기
+              <span>
+                <GoChevronRight style={{ color: 'white' }} />
+              </span>
+            </Button>
           </div>
         </form>
       </section>
