@@ -1,6 +1,7 @@
 import { IoArrowBackOutline } from 'react-icons/io5';
 import { useNavigate } from 'react-router-dom';
 
+import BookShelf from 'components/feat/BookShelf';
 import Button from 'components/ui/Button';
 import Header from 'components/ui/Header';
 
@@ -39,17 +40,17 @@ const BookDetail = () => {
       />
 
       <div className="flex flex-col items-center">
-        <img src={book.cover} alt={`${book.title} 커버`} className="h-[234px] w-[167px]" />
-        <div className="w-full bg-slate-500">선반</div>
+        <img src={book.cover} alt={`${book.title} 커버`} className="z-10 h-[234px] w-[167px]" />
+        <BookShelf />
       </div>
       <div className="pb-7 pt-6 text-center">
         <h1 className="text-lg font-bold">{book.title}</h1>
-        <p className="text-sub text-xs">{`저자 ${book.author}`}</p>
+        <p className="text-xs text-sub">{`저자 ${book.author}`}</p>
       </div>
       <section className="flex w-full grow flex-col items-center px-7 pb-9">
         <p className="w-full pb-4 text-base font-semibold">
           책정보
-          <hr className="bg-sub mb-2 h-0.5" />
+          <hr className="mb-2 h-0.5 bg-sub" />
           <div className="grid grid-cols-2 grid-rows-2 text-[13px] font-normal">
             <div>{`출판 : ${book.publisher}`}</div>
             <div>{`카테고리 : ${formatBookJenre(book.jenre)}`}</div>
@@ -59,8 +60,8 @@ const BookDetail = () => {
         </p>
         <p className="relative grow text-base font-semibold">
           줄거리
-          <span className="text-sub absolute right-0 text-xs">더보기</span>
-          <hr className="bg-sub mb-2 h-0.5" />
+          <span className="absolute right-0 text-xs text-sub">더보기</span>
+          <hr className="mb-2 h-0.5 bg-sub" />
           <div className="text-[13px] font-normal">{book.plot}</div>
         </p>
         <Button handleClick={handleSaveBook}>책 저장하기</Button>
