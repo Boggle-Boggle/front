@@ -26,7 +26,7 @@ const LoginBtn = ({ type }: LoginBtnProps) => {
   return (
     <button
       type="submit"
-      className={`h-[50px] w-[345px] border-spacing-3 rounded-lg ${color} flex items-center justify-center drop-shadow`}
+      className={`h-[50px] w-[345px] rounded-lg ${color} flex items-center justify-center drop-shadow`}
       onClick={handleClick}
     >
       <span>
