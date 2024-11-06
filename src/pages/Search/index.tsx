@@ -28,6 +28,10 @@ const Search = () => {
     navigate(-1);
   };
 
+  const handleGoDetail = (isbn: string) => {
+    navigate(`/detail/${isbn}`);
+  };
+
   const handleReadBarcode = () => {};
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -67,7 +71,7 @@ const Search = () => {
         hasBooks ? (
           <ul className="height-content absolute bottom-0 mb-[80px] w-full overflow-y-auto rounded-tl-3xl bg-white p-6">
             {allBooks.map((book) => (
-              <li key={book.isbn}>
+              <li key={book.isbn} onClick={() => handleGoDetail(book.isbn)}>
                 <SearchBookResult book={book} />
                 <hr />
               </li>
@@ -80,7 +84,7 @@ const Search = () => {
       ) : (
         <>
           <SearchHistory />
-          <div className="text-sub flex flex-col items-center justify-center pt-28">
+          <div className="flex flex-col items-center justify-center pt-28 text-sub">
             <TbCameraSearch style={{ width: '137px', height: '137px', opacity: '30%' }} />
             <p className="pt-4 text-center">
               오른쪽 상단의 아이콘을 클릭하면 <br />
