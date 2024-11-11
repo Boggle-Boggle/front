@@ -6,6 +6,8 @@ import Button from 'components/ui/Button';
 import Header from 'components/ui/Header';
 
 import { formatDateAndTime, formatBookJenre } from 'utils/format';
+import useModal from 'hooks/useModal';
+import ExistingRecordModal from './ExistingRecordModal';
 
 const book = {
   title: '파과 (리커버)',
@@ -19,6 +21,7 @@ const book = {
 };
 
 const BookDetail = () => {
+  const { isOpen, close, scrollPos, open } = useModal();
   const navigate = useNavigate();
 
   const { yy, mm, dd } = formatDateAndTime(book.pubDate);
@@ -27,18 +30,21 @@ const BookDetail = () => {
   };
 
   const handleSaveBook = () => {
-    console.log('책 저장하비다.');
+    // TODO : 이미 등록된 책인지 확인
+    // 미등록일 경우 등록페이지로 라우팅
+    // 등록되어 있으면 모달 오픈
+    open();
   };
 
   return (
     <div className="height-without-header flex flex-col">
+      <ExistingRecordModal isOpen={isOpen} close={close} scrollPos={scrollPos} />
       <Header
         leftBtn={{
           icon: <IoArrowBackOutline style={{ width: '24px', height: '24px' }} />,
           handleLeftBtnClick: handleGoBack,
         }}
       />
-
       <div className="flex flex-col items-center">
         <img src={book.cover} alt={`${book.title} 커버`} className="z-10 h-[234px] w-[167px]" />
         <BookShelf />

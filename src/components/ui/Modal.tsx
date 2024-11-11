@@ -35,7 +35,7 @@ const Modal = ({ onClose, children, isOpen, scrollPos }: ModalProps) => {
 
   return createPortal(
     <div onClick={onClose} className="flex h-full w-full items-center justify-center">
-      <div onClick={(e) => e.stopPropagation()} className="relative rounded-md bg-white">
+      <div onClick={(e) => e.stopPropagation()} className="relative rounded-md bg-white p-5">
         {children}
         <button type="button" onClick={onClose} className="absolute right-4 top-4">
           닫기
