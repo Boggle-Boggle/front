@@ -1,5 +1,6 @@
 import { ReactNode, useEffect } from 'react';
 import { createPortal } from 'react-dom';
+import { FaXmark } from 'react-icons/fa6';
 
 type ModalProps = {
   children: ReactNode;
@@ -37,8 +38,8 @@ const Modal = ({ onClose, children, isOpen, scrollPos }: ModalProps) => {
     <div onClick={onClose} className="flex h-full w-full items-center justify-center">
       <div onClick={(e) => e.stopPropagation()} className="relative rounded-md bg-white p-5">
         {children}
-        <button type="button" onClick={onClose} className="absolute right-4 top-4">
-          닫기
+        <button type="button" onClick={onClose} className="absolute right-3 top-3">
+          <FaXmark style={{ width: '20px', height: '20px' }} />
         </button>
       </div>
     </div>,
