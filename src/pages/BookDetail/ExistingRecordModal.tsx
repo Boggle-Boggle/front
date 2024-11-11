@@ -19,7 +19,7 @@ const ExistingRecordModal = ({ isOpen, close, scrollPos }: ExistingRecordModalPr
         <Modal isOpen={isOpen} onClose={close} scrollPos={scrollPos}>
           <div className="flex min-h-[400px] w-72 flex-col items-center justify-center">
             <img src={Book1} className="h-36 w-36" />
-            <h1 className="py-4 text-base font-bold">이전 기록이 있어요</h1>
+            <h1 className="py-5 text-base font-bold">이전 기록이 있어요!</h1>
             <p className="text-center text-sm">
               <span className="relative inline-block">
                 <span className="relative z-10">파과를 2024년 06월 19일</span>
@@ -29,7 +29,7 @@ const ExistingRecordModal = ({ isOpen, close, scrollPos }: ExistingRecordModalPr
               에 읽은적이 있네요 <br />
               회독 기간을 추가하고 이어서 작성해보세요
             </p>
-            <Button handleClick={handleClick} width="w-full">
+            <Button handleClick={handleClick} className="mt-7 h-12 w-3/4 font-bold">
               이어서 작성하기
             </Button>
           </div>
