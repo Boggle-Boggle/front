@@ -14,3 +14,9 @@ export const getBookDetail = async (isbn: string) => {
 
   return response.data.data as BookDetail;
 };
+
+export const hasReadingRecord = async (isbn: string) => {
+  const response = await api.get(`/reading-record/isbn/${isbn}`);
+
+  return response.data.data as null | number;
+};

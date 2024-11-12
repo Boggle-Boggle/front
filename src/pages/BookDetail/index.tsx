@@ -9,7 +9,7 @@ import { formatDateAndTime, formatBookJenre } from 'utils/format';
 import useModal from 'hooks/useModal';
 import ExistingRecordModal from './ExistingRecordModal';
 import { useQuery } from '@tanstack/react-query';
-import { getBookDetail } from 'services/search';
+import { getBookDetail, hasReadingRecord } from 'services/search';
 
 const BookDetail = () => {
   const { isOpen, close, scrollPos, open } = useModal();
@@ -25,11 +25,18 @@ const BookDetail = () => {
     queryFn: () => getBookDetail(detailId),
   });
 
+  const { data: readingRecord } = useQuery({
+    queryKey: ['hasRecord', detailId],
+    queryFn: () => hasReadingRecord(detailId),
+  });
+
   const handleSaveBook = () => {
-    // TODO : 이미 등록된 책인지 확인
-    // 미등록일 경우 등록페이지로 라우팅
-    // 등록되어 있으면 모달 오픈
-    open();
+    if (readingRecord) {
+      open();
+    }
+
+    // 책 등록페이지로 렌더링
+    console.log('책 새로 등록');
   };
 
   if (!book) {
