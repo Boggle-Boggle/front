@@ -1,12 +1,22 @@
 import { PaginationResponse } from 'types/api';
-import { Book } from 'types/book';
+import { Book, BookDetail } from 'types/book';
 
 import api from '.';
 
-const getSearchBooks = async (query: string, page: number) => {
+export const getSearchBooks = async (query: string, page: number) => {
   const response = await api.get(`/books?query=${query}&pageNum=${page}`);
 
   return response.data.data as PaginationResponse<Book[]>;
 };
 
-export default getSearchBooks;
+export const getBookDetail = async (isbn: string) => {
+  const response = await api.get(`/books/${isbn}`);
+
+  return response.data.data as BookDetail;
+};
+
+export const hasReadingRecord = async (isbn: string) => {
+  const response = await api.get(`/reading-record/isbn/${isbn}`);
+
+  return response.data.data as null | number;
+};

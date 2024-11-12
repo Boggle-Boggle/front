@@ -8,6 +8,6 @@ export type Book = {
 };
 
 export type BookDetail = Book & {
-  jenre: string;
+  genre: string;
   plot: string;
 };
