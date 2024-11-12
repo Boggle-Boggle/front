@@ -9,7 +9,7 @@ import Header from 'components/ui/Header';
 import SearchBar from 'components/ui/SearchBar';
 
 import useInfiniteScroll from 'hooks/useInfiniteScroll';
-import getSearchBooks from 'services/search';
+import { getSearchBooks } from 'services/search';
 
 import SearchBookResult from './SearchBookResult';
 
