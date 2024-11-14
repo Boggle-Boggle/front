@@ -29,7 +29,7 @@ const ExistingRecordModal = ({ isOpen, close, scrollPos }: ExistingRecordModalPr
               에 읽은적이 있네요 <br />
               회독 기간을 추가하고 이어서 작성해보세요
             </p>
-            <Button handleClick={handleClick} className="mt-7 h-12 w-3/4 font-bold">
+            <Button handleClick={handleClick} className="mt-7 h-12 w-3/4 font-bold text-white">
               이어서 작성하기
             </Button>
           </div>
