@@ -1,10 +1,10 @@
-import checked from 'assets/checked.png';
+import { useState } from 'react';
 import { FiPlus } from 'react-icons/fi';
 
 import Title from './shared/Title';
 import SubTitle from './shared/SubTitle';
 import ButtonSet from './shared/ButtonSet';
-import { useState } from 'react';
+import CheckBox from './shared/CheckBox';
 
 type LibraryProps = {
   onPrev: () => void;
@@ -41,9 +41,7 @@ const Library = ({ onPrev, onNext }: LibraryProps) => {
             onClick={() => handleSelect(id)}
           >
             {libraryName}
-            <span className={`h-6 w-6 rounded-md ${selected.includes(id) ? 'bg-accent' : 'bg-main'}`}>
-              <img src={checked} />
-            </span>
+            <CheckBox isChecked={selected.includes(id)} />
           </li>
         ))}
 
