@@ -31,7 +31,7 @@ type RatingProps = {
 const RATING_STATUS = [
   {
     status: 1,
-    title: '별로에요',
+    title: '별로예요',
     img: { empty: emptyStar1, half: halfStar1, filled: filledStar1 },
   },
   {
@@ -63,7 +63,7 @@ const Rating = ({ onPrev, onNext }: RatingProps) => {
   const [rating, setRating] = useState<number>(5);
 
   const updateStatus = (rating: number) => {
-    const statuses: RatingType['title'][] = ['별로에요', '그저그래요', '보통이에요', '좋아요', '최고예요'];
+    const statuses: RatingType['title'][] = ['별로예요', '그저그래요', '보통이에요', '좋아요', '최고예요'];
     const idx = Math.max(Math.ceil(rating) - 1, 0);
 
     setStatus(statuses[idx]);
