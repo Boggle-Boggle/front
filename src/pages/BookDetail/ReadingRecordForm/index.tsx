@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { FaXmark } from 'react-icons/fa6';
 
-import { DateType, StatusType } from 'types/record';
+import { DateType, RatingTitleType, StatusType } from 'types/record';
 import { addRecord } from 'services/record';
 import { formatDate } from 'utils/format';
 
@@ -24,6 +24,7 @@ const ReadingRecordForm = ({ isbn, onClose }: ReadingRecordFormProps) => {
 
   const [selectedStatus, setSelectedStatus] = useState<StatusType>('reading');
   const [rating, setRating] = useState<number>(5);
+  const [ratingTitle, setRatingTitle] = useState<RatingTitleType>('최고예요');
   const [startDate, setStartDate] = useState<DateType>(null);
   const [endDate, setEndDate] = useState<DateType>(null);
   const [selectedLibrary, setSelectedLibrary] = useState<number[]>([]);
@@ -53,7 +54,14 @@ const ReadingRecordForm = ({ isbn, onClose }: ReadingRecordFormProps) => {
           <Status onNext={() => setStep('별점')} selected={selectedStatus} setSelected={setSelectedStatus} />
         )}
         {step === '별점' && (
-          <Rating onPrev={() => setStep('상태')} onNext={() => setStep('날짜')} rating={rating} setRating={setRating} />
+          <Rating
+            onPrev={() => setStep('상태')}
+            onNext={() => setStep('날짜')}
+            rating={rating}
+            setRating={setRating}
+            status={ratingTitle}
+            setStatus={setRatingTitle}
+          />
         )}
         {step === '날짜' && (
           <ReadingDate

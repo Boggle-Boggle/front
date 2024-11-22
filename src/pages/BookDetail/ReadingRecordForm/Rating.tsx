@@ -8,14 +8,14 @@ import ButtonSet from './shared/ButtonSet';
 
 type RatingProps = {
   rating: number;
+  status: RatingTitleType;
   setRating: React.Dispatch<React.SetStateAction<number>>;
+  setStatus: React.Dispatch<React.SetStateAction<RatingTitleType>>;
   onPrev: () => void;
   onNext: () => void;
 };
 
-const Rating = ({ rating, setRating, onPrev, onNext }: RatingProps) => {
-  const [status, setStatus] = useState<RatingTitleType>('최고예요');
-
+const Rating = ({ rating, status, setRating, setStatus, onPrev, onNext }: RatingProps) => {
   const updateStatus = (rating: number) => {
     const statuses: RatingTitleType[] = ['별로예요', '그저그래요', '보통이에요', '좋아요', '최고예요'];
     const idx = Math.max(Math.ceil(rating) - 1, 0);
