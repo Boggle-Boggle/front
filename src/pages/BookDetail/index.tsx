@@ -82,7 +82,7 @@ const BookDetail = () => {
           <Button handleClick={handleSaveBook}>책 저장하기</Button>
         </section>
         <ExistingRecordModal isOpen={isOpen} close={close} scrollPos={scrollPos} />
-        {isRecording && <ReadingRecordForm onClose={() => setIsRecording(false)} />}
+        {isRecording && <ReadingRecordForm onClose={() => setIsRecording(false)} isbn={book.isbn} />}
       </div>
     )
   );

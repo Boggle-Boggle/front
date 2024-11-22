@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import { FaXmark } from 'react-icons/fa6';
 
 import { DateType, StatusType } from 'types/record';
+import { addRecord } from 'services/record';
+import { formatDate } from 'utils/format';
 
 import Status from './Status';
 import Rating from './Rating';
@@ -13,10 +15,11 @@ import Complete from './Complete';
 type StepType = '상태' | '별점' | '날짜' | '서재' | '숨기기' | '완료';
 
 type ReadingRecordFormProps = {
+  isbn: string;
   onClose: () => void;
 };
 
-const ReadingRecordForm = ({ onClose }: ReadingRecordFormProps) => {
+const ReadingRecordForm = ({ isbn, onClose }: ReadingRecordFormProps) => {
   const [step, setStep] = useState<StepType>('상태');
 
   const [selectedStatus, setSelectedStatus] = useState<StatusType>('reading');
@@ -28,7 +31,17 @@ const ReadingRecordForm = ({ onClose }: ReadingRecordFormProps) => {
 
   useEffect(() => {
     if (step === '완료') {
-      console.log('데이터가즈아');
+      const record = {
+        isbn,
+        readStatus: selectedStatus,
+        rating,
+        startReadDate: startDate ? formatDate(startDate[0], startDate[1], startDate[2]) : null,
+        endReadDate: endDate ? formatDate(endDate[0], endDate[1], endDate[2]) : null,
+        libraryIdList: selectedLibrary,
+        isVisible: status,
+      };
+
+      addRecord(record);
     }
   }, [step]);
 
