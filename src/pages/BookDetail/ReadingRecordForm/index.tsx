@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FaXmark } from 'react-icons/fa6';
 
 import { DateType, StatusType } from 'types/record';
@@ -25,6 +25,12 @@ const ReadingRecordForm = ({ onClose }: ReadingRecordFormProps) => {
   const [endDate, setEndDate] = useState<DateType>(null);
   const [selectedLibrary, setSelectedLibrary] = useState<number[]>([]);
   const [status, setStatus] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (step === '완료') {
+      console.log('데이터가즈아');
+    }
+  }, [step]);
 
   return (
     <>

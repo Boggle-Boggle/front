@@ -22,6 +22,20 @@ const ReadingDate = ({ startDate, endDate, setStartDate, setEndDate, onPrev, onN
   const [isChangingStartDate, setIsChangeStartDate] = useState<boolean>(false);
   const [isChangingEndDate, setIsChangeEndDate] = useState<boolean>(false);
 
+  const handleNext = () => {
+    if (!startDate || !endDate) {
+      alert('날짜를 선택해주세요');
+
+      return;
+    }
+
+    if (startDate[0] <= endDate[0] && startDate[1] <= endDate[1] && startDate[2] <= endDate[2]) {
+      onNext();
+    } else {
+      alert('종료날짜는 시작날짜 이후여야 합니다.');
+    }
+  };
+
   return (
     <>
       <Title message="책을 언제 읽었나요?" />
@@ -79,7 +93,7 @@ const ReadingDate = ({ startDate, endDate, setStartDate, setEndDate, onPrev, onN
         </div>
       </section>
 
-      <ButtonSet onPrev={onPrev} onNext={onNext} />
+      <ButtonSet onPrev={onPrev} onNext={handleNext} />
 
       {isChangingStartDate && (
         <DateSelector
