@@ -11,11 +11,9 @@ const Button: React.FC<ButtonProps> = ({ handleClick, children, className, disab
   return (
     <button
       type="submit"
-      className={
-        `flex h-[50px] items-center justify-center rounded-lg bg-accent text-white drop-shadow ${className ?? 'w-full'} ${
-          disabled ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'
-        }` + className
-      }
+      className={`flex h-[50px] items-center justify-center rounded-lg bg-accent drop-shadow ${className ?? 'w-full text-white'} ${
+        disabled ? 'cursor-not-allowed opacity-50' : 'cursor-pointer'
+      }`}
       onClick={handleClick}
       disabled={disabled}
     >

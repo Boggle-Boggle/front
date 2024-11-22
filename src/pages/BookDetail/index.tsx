@@ -1,18 +1,23 @@
+import { useState } from 'react';
 import { IoArrowBackOutline } from 'react-icons/io5';
 import { useNavigate, useParams } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
 
-import BookShelf from 'components/feat/BookShelf';
+import { getBookDetail, hasReadingRecord } from 'services/search';
+import { formatDateAndTime, formatBookJenre } from 'utils/format';
+import useModal from 'hooks/useModal';
+
 import Button from 'components/ui/Button';
 import Header from 'components/ui/Header';
 
-import { formatDateAndTime, formatBookJenre } from 'utils/format';
-import useModal from 'hooks/useModal';
+import BookShelf from './BookShelf';
 import ExistingRecordModal from './ExistingRecordModal';
-import { useQuery } from '@tanstack/react-query';
-import { getBookDetail, hasReadingRecord } from 'services/search';
+import ReadingRecordForm from './ReadingRecordForm';
 
 const BookDetail = () => {
   const { isOpen, close, scrollPos, open } = useModal();
+  const [isRecording, setIsRecording] = useState<boolean>(false);
+
   const navigate = useNavigate();
   const { detailId = '' } = useParams();
 
@@ -25,18 +30,16 @@ const BookDetail = () => {
     queryFn: () => getBookDetail(detailId),
   });
 
-  const { data: readingRecord } = useQuery({
-    queryKey: ['hasRecord', detailId],
-    queryFn: () => hasReadingRecord(detailId),
-  });
+  const handleSaveBook = async () => {
+    const readingRecord = await hasReadingRecord(detailId);
 
-  const handleSaveBook = () => {
     if (readingRecord) {
       open();
+
+      return;
     }
 
-    // 책 등록페이지로 렌더링
-    console.log('책 새로 등록');
+    setIsRecording(true);
   };
 
   if (!book) {
@@ -47,23 +50,19 @@ const BookDetail = () => {
   return (
     book && (
       <div className="height-without-header flex flex-col">
-        <ExistingRecordModal isOpen={isOpen} close={close} scrollPos={scrollPos} />
         <Header
           leftBtn={{
             icon: <IoArrowBackOutline style={{ width: '24px', height: '24px' }} />,
             handleLeftBtnClick: handleGoBack,
           }}
         />
-        <div className="flex flex-col items-center">
-          <img src={book.cover} alt={`${book.title} 커버`} className="z-10 h-[234px] w-[167px]" />
-          <BookShelf />
-        </div>
-        <div className="pb-7 pt-6 text-center">
+        <BookShelf cover={book.cover} title={book.title} />
+        <section className="pb-7 pt-6 text-center">
           <h1 className="text-lg font-bold">{book.title}</h1>
           <p className="text-xs text-sub">{`저자 ${book.author}`}</p>
-        </div>
+        </section>
         <section className="flex w-full grow flex-col items-center px-7 pb-9">
-          <p className="w-full pb-4 text-base font-semibold">
+          <p className="w-full pb-6 text-base font-semibold">
             책정보
             <hr className="mb-2 h-0.5 bg-sub" />
             <div className="grid grid-cols-2 grid-rows-2 text-[13px] font-normal">
@@ -81,6 +80,8 @@ const BookDetail = () => {
           </p>
           <Button handleClick={handleSaveBook}>책 저장하기</Button>
         </section>
+        <ExistingRecordModal isOpen={isOpen} close={close} scrollPos={scrollPos} />
+        {isRecording && <ReadingRecordForm onClose={() => setIsRecording(false)} isbn={book.isbn} />}
       </div>
     )
   );
