@@ -30,14 +30,13 @@ const BookDetail = () => {
     queryFn: () => getBookDetail(detailId),
   });
 
-  const { data: readingRecord } = useQuery({
-    queryKey: ['hasRecord', detailId],
-    queryFn: () => hasReadingRecord(detailId),
-  });
+  const handleSaveBook = async () => {
+    const readingRecord = await hasReadingRecord(detailId);
 
-  const handleSaveBook = () => {
     if (readingRecord) {
       open();
+
+      return;
     }
 
     setIsRecording(true);
