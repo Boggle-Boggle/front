@@ -2,20 +2,23 @@ import { useState } from 'react';
 import { LuCalendarCheck2 } from 'react-icons/lu';
 import { GoChevronRight } from 'react-icons/go';
 
+import { DateType } from 'types/record';
+
 import Title from './shared/Title';
 import SubTitle from './shared/SubTitle';
 import ButtonSet from './shared/ButtonSet';
-
 import DateSelector from './shared/DateSelector';
 
 type DateProps = {
+  startDate: DateType;
+  endDate: DateType;
+  setStartDate: React.Dispatch<React.SetStateAction<DateType>>;
+  setEndDate: React.Dispatch<React.SetStateAction<DateType>>;
   onPrev: () => void;
   onNext: () => void;
 };
 
-const ReadingDate = ({ onPrev, onNext }: DateProps) => {
-  const [startDate, setStartDate] = useState<[number, number, number] | null>(null);
-  const [endDate, setEndDate] = useState<[number, number, number] | null>(null);
+const ReadingDate = ({ startDate, endDate, setStartDate, setEndDate, onPrev, onNext }: DateProps) => {
   const [isChangingStartDate, setIsChangeStartDate] = useState<boolean>(false);
   const [isChangingEndDate, setIsChangeEndDate] = useState<boolean>(false);
 

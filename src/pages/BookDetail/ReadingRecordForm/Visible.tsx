@@ -1,7 +1,4 @@
-import { useState } from 'react';
-
 import visible from 'assets/visible.png';
-import checked from 'assets/checked.png';
 
 import Title from './shared/Title';
 import SubTitle from './shared/SubTitle';
@@ -9,13 +6,13 @@ import ButtonSet from './shared/ButtonSet';
 import CheckBox from './shared/CheckBox';
 
 type VisiableProps = {
+  status: boolean;
+  setStatus: React.Dispatch<React.SetStateAction<boolean>>;
   onPrev: () => void;
   onNext: () => void;
 };
 
-const Visiable = ({ onPrev, onNext }: VisiableProps) => {
-  const [status, setStatus] = useState<boolean>(false);
-
+const Visiable = ({ status, setStatus, onPrev, onNext }: VisiableProps) => {
   return (
     <>
       <Title message="책을 책장에서 숨기고 싶으신가요?" />

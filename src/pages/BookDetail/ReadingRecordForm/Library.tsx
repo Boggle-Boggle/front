@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { FiPlus } from 'react-icons/fi';
 
 import Title from './shared/Title';
@@ -7,12 +6,13 @@ import ButtonSet from './shared/ButtonSet';
 import CheckBox from './shared/CheckBox';
 
 type LibraryProps = {
+  selected: number[];
+  setSelected: React.Dispatch<React.SetStateAction<number[]>>;
   onPrev: () => void;
   onNext: () => void;
 };
 
-const Library = ({ onPrev, onNext }: LibraryProps) => {
-  const [selected, setSelected] = useState<number[]>([]);
+const Library = ({ selected, setSelected, onPrev, onNext }: LibraryProps) => {
   const librarys = [
     {
       id: 1,

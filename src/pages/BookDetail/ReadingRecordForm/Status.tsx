@@ -1,45 +1,18 @@
-import bookmark from 'assets/bookmark.png';
+import { REDING_STATUS, StatusType } from 'types/record';
 
-// TODO : IMG
-import img1 from 'assets/1.png';
-import img2 from 'assets/2.png';
-import img3 from 'assets/3.png';
+import bookmark from 'assets/bookmark.png';
 
 import Title from './shared/Title';
 import ButtonSet from './shared/ButtonSet';
 import SubTitle from './shared/SubTitle';
-import { useState } from 'react';
-
-const REDING_STATUS = [
-  {
-    status: 'reading',
-    title: '읽는 중인 책',
-    subTitle: '책을 읽고 있는 중이신가요? \n 나중에 다 읽은 책으로 변경할 수 있어요',
-    img: img1,
-  },
-  {
-    status: 'pending',
-    title: '다 읽은 책',
-    subTitle: '대단해요! 책을 다 읽으셨나요? \n 등록 후 책에 대한 이야기를 남겨보세요',
-    img: img2,
-  },
-  {
-    status: 'completed',
-    title: '읽어보고 싶은 책',
-    subTitle: '읽고 싶은 책인가요? \n 잊어버리지 않게 미리 등록해두세요!',
-    img: img3,
-  },
-] as const;
-
-type StatusType = (typeof REDING_STATUS)[number]['status'];
 
 type StatusProps = {
+  selected: StatusType;
+  setSelected: React.Dispatch<React.SetStateAction<StatusType>>;
   onNext: () => void;
 };
 
-const Status = ({ onNext }: StatusProps) => {
-  const [selected, setSelected] = useState<StatusType>('reading');
-
+const Status = ({ selected, setSelected, onNext }: StatusProps) => {
   const handleSelect = (status: StatusType) => {
     setSelected(status);
   };

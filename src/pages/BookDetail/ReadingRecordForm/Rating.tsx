@@ -1,69 +1,23 @@
 import { useState } from 'react';
 
-// TODO : 이미지최적화
-import emptyStar1 from 'assets/stars/empty/star1.png';
-import emptyStar2 from 'assets/stars/empty/star2.png';
-import emptyStar3 from 'assets/stars/empty/star3.png';
-import emptyStar4 from 'assets/stars/empty/star4.png';
-import emptyStar5 from 'assets/stars/empty/star5.png';
-
-import halfStar1 from 'assets/stars/half/star1.png';
-import halfStar2 from 'assets/stars/half/star2.png';
-import halfStar3 from 'assets/stars/half/star3.png';
-import halfStar4 from 'assets/stars/half/star4.png';
-import halfStar5 from 'assets/stars/half/star5.png';
-
-import filledStar1 from 'assets/stars/filled/star1.png';
-import filledStar2 from 'assets/stars/filled/star2.png';
-import filledStar3 from 'assets/stars/filled/star3.png';
-import filledStar4 from 'assets/stars/filled/star4.png';
-import filledStar5 from 'assets/stars/filled/star5.png';
+import { RATING_STATUS, RatingTitleType } from 'types/record';
 
 import Title from './shared/Title';
 import SubTitle from './shared/SubTitle';
 import ButtonSet from './shared/ButtonSet';
 
 type RatingProps = {
+  rating: number;
+  setRating: React.Dispatch<React.SetStateAction<number>>;
   onPrev: () => void;
   onNext: () => void;
 };
 
-const RATING_STATUS = [
-  {
-    status: 1,
-    title: '별로예요',
-    img: { empty: emptyStar1, half: halfStar1, filled: filledStar1 },
-  },
-  {
-    status: 2,
-    title: '그저그래요',
-    img: { empty: emptyStar2, half: halfStar2, filled: filledStar2 },
-  },
-  {
-    status: 3,
-    title: '보통이에요',
-    img: { empty: emptyStar3, half: halfStar3, filled: filledStar3 },
-  },
-  {
-    status: 4,
-    title: '좋아요',
-    img: { empty: emptyStar4, half: halfStar4, filled: filledStar4 },
-  },
-  {
-    status: 5,
-    title: '최고예요',
-    img: { empty: emptyStar5, half: halfStar5, filled: filledStar5 },
-  },
-] as const;
-
-type RatingType = (typeof RATING_STATUS)[number];
-
-const Rating = ({ onPrev, onNext }: RatingProps) => {
-  const [status, setStatus] = useState<RatingType['title']>('최고예요');
-  const [rating, setRating] = useState<number>(5);
+const Rating = ({ rating, setRating, onPrev, onNext }: RatingProps) => {
+  const [status, setStatus] = useState<RatingTitleType>('최고예요');
 
   const updateStatus = (rating: number) => {
-    const statuses: RatingType['title'][] = ['별로예요', '그저그래요', '보통이에요', '좋아요', '최고예요'];
+    const statuses: RatingTitleType[] = ['별로예요', '그저그래요', '보통이에요', '좋아요', '최고예요'];
     const idx = Math.max(Math.ceil(rating) - 1, 0);
 
     setStatus(statuses[idx]);
