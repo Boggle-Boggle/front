@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import { useMemo } from 'react';
+import { useMemo, Suspense } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls, useGLTF } from '@react-three/drei';
@@ -56,24 +56,27 @@ const BookCase = () => {
       <Canvas camera={{ position: [0, 0, cameraZPosition] }}>
         <ambientLight intensity={1.7} />
         <directionalLight position={[5, 5, 5]} intensity={1} />
-        <primitive object={scene} />
-        {books &&
-          books.reduce<{ previousX: number; previousY: number; elements: React.ReactNode[] }>(
-            (acc, { title, page }) => {
-              const { width, offset } = getBookProperties(page);
-              const xPosition = acc.previousX + offset / 2;
-              const yPosition = acc.previousY;
+        {/* TODO : 로딩중 Fallback */}
+        <Suspense fallback={<div>로딩중</div>}>
+          <primitive object={scene} />
+          {books &&
+            books.reduce<{ previousX: number; previousY: number; elements: React.ReactNode[] }>(
+              (acc, { title, page }) => {
+                const { width, offset } = getBookProperties(page);
+                const xPosition = acc.previousX + offset / 2;
+                const yPosition = acc.previousY;
 
-              acc.previousX = xPosition + offset / 2;
+                acc.previousX = xPosition + offset / 2;
 
-              acc.elements.push(
-                <Book position={[xPosition, yPosition, 0.1]} title={title} width={width} page={page} />,
-              );
+                acc.elements.push(
+                  <Book position={[xPosition, yPosition, 0.1]} title={title} width={width} page={page} />,
+                );
 
-              return acc;
-            },
-            { previousX: startX, previousY: startY, elements: [] },
-          ).elements}
+                return acc;
+              },
+              { previousX: startX, previousY: startY, elements: [] },
+            ).elements}
+        </Suspense>
 
         <OrbitControls
           enableRotate={false}
