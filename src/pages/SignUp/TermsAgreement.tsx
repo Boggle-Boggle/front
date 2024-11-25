@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import { FaCheck } from 'react-icons/fa6';
 import { GoArrowLeft, GoChevronRight } from 'react-icons/go';
-import { useNavigate } from 'react-router-dom';
 
 import Button from 'components/ui/Button';
 import Header from 'components/ui/Header';
 
 import TermsItem from './TermsItem';
 
+// TODO : 데이터 받아오기
 const TERMS = [
   {
     id: 1,
@@ -33,19 +33,16 @@ const TERMS = [
 ];
 
 type TermsAgreementProps = {
+  onPrev: () => void;
   onNext: () => void;
 };
 
-const TermsAgreement = ({ onNext }: TermsAgreementProps) => {
-  const navigate = useNavigate();
-
+const TermsAgreement = ({ onPrev, onNext }: TermsAgreementProps) => {
   const [terms, setTerms] = useState(TERMS);
   const [isAllChecked, setIsAllChecked] = useState<boolean>(false);
 
   const handleCheckboxChange = (id: number) => {
-    const newTerms = terms.map((term) =>
-      term.id === id ? { ...term, isChecked: !term.isChecked } : term,
-    );
+    const newTerms = terms.map((term) => (term.id === id ? { ...term, isChecked: !term.isChecked } : term));
 
     setTerms(() => newTerms);
 
@@ -60,7 +57,7 @@ const TermsAgreement = ({ onNext }: TermsAgreementProps) => {
     setTerms((prevTerms) => prevTerms.map((term) => ({ ...term, isChecked: newCheckStatus })));
   };
 
-  const handleLeftBtnClick = () => navigate('/login');
+  const handleLeftBtnClick = onPrev;
 
   const handleNext = (e: React.FormEvent) => {
     e.preventDefault();
@@ -85,24 +82,24 @@ const TermsAgreement = ({ onNext }: TermsAgreementProps) => {
           <br /> 이용하기 전{' '}
           <span className="relative inline-block">
             <span className="relative z-10">몇 가지</span>
-            <span className="bg-accent absolute bottom-1 left-0 h-3 w-full opacity-50" />
-            <span className="bg-accent absolute bottom-1 right-0 h-3 w-1 opacity-50" />
+            <span className="absolute bottom-1 left-0 h-3 w-full bg-accent opacity-50" />
+            <span className="absolute bottom-1 right-0 h-3 w-1 bg-accent opacity-50" />
           </span>
           <br />
           <span className="relative inline-block">
             <span className="relative z-10">동의</span>
-            <span className="bg-accent absolute bottom-1 left-0 h-3 w-full opacity-50" />
-            <span className="bg-accent absolute bottom-1 right-0 h-3 w-1 opacity-50" />
+            <span className="absolute bottom-1 left-0 h-3 w-full bg-accent opacity-50" />
+            <span className="absolute bottom-1 right-0 h-3 w-1 bg-accent opacity-50" />
           </span>
           가 필요해요
         </h1>
-        <p className="text-sub pb-10 pt-2 text-sm">원활한 사용을 위해 약관에 동의해주세요</p>
+        <p className="pb-10 pt-2 text-sm text-sub">원활한 사용을 위해 약관에 동의해주세요</p>
         <form onSubmit={handleNext} className="relative flex-grow">
           <label
             htmlFor="termsAllAgreement"
-            className="bg-sub flex h-[50px] cursor-pointer items-center rounded-lg p-4"
+            className="flex h-[50px] cursor-pointer items-center rounded-lg bg-sub p-4"
           >
-            <span className="bg-accent mr-3 flex h-6 w-6 items-center justify-center rounded-sm">
+            <span className="mr-3 flex h-6 w-6 items-center justify-center rounded-sm bg-accent">
               <input
                 type="checkbox"
                 id="termsAllAgreement"
@@ -110,9 +107,7 @@ const TermsAgreement = ({ onNext }: TermsAgreementProps) => {
                 checked={isAllChecked}
                 onChange={handleAllCheck}
               />
-              {isAllChecked && (
-                <FaCheck style={{ width: '20px', height: '20px', color: 'white' }} />
-              )}
+              {isAllChecked && <FaCheck style={{ width: '20px', height: '20px', color: 'white' }} />}
             </span>
             <p className="text-base font-semibold">모든 약관에 동의합니다</p>
           </label>
