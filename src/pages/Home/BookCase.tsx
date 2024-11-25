@@ -33,7 +33,7 @@ const getBookProperties = (page: number) => {
 };
 
 const BookCase = () => {
-  const { scene } = useGLTF('../src/assets/bookshelf.glb');
+  const { scene } = useGLTF(`${import.meta.env.VITE_IMG_BASE_URL || ''}/assets/bookshelf.glb`);
 
   const { data: books } = useQuery({
     queryKey: ['book'],
