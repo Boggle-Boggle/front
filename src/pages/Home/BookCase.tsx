@@ -1,8 +1,11 @@
+import * as THREE from 'three';
 import { useMemo } from 'react';
+import { useQuery } from '@tanstack/react-query';
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls, useGLTF } from '@react-three/drei';
 
-import * as THREE from 'three';
+import { getBookCase } from 'services/record.ts';
+
 import Book from './Book.tsx';
 
 const getBookProperties = (page: number) => {
@@ -29,27 +32,13 @@ const getBookProperties = (page: number) => {
   return { width: 1.4, offset: 0.14 };
 };
 
-const books = [
-  { readingRecordId: 3, title: '니체의 위험한 책, 차라투스트라는 이렇게 말했다', page: 43 },
-  { readingRecordId: 3, title: '뇌가 NO라고 속삭일 때 ', page: 98 },
-  { readingRecordId: 3, title: '이방인', page: 309 },
-  { readingRecordId: 3, title: '삼방인', page: 309 },
-  { readingRecordId: 3, title: '사방인', page: 706 },
-  { readingRecordId: 3, title: '오방인', page: 307 },
-  { readingRecordId: 3, title: '육방인', page: 457 },
-  { readingRecordId: 3, title: '칠방인', page: 308 },
-  { readingRecordId: 3, title: '팔방인', page: 453 },
-  { readingRecordId: 3, title: '구방인', page: 305 },
-  { readingRecordId: 3, title: '십방인', page: 458 },
-  { readingRecordId: 3, title: '십일방인', page: 300 },
-  { readingRecordId: 3, title: '십이방인', page: 452 },
-  { readingRecordId: 3, title: '십삼방인', page: 41 },
-  { readingRecordId: 3, title: '십사방인', page: 91 },
-  { readingRecordId: 3, title: '십오방인', page: 707 },
-];
-
 const BookCase = () => {
   const { scene } = useGLTF('../src/assets/bookshelf.glb');
+
+  const { data: books } = useQuery({
+    queryKey: ['book'],
+    queryFn: () => getBookCase(),
+  });
 
   useMemo(() => {
     const box = new THREE.Box3().setFromObject(scene);
@@ -58,7 +47,7 @@ const BookCase = () => {
     scene.position.sub(center);
   }, [scene]);
 
-  const startX = -0.62 + Math.min(Math.ceil(books[0].page / 100), 20) * 0.005;
+  const startX = books && books.length > 0 ? -0.62 + Math.min(Math.ceil(books[0].page / 100), 20) * 0.005 : 0;
   const startY = 0.735;
   const cameraZPosition = window.innerWidth < 350 ? 3 : 2.5;
 
@@ -68,7 +57,7 @@ const BookCase = () => {
         <ambientLight intensity={1.7} />
         <directionalLight position={[5, 5, 5]} intensity={1} />
         <primitive object={scene} />
-        {
+        {books &&
           books.reduce<{ previousX: number; previousY: number; elements: React.ReactNode[] }>(
             (acc, { title, page }) => {
               const { width, offset } = getBookProperties(page);
@@ -84,8 +73,7 @@ const BookCase = () => {
               return acc;
             },
             { previousX: startX, previousY: startY, elements: [] },
-          ).elements
-        }
+          ).elements}
 
         <OrbitControls
           enableRotate={false}
