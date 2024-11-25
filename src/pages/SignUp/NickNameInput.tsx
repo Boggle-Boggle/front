@@ -45,27 +45,27 @@ const NickNameInput = ({ nickName, setNickName, onNext }: NickNameInputProps) =>
         }}
       />
       <section className="height-without-header flex w-full flex-col p-9">
-        <h1 className="text-text text-[32px] font-semibold">
+        <h1 className="text-[32px] font-semibold text-text">
           <span className="relative inline-block">
             <span className="relative z-10">빼곡에서</span>
-            <span className="bg-accent absolute bottom-1 left-0 h-3 w-full opacity-50" />
-            <span className="bg-accent absolute bottom-1 right-0 h-3 w-1 opacity-50" />
+            <span className="absolute bottom-1 left-0 h-3 w-full bg-accent opacity-50" />
+            <span className="absolute bottom-1 right-0 h-3 w-1 bg-accent opacity-50" />
           </span>
           <br />
           <span className="relative inline-block">
             <span className="relative z-10">사용할 닉네임</span>
-            <span className="bg-accent absolute bottom-1 left-0 h-3 w-full opacity-50" />
-            <span className="bg-accent absolute bottom-1 right-0 h-3 w-1 opacity-50" />
+            <span className="absolute bottom-1 left-0 h-3 w-full bg-accent opacity-50" />
+            <span className="absolute bottom-1 right-0 h-3 w-1 bg-accent opacity-50" />
           </span>
           을
           <br /> 작성해주세요
         </h1>
-        <p className="text-sub pb-10 pt-2 text-sm">
+        <p className="pb-10 pt-2 text-sm text-sub">
           한글 최대 {MAX_KOR_NICKNAME_LEN}글자 / 영문 최대 {MAX_ENG_NICKNAME_LEN}글자
           <br /> 공백, 특수기호 사용 불가
         </p>
         <form className="relative flex-grow">
-          <div className="border-accent h-10 w-full border-b-4">
+          <div className="h-10 w-full border-b-4 border-accent">
             <input
               className="h-full w-full bg-main text-lg font-semibold focus:outline-none"
               value={nickName}
@@ -76,13 +76,13 @@ const NickNameInput = ({ nickName, setNickName, onNext }: NickNameInputProps) =>
                 {isValid ? (
                   <img
                     alt="유효성 검사 통과"
-                    src="src/assets/icons/nickname_check.png"
+                    src="/assets/icons/nickname_check.png"
                     className="mr-2 inline h-[18px] w-[18px]"
                   />
                 ) : (
                   <img
                     alt="유효성 검사 실패"
-                    src="src/assets/icons/nickname_uncheck.png"
+                    src="/assets/icons/nickname_uncheck.png"
                     className="mr-2 inline h-[18px] w-[18px]"
                   />
                 )}
