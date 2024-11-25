@@ -15,6 +15,7 @@ import SignUp from 'pages/SignUp';
 
 import App from './App';
 import './main.css';
+import Home from 'pages/Home';
 
 const router = createBrowserRouter([
   {
@@ -26,7 +27,7 @@ const router = createBrowserRouter([
         element: <App />,
         children: [
           { path: '/', element: <div>홈</div> },
-          { path: 'home', element: <div>홈</div> },
+          { path: 'home', element: <Home /> },
           { path: 'library', element: <Library /> },
           { path: 'myPage', element: <MyPage /> },
           { path: 'search', element: <Search /> },

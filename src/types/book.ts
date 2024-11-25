@@ -11,3 +11,9 @@ export type BookDetail = Book & {
   genre: string;
   plot: string;
 };
+
+export type BookCase = {
+  readingRecordId: number;
+  title: string;
+  page: number;
+};
