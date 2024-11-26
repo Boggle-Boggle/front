@@ -57,7 +57,7 @@ const BookDetail = () => {
           }}
         />
         <BookShelf cover={book.cover} title={book.title} />
-        <section className="pb-7 pt-6 text-center">
+        <section className="p-[24px] text-center">
           <h1 className="text-lg font-bold">{book.title}</h1>
           <p className="text-xs text-sub">{`저자 ${book.author}`}</p>
         </section>
