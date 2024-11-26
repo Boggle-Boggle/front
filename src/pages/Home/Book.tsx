@@ -16,7 +16,8 @@ type BookProps = {
 };
 
 const Book = ({ position, title, width, page }: BookProps) => {
-  const { scene } = useGLTF('../src/assets/book.glb');
+  useGLTF.preload(`${import.meta.env.VITE_IMG_BASE_URL || ''}/assets/book.glb`);
+  const { scene } = useGLTF(`${import.meta.env.VITE_IMG_BASE_URL || ''}/assets/book.glb`);
 
   const bookScene = useMemo(() => {
     const clonedScene = scene.clone();
