@@ -48,7 +48,7 @@ const Search = () => {
   }
 
   return (
-    <div className="relative h-screen bg-main">
+    <div className="bg-mainLightGray relative h-screen">
       <Header
         title={{ text: '도서 검색' }}
         leftBtn={{

@@ -6,7 +6,7 @@ type CheckBoxProps = {
 const CheckBox = ({ isChecked }: CheckBoxProps) => {
   return (
     <>
-      <span className={`h-6 w-6 rounded-md ${isChecked ? 'bg-accent' : 'bg-main'}`}>
+      <span className={`h-6 w-6 rounded-md ${isChecked ? 'bg-accent' : 'bg-mainLightGray'}`}>
         <img src={checked} />
       </span>
     </>
