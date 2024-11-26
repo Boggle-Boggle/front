@@ -73,7 +73,7 @@ const Search = () => {
             {allBooks.map((book) => (
               <li key={book.isbn} onClick={() => handleGoDetail(book.isbn)}>
                 <SearchBookResult book={book} />
-                <hr />
+                <hr className="h-0 bg-main opacity-20" />
               </li>
             ))}
             <div ref={observerTarget} />
