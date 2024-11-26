@@ -5,7 +5,7 @@ import { NavLink } from 'react-router-dom';
 
 const BottomNavigator = () => {
   return (
-    <ul className="fixed bottom-0 grid h-[84px] w-full max-w-screen-sm grid-cols-3 items-center rounded-t-xl bg-white shadow-navigator">
+    <ul className="h-footer fixed bottom-0 grid w-full max-w-screen-sm grid-cols-3 items-center rounded-t-xl bg-white shadow-navigator">
       <li className="m-auto">
         <NavLink
           to="/"
