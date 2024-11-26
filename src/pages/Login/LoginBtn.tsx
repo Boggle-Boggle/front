@@ -1,7 +1,7 @@
 const LOGIN_TYPE = {
   kakao: {
     title: '카카오',
-    imgUrl: 'src/assets/icons/kakao_login.png',
+    imgUrl: '/assets/icons/kakao_login.png',
     redirect: '',
     color: 'bg-[#FCE51E]',
   },

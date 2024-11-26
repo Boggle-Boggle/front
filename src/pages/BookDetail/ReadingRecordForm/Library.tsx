@@ -29,7 +29,7 @@ const Library = ({ selected, setSelected, onPrev, onNext }: LibraryProps) => {
     <>
       <Title message="책을 서재에 분류해 보세요!" />
       <SubTitle message="필요한 서재가 없다면 아래에서 추가해보세요" />
-      <ul className="max-h-96 overflow-y-scroll">
+      <ul className="max-h-96 overflow-y-auto">
         {data &&
           data.map(({ libraryId, libraryName }) => (
             <li

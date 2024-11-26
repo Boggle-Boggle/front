@@ -12,13 +12,11 @@ const SignUp = () => {
   return (
     <>
       {step === '닉네임입력' && (
-        <NickNameInput
-          nickName={nickName}
-          setNickName={setNickName}
-          onNext={() => setStep('약관동의')}
-        />
+        <NickNameInput nickName={nickName} setNickName={setNickName} onNext={() => setStep('약관동의')} />
       )}
-      {step === '약관동의' && <TermsAgreement onNext={() => setStep('가입완료')} />}
+      {step === '약관동의' && (
+        <TermsAgreement onPrev={() => setStep('닉네임입력')} onNext={() => setStep('가입완료')} />
+      )}
       {step === '가입완료' && <div>가입완료다냥</div>}
     </>
   );
