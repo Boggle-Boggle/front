@@ -6,13 +6,13 @@ import ButtonSet from './shared/ButtonSet';
 import CheckBox from './shared/CheckBox';
 
 type VisiableProps = {
-  status: boolean;
-  setStatus: React.Dispatch<React.SetStateAction<boolean>>;
+  isVisible: boolean;
+  setIsVisible: React.Dispatch<React.SetStateAction<boolean>>;
   onPrev: () => void;
   onNext: () => void;
 };
 
-const Visiable = ({ status, setStatus, onPrev, onNext }: VisiableProps) => {
+const Visiable = ({ isVisible, setIsVisible, onPrev, onNext }: VisiableProps) => {
   return (
     <>
       <Title message="책을 책장에서 숨기고 싶으신가요?" />
@@ -23,10 +23,10 @@ const Visiable = ({ status, setStatus, onPrev, onNext }: VisiableProps) => {
       <img src={visible} className="mx-auto" />
       <li
         className={`mb-8 flex items-center justify-between rounded-[10px] bg-white p-4 font-semibold shadow-md ${status && 'border-2 border-accent'}`}
-        onClick={() => setStatus(!status)}
+        onClick={() => setIsVisible(!isVisible)}
       >
         책장에서 책 숨기기
-        <CheckBox isChecked={status} />
+        <CheckBox isChecked={isVisible} />
       </li>
 
       <ButtonSet onPrev={onPrev} onNext={onNext} />

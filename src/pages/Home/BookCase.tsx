@@ -2,7 +2,7 @@ import * as THREE from 'three';
 import { useMemo, Suspense } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { Canvas } from '@react-three/fiber';
-import { OrbitControls, useGLTF } from '@react-three/drei';
+import { Html, OrbitControls, useGLTF } from '@react-three/drei';
 
 import { getBookCase } from 'services/record.ts';
 
@@ -33,6 +33,7 @@ const getBookProperties = (page: number) => {
 };
 
 const BookCase = () => {
+  useGLTF.preload(`${import.meta.env.VITE_IMG_BASE_URL || ''}/assets/bookshelf.glb`);
   const { scene } = useGLTF(`${import.meta.env.VITE_IMG_BASE_URL || ''}/assets/bookshelf.glb`);
 
   const { data: books } = useQuery({
@@ -57,7 +58,13 @@ const BookCase = () => {
         <ambientLight intensity={1.7} />
         <directionalLight position={[5, 5, 5]} intensity={1} />
         {/* TODO : 로딩중 Fallback */}
-        <Suspense fallback={<div>로딩중</div>}>
+        <Suspense
+          fallback={
+            <Html center>
+              <div> fh로딩</div>
+            </Html>
+          }
+        >
           <primitive object={scene} />
           {books &&
             books.reduce<{ previousX: number; previousY: number; elements: React.ReactNode[] }>(

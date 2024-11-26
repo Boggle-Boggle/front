@@ -28,7 +28,7 @@ const ReadingRecordForm = ({ isbn, onClose }: ReadingRecordFormProps) => {
   const [startDate, setStartDate] = useState<DateType>(null);
   const [endDate, setEndDate] = useState<DateType>(null);
   const [selectedLibrary, setSelectedLibrary] = useState<number[]>([]);
-  const [status, setStatus] = useState<boolean>(false);
+  const [isVisible, setIsVisible] = useState<boolean>(true);
 
   useEffect(() => {
     if (step === '완료') {
@@ -39,7 +39,7 @@ const ReadingRecordForm = ({ isbn, onClose }: ReadingRecordFormProps) => {
         startReadDate: startDate ? formatDate(startDate[0], startDate[1], startDate[2]) : null,
         endReadDate: endDate ? formatDate(endDate[0], endDate[1], endDate[2]) : null,
         libraryIdList: selectedLibrary,
-        isVisible: status,
+        isVisible: isVisible,
       };
 
       addRecord(record);
@@ -85,8 +85,8 @@ const ReadingRecordForm = ({ isbn, onClose }: ReadingRecordFormProps) => {
           <Visiable
             onPrev={() => setStep('서재')}
             onNext={() => setStep('완료')}
-            status={status}
-            setStatus={setStatus}
+            isVisible={isVisible}
+            setIsVisible={setIsVisible}
           />
         )}
         {step === '완료' && <Complete />}
