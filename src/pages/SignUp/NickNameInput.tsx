@@ -67,7 +67,7 @@ const NickNameInput = ({ nickName, setNickName, onNext }: NickNameInputProps) =>
         <form className="relative flex-grow">
           <div className="h-10 w-full border-b-4 border-accent">
             <input
-              className="bg-mainLightGray h-full w-full text-lg font-semibold focus:outline-none"
+              className="h-full w-full bg-main text-lg font-semibold focus:outline-none"
               value={nickName}
               onChange={handleInput}
             />

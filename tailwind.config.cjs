@@ -4,13 +4,13 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        mainLightGray: '#EEEDEB',
-        mainDartGray: '#DCD7D6',
+        main: '#EEEDEB',
         accent: '#E6B9A6',
         sub: '#939185',
         text: '#2F3645',
         green: '#4BAA64',
         red: '#E2574C',
+        gray: '#DCD7D6',
       },
       boxShadow: {
         navigator: '0 -3px 6px -2px rgba(0, 0, 0, 0.1)',

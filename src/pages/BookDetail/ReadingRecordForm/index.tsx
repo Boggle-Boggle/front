@@ -49,7 +49,7 @@ const ReadingRecordForm = ({ isbn, onClose }: ReadingRecordFormProps) => {
   return (
     <>
       <div className="absolute z-20 h-full w-full bg-black opacity-40" onClick={onClose} />
-      <section className="bg-mainLightGray fixed bottom-0 z-30 h-auto w-full rounded-t-2xl p-9">
+      <section className="fixed bottom-0 z-30 h-auto w-full rounded-t-2xl bg-main p-9">
         {step === '상태' && (
           <Status onNext={() => setStep('별점')} selected={selectedStatus} setSelected={setSelectedStatus} />
         )}
