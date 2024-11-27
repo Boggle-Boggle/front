@@ -1,8 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { FaXmark } from 'react-icons/fa6';
 
 import { DateType, RatingTitleType, StatusType } from 'types/record';
-import { addRecord } from 'services/record';
+
 import { formatDate } from 'utils/format';
 
 import Status from './Status';
@@ -30,21 +30,17 @@ const ReadingRecordForm = ({ isbn, onClose }: ReadingRecordFormProps) => {
   const [selectedLibrary, setSelectedLibrary] = useState<number[]>([]);
   const [isVisible, setIsVisible] = useState<boolean>(true);
 
-  useEffect(() => {
-    if (step === '완료') {
-      const record = {
-        isbn,
-        readStatus: selectedStatus,
-        rating,
-        startReadDate: startDate ? formatDate(startDate[0], startDate[1], startDate[2]) : null,
-        endReadDate: endDate ? formatDate(endDate[0], endDate[1], endDate[2]) : null,
-        libraryIdList: selectedLibrary,
-        isVisible: isVisible,
-      };
-
-      addRecord(record);
-    }
-  }, [step]);
+  const createRecord = () => {
+    return {
+      isbn,
+      readStatus: selectedStatus,
+      rating,
+      startReadDate: startDate ? formatDate(startDate[0], startDate[1], startDate[2]) : null,
+      endReadDate: endDate ? formatDate(endDate[0], endDate[1], endDate[2]) : null,
+      libraryIdList: selectedLibrary,
+      isVisible: isVisible,
+    };
+  };
 
   return (
     <>
@@ -89,7 +85,7 @@ const ReadingRecordForm = ({ isbn, onClose }: ReadingRecordFormProps) => {
             setIsVisible={setIsVisible}
           />
         )}
-        {step === '완료' && <Complete />}
+        {step === '완료' && <Complete record={createRecord()} />}
         <button type="button" onClick={onClose} className="absolute right-3 top-3">
           <FaXmark style={{ width: '20px', height: '20px' }} />
         </button>
