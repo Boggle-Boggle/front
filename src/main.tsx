@@ -14,6 +14,7 @@ import Search from 'pages/Search';
 import SignUp from 'pages/SignUp';
 import Home from 'pages/Home';
 import Note from 'pages/Note';
+import Record from 'pages/Record';
 
 import App from './App';
 import './main.css';
@@ -33,6 +34,7 @@ const router = createBrowserRouter([
           { path: 'search', element: <Search /> },
           { path: 'detail/:detailId', element: <BookDetail /> },
           { path: 'note/:noteId', element: <Note /> },
+          { path: 'record/:recordId', element: <Record /> },
         ],
       },
     ],

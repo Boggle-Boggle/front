@@ -17,18 +17,18 @@ const Complete = ({ record }: CompleteType) => {
   const [recordId, setRecordId] = useState<number | null>(null);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const creaateRecord = async () => {
-      const id = await addRecord(record);
-      setRecordId(id);
-    };
+  const creaateRecord = async () => {
+    const id = await addRecord(record);
+    setRecordId(id);
+  };
 
+  useEffect(() => {
     creaateRecord();
-  }, [record]);
+  }, []);
 
   const handleGoRecord = () => {
     if (recordId) {
-      navigate('/');
+      navigate(`/record/${recordId}`);
     }
   };
 
