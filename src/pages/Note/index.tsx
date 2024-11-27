@@ -1,19 +1,40 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { PiBooksDuotone } from 'react-icons/pi';
 import { IoArrowBackOutline } from 'react-icons/io5';
 import Header from 'components/ui/Header';
 
 import bookmark from 'assets/bookmarkBig.png';
+import { addNote } from 'services/record';
 
-const MAXTITLE = 7;
+const MAXTITLE = 30;
 const MAXCONTENT = 256;
+
 const Note = () => {
   const [title, setTitle] = useState<string>('');
   const [content, setContent] = useState<string>('');
   const navigate = useNavigate();
+  const location = useLocation();
+
   const handleGoBack = () => {
     navigate(-1);
+  };
+
+  const handleSave = () => {
+    if (title.length === 0) {
+      alert('제목을 적어주세요');
+      return;
+    }
+
+    if (content.length === 0) {
+      alert('내용을 적어주세요');
+      return;
+    }
+    const recordId = location.state.recordId;
+
+    if (recordId) {
+      addNote(recordId, { title, content });
+    }
   };
 
   const handleChangeTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -38,7 +59,7 @@ const Note = () => {
         }}
         rightBtn={{
           icon: <span>저장</span>,
-          handleRightBtnClick: () => console.log('독서노트저장'),
+          handleRightBtnClick: handleSave,
         }}
       />
       <section className="height-without-footer pb-header flex flex-col overflow-hidden rounded-tl-3xl bg-white">

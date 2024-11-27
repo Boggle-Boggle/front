@@ -21,3 +21,7 @@ export const getBookCase = async () => {
 
   return response.data.data.books as BookCase[];
 };
+
+export const addNote = (recordId: number, note: Note) => {
+  api.post(`/reading-record/${recordId}/note`, note);
+};

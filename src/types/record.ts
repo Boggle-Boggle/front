@@ -88,3 +88,8 @@ export type RecordType = {
   libraryIdList: number[];
   isVisible: boolean;
 };
+
+export type Note = {
+  title: string;
+  content: string;
+};
