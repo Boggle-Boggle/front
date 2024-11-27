@@ -12,10 +12,12 @@ import MyPage from 'pages/MyPage';
 import PrivateRoute from 'pages/PrivateRoute';
 import Search from 'pages/Search';
 import SignUp from 'pages/SignUp';
+import Home from 'pages/Home';
+import Note from 'pages/Note';
+import Record from 'pages/Record';
 
 import App from './App';
 import './main.css';
-import Home from 'pages/Home';
 
 const router = createBrowserRouter([
   {
@@ -31,6 +33,9 @@ const router = createBrowserRouter([
           { path: 'myPage', element: <MyPage /> },
           { path: 'search', element: <Search /> },
           { path: 'detail/:detailId', element: <BookDetail /> },
+          { path: 'note/write', element: <Note /> },
+          { path: 'note/:noteId', element: <div>노트 조회 페이지</div> },
+          { path: 'record/:recordId', element: <Record /> },
         ],
       },
     ],

@@ -10,9 +10,14 @@ module.exports = {
         text: '#2F3645',
         green: '#4BAA64',
         red: '#E2574C',
+        gray: '#DCD7D6',
       },
       boxShadow: {
         navigator: '0 -3px 6px -2px rgba(0, 0, 0, 0.1)',
+      },
+      spacing: {
+        header: '64px',
+        footer: '84px',
       },
     },
   },
