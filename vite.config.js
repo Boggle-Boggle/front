@@ -1,11 +1,20 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react-swc';
+import mkcert from 'vite-plugin-mkcert';
 import path from 'path';
 
 const __dirname = path.resolve();
 
 export default defineConfig({
-  plugins: [react()],
+  plugins: [react(), mkcert({ certFileName: './localhost.pem', keyFileName: './localhost-key.pem' })],
+  server: {
+    https: true,
+    cors: {
+      origin: 'https://bbaegok.duckdns.org',
+      credentials: true,
+    },
+  },
+
   resolve: {
     alias: [
       {
