@@ -12,8 +12,7 @@ dist
 dist-ssr
 *.local
 .env
-
-.env
+*.pem
 
 # Editor directories and files
 .vscode/*
@@ -25,3 +24,4 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
