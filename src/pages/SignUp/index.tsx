@@ -12,7 +12,7 @@ const SignUp = () => {
   const [step, setStep] = useState<StepType>('닉네임입력');
 
   return (
-    <>
+    <div className="bg-white">
       {step === '닉네임입력' && (
         <NickNameInput
           nickName={nickName}
@@ -25,7 +25,7 @@ const SignUp = () => {
         <TermsAgreement onPrev={() => setStep('닉네임입력')} onNext={() => setStep('가입완료')} />
       )}
       {step === '가입완료' && <div>가입완료다냥</div>}
-    </>
+    </div>
   );
 };
 
