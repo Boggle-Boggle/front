@@ -97,9 +97,11 @@ const TermsAgreement = ({ onPrev, onNext }: TermsAgreementProps) => {
         <form onSubmit={handleNext} className="relative flex-grow">
           <label
             htmlFor="termsAllAgreement"
-            className="flex h-[50px] cursor-pointer items-center rounded-lg bg-sub p-4"
+            className="flex h-[50px] cursor-pointer items-center rounded-lg bg-main p-4"
           >
-            <span className="mr-3 flex h-6 w-6 items-center justify-center rounded-sm bg-accent">
+            <span
+              className={`mr-3 flex h-6 w-6 items-center justify-center rounded-sm ${isAllChecked ? 'bg-accent' : 'border border-text opacity-50'} `}
+            >
               <input
                 type="checkbox"
                 id="termsAllAgreement"
