@@ -1,27 +1,18 @@
 import { useState } from 'react';
 
 const useNickNameInput = () => {
-  const [message, setMessage] = useState<string>('');
+  const [nickName, setNickName] = useState<string>('');
   const [isValid, setIsValid] = useState<boolean>(false);
 
-  const validateNickName = (name: string) => {
-    // 벨리데이션 체크
-    console.log(name);
+  const updateNickName = (name: string) => {
+    if (name.length > 15) return;
+    if (name.length === 0) setIsValid(false);
+    else setIsValid(true);
 
-    // 중복체크
-    // if ('중복확인') {
-    //   setMessage('이미 사용중인 닉네임이에요');
-    //   setIsValid(false);
-    //   return false;
-    // }
-
-    setMessage('️사용 가능한 닉네임이에요!');
-    setIsValid(true);
-
-    return true;
+    setNickName(name);
   };
 
-  return { message, isValid, validateNickName };
+  return { nickName, setNickName, isValid, updateNickName };
 };
 
 export default useNickNameInput;
