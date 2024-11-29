@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 import Button from 'components/ui/Button';
 import Header from 'components/ui/Header';
+import { isDuplicateNickname } from 'services/signup';
 
 type NickNameInputProps = {
   nickName: string;
@@ -16,9 +17,17 @@ const NickNameInput = ({ nickName, isValid, updateNickName, onNext }: NickNameIn
 
   const handleLeftBtnClick = () => navigate('/login');
 
-  const handleNext = (e: React.FormEvent) => {
+  const handleNext = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!isValid) return;
+
+    const isDuplicated = await isDuplicateNickname(nickName);
+
+    if (isDuplicated) {
+      alert(`사용중인 닉네임입니다.\n다른 닉네임을 입력해주세요`);
+      return;
+    }
+
     onNext();
   };
 
@@ -51,7 +60,7 @@ const NickNameInput = ({ nickName, isValid, updateNickName, onNext }: NickNameIn
         <form className="relative flex-grow">
           <div className="h-10 w-full border-b-4 border-accent">
             <input
-              className="h-full w-full bg-main text-lg font-semibold focus:outline-none"
+              className="h-full w-full text-lg font-semibold focus:outline-none"
               value={nickName}
               onChange={(e) => updateNickName(e.target.value)}
             />
