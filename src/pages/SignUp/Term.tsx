@@ -30,7 +30,7 @@ const Term = ({ selectedTerm, setSelectedTerm, handleCheckboxChange }: TermProps
         }}
       />
       <section className="height-without-header mx-4 flex flex-col overflow-y-auto">
-        <p className="h-full overflow-y-scroll">{content}</p>
+        <p className="h-full overflow-y-scroll whitespace-pre-wrap">{content}</p>
 
         <div className="flex flex-col items-center gap-4">
           <Button handleClick={handleAgreementClick} className="my-4 w-full text-white">
