@@ -8,6 +8,10 @@ export const isDuplicateNickname = async (nickname: string) => {
   return !response.data.data as boolean;
 };
 
+export const updateNickname = async (nickname: string) => {
+  await api.patch('/user/nickname', { nickname });
+};
+
 export const getTermsAgreement = async () => {
   const response = await api.get('/user/terms');
 
