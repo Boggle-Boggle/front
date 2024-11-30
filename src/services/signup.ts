@@ -1,7 +1,19 @@
 import api from '.';
 
+import { AgreementStatus, Terms } from 'types/user';
+
 export const isDuplicateNickname = async (nickname: string) => {
   const response = await api.get(`/user/nickname?nickname=${nickname}`);
 
-  return response.data.data as boolean;
+  return !response.data.data as boolean;
+};
+
+export const getTermsAgreement = async () => {
+  const response = await api.get('/user/terms');
+
+  return response.data.data as Terms;
+};
+
+export const agreeTerms = async (terms: AgreementStatus[]) => {
+  await api.patch('/user/terms', terms);
 };
