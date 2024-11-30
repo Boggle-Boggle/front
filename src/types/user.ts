@@ -13,5 +13,7 @@ export type Term = {
 
 export type AgreementStatus = {
   id: number;
-  idAgree: true;
+  isAgree: boolean;
 };
+
+export type TermWithAgree = Term & { isAgree: boolean };
