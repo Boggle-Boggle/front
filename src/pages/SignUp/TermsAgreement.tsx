@@ -22,6 +22,7 @@ const TermsAgreement = ({ onPrev, onNext }: TermsAgreementProps) => {
   const [terms, setTerms] = useState<TermWithAgree[]>();
   const [isAllChecked, setIsAllChecked] = useState<boolean>(false);
   const [selectedTerm, setSelectedTerm] = useState<TermWithAgree | null>(null);
+  const [isAllMandatoryChecked, setIsAllMandatoryChecked] = useState<boolean>(false);
 
   const { data } = useQuery({
     queryKey: ['termsAgreement'],
@@ -36,11 +37,8 @@ const TermsAgreement = ({ onPrev, onNext }: TermsAgreementProps) => {
     }
   }, [data]);
 
-  // TODO : 필수 약관 전부 체크 됐는지 먼저 확인하기
   const handleNext = (e: React.FormEvent) => {
-    // e.preventDefault();
-    // if (!isAllChecked) return;
-    onNext();
+    if (isAllMandatoryChecked) onNext();
   };
 
   const handleTermsClick = (id: number) => {
@@ -58,13 +56,17 @@ const TermsAgreement = ({ onPrev, onNext }: TermsAgreementProps) => {
 
     const allChecked = newTerms.every((term) => term.isAgree);
     setIsAllChecked(allChecked);
+
+    const newIsAllMAndatoryChecked = newTerms.every((term) => term.isAgree === term.mandatory);
+    setIsAllMandatoryChecked(newIsAllMAndatoryChecked);
   };
 
   const handleAllCheck = () => {
     const newCheckStatus = !isAllChecked;
-    setIsAllChecked(!isAllChecked);
-
+    setIsAllChecked(newCheckStatus);
     setTerms((preStatus) => preStatus?.map((status) => ({ ...status, isAgree: newCheckStatus })));
+
+    if (newCheckStatus) setIsAllMandatoryChecked(newCheckStatus);
   };
 
   return (
@@ -126,7 +128,7 @@ const TermsAgreement = ({ onPrev, onNext }: TermsAgreementProps) => {
               ))}
             </ul>
             <div className="absolute bottom-0 w-full">
-              <Button handleClick={handleNext} disabled={!isAllChecked}>
+              <Button handleClick={handleNext} disabled={!isAllMandatoryChecked}>
                 빼곡 시작하기
                 <span>
                   <GoChevronRight style={{ color: 'white' }} />
