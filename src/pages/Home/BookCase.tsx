@@ -39,20 +39,21 @@ const BookCase = () => {
     scene.position.sub(center);
   }, [scene]);
 
-  const startX = books && books.length > 0 ? -0.62 + Math.min(Math.ceil(books[0].page / 100), 20) * 0.005 : 0;
-  const startY = 0.8;
+  const startX = -0.62;
+  const startY = 0.815;
+  const rowHeight = 0.575;
   const cameraZPosition = window.innerWidth < 350 ? 3 : 2.5;
 
   return (
     <div className="h-full w-full items-center justify-center">
       <Canvas camera={{ position: [0, 0, cameraZPosition] }}>
         <ambientLight intensity={1.7} />
-        <directionalLight position={[5, 5, 5]} intensity={1} />
+        <directionalLight position={[7.5, 5, 7.5]} intensity={1} />
         {/* TODO : 로딩중 Fallback */}
         <Suspense
           fallback={
             <Html center>
-              <div> fh로딩</div>
+              <div>로딩</div>
             </Html>
           }
         >
@@ -69,6 +70,11 @@ const BookCase = () => {
                 acc.elements.push(
                   <Book position={[xPosition, yPosition, 0.1]} title={title} width={width} page={page} />,
                 );
+
+                if (acc.previousX > 0.56) {
+                  acc.previousY = yPosition - rowHeight;
+                  acc.previousX = startX;
+                }
 
                 return acc;
               },
