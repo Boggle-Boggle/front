@@ -17,7 +17,6 @@ type BookProps = {
 
 const Book = ({ position, title, width, page, zoomLevel }: BookProps) => {
   const [fontSize, setFontSize] = useState(14);
-  const [leading, setLeading] = useState(14);
   useGLTF.preload(`${import.meta.env.VITE_IMG_BASE_URL || ''}/assets/book.glb`);
   const { scene } = useGLTF(`${import.meta.env.VITE_IMG_BASE_URL || ''}/assets/book.glb`);
 
@@ -39,23 +38,16 @@ const Book = ({ position, title, width, page, zoomLevel }: BookProps) => {
   const filteredTitle = title.replace(/[^a-zA-Z0-9가-힣 ?!]/g, '');
 
   useEffect(() => {
-    if (zoomLevel < 2) {
-      setFontSize(18);
-      setLeading(18);
-    } else if (zoomLevel < 2.5) {
-      setFontSize(16);
-      setLeading(16);
-    } else {
-      setFontSize(14);
-      setLeading(14);
-    }
+    if (zoomLevel < 2) setFontSize(18);
+    else if (zoomLevel < 2.5) setFontSize(16);
+    else setFontSize(14);
   }, [zoomLevel]);
 
   return (
     <group position={position} scale={[width, 1.5, 1]}>
       <primitive object={bookScene} />
       <Html position={[0, 0, 0.035]} center>
-        <div className={`flex flex-col items-center pb-2 text-[${fontSize}px] leading-[${leading}px] text-[#3e3b36]`}>
+        <div className={`flex flex-col items-center pb-2 text-[${fontSize}px] leading-none text-[#3e3b36]`}>
           {Array.from(filteredTitle.length > MAX_TITLE_LEN ? filteredTitle.slice(0, MAX_TITLE_LEN) : filteredTitle).map(
             (char) => (char === ' ' ? <div className="h-[3px]">{'\u00A0'}</div> : <div>{char}</div>),
           )}
