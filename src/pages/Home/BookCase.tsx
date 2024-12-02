@@ -1,9 +1,8 @@
 import * as THREE from 'three';
-import { Suspense, useEffect } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { Canvas } from '@react-three/fiber';
-import { Html, OrbitControls, useGLTF } from '@react-three/drei';
-
+import { Html, OrbitControls, OrbitControlsChangeEvent, useGLTF } from '@react-three/drei';
 import { getBookCase } from 'services/record.ts';
 
 import Book from './Book.tsx';
@@ -20,6 +19,12 @@ const getBookProperties = (page: number) => {
 };
 
 const BookCase = () => {
+  const startX = -0.62;
+  const startY = 0.815;
+  const rowHeight = 0.575;
+  const cameraZPosition = window.innerWidth < 350 ? 3 : 2.5;
+  const [zoomLevel, setZoomLevel] = useState<number>(cameraZPosition);
+
   useGLTF.preload(`${import.meta.env.VITE_IMG_BASE_URL || ''}/assets/bookshelf.glb`);
   const { scene } = useGLTF(`${import.meta.env.VITE_IMG_BASE_URL || ''}/assets/bookshelf.glb`);
 
@@ -27,6 +32,15 @@ const BookCase = () => {
     queryKey: ['book'],
     queryFn: () => getBookCase(),
   });
+
+  const getZoomLevel = (e?: OrbitControlsChangeEvent) => {
+    if (!e) return;
+
+    const controls = e.target;
+    const distance = controls.object.position.z;
+
+    setZoomLevel(distance);
+  };
 
   useEffect(() => {
     if (!scene) return;
@@ -38,11 +52,6 @@ const BookCase = () => {
     box.getCenter(center);
     scene.position.sub(center);
   }, [scene]);
-
-  const startX = -0.62;
-  const startY = 0.815;
-  const rowHeight = 0.575;
-  const cameraZPosition = window.innerWidth < 350 ? 3 : 2.5;
 
   return (
     <div className="h-full w-full items-center justify-center">
@@ -68,7 +77,13 @@ const BookCase = () => {
                 acc.previousX = xPosition + offset / 2;
 
                 acc.elements.push(
-                  <Book position={[xPosition, yPosition, 0.1]} title={title} width={width} page={page} />,
+                  <Book
+                    position={[xPosition, yPosition, 0.1]}
+                    title={title}
+                    width={width}
+                    page={page}
+                    zoomLevel={zoomLevel}
+                  />,
                 );
 
                 if (acc.previousX > 0.56) {
@@ -90,6 +105,7 @@ const BookCase = () => {
           enableZoom={true}
           minDistance={1.5}
           maxDistance={cameraZPosition}
+          onChange={(e) => getZoomLevel(e)}
         />
       </Canvas>
     </div>
