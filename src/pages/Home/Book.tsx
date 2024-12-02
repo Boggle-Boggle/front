@@ -44,13 +44,6 @@ const Book = ({ position, title, width, page }: BookProps) => {
           {Array.from(filteredTitle.length > MAX_TITLE_LEN ? filteredTitle.slice(0, MAX_TITLE_LEN) : filteredTitle).map(
             (char) => (char === ' ' ? <div className="h-[3px]">{'\u00A0'}</div> : <div>{char}</div>),
           )}
-          {filteredTitle.length > MAX_TITLE_LEN && (
-            <div className="absolute bottom-[7px]">
-              <div className="h-[2px]">.</div>
-              <div className="h-[2px]">.</div>
-              <div className="h-[2px]">.</div>
-            </div>
-          )}
         </div>
       </Html>
     </group>
