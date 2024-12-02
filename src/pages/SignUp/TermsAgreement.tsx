@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { FaCheck } from 'react-icons/fa6';
 import { GoArrowLeft, GoChevronRight } from 'react-icons/go';
@@ -23,6 +23,18 @@ const TermsAgreement = ({ terms, setTerms, onPrev, onNext }: TermsAgreementProps
   const [selectedTerm, setSelectedTerm] = useState<TermWithAgree | null>(null);
   const [isAllMandatoryChecked, setIsAllMandatoryChecked] = useState<boolean>(false);
 
+  useEffect(() => {
+    const allChecked = terms.every((term) => term.isAgree);
+    setIsAllChecked(allChecked);
+
+    const newIsAllMAndatoryChecked = terms.every((term) => {
+      if (term.mandatory) return term.isAgree === term.mandatory;
+      else return true;
+    });
+
+    setIsAllMandatoryChecked(newIsAllMAndatoryChecked);
+  }, [terms]);
+
   const handleNext = (e: React.FormEvent) => {
     if (isAllMandatoryChecked) onNext();
   };
@@ -39,20 +51,11 @@ const TermsAgreement = ({ terms, setTerms, onPrev, onNext }: TermsAgreementProps
 
     const newTerms = terms.map((term) => (term.id === id ? { ...term, isAgree: !term.isAgree } : term));
     setTerms(() => newTerms);
-
-    const allChecked = newTerms.every((term) => term.isAgree);
-    setIsAllChecked(allChecked);
-
-    const newIsAllMAndatoryChecked = newTerms.every((term) => term.isAgree === term.mandatory);
-    setIsAllMandatoryChecked(newIsAllMAndatoryChecked);
   };
 
   const handleAllCheck = () => {
     const newCheckStatus = !isAllChecked;
-    setIsAllChecked(newCheckStatus);
     setTerms((preStatus) => preStatus?.map((status) => ({ ...status, isAgree: newCheckStatus })));
-
-    if (newCheckStatus) setIsAllMandatoryChecked(newCheckStatus);
   };
 
   return (
