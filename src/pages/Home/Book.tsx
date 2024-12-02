@@ -5,7 +5,7 @@ import * as THREE from 'three';
 
 // TODO : 테마 다양하게 두기
 const colors = [0xe4b4b2, 0xe1c2a5, 0xd6c8c5, 0xb6bfbd, 0xdecdcc];
-const MAX_TITLE_LEN = window.innerWidth < 400 ? 5 : 7;
+const MAX_TITLE_LEN = window.innerWidth < 400 ? 7 : 9;
 const FONT_SIZE = window.innerHeight < 600 ? 6 : 8;
 
 type BookProps = {
@@ -37,10 +37,10 @@ const Book = ({ position, title, width, page }: BookProps) => {
   const filteredTitle = title.replace(/[^a-zA-Z0-9가-힣 ?!]/g, '');
 
   return (
-    <group position={position} scale={[width, 1, 1]}>
+    <group position={position} scale={[width, 1.4, 1]}>
       <primitive object={bookScene} />
       <Html position={[0, 0, 0.035]} center>
-        <div className={`flex flex-col items-center pb-2 text-[${FONT_SIZE}px] leading-[9px] text-[#3e3b36]`}>
+        <div className={`flex flex-col items-center pb-2 text-[${FONT_SIZE}px] leading-[16px] text-[#3e3b36]`}>
           {Array.from(filteredTitle.length > MAX_TITLE_LEN ? filteredTitle.slice(0, MAX_TITLE_LEN) : filteredTitle).map(
             (char) => (char === ' ' ? <div className="h-[3px]">{'\u00A0'}</div> : <div>{char}</div>),
           )}

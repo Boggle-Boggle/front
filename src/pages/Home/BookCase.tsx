@@ -53,7 +53,7 @@ const BookCase = () => {
   }, [scene]);
 
   const startX = books && books.length > 0 ? -0.62 + Math.min(Math.ceil(books[0].page / 100), 20) * 0.005 : 0;
-  const startY = 0.735;
+  const startY = 0.8;
   const cameraZPosition = window.innerWidth < 350 ? 3 : 2.5;
 
   return (
