@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import { useMemo, Suspense } from 'react';
+import { useMemo, Suspense, useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { Canvas } from '@react-three/fiber';
 import { Html, OrbitControls, useGLTF } from '@react-three/drei';
@@ -41,7 +41,11 @@ const BookCase = () => {
     queryFn: () => getBookCase(),
   });
 
-  useMemo(() => {
+  useEffect(() => {
+    if (!scene) return;
+
+    scene.scale.set(1, 1.2, 1);
+
     const box = new THREE.Box3().setFromObject(scene);
     const center = new THREE.Vector3();
     box.getCenter(center);
