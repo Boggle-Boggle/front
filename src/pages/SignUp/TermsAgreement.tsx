@@ -1,70 +1,61 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+
 import { FaCheck } from 'react-icons/fa6';
 import { GoArrowLeft, GoChevronRight } from 'react-icons/go';
+
+import { TermWithAgree } from 'types/user';
 
 import Button from 'components/ui/Button';
 import Header from 'components/ui/Header';
 
 import TermsItem from './TermsItem';
-
-// TODO : 데이터 받아오기
-const TERMS = [
-  {
-    id: 1,
-    title: '서비스 이용 약관 동의',
-    text: '서비스 이용 약관 동의 본문',
-    isChecked: false,
-    isRequired: true,
-  },
-  {
-    id: 2,
-    title: '개인정보 수집 및 이용 동의',
-    text: '개인정보 수집 및 이용 동의 본문',
-    isChecked: false,
-    isRequired: true,
-  },
-  {
-    id: 3,
-    title: '개인정보 제 3자 제공 동의',
-    text: '개인정보 제 3자 제공 동의 본문',
-    isChecked: false,
-    isRequired: true,
-  },
-];
+import Term from './Term';
 
 type TermsAgreementProps = {
+  terms: TermWithAgree[];
+  setTerms: React.Dispatch<React.SetStateAction<TermWithAgree[]>>;
   onPrev: () => void;
   onNext: () => void;
 };
 
-const TermsAgreement = ({ onPrev, onNext }: TermsAgreementProps) => {
-  const [terms, setTerms] = useState(TERMS);
+const TermsAgreement = ({ terms, setTerms, onPrev, onNext }: TermsAgreementProps) => {
   const [isAllChecked, setIsAllChecked] = useState<boolean>(false);
+  const [selectedTerm, setSelectedTerm] = useState<TermWithAgree | null>(null);
+  const [isAllMandatoryChecked, setIsAllMandatoryChecked] = useState<boolean>(false);
+
+  useEffect(() => {
+    const allChecked = terms.every((term) => term.isAgree);
+    setIsAllChecked(allChecked);
+
+    const newIsAllMAndatoryChecked = terms.every((term) => {
+      if (term.mandatory) return term.isAgree === term.mandatory;
+      else return true;
+    });
+
+    setIsAllMandatoryChecked(newIsAllMAndatoryChecked);
+  }, [terms]);
+
+  const handleNext = (e: React.FormEvent) => {
+    if (isAllMandatoryChecked) onNext();
+  };
+
+  const handleTermsClick = (id: number) => {
+    if (!terms) return;
+
+    const newSelectedTerm = terms.filter((term) => term.id === id)[0];
+    setSelectedTerm(newSelectedTerm);
+  };
 
   const handleCheckboxChange = (id: number) => {
-    const newTerms = terms.map((term) => (term.id === id ? { ...term, isChecked: !term.isChecked } : term));
+    if (!terms) return;
 
+    const newTerms = terms.map((term) => (term.id === id ? { ...term, isAgree: !term.isAgree } : term));
     setTerms(() => newTerms);
-
-    const allChecked = newTerms.every((term) => term.isChecked);
-    setIsAllChecked(allChecked);
   };
 
   const handleAllCheck = () => {
     const newCheckStatus = !isAllChecked;
-    setIsAllChecked(newCheckStatus);
-
-    setTerms((prevTerms) => prevTerms.map((term) => ({ ...term, isChecked: newCheckStatus })));
-  };
-
-  const handleLeftBtnClick = onPrev;
-
-  const handleNext = (e: React.FormEvent) => {
-    e.preventDefault();
-
-    if (!isAllChecked) return;
-
-    onNext();
+    setTerms((preStatus) => preStatus?.map((status) => ({ ...status, isAgree: newCheckStatus })));
   };
 
   return (
@@ -73,7 +64,7 @@ const TermsAgreement = ({ onPrev, onNext }: TermsAgreementProps) => {
         title={{ text: '회원가입' }}
         leftBtn={{
           icon: <GoArrowLeft style={{ width: '24px', height: '24px' }} />,
-          handleLeftBtnClick,
+          handleLeftBtnClick: onPrev,
         }}
       />
       <section className="height-without-header flex w-full flex-col p-9">
@@ -97,9 +88,11 @@ const TermsAgreement = ({ onPrev, onNext }: TermsAgreementProps) => {
         <form onSubmit={handleNext} className="relative flex-grow">
           <label
             htmlFor="termsAllAgreement"
-            className="flex h-[50px] cursor-pointer items-center rounded-lg bg-sub p-4"
+            className="flex h-[50px] cursor-pointer items-center rounded-lg bg-main p-4"
           >
-            <span className="mr-3 flex h-6 w-6 items-center justify-center rounded-sm bg-accent">
+            <span
+              className={`mr-3 flex h-6 w-6 items-center justify-center rounded-sm ${isAllChecked ? 'bg-accent' : 'border border-text opacity-50'} `}
+            >
               <input
                 type="checkbox"
                 id="termsAllAgreement"
@@ -114,12 +107,16 @@ const TermsAgreement = ({ onPrev, onNext }: TermsAgreementProps) => {
           <ul className="pt-6">
             {terms.map((term) => (
               <li key={term.id}>
-                <TermsItem term={term} handleCheckboxChange={handleCheckboxChange} />
+                <TermsItem
+                  term={term}
+                  handleCheckboxChange={handleCheckboxChange}
+                  handleTermsClick={() => handleTermsClick(term.id)}
+                />
               </li>
             ))}
           </ul>
           <div className="absolute bottom-0 w-full">
-            <Button handleClick={handleNext} disabled={!isAllChecked}>
+            <Button handleClick={handleNext} disabled={!isAllMandatoryChecked}>
               빼곡 시작하기
               <span>
                 <GoChevronRight style={{ color: 'white' }} />
@@ -128,6 +125,13 @@ const TermsAgreement = ({ onPrev, onNext }: TermsAgreementProps) => {
           </div>
         </form>
       </section>
+      {selectedTerm && (
+        <Term
+          selectedTerm={selectedTerm}
+          handleCheckboxChange={handleCheckboxChange}
+          setSelectedTerm={setSelectedTerm}
+        />
+      )}
     </>
   );
 };

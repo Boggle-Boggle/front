@@ -8,8 +8,6 @@ module.exports = {
         accent: '#E6B9A6',
         sub: '#939185',
         text: '#2F3645',
-        green: '#4BAA64',
-        red: '#E2574C',
         gray: '#DCD7D6',
       },
       boxShadow: {

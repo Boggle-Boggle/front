@@ -1,37 +1,33 @@
-import { useEffect } from 'react';
 import { GoArrowLeft, GoChevronRight } from 'react-icons/go';
 import { useNavigate } from 'react-router-dom';
 
 import Button from 'components/ui/Button';
 import Header from 'components/ui/Header';
-
-import useNickNameInput from 'hooks/useNickNameInput';
-
-import { MAX_KOR_NICKNAME_LEN, MAX_ENG_NICKNAME_LEN } from 'constants/index';
+import { isDuplicateNickname } from 'services/signup';
 
 type NickNameInputProps = {
   nickName: string;
-  setNickName: React.Dispatch<React.SetStateAction<string>>;
+  isValid: boolean;
   onNext: () => void;
+  updateNickName: (name: string) => void;
 };
 
-const NickNameInput = ({ nickName, setNickName, onNext }: NickNameInputProps) => {
-  const { message, isValid, validateNickName } = useNickNameInput();
+const NickNameInput = ({ nickName, isValid, updateNickName, onNext }: NickNameInputProps) => {
   const navigate = useNavigate();
 
   const handleLeftBtnClick = () => navigate('/login');
 
-  const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setNickName(e.target.value);
-  };
-
-  useEffect(() => {
-    validateNickName(nickName);
-  }, [nickName, validateNickName]);
-
-  const handleNext = (e: React.FormEvent) => {
+  const handleNext = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!isValid) return;
+
+    const isDuplicated = await isDuplicateNickname(nickName);
+
+    if (isDuplicated) {
+      alert(`사용중인 닉네임입니다.\n다른 닉네임을 입력해주세요`);
+      return;
+    }
+
     onNext();
   };
 
@@ -60,35 +56,14 @@ const NickNameInput = ({ nickName, setNickName, onNext }: NickNameInputProps) =>
           을
           <br /> 작성해주세요
         </h1>
-        <p className="pb-10 pt-2 text-sm text-sub">
-          한글 최대 {MAX_KOR_NICKNAME_LEN}글자 / 영문 최대 {MAX_ENG_NICKNAME_LEN}글자
-          <br /> 공백, 특수기호 사용 불가
-        </p>
+        <p className="pb-10 pt-2 text-sm text-sub">최대 15글자까지 입력할 수 있어요</p>
         <form className="relative flex-grow">
           <div className="h-10 w-full border-b-4 border-accent">
             <input
-              className="h-full w-full bg-main text-lg font-semibold focus:outline-none"
+              className="h-full w-full text-lg font-semibold focus:outline-none"
               value={nickName}
-              onChange={handleInput}
+              onChange={(e) => updateNickName(e.target.value)}
             />
-            <p className={`mt-2 ${isValid ? 'text-green' : 'text-red'}`}>
-              <span className="text-sm">
-                {isValid ? (
-                  <img
-                    alt="유효성 검사 통과"
-                    src="/assets/icons/nickname_check.png"
-                    className="mr-2 inline h-[18px] w-[18px]"
-                  />
-                ) : (
-                  <img
-                    alt="유효성 검사 실패"
-                    src="/assets/icons/nickname_uncheck.png"
-                    className="mr-2 inline h-[18px] w-[18px]"
-                  />
-                )}
-              </span>
-              {message}
-            </p>
           </div>
           <div className="absolute bottom-0 w-full">
             <Button handleClick={handleNext} disabled={!isValid}>
