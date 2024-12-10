@@ -20,7 +20,7 @@ const Visiable = ({ isVisible, setIsVisible, onPrev, onNext }: VisiableProps) =>
         message={`등록시 기본적으로 책장에 책이 꽂히게 됩니다.\n책장에서 책을 숨기고 싶다면 아래 체크박스에 체크해주세요`}
       />
 
-      <img src={visible} className="mx-auto" />
+      <img src={visible} className="mx-auto" alt="" />
       <li
         className={`mb-8 flex items-center justify-between rounded-[10px] bg-white p-4 font-semibold shadow-md ${status && 'border-2 border-accent'}`}
         onClick={() => setIsVisible(!isVisible)}
