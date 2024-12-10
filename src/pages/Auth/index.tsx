@@ -11,9 +11,6 @@ const Auth = () => {
   useEffect(() => {
     const queryParam = new URLSearchParams(location.search);
     const accessToken = queryParam.get('token');
-    console.log(`location.search : ${location.search}`);
-    console.log(`queryParam : ${queryParam}`);
-    console.log(`accessToken : ${accessToken}`);
 
     if (accessToken) {
       login(accessToken);
