@@ -1,16 +1,16 @@
 import { useState } from 'react';
 import { FaXmark } from 'react-icons/fa6';
 
-import { DateType, RatingTitleType, StatusType } from 'types/record';
-
 import { formatDate } from 'utils/format';
 
-import Status from './Status';
+import { DateType, RatingTitleType, StatusType } from 'types/record';
+
+import Complete from './Complete';
+import Library from './Library';
 import Rating from './Rating';
 import ReadingDate from './ReadingDate';
-import Library from './Library';
+import Status from './Status';
 import Visiable from './Visible';
-import Complete from './Complete';
 
 type StepType = '상태' | '별점' | '날짜' | '서재' | '숨기기' | '완료';
 
