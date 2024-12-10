@@ -21,13 +21,14 @@ const Visiable = ({ isVisible, setIsVisible, onPrev, onNext }: VisiableProps) =>
       />
 
       <img src={visible} className="mx-auto" alt="" />
-      <li
-        className={`mb-8 flex items-center justify-between rounded-[10px] bg-white p-4 font-semibold shadow-md ${status && 'border-2 border-accent'}`}
+      <button
+        className="mb-8 flex w-full items-center justify-between rounded-[10px] bg-white p-4 font-semibold shadow-md"
         onClick={() => setIsVisible(!isVisible)}
+        type="button"
       >
         책장에서 책 숨기기
         <CheckBox isChecked={isVisible} />
-      </li>
+      </button>
 
       <ButtonSet onPrev={onPrev} onNext={onNext} />
     </>
