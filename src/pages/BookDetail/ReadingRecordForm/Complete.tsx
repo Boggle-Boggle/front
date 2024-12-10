@@ -1,13 +1,16 @@
-import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import Button from 'components/ui/Button';
-import visible from 'assets/visible.png';
-import { RecordType } from 'types/record';
+
 import { addRecord } from 'services/record';
 
-import Title from './shared/Title';
+import { RecordType } from 'types/record';
+
+import visible from 'assets/visible.png';
+
 import SubTitle from './shared/SubTitle';
+import Title from './shared/Title';
 
 type CompleteType = {
   record: RecordType;
