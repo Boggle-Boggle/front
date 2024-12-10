@@ -11,7 +11,7 @@ type ExistingRecordModalProps = {
 
 const ExistingRecordModal = ({ isOpen, close, scrollPos }: ExistingRecordModalProps) => {
   const handleClick = () => {
-    console.log('이어서 작성하기');
+    // TODO : console.log('이어서 작성하기');
   };
 
   return (
