@@ -2,9 +2,9 @@ import { REDING_STATUS, StatusType } from 'types/record';
 
 import bookmark from 'assets/bookmark.png';
 
-import Title from './shared/Title';
 import ButtonSet from './shared/ButtonSet';
 import SubTitle from './shared/SubTitle';
+import Title from './shared/Title';
 
 type StatusProps = {
   selected: StatusType;
