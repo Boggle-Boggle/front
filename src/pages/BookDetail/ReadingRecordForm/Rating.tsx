@@ -1,10 +1,8 @@
-import { useState } from 'react';
-
 import { RATING_STATUS, RatingTitleType } from 'types/record';
 
-import Title from './shared/Title';
-import SubTitle from './shared/SubTitle';
 import ButtonSet from './shared/ButtonSet';
+import SubTitle from './shared/SubTitle';
+import Title from './shared/Title';
 
 type RatingProps = {
   rating: number;
