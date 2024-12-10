@@ -1,12 +1,13 @@
-import { FiPlus } from 'react-icons/fi';
 import { useQuery } from '@tanstack/react-query';
+
+import { FiPlus } from 'react-icons/fi';
 
 import { getLibrary } from 'services/record';
 
-import Title from './shared/Title';
-import SubTitle from './shared/SubTitle';
 import ButtonSet from './shared/ButtonSet';
 import CheckBox from './shared/CheckBox';
+import SubTitle from './shared/SubTitle';
+import Title from './shared/Title';
 
 type LibraryProps = {
   selected: number[];
