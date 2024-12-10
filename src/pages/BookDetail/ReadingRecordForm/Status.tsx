@@ -33,8 +33,8 @@ const Status = ({ selected, setSelected, onNext }: StatusProps) => {
               <p className="pb-1 text-lg font-semibold">{title}</p>
               <p className="whitespace-pre-line text-xs opacity-60">{subTitle}</p>
             </p>
-            <img src={img} className="right-0 h-14 w-14" />
-            {status === selected && <img src={bookmark} className="absolute -top-1 left-4" />}
+            <img src={img} className="right-0 h-14 w-14" alt="" />
+            {status === selected && <img src={bookmark} className="absolute -top-1 left-4" alt="선택됨" />}
           </li>
         ))}
       </ul>
