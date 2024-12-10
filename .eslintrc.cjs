@@ -57,8 +57,7 @@ module.exports = {
             position: 'before',
           },
           {
-            pattern:
-              '{hooks,hooks/*,hooks/**/*,services,services/*,services/**/*,utils,utils/*,utils/**/*}',
+            pattern: '{hooks,hooks/*,hooks/**/*,services,services/*,services/**/*,utils,utils/*,utils/**/*}',
             group: 'internal',
             position: 'before',
           },
@@ -92,5 +91,6 @@ module.exports = {
     ],
     'arrow-body-style': 'off',
     'react/react-in-jsx-scope': 'off',
+    'no-alert': 'off',
   },
 };
