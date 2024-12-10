@@ -10,7 +10,7 @@ import Library from './Library';
 import Rating from './Rating';
 import ReadingDate from './ReadingDate';
 import Status from './Status';
-import Visiable from './Visible';
+import Visible from './Visible';
 
 type StepType = '상태' | '별점' | '날짜' | '서재' | '숨기기' | '완료';
 
@@ -78,7 +78,7 @@ const ReadingRecordForm = ({ isbn, onClose }: ReadingRecordFormProps) => {
           />
         )}
         {step === '숨기기' && (
-          <Visiable
+          <Visible
             onPrev={() => setStep('서재')}
             onNext={() => setStep('완료')}
             isVisible={isVisible}
