@@ -1,6 +1,7 @@
-import Modal from 'components/ui/Modal';
-import Book1 from '../../assets/book1.png';
 import Button from 'components/ui/Button';
+import Modal from 'components/ui/Modal';
+
+import Book1 from '../../assets/book1.png';
 
 type ExistingRecordModalProps = {
   isOpen: boolean;
