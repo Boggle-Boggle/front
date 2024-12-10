@@ -6,15 +6,15 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 
 import Auth from 'pages/Auth';
 import BookDetail from 'pages/BookDetail';
+import Home from 'pages/Home';
 import Library from 'pages/Library';
 import Login from 'pages/Login';
 import MyPage from 'pages/MyPage';
+import Note from 'pages/Note';
 import PrivateRoute from 'pages/PrivateRoute';
+import Record from 'pages/Record';
 import Search from 'pages/Search';
 import SignUp from 'pages/SignUp';
-import Home from 'pages/Home';
-import Note from 'pages/Note';
-import Record from 'pages/Record';
 
 import App from './App';
 import './main.css';
