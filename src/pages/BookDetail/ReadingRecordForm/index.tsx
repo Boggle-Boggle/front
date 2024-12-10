@@ -38,7 +38,7 @@ const ReadingRecordForm = ({ isbn, onClose }: ReadingRecordFormProps) => {
       startReadDate: startDate ? formatDate(startDate[0], startDate[1], startDate[2]) : null,
       endReadDate: endDate ? formatDate(endDate[0], endDate[1], endDate[2]) : null,
       libraryIdList: selectedLibrary,
-      isVisible: isVisible,
+      isVisible,
     };
   };
 
