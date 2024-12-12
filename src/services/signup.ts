@@ -1,6 +1,6 @@
-import api from '.';
-
 import { AgreementStatus, Terms } from 'types/user';
+
+import api from '.';
 
 export const isDuplicateNickname = async (nickname: string) => {
   const response = await api.get(`/user/nickname?nickname=${nickname}`);
