@@ -58,7 +58,7 @@ const ReadingRecordForm = ({ isbn, onClose }: ReadingRecordFormProps) => {
         aria-label="취소"
         type="button"
       />
-      <section className="fixed bottom-0 z-30 h-auto w-full rounded-t-2xl bg-main p-9">
+      <section className="fixed bottom-0 z-30 h-auto w-full rounded-t-2xl bg-main p-7">
         {step === '상태' && (
           <Status
             onNext={() => {
