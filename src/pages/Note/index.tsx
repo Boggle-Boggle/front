@@ -1,11 +1,13 @@
 import { useState } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
-import { PiBooksDuotone } from 'react-icons/pi';
 import { IoArrowBackOutline } from 'react-icons/io5';
+import { PiBooksDuotone } from 'react-icons/pi';
+import { useNavigate, useLocation } from 'react-router-dom';
+
 import Header from 'components/ui/Header';
 
-import bookmark from 'assets/bookmarkBig.png';
 import { addNote } from 'services/record';
+
+import bookmark from 'assets/bookmarkBig.png';
 
 const MAXTITLE = 30;
 const MAXCONTENT = 256;
@@ -62,7 +64,7 @@ const Note = () => {
           handleRightBtnClick: handleSave,
         }}
       />
-      <section className="height-without-footer pb-header flex flex-col overflow-hidden rounded-tl-3xl bg-white">
+      <section className="height-without-footer flex flex-col overflow-hidden rounded-tl-3xl bg-white pb-header">
         <img src={bookmark} className="h-13 header absolute left-10 top-[63px] block w-12" />
         <input
           className={`w-full p-4 text-center font-semibold focus:outline-none`}
