@@ -63,7 +63,7 @@ const BookDetail = () => {
           <p className="text-xs text-sub">{`저자 ${book.author}`}</p>
         </section>
         <section className="flex w-full grow flex-col items-center px-7 pb-9">
-          <p className="w-full pb-6 text-base font-semibold">
+          <div className="w-full pb-6 text-base font-semibold">
             책정보
             <hr className="mb-2 h-0.5 bg-sub" />
             <div className="grid grid-cols-2 grid-rows-2 text-[13px] font-normal">
@@ -72,13 +72,13 @@ const BookDetail = () => {
               <div>{`발행 : ${yy}.${mm}.${dd}`}</div>
               <div>{`ISBN : ${book.isbn}`}</div>
             </div>
-          </p>
-          <p className="relative grow text-base font-semibold">
+          </div>
+          <div className="relative grow text-base font-semibold">
             줄거리
             <span className="absolute right-0 text-xs text-sub">더보기</span>
             <hr className="mb-2 h-0.5 bg-sub" />
             <div className="text-[13px] font-normal">{book.plot}</div>
-          </p>
+          </div>
           <Button handleClick={handleSaveBook}>책 저장하기</Button>
         </section>
         <ExistingRecordModal isOpen={isOpen} close={close} scrollPos={scrollPos} />
