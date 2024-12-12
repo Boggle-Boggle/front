@@ -65,7 +65,7 @@ const BookDetail = () => {
         <section className="flex w-full grow flex-col items-center px-7 pb-9">
           <div className="w-full pb-6 text-base font-semibold">
             책정보
-            <hr className="mb-2 h-0.5 bg-sub" />
+            <hr className="mb-2 h-0.5 border-none bg-gray" />
             <div className="grid grid-cols-2 grid-rows-2 text-[13px] font-normal">
               <div>{`출판 : ${book.publisher}`}</div>
               <div>{`카테고리 : ${formatBookJenre(book.genre)}`}</div>
@@ -76,7 +76,7 @@ const BookDetail = () => {
           <div className="relative grow text-base font-semibold">
             줄거리
             <span className="absolute right-0 text-xs text-sub">더보기</span>
-            <hr className="mb-2 h-0.5 bg-sub" />
+            <hr className="mb-2 h-0.5 border-none bg-gray" />
             <div className="text-[13px] font-normal">{book.plot}</div>
           </div>
           <Button handleClick={handleSaveBook}>책 저장하기</Button>

@@ -78,7 +78,7 @@ const Search = () => {
                   className="w-full text-start"
                 >
                   <SearchBookResult book={book} />
-                  <hr className="h-0 bg-main opacity-20" />
+                  <hr className="h-[2px] border-none bg-main" />
                 </button>
               </li>
             ))}

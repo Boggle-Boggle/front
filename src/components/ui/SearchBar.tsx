@@ -12,10 +12,7 @@ const SearchBar = ({ placeholder, value, setValue, handleSubmit }: SearchBarProp
   const handleClear = () => setValue('');
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="mx-7 my-3 flex items-center rounded-xl border border-solid bg-white px-3"
-    >
+    <form onSubmit={handleSubmit} className="mx-7 my-3 flex items-center rounded-xl bg-white px-3">
       <span className="mr-1">
         <FcSearch style={{ width: '28px', height: '28px' }} />
       </span>
