@@ -1,6 +1,6 @@
-import { useEffect, useMemo, useState } from 'react';
 import { Html, useGLTF } from '@react-three/drei';
 
+import { useEffect, useMemo, useState } from 'react';
 import * as THREE from 'three';
 
 // TODO : 테마 다양하게 두기
