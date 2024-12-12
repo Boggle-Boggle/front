@@ -5,14 +5,14 @@ import CheckBox from './shared/CheckBox';
 import SubTitle from './shared/SubTitle';
 import Title from './shared/Title';
 
-type VisiableProps = {
+type VisibleProps = {
   isVisible: boolean;
   setIsVisible: React.Dispatch<React.SetStateAction<boolean>>;
   onPrev: () => void;
   onNext: () => void;
 };
 
-const Visiable = ({ isVisible, setIsVisible, onPrev, onNext }: VisiableProps) => {
+const Visible = ({ isVisible, setIsVisible, onPrev, onNext }: VisibleProps) => {
   return (
     <>
       <Title message="책을 책장에서 숨기고 싶으신가요?" />
@@ -27,7 +27,7 @@ const Visiable = ({ isVisible, setIsVisible, onPrev, onNext }: VisiableProps) =>
         type="button"
       >
         책장에서 책 숨기기
-        <CheckBox isChecked={isVisible} />
+        <CheckBox isChecked={!isVisible} />
       </button>
 
       <ButtonSet onPrev={onPrev} onNext={onNext} />
@@ -35,4 +35,4 @@ const Visiable = ({ isVisible, setIsVisible, onPrev, onNext }: VisiableProps) =>
   );
 };
 
-export default Visiable;
+export default Visible;
