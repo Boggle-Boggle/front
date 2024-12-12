@@ -1,6 +1,9 @@
+import { useQuery } from '@tanstack/react-query';
+
 import { useState } from 'react';
 import { FaXmark } from 'react-icons/fa6';
 
+import { getLibrary } from 'services/record';
 import { formatDate } from 'utils/format';
 
 import { DateType, RatingTitleType, StatusType } from 'types/record';
@@ -42,6 +45,11 @@ const ReadingRecordForm = ({ isbn, onClose }: ReadingRecordFormProps) => {
     };
   };
 
+  const { data: library } = useQuery({
+    queryKey: ['library'],
+    queryFn: () => getLibrary(),
+  });
+
   return (
     <>
       <button
@@ -74,8 +82,9 @@ const ReadingRecordForm = ({ isbn, onClose }: ReadingRecordFormProps) => {
             setEndDate={setEndDate}
           />
         )}
-        {step === '서재' && (
+        {step === '서재' && library && (
           <Library
+            library={library}
             onPrev={() => setStep('날짜')}
             onNext={() => setStep('숨기기')}
             selected={selectedLibrary}
