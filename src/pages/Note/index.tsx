@@ -67,13 +67,13 @@ const Note = () => {
       <section className="height-without-footer flex flex-col overflow-hidden rounded-tl-3xl bg-white pb-header">
         <img src={bookmark} className="h-13 header absolute left-10 top-[63px] block w-12" />
         <input
-          className={`w-full p-4 text-center font-semibold focus:outline-none`}
+          className="w-full p-4 text-center font-semibold focus:outline-none"
           value={title}
           placeholder="제목을 작성해주시핑"
           onChange={(e) => handleChangeTitle(e)}
         />
         <textarea
-          className={`w-full flex-grow resize-none overflow-auto p-3 focus:outline-none`}
+          className="w-full flex-grow resize-none overflow-auto p-3 focus:outline-none"
           value={content}
           placeholder="내용을 작성해주시핑"
           onChange={(e) => handleChangeContent(e)}
