@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { IoArrowBackOutline } from 'react-icons/io5';
-import { PiBooksDuotone } from 'react-icons/pi';
 import { useNavigate, useLocation } from 'react-router-dom';
 
 import Header from 'components/ui/Header';
@@ -80,7 +79,8 @@ const Note = () => {
         />
         <div className="flex h-10 items-center justify-between bg-main">
           <section>
-            <button className="px-3 py-2" onClick={() => {}} type="button">
+            {/* TODO : 2차 배포에 포함. 노트추가 부가기능 */}
+            {/* <button className="px-3 py-2" onClick={() => {}} type="button">
               <PiBooksDuotone style={{ width: '24px', height: '24px', color: '#9B9999' }} />
             </button>
             <button className="px-3 py-2" onClick={() => {}} type="button">
@@ -91,7 +91,7 @@ const Note = () => {
             </button>
             <button className="px-3 py-2" onClick={() => {}} type="button">
               <PiBooksDuotone style={{ width: '24px', height: '24px', color: '#9B9999' }} />
-            </button>
+            </button> */}
           </section>
 
           <span className="pr-3 text-sm">{content?.length ?? 0}자/256자</span>
