@@ -1,5 +1,7 @@
 import { useEffect } from 'react';
+
 import { agreeTerms, updateNickname } from 'services/signup';
+
 import { AgreementStatus } from 'types/user';
 
 type CompleteProps = {

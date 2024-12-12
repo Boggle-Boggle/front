@@ -1,15 +1,14 @@
 import { useEffect, useState } from 'react';
-
 import { FaCheck } from 'react-icons/fa6';
 import { GoArrowLeft, GoChevronRight } from 'react-icons/go';
-
-import { TermWithAgree } from 'types/user';
 
 import Button from 'components/ui/Button';
 import Header from 'components/ui/Header';
 
-import TermsItem from './TermsItem';
+import { TermWithAgree } from 'types/user';
+
 import Term from './Term';
+import TermsItem from './TermsItem';
 
 type TermsAgreementProps = {
   terms: TermWithAgree[];

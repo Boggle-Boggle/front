@@ -1,9 +1,9 @@
 import { BiX } from 'react-icons/bi';
 
-import { TermWithAgree } from 'types/user';
-
 import Button from 'components/ui/Button';
 import Header from 'components/ui/Header';
+
+import { TermWithAgree } from 'types/user';
 
 type TermProps = {
   selectedTerm: TermWithAgree;

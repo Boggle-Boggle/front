@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 import Button from 'components/ui/Button';
 import Header from 'components/ui/Header';
+
 import { isDuplicateNickname } from 'services/signup';
 
 type NickNameInputProps = {
