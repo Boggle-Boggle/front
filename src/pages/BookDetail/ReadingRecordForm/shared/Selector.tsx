@@ -25,7 +25,7 @@ const Selector = ({ list, selected, setSelected }: SelectorProps) => {
     if (ref.current && selected) {
       ref.current.scrollTop = selected * ITEM_HEIGHT - ITEM_HEIGHT;
     }
-  }, []);
+  }, [selected]);
 
   return (
     <ul
@@ -38,7 +38,7 @@ const Selector = ({ list, selected, setSelected }: SelectorProps) => {
         scrollbarWidth: 'none',
       }}
     >
-      <div className={`sticky top-[80px] box-border h-[40px] border-y-2 border-accent`} />
+      <div className="sticky top-[80px] box-border h-[40px] border-y-2 border-accent" />
       {newList.map((item, index) => (
         <li
           key={index}
