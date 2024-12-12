@@ -13,7 +13,7 @@ const Complete = ({ nickName, terms }: CompleteProps) => {
   useEffect(() => {
     updateNickname(nickName);
     agreeTerms(terms);
-  }, []);
+  }, [nickName, terms]);
 
   return <>가입 완료다냥</>;
 };
