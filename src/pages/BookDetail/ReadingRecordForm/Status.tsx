@@ -27,7 +27,7 @@ const Status = ({ selected, setSelected, onNext }: StatusProps) => {
           <li key={status}>
             <button
               type="button"
-              className={`relative mb-6 flex h-24 w-full list-none flex-row items-center justify-between rounded-[10px] bg-white px-6 py-4 shadow-inherit ${status === selected && 'border-2 border-accent'}`}
+              className={`relative mb-6 flex h-24 w-full list-none flex-row items-center justify-between rounded-[10px] border-2 bg-white px-6 py-4 shadow-inherit ${status === selected ? 'border-accent' : 'border-transparent'}`}
               onClick={() => handleSelect(status)}
             >
               <div className="text-start">
