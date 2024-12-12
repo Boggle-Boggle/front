@@ -31,7 +31,7 @@ const Note = () => {
       alert('내용을 적어주세요');
       return;
     }
-    const recordId = location.state.recordId;
+    const { recordId } = location.state;
 
     if (recordId) {
       addNote(recordId, { title, content });
