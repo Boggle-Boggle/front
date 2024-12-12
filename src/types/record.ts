@@ -2,24 +2,21 @@
 import img1 from 'assets/1.png';
 import img2 from 'assets/2.png';
 import img3 from 'assets/3.png';
-
 import emptyStar1 from 'assets/stars/empty/star1.png';
 import emptyStar2 from 'assets/stars/empty/star2.png';
 import emptyStar3 from 'assets/stars/empty/star3.png';
 import emptyStar4 from 'assets/stars/empty/star4.png';
 import emptyStar5 from 'assets/stars/empty/star5.png';
-
-import halfStar1 from 'assets/stars/half/star1.png';
-import halfStar2 from 'assets/stars/half/star2.png';
-import halfStar3 from 'assets/stars/half/star3.png';
-import halfStar4 from 'assets/stars/half/star4.png';
-import halfStar5 from 'assets/stars/half/star5.png';
-
 import filledStar1 from 'assets/stars/filled/star1.png';
 import filledStar2 from 'assets/stars/filled/star2.png';
 import filledStar3 from 'assets/stars/filled/star3.png';
 import filledStar4 from 'assets/stars/filled/star4.png';
 import filledStar5 from 'assets/stars/filled/star5.png';
+import halfStar1 from 'assets/stars/half/star1.png';
+import halfStar2 from 'assets/stars/half/star2.png';
+import halfStar3 from 'assets/stars/half/star3.png';
+import halfStar4 from 'assets/stars/half/star4.png';
+import halfStar5 from 'assets/stars/half/star5.png';
 
 // Status
 export const REDING_STATUS = [
