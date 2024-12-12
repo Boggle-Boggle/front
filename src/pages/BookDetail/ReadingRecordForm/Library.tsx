@@ -27,7 +27,7 @@ const Library = ({ library, selected, setSelected, onPrev, onNext }: LibraryProp
 
       <ul className="max-h-96 overflow-y-auto">
         {library.map(({ libraryId, libraryName }) => (
-          <li>
+          <li key={libraryId}>
             <button
               className={`mb-4 box-border flex w-full justify-between rounded-[10px] border-2 bg-white p-4 text-[15px] shadow-md ${selected.includes(libraryId) ? 'border-accent' : 'border-transparent'}`}
               onClick={() => handleSelect(libraryId)}
