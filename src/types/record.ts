@@ -79,7 +79,7 @@ export type DateType = [number, number, number] | null;
 export type RecordType = {
   isbn: string;
   readStatus: StatusType;
-  rating: number;
+  rating: number | null;
   startReadDate: string | null;
   endReadDate: string | null;
   libraryIdList: number[];

@@ -37,7 +37,7 @@ const ReadingRecordForm = ({ isbn, onClose }: ReadingRecordFormProps) => {
     return {
       isbn,
       readStatus: selectedStatus,
-      rating,
+      rating: selectedStatus === 'completed' ? rating : null,
       startReadDate: startDate ? formatDate(startDate[0], startDate[1], startDate[2]) : null,
       endReadDate: endDate ? formatDate(endDate[0], endDate[1], endDate[2]) : null,
       libraryIdList: selectedLibrary,
@@ -60,7 +60,14 @@ const ReadingRecordForm = ({ isbn, onClose }: ReadingRecordFormProps) => {
       />
       <section className="fixed bottom-0 z-30 h-auto w-full rounded-t-2xl bg-main p-9">
         {step === '상태' && (
-          <Status onNext={() => setStep('별점')} selected={selectedStatus} setSelected={setSelectedStatus} />
+          <Status
+            onNext={() => {
+              if (selectedStatus === 'completed') setStep('별점');
+              else setStep('서재');
+            }}
+            selected={selectedStatus}
+            setSelected={setSelectedStatus}
+          />
         )}
         {step === '별점' && (
           <Rating
@@ -85,7 +92,10 @@ const ReadingRecordForm = ({ isbn, onClose }: ReadingRecordFormProps) => {
         {step === '서재' && library && (
           <Library
             library={library}
-            onPrev={() => setStep('날짜')}
+            onPrev={() => {
+              if (selectedStatus === 'completed') setStep('날짜');
+              else setStep('상태');
+            }}
             onNext={() => setStep('숨기기')}
             selected={selectedLibrary}
             setSelected={setSelectedLibrary}
