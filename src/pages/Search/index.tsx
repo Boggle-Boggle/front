@@ -66,7 +66,6 @@ const Search = () => {
         setValue={setValue}
         handleSubmit={(e) => handleSubmit(e)}
       />
-      {/* eslint-disable-next-line no-nested-ternary */}
       {searchQueryEnabled ? (
         hasBooks ? (
           <ul className="height-content absolute bottom-0 mb-[80px] w-full overflow-y-auto rounded-tl-3xl bg-white p-6">
