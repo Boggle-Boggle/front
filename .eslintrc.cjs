@@ -94,5 +94,6 @@ module.exports = {
     'arrow-body-style': 'off',
     'no-alert': 'off',
     'no-nested-ternary': 'off',
+    '@typescript-eslint/no-shadow': 'off',
   },
 };
