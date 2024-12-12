@@ -30,13 +30,16 @@ const Library = ({ selected, setSelected, onPrev, onNext }: LibraryProps) => {
     <>
       <Title message="책을 서재에 분류해 보세요!" />
       <SubTitle message="필요한 서재가 없다면 아래에서 추가해보세요" />
+
       <ul className="max-h-96 overflow-y-auto">
         {data &&
           data.map(({ libraryId, libraryName }) => (
-            <li
-              className={`mb-4 flex justify-between rounded-[10px] bg-white p-4 text-[15px] shadow-md ${selected.includes(libraryId) && `border-2 border-accent`}`}
-            >
-              <button onClick={() => handleSelect(libraryId)} type="button">
+            <li>
+              <button
+                className={`mb-4 box-border flex w-full justify-between rounded-[10px] border-2 bg-white p-4 text-[15px] shadow-md ${selected.includes(libraryId) ? 'border-accent' : 'border-transparent'}`}
+                onClick={() => handleSelect(libraryId)}
+                type="button"
+              >
                 {libraryName}
                 <CheckBox isChecked={selected.includes(libraryId)} />
               </button>
