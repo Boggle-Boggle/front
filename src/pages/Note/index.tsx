@@ -64,7 +64,7 @@ const Note = () => {
         }}
       />
       <section className="height-without-footer flex flex-col overflow-hidden rounded-tl-3xl bg-white pb-header">
-        <img src={bookmark} className="h-13 header absolute left-10 top-[63px] block w-12" />
+        <img src={bookmark} className="h-13 header absolute left-10 top-[63px] block w-12" alt="" />
         <input
           className="w-full p-4 text-center font-semibold focus:outline-none"
           value={title}
