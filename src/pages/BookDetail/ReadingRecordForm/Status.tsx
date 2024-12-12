@@ -24,17 +24,19 @@ const Status = ({ selected, setSelected, onNext }: StatusProps) => {
 
       <ul>
         {REDING_STATUS.map(({ status, title, subTitle, img }) => (
-          <li
-            className={`relative mb-6 flex h-24 w-full list-none flex-row items-center justify-between rounded-[10px] bg-white px-6 py-4 shadow-inherit ${status === selected && 'border-2 border-accent'}`}
-            onClick={() => handleSelect(status)}
-            key={status}
-          >
-            <p>
-              <p className="pb-1 text-lg font-semibold">{title}</p>
-              <p className="whitespace-pre-line text-xs opacity-60">{subTitle}</p>
-            </p>
-            <img src={img} className="right-0 h-14 w-14" alt="" />
-            {status === selected && <img src={bookmark} className="absolute -top-1 left-4" alt="선택됨" />}
+          <li key={status}>
+            <button
+              type="button"
+              className={`relative mb-6 flex h-24 w-full list-none flex-row items-center justify-between rounded-[10px] bg-white px-6 py-4 shadow-inherit ${status === selected && 'border-2 border-accent'}`}
+              onClick={() => handleSelect(status)}
+            >
+              <div className="text-start">
+                <p className="pb-1 text-lg font-semibold">{title}</p>
+                <p className="whitespace-pre-line text-xs opacity-60">{subTitle}</p>
+              </div>
+              <img src={img} className="right-0 h-14 w-14" alt="" />
+              {status === selected && <img src={bookmark} className="absolute -top-1 left-4" alt="선택됨" />}
+            </button>
           </li>
         ))}
       </ul>
