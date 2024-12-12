@@ -44,7 +44,7 @@ const BookDetail = () => {
   };
 
   if (!book) {
-    return <div></div>;
+    return <div>{/* TODO : 책이 없음 페이지 표시 + 책 직접 등록 */}</div>;
   }
 
   const { yy, mm, dd } = formatDateAndTime(book.pubDate);
