@@ -71,9 +71,16 @@ const Search = () => {
         hasBooks ? (
           <ul className="height-content absolute bottom-0 mb-[80px] w-full overflow-y-auto rounded-tl-3xl bg-white p-6">
             {allBooks.map((book) => (
-              <li key={book.isbn} onClick={() => handleGoDetail(book.isbn)}>
-                <SearchBookResult book={book} />
-                <hr className="h-0 bg-main opacity-20" />
+              <li key={book.isbn}>
+                <button
+                  onClick={() => handleGoDetail(book.isbn)}
+                  type="button"
+                  aria-label={book.title}
+                  className="w-full text-start"
+                >
+                  <SearchBookResult book={book} />
+                  <hr className="h-0 bg-main opacity-20" />
+                </button>
               </li>
             ))}
             <div ref={observerTarget} />
