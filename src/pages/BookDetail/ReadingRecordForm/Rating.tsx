@@ -52,6 +52,7 @@ const Rating = ({ rating, status, setRating, setStatus, onPrev, onNext }: Rating
               <img
                 src={status - rating >= 1 ? img.empty : status - rating <= 0 ? img.filled : img.half}
                 className="mb-3 w-12"
+                alt=""
               />
               <p className="opacity-60">{title}</p>
             </li>
