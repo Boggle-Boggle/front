@@ -98,13 +98,12 @@ const BookCase = () => {
               { previousX: startX, previousY: startY, elements: [] },
             ).elements}
         </Suspense>
-
         <OrbitControls
           enableRotate={false}
           enablePan={false}
           maxPolarAngle={Math.PI / 2}
           minPolarAngle={Math.PI / 2}
-          enableZoom={true}
+          enableZoom
           minDistance={1.5}
           maxDistance={cameraZPosition}
           onChange={(e) => getZoomLevel(e)}
