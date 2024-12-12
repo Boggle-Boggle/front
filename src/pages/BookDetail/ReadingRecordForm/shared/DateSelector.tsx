@@ -108,7 +108,7 @@ const DateSelector = ({ type, initialDate, setDate, setIsChangeDate }: DateSelec
   return (
     <div className="absolute left-0 top-0 z-30 flex h-full w-full flex-col rounded-t-2xl bg-white">
       <p className="py-3 text-center">{type} 날짜 선택</p>
-      <hr className="h-[2px] bg-accent" />
+      <hr className="h-[2px] border-none bg-accent" />
       <section className="flex">
         {selectedYear !== null && selectedMonth !== null && selectedDay !== null && (
           <>
