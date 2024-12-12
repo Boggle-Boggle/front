@@ -43,10 +43,10 @@ const Rating = ({ rating, status, setRating, setStatus, onPrev, onNext }: Rating
         <span className="mb-5 inline-block rounded-2xl border-2 border-yellow-300 px-4 py-1 font-semibold">
           {status}
         </span>
-        <ul className="flex w-full justify-center" onTouchMove={handleTouchMove}>
+        <ul className="flex w-full justify-center px-2" onTouchMove={handleTouchMove}>
           {RATING_STATUS.map(({ status, title, img }) => (
             <li
-              className="bg-slate-30 mx-[2px] flex w-1/6 flex-col items-center justify-center place-self-start text-[10px]"
+              className="bg-slate-30 mx-[2px] flex w-1/6 grow flex-col items-center justify-center place-self-start text-[10px]"
               key={status}
             >
               <img

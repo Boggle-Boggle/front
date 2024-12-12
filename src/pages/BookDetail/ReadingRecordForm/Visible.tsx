@@ -17,7 +17,7 @@ const Visible = ({ isVisible, setIsVisible, onPrev, onNext }: VisibleProps) => {
     <>
       <Title message="책을 책장에서 숨기고 싶으신가요?" />
       <SubTitle
-        message={`등록시 기본적으로 책장에 책이 꽂히게 됩니다.\n책장에서 책을 숨기고 싶다면 아래 체크박스에 체크해주세요`}
+        message={`등록시 기본적으로 책장에 책이 꽂히게 됩니다.\n책을 숨기고 싶다면 아래 체크박스에 체크해주세요`}
       />
 
       <img src={visible} className="mx-auto" alt="" />
