@@ -1,4 +1,5 @@
 import axios from 'axios';
+
 import { getSessionItem, removeSessionItem, setSessionItem } from 'utils/sessions';
 
 const api = axios.create({
