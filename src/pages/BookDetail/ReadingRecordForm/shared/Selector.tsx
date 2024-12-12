@@ -25,7 +25,8 @@ const Selector = ({ list, selected, setSelected }: SelectorProps) => {
     if (ref.current && selected) {
       ref.current.scrollTop = selected * ITEM_HEIGHT - ITEM_HEIGHT;
     }
-  }, [selected]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <ul
@@ -41,7 +42,8 @@ const Selector = ({ list, selected, setSelected }: SelectorProps) => {
       <div className="sticky top-[80px] box-border h-[40px] border-y-2 border-accent" />
       {newList.map((item, index) => (
         <li
-          key={item}
+          // eslint-disable-next-line react/no-array-index-key
+          key={index}
           className={`flex h-[30px] snap-center items-center justify-center font-bold tracking-[.32px] h-[${ITEM_HEIGHT}px] ${
             index === selected ? 'opacity-100' : 'opacity-40'
           }`}
