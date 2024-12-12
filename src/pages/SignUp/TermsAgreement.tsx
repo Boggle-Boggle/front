@@ -28,13 +28,13 @@ const TermsAgreement = ({ terms, setTerms, onPrev, onNext }: TermsAgreementProps
 
     const newIsAllMAndatoryChecked = terms.every((term) => {
       if (term.mandatory) return term.isAgree === term.mandatory;
-      else return true;
+      return true;
     });
 
     setIsAllMandatoryChecked(newIsAllMAndatoryChecked);
   }, [terms]);
 
-  const handleNext = (e: React.FormEvent) => {
+  const handleNext = () => {
     if (isAllMandatoryChecked) onNext();
   };
 
