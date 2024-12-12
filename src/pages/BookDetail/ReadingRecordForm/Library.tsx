@@ -35,10 +35,11 @@ const Library = ({ selected, setSelected, onPrev, onNext }: LibraryProps) => {
           data.map(({ libraryId, libraryName }) => (
             <li
               className={`mb-4 flex justify-between rounded-[10px] bg-white p-4 text-[15px] shadow-md ${selected.includes(libraryId) && `border-2 border-accent`}`}
-              onClick={() => handleSelect(libraryId)}
             >
-              {libraryName}
-              <CheckBox isChecked={selected.includes(libraryId)} />
+              <button onClick={() => handleSelect(libraryId)} type="button">
+                {libraryName}
+                <CheckBox isChecked={selected.includes(libraryId)} />
+              </button>
             </li>
           ))}
 
