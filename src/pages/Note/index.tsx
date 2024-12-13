@@ -59,11 +59,11 @@ const Note = () => {
           handleLeftBtnClick: handleGoBack,
         }}
         rightBtn={{
-          icon: <span>저장</span>,
+          icon: <span className="font-black">저장</span>,
           handleRightBtnClick: handleSave,
         }}
       />
-      <section className="height-without-footer border-mains flex flex-col overflow-hidden rounded-tl-3xl border bg-white pb-header">
+      <section className="height-without-footer border-mains flex flex-col overflow-hidden rounded-tl-3xl border border-main bg-white pb-header">
         <img src={bookmark} className="h-13 header absolute left-10 top-header block w-12" alt="" />
         <input
           className="w-full p-4 text-center font-semibold focus:outline-none"
