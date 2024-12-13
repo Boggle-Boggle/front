@@ -1,5 +1,6 @@
+import { useQueryClient } from '@tanstack/react-query';
+
 import { useState } from 'react';
-import { BiScan } from 'react-icons/bi';
 import { IoArrowBackOutline } from 'react-icons/io5';
 import { TbCameraSearch } from 'react-icons/tb';
 import { useNavigate } from 'react-router-dom';
@@ -9,7 +10,7 @@ import Header from 'components/ui/Header';
 import SearchBar from 'components/ui/SearchBar';
 
 import useInfiniteScroll from 'hooks/useInfiniteScroll';
-import { getSearchBooks } from 'services/search';
+import { getSearchBooks, addSearchHistory } from 'services/search';
 
 import SearchBookResult from './SearchBookResult';
 
@@ -17,6 +18,7 @@ const Search = () => {
   const [value, setValue] = useState<string>('');
   const [searchQueryEnabled, setSearchQueryEnabled] = useState<boolean>(false);
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   const { data, refetch, observerTarget, isFetchingNextPage } = useInfiniteScroll(
     ['searchBooks', value],
@@ -32,10 +34,11 @@ const Search = () => {
     navigate(`/detail/${isbn}`);
   };
 
-  const handleReadBarcode = () => {};
-
   const handleSubmit = (e: React.FormEvent) => {
+    if (!value) return;
     e.preventDefault();
+    addSearchHistory(value);
+    queryClient.invalidateQueries({ queryKey: ['searchHistory'] });
     setSearchQueryEnabled(true);
     refetch();
   };
@@ -55,13 +58,15 @@ const Search = () => {
           icon: <IoArrowBackOutline style={{ width: '24px', height: '24px' }} />,
           handleLeftBtnClick: handleGoBack,
         }}
-        rightBtn={{
-          icon: <BiScan style={{ width: '24px', height: '24px' }} />,
-          handleRightBtnClick: handleReadBarcode,
-        }}
+
+        // TODO : 2차배포
+        // rightBtn={{
+        //   icon: <BiScan style={{ width: '24px', height: '24px' }} />,
+        //   handleRightBtnClick: handleReadBarcode,
+        // }}
       />
       <SearchBar
-        placeholder="읽고 싶은 책을 검색해 보세요!"
+        placeholder="제목 및 저자로 검색이 가능해요"
         value={value}
         setValue={setValue}
         handleSubmit={(e) => handleSubmit(e)}
@@ -92,10 +97,10 @@ const Search = () => {
           <SearchHistory />
           <div className="flex flex-col items-center justify-center pt-28 text-sub">
             <TbCameraSearch style={{ width: '137px', height: '137px', opacity: '30%' }} />
-            <p className="pt-4 text-center">
+            {/* TODO : 2차배포
               오른쪽 상단의 아이콘을 클릭하면 <br />
-              바코드 검색이 가능합니다.
-            </p>
+              바코드 검색이 가능합니다. */}
+            <p className="pt-4 text-center">읽고 싶은 책을 검색해 보세요!</p>
           </div>
         </>
       )}

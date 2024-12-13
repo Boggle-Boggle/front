@@ -17,7 +17,7 @@ const SearchBar = ({ placeholder, value, setValue, handleSubmit }: SearchBarProp
         <FcSearch style={{ width: '28px', height: '28px' }} />
       </span>
       <input
-        className="h-[36px] w-full focus:outline-none"
+        className="h-[36px] w-full text-sm focus:outline-none"
         placeholder={placeholder}
         value={value}
         onChange={(e) => setValue(e.target.value)}

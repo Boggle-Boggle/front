@@ -27,10 +27,14 @@ export const getSearchHistories = async () => {
   return response.data.data as SearchHistory[];
 };
 
+export const addSearchHistory = async (title: string) => {
+  await api.post('/recent-searches', { keyword: title });
+};
+
 export const removeSearchHistory = async (history: SearchHistory) => {
   await api.delete('/recent-searches', { data: history });
 };
 
 export const removeAllSearchHistory = async () => {
-  await api.delete('/recent-searches');
+  await api.delete('/recent-searches/all');
 };
