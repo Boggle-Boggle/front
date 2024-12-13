@@ -58,26 +58,28 @@ const BookDetail = () => {
           }}
         />
         <BookShelf cover={book.cover} title={book.title} />
-        <section className="p-[24px] text-center">
-          <h1 className="text-lg font-bold">{book.title}</h1>
-          <p className="text-xs text-sub">{`저자 ${book.author}`}</p>
+        <section className="p-6 text-center">
+          <h1 className={`${book.title.length > 50 ? 'text-[0.9rem]' : book.title.length < 30 && 'text-lg'} font-bold`}>
+            {book.title}
+          </h1>
+          <p className="m-1 text-xs text-sub">{`저자 ${book.author}`}</p>
         </section>
         <section className="flex w-full grow flex-col items-center px-7 pb-9">
           <div className="w-full pb-6 text-base font-semibold">
             책정보
             <hr className="mb-2 h-0.5 border-none bg-gray" />
-            <div className="grid grid-cols-2 grid-rows-2 text-[13px] font-normal">
-              <div>{`출판 : ${book.publisher}`}</div>
-              <div>{`카테고리 : ${formatBookJenre(book.genre)}`}</div>
-              <div>{`발행 : ${yy}.${mm}.${dd}`}</div>
-              <div>{`ISBN : ${book.isbn}`}</div>
+            <div className="grid grid-cols-2 grid-rows-2 text-[0.8rem] font-normal">
+              <p className="truncate pr-2">{`출판 : ${book.publisher}`}</p>
+              <p className="truncate pr-2">{`카테고리 : ${formatBookJenre(book.genre)}`}</p>
+              <p className="truncate pr-2">{`발행 : ${yy}.${mm}.${dd}`}</p>
+              <p className="truncate pr-2">{`ISBN : ${book.isbn}`}</p>
             </div>
           </div>
           <div className="relative grow text-base font-semibold">
             줄거리
             <span className="absolute right-0 text-xs text-sub">더보기</span>
             <hr className="mb-2 h-0.5 border-none bg-gray" />
-            <div className="text-[13px] font-normal">{book.plot}</div>
+            <div className="max-h-[100px] bg-slate-500 text-[13px] font-normal">{book.plot}</div>
           </div>
           <Button handleClick={handleSaveBook}>책 저장하기</Button>
         </section>

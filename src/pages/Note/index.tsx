@@ -63,8 +63,8 @@ const Note = () => {
           handleRightBtnClick: handleSave,
         }}
       />
-      <section className="height-without-footer flex flex-col overflow-hidden rounded-tl-3xl bg-white pb-header">
-        <img src={bookmark} className="h-13 header absolute left-10 top-[63px] block w-12" alt="" />
+      <section className="height-without-footer border-mains flex flex-col overflow-hidden rounded-tl-3xl border bg-white pb-header">
+        <img src={bookmark} className="h-13 header absolute left-10 top-header block w-12" alt="" />
         <input
           className="w-full p-4 text-center font-semibold focus:outline-none"
           value={title}
@@ -77,7 +77,7 @@ const Note = () => {
           placeholder="내용을 작성해주시핑"
           onChange={(e) => handleChangeContent(e)}
         />
-        <div className="flex h-10 items-center justify-between bg-main">
+        <div className="absolute bottom-footer flex h-10 w-full items-center justify-between bg-main">
           <section>
             {/* TODO : 2차 배포에 포함. 노트추가 부가기능 */}
             {/* <button className="px-3 py-2" onClick={() => {}} type="button">
