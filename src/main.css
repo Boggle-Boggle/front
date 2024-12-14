@@ -13,13 +13,13 @@
     @apply flex items-center justify-center;
   }
   .height-without-header {
-    height: calc(100vh - 64px);
+    height: calc(100vh - 4rem);
   }
   .height-without-footer {
-    height: calc(100vh - 84px);
+    height: calc(100vh - 5rem);
   }
   .height-content {
-    height: calc(100vh - 220px);
+    height: calc(100vh - 9rem);
   }
 }
 
@@ -91,17 +91,23 @@ html {
 
 @media (min-width: 350px) {
   html {
-    font-size: 14px;
+    font-size: 13px;
   }
 
   @media (min-height: 850px) {
     html {
-      font-size: 15px;
+      font-size: 16px;
     }
   }
 }
 
-@media (min-width: 390px) {
+@media (min-width: 370px) {
+  html {
+    font-size: 14px;
+  }
+}
+
+@media (min-width: 400px) {
   html {
     font-size: 16px;
   }
