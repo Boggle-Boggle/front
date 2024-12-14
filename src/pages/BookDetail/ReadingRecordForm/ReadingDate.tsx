@@ -1,13 +1,13 @@
 import { useState } from 'react';
-import { LuCalendarCheck2 } from 'react-icons/lu';
 import { GoChevronRight } from 'react-icons/go';
+import { LuCalendarCheck2 } from 'react-icons/lu';
 
 import { DateType } from 'types/record';
 
-import Title from './shared/Title';
-import SubTitle from './shared/SubTitle';
 import ButtonSet from './shared/ButtonSet';
 import DateSelector from './shared/DateSelector';
+import SubTitle from './shared/SubTitle';
+import Title from './shared/Title';
 
 type DateProps = {
   startDate: DateType;

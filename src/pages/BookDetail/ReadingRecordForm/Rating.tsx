@@ -1,10 +1,8 @@
-import { useState } from 'react';
-
 import { RATING_STATUS, RatingTitleType } from 'types/record';
 
-import Title from './shared/Title';
-import SubTitle from './shared/SubTitle';
 import ButtonSet from './shared/ButtonSet';
+import SubTitle from './shared/SubTitle';
+import Title from './shared/Title';
 
 type RatingProps = {
   rating: number;
@@ -45,15 +43,16 @@ const Rating = ({ rating, status, setRating, setStatus, onPrev, onNext }: Rating
         <span className="mb-5 inline-block rounded-2xl border-2 border-yellow-300 px-4 py-1 font-semibold">
           {status}
         </span>
-        <ul className="flex w-full justify-center" onTouchMove={handleTouchMove}>
+        <ul className="flex w-full justify-center px-2" onTouchMove={handleTouchMove}>
           {RATING_STATUS.map(({ status, title, img }) => (
             <li
-              className="bg-slate-30 mx-[2px] flex w-1/6 flex-col items-center justify-center place-self-start text-[10px]"
+              className="bg-slate-30 mx-[2px] flex w-1/6 grow flex-col items-center justify-center place-self-start text-[10px]"
               key={status}
             >
               <img
                 src={status - rating >= 1 ? img.empty : status - rating <= 0 ? img.filled : img.half}
                 className="mb-3 w-12"
+                alt=""
               />
               <p className="opacity-60">{title}</p>
             </li>

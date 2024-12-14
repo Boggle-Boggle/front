@@ -9,11 +9,11 @@ const LogoutBtn = () => {
     api
       .post('/auth/logout')
       .then(() => {
-        console.log('Logout successful');
         logout();
       })
-      .catch((error) => {
-        console.error('Error during logout', error);
+      .catch(() => {
+        // TODO : 로그아웃 에러핸들링
+        // console.error('Error during logout', error);
       });
   };
 

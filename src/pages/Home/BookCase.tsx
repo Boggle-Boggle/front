@@ -1,11 +1,13 @@
-import * as THREE from 'three';
-import { Suspense, useEffect, useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
-import { Canvas } from '@react-three/fiber';
 import { Html, OrbitControls, OrbitControlsChangeEvent, useGLTF } from '@react-three/drei';
-import { getBookCase } from 'services/record.ts';
+import { Canvas } from '@react-three/fiber';
+import { useQuery } from '@tanstack/react-query';
 
-import Book from './Book.tsx';
+import { Suspense, useEffect, useState } from 'react';
+import * as THREE from 'three';
+
+import { getBookCase } from 'services/record';
+
+import Book from './Book';
 
 const getBookProperties = (page: number) => {
   if (page <= 100) return { width: 0.7, offset: 0.07 };
@@ -96,13 +98,12 @@ const BookCase = () => {
               { previousX: startX, previousY: startY, elements: [] },
             ).elements}
         </Suspense>
-
         <OrbitControls
           enableRotate={false}
           enablePan={false}
           maxPolarAngle={Math.PI / 2}
           minPolarAngle={Math.PI / 2}
-          enableZoom={true}
+          enableZoom
           minDistance={1.5}
           maxDistance={cameraZPosition}
           onChange={(e) => getZoomLevel(e)}

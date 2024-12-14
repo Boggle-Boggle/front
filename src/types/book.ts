@@ -17,3 +17,8 @@ export type BookCase = {
   title: string;
   page: number;
 };
+
+export type SearchHistory = {
+  keyword: string;
+  createdAt: string;
+};

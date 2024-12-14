@@ -7,10 +7,10 @@ export const formatDateAndTime = (dateTime: string) => {
   return { yy, mm, dd, h, m, s };
 };
 
-export const formatBookJenre = (jenre: string) => {
-  const formattedJenre = jenre.split('>');
+export const formatBookGenre = (Genre: string) => {
+  const formattedGenre = Genre.split('>');
 
-  return formattedJenre[2];
+  return formattedGenre[2];
 };
 
 export const formatDate = (year: number, month: number, day: number) => {

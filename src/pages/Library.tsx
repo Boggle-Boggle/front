@@ -11,7 +11,7 @@ const Library = () => {
   };
 
   const handleToggle = () => {
-    console.log('책 검색 페이지로 이동');
+    // TODO 디자인 변경시 수정 예정
   };
 
   return (

@@ -1,4 +1,5 @@
 import axios from 'axios';
+
 import { getSessionItem, removeSessionItem, setSessionItem } from 'utils/sessions';
 
 const api = axios.create({
@@ -41,7 +42,7 @@ api.interceptors.response.use(
         setSessionItem('accessToken', newAccessToken);
 
         newConfig.headers.Authorization = `Bearer ${newAccessToken}`;
-        return api(newConfig);
+        return await api(newConfig);
       } catch (err) {
         // TODO : 로그인 재시도 안내 구현
         removeSessionItem('accessToken');

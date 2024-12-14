@@ -1,16 +1,19 @@
+import { useQuery } from '@tanstack/react-query';
+
 import { useState } from 'react';
 import { FaXmark } from 'react-icons/fa6';
 
-import { DateType, RatingTitleType, StatusType } from 'types/record';
-
+import { getLibrary } from 'services/record';
 import { formatDate } from 'utils/format';
 
-import Status from './Status';
+import { DateType, RatingTitleType, StatusType } from 'types/record';
+
+import Complete from './Complete';
+import Library from './Library';
 import Rating from './Rating';
 import ReadingDate from './ReadingDate';
-import Library from './Library';
-import Visiable from './Visible';
-import Complete from './Complete';
+import Status from './Status';
+import Visible from './Visible';
 
 type StepType = '상태' | '별점' | '날짜' | '서재' | '숨기기' | '완료';
 
@@ -34,20 +37,37 @@ const ReadingRecordForm = ({ isbn, onClose }: ReadingRecordFormProps) => {
     return {
       isbn,
       readStatus: selectedStatus,
-      rating,
+      rating: selectedStatus === 'completed' ? rating : null,
       startReadDate: startDate ? formatDate(startDate[0], startDate[1], startDate[2]) : null,
       endReadDate: endDate ? formatDate(endDate[0], endDate[1], endDate[2]) : null,
       libraryIdList: selectedLibrary,
-      isVisible: isVisible,
+      isVisible,
     };
   };
 
+  const { data: library } = useQuery({
+    queryKey: ['library'],
+    queryFn: () => getLibrary(),
+  });
+
   return (
     <>
-      <div className="absolute z-20 h-full w-full bg-black opacity-40" onClick={onClose} />
-      <section className="fixed bottom-0 z-30 h-auto w-full rounded-t-2xl bg-main p-9">
+      <button
+        className="absolute z-20 h-full w-full bg-black opacity-40"
+        onClick={onClose}
+        aria-label="취소"
+        type="button"
+      />
+      <section className="fixed bottom-0 z-30 h-auto w-full rounded-t-2xl bg-main p-7">
         {step === '상태' && (
-          <Status onNext={() => setStep('별점')} selected={selectedStatus} setSelected={setSelectedStatus} />
+          <Status
+            onNext={() => {
+              if (selectedStatus === 'completed') setStep('별점');
+              else setStep('서재');
+            }}
+            selected={selectedStatus}
+            setSelected={setSelectedStatus}
+          />
         )}
         {step === '별점' && (
           <Rating
@@ -69,16 +89,20 @@ const ReadingRecordForm = ({ isbn, onClose }: ReadingRecordFormProps) => {
             setEndDate={setEndDate}
           />
         )}
-        {step === '서재' && (
+        {step === '서재' && library && (
           <Library
-            onPrev={() => setStep('날짜')}
+            library={library}
+            onPrev={() => {
+              if (selectedStatus === 'completed') setStep('날짜');
+              else setStep('상태');
+            }}
             onNext={() => setStep('숨기기')}
             selected={selectedLibrary}
             setSelected={setSelectedLibrary}
           />
         )}
         {step === '숨기기' && (
-          <Visiable
+          <Visible
             onPrev={() => setStep('서재')}
             onNext={() => setStep('완료')}
             isVisible={isVisible}
@@ -86,7 +110,7 @@ const ReadingRecordForm = ({ isbn, onClose }: ReadingRecordFormProps) => {
           />
         )}
         {step === '완료' && <Complete record={createRecord()} />}
-        <button type="button" onClick={onClose} className="absolute right-3 top-3">
+        <button type="button" onClick={onClose} className="absolute right-3 top-3" aria-label="책 저장하기">
           <FaXmark style={{ width: '20px', height: '20px' }} />
         </button>
       </section>

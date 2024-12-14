@@ -1,6 +1,6 @@
+import { BookCase } from 'types/book';
 import { Library } from 'types/library';
 import { Note, RecordType } from 'types/record';
-import { BookCase } from 'types/book';
 
 import api from '.';
 

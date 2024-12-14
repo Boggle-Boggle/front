@@ -11,13 +11,15 @@ const Record = () => {
     <>
       <div className="h-80 w-full bg-slate-300">노트 조회</div>
       <div>
-        <button onClick={handleGoToNote}>노트 작성하기</button>
+        <button onClick={handleGoToNote} type="button">
+          노트 작성하기
+        </button>
       </div>
       <div>
-        <button>노트 수정하기</button>
+        <button type="button">노트 수정하기</button>
       </div>
       <div>
-        <button>노트 삭제하기</button>
+        <button type="button">노트 삭제하기</button>
       </div>
     </>
   );

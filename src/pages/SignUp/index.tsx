@@ -1,13 +1,15 @@
-import { useEffect, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
+
+import { useEffect, useState } from 'react';
 
 import useNickNameInput from 'hooks/useNickNameInput';
 import { getTermsAgreement } from 'services/signup';
+
 import { TermWithAgree } from 'types/user';
 
+import Complete from './Complete';
 import NickNameInput from './NickNameInput';
 import TermsAgreement from './TermsAgreement';
-import Complete from './Complete';
 
 type StepType = '닉네임입력' | '약관동의' | '가입완료';
 

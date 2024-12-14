@@ -80,7 +80,7 @@ const DateSelector = ({ type, initialDate, setDate, setIsChangeDate }: DateSelec
   const [selectedMonth, setSelectedMonth] = useState<number | null>(null);
   const [selectedDay, setSelectedDay] = useState<number | null>(null);
 
-  //TODO : 날짜 검증
+  // TODO : 날짜 검증
   const handleSelect = () => {
     if (selectedYear && selectedMonth && selectedDay) setDate([selectedYear, selectedMonth, selectedDay]);
     setIsChangeDate(false);
@@ -106,24 +106,22 @@ const DateSelector = ({ type, initialDate, setDate, setIsChangeDate }: DateSelec
   }, [initialDate]);
 
   return (
-    <>
-      <div className="absolute left-0 top-0 z-30 flex h-full w-full flex-col rounded-t-2xl bg-white">
-        <p className="py-3 text-center">{type} 날짜 선택</p>
-        <hr className="h-[2px] bg-accent" />
-        <section className="flex">
-          {selectedYear !== null && selectedMonth !== null && selectedDay !== null && (
-            <>
-              <Selector list={DATE_STATUS.YEARS} selected={selectedYear} setSelected={setSelectedYear} />
-              <Selector list={DATE_STATUS.MONTH} selected={selectedMonth} setSelected={setSelectedMonth} />
-              <Selector list={DATE_STATUS.DAYS} selected={selectedDay} setSelected={setSelectedDay} />
-            </>
-          )}
-        </section>
-        <Button className="mx-auto mb-4 mt-4 w-5/6 font-bold text-white" handleClick={handleSelect}>
-          선택
-        </Button>
-      </div>
-    </>
+    <div className="absolute left-0 top-0 z-30 flex h-full w-full flex-col rounded-t-2xl bg-white">
+      <p className="py-3 text-center">{type} 날짜 선택</p>
+      <hr className="h-[2px] border-none bg-accent" />
+      <section className="flex">
+        {selectedYear !== null && selectedMonth !== null && selectedDay !== null && (
+          <>
+            <Selector list={DATE_STATUS.YEARS} selected={selectedYear} setSelected={setSelectedYear} />
+            <Selector list={DATE_STATUS.MONTH} selected={selectedMonth} setSelected={setSelectedMonth} />
+            <Selector list={DATE_STATUS.DAYS} selected={selectedDay} setSelected={setSelectedDay} />
+          </>
+        )}
+      </section>
+      <Button className="mx-auto mb-4 mt-4 w-5/6 font-bold text-white" handleClick={handleSelect}>
+        선택
+      </Button>
+    </div>
   );
 };
 

@@ -6,7 +6,7 @@ type BookShelfProps = {
 const BookShelf = ({ cover, title }: BookShelfProps) => {
   return (
     <section className="flex w-full flex-col items-center">
-      <img src={cover} alt={`${title} 커버`} className="z-10 h-[234px] w-[167px]" />
+      <img src={cover} alt={`${title} 커버`} className="z-10 h-56 w-40" />
       <div className="relative w-full">
         <div
           style={{ clipPath: 'polygon(10% 0%, 80% 0%, 10000000% 100%, 0% 100%)' }}

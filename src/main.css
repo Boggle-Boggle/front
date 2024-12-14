@@ -13,13 +13,13 @@
     @apply flex items-center justify-center;
   }
   .height-without-header {
-    height: calc(100vh - 64px);
+    height: calc(100vh - 4rem);
   }
   .height-without-footer {
-    height: calc(100vh - 84px);
+    height: calc(100vh - 5rem);
   }
   .height-content {
-    height: calc(100vh - 220px);
+    height: calc(100vh - 9rem);
   }
 }
 
@@ -29,12 +29,9 @@
   src:
     url(https://hangeul.pstatic.net/hangeul_static/webfont/MaruBuri/MaruBuri-Regular.eot?#iefix)
       format('embedded-opentype'),
-    url(https://hangeul.pstatic.net/hangeul_static/webfont/MaruBuri/MaruBuri-Regular.woff2)
-      format('woff2'),
-    url(https://hangeul.pstatic.net/hangeul_static/webfont/MaruBuri/MaruBuri-Regular.woff)
-      format('woff'),
-    url(https://hangeul.pstatic.net/hangeul_static/webfont/MaruBuri/MaruBuri-Regular.ttf)
-      format('truetype');
+    url(https://hangeul.pstatic.net/hangeul_static/webfont/MaruBuri/MaruBuri-Regular.woff2) format('woff2'),
+    url(https://hangeul.pstatic.net/hangeul_static/webfont/MaruBuri/MaruBuri-Regular.woff) format('woff'),
+    url(https://hangeul.pstatic.net/hangeul_static/webfont/MaruBuri/MaruBuri-Regular.ttf) format('truetype');
 }
 
 @font-face {
@@ -43,12 +40,9 @@
   src:
     url(https://hangeul.pstatic.net/hangeul_static/webfont/MaruBuri/MaruBuri-SemiBold.eot?#iefix)
       format('embedded-opentype'),
-    url(https://hangeul.pstatic.net/hangeul_static/webfont/MaruBuri/MaruBuri-SemiBold.woff2)
-      format('woff2'),
-    url(https://hangeul.pstatic.net/hangeul_static/webfont/MaruBuri/MaruBuri-SemiBold.woff)
-      format('woff'),
-    url(https://hangeul.pstatic.net/hangeul_static/webfont/MaruBuri/MaruBuri-SemiBold.ttf)
-      format('truetype');
+    url(https://hangeul.pstatic.net/hangeul_static/webfont/MaruBuri/MaruBuri-SemiBold.woff2) format('woff2'),
+    url(https://hangeul.pstatic.net/hangeul_static/webfont/MaruBuri/MaruBuri-SemiBold.woff) format('woff'),
+    url(https://hangeul.pstatic.net/hangeul_static/webfont/MaruBuri/MaruBuri-SemiBold.ttf) format('truetype');
 }
 
 @font-face {
@@ -57,12 +51,9 @@
   src:
     url(https://hangeul.pstatic.net/hangeul_static/webfont/MaruBuri/MaruBuri-Bold.eot?#iefix)
       format('embedded-opentype'),
-    url(https://hangeul.pstatic.net/hangeul_static/webfont/MaruBuri/MaruBuri-Bold.woff2)
-      format('woff2'),
-    url(https://hangeul.pstatic.net/hangeul_static/webfont/MaruBuri/MaruBuri-Bold.woff)
-      format('woff'),
-    url(https://hangeul.pstatic.net/hangeul_static/webfont/MaruBuri/MaruBuri-Bold.ttf)
-      format('truetype');
+    url(https://hangeul.pstatic.net/hangeul_static/webfont/MaruBuri/MaruBuri-Bold.woff2) format('woff2'),
+    url(https://hangeul.pstatic.net/hangeul_static/webfont/MaruBuri/MaruBuri-Bold.woff) format('woff'),
+    url(https://hangeul.pstatic.net/hangeul_static/webfont/MaruBuri/MaruBuri-Bold.ttf) format('truetype');
 }
 
 @font-face {
@@ -71,12 +62,9 @@
   src:
     url(https://hangeul.pstatic.net/hangeul_static/webfont/MaruBuri/MaruBuri-Light.eot?#iefix)
       format('embedded-opentype'),
-    url(https://hangeul.pstatic.net/hangeul_static/webfont/MaruBuri/MaruBuri-Light.woff2)
-      format('woff2'),
-    url(https://hangeul.pstatic.net/hangeul_static/webfont/MaruBuri/MaruBuri-Light.woff)
-      format('woff'),
-    url(https://hangeul.pstatic.net/hangeul_static/webfont/MaruBuri/MaruBuri-Light.ttf)
-      format('truetype');
+    url(https://hangeul.pstatic.net/hangeul_static/webfont/MaruBuri/MaruBuri-Light.woff2) format('woff2'),
+    url(https://hangeul.pstatic.net/hangeul_static/webfont/MaruBuri/MaruBuri-Light.woff) format('woff'),
+    url(https://hangeul.pstatic.net/hangeul_static/webfont/MaruBuri/MaruBuri-Light.ttf) format('truetype');
 }
 
 @font-face {
@@ -85,15 +73,51 @@
   src:
     url(https://hangeul.pstatic.net/hangeul_static/webfont/MaruBuri/MaruBuri-ExtraLight.eot?#iefix)
       format('embedded-opentype'),
-    url(https://hangeul.pstatic.net/hangeul_static/webfont/MaruBuri/MaruBuri-ExtraLight.woff2)
-      format('woff2'),
-    url(https://hangeul.pstatic.net/hangeul_static/webfont/MaruBuri/MaruBuri-ExtraLight.woff)
-      format('woff'),
-    url(https://hangeul.pstatic.net/hangeul_static/webfont/MaruBuri/MaruBuri-ExtraLight.ttf)
-      format('truetype');
+    url(https://hangeul.pstatic.net/hangeul_static/webfont/MaruBuri/MaruBuri-ExtraLight.woff2) format('woff2'),
+    url(https://hangeul.pstatic.net/hangeul_static/webfont/MaruBuri/MaruBuri-ExtraLight.woff) format('woff'),
+    url(https://hangeul.pstatic.net/hangeul_static/webfont/MaruBuri/MaruBuri-ExtraLight.ttf) format('truetype');
 }
 
 body,
 html {
   font-family: 'MaruBuri', sans-serif;
+}
+
+@media (min-width: 320px) {
+  html {
+    font-size: 12px;
+  }
+}
+
+@media (min-width: 350px) {
+  html {
+    font-size: 13px;
+  }
+
+  @media (min-height: 850px) {
+    html {
+      font-size: 16px;
+    }
+  }
+}
+
+@media (min-width: 370px) {
+  html {
+    font-size: 14px;
+  }
+}
+
+@media (min-width: 400px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
 }

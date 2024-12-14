@@ -1,11 +1,12 @@
 import { useState } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
-import { PiBooksDuotone } from 'react-icons/pi';
 import { IoArrowBackOutline } from 'react-icons/io5';
+import { useNavigate, useLocation } from 'react-router-dom';
+
 import Header from 'components/ui/Header';
 
-import bookmark from 'assets/bookmarkBig.png';
 import { addNote } from 'services/record';
+
+import bookmark from 'assets/bookmarkBig.png';
 
 const MAXTITLE = 30;
 const MAXCONTENT = 256;
@@ -30,7 +31,7 @@ const Note = () => {
       alert('내용을 적어주세요');
       return;
     }
-    const recordId = location.state.recordId;
+    const { recordId } = location.state;
 
     if (recordId) {
       addNote(recordId, { title, content });
@@ -58,27 +59,28 @@ const Note = () => {
           handleLeftBtnClick: handleGoBack,
         }}
         rightBtn={{
-          icon: <span>저장</span>,
+          icon: <span className="font-black">저장</span>,
           handleRightBtnClick: handleSave,
         }}
       />
-      <section className="height-without-footer pb-header flex flex-col overflow-hidden rounded-tl-3xl bg-white">
-        <img src={bookmark} className="h-13 header absolute left-10 top-[63px] block w-12" />
+      <section className="height-without-footer border-mains flex flex-col overflow-hidden rounded-tl-3xl border border-main bg-white pb-header">
+        <img src={bookmark} className="h-13 header absolute left-10 top-header block w-12" alt="" />
         <input
-          className={`w-full p-4 text-center font-semibold focus:outline-none`}
+          className="w-full p-4 text-center font-semibold focus:outline-none"
           value={title}
           placeholder="제목을 작성해주시핑"
           onChange={(e) => handleChangeTitle(e)}
         />
         <textarea
-          className={`w-full flex-grow resize-none overflow-auto p-3 focus:outline-none`}
+          className="w-full flex-grow resize-none overflow-auto p-3 focus:outline-none"
           value={content}
           placeholder="내용을 작성해주시핑"
           onChange={(e) => handleChangeContent(e)}
         />
-        <div className="flex h-10 items-center justify-between bg-main">
+        <div className="absolute bottom-footer flex h-10 w-full items-center justify-between bg-main">
           <section>
-            <button className="px-3 py-2" onClick={() => {}} type="button">
+            {/* TODO : 2차 배포에 포함. 노트추가 부가기능 */}
+            {/* <button className="px-3 py-2" onClick={() => {}} type="button">
               <PiBooksDuotone style={{ width: '24px', height: '24px', color: '#9B9999' }} />
             </button>
             <button className="px-3 py-2" onClick={() => {}} type="button">
@@ -89,7 +91,7 @@ const Note = () => {
             </button>
             <button className="px-3 py-2" onClick={() => {}} type="button">
               <PiBooksDuotone style={{ width: '24px', height: '24px', color: '#9B9999' }} />
-            </button>
+            </button> */}
           </section>
 
           <span className="pr-3 text-sm">{content?.length ?? 0}자/256자</span>
