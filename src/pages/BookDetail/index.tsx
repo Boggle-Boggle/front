@@ -9,7 +9,7 @@ import Header from 'components/ui/Header';
 
 import useModal from 'hooks/useModal';
 import { getBookDetail, hasReadingRecord } from 'services/search';
-import { formatDateAndTime, formatBookJenre } from 'utils/format';
+import { formatDateAndTime, formatBookGenre } from 'utils/format';
 
 import BookShelf from './BookShelf';
 import ExistingRecordModal from './ExistingRecordModal';
@@ -80,7 +80,7 @@ const BookDetail = () => {
             <hr className="mb-2 h-0.5 border-none bg-gray" />
             <div className="grid grid-cols-2 grid-rows-2 text-[0.815rem] font-normal">
               <p className="truncate pr-2">{`출판 : ${book.publisher}`}</p>
-              <p className="truncate pr-2">{`카테고리 : ${formatBookJenre(book.genre)}`}</p>
+              <p className="truncate pr-2">{`카테고리 : ${formatBookGenre(book.genre)}`}</p>
               <p className="truncate pr-2">{`발행 : ${yy}.${mm}.${dd}`}</p>
               <p className="truncate pr-2">{`ISBN : ${book.isbn}`}</p>
             </div>
