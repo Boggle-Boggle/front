@@ -47,7 +47,7 @@ const SearchHistory = () => {
           전체삭제
         </button>
       )}
-      <ul className="mt-3 flex h-6">
+      <ul className="scrollbar-hide mt-3 flex h-6 overflow-x-auto whitespace-nowrap">
         {histories &&
           histories.map(({ keyword, createdAt }) => (
             // TODO : 검색 결과 페이지로 이동
