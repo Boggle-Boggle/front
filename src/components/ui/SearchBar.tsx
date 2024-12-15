@@ -5,14 +5,21 @@ type SearchBarProps = {
   placeholder: string;
   value: string;
   setValue: React.Dispatch<React.SetStateAction<string>>;
-  handleSubmit: (e: React.FormEvent) => void;
+  fetchResult: () => void;
 };
 
-const SearchBar = ({ placeholder, value, setValue, handleSubmit }: SearchBarProps) => {
+const SearchBar = ({ placeholder, value, setValue, fetchResult }: SearchBarProps) => {
   const handleClear = () => setValue('');
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!value) return;
+
+    fetchResult();
+  };
 
   return (
-    <form onSubmit={handleSubmit} className="mx-7 my-3 flex items-center rounded-xl bg-white px-3">
+    <form onSubmit={handleSubmit} className="mx-7 mb-3 flex items-center rounded-xl bg-white px-3">
       <span className="mr-1">
         <FcSearch style={{ width: '28px', height: '28px' }} />
       </span>
