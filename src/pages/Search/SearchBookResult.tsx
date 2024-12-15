@@ -16,7 +16,7 @@ const SearchBookResult = ({ book }: SearchBookResultProps) => {
         <div className="text-[11px] text-sub">
           <div className="line-clamp-1">{`저자 ${book.author}`}</div>
           <div className="line-clamp-1">{`출판 ${book.publisher}`}</div>
-          <div>{`${yy}년 ${mm}월 ${dd}일`}</div>
+          <div>{`출간일 ${yy}년 ${mm}월 ${dd}일`}</div>
         </div>
       </div>
     </div>
