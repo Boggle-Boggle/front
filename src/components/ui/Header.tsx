@@ -13,6 +13,7 @@ type HeaderProps = {
   };
 };
 
+// TODO : 리팩토링
 const Header = ({ leftBtn, title, rightBtn }: HeaderProps) => {
   return (
     <div className="relative flex h-16 items-center">
@@ -23,11 +24,7 @@ const Header = ({ leftBtn, title, rightBtn }: HeaderProps) => {
       )}
       {title && <h1 className="mx-auto text-lg font-semibold">{title.text}</h1>}
       {rightBtn && (
-        <button
-          type="button"
-          onClick={rightBtn.handleRightBtnClick}
-          className="absolute right-0 px-3"
-        >
+        <button type="button" onClick={rightBtn.handleRightBtnClick} className="absolute right-0 px-3">
           <span>{rightBtn.icon}</span>
         </button>
       )}
