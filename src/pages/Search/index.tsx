@@ -1,97 +1,64 @@
 import { useQueryClient } from '@tanstack/react-query';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { IoArrowBackOutline } from 'react-icons/io5';
 import { TbCameraSearch } from 'react-icons/tb';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 import SearchHistory from 'components/feat/SearchHistory';
 import Header from 'components/ui/Header';
 import SearchBar from 'components/ui/SearchBar';
 
-import useInfiniteScroll from 'hooks/useInfiniteScroll';
-import { getSearchBooks, addSearchHistory } from 'services/search';
+import { addSearchHistory } from 'services/search';
 
-import SearchBookResult from './SearchBookResult';
+import SearchResult from './SearchResult';
 
 const Search = () => {
   const [value, setValue] = useState<string>('');
-  const [searchQueryEnabled, setSearchQueryEnabled] = useState<boolean>(false);
-  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const queryClient = useQueryClient();
+  const navigate = useNavigate();
 
-  const { data, refetch, observerTarget, isFetchingNextPage } = useInfiniteScroll(
-    ['searchBooks', value],
-    ({ pageParam = 1 }) => getSearchBooks(value, pageParam as number),
-    false,
-  );
+  const query = searchParams.get('q') || '';
 
-  const handleGoBack = () => {
-    navigate(-1);
-  };
+  const fetchResult = () => {
+    const params = new URLSearchParams({ q: value });
+    navigate(`/search?${params.toString()}`);
 
-  const handleGoDetail = (isbn: string) => {
-    navigate(`/detail/${isbn}`);
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    if (!value) return;
-    e.preventDefault();
     addSearchHistory(value);
     queryClient.invalidateQueries({ queryKey: ['searchHistory'] });
-    setSearchQueryEnabled(true);
-    refetch();
   };
 
-  const allBooks = data?.pages.flatMap((page) => page.items) || [];
-  const hasBooks = allBooks.length > 0;
+  const handleGoBack = () => {
+    navigate('/search');
+  };
 
-  if (isFetchingNextPage) {
-    <div>로딩중</div>;
-  }
+  useEffect(() => {
+    setValue(query);
+  }, [query]);
 
   return (
     <div className="relative h-screen bg-main">
-      <Header
-        title={{ text: '도서 검색' }}
-        leftBtn={{
-          icon: <IoArrowBackOutline style={{ width: '24px', height: '24px' }} />,
-          handleLeftBtnClick: handleGoBack,
-        }}
-
-        // TODO : 2차배포
-        // rightBtn={{
-        //   icon: <BiScan style={{ width: '24px', height: '24px' }} />,
-        //   handleRightBtnClick: handleReadBarcode,
-        // }}
-      />
+      {query ? (
+        <Header
+          title={{ text: '도서 검색' }}
+          leftBtn={{
+            icon: <IoArrowBackOutline style={{ width: '24px', height: '24px' }} />,
+            handleLeftBtnClick: handleGoBack,
+          }}
+        />
+      ) : (
+        <Header title={{ text: '도서 검색' }} />
+      )}
       <SearchBar
         placeholder="제목 및 저자로 검색이 가능해요"
         value={value}
         setValue={setValue}
-        handleSubmit={(e) => handleSubmit(e)}
+        fetchResult={fetchResult}
       />
-      {searchQueryEnabled ? (
-        hasBooks ? (
-          <ul className="height-content absolute bottom-0 mb-[80px] w-full overflow-y-auto rounded-tl-3xl bg-white p-6">
-            {allBooks.map((book) => (
-              <li key={book.isbn}>
-                <button
-                  onClick={() => handleGoDetail(book.isbn)}
-                  type="button"
-                  aria-label={book.title}
-                  className="w-full text-start"
-                >
-                  <SearchBookResult book={book} />
-                  <hr className="h-[2px] border-none bg-main" />
-                </button>
-              </li>
-            ))}
-            <div ref={observerTarget} />
-          </ul>
-        ) : (
-          <div>아이템 없슴~!!</div>
-        )
+
+      {query ? (
+        <SearchResult query={query} />
       ) : (
         <>
           <SearchHistory />

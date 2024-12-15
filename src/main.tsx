@@ -45,7 +45,6 @@ const router = createBrowserRouter([
   { path: '/oauth/redirect', element: <Auth /> },
 ]);
 
-// Create a client
 const queryClient = new QueryClient();
 
 ReactDOM.createRoot(document.getElementById('root')!).render(

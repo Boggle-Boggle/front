@@ -5,8 +5,6 @@ import { Link } from 'react-router-dom';
 
 import { getSearchHistories, removeSearchHistory, removeAllSearchHistory } from 'services/search';
 
-import { SearchHistory as SearchHistoryType } from 'types/book';
-
 const SearchHistory = () => {
   const queryClient = useQueryClient();
 
@@ -29,9 +27,9 @@ const SearchHistory = () => {
     },
   });
 
-  const handleRemove = (e: React.MouseEvent, { keyword, createdAt }: SearchHistoryType) => {
+  const handleRemove = (e: React.MouseEvent, keyword: string) => {
     e.preventDefault();
-    deleteHistory({ keyword, createdAt });
+    deleteHistory(keyword);
   };
 
   return (
@@ -47,20 +45,19 @@ const SearchHistory = () => {
           전체삭제
         </button>
       )}
-      <ul className="scrollbar-hide mt-3 flex h-6 overflow-x-auto whitespace-nowrap">
+      <ul className="scrollbar-hide mt-3 flex h-7 overflow-x-auto whitespace-nowrap">
         {histories &&
-          histories.map(({ keyword, createdAt }) => (
-            // TODO : 검색 결과 페이지로 이동
-            <li className="mr-2 inline-flex rounded-full border border-sub px-2 py-1 text-xs text-sub" key={createdAt}>
-              <Link to="/" className="flex items-center">
+          histories.map((keyword) => (
+            <li className="mr-3 inline-flex rounded-full border border-sub px-2 text-sm text-sub" key={keyword}>
+              <Link to={`?q=${keyword}`} className="flex items-center">
                 {keyword}
                 <button
                   aria-label="remove button"
                   type="button"
                   className="focus:outline-none"
-                  onClick={(e) => handleRemove(e, { keyword, createdAt })}
+                  onClick={(e) => handleRemove(e, keyword)}
                 >
-                  <BiX style={{ width: '14px', height: '14px', marginLeft: '4px' }} />
+                  <BiX style={{ width: '1rem', height: '1rem', marginLeft: '0.1rem' }} />
                 </button>
               </Link>
             </li>

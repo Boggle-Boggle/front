@@ -81,7 +81,7 @@ const BookDetail = () => {
             <div className="grid grid-cols-2 grid-rows-2 text-[0.815rem] font-normal">
               <p className="truncate pr-2">{`출판 : ${book.publisher}`}</p>
               <p className="truncate pr-2">{`카테고리 : ${formatBookGenre(book.genre)}`}</p>
-              <p className="truncate pr-2">{`발행 : ${yy}.${mm}.${dd}`}</p>
+              <p className="truncate pr-2">{`출간일 : ${yy}.${mm}.${dd}`}</p>
               <p className="truncate pr-2">{`ISBN : ${book.isbn}`}</p>
             </div>
           </div>

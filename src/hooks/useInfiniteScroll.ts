@@ -9,7 +9,7 @@ const useInfiniteScroll = <T>(
   queryFn: ({ pageParam }: { pageParam: number }) => Promise<PaginationResponse<T>>,
   enabled: boolean,
 ) => {
-  const { data, fetchNextPage, hasNextPage, refetch, isFetchingNextPage } = useInfiniteQuery({
+  const { data, fetchNextPage, hasNextPage, refetch, isFetchingNextPage, isLoading } = useInfiniteQuery({
     queryKey,
     queryFn,
     getNextPageParam: (lastPage) => {
@@ -44,7 +44,7 @@ const useInfiniteScroll = <T>(
     };
   }, [handleObserver]);
 
-  return { data, refetch, isFetchingNextPage, observerTarget };
+  return { data, refetch, isFetchingNextPage, observerTarget, isLoading };
 };
 
 export default useInfiniteScroll;
