@@ -48,9 +48,8 @@ const SearchHistory = () => {
       <ul className="scrollbar-hide mt-3 flex h-7 overflow-x-auto whitespace-nowrap">
         {histories &&
           histories.map((keyword) => (
-            // TODO : 검색 결과 페이지로 이동
             <li className="mr-3 inline-flex rounded-full border border-sub px-2 text-sm text-sub" key={keyword}>
-              <Link to="/" className="flex items-center">
+              <Link to={`?q=${keyword}`} className="flex items-center">
                 {keyword}
                 <button
                   aria-label="remove button"
