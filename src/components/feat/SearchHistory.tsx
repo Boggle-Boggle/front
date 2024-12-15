@@ -45,11 +45,11 @@ const SearchHistory = () => {
           전체삭제
         </button>
       )}
-      <ul className="scrollbar-hide mt-3 flex h-6 overflow-x-auto whitespace-nowrap">
+      <ul className="scrollbar-hide mt-3 flex h-7 overflow-x-auto whitespace-nowrap">
         {histories &&
           histories.map((keyword) => (
             // TODO : 검색 결과 페이지로 이동
-            <li className="mr-2 inline-flex rounded-full border border-sub px-2 py-1 text-xs text-sub" key={keyword}>
+            <li className="mr-3 inline-flex rounded-full border border-sub px-2 text-sm text-sub" key={keyword}>
               <Link to="/" className="flex items-center">
                 {keyword}
                 <button
@@ -58,7 +58,7 @@ const SearchHistory = () => {
                   className="focus:outline-none"
                   onClick={(e) => handleRemove(e, keyword)}
                 >
-                  <BiX style={{ width: '14px', height: '14px', marginLeft: '4px' }} />
+                  <BiX style={{ width: '1rem', height: '1rem', marginLeft: '0.1rem' }} />
                 </button>
               </Link>
             </li>
