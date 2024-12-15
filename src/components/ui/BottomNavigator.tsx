@@ -15,7 +15,7 @@ const BottomNavigator = () => {
             isActive ? 'flex flex-col items-center text-xs font-bold' : 'flex flex-col items-center text-xs'
           }
         >
-          <LuHome style={{ width: '29px', height: '29px', marginBottom: '6px' }} />홈
+          <LuHome style={{ width: '1.5rem', height: '1.5rem', marginBottom: '0.35rem' }} />홈
         </NavLink>
       </li>
       <li className="m-auto">
@@ -25,7 +25,7 @@ const BottomNavigator = () => {
             isActive ? 'flex flex-col items-center text-xs font-bold' : 'flex flex-col items-center text-xs'
           }
         >
-          <FiSearch style={{ width: '29px', height: '29px', marginBottom: '6px' }} />
+          <FiSearch style={{ width: '1.5rem', height: '1.5rem', marginBottom: '0.35rem' }} />
           검색
         </NavLink>
       </li>
@@ -36,7 +36,7 @@ const BottomNavigator = () => {
             isActive ? 'flex flex-col items-center text-xs font-bold' : 'flex flex-col items-center text-xs'
           }
         >
-          <PiBooksDuotone style={{ width: '29px', height: '29px', marginBottom: '6px' }} />
+          <PiBooksDuotone style={{ width: '1.5rem', height: '1.5rem', marginBottom: '0.35rem' }} />
           서재
         </NavLink>
       </li>
@@ -47,7 +47,7 @@ const BottomNavigator = () => {
             isActive ? 'flex flex-col items-center text-xs font-bold' : 'flex flex-col items-center text-xs'
           }
         >
-          <FaRegUserCircle style={{ width: '29px', height: '29px', marginBottom: '6px' }} />
+          <FaRegUserCircle style={{ width: '1.5rem', height: '1.5rem', marginBottom: '0.35rem' }} />
           마이페이지
         </NavLink>
       </li>
