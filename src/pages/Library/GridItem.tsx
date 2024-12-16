@@ -10,7 +10,7 @@ const GridItem = () => {
       <img
         src={`${import.meta.env.VITE_IMG_BASE_URL || ''}/assets/shadow.png`}
         alt=""
-        className="absolute bottom-0 left-28 z-50 -translate-x-1/2"
+        className="absolute -bottom-1 left-[6.8rem] z-50 -translate-x-1/2 opacity-95"
       />
       <img
         src={`${import.meta.env.VITE_IMG_BASE_URL || ''}/assets/Subtract.png`}
