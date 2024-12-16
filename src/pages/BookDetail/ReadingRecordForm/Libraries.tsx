@@ -1,6 +1,6 @@
 import { FiPlus } from 'react-icons/fi';
 
-import { Library as LibraryType } from 'types/library';
+import { Library } from 'types/library';
 
 import ButtonSet from './shared/ButtonSet';
 import CheckBox from './shared/CheckBox';
@@ -8,14 +8,14 @@ import SubTitle from './shared/SubTitle';
 import Title from './shared/Title';
 
 type LibraryProps = {
-  library: LibraryType[];
+  libraries: Library[];
   selected: number[];
   setSelected: React.Dispatch<React.SetStateAction<number[]>>;
   onPrev: () => void;
   onNext: () => void;
 };
 
-const Library = ({ library, selected, setSelected, onPrev, onNext }: LibraryProps) => {
+const Libraries = ({ libraries, selected, setSelected, onPrev, onNext }: LibraryProps) => {
   const handleSelect = (id: number) => {
     setSelected((prev) => (prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]));
   };
@@ -26,7 +26,7 @@ const Library = ({ library, selected, setSelected, onPrev, onNext }: LibraryProp
       <SubTitle message="필요한 서재가 없다면 아래에서 추가해보세요" />
 
       <ul className="max-h-96 overflow-y-auto">
-        {library.map(({ libraryId, libraryName }) => (
+        {libraries.map(({ libraryId, libraryName }) => (
           <li key={libraryId}>
             <button
               className={`mb-4 box-border flex w-full justify-between rounded-[10px] border-2 bg-white p-4 text-[15px] shadow-md ${selected.includes(libraryId) ? 'border-accent' : 'border-transparent'}`}
@@ -50,4 +50,4 @@ const Library = ({ library, selected, setSelected, onPrev, onNext }: LibraryProp
   );
 };
 
-export default Library;
+export default Libraries;
