@@ -7,7 +7,7 @@ import { NavLink } from 'react-router-dom';
 // TODO : 선택된 탭 보더 처리
 const BottomNavigator = () => {
   return (
-    <ul className="fixed bottom-0 grid h-footer w-full max-w-screen-sm grid-cols-4 items-center rounded-t-xl bg-white shadow-navigator">
+    <ul className="fixed bottom-0 z-20 grid h-footer w-full max-w-screen-sm grid-cols-4 items-center rounded-t-xl bg-white shadow-navigator">
       <li className="m-auto">
         <NavLink
           to="/"
