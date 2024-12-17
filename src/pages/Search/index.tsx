@@ -7,10 +7,10 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 
 import Header from 'components/Header';
 import SearchBar from 'components/SearchBar';
-import SearchHistory from 'components/SearchHistory';
 
 import { addSearchHistory } from 'services/search';
 
+import SearchHistory from './SearchHistory';
 import SearchResult from './SearchResult';
 
 const Search = () => {
