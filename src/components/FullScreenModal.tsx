@@ -7,7 +7,7 @@ const FullScreenModal = ({ children, handleClose }: FullScreenModalProps) => {
   return (
     <>
       <button
-        className="absolute top-0 h-full w-full bg-black opacity-40"
+        className="absolute top-0 z-20 h-full w-full bg-black opacity-40"
         aria-label="취소"
         type="button"
         onClick={handleClose}

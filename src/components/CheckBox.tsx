@@ -10,7 +10,7 @@ type CheckBoxProps = {
 const CheckBox = ({ isSquare, color = 'accent', type = 'checked', isChecked = true }: CheckBoxProps) => {
   return (
     <span
-      className={`h-6 w-6 ${isSquare ? 'rounded-md' : 'rounded-full'} text-white ${isChecked ? `bg-${color}` : 'bg-main'} flex items-center justify-center`}
+      className={`h-6 w-6 ${isSquare ? 'rounded-md' : 'rounded-full'} text-white ${isChecked ? `bg-${color}` : type === 'plus' ? 'bg-[#D9D9D9]' : 'bg-main'} flex items-center justify-center`}
     >
       {type === 'checked' && isChecked && <FaCheck />}
       {type === 'minus' && isChecked && <FaMinus />}

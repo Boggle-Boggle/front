@@ -1,20 +1,24 @@
-import { SetStateAction, useState } from 'react';
+import { SetStateAction } from 'react';
 
 import CheckBox from 'components/CheckBox';
 import FullScreenModal from 'components/FullScreenModal';
+import Header from 'components/Header';
 
 import Content from './shared/Content';
 import ContentItem from './shared/ContentItem';
-import Title from './shared/Title';
 
 type LibrarySelectModalProps = {
   onClose: React.Dispatch<SetStateAction<boolean>>;
+  handleEdit: React.Dispatch<SetStateAction<boolean>>;
 };
 
-const LibrarySelectModal = ({ onClose }: LibrarySelectModalProps) => {
-  const [isEdited, setIsEdited] = useState<boolean>(false);
-
+const LibrarySelectModal = ({ onClose, handleEdit }: LibrarySelectModalProps) => {
   const handleClose = () => {
+    onClose(false);
+  };
+
+  const handleOpenEdit = () => {
+    handleEdit(true);
     onClose(false);
   };
 
@@ -29,9 +33,20 @@ const LibrarySelectModal = ({ onClose }: LibrarySelectModalProps) => {
     '소설',
     '고전문학',
   ];
+
   return (
     <FullScreenModal handleClose={handleClose}>
-      <Title message={isEdited ? '서재 편집' : '서재 선택'} />
+      <Header
+        title={{ text: '서재' }}
+        rightBtn={{
+          icon: (
+            <button onClick={handleOpenEdit} className="opacity-50" type="button">
+              편집
+            </button>
+          ),
+          handleRightBtnClick: () => {},
+        }}
+      />
       <section className="h-[calc(100%_-_3.75rem)] overflow-y-auto pb-5">
         <div className="mb-2 ml-4">기본 서재</div>
         <Content>

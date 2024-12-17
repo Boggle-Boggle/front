@@ -5,6 +5,7 @@ import Header from 'components/Header';
 import SearchBar from 'components/SearchBar';
 
 import GridLayout from './GridLayout';
+import LibraryEditedModal from './LibraryEditedModal';
 import LibrarySelectModal from './LibrarySelectModal';
 import LibrarySortModal from './LibrarySortModal';
 import ListLayout from './ListLayout';
@@ -12,7 +13,9 @@ import ListLayout from './ListLayout';
 const Library = () => {
   const [value, setValue] = useState<string>('');
   const [layout, setLayout] = useState<'grid' | 'list'>('list');
-  const [isToggledLibrarySelect, setIsToggledLibrarySelect] = useState<boolean>(true);
+
+  const [isToggledLibrarySelect, setIsToggledLibrarySelect] = useState<boolean>(false);
+  const [isToggledLibraryEdit, setIsToggledLibraryEdit] = useState<boolean>(false);
   const [isToggledSort, setIsToggledSort] = useState<boolean>(false);
 
   return (
@@ -46,7 +49,16 @@ const Library = () => {
       <section className="height-content overflow-y-scroll bg-main pb-10">
         {layout === 'grid' ? <GridLayout /> : <ListLayout />}
       </section>
-      {isToggledLibrarySelect && <LibrarySelectModal onClose={setIsToggledLibrarySelect} />}
+
+      {isToggledLibrarySelect && (
+        <LibrarySelectModal onClose={setIsToggledLibrarySelect} handleEdit={() => setIsToggledLibraryEdit(true)} />
+      )}
+      {isToggledLibraryEdit && (
+        <LibraryEditedModal
+          onClose={setIsToggledLibraryEdit}
+          handleOpenSelect={() => setIsToggledLibrarySelect(true)}
+        />
+      )}
       {isToggledSort && <LibrarySortModal onClose={setIsToggledSort} />}
     </>
   );
