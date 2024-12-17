@@ -1,15 +1,17 @@
 import { useState } from 'react';
-import { FiAlignCenter, FiGrid, FiList } from 'react-icons/fi';
+import { FiMoreVertical, FiGrid, FiList } from 'react-icons/fi';
 
 import Header from 'components/ui/Header';
 import SearchBar from 'components/ui/SearchBar';
 
 import GridLayout from './GridLayout';
+import LibrarySortModal from './LibrarySortModal';
 import ListLayout from './ListLayout';
 
 const Library = () => {
   const [value, setValue] = useState<string>('');
   const [layout, setLayout] = useState<'grid' | 'list'>('list');
+  const [isToggledSort, setIsToggledSort] = useState<boolean>(true);
 
   const handleToggle = () => {
     // TODO 디자인 변경시 수정 예정
@@ -28,7 +30,7 @@ const Library = () => {
                 <FiList style={{ width: '24px', height: '24px' }} onClick={() => setLayout('list')} />
               )}
               <span className="w-2" />
-              <FiAlignCenter style={{ width: '24px', height: '24px' }} />
+              <FiMoreVertical style={{ width: '24px', height: '24px' }} onClick={() => setIsToggledSort(true)} />
             </div>
           ),
           handleRightBtnClick: handleToggle,
@@ -46,6 +48,7 @@ const Library = () => {
       <section className="height-content overflow-y-scroll bg-main pb-10">
         {layout === 'grid' ? <GridLayout /> : <ListLayout />}
       </section>
+      {isToggledSort && <LibrarySortModal onClose={setIsToggledSort} />}
     </>
   );
 };
