@@ -5,17 +5,15 @@ import Header from 'components/Header';
 import SearchBar from 'components/SearchBar';
 
 import GridLayout from './GridLayout';
+import LibrarySelectModal from './LibrarySelectModal';
 import LibrarySortModal from './LibrarySortModal';
 import ListLayout from './ListLayout';
 
 const Library = () => {
   const [value, setValue] = useState<string>('');
   const [layout, setLayout] = useState<'grid' | 'list'>('list');
+  const [isToggledLibrarySelect, setIsToggledLibrarySelect] = useState<boolean>(true);
   const [isToggledSort, setIsToggledSort] = useState<boolean>(false);
-
-  const handleToggle = () => {
-    // TODO 디자인 변경시 수정 예정
-  };
 
   return (
     <>
@@ -33,9 +31,9 @@ const Library = () => {
               <FiMoreVertical style={{ width: '24px', height: '24px' }} onClick={() => setIsToggledSort(true)} />
             </div>
           ),
-          handleRightBtnClick: handleToggle,
+          handleRightBtnClick: () => {},
         }}
-        title={{ text: '전체보기' }}
+        title={{ text: '전체보기', handleTitleClick: () => setIsToggledLibrarySelect(true) }}
       />
       <SearchBar
         placeholder="서재 안 도서 검색"
@@ -48,6 +46,7 @@ const Library = () => {
       <section className="height-content overflow-y-scroll bg-main pb-10">
         {layout === 'grid' ? <GridLayout /> : <ListLayout />}
       </section>
+      {isToggledLibrarySelect && <LibrarySelectModal onClose={setIsToggledLibrarySelect} />}
       {isToggledSort && <LibrarySortModal onClose={setIsToggledSort} />}
     </>
   );

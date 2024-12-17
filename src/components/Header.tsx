@@ -22,7 +22,11 @@ const Header = ({ leftBtn, title, rightBtn }: HeaderProps) => {
           <span>{leftBtn.icon}</span>
         </button>
       )}
-      {title && <h1 className="mx-auto text-lg font-semibold">{title.text}</h1>}
+      {title && (
+        <h1 className="mx-auto text-lg font-semibold" onClick={title.handleTitleClick}>
+          {title.text}
+        </h1>
+      )}
       {rightBtn && (
         <button type="button" onClick={rightBtn.handleRightBtnClick} className="absolute right-0 px-3">
           <span>{rightBtn.icon}</span>
