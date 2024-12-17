@@ -1,7 +1,7 @@
 import { BiX } from 'react-icons/bi';
 
-import Button from 'components/ui/Button';
-import Header from 'components/ui/Header';
+import Button from 'components/Button';
+import Header from 'components/Header';
 
 import { TermWithAgree } from 'types/user';
 

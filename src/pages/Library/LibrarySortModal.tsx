@@ -1,6 +1,6 @@
 import { SetStateAction } from 'react';
 
-import FullScreenModal from 'components/ui/FullScreenModal';
+import FullScreenModal from 'components/FullScreenModal';
 import CheckBox from 'pages/BookDetail/ReadingRecordForm/shared/CheckBox';
 
 import Content from './shared/Content';

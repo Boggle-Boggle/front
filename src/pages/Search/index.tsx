@@ -5,9 +5,9 @@ import { IoArrowBackOutline } from 'react-icons/io5';
 import { TbCameraSearch } from 'react-icons/tb';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
-import SearchHistory from 'components/feat/SearchHistory';
-import Header from 'components/ui/Header';
-import SearchBar from 'components/ui/SearchBar';
+import Header from 'components/Header';
+import SearchBar from 'components/SearchBar';
+import SearchHistory from 'components/SearchHistory';
 
 import { addSearchHistory } from 'services/search';
 

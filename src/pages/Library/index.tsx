@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { FiMoreVertical, FiGrid, FiList } from 'react-icons/fi';
 
-import Header from 'components/ui/Header';
-import SearchBar from 'components/ui/SearchBar';
+import Header from 'components/Header';
+import SearchBar from 'components/SearchBar';
 
 import GridLayout from './GridLayout';
 import LibrarySortModal from './LibrarySortModal';

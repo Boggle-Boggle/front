@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react';
 import { FaCheck } from 'react-icons/fa6';
 import { GoArrowLeft, GoChevronRight } from 'react-icons/go';
 
-import Button from 'components/ui/Button';
-import Header from 'components/ui/Header';
+import Button from 'components/Button';
+import Header from 'components/Header';
 
 import { TermWithAgree } from 'types/user';
 

@@ -4,8 +4,8 @@ import { useEffect, useRef, useState } from 'react';
 import { IoArrowBackOutline } from 'react-icons/io5';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import Button from 'components/ui/Button';
-import Header from 'components/ui/Header';
+import Button from 'components/Button';
+import Header from 'components/Header';
 
 import useModal from 'hooks/useModal';
 import { getBookDetail, hasReadingRecord } from 'services/search';

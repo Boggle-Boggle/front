@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { IoArrowBackOutline } from 'react-icons/io5';
 import { useNavigate, useLocation } from 'react-router-dom';
 
-import Header from 'components/ui/Header';
+import Header from 'components/Header';
 
 import { addNote } from 'services/record';
 
