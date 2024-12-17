@@ -2,10 +2,10 @@ import { SetStateAction } from 'react';
 
 import CheckBox from 'components/CheckBox';
 import FullScreenModal from 'components/FullScreenModal';
+import Header from 'components/Header';
 
 import Content from './shared/Content';
 import ContentItem from './shared/ContentItem';
-import Title from './shared/Title';
 
 type LibrarySortModalProps = {
   onClose: React.Dispatch<SetStateAction<boolean>>;
@@ -19,7 +19,7 @@ const LibrarySortModal = ({ onClose }: LibrarySortModalProps) => {
 
   return (
     <FullScreenModal handleClose={handleClose}>
-      <Title message="정렬" />
+      <Header title={{ text: '정렬' }} />
       <Content>
         {titles.map((title) => (
           <ContentItem>
