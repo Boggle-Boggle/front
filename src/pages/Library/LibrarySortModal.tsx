@@ -1,7 +1,7 @@
 import { SetStateAction } from 'react';
 
+import CheckBox from 'components/CheckBox';
 import FullScreenModal from 'components/FullScreenModal';
-import CheckBox from 'pages/BookDetail/ReadingRecordForm/shared/CheckBox';
 
 import Content from './shared/Content';
 import ContentItem from './shared/ContentItem';
@@ -21,10 +21,10 @@ const LibrarySortModal = ({ onClose }: LibrarySortModalProps) => {
     <FullScreenModal handleClose={handleClose}>
       <Title message="정렬" />
       <Content>
-        {titles.map((title, idx) => (
+        {titles.map((title) => (
           <ContentItem>
-            <p>{title}</p>
-            <CheckBox isChecked={idx === 0} />
+            <p className="opacity-70">{title}</p>
+            <CheckBox />
           </ContentItem>
         ))}
       </Content>

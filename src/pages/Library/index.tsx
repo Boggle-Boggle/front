@@ -11,7 +11,7 @@ import ListLayout from './ListLayout';
 const Library = () => {
   const [value, setValue] = useState<string>('');
   const [layout, setLayout] = useState<'grid' | 'list'>('list');
-  const [isToggledSort, setIsToggledSort] = useState<boolean>(true);
+  const [isToggledSort, setIsToggledSort] = useState<boolean>(false);
 
   const handleToggle = () => {
     // TODO 디자인 변경시 수정 예정
