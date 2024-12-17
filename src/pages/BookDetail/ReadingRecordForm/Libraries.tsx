@@ -1,9 +1,10 @@
 import { FiPlus } from 'react-icons/fi';
 
+import CheckBox from 'components/CheckBox';
+
 import { Library } from 'types/library';
 
 import ButtonSet from './shared/ButtonSet';
-import CheckBox from './shared/CheckBox';
 import SubTitle from './shared/SubTitle';
 import Title from './shared/Title';
 
