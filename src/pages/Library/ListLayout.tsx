@@ -25,13 +25,13 @@ const ListLayout = ({ allBooks }: ListLayoutProps) => {
                 className="absolute bottom-0 left-5 h-32 w-[5.7rem] shadow-[3px_0px_4px_0_rgba(0,0,0,0.25)]"
               />
               <span className="absolute bottom-0 left-6 block h-32 w-[0.0625rem] bg-black opacity-50 blur-[2px]" />
-              <div className="ml-32 flex h-full flex-col items-start py-[0.6rem]">
+              <div className="ml-32 flex h-full flex-col items-start justify-between py-[0.6rem]">
                 <img
                   src={`${import.meta.env.VITE_IMG_BASE_URL || ''}/assets/stars.png`}
                   alt={`${rating}점`}
                   className="w-[5.5rem]"
                 />
-                <p className="flex grow items-center justify-center pr-2 text-start font-semibold leading-6">{title}</p>
+                <p className="line-clamp-2 justify-center pr-2 text-start font-semibold leading-6">{title}</p>
 
                 <p className="text-[0.8125rem] opacity-50">
                   {!recentReadDate ? '아직 읽기 전이에요' : `${startDate} ~ ${endDate}`}

@@ -16,7 +16,7 @@ import ListLayout from './ListLayout';
 
 const Library = () => {
   const [value, setValue] = useState<string>('');
-  const [layout, setLayout] = useState<'grid' | 'list'>('list');
+  const [layout, setLayout] = useState<'grid' | 'list'>('grid');
 
   const [isToggledLibrarySelect, setIsToggledLibrarySelect] = useState<boolean>(false);
   const [isToggledLibraryEdit, setIsToggledLibraryEdit] = useState<boolean>(false);
