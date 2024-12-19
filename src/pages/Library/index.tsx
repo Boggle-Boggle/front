@@ -1,8 +1,12 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FiMoreVertical, FiGrid, FiList } from 'react-icons/fi';
 
 import Header from 'components/Header';
 import SearchBar from 'components/SearchBar';
+import Loading from 'pages/Loading';
+
+import useInfiniteScroll from 'hooks/useInfiniteScroll';
+import { getLibraryBooks } from 'services/library';
 
 import GridLayout from './GridLayout';
 import LibraryEditedModal from './LibraryEditedModal';
@@ -18,6 +22,19 @@ const Library = () => {
   const [isToggledLibraryEdit, setIsToggledLibraryEdit] = useState<boolean>(false);
   const [isToggledSort, setIsToggledSort] = useState<boolean>(false);
 
+  const { data, refetch, observerTarget, isLoading } = useInfiniteScroll(
+    [],
+    ({ pageParam = 1 }) => getLibraryBooks({}, pageParam),
+    false,
+  );
+
+  useEffect(() => {
+    refetch();
+  }, [refetch]);
+
+  if (isLoading) <Loading />;
+
+  const allBooks = data?.pages.flatMap((page) => page.items) || [];
   return (
     <>
       <Header
@@ -46,9 +63,13 @@ const Library = () => {
           // console.log('데이터 가져올예정');
         }}
       />
-      <section className="height-content overflow-y-scroll bg-main pb-10">
-        {layout === 'grid' ? <GridLayout /> : <ListLayout />}
-      </section>
+
+      {data && (
+        <section className="height-content overflow-y-scroll bg-main">
+          {layout === 'grid' ? <GridLayout allBooks={allBooks} /> : <ListLayout allBooks={allBooks} />}
+          <div className="h-5" ref={observerTarget} />
+        </section>
+      )}
 
       {isToggledLibrarySelect && (
         <LibrarySelectModal onClose={setIsToggledLibrarySelect} handleEdit={() => setIsToggledLibraryEdit(true)} />
