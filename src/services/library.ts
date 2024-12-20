@@ -26,3 +26,11 @@ export const getLibrarySorting = async () => {
 export const changeLibrarySorting = async (sortingType: SortingType) => {
   await api.patch('/user/settings/sorting', { sortingType });
 };
+
+export const removeLibrary = async (removeId: number) => {
+  await api.delete(`/libraries?libraryId=${removeId}`);
+};
+
+export const addLibrary = async (libraryName: string) => {
+  await api.post('/libraries', { libraryName });
+};

@@ -29,7 +29,12 @@ const Library = () => {
 
   const [selectedLibrary, setSelectedLibrary] = useState<DefaultLibraryStatus | 'all' | number>('all');
 
-  const { data, refetch, observerTarget, isLoading } = useInfiniteScroll(
+  const {
+    data,
+    refetch: refetchBooks,
+    observerTarget,
+    isLoading,
+  } = useInfiniteScroll(
     ['libraryBooks', selectedLibrary],
     ({ pageParam = 1 }) => {
       if (selectedLibrary === 'all') return getLibraryBooks({}, pageParam);
@@ -40,14 +45,14 @@ const Library = () => {
     false,
   );
 
-  const { data: libraries } = useQuery({
+  const { data: libraries, refetch: refetchLibraries } = useQuery({
     queryKey: ['libraries'],
     queryFn: () => getLibraries(),
   });
 
   useEffect(() => {
-    refetch();
-  }, [refetch, selectedLibrary]);
+    refetchBooks();
+  }, [refetchBooks, selectedLibrary]);
 
   const allBooks = data?.pages.flatMap((page) => page.items) || [];
 
@@ -105,13 +110,15 @@ const Library = () => {
           setSelectedLibrary={setSelectedLibrary}
         />
       )}
-      {isToggledLibraryEdit && (
+      {isToggledLibraryEdit && libraries && (
         <LibraryEditedModal
           onClose={setIsToggledLibraryEdit}
           handleOpenSelect={() => setIsToggledLibrarySelect(true)}
+          libraries={libraries}
+          refetchLibraries={refetchLibraries}
         />
       )}
-      {isToggledSort && <LibrarySortModal onClose={setIsToggledSort} refetchBooks={refetch} />}
+      {isToggledSort && <LibrarySortModal onClose={setIsToggledSort} refetchBooks={refetchBooks} />}
     </>
   );
 };
