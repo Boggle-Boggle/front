@@ -23,7 +23,7 @@ const Library = () => {
   const [isToggledSort, setIsToggledSort] = useState<boolean>(false);
 
   const { data, refetch, observerTarget, isLoading } = useInfiniteScroll(
-    [],
+    ['libraryBooks'],
     ({ pageParam = 1 }) => getLibraryBooks({}, pageParam),
     false,
   );
@@ -32,9 +32,9 @@ const Library = () => {
     refetch();
   }, [refetch]);
 
-  if (isLoading) <Loading />;
-
   const allBooks = data?.pages.flatMap((page) => page.items) || [];
+
+  if (isLoading) <Loading />;
   return (
     <>
       <Header
@@ -88,7 +88,7 @@ const Library = () => {
           handleOpenSelect={() => setIsToggledLibrarySelect(true)}
         />
       )}
-      {isToggledSort && <LibrarySortModal onClose={setIsToggledSort} />}
+      {isToggledSort && <LibrarySortModal onClose={setIsToggledSort} refetchBooks={refetch} />}
     </>
   );
 };

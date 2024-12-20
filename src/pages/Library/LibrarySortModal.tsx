@@ -1,32 +1,75 @@
+import {
+  InfiniteData,
+  QueryObserverResult,
+  RefetchOptions,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from '@tanstack/react-query';
+
 import { SetStateAction } from 'react';
 
 import CheckBox from 'components/CheckBox';
 import FullScreenModal from 'components/FullScreenModal';
 import Header from 'components/Header';
 
+import { changeLibrarySorting, getLibrarySorting } from 'services/library';
+
+import { PaginationResponse } from 'types/api';
+import { LibraryBook, SortingTitle, SortingType } from 'types/library';
+
 import Content from './shared/Content';
 import ContentItem from './shared/ContentItem';
 
 type LibrarySortModalProps = {
   onClose: React.Dispatch<SetStateAction<boolean>>;
+  refetchBooks: (
+    options?: RefetchOptions,
+  ) => Promise<QueryObserverResult<InfiniteData<PaginationResponse<LibraryBook[]>, unknown>, Error>>;
 };
 
-const LibrarySortModal = ({ onClose }: LibrarySortModalProps) => {
-  const handleClose = () => {
-    onClose(false);
+const LibrarySortModal = ({ onClose, refetchBooks }: LibrarySortModalProps) => {
+  const sortingOptions = Object.keys(SortingTitle) as SortingType[];
+  const queryClient = useQueryClient();
+  const {
+    data: selectedOption,
+    refetch: refetchSortingType,
+    isFetched,
+  } = useQuery({ queryKey: ['librarySorting'], queryFn: getLibrarySorting });
+
+  const { mutate } = useMutation({
+    mutationFn: changeLibrarySorting,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['libraryBooks'] });
+      queryClient.invalidateQueries({ queryKey: ['librarySorting'] });
+      refetchBooks();
+    },
+  });
+
+  const handleOptionChange = (sortingOption: SortingType) => {
+    refetchSortingType();
+    mutate(sortingOption);
   };
-  const titles = ['최신순 보기', '오래된순 보기', '별점순 보기'];
 
   return (
-    <FullScreenModal handleClose={handleClose}>
+    <FullScreenModal
+      handleClose={() => {
+        onClose(false);
+      }}
+    >
       <Header title={{ text: '정렬' }} />
       <Content>
-        {titles.map((title) => (
-          <ContentItem>
-            <p className="opacity-70">{title}</p>
-            <CheckBox />
-          </ContentItem>
-        ))}
+        {isFetched &&
+          sortingOptions.map((sortingOption) => (
+            <li key={sortingOption}>
+              <button type="button" onClick={() => handleOptionChange(sortingOption)} className="w-full">
+                <ContentItem>
+                  <p className="opacity-70">{SortingTitle[sortingOption]}</p>
+                  <CheckBox isChecked={selectedOption === sortingOption} />
+                </ContentItem>
+              </button>
+            </li>
+          ))}
       </Content>
     </FullScreenModal>
   );

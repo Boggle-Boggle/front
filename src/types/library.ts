@@ -22,3 +22,11 @@ export type GetLibraryBooksParams = {
   pageSize?: number;
   keyword?: string;
 };
+
+export const SortingTitle = {
+  newest_first: '최신순 보기',
+  oldest_first: '오래된순 보기',
+  rating: '별점순 보기',
+} as const;
+
+export type SortingType = keyof typeof SortingTitle;

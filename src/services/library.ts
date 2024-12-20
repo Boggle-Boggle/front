@@ -1,9 +1,8 @@
 import { PaginationResponse } from 'types/api';
-import { LibraryBook, GetLibraryBooksParams } from 'types/library';
+import { LibraryBook, GetLibraryBooksParams, SortingType } from 'types/library';
 
 import api from '.';
 
-// eslint-disable-next-line import/prefer-default-export
 export const getLibraryBooks = async (params: GetLibraryBooksParams, pageNum: number) => {
   const queryString = new URLSearchParams();
 
@@ -16,4 +15,14 @@ export const getLibraryBooks = async (params: GetLibraryBooksParams, pageNum: nu
   const response = await api.get(`/library?${queryString.toString()}`);
 
   return response.data.data as PaginationResponse<LibraryBook[]>;
+};
+
+export const getLibrarySorting = async () => {
+  const response = await api.get('/user/settings/sorting');
+
+  return response.data.data as SortingType;
+};
+
+export const changeLibrarySorting = async (sortingType: SortingType) => {
+  await api.patch('/user/settings/sorting', { sortingType });
 };
