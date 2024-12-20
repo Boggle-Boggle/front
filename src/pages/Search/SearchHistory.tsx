@@ -33,7 +33,7 @@ const SearchHistory = () => {
   };
 
   return (
-    <section className="relative px-4 py-2 text-base font-semibold">
+    <section className="relative mt-3 px-4 py-2 text-base font-semibold">
       최근검색어
       {histories && histories.length !== 0 && (
         <button
