@@ -44,6 +44,7 @@ const LibraryEditedModal = ({ onClose, handleOpenSelect, libraries, refetchLibra
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.value.length > 15) return;
     setValues(e.target.value);
   };
 
@@ -74,7 +75,7 @@ const LibraryEditedModal = ({ onClose, handleOpenSelect, libraries, refetchLibra
           className="h-10 w-[92%] rounded-md p-3 pr-2 focus:outline-none"
         />
         <button type="submit" aria-label="서재 추가">
-          <CheckBox type="plus" isChecked={false} />
+          <CheckBox type="plus" isChecked={values.length > 0} />
         </button>
       </form>
       <div className="m-4 mb-2">사용자 지정 서재</div>

@@ -11,7 +11,7 @@ import useInfiniteScroll from 'hooks/useInfiniteScroll';
 import { getLibraryBooks } from 'services/library';
 import { getLibraries } from 'services/record';
 
-import { DefaultLibraryStatus } from 'types/library';
+import { DefaultLibraryStatus, DefaultLibraryTitle } from 'types/library';
 
 import GridLayout from './GridLayout';
 import LibraryEditedModal from './LibraryEditedModal';
@@ -20,6 +20,7 @@ import LibrarySortModal from './LibrarySortModal';
 import ListLayout from './ListLayout';
 
 const Library = () => {
+  const [title, setTitle] = useState<string>('');
   const [value, setValue] = useState<string>('');
   const [layout, setLayout] = useState<'grid' | 'list'>('grid');
 
@@ -29,6 +30,11 @@ const Library = () => {
 
   const [selectedLibrary, setSelectedLibrary] = useState<DefaultLibraryStatus | 'all' | number>('all');
 
+  const { data: libraries, refetch: refetchLibraries } = useQuery({
+    queryKey: ['libraries'],
+    queryFn: () => getLibraries(),
+  });
+
   const {
     data,
     refetch: refetchBooks,
@@ -37,18 +43,23 @@ const Library = () => {
   } = useInfiniteScroll(
     ['libraryBooks', selectedLibrary],
     ({ pageParam = 1 }) => {
-      if (selectedLibrary === 'all') return getLibraryBooks({}, pageParam);
-      if (typeof selectedLibrary === 'number') return getLibraryBooks({ libraryId: selectedLibrary }, pageParam);
+      if (selectedLibrary === 'all') {
+        setTitle('전체보기');
+        return getLibraryBooks({}, pageParam);
+      }
+      if (typeof selectedLibrary === 'number') {
+        const selectedTitle =
+          libraries?.filter((library) => library.libraryId === selectedLibrary)[0].libraryName ?? '';
+        setTitle(selectedTitle);
+        return getLibraryBooks({ libraryId: selectedLibrary }, pageParam);
+      }
+
+      setTitle(DefaultLibraryTitle[selectedLibrary]);
 
       return getLibraryBooks({ status: selectedLibrary }, pageParam);
     },
     false,
   );
-
-  const { data: libraries, refetch: refetchLibraries } = useQuery({
-    queryKey: ['libraries'],
-    queryFn: () => getLibraries(),
-  });
 
   useEffect(() => {
     refetchBooks();
@@ -75,7 +86,7 @@ const Library = () => {
           ),
           handleRightBtnClick: () => {},
         }}
-        title={{ text: '전체보기', handleTitleClick: () => setIsToggledLibrarySelect(true) }}
+        title={{ text: title, handleTitleClick: () => setIsToggledLibrarySelect(true) }}
       />
       <SearchBar
         placeholder="서재 안 도서 검색"
