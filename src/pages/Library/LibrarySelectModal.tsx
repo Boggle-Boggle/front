@@ -4,38 +4,49 @@ import CheckBox from 'components/CheckBox';
 import FullScreenModal from 'components/FullScreenModal';
 import Header from 'components/Header';
 
+import { DefaultLibraryStatus, DefaultLibraryTitle, Library } from 'types/library';
+
 import Content from './shared/Content';
 import ContentItem from './shared/ContentItem';
 
 type LibrarySelectModalProps = {
+  libraries: Library[];
   onClose: React.Dispatch<SetStateAction<boolean>>;
   handleEdit: React.Dispatch<SetStateAction<boolean>>;
+  selectedLibrary: DefaultLibraryStatus | 'all' | number;
+  setSelectedLibrary: React.Dispatch<SetStateAction<DefaultLibraryStatus | 'all' | number>>;
 };
 
-const LibrarySelectModal = ({ onClose, handleEdit }: LibrarySelectModalProps) => {
-  const handleClose = () => {
-    onClose(false);
-  };
-
+const LibrarySelectModal = ({
+  libraries,
+  onClose,
+  handleEdit,
+  selectedLibrary,
+  setSelectedLibrary,
+}: LibrarySelectModalProps) => {
   const handleOpenEdit = () => {
     handleEdit(true);
     onClose(false);
   };
 
-  const libraries = ['전체보기', '읽고 있는 책', '다 읽은 책', '읽는 중인 책'];
-  const customLibraries = [
-    '추천도서',
-    'CS',
-    '해리포터시리즈',
-    '개발 관련 도서',
-    '전공책',
-    '애니메이션',
-    '소설',
-    '고전문학',
-  ];
+  const handleClick = (selected: string | number) => {
+    if (typeof selected === 'number') {
+      setSelectedLibrary(selected);
+      return;
+    }
+
+    if (['all', 'reading', 'pending', 'completed'].includes(selected))
+      setSelectedLibrary(selected as DefaultLibraryStatus | 'all');
+  };
+
+  const defaultLibraries: ['all', 'reading', 'pending', 'completed'] = ['all', 'reading', 'pending', 'completed'];
 
   return (
-    <FullScreenModal handleClose={handleClose}>
+    <FullScreenModal
+      handleClose={() => {
+        onClose(false);
+      }}
+    >
       <Header
         title={{ text: '서재' }}
         rightBtn={{
@@ -47,23 +58,31 @@ const LibrarySelectModal = ({ onClose, handleEdit }: LibrarySelectModalProps) =>
           handleRightBtnClick: () => {},
         }}
       />
-      <section className="h-[calc(100%_-_3.75rem)] overflow-y-auto pb-5">
+      <section className="h-[calc(100%_-_4rem)] overflow-y-auto pb-5">
         <div className="mb-2 ml-4">기본 서재</div>
         <Content>
-          {libraries.map((library) => (
-            <ContentItem>
-              {library}
-              <CheckBox />
-            </ContentItem>
+          {defaultLibraries.map((title) => (
+            <li key={title}>
+              <button type="button" className="w-full" onClick={() => handleClick(title)}>
+                <ContentItem>
+                  {DefaultLibraryTitle[title]}
+                  <CheckBox isChecked={title === selectedLibrary} />
+                </ContentItem>
+              </button>
+            </li>
           ))}
         </Content>
         <div className="m-4 mb-2">사용자 지정 서재</div>
         <Content>
-          {customLibraries.map((library) => (
-            <ContentItem>
-              {library}
-              <CheckBox />
-            </ContentItem>
+          {libraries.map(({ libraryId, libraryName }) => (
+            <li key={libraryId}>
+              <button type="button" className="w-full" onClick={() => handleClick(libraryId)}>
+                <ContentItem>
+                  {libraryName}
+                  <CheckBox isChecked={libraryId === selectedLibrary} />
+                </ContentItem>
+              </button>
+            </li>
           ))}
         </Content>
       </section>

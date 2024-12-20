@@ -57,7 +57,7 @@ const LibraryEditedModal = ({ onClose, handleOpenSelect }: LibraryEditedModalPro
         <CheckBox type="plus" isChecked={false} />
       </form>
       <div className="m-4 mb-2">사용자 지정 서재</div>
-      <div className="h-[calc(100%_-_9.2rem)] overflow-y-auto pb-5">
+      <div className="h-[calc(100%_-_9.5rem)] overflow-y-auto pb-8">
         <Content>
           {customLibraries.map((library) => (
             <ContentItem>

@@ -16,9 +16,18 @@ export type LibraryBook = {
   imageUrl: string;
 };
 
+export const DefaultLibraryTitle = {
+  all: '전체보기',
+  reading: '읽는중인 책',
+  pending: '읽고 있는 책',
+  completed: '다 읽은 책',
+};
+
+export type DefaultLibraryStatus = 'reading' | 'pending' | 'completed';
+
 export type GetLibraryBooksParams = {
   libraryId?: number;
-  status?: 'reading' | 'pending' | 'completed';
+  status?: DefaultLibraryStatus;
   pageSize?: number;
   keyword?: string;
 };

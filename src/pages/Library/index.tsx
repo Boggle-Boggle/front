@@ -1,3 +1,5 @@
+import { useQuery } from '@tanstack/react-query';
+
 import { useEffect, useState } from 'react';
 import { FiMoreVertical, FiGrid, FiList } from 'react-icons/fi';
 
@@ -7,6 +9,9 @@ import Loading from 'pages/Loading';
 
 import useInfiniteScroll from 'hooks/useInfiniteScroll';
 import { getLibraryBooks } from 'services/library';
+import { getLibraries } from 'services/record';
+
+import { DefaultLibraryStatus } from 'types/library';
 
 import GridLayout from './GridLayout';
 import LibraryEditedModal from './LibraryEditedModal';
@@ -22,15 +27,27 @@ const Library = () => {
   const [isToggledLibraryEdit, setIsToggledLibraryEdit] = useState<boolean>(false);
   const [isToggledSort, setIsToggledSort] = useState<boolean>(false);
 
+  const [selectedLibrary, setSelectedLibrary] = useState<DefaultLibraryStatus | 'all' | number>('all');
+
   const { data, refetch, observerTarget, isLoading } = useInfiniteScroll(
-    ['libraryBooks'],
-    ({ pageParam = 1 }) => getLibraryBooks({}, pageParam),
+    ['libraryBooks', selectedLibrary],
+    ({ pageParam = 1 }) => {
+      if (selectedLibrary === 'all') return getLibraryBooks({}, pageParam);
+      if (typeof selectedLibrary === 'number') return getLibraryBooks({ libraryId: selectedLibrary }, pageParam);
+
+      return getLibraryBooks({ status: selectedLibrary }, pageParam);
+    },
     false,
   );
 
+  const { data: libraries } = useQuery({
+    queryKey: ['libraries'],
+    queryFn: () => getLibraries(),
+  });
+
   useEffect(() => {
     refetch();
-  }, [refetch]);
+  }, [refetch, selectedLibrary]);
 
   const allBooks = data?.pages.flatMap((page) => page.items) || [];
 
@@ -79,8 +96,14 @@ const Library = () => {
         </>
       )}
 
-      {isToggledLibrarySelect && (
-        <LibrarySelectModal onClose={setIsToggledLibrarySelect} handleEdit={() => setIsToggledLibraryEdit(true)} />
+      {isToggledLibrarySelect && libraries && (
+        <LibrarySelectModal
+          onClose={setIsToggledLibrarySelect}
+          handleEdit={() => setIsToggledLibraryEdit(true)}
+          libraries={libraries}
+          selectedLibrary={selectedLibrary}
+          setSelectedLibrary={setSelectedLibrary}
+        />
       )}
       {isToggledLibraryEdit && (
         <LibraryEditedModal
