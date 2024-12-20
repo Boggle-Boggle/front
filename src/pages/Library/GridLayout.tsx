@@ -1,21 +1,32 @@
+import { LibraryBook } from 'types/library';
+
 import GridItem from './GridItem';
 
-const Grid = () => {
-  const map = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+type GridLayoutProps = {
+  allBooks: LibraryBook[];
+};
 
-  return map.map(() => (
-    <section className="mb-14 mt-3 flex w-full flex-col items-center shadow-2xl">
-      <section className="z-10 flex w-full justify-between px-7">
-        <GridItem />
-        <GridItem />
-        <GridItem />
-      </section>
-      <div className="relative w-full">
-        <div className="absolute -top-2 right-0 h-5 w-full bg-gradient-to-b from-[#C1BEBD] via-[#D6D3D3] via-80% to-[#E7E4E4]" />
-        <div className="absolute top-3 h-3 w-full bg-gradient-to-b from-[#E7E4E4] via-[#D6D3D3] via-60% to-[#C1BEBD]" />
+const GridLayout = ({ allBooks }: GridLayoutProps) => {
+  const chunkedBooks = [];
+  for (let i = 0; i < allBooks.length; i += 3) {
+    chunkedBooks.push(allBooks.slice(i, i + 3));
+  }
+
+  while (chunkedBooks.length < 4) {
+    chunkedBooks.push([]);
+  }
+
+  return chunkedBooks.map((books) => (
+    <section className="relative flex h-[calc((100%_-_10px)/4)] w-full items-end justify-end shadow-[20px_30px_40px_rgba(0,0,0,0.15)]">
+      <div className="z-10 mb-5 grid h-[8.75rem] w-full grid-cols-3 items-end gap-12 px-7">
+        {books[0] && <GridItem book={books[0]} />}
+        {books[1] && <GridItem book={books[1]} />}
+        {books[2] && <GridItem book={books[2]} />}
       </div>
+      <div className="absolute bottom-3 h-5 w-full bg-gradient-to-b from-[#C1BEBD] via-[#D6D3D3] via-80% to-[#E7E4E4]" />
+      <div className="absolute bottom-0 h-3 w-full bg-gradient-to-b from-[#E7E4E4] via-[#D6D3D3] via-60% to-[#C1BEBD]" />
     </section>
   ));
 };
 
-export default Grid;
+export default GridLayout;

@@ -63,12 +63,20 @@ const Library = () => {
           // console.log('데이터 가져올예정');
         }}
       />
-
       {data && (
-        <section className="height-content overflow-y-scroll bg-main">
-          {layout === 'grid' ? <GridLayout allBooks={allBooks} /> : <ListLayout allBooks={allBooks} />}
-          <div className="h-5" ref={observerTarget} />
-        </section>
+        <>
+          {layout === 'list' && (
+            <section className="height-content mt-4 overflow-y-scroll bg-main pb-8">
+              <ListLayout allBooks={allBooks} />
+            </section>
+          )}
+          {layout === 'grid' && (
+            <section className="mt-3 h-[calc(100%_-_9.75rem_-_36px)] overflow-y-scroll">
+              <GridLayout allBooks={allBooks} />
+            </section>
+          )}
+          <div className="h-1" ref={observerTarget} />
+        </>
       )}
 
       {isToggledLibrarySelect && (
