@@ -9,6 +9,7 @@ module.exports = {
         sub: '#939185',
         text: '#2F3645',
         gray: '#DCD7D6',
+        red: '#D62321',
       },
       boxShadow: {
         navigator: '0 -3px 6px -2px rgba(0, 0, 0, 0.1)',

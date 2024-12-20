@@ -4,7 +4,7 @@ import { Note, RecordType } from 'types/record';
 
 import api from '.';
 
-export const getLibrary = async () => {
+export const getLibraries = async () => {
   const response = await api.get(`/libraries`);
 
   return response.data.data as Library[];

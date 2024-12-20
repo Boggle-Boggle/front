@@ -1,6 +1,6 @@
 import { GoChevronLeft, GoChevronRight } from 'react-icons/go';
 
-import Button from 'components/ui/Button';
+import Button from 'components/Button';
 
 type ButtonSetProps = {
   onPrev?: () => void;

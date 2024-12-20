@@ -1,5 +1,5 @@
-import Button from 'components/ui/Button';
-import Modal from 'components/ui/Modal';
+import Button from 'components/Button';
+import Modal from 'components/Modal';
 
 import Book1 from '../../assets/book1.png';
 

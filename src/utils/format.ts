@@ -7,6 +7,14 @@ export const formatDateAndTime = (dateTime: string) => {
   return { yy, mm, dd, h, m, s };
 };
 
+export const formatDateTimeToDate = (dateTime: string) => {
+  const date = dateTime.split('T')[0];
+
+  const [yy, mm, dd] = date.split('-');
+
+  return `${yy}.${mm}.${dd}`;
+};
+
 export const formatBookGenre = (Genre: string) => {
   const formattedGenre = Genre.split('>');
 

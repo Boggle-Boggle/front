@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 
-import Button from 'components/ui/Button';
+import Button from 'components/Button';
 
 import Selector from './Selector';
 

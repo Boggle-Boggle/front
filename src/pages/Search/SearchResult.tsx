@@ -36,7 +36,7 @@ const SearchResult = ({ query }: SearchResultProps) => {
   const allBooks = data?.pages.flatMap((page) => page.items) || [];
 
   return allBooks.length ? (
-    <ul className="height-content bottom-0 h-full w-full overflow-y-auto rounded-tl-3xl bg-white px-5 py-4">
+    <ul className="height-content bottom-0 mt-3 h-full w-full overflow-y-auto rounded-tl-3xl bg-white px-5 py-4">
       {allBooks.map((book) => (
         <li key={book.isbn}>
           <button

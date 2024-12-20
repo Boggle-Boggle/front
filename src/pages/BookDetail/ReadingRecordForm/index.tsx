@@ -3,13 +3,13 @@ import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { FaXmark } from 'react-icons/fa6';
 
-import { getLibrary } from 'services/record';
+import { getLibraries } from 'services/record';
 import { formatDate } from 'utils/format';
 
 import { DateType, RatingTitleType, StatusType } from 'types/record';
 
 import Complete from './Complete';
-import Library from './Library';
+import Libraries from './Libraries';
 import Rating from './Rating';
 import ReadingDate from './ReadingDate';
 import Status from './Status';
@@ -30,7 +30,7 @@ const ReadingRecordForm = ({ isbn, onClose }: ReadingRecordFormProps) => {
   const [ratingTitle, setRatingTitle] = useState<RatingTitleType>('최고예요');
   const [startDate, setStartDate] = useState<DateType>(null);
   const [endDate, setEndDate] = useState<DateType>(null);
-  const [selectedLibrary, setSelectedLibrary] = useState<number[]>([]);
+  const [selectedLibraries, setSelectedLibraries] = useState<number[]>([]);
   const [isVisible, setIsVisible] = useState<boolean>(true);
 
   const createRecord = () => {
@@ -40,14 +40,14 @@ const ReadingRecordForm = ({ isbn, onClose }: ReadingRecordFormProps) => {
       rating: selectedStatus === 'completed' ? rating : null,
       startReadDate: startDate ? formatDate(startDate[0], startDate[1], startDate[2]) : null,
       endReadDate: endDate ? formatDate(endDate[0], endDate[1], endDate[2]) : null,
-      libraryIdList: selectedLibrary,
+      libraryIdList: selectedLibraries,
       isVisible,
     };
   };
 
-  const { data: library } = useQuery({
-    queryKey: ['library'],
-    queryFn: () => getLibrary(),
+  const { data: libraries } = useQuery({
+    queryKey: ['libraries'],
+    queryFn: () => getLibraries(),
   });
 
   return (
@@ -89,16 +89,16 @@ const ReadingRecordForm = ({ isbn, onClose }: ReadingRecordFormProps) => {
             setEndDate={setEndDate}
           />
         )}
-        {step === '서재' && library && (
-          <Library
-            library={library}
+        {step === '서재' && libraries && (
+          <Libraries
+            libraries={libraries}
             onPrev={() => {
               if (selectedStatus === 'completed') setStep('날짜');
               else setStep('상태');
             }}
             onNext={() => setStep('숨기기')}
-            selected={selectedLibrary}
-            setSelected={setSelectedLibrary}
+            selected={selectedLibraries}
+            setSelected={setSelectedLibraries}
           />
         )}
         {step === '숨기기' && (

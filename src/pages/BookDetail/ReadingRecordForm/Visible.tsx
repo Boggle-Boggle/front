@@ -1,7 +1,8 @@
+import CheckBox from 'components/CheckBox';
+
 import visible from 'assets/visible.png';
 
 import ButtonSet from './shared/ButtonSet';
-import CheckBox from './shared/CheckBox';
 import SubTitle from './shared/SubTitle';
 import Title from './shared/Title';
 
