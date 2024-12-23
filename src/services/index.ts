@@ -1,6 +1,5 @@
 import axios from 'axios';
-
-import { getSessionItem, removeSessionItem, setSessionItem } from 'utils/sessions';
+import useAuthStore from 'stores/useAuthStore';
 
 const api = axios.create({
   baseURL: import.meta.env.VITE_SERVER_BASE_URL,
@@ -11,7 +10,7 @@ const api = axios.create({
 api.interceptors.request.use(
   (config) => {
     const newConfig = { ...config };
-    const accessToken = getSessionItem('accessToken');
+    const { accessToken } = useAuthStore.getState();
 
     if (accessToken) {
       newConfig.headers.Authorization = `Bearer ${accessToken}`;
@@ -31,6 +30,7 @@ api.interceptors.response.use(
 
   async (error) => {
     const { response, config } = error;
+    const { login, logout } = useAuthStore.getState();
 
     if (response.status === 401) {
       try {
@@ -38,14 +38,14 @@ api.interceptors.response.use(
         const newAccessToken = refreshResponse.data.data;
         const newConfig = { ...config };
 
-        removeSessionItem('accessToken');
-        setSessionItem('accessToken', newAccessToken);
+        logout();
+        login(newAccessToken);
 
         newConfig.headers.Authorization = `Bearer ${newAccessToken}`;
         return await api(newConfig);
       } catch (err) {
         // TODO : 로그인 재시도 안내 구현
-        removeSessionItem('accessToken');
+
         return Promise.reject(err);
       }
     }

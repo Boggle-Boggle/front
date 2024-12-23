@@ -1,9 +1,8 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
-import { getSessionItem, removeSessionItem, setSessionItem } from 'utils/sessions';
-
 type AuthStoreType = {
+  accessToken: null | string;
   isAuthenticated: boolean;
   login: (accessToken: string) => void;
   logout: () => void;
@@ -12,14 +11,13 @@ type AuthStoreType = {
 const useAuthStore = create<AuthStoreType>()(
   persist(
     (set) => ({
-      isAuthenticated: !!getSessionItem('accessToken'),
+      accessToken: null,
+      isAuthenticated: false,
       login: (accessToken) => {
-        set({ isAuthenticated: true });
-        setSessionItem('accessToken', accessToken);
+        set({ accessToken, isAuthenticated: true });
       },
       logout: () => {
-        set({ isAuthenticated: false });
-        removeSessionItem('accessToken');
+        set({ accessToken: null, isAuthenticated: false });
       },
     }),
     { name: 'auth-store' },
