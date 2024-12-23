@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { FaXmark } from 'react-icons/fa6';
 
-import { getLibraries } from 'services/record';
+import { getLibraries } from 'services/library';
 import { formatDate } from 'utils/format';
 
 import { DateType, RatingTitleType, StatusType } from 'types/record';
@@ -91,7 +91,7 @@ const ReadingRecordForm = ({ isbn, onClose }: ReadingRecordFormProps) => {
         )}
         {step === '서재' && libraries && (
           <Libraries
-            libraries={libraries}
+            libraries={libraries.libraryList}
             onPrev={() => {
               if (selectedStatus === 'completed') setStep('날짜');
               else setStep('상태');

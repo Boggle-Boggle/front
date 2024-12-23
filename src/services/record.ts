@@ -1,14 +1,7 @@
 import { BookCase } from 'types/book';
-import { Library } from 'types/library';
 import { Note, RecordType } from 'types/record';
 
 import api from '.';
-
-export const getLibraries = async () => {
-  const response = await api.get(`/libraries`);
-
-  return response.data.data as Library[];
-};
 
 export const addRecord = async (record: RecordType) => {
   const response = await api.post(`/reading-record`, record);
