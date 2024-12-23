@@ -8,10 +8,9 @@ import SearchBar from 'components/SearchBar';
 import Loading from 'pages/Loading';
 
 import useInfiniteScroll from 'hooks/useInfiniteScroll';
-import { getLibraryBooks } from 'services/library';
-import { getLibraries } from 'services/record';
+import { getLibraries, getLibraryBooks } from 'services/library';
 
-import { DefaultLibraryStatus, DefaultLibraryTitle } from 'types/library';
+import { CustomLibrary, StatusLibrary } from 'types/library';
 
 import GridLayout from './GridLayout';
 import LibraryEditedModal from './LibraryEditedModal';
@@ -20,15 +19,19 @@ import LibrarySortModal from './LibrarySortModal';
 import ListLayout from './ListLayout';
 
 const Library = () => {
-  const [title, setTitle] = useState<string>('');
-  const [value, setValue] = useState<string>('');
   const [layout, setLayout] = useState<'grid' | 'list'>('grid');
+  const [value, setValue] = useState<string>('');
+  const [title, setTitle] = useState<string>('전체보기');
 
   const [isToggledLibrarySelect, setIsToggledLibrarySelect] = useState<boolean>(false);
   const [isToggledLibraryEdit, setIsToggledLibraryEdit] = useState<boolean>(false);
   const [isToggledSort, setIsToggledSort] = useState<boolean>(false);
 
-  const [selectedLibrary, setSelectedLibrary] = useState<DefaultLibraryStatus | 'all' | number>('all');
+  const [selectedLibrary, setSelectedLibrary] = useState<CustomLibrary | StatusLibrary>({
+    status: 'all',
+    libraryName: '전체보기',
+    bookCount: 0,
+  });
 
   const { data: libraries, refetch: refetchLibraries } = useQuery({
     queryKey: ['libraries'],
@@ -43,30 +46,20 @@ const Library = () => {
   } = useInfiniteScroll(
     ['libraryBooks', selectedLibrary],
     ({ pageParam = 1 }) => {
-      if (selectedLibrary === 'all') {
-        setTitle('전체보기');
-        return getLibraryBooks({}, pageParam);
-      }
-      if (typeof selectedLibrary === 'number') {
-        const selectedTitle =
-          libraries?.filter((library) => library.libraryId === selectedLibrary)[0].libraryName ?? '';
-        setTitle(selectedTitle);
-        return getLibraryBooks({ libraryId: selectedLibrary }, pageParam);
-      }
+      if (selectedLibrary) setTitle(selectedLibrary.libraryName);
 
-      setTitle(DefaultLibraryTitle[selectedLibrary]);
+      if ('libraryId' in selectedLibrary) return getLibraryBooks({ libraryId: selectedLibrary.libraryId }, pageParam);
 
-      return getLibraryBooks({ status: selectedLibrary }, pageParam);
+      return getLibraryBooks({ status: selectedLibrary.status }, pageParam);
     },
     false,
   );
 
   useEffect(() => {
     refetchBooks();
-  }, [refetchBooks, selectedLibrary]);
+  }, [refetchBooks, libraries, selectedLibrary]);
 
   const allBooks = data?.pages.flatMap((page) => page.items) || [];
-
   if (isLoading) <Loading />;
   return (
     <>
