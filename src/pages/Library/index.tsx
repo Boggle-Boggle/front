@@ -56,11 +56,28 @@ const Library = () => {
   );
 
   useEffect(() => {
+    if (libraries) {
+      const updatedLibrary =
+        'libraryId' in selectedLibrary
+          ? libraries.libraryList.find((lib) => lib.libraryId === selectedLibrary?.libraryId)
+          : libraries.statusList.find((lib) => lib.status === selectedLibrary?.status);
+
+      if (updatedLibrary && updatedLibrary.bookCount !== selectedLibrary.bookCount) {
+        setSelectedLibrary((prev) => ({
+          ...prev,
+          bookCount: updatedLibrary.bookCount,
+        }));
+      }
+    }
+  }, [libraries, selectedLibrary]);
+
+  useEffect(() => {
     refetchBooks();
-  }, [refetchBooks, libraries, selectedLibrary]);
+  }, [refetchBooks, selectedLibrary]);
 
   const allBooks = data?.pages.flatMap((page) => page.items) || [];
   if (isLoading) <Loading />;
+
   return (
     <>
       <Header
@@ -79,7 +96,10 @@ const Library = () => {
           ),
           handleRightBtnClick: () => {},
         }}
-        title={{ text: title, handleTitleClick: () => setIsToggledLibrarySelect(true) }}
+        title={{
+          text: `${title}(${selectedLibrary.bookCount})`,
+          handleTitleClick: () => setIsToggledLibrarySelect(true),
+        }}
       />
       <SearchBar
         placeholder="서재 안 도서 검색"
