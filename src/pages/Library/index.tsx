@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { FiMoreVertical, FiGrid, FiList } from 'react-icons/fi';
 
 import Header from 'components/Header';
@@ -9,6 +9,7 @@ import Loading from 'pages/Loading';
 
 import useInfiniteScroll from 'hooks/useInfiniteScroll';
 import { getLibraries, getLibraryBooks } from 'services/library';
+import searchDebounce from 'utils/debounce';
 
 import { CustomLibrary, StatusLibrary } from 'types/library';
 
@@ -33,11 +34,17 @@ const Library = () => {
     bookCount: 0,
   });
 
-  const { data: libraries, refetch: refetchLibraries } = useQuery({
+  // 서재 가져오는 쿼리
+  const {
+    data: libraries,
+    refetch: refetchLibraries,
+    isLoading: isLibrariesLoading,
+  } = useQuery({
     queryKey: ['libraries'],
     queryFn: () => getLibraries(),
   });
 
+  // 선택된 서재에 따라 책 데이터 가져오는 쿼리
   const {
     data,
     refetch: refetchBooks,
@@ -48,13 +55,22 @@ const Library = () => {
     ({ pageParam = 1 }) => {
       if (selectedLibrary) setTitle(selectedLibrary.libraryName);
 
-      if ('libraryId' in selectedLibrary) return getLibraryBooks({ libraryId: selectedLibrary.libraryId }, pageParam);
+      if ('libraryId' in selectedLibrary)
+        return getLibraryBooks({ libraryId: selectedLibrary.libraryId, keyword: value }, pageParam);
 
-      return getLibraryBooks({ status: selectedLibrary.status }, pageParam);
+      return getLibraryBooks({ status: selectedLibrary.status, keyword: value }, pageParam);
     },
     false,
   );
 
+  // 서치바 디바운싱
+  const debouncedSearch = useRef(
+    searchDebounce(() => {
+      refetchBooks();
+    }, 300),
+  ).current;
+
+  // 서재가 선택되고, 선택된 서재의 책을 가져왔을 때 개수를 동기화
   useEffect(() => {
     if (libraries) {
       const updatedLibrary =
@@ -71,79 +87,81 @@ const Library = () => {
     }
   }, [libraries, selectedLibrary]);
 
+  // 서재가 선택될때마다 선택된 서재의 책을 가져옴
   useEffect(() => {
     refetchBooks();
   }, [refetchBooks, selectedLibrary]);
 
   const allBooks = data?.pages.flatMap((page) => page.items) || [];
-  if (isLoading) <Loading />;
+  if (isLibrariesLoading || isLoading) <Loading />;
 
   return (
-    <>
-      <Header
-        rightBtn={{
-          icon: (
-            <div className="flex">
-              {layout === 'list' && (
-                <FiGrid style={{ width: '24px', height: '24px' }} onClick={() => setLayout('grid')} />
-              )}
-              {layout === 'grid' && (
-                <FiList style={{ width: '24px', height: '24px' }} onClick={() => setLayout('list')} />
-              )}
-              <span className="w-2" />
-              <FiMoreVertical style={{ width: '24px', height: '24px' }} onClick={() => setIsToggledSort(true)} />
-            </div>
-          ),
-          handleRightBtnClick: () => {},
-        }}
-        title={{
-          text: `${title}(${selectedLibrary.bookCount})`,
-          handleTitleClick: () => setIsToggledLibrarySelect(true),
-        }}
-      />
-      <SearchBar
-        placeholder="서재 안 도서 검색"
-        value={value}
-        setValue={setValue}
-        fetchResult={() => {
-          // console.log('데이터 가져올예정');
-        }}
-      />
-      {data && (
-        <>
-          {layout === 'list' && (
-            <section className="height-content mt-4 overflow-y-scroll bg-main pb-8">
-              <ListLayout allBooks={allBooks} />
-            </section>
-          )}
-          {layout === 'grid' && (
-            <section className="mt-3 h-[calc(100%_-_9.75rem_-_36px)] overflow-y-scroll">
-              <GridLayout allBooks={allBooks} />
-            </section>
-          )}
-          <div className="h-1" ref={observerTarget} />
-        </>
-      )}
+    !isLibrariesLoading && (
+      <>
+        <Header
+          rightBtn={{
+            icon: (
+              <div className="flex">
+                {layout === 'list' && (
+                  <FiGrid style={{ width: '24px', height: '24px' }} onClick={() => setLayout('grid')} />
+                )}
+                {layout === 'grid' && (
+                  <FiList style={{ width: '24px', height: '24px' }} onClick={() => setLayout('list')} />
+                )}
+                <span className="w-2" />
+                <FiMoreVertical style={{ width: '24px', height: '24px' }} onClick={() => setIsToggledSort(true)} />
+              </div>
+            ),
+            handleRightBtnClick: () => {},
+          }}
+          title={{
+            text: `${title}(${data?.pages[0].totalResultCnt})`,
+            handleTitleClick: () => setIsToggledLibrarySelect(true),
+          }}
+        />
+        <SearchBar
+          placeholder="서재 안 도서 검색"
+          value={value}
+          setValue={setValue}
+          fetchResult={debouncedSearch}
+          allowEmptyVal
+        />
+        {data && (
+          <>
+            {layout === 'list' && (
+              <section className="height-content mt-4 overflow-y-scroll bg-main pb-8">
+                <ListLayout allBooks={allBooks} />
+              </section>
+            )}
+            {layout === 'grid' && (
+              <section className="mt-3 h-[calc(100%_-_9.75rem_-_36px)] overflow-y-scroll">
+                <GridLayout allBooks={allBooks} />
+              </section>
+            )}
+            <div className="h-1" ref={observerTarget} />
+          </>
+        )}
 
-      {isToggledLibrarySelect && libraries && (
-        <LibrarySelectModal
-          onClose={setIsToggledLibrarySelect}
-          handleEdit={() => setIsToggledLibraryEdit(true)}
-          libraries={libraries}
-          selectedLibrary={selectedLibrary}
-          setSelectedLibrary={setSelectedLibrary}
-        />
-      )}
-      {isToggledLibraryEdit && libraries && (
-        <LibraryEditedModal
-          onClose={setIsToggledLibraryEdit}
-          handleOpenSelect={() => setIsToggledLibrarySelect(true)}
-          libraries={libraries}
-          refetchLibraries={refetchLibraries}
-        />
-      )}
-      {isToggledSort && <LibrarySortModal onClose={setIsToggledSort} refetchBooks={refetchBooks} />}
-    </>
+        {isToggledLibrarySelect && libraries && (
+          <LibrarySelectModal
+            onClose={setIsToggledLibrarySelect}
+            handleEdit={() => setIsToggledLibraryEdit(true)}
+            libraries={libraries}
+            selectedLibrary={selectedLibrary}
+            setSelectedLibrary={setSelectedLibrary}
+          />
+        )}
+        {isToggledLibraryEdit && libraries && (
+          <LibraryEditedModal
+            onClose={setIsToggledLibraryEdit}
+            handleOpenSelect={() => setIsToggledLibrarySelect(true)}
+            libraries={libraries}
+            refetchLibraries={refetchLibraries}
+          />
+        )}
+        {isToggledSort && <LibrarySortModal onClose={setIsToggledSort} refetchBooks={refetchBooks} />}
+      </>
+    )
   );
 };
 

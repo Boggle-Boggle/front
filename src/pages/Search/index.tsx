@@ -55,6 +55,7 @@ const Search = () => {
         value={value}
         setValue={setValue}
         fetchResult={fetchResult}
+        allowEmptyVal={false}
       />
 
       {query ? (
