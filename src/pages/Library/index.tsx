@@ -93,75 +93,74 @@ const Library = () => {
   }, [refetchBooks, selectedLibrary]);
 
   const allBooks = data?.pages.flatMap((page) => page.items) || [];
-  if (isLibrariesLoading || isLoading) <Loading />;
+
+  if (isLibrariesLoading || isLoading) return <Loading />;
 
   return (
-    !isLibrariesLoading && (
-      <>
-        <Header
-          rightBtn={{
-            icon: (
-              <div className="flex">
-                {layout === 'list' && (
-                  <FiGrid style={{ width: '24px', height: '24px' }} onClick={() => setLayout('grid')} />
-                )}
-                {layout === 'grid' && (
-                  <FiList style={{ width: '24px', height: '24px' }} onClick={() => setLayout('list')} />
-                )}
-                <span className="w-2" />
-                <FiMoreVertical style={{ width: '24px', height: '24px' }} onClick={() => setIsToggledSort(true)} />
-              </div>
-            ),
-            handleRightBtnClick: () => {},
-          }}
-          title={{
-            text: `${title}(${data?.pages[0].totalResultCnt})`,
-            handleTitleClick: () => setIsToggledLibrarySelect(true),
-          }}
-        />
-        <SearchBar
-          placeholder="서재 안 도서 검색"
-          value={value}
-          setValue={setValue}
-          fetchResult={debouncedSearch}
-          allowEmptyVal
-        />
-        {data && (
-          <>
-            {layout === 'list' && (
-              <section className="height-content mt-4 overflow-y-scroll bg-main pb-8">
-                <ListLayout allBooks={allBooks} />
-              </section>
-            )}
-            {layout === 'grid' && (
-              <section className="mt-3 h-[calc(100%_-_9.75rem_-_36px)] overflow-y-scroll">
-                <GridLayout allBooks={allBooks} />
-              </section>
-            )}
-            <div className="h-1" ref={observerTarget} />
-          </>
-        )}
+    <>
+      <Header
+        rightBtn={{
+          icon: (
+            <div className="flex">
+              {layout === 'list' && (
+                <FiGrid style={{ width: '24px', height: '24px' }} onClick={() => setLayout('grid')} />
+              )}
+              {layout === 'grid' && (
+                <FiList style={{ width: '24px', height: '24px' }} onClick={() => setLayout('list')} />
+              )}
+              <span className="w-2" />
+              <FiMoreVertical style={{ width: '24px', height: '24px' }} onClick={() => setIsToggledSort(true)} />
+            </div>
+          ),
+          handleRightBtnClick: () => {},
+        }}
+        title={{
+          text: `${title}(${data?.pages[0]?.totalResultCnt ?? 0})`,
+          handleTitleClick: () => setIsToggledLibrarySelect(true),
+        }}
+      />
+      <SearchBar
+        placeholder="서재 안 도서 검색"
+        value={value}
+        setValue={setValue}
+        fetchResult={debouncedSearch}
+        allowEmptyVal
+      />
+      {data && (
+        <>
+          {layout === 'list' && (
+            <section className="height-content mt-4 overflow-y-scroll bg-main pb-8">
+              <ListLayout allBooks={allBooks} />
+            </section>
+          )}
+          {layout === 'grid' && (
+            <section className="mt-3 h-[calc(100%_-_9.75rem_-_36px)] overflow-y-scroll">
+              <GridLayout allBooks={allBooks} />
+            </section>
+          )}
+          <div className="h-1" ref={observerTarget} />
+        </>
+      )}
 
-        {isToggledLibrarySelect && libraries && (
-          <LibrarySelectModal
-            onClose={setIsToggledLibrarySelect}
-            handleEdit={() => setIsToggledLibraryEdit(true)}
-            libraries={libraries}
-            selectedLibrary={selectedLibrary}
-            setSelectedLibrary={setSelectedLibrary}
-          />
-        )}
-        {isToggledLibraryEdit && libraries && (
-          <LibraryEditedModal
-            onClose={setIsToggledLibraryEdit}
-            handleOpenSelect={() => setIsToggledLibrarySelect(true)}
-            libraries={libraries}
-            refetchLibraries={refetchLibraries}
-          />
-        )}
-        {isToggledSort && <LibrarySortModal onClose={setIsToggledSort} refetchBooks={refetchBooks} />}
-      </>
-    )
+      {isToggledLibrarySelect && libraries && (
+        <LibrarySelectModal
+          onClose={setIsToggledLibrarySelect}
+          handleEdit={() => setIsToggledLibraryEdit(true)}
+          libraries={libraries}
+          selectedLibrary={selectedLibrary}
+          setSelectedLibrary={setSelectedLibrary}
+        />
+      )}
+      {isToggledLibraryEdit && libraries && (
+        <LibraryEditedModal
+          onClose={setIsToggledLibraryEdit}
+          handleOpenSelect={() => setIsToggledLibrarySelect(true)}
+          libraries={libraries}
+          refetchLibraries={refetchLibraries}
+        />
+      )}
+      {isToggledSort && <LibrarySortModal onClose={setIsToggledSort} refetchBooks={refetchBooks} />}
+    </>
   );
 };
 
