@@ -8,7 +8,7 @@ import Header from 'components/Header';
 
 import { addLibrary, removeLibrary } from 'services/library';
 
-import { Library } from 'types/library';
+import { Libraries } from 'types/library';
 
 import Content from './shared/Content';
 import ContentItem from './shared/ContentItem';
@@ -16,8 +16,8 @@ import ContentItem from './shared/ContentItem';
 type LibraryEditedModalProps = {
   onClose: React.Dispatch<SetStateAction<boolean>>;
   handleOpenSelect: React.Dispatch<SetStateAction<boolean>>;
-  libraries: Library[];
-  refetchLibraries: (options?: RefetchOptions) => Promise<QueryObserverResult<Library[], Error>>;
+  libraries: Libraries;
+  refetchLibraries: (options?: RefetchOptions) => Promise<QueryObserverResult<Libraries, Error>>;
 };
 
 const LibraryEditedModal = ({ onClose, handleOpenSelect, libraries, refetchLibraries }: LibraryEditedModalProps) => {
@@ -81,7 +81,7 @@ const LibraryEditedModal = ({ onClose, handleOpenSelect, libraries, refetchLibra
       <div className="m-4 mb-2">사용자 지정 서재</div>
       <div className="h-[calc(100%_-_9.5rem)] overflow-y-auto pb-8">
         <Content>
-          {libraries.map(({ libraryName, libraryId }) => (
+          {libraries.libraryList.map(({ libraryName, libraryId }) => (
             <ContentItem>
               <li key={libraryId} className="flex">
                 <button

@@ -6,14 +6,24 @@ type SearchBarProps = {
   value: string;
   setValue: React.Dispatch<React.SetStateAction<string>>;
   fetchResult: () => void;
+  allowEmptyVal: boolean;
 };
 
-const SearchBar = ({ placeholder, value, setValue, fetchResult }: SearchBarProps) => {
+const SearchBar = ({ placeholder, value, setValue, fetchResult, allowEmptyVal }: SearchBarProps) => {
   const handleClear = () => setValue('');
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const searchValue = e.target.value;
+    setValue(searchValue);
+
+    if (searchValue.length === 0 && !allowEmptyVal) return;
+    fetchResult();
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!value) return;
+    if (value.length === 0 && !allowEmptyVal) return;
 
     fetchResult();
   };
@@ -27,7 +37,7 @@ const SearchBar = ({ placeholder, value, setValue, fetchResult }: SearchBarProps
         className="h-[36px] w-full text-sm focus:outline-none"
         placeholder={placeholder}
         value={value}
-        onChange={(e) => setValue(e.target.value)}
+        onChange={handleChange}
       />
       {value && (
         <button type="button" onClick={handleClear} aria-label="clear button" className="ml-1">

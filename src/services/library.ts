@@ -1,5 +1,5 @@
 import { PaginationResponse } from 'types/api';
-import { LibraryBook, GetLibraryBooksParams, SortingType } from 'types/library';
+import { LibraryBook, GetLibraryBooksParams, SortingType, Libraries } from 'types/library';
 
 import api from '.';
 
@@ -9,7 +9,7 @@ export const getLibraryBooks = async (params: GetLibraryBooksParams, pageNum: nu
   queryString.append('pageNum', pageNum.toString());
   queryString.append('pageSize', '20');
   if (params.libraryId !== undefined) queryString.append('libraryId', params.libraryId.toString());
-  if (params.status) queryString.append('status', params.status);
+  if (params.status && params.status !== 'all') queryString.append('status', params.status);
   if (params.keyword) queryString.append('keyword', params.keyword);
 
   const response = await api.get(`/library?${queryString.toString()}`);
@@ -25,6 +25,12 @@ export const getLibrarySorting = async () => {
 
 export const changeLibrarySorting = async (sortingType: SortingType) => {
   await api.patch('/user/settings/sorting', { sortingType });
+};
+
+export const getLibraries = async () => {
+  const response = await api.get(`/libraries`);
+
+  return response.data.data as Libraries;
 };
 
 export const removeLibrary = async (removeId: number) => {

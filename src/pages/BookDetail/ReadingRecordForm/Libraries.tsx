@@ -2,14 +2,14 @@ import { FiPlus } from 'react-icons/fi';
 
 import CheckBox from 'components/CheckBox';
 
-import { Library } from 'types/library';
+import { CustomLibrary } from 'types/library';
 
 import ButtonSet from './shared/ButtonSet';
 import SubTitle from './shared/SubTitle';
 import Title from './shared/Title';
 
 type LibraryProps = {
-  libraries: Library[];
+  libraries: CustomLibrary[];
   selected: number[];
   setSelected: React.Dispatch<React.SetStateAction<number[]>>;
   onPrev: () => void;
