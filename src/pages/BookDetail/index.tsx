@@ -61,12 +61,7 @@ const BookDetail = () => {
   return (
     book && (
       <div className="height-without-header flex flex-col">
-        <Header
-          leftBtn={{
-            icon: <IoArrowBackOutline style={{ width: '24px', height: '24px' }} />,
-            handleLeftBtnClick: handleGoBack,
-          }}
-        />
+        <Header leftBtn={<IoArrowBackOutline style={{ width: '24px', height: '24px' }} onClick={handleGoBack} />} />
         <BookShelf cover={book.cover} title={book.title} />
         <section className="p-6 text-center">
           <h1 className={`${book.title.length > 50 ? 'text-[0.9rem]' : book.title.length < 30 && 'text-lg'} font-bold`}>

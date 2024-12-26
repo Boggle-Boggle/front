@@ -53,15 +53,13 @@ const Note = () => {
   return (
     <div className="relative h-screen bg-gray">
       <Header
-        title={{ text: '독서 노트' }}
-        leftBtn={{
-          icon: <IoArrowBackOutline style={{ width: '24px', height: '24px' }} />,
-          handleLeftBtnClick: handleGoBack,
-        }}
-        rightBtn={{
-          icon: <span className="font-black">저장</span>,
-          handleRightBtnClick: handleSave,
-        }}
+        title={<>독서 노트</>}
+        leftBtn={<IoArrowBackOutline style={{ width: '24px', height: '24px' }} onClick={handleGoBack} />}
+        rightBtn={
+          <button className="font-black" onClick={handleSave} type="submit">
+            저장
+          </button>
+        }
       />
       <section className="height-without-footer border-mains flex flex-col overflow-hidden rounded-tl-3xl border border-main bg-white pb-header">
         <img src={bookmark} className="h-13 header absolute left-10 top-header block w-12" alt="" />

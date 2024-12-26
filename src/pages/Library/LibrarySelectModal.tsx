@@ -41,15 +41,12 @@ const LibrarySelectModal = ({
       }}
     >
       <Header
-        title={{ text: '서재' }}
-        rightBtn={{
-          icon: (
-            <button onClick={handleOpenEdit} className="opacity-50" type="button">
-              편집
-            </button>
-          ),
-          handleRightBtnClick: () => {},
-        }}
+        title={<span className="text-base"> 서재</span>}
+        rightBtn={
+          <button onClick={handleOpenEdit} className="opacity-50" type="button">
+            편집
+          </button>
+        }
       />
       <section className="h-[calc(100%_-_4rem)] overflow-y-auto pb-5">
         <div className="mb-2 ml-4">기본 서재</div>

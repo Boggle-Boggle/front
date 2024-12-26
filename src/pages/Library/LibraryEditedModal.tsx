@@ -57,15 +57,12 @@ const LibraryEditedModal = ({ onClose, handleOpenSelect, libraries, refetchLibra
   return (
     <FullScreenModal>
       <Header
-        title={{ text: '서재 편집' }}
-        rightBtn={{
-          icon: (
-            <button onClick={handleClose} type="button">
-              완료
-            </button>
-          ),
-          handleRightBtnClick: () => {},
-        }}
+        title={<span className="text-base">서재 편집</span>}
+        rightBtn={
+          <button onClick={handleClose} type="button">
+            완료
+          </button>
+        }
       />
       <form className="flex h-10 w-full items-center justify-between px-4" onSubmit={(e) => handleAddLibrary(e)}>
         <input

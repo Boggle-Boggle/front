@@ -41,14 +41,11 @@ const Search = () => {
     <div className="relative h-screen bg-main">
       {query ? (
         <Header
-          title={{ text: '도서 검색' }}
-          leftBtn={{
-            icon: <IoArrowBackOutline style={{ width: '24px', height: '24px' }} />,
-            handleLeftBtnClick: handleGoBack,
-          }}
+          title={<>도서 검색</>}
+          leftBtn={<IoArrowBackOutline style={{ width: '24px', height: '24px' }} onClick={handleGoBack} />}
         />
       ) : (
-        <Header title={{ text: '도서 검색' }} />
+        <Header title={<>도서 검색</>} />
       )}
       <SearchBar
         placeholder="제목 및 저자로 검색이 가능해요"
