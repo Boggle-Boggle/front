@@ -1,3 +1,5 @@
+import { useNavigate } from 'react-router-dom';
+
 import { formatDateTimeToDate } from 'utils/format';
 
 import { LibraryBook } from 'types/library';
@@ -7,6 +9,8 @@ type ListLayoutProps = {
 };
 
 const ListLayout = ({ allBooks }: ListLayoutProps) => {
+  const navigate = useNavigate();
+
   return (
     <section className="p-4">
       {allBooks.map(({ readingRecordId, imageUrl, title, rating, recentReadDate, readingCount }) => {
@@ -18,7 +22,7 @@ const ListLayout = ({ allBooks }: ListLayoutProps) => {
             className="relative mb-9 h-28 w-full list-none rounded-[0.4375rem] bg-white shadow-[1px_1px_4px_0_rgba(0,0,0,0.1)]"
             key={readingRecordId}
           >
-            <button className="h-full w-full" type="button">
+            <button className="h-full w-full" type="button" onClick={() => navigate(`/record/${readingRecordId}`)}>
               <img
                 src={imageUrl}
                 alt={`${title} 북커버`}
