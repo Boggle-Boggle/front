@@ -1,10 +1,17 @@
 // 서재 조회
-export type Status = 'reading' | 'pending' | 'completed' | 'all';
-export type Name = '전체보기' | '읽는 중인 책' | '읽고 있는 책' | '다 읽은 책';
+
+export const STATUS = {
+  reading: '읽는 중인 책',
+  pending: '읽고 싶은 책',
+  completed: '다 읽은 책',
+} as const;
+
+type Status = keyof typeof STATUS;
+type Name = (typeof STATUS)[Status];
 
 export type StatusLibrary = {
-  status: Status;
-  libraryName: Name;
+  status: Status & 'all';
+  libraryName: Name & '전체보기';
   bookCount: number;
 };
 

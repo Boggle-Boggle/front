@@ -18,6 +18,8 @@ import halfStar3 from 'assets/stars/half/star3.png';
 import halfStar4 from 'assets/stars/half/star4.png';
 import halfStar5 from 'assets/stars/half/star5.png';
 
+import { BookDetail } from './book';
+
 // Status
 export const REDING_STATUS = [
   {
@@ -89,4 +91,27 @@ export type RecordType = {
 export type Note = {
   title: string;
   content: string;
+};
+
+type RecordLibraries = {
+  libraryId: number;
+  libraryName: string;
+};
+
+type RecordDate = {
+  id: number;
+  startReadDate: string | null;
+  endReadDate: string | null;
+};
+
+export type Record = {
+  readingRecordId: number;
+  bookData: Omit<BookDetail, 'isbn'> & { page: number };
+  recordData: {
+    status: StatusType;
+    rating: number | null;
+    readDateList: RecordDate[];
+    libraries: RecordLibraries[];
+    isBookVisible: boolean;
+  };
 };

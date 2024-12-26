@@ -1,5 +1,5 @@
 import { BookCase } from 'types/book';
-import { Note, RecordType } from 'types/record';
+import { Note, RecordType, Record } from 'types/record';
 
 import api from '.';
 
@@ -7,6 +7,12 @@ export const addRecord = async (record: RecordType) => {
   const response = await api.post(`/reading-record`, record);
 
   return response.data.data as number;
+};
+
+export const getRecord = async (recordId: string) => {
+  const response = await api.get(`/reading-record/${recordId}`);
+
+  return response.data.data as Record;
 };
 
 export const getBookCase = async () => {
