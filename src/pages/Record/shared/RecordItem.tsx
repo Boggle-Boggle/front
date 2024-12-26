@@ -6,7 +6,7 @@ type RecordItemProps = {
 
 const RecordItem = ({ icons, title, content }: RecordItemProps) => {
   return (
-    <div className="flex justify-between border-b border-main px-3 py-4">
+    <div className="flex justify-between border-b border-main px-4 py-[0.875rem]">
       <span className="flex items-center">
         {icons}
         <p className="ml-2">{title}</p>
