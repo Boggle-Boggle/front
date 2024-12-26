@@ -46,6 +46,10 @@ const RecordTab = () => {
             <p className="mr-2 text-xs font-semibold">발행일</p>
             <p className="text-xs opacity-70">2018.04.16</p>
           </span>
+          <span className="mt-2 flex">
+            <p className="mr-2 text-xs font-semibold">페이지</p>
+            <p className="text-xs opacity-70">203 p</p>
+          </span>
           <span className="mt-4 flex justify-between text-xs font-bold">
             책소개
             <button type="button" onClick={handleExpandToggle}>
