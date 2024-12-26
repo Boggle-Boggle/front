@@ -2,13 +2,21 @@ import { useReducer } from 'react';
 import { CiCircleInfo, CiTimer, CiFlag1, CiCalendarDate, CiUnread, CiStar, CiShoppingTag } from 'react-icons/ci';
 import { GoChevronDown, GoChevronUp } from 'react-icons/go';
 
+import { formatDateTimeToDate } from 'utils/format';
+
+import { STATUS } from 'types/library';
+import { Record } from 'types/record';
+
 import RecordItem from './shared/RecordItem';
 
-const RecordTab = () => {
+type RecordTabProps = {
+  book: Record;
+};
+
+const RecordTab = ({ book }: RecordTabProps) => {
+  const { bookData, recordData } = book;
   const [isToggledInfo, handleInfoToggle] = useReducer((prev) => !prev, false);
   const [isToggledExpand, handleExpandToggle] = useReducer((prev) => !prev, true);
-
-  const libraries = ['완독서', '구병모 소설 모음집', '시은이한테 추천해줌'];
 
   return (
     <>
@@ -32,23 +40,23 @@ const RecordTab = () => {
           <p className="text-xs font-bold">책정보</p>
           <span className="mt-2 flex">
             <p className="mr-2 text-xs font-semibold">저자</p>
-            <p className="text-xs opacity-70">구병모</p>
+            <p className="text-xs opacity-70">{bookData.author}</p>
           </span>
           <span className="mt-2 flex">
             <p className="mr-2 text-xs font-semibold">분야</p>
-            <p className="text-xs opacity-70">한국소설</p>
+            <p className="text-xs opacity-70">{bookData.genre}</p>
           </span>
           <span className="mt-2 flex">
             <p className="mr-2 text-xs font-semibold">출판사</p>
-            <p className="text-xs opacity-70">위즈덤하우스</p>
+            <p className="text-xs opacity-70">{bookData.publisher}</p>
           </span>
           <span className="mt-2 flex">
             <p className="mr-2 text-xs font-semibold">발행일</p>
-            <p className="text-xs opacity-70">2018.04.16</p>
+            <p className="text-xs opacity-70">{formatDateTimeToDate(bookData.pubDate)}</p>
           </span>
           <span className="mt-2 flex">
             <p className="mr-2 text-xs font-semibold">페이지</p>
-            <p className="text-xs opacity-70">203 p</p>
+            <p className="text-xs opacity-70">{bookData.page} p</p>
           </span>
           <span className="mt-4 flex justify-between text-xs font-bold">
             책소개
@@ -56,43 +64,75 @@ const RecordTab = () => {
               <p className="font-normal opacity-70">더보기</p>
             </button>
           </span>
-          <p className={`mt-2 text-xs opacity-70 ${isToggledExpand}`}>
-            한국 소설에 가장 강렬하게 새겨질 새로운 여성 서사를 탄생시킨 구병모 작가의 《파과》가 새 옷을 갈아입었다.
-            40여 년간 날카롭고 냉혹하게 청부 살인을 업으로 삼아온 60대 여성 킬러 ‘조각(爪角)’. 몸도 기억도 예전 같지
-            않게 삐걱거리기 시작하면서 이제는 퇴물 취급을 받는다...
-          </p>
+          <p className={`mt-2 text-xs leading-5 opacity-70 ${isToggledExpand}`}>{bookData.plot}</p>
         </section>
       )}
 
-      <RecordItem icons={<CiTimer style={{ width: '20px', height: '20px' }} />} title="진행도" content="다 읽은 책" />
       <RecordItem
-        icons={<CiCalendarDate style={{ width: '20px', height: '20px' }} />}
-        title="독서기간"
-        content="2021.10.15 - 2031.11.15"
+        icons={<CiTimer style={{ width: '20px', height: '20px' }} />}
+        title="진행도"
+        content={STATUS[recordData.status]}
       />
-      <RecordItem icons={<CiFlag1 style={{ width: '20px', height: '20px' }} />} title="회독" content="1회독" />
+
+      {recordData.readDateList.map((date, idx) => {
+        const startDate = date.startReadDate && formatDateTimeToDate(date.startReadDate);
+        const endDate = date.endReadDate && formatDateTimeToDate(date.endReadDate);
+
+        if (!startDate) return;
+        if (idx === 0)
+          return (
+            <li key={date.id} className="list-none">
+              <RecordItem
+                icons={<CiCalendarDate style={{ width: '20px', height: '20px' }} />}
+                title="독서기간"
+                content={`${startDate} ~ ${endDate ?? '독서중'}`}
+              />
+            </li>
+          );
+        return (
+          <li key={date.id} className="list-none">
+            <RecordItem
+              icons={<CiCalendarDate style={{ width: '20px', height: '20px' }} />}
+              title="독서기간"
+              content={`${startDate} ~ ${endDate ?? '독서중'}`}
+            />
+          </li>
+        );
+      })}
+
+      <RecordItem
+        icons={<CiFlag1 style={{ width: '20px', height: '20px' }} />}
+        title="회독"
+        content={`${recordData.readDateList.length}회독`}
+      />
       <RecordItem
         icons={<CiStar style={{ width: '20px', height: '20px' }} />}
         title="내 평점"
-        content="⭐️⭐️⭐️⭐️⭐️"
+        content={recordData.rating}
       />
 
-      {libraries.map((library, idx) => {
+      {recordData.libraries.map((library, idx) => {
         if (idx === 0)
           return (
-            <RecordItem
-              icons={<CiShoppingTag style={{ width: '20px', height: '20px' }} />}
-              title="서재분류"
-              content="완독책"
-            />
+            <li key={library.libraryId}>
+              <RecordItem
+                icons={<CiShoppingTag style={{ width: '20px', height: '20px' }} />}
+                title="서재분류"
+                content={library.libraryName}
+              />
+            </li>
           );
-        return <RecordItem content={library} />;
+        return (
+          <li key={library.libraryId}>
+            <RecordItem content={library.libraryName} />;
+          </li>
+        );
       })}
 
       <RecordItem
         icons={<CiUnread style={{ width: '20px', height: '20px' }} />}
-        title="책장에서 숨기기"
-        content="책장에서 숨김"
+        title={recordData.isBookVisible ? '책장에서 보임' : '책장에서 숨김'}
+        content={recordData.isBookVisible ? '책장에서 보임' : '책장에서 숨김'}
       />
 
       <RecordItem />
