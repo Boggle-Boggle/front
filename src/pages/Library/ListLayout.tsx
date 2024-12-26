@@ -19,7 +19,7 @@ const ListLayout = ({ allBooks }: ListLayoutProps) => {
 
         return (
           <li
-            className="relative mb-9 h-28 w-full list-none rounded-[0.4375rem] bg-white shadow-[1px_1px_4px_0_rgba(0,0,0,0.1)]"
+            className="relative mb-9 h-28 w-full rounded-[0.4375rem] bg-white shadow-[1px_1px_4px_0_rgba(0,0,0,0.1)]"
             key={readingRecordId}
           >
             <button className="h-full w-full" type="button" onClick={() => navigate(`/record/${readingRecordId}`)}>

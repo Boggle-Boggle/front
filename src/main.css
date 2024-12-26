@@ -5,13 +5,11 @@
 @layer base {
   body {
     @apply text-text;
+    @apply list-none;
   }
 }
 
 @layer utilities {
-  .centered {
-    @apply flex items-center justify-center;
-  }
   .height-without-header {
     height: calc(100vh - 4rem);
   }
@@ -78,10 +76,10 @@
     url(https://hangeul.pstatic.net/hangeul_static/webfont/MaruBuri/MaruBuri-ExtraLight.ttf) format('truetype');
 }
 
-body,
+/* body,
 html {
   font-family: 'MaruBuri', sans-serif;
-}
+} */
 
 @media (min-width: 320px) {
   html {

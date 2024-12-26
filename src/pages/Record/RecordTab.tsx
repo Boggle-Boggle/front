@@ -81,7 +81,7 @@ const RecordTab = ({ book }: RecordTabProps) => {
         if (!startDate) return;
         if (idx === 0)
           return (
-            <li key={date.id} className="list-none">
+            <li key={date.id}>
               <RecordItem
                 icons={<CiCalendarDate style={{ width: '20px', height: '20px' }} />}
                 title="독서기간"
@@ -90,7 +90,7 @@ const RecordTab = ({ book }: RecordTabProps) => {
             </li>
           );
         return (
-          <li key={date.id} className="list-none">
+          <li key={date.id}>
             <RecordItem
               icons={<CiCalendarDate style={{ width: '20px', height: '20px' }} />}
               title="독서기간"
