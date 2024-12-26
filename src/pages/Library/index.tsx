@@ -99,25 +99,23 @@ const Library = () => {
   return (
     <>
       <Header
-        rightBtn={{
-          icon: (
-            <div className="flex">
-              {layout === 'list' && (
-                <FiGrid style={{ width: '24px', height: '24px' }} onClick={() => setLayout('grid')} />
-              )}
-              {layout === 'grid' && (
-                <FiList style={{ width: '24px', height: '24px' }} onClick={() => setLayout('list')} />
-              )}
-              <span className="w-2" />
-              <FiMoreVertical style={{ width: '24px', height: '24px' }} onClick={() => setIsToggledSort(true)} />
-            </div>
-          ),
-          handleRightBtnClick: () => {},
-        }}
-        title={{
-          text: `${title}(${data?.pages[0]?.totalResultCnt ?? 0})`,
-          handleTitleClick: () => setIsToggledLibrarySelect(true),
-        }}
+        rightBtn={
+          <div className="flex">
+            {layout === 'list' && (
+              <FiGrid style={{ width: '24px', height: '24px' }} onClick={() => setLayout('grid')} />
+            )}
+            {layout === 'grid' && (
+              <FiList style={{ width: '24px', height: '24px' }} onClick={() => setLayout('list')} />
+            )}
+            <span className="w-2" />
+            <FiMoreVertical style={{ width: '24px', height: '24px' }} onClick={() => setIsToggledSort(true)} />
+          </div>
+        }
+        title={
+          <button onClick={() => setIsToggledLibrarySelect(true)} type="button">
+            {`${title}(${data?.pages[0]?.totalResultCnt ?? 0})`}
+          </button>
+        }
       />
       <SearchBar
         placeholder="서재 안 도서 검색"

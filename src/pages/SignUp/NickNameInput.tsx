@@ -35,11 +35,8 @@ const NickNameInput = ({ nickName, isValid, updateNickName, onNext }: NickNameIn
   return (
     <>
       <Header
-        title={{ text: '회원가입' }}
-        leftBtn={{
-          icon: <GoArrowLeft style={{ width: '24px', height: '24px' }} />,
-          handleLeftBtnClick,
-        }}
+        title={<>회원가입</>}
+        leftBtn={<GoArrowLeft style={{ width: '24px', height: '24px' }} onClick={handleLeftBtnClick} />}
       />
       <section className="height-without-header flex w-full flex-col p-9">
         <h1 className="text-[32px] font-semibold text-text">

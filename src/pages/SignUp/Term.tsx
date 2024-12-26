@@ -23,11 +23,8 @@ const Term = ({ selectedTerm, setSelectedTerm, handleCheckboxChange }: TermProps
   return (
     <div className="absolute top-0 z-20 w-full bg-white">
       <Header
-        title={{ text: title ?? '약관동의' }}
-        rightBtn={{
-          icon: <BiX style={{ width: '28px', height: '28px' }} />,
-          handleRightBtnClick: () => setSelectedTerm(null),
-        }}
+        title={title ?? '약관동의'}
+        rightBtn={<BiX style={{ width: '28px', height: '28px' }} onClick={() => setSelectedTerm(null)} />}
       />
       <section className="height-without-header mx-4 flex flex-col overflow-y-auto">
         <p className="h-full overflow-y-scroll whitespace-pre-wrap">{content}</p>

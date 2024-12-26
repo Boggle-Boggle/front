@@ -57,7 +57,7 @@ const LibrarySortModal = ({ onClose, refetchBooks }: LibrarySortModalProps) => {
         onClose(false);
       }}
     >
-      <Header title={{ text: '정렬' }} />
+      <Header title={<span className="text-base">정렬</span>} />
       <Content>
         {isFetched &&
           sortingOptions.map((sortingOption) => (

@@ -59,13 +59,12 @@ const TermsAgreement = ({ terms, setTerms, onPrev, onNext }: TermsAgreementProps
 
   return (
     <>
-      <Header
-        title={{ text: '회원가입' }}
-        leftBtn={{
-          icon: <GoArrowLeft style={{ width: '24px', height: '24px' }} />,
-          handleLeftBtnClick: onPrev,
-        }}
-      />
+      {!selectedTerm && (
+        <Header
+          title={<>회원가입</>}
+          leftBtn={<GoArrowLeft style={{ width: '24px', height: '24px' }} onClick={onPrev} />}
+        />
+      )}
       <section className="height-without-header flex w-full flex-col p-9">
         <h1 className="text-[32px] font-semibold">
           빼곡을
