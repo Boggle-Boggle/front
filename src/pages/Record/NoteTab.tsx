@@ -1,34 +1,61 @@
+import { useQuery } from '@tanstack/react-query';
+
 import { useReducer } from 'react';
 import { GoChevronDown, GoChevronUp } from 'react-icons/go';
 
+import Loading from 'pages/Loading';
+
+import { getNote } from 'services/record';
+import { formatDateTimeToDate } from 'utils/format';
+
 import NoteItem from './shared/NoteItem';
 
-const a = [1, 2, 3, 4];
-const b = [1, 2, 3];
+type NoteTabProps = {
+  recordId: string;
+};
 
-const NoteTab = () => {
+const NoteTab = ({ recordId }: NoteTabProps) => {
   const [isToggled, handleToggle] = useReducer((prev) => !prev, true);
+  const { data, isLoading } = useQuery({
+    queryKey: ['note', recordId],
+    queryFn: () => getNote(recordId!),
+  });
 
-  return a.map((it) => (
-    <>
-      <div className="flex justify-between border-b-4 border-main px-4 py-[0.875rem]">
-        <p className="font-bold">
-          {it}회독
-          <span className="ml-1 font-normal opacity-50">(2023.12.22~2024.01.01)</span>
-        </p>
-        {isToggled ? (
-          <button onClick={handleToggle} aria-label="도서 정보 자세히 보기" type="button">
-            <GoChevronUp style={{ width: '20px', height: '20px' }} />
-          </button>
-        ) : (
-          <button onClick={handleToggle} aria-label="도서 정보 간략히 보기" type="button">
-            <GoChevronDown style={{ width: '20px', height: '20px' }} />
-          </button>
-        )}
-      </div>
-      {isToggled && b.map(() => <NoteItem />)}
-    </>
-  ));
+  // TODO : 독서노트 수정페이지로 이동
+  // const handleGoToNote = () => {
+  //   navigate(`/note/write`, { state: { recordId } });
+  // };
+
+  if (isLoading) return <Loading />;
+
+  return (
+    data &&
+    data.map(({ readDate, notes }, idx) => {
+      const startDate = readDate.startReadDate && formatDateTimeToDate(readDate.startReadDate);
+      const endDate = readDate.endReadDate ? formatDateTimeToDate(readDate.endReadDate) : '독서중';
+
+      return (
+        <>
+          <div className="flex justify-between border-b-4 border-main px-4 py-[0.875rem]">
+            <p className="font-bold">
+              {idx}회독
+              {idx > 0 && <span className="ml-1 font-normal opacity-50">{`${startDate}~${endDate}`}</span>}
+            </p>
+            {isToggled ? (
+              <button onClick={handleToggle} aria-label="도서 정보 자세히 보기" type="button">
+                <GoChevronUp style={{ width: '20px', height: '20px' }} />
+              </button>
+            ) : (
+              <button onClick={handleToggle} aria-label="도서 정보 간략히 보기" type="button">
+                <GoChevronDown style={{ width: '20px', height: '20px' }} />
+              </button>
+            )}
+          </div>
+          {isToggled && notes.map((note) => <NoteItem note={note} />)}
+        </>
+      );
+    })
+  );
 };
 
 export default NoteTab;

@@ -19,13 +19,7 @@ const Record = () => {
   const [selected, setSelected] = useState<(typeof TABS)[number]>('독서기록');
   const observer = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
-
   const { recordId } = useParams();
-
-  // TODO : 독서노트 이동 로직
-  // const handleGoToNote = () => {
-  //   navigate(`/note/write`, { state: { recordId } });
-  // };
 
   const { data, isLoading } = useQuery({
     queryKey: ['record', recordId],
@@ -108,7 +102,7 @@ const Record = () => {
               ))}
             </ul>
             {selected === '독서기록' && <RecordTab book={data} />}
-            {selected === '독서노트' && <NoteTab />}
+            {selected === '독서노트' && recordId && <NoteTab recordId={recordId} />}
           </section>
         </div>
       </>
