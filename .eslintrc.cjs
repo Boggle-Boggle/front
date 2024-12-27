@@ -95,5 +95,6 @@ module.exports = {
     'no-alert': 'off',
     'no-nested-ternary': 'off',
     '@typescript-eslint/no-shadow': 'off',
+    'consistent-return': 'off',
   },
 };

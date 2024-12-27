@@ -25,6 +25,7 @@ const Selector = ({ list, selected, setSelected }: SelectorProps) => {
     if (ref.current && selected) {
       ref.current.scrollTop = selected * ITEM_HEIGHT - ITEM_HEIGHT;
     }
+    // TODO : 린트에러 확인
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -32,7 +33,7 @@ const Selector = ({ list, selected, setSelected }: SelectorProps) => {
     <ul
       ref={ref}
       onScroll={handleScroll}
-      className="relative mt-6 h-[200px] w-full list-none overflow-y-scroll scroll-smooth p-0"
+      className="relative mt-6 h-[200px] w-full overflow-y-scroll scroll-smooth p-0"
       style={{
         scrollSnapType: 'y mandatory',
         scrollBehavior: 'smooth',
