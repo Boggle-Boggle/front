@@ -34,7 +34,7 @@ const Record = () => {
 
   useEffect(() => {
     const container = observer.current;
-    if (!container) return undefined;
+    if (!container) return;
 
     const handleScroll = () => {
       setHasHeaderBackground(container.scrollTop > 200);
@@ -88,7 +88,7 @@ const Record = () => {
             </span>
           </section>
 
-          <section className="relative flex h-28 w-full flex-col justify-center bg-white px-7" ref={observer}>
+          <section className="relative flex h-28 w-full flex-col justify-center bg-white px-7">
             <p className="text-center font-bold leading-tight">{data.bookData.title}</p>
             <p className="my-2 text-center text-xs opacity-50">{data.bookData.author}</p>
           </section>
