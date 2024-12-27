@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { FiArrowLeft, FiMoreVertical } from 'react-icons/fi';
 import { useNavigate, useParams } from 'react-router-dom';
 
@@ -17,7 +17,6 @@ const TABS = ['독서기록', '독서노트'] as const;
 const Record = () => {
   const [hasHeaderBackground, setHasHeaderBackground] = useState<boolean>(false);
   const [selected, setSelected] = useState<(typeof TABS)[number]>('독서기록');
-  const observer = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
   const { recordId } = useParams();
 
@@ -26,19 +25,18 @@ const Record = () => {
     queryFn: () => getRecord(recordId!),
   });
 
-  useEffect(() => {
-    const container = observer.current;
-    if (!container) return;
+  const setObserver = useCallback((node: HTMLDivElement | null) => {
+    if (node) {
+      const handleScroll = () => {
+        setHasHeaderBackground(node.scrollTop > 200);
+      };
 
-    const handleScroll = () => {
-      setHasHeaderBackground(container.scrollTop > 200);
-    };
+      node.addEventListener('scroll', handleScroll);
 
-    container.addEventListener('scroll', handleScroll);
-
-    return () => {
-      container.removeEventListener('scroll', handleScroll);
-    };
+      return () => {
+        node.removeEventListener('scroll', handleScroll);
+      };
+    }
   }, []);
 
   if (isLoading) return <Loading />;
@@ -61,7 +59,9 @@ const Record = () => {
 
         <div
           className="height-without-footer relative flex-col overflow-y-auto overflow-x-hidden bg-white pt-header"
-          ref={observer}
+          ref={(node) => {
+            setObserver(node);
+          }}
         >
           <div
             style={{
