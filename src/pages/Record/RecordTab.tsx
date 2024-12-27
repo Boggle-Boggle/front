@@ -1,4 +1,4 @@
-import { useReducer } from 'react';
+import { useEffect, useReducer, useRef, useState } from 'react';
 import { CiCircleInfo, CiTimer, CiFlag1, CiCalendarDate, CiUnread, CiStar, CiShoppingTag } from 'react-icons/ci';
 import { GoChevronDown, GoChevronUp } from 'react-icons/go';
 
@@ -15,8 +15,17 @@ type RecordTabProps = {
 
 const RecordTab = ({ book }: RecordTabProps) => {
   const { bookData, recordData } = book;
-  const [isToggledInfo, handleInfoToggle] = useReducer((prev) => !prev, false);
-  const [isToggledExpand, handleExpandToggle] = useReducer((prev) => !prev, true);
+  const [isClamped, setIsClamped] = useState<boolean>(true);
+  const [isToggledInfo, handleInfoToggle] = useReducer((prev) => !prev, true);
+  const [isToggledExpand, handleExpandToggle] = useReducer((prev) => !prev, false);
+  const plotRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (plotRef.current) {
+      const plot = plotRef.current;
+      setIsClamped(plot.clientHeight < plot.scrollHeight);
+    }
+  }, []);
 
   return (
     <>
@@ -60,11 +69,15 @@ const RecordTab = ({ book }: RecordTabProps) => {
           </span>
           <span className="mt-4 flex justify-between text-xs font-bold">
             책소개
-            <button type="button" onClick={handleExpandToggle}>
-              <p className="font-normal opacity-70">더보기</p>
-            </button>
+            {isClamped && (
+              <button type="button" onClick={handleExpandToggle}>
+                <p className="font-normal opacity-70">{isToggledExpand ? '간략히' : '더보기'}</p>
+              </button>
+            )}
           </span>
-          <p className={`mt-2 text-xs leading-5 opacity-70 ${isToggledExpand}`}>{bookData.plot}</p>
+          <p className={`mt-2 text-xs leading-5 opacity-70 ${isToggledExpand || 'line-clamp-4'}`} ref={plotRef}>
+            {bookData.plot}
+          </p>
         </section>
       )}
 
@@ -81,7 +94,7 @@ const RecordTab = ({ book }: RecordTabProps) => {
         if (!startDate) return;
         if (idx === 0)
           return (
-            <li key={date.id}>
+            <li key={date.readDateId}>
               <RecordItem
                 icons={<CiCalendarDate style={{ width: '20px', height: '20px' }} />}
                 title="독서기간"
@@ -90,7 +103,7 @@ const RecordTab = ({ book }: RecordTabProps) => {
             </li>
           );
         return (
-          <li key={date.id}>
+          <li key={date.readDateId}>
             <RecordItem
               icons={<CiCalendarDate style={{ width: '20px', height: '20px' }} />}
               title="독서기간"
