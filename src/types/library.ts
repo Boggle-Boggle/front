@@ -10,8 +10,8 @@ type Status = keyof typeof STATUS;
 type Name = (typeof STATUS)[Status];
 
 export type StatusLibrary = {
-  status: Status & 'all';
-  libraryName: Name & '전체보기';
+  status: Status | 'all';
+  libraryName: Name | '전체보기';
   bookCount: number;
 };
 
@@ -41,7 +41,7 @@ export type LibraryBook = {
 
 export type GetLibraryBooksParams = {
   libraryId?: number;
-  status?: Status;
+  status?: Status | 'all';
   pageSize?: number;
   keyword?: string;
 };
