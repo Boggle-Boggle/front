@@ -17,6 +17,9 @@ const Note = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
+  const { recordId } = location.state;
+  console.log(`${recordId} 번 독서노트 작성중`);
+
   const handleGoBack = () => {
     navigate(-1);
   };
