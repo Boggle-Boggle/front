@@ -1,9 +1,11 @@
 import { useRef, useState } from 'react';
+import { CiBookmarkPlus, CiShoppingTag } from 'react-icons/ci';
 import { IoArrowBackOutline } from 'react-icons/io5';
 import { useNavigate, useLocation } from 'react-router-dom';
 
 import Header from 'components/Header';
 
+import useKeyboardStatus from 'hooks/useKeyboardStatus';
 import { addNote } from 'services/record';
 
 import bookmark from 'assets/bookmarkBig.png';
@@ -15,6 +17,7 @@ const Note = () => {
   const [title, setTitle] = useState<string>('');
   const [content, setContent] = useState<string>('');
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const isKeyboardActive = useKeyboardStatus();
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -36,7 +39,6 @@ const Note = () => {
       alert('내용을 적어주세요');
       return;
     }
-    const { recordId } = location.state;
 
     if (recordId) {
       addNote(recordId, { title, content });
@@ -95,21 +97,17 @@ const Note = () => {
         />
       </section>
       {/* 키보드 활성화 여부에 따라 top-범위 지정 */}
-      <div className="absolute bottom-footer flex h-10 w-full items-center justify-between bg-main">
+      <div
+        className={`absolute ${isKeyboardActive ? 'bottom-0' : 'bottom-footer'} flex h-10 w-full items-center justify-between bg-main`}
+      >
         <section>
           {/* TODO : 2차 배포에 포함. 노트추가 부가기능 */}
-          {/* <button className="px-3 py-2" onClick={() => {}} type="button">
-      <PiBooksDuotone style={{ width: '24px', height: '24px', color: '#9B9999' }} />
-    </button>
-    <button className="px-3 py-2" onClick={() => {}} type="button">
-      <PiBooksDuotone style={{ width: '24px', height: '24px', color: '#9B9999' }} />
-    </button>
-    <button className="px-3 py-2" onClick={() => {}} type="button">
-      <PiBooksDuotone style={{ width: '24px', height: '24px', color: '#9B9999' }} />
-    </button>
-    <button className="px-3 py-2" onClick={() => {}} type="button">
-      <PiBooksDuotone style={{ width: '24px', height: '24px', color: '#9B9999' }} />
-    </button> */}
+          <button className="px-3 py-2" onClick={() => {}} type="button" aria-label="페이지 입력하기">
+            <CiBookmarkPlus style={{ width: '24px', height: '24px', color: '#9B9999' }} />
+          </button>
+          <button className="px-3 py-2" onClick={() => {}} type="button" aria-label="태그 추가하기">
+            <CiShoppingTag style={{ width: '24px', height: '24px', color: '#9B9999' }} />
+          </button>
         </section>
 
         <span className="pr-3 text-sm">{content?.length ?? 0}자/256자</span>
