@@ -1,4 +1,5 @@
 import { CiShoppingTag } from 'react-icons/ci';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import { formatDateTimeToDate } from 'utils/format';
 
@@ -10,8 +11,16 @@ type NoteItemProps = {
 
 const NoteItem = ({ note }: NoteItemProps) => {
   const { title, content, tags, selectedDate, page, pages } = note;
+
+  const navigate = useNavigate();
+  const { recordId } = useParams();
+
+  const handleGoToNote = () => {
+    navigate(`/note/write`, { state: { recordId, note } });
+  };
+
   return (
-    <section className="border-b-4 border-main p-7 text-center">
+    <button className="w-full border-b-4 border-main p-7 text-center" type="button" onClick={handleGoToNote}>
       <p className="font-bold">{title}</p>
       <p className="pb-4 pt-2 text-xs opacity-50">
         {selectedDate && formatDateTimeToDate(selectedDate)}
@@ -31,7 +40,7 @@ const NoteItem = ({ note }: NoteItemProps) => {
           </>
         )}
       </div>
-    </section>
+    </button>
   );
 };
 
