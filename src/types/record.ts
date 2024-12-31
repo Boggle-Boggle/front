@@ -112,8 +112,16 @@ export type Record = {
 };
 
 export type AddNoteParams = {
-  title: string;
-  content: string;
+  readDateId: null | number;
+  selectedDate: null | string;
+  title: null | string;
+  content: null | string;
+  page: null | number;
+  pages: null | {
+    startPage: number;
+    endPage: number;
+  };
+  tags: string[];
 };
 
 export type Note = {
