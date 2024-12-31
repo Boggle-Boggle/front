@@ -126,7 +126,7 @@ export type AddNoteParams = {
 
 export type Note = {
   noteId: number;
-  title: string;
+  title: string | null;
   selectedDate: string | null;
   page: number | null;
   pages: {

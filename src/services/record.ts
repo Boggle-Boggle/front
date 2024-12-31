@@ -25,6 +25,10 @@ export const addNote = (recordId: number, note: AddNoteParams) => {
   api.post(`/reading-record/${recordId}/note`, note);
 };
 
+export const updateNote = (recordId: number, noteId: number, note: Partial<AddNoteParams>) => {
+  api.patch(`/reading-record/${recordId}/note/${noteId}`, note);
+};
+
 export const getNote = async (recordId: string) => {
   const response = await api.get(`/reading-record/${recordId}/note`);
 
