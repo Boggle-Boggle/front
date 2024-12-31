@@ -93,7 +93,7 @@ type RecordLibraries = {
   libraryName: string;
 };
 
-type RecordDate = {
+export type RecordDate = {
   readDateId: number;
   startReadDate: string | null;
   endReadDate: string | null;
