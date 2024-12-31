@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 
 import { useCallback, useState } from 'react';
-import { FiArrowLeft, FiMoreVertical } from 'react-icons/fi';
+import { FiArrowLeft, FiMoreVertical, FiEdit } from 'react-icons/fi';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import Header from 'components/Header';
@@ -24,6 +24,10 @@ const Record = () => {
     queryKey: ['record', recordId],
     queryFn: () => getRecord(recordId!),
   });
+
+  const handleGoToNote = () => {
+    navigate(`/note/write`, { state: { recordId } });
+  };
 
   const setObserver = useCallback((node: HTMLDivElement | null) => {
     if (node) {
@@ -102,7 +106,20 @@ const Record = () => {
               ))}
             </ul>
             {selected === '독서기록' && <RecordTab book={data} />}
-            {selected === '독서노트' && recordId && <NoteTab recordId={recordId} />}
+            {selected === '독서노트' && recordId && (
+              <>
+                <NoteTab recordId={recordId} />
+
+                <button
+                  type="button"
+                  className="fixed bottom-[6rem] right-[1rem] flex h-16 w-16 items-center justify-center rounded-full bg-accent shadow-lg"
+                  onClick={handleGoToNote}
+                  aria-label="독서노트 작성하기"
+                >
+                  <FiEdit style={{ width: '24px', height: '24px', color: 'white' }} />
+                </button>
+              </>
+            )}
           </section>
         </div>
       </>

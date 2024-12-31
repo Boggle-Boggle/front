@@ -1,9 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 
 import { useReducer } from 'react';
-import { FiEdit } from 'react-icons/fi';
 import { GoChevronDown, GoChevronUp } from 'react-icons/go';
-import { useNavigate } from 'react-router-dom';
 
 import Loading from 'pages/Loading';
 
@@ -17,21 +15,16 @@ type NoteTabProps = {
 };
 
 const NoteTab = ({ recordId }: NoteTabProps) => {
-  const navigate = useNavigate();
   const [isToggled, handleToggle] = useReducer((prev) => !prev, false);
   const { data, isLoading } = useQuery({
     queryKey: ['note', recordId],
     queryFn: () => getNote(recordId!),
   });
 
-  const handleGoToNote = () => {
-    navigate(`/note/write`, { state: { recordId } });
-  };
-
   if (isLoading) return <Loading />;
 
   return (
-    data &&
+    data !== undefined &&
     data.map(({ readDate, notes }, idx) => {
       const startDate = readDate.startReadDate && formatDateTimeToDate(readDate.startReadDate);
       const endDate = readDate.endReadDate ? formatDateTimeToDate(readDate.endReadDate) : '독서중';
@@ -54,14 +47,6 @@ const NoteTab = ({ recordId }: NoteTabProps) => {
             )}
           </div>
           {isToggled && notes.map((note) => <NoteItem note={note} />)}
-          <button
-            type="button"
-            className="fixed bottom-[6rem] right-[1rem] flex h-16 w-16 items-center justify-center rounded-full bg-accent shadow-lg"
-            onClick={handleGoToNote}
-            aria-label="독서노트 작성하기"
-          >
-            <FiEdit style={{ width: '24px', height: '24px', color: 'white' }} />
-          </button>
         </>
       );
     })
