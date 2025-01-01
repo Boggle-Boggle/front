@@ -1,5 +1,6 @@
 import { BiBook, BiBookOpen, BiCool } from 'react-icons/bi';
 import { RiPencilLine } from 'react-icons/ri';
+import { useNavigate } from 'react-router-dom';
 
 import useModal from 'hooks/useModal';
 
@@ -9,6 +10,7 @@ import ContentItem from './shared/ContentItem';
 
 const MyPage = () => {
   const { isOpen, open, close, scrollPos } = useModal();
+  const navigate = useNavigate();
 
   return (
     <div className="bg-main px-5 py-[6.5rem]">
@@ -55,7 +57,7 @@ const MyPage = () => {
       </Content>
       <Content>
         <ContentItem handleClick={open}>로그아웃</ContentItem>
-        <ContentItem>서비스 탈퇴</ContentItem>
+        <ContentItem handleClick={() => navigate('deleteAccount')}>서비스 탈퇴</ContentItem>
       </Content>
 
       {isOpen && <LogoutModal isOpen={isOpen} close={close} scrollPos={scrollPos} />}

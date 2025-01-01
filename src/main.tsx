@@ -10,6 +10,7 @@ import Home from 'pages/Home';
 import Library from 'pages/Library';
 import Login from 'pages/Login';
 import MyPage from 'pages/MyPage';
+import DeleteAccount from 'pages/MyPage/DeleteAccount';
 import EditNickname from 'pages/MyPage/EditNickname';
 import Note from 'pages/Note';
 import PrivateRoute from 'pages/PrivateRoute';
@@ -33,6 +34,7 @@ const router = createBrowserRouter([
           { path: 'library', element: <Library /> },
           { path: 'myPage', element: <MyPage /> },
           { path: 'myPage/nickname', element: <EditNickname /> },
+          { path: 'myPage/deleteAccount', element: <DeleteAccount /> },
           { path: 'search', element: <Search /> },
           { path: 'detail/:detailId', element: <BookDetail /> },
           { path: 'note/write', element: <Note /> },
