@@ -46,7 +46,7 @@ const MyPage = () => {
       <Content>
         <ContentItem>자주묻는질문</ContentItem>
         <ContentItem>문의하기</ContentItem>
-        <ContentItem>버전정보</ContentItem>
+        <ContentItem handleClick={() => navigate('versionInfo')}>버전정보</ContentItem>
         <ContentItem>개발자 소개</ContentItem>
         <ContentItem>평점</ContentItem>
       </Content>
