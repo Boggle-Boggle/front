@@ -2,14 +2,14 @@ import useAuthStore from 'stores/useAuthStore';
 
 import api from 'services/index';
 
-const LogoutBtn = () => {
-  const logout = useAuthStore((state) => state.logout);
+const useLogout = () => {
+  const logoutStore = useAuthStore((state) => state.logout);
 
-  const handleClick = () => {
+  const logout = () => {
     api
       .post('/auth/logout')
       .then(() => {
-        logout();
+        logoutStore();
       })
       .catch(() => {
         // TODO : 로그아웃 에러핸들링
@@ -17,11 +17,7 @@ const LogoutBtn = () => {
       });
   };
 
-  return (
-    <button type="submit" onClick={handleClick}>
-      로그아웃
-    </button>
-  );
+  return { logout };
 };
 
-export default LogoutBtn;
+export default useLogout;

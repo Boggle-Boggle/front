@@ -1,14 +1,14 @@
 import { BiBook, BiBookOpen, BiCool } from 'react-icons/bi';
 import { RiPencilLine } from 'react-icons/ri';
-// import useAuthStore from 'stores/useAuthStore';
 
-// import LogoutBtn from 'pages/Login/LogoutBtn';
+import useModal from 'hooks/useModal';
 
+import LogoutModal from './LogoutModal';
 import Content from './shared/Content';
 import ContentItem from './shared/ContentItem';
 
 const MyPage = () => {
-  // const { isAuthenticated } = useAuthStore();
+  const { isOpen, open, close, scrollPos } = useModal();
 
   return (
     <div className="bg-main px-5 py-[6.5rem]">
@@ -54,11 +54,11 @@ const MyPage = () => {
         <ContentItem>오픈소스 라이선스</ContentItem>
       </Content>
       <Content>
-        <ContentItem>로그아웃</ContentItem>
+        <ContentItem handleClick={open}>로그아웃</ContentItem>
         <ContentItem>서비스 탈퇴</ContentItem>
       </Content>
 
-      {/* {isAuthenticated && <LogoutBtn />} */}
+      {isOpen && <LogoutModal isOpen={isOpen} close={close} scrollPos={scrollPos} />}
     </div>
   );
 };
