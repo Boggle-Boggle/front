@@ -34,7 +34,11 @@ const MyPage = () => {
             alt=""
           />
 
-          <button className="flex items-center justify-center text-xl font-bold" type="button">
+          <button
+            className="flex items-center justify-center text-xl font-bold"
+            type="button"
+            onClick={() => navigate('nickname', { state: { nickname: data.nickname } })}
+          >
             {data.nickname}
             <RiPencilLine style={{ width: '20px', height: '20px', opacity: '50%', paddingLeft: '2px' }} />
           </button>

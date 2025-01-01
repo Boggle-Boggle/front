@@ -1,5 +1,8 @@
+import { useQueryClient } from '@tanstack/react-query';
+
+import { useEffect } from 'react';
 import { FaAngleLeft } from 'react-icons/fa6';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import Button from 'components/Button';
 import Header from 'components/Header';
@@ -9,7 +12,23 @@ import { updateNickname } from 'services/signup';
 
 const EditNickname = () => {
   const navigate = useNavigate();
-  const { nickName, updateNickName } = useNickNameInput();
+  const location = useLocation();
+  const queryClient = useQueryClient();
+
+  const { nickName, setNickName, updateNickName } = useNickNameInput();
+  const { nickname } = location.state;
+
+  const handleSave = async () => {
+    await updateNickname(nickName);
+
+    queryClient.invalidateQueries({ queryKey: ['myPage'] });
+
+    navigate('/myPage');
+  };
+
+  useEffect(() => {
+    setNickName(nickname);
+  }, [nickname, setNickName]);
 
   return (
     <section className="h-full bg-white">
@@ -26,10 +45,11 @@ const EditNickname = () => {
             value={nickName}
             onChange={(e) => updateNickName(e.target.value)}
           />
+          <p className="pt-2 opacity-70">최대 10글자/특수기호 사용 불가</p>
         </div>
 
         <div className="mt-auto flex w-full justify-center pb-7">
-          <Button handleClick={() => updateNickname(nickName)} className="w-full text-white">
+          <Button handleClick={handleSave} className="w-full text-white">
             저장하기
           </Button>
         </div>
