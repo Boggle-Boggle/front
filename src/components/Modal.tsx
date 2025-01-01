@@ -7,9 +7,10 @@ type ModalProps = {
   onClose: () => void;
   isOpen: boolean;
   scrollPos: number;
+  hasCloseMark?: boolean;
 };
 
-const Modal = ({ onClose, children, isOpen, scrollPos }: ModalProps) => {
+const Modal = ({ onClose, children, isOpen, scrollPos, hasCloseMark = true }: ModalProps) => {
   useEffect(() => {
     const modal = document.getElementById('modal');
 
@@ -38,9 +39,11 @@ const Modal = ({ onClose, children, isOpen, scrollPos }: ModalProps) => {
     <div onClick={onClose} className="flex h-full w-full items-center justify-center" role="presentation">
       <div onClick={(e) => e.stopPropagation()} className="relative rounded-md bg-white p-5" role="presentation">
         {children}
-        <button type="button" onClick={onClose} className="absolute right-3 top-3" aria-label="닫기">
-          <FaXmark style={{ width: '20px', height: '20px' }} />
-        </button>
+        {hasCloseMark && (
+          <button type="button" onClick={onClose} className="absolute right-3 top-3" aria-label="닫기">
+            <FaXmark style={{ width: '20px', height: '20px' }} />
+          </button>
+        )}
       </div>
     </div>,
     document.getElementById('modal') as HTMLElement,

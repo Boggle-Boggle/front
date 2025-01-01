@@ -17,3 +17,10 @@ export type AgreementStatus = {
 };
 
 export type TermWithAgree = Term & { isAgree: boolean };
+
+export type MyPage = {
+  nickname: string;
+  totalReadingCnt: number;
+  monthlyReadingCnt: number;
+  totalNote: number;
+};
