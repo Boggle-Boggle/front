@@ -103,9 +103,8 @@ export type Record = {
   readingRecordId: number;
   bookData: Omit<BookDetail, 'isbn'> & { page: number };
   recordData: {
-    status: StatusType;
     rating: number | null;
-    readDateList: RecordDate[];
+    readDateList: RecordDate & { status: StatusType }[];
     libraries: RecordLibraries[];
     isBookVisible: boolean;
   };

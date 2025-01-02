@@ -38,5 +38,5 @@ export const getNote = async (recordId: string) => {
 export const getReadDates = async (recordId: string) => {
   const response = await api.get(`/reading-record/${recordId}/read-dates`);
 
-  return response.data.data as RecordDate[];
+  return response.data.data as (RecordDate & { readDateIndex: number })[];
 };
