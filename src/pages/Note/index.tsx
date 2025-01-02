@@ -9,12 +9,15 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import Header from 'components/Header';
 
 import useKeyboardStatus from 'hooks/useKeyboardStatus';
+import useModal from 'hooks/useModal';
 import { addNote, getReadDates, updateNote } from 'services/record';
-import { generateDate } from 'utils/format';
+import { formatDate, formatDateAndTime, generateDate } from 'utils/format';
 
 import { AddNoteParams, RecordDate } from 'types/record';
 
 import bookmark from 'assets/bookmarkBig.png';
+
+import DatePickModal from './DatePickModal';
 
 const MAX_TITLE = 30;
 const MAX_CONTENT = 256;
@@ -24,10 +27,10 @@ const Note = () => {
   const [isToggled, handleToggled] = useReducer((prev) => !prev, false);
 
   const [readDateId, setReadDateId] = useState<(RecordDate & { readDateIndex: number }) | null>(null);
-  const [selectedDate, setSelectedDate] = useState<string>(() => {
+  const [selectedDate, setSelectedDate] = useState<[number, number, number]>(() => {
     const { year, month, day } = generateDate();
 
-    return `${year}년 ${month}월 ${day}일`;
+    return [year - 2000, month, day];
   });
   const [title, setTitle] = useState<string>('');
   const [content, setContent] = useState<string>('');
@@ -41,6 +44,8 @@ const Note = () => {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
   const location = useLocation();
+
+  const { isOpen, open, close, scrollPos } = useModal();
 
   const { recordId, note, readDateIndex } = location.state;
 
@@ -61,7 +66,7 @@ const Note = () => {
     if (note && noteId) {
       const newNote: Partial<AddNoteParams> = {};
 
-      // if (selectedDate !== note.selectedDate) newNote.selectedDate = selectedDate;
+      newNote.selectedDate = formatDate(...selectedDate);
       if (readDateId) newNote.readDateId = readDateId.readDateId;
       if (title !== note.title) newNote.title = title;
       if (content !== note.content) newNote.content = content;
@@ -76,11 +81,11 @@ const Note = () => {
       // }
 
       updateNote(recordId, noteId, newNote);
-    } // TODO : 이 이프문 왜 들어가는지 확인하기
+    } //
     else
       addNote(recordId, {
         readDateId: readDateId?.readDateId ?? null,
-        selectedDate: null,
+        selectedDate: formatDate(...selectedDate),
         title,
         content,
         page,
@@ -118,11 +123,15 @@ const Note = () => {
   useEffect(() => {
     // 수정일 경우 note 데이터가 있음
     if (note) {
-      const { noteId, title, content, tags, page, pages } = note;
+      const { noteId, title, content, tags, page, pages, selectedDate } = note;
 
       setNoteID(noteId);
 
-      // if (selectedDate) setSelectedDate(1);
+      if (selectedDate) {
+        const { yy, mm, dd } = formatDateAndTime(selectedDate);
+
+        setSelectedDate([+yy - 2000, +mm, +dd]);
+      }
       if (title) setTitle(title);
       if (content) setContent(content);
       if (tags.length > 0) setTags([...tags]);
@@ -179,7 +188,13 @@ const Note = () => {
 
         <section className="height-without-footer border-mains flex flex-col overflow-hidden rounded-tl-3xl border border-main bg-white pb-header">
           <img src={bookmark} className="header absolute right-10 top-header block h-12 w-12" alt="" />
-          <p className="w-full px-5 py-3 font-semibold opacity-50 focus:outline-none">{selectedDate}</p>
+          <button
+            className="w-full px-5 py-3 text-start font-semibold opacity-50 focus:outline-none"
+            type="button"
+            onClick={open}
+          >
+            {`${selectedDate[0] + 2000}년 ${selectedDate[1]}월 ${selectedDate[2]}일`}
+          </button>
           <textarea
             rows={1}
             className="w-full resize-none overflow-hidden border-b-[1px] border-main px-5 pb-3 font-bold focus:outline-none"
@@ -212,6 +227,15 @@ const Note = () => {
           {/* TODO : 글자수 처리 로직 추후 구현 */}
           {/* <span className="pr-3 text-sm">{content?.length ?? 0}자/256자</span> */}
         </div>
+        {isOpen && (
+          <DatePickModal
+            isOpen={isOpen}
+            close={close}
+            scrollPos={scrollPos}
+            setSelectedDate={setSelectedDate}
+            initialDate={selectedDate}
+          />
+        )}
       </div>
     )
   );

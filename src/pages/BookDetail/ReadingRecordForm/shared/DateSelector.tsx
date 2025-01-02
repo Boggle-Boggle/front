@@ -4,7 +4,7 @@ import Button from 'components/Button';
 
 import Selector from './Selector';
 
-const DATE_STATUS = {
+export const DATE_STATUS = {
   YEARS: [
     '2001년',
     '2002년',
