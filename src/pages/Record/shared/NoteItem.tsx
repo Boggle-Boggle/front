@@ -30,18 +30,17 @@ const NoteItem = ({ note, readDateIndex }: NoteItemProps) => {
         {pages && `P.${pages.startPage}~P.${pages.endPage}`}
       </p>
       <p className="pb-[0.875rem] text-xs leading-5">{content}</p>
-      <div className="border-t-[1px] border-main pt-[0.875rem] font-bold">
-        {tags && (
-          <>
-            <p>
-              <CiShoppingTag style={{ width: '18px', height: '18px', display: 'inline', marginBottom: '3px' }} /> 태그
-            </p>
-            {tags.map((tag) => (
-              <p className="mt-1 text-xs opacity-70">{tag}</p>
-            ))}
-          </>
-        )}
-      </div>
+
+      {tags && tags.length > 0 && (
+        <div className="border-t-[1px] border-main pt-[0.875rem] font-bold">
+          <p>
+            <CiShoppingTag style={{ width: '18px', height: '18px', display: 'inline', marginBottom: '3px' }} /> 태그
+          </p>
+          {tags.map((tag) => (
+            <p className="mr-2 mt-1 inline-flex text-xs opacity-70">{`#${tag}`}</p>
+          ))}
+        </div>
+      )}
     </button>
   );
 };

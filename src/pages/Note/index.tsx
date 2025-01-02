@@ -19,6 +19,7 @@ import bookmark from 'assets/bookmarkBig.png';
 
 import DatePickModal from './DatePickModal';
 import PageModal from './PageModal';
+import TagModal from './TagModal';
 
 const MAX_TITLE = 30;
 const MAX_CONTENT = 256;
@@ -39,7 +40,8 @@ const Note = () => {
   const [pages, setPages] = useState<AddNoteParams['pages']>(null);
   const [tags, setTags] = useState<string[]>([]);
 
-  const [isEditPage, setIsEditPage] = useState<boolean>(true);
+  const [isEditPage, setIsEditPage] = useState<boolean>(false);
+  const [isEditTag, setIsEditTag] = useState<boolean>(false);
 
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const isKeyboardActive = useKeyboardStatus();
@@ -224,11 +226,11 @@ const Note = () => {
             >
               <LuBookmarkPlus style={{ width: '20px', height: '20px', color: '#9B9999' }} />
             </button>
-            <button className="px-3 py-2" onClick={() => {}} type="button" aria-label="태그 추가하기">
+            <button className="px-3 py-2" onClick={() => setIsEditTag(true)} type="button" aria-label="태그 추가하기">
               <LuTags style={{ width: '20px', height: '20px', color: '#9B9999' }} />
             </button>
           </section>
-          <button className="px-3 py-2" onClick={() => {}} type="button" aria-label="태그 추가하기">
+          <button className="px-3 py-2" onClick={() => {}} type="button" aria-label="독서노트 삭제하기">
             <LuTrash2 style={{ width: '20px', height: '20px', color: '#9B9999' }} />
           </button>
           {/* TODO : 글자수 처리 로직 추후 구현 */}
@@ -244,6 +246,7 @@ const Note = () => {
           />
         )}
         {isEditPage && <PageModal close={() => setIsEditPage(false)} setPage={setPage} setPages={setPages} />}
+        {isEditTag && <TagModal close={() => setIsEditTag(false)} tags={tags} setTags={setTags} />}
       </div>
     )
   );
