@@ -18,6 +18,7 @@ import { AddNoteParams, RecordDate } from 'types/record';
 import bookmark from 'assets/bookmarkBig.png';
 
 import DatePickModal from './DatePickModal';
+import PageModal from './PageModal';
 
 const MAX_TITLE = 30;
 const MAX_CONTENT = 256;
@@ -37,6 +38,8 @@ const Note = () => {
   const [page, setPage] = useState<number | null>(null);
   const [pages, setPages] = useState<AddNoteParams['pages']>(null);
   const [tags, setTags] = useState<string[]>([]);
+
+  const [isEditPage, setIsEditPage] = useState<boolean>(true);
 
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const isKeyboardActive = useKeyboardStatus();
@@ -62,7 +65,6 @@ const Note = () => {
       return;
     }
 
-    // TODO : 페이지는 교차검증
     if (note && noteId) {
       const newNote: Partial<AddNoteParams> = {};
 
@@ -71,14 +73,14 @@ const Note = () => {
       if (title !== note.title) newNote.title = title;
       if (content !== note.content) newNote.content = content;
       if (tags.toString() !== note?.tags.toString()) newNote.tags = tags;
-      // if (page) {
-      //   newNote.page = page;
-      //   newNote.pages = null;
-      // }
-      // if (pages) {
-      //   newNote.page = null;
-      //   newNote.pages = pages;
-      // }
+      if (page) {
+        newNote.page = page;
+        newNote.pages = null;
+      }
+      if (pages) {
+        newNote.page = null;
+        newNote.pages = pages;
+      }
 
       updateNote(recordId, noteId, newNote);
     } //
@@ -214,7 +216,12 @@ const Note = () => {
           className={`absolute ${isKeyboardActive ? 'bottom-0' : 'bottom-footer'} h-13 flex w-full items-center justify-between bg-main`}
         >
           <section className="flex">
-            <button className="px-3 py-2" onClick={() => {}} type="button" aria-label="페이지 입력하기">
+            <button
+              className="px-3 py-2"
+              onClick={() => setIsEditPage(true)}
+              type="button"
+              aria-label="페이지 입력하기"
+            >
               <LuBookmarkPlus style={{ width: '20px', height: '20px', color: '#9B9999' }} />
             </button>
             <button className="px-3 py-2" onClick={() => {}} type="button" aria-label="태그 추가하기">
@@ -236,6 +243,7 @@ const Note = () => {
             initialDate={selectedDate}
           />
         )}
+        {isEditPage && <PageModal close={() => setIsEditPage(false)} setPage={setPage} setPages={setPages} />}
       </div>
     )
   );

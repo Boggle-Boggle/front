@@ -1,9 +1,18 @@
+import { FaXmark } from 'react-icons/fa6';
+
 type FullScreenModalProps = {
   children: React.ReactNode;
   handleClose?: () => void;
+  hasCloseMark?: boolean;
+  bgColor?: string;
 };
 
-const FullScreenModal = ({ children, handleClose }: FullScreenModalProps) => {
+const FullScreenModal = ({
+  children,
+  handleClose,
+  hasCloseMark = false,
+  bgColor = 'bg-main',
+}: FullScreenModalProps) => {
   return (
     <>
       <button
@@ -12,7 +21,20 @@ const FullScreenModal = ({ children, handleClose }: FullScreenModalProps) => {
         type="button"
         onClick={handleClose}
       />
-      <section className="absolute bottom-0 z-30 h-1/2 w-full rounded-2xl bg-main">{children}</section>
+      <section className={`min-h-1/2 absolute bottom-0 z-30 w-full rounded-2xl ${bgColor}`}>
+        {hasCloseMark && (
+          <button
+            type="button"
+            onClick={handleClose}
+            className="absolute right-3 top-3 z-40 opacity-50"
+            aria-label="닫기"
+          >
+            <FaXmark style={{ width: '20px', height: '20px' }} />
+          </button>
+        )}
+
+        {children}
+      </section>
     </>
   );
 };

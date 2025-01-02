@@ -25,8 +25,9 @@ const NoteItem = ({ note, readDateIndex }: NoteItemProps) => {
       <p className="font-bold">{title}</p>
       <p className="pb-4 pt-2 text-xs opacity-50">
         {selectedDate && formatDateTimeToDate(selectedDate)}
-        {page && `p.${page}`}
-        {pages && `p.${pages.startPage}~p.${pages.endPage}`}
+        {'\r'}
+        {page && `P.${page}`}
+        {pages && `P.${pages.startPage}~P.${pages.endPage}`}
       </p>
       <p className="pb-[0.875rem] text-xs leading-5">{content}</p>
       <div className="border-t-[1px] border-main pt-[0.875rem] font-bold">
