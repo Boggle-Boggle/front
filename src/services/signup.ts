@@ -1,4 +1,4 @@
-import { AgreementStatus, Terms } from 'types/user';
+import { AgreementStatus, MyPage, Terms } from 'types/user';
 
 import api from '.';
 
@@ -20,4 +20,10 @@ export const getTermsAgreement = async () => {
 
 export const agreeTerms = async (terms: AgreementStatus[]) => {
   await api.patch('/user/terms', terms);
+};
+
+export const getMyPageInfo = async () => {
+  const response = await api.get('/mypage');
+
+  return response.data.data as MyPage;
 };
