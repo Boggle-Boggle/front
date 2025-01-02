@@ -37,7 +37,7 @@ const Modal = ({ onClose, children, isOpen, scrollPos, hasCloseMark = true }: Mo
 
   return createPortal(
     <div onClick={onClose} className="flex h-full w-full items-center justify-center" role="presentation">
-      <div onClick={(e) => e.stopPropagation()} className="relative rounded-md bg-white p-5" role="presentation">
+      <div onClick={(e) => e.stopPropagation()} className="relative rounded-md bg-white" role="presentation">
         {children}
         {hasCloseMark && (
           <button type="button" onClick={onClose} className="absolute right-3 top-3" aria-label="닫기">

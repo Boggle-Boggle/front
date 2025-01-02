@@ -1,10 +1,9 @@
 import { useEffect, useReducer, useRef, useState } from 'react';
-import { CiCircleInfo, CiTimer, CiFlag1, CiCalendarDate, CiUnread, CiStar, CiShoppingTag } from 'react-icons/ci';
+import { CiCircleInfo, CiFlag1, CiCalendarDate, CiUnread, CiStar, CiShoppingTag } from 'react-icons/ci';
 import { GoChevronDown, GoChevronUp } from 'react-icons/go';
 
 import { formatDateTimeToDate } from 'utils/format';
 
-import { STATUS } from 'types/library';
 import { Record } from 'types/record';
 
 import RecordItem from './shared/RecordItem';
@@ -80,12 +79,6 @@ const RecordTab = ({ book }: RecordTabProps) => {
           </p>
         </section>
       )}
-
-      <RecordItem
-        icons={<CiTimer style={{ width: '20px', height: '20px' }} />}
-        title="진행도"
-        content={STATUS[recordData.status]}
-      />
 
       {recordData.readDateList.map((date, idx) => {
         const startDate = date.startReadDate && formatDateTimeToDate(date.startReadDate);

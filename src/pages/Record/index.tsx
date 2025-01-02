@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 
 import { useCallback, useState } from 'react';
-import { FiArrowLeft, FiMoreVertical } from 'react-icons/fi';
+import { FiArrowLeft, FiMoreVertical, FiEdit } from 'react-icons/fi';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import Header from 'components/Header';
@@ -24,6 +24,10 @@ const Record = () => {
     queryKey: ['record', recordId],
     queryFn: () => getRecord(recordId!),
   });
+
+  const handleGoToNote = () => {
+    navigate(`/note/write`, { state: { recordId } });
+  };
 
   const setObserver = useCallback((node: HTMLDivElement | null) => {
     if (node) {
@@ -77,6 +81,7 @@ const Record = () => {
               alt={`${data.bookData.title} 책 표지`}
               className="absolute bottom-10 z-10 h-60 w-40 shadow-[3px_2px_5px_0_rgba(0,0,0,0.3)]"
             />
+            <span className="absolute bottom-10 z-30 h-[14.9rem] w-[0.0625rem] -translate-x-[4.5rem] bg-black opacity-50 blur-[2px]" />
             <span className="absolute -bottom-10 w-full">
               <ShelfSvg />
             </span>
@@ -102,7 +107,20 @@ const Record = () => {
               ))}
             </ul>
             {selected === '독서기록' && <RecordTab book={data} />}
-            {selected === '독서노트' && recordId && <NoteTab recordId={recordId} />}
+            {selected === '독서노트' && recordId && (
+              <>
+                <NoteTab recordId={recordId} />
+
+                <button
+                  type="button"
+                  className="fixed bottom-[6rem] right-[1rem] flex h-16 w-16 items-center justify-center rounded-full bg-accent shadow-lg"
+                  onClick={handleGoToNote}
+                  aria-label="독서노트 작성하기"
+                >
+                  <FiEdit style={{ width: '24px', height: '24px', color: 'white' }} />
+                </button>
+              </>
+            )}
           </section>
         </div>
       </>

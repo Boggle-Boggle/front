@@ -22,9 +22,19 @@ export const formatBookGenre = (Genre: string) => {
 };
 
 export const formatDate = (year: number, month: number, day: number) => {
-  const fullYear = 2000 + year;
+  const fullYear = year > 2000 ? year : 2000 + year;
   const paddedMonth = String(month).padStart(2, '0');
   const paddedDay = String(day).padStart(2, '0');
 
   return `${fullYear}-${paddedMonth}-${paddedDay}T00:00:00`;
+};
+
+export const generateDate = () => {
+  const date = new Date();
+
+  const year = date.getFullYear();
+  const month = date.getMonth() + 1;
+  const day = date.getDate();
+
+  return { year, month, day };
 };

@@ -93,7 +93,7 @@ type RecordLibraries = {
   libraryName: string;
 };
 
-type RecordDate = {
+export type RecordDate = {
   readDateId: number;
   startReadDate: string | null;
   endReadDate: string | null;
@@ -103,22 +103,29 @@ export type Record = {
   readingRecordId: number;
   bookData: Omit<BookDetail, 'isbn'> & { page: number };
   recordData: {
-    status: StatusType;
     rating: number | null;
-    readDateList: RecordDate[];
+    readDateList: (RecordDate & { status: StatusType })[];
     libraries: RecordLibraries[];
     isBookVisible: boolean;
   };
 };
 
 export type AddNoteParams = {
-  title: string;
-  content: string;
+  readDateId: null | number;
+  selectedDate: null | string;
+  title: null | string;
+  content: null | string;
+  page: null | number;
+  pages: null | {
+    startPage: number;
+    endPage: number;
+  };
+  tags: string[];
 };
 
 export type Note = {
   noteId: number;
-  title: string;
+  title: string | null;
   selectedDate: string | null;
   page: number | null;
   pages: {
