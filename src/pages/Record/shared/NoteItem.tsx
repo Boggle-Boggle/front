@@ -7,16 +7,17 @@ import { Note } from 'types/record';
 
 type NoteItemProps = {
   note: Note;
+  readDateIndex: number;
 };
 
-const NoteItem = ({ note }: NoteItemProps) => {
+const NoteItem = ({ note, readDateIndex }: NoteItemProps) => {
   const { title, content, tags, selectedDate, page, pages } = note;
 
   const navigate = useNavigate();
   const { recordId } = useParams();
 
   const handleGoToNote = () => {
-    navigate(`/note/write`, { state: { recordId, note } });
+    navigate(`/note/write`, { state: { recordId, note, readDateIndex } });
   };
 
   return (
