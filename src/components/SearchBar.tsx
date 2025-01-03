@@ -7,9 +7,17 @@ type SearchBarProps = {
   setValue: React.Dispatch<React.SetStateAction<string>>;
   fetchResult: () => void;
   allowEmptyVal: boolean;
+  hasDebounce?: boolean;
 };
 
-const SearchBar = ({ placeholder, value, setValue, fetchResult, allowEmptyVal }: SearchBarProps) => {
+const SearchBar = ({
+  placeholder,
+  value,
+  setValue,
+  fetchResult,
+  allowEmptyVal,
+  hasDebounce = true,
+}: SearchBarProps) => {
   const handleClear = () => setValue('');
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -17,7 +25,7 @@ const SearchBar = ({ placeholder, value, setValue, fetchResult, allowEmptyVal }:
     setValue(searchValue);
 
     if (searchValue.length === 0 && !allowEmptyVal) return;
-    fetchResult();
+    if (hasDebounce) fetchResult();
   };
 
   const handleSubmit = (e: React.FormEvent) => {
