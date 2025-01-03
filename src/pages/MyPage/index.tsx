@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import Loading from 'pages/Loading';
 
 import useModal from 'hooks/useModal';
-import { getMyPageInfo, getTermsAgreement } from 'services/signup';
+import { getMyPageInfo, getTermsAgreement } from 'services/user';
 
 import LogoutModal from './LogoutModal';
 import Content from './shared/Content';

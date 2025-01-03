@@ -8,7 +8,7 @@ import Button from 'components/Button';
 import Header from 'components/Header';
 
 import useNickNameInput from 'hooks/useNickNameInput';
-import { updateNickname } from 'services/signup';
+import { updateNickname } from 'services/user';
 
 const EditNickname = () => {
   const navigate = useNavigate();
