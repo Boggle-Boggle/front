@@ -25,10 +25,15 @@
     height: calc(100vh - 9rem);
   }
 }
-
-/* 미니 : 350 - 375 */
+/* 초미니 : 320 이상 */
+/* 미니 : 350 이상 */
 /* 기본 : 385 이상  */
 /* 프로 : 405 이상 */
+@media (min-width: 320px) {
+  html {
+    font-size: 13px;
+  }
+}
 
 @media (min-width: 350px) {
   html {

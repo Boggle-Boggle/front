@@ -18,15 +18,11 @@ import ReadingRecordForm from './ReadingRecordForm';
 const BookDetail = () => {
   const { isOpen, close, scrollPos, open } = useModal();
   const [isRecording, setIsRecording] = useState<boolean>(false);
-  const [isClamped, setIsClamped] = useState<boolean>(false);
-  const plotRef = useRef<HTMLDivElement>(null);
+  const [isClamped, setIsClamped] = useState<boolean>(true);
+  const [clampLine, setClampLine] = useState<number | null>(4);
 
-  useEffect(() => {
-    if (plotRef.current) {
-      const plot = plotRef.current;
-      setIsClamped(plot.clientHeight < plot.scrollHeight);
-    }
-  }, []);
+  const plotRef = useRef<HTMLDivElement>(null);
+  const buttonRef = useRef<HTMLDivElement>(null);
 
   const navigate = useNavigate();
   const { detailId = '' } = useParams();
@@ -52,25 +48,44 @@ const BookDetail = () => {
     setIsRecording(true);
   };
 
-  if (!book) {
-    return <div>{/* TODO : 책이 없음 페이지 표시 + 책 직접 등록 */}</div>;
-  }
+  useEffect(() => {
+    if (plotRef.current && buttonRef.current) {
+      const plot = plotRef.current.getBoundingClientRect();
+      const button = buttonRef.current.getBoundingClientRect();
+
+      if (plot.bottom > button.top - 16) {
+        setIsClamped(true);
+        if (button.top - plot.top < 110) setClampLine(3);
+        else if (button.top - plot.top < 125) setClampLine(4);
+        else setClampLine(5);
+      } else {
+        setIsClamped(false);
+        setClampLine(null);
+      }
+    }
+  }, [book]);
+
+  // TODO : notFound
+  if (!book) return;
 
   const { yy, mm, dd } = formatDateAndTime(book.pubDate);
 
   return (
     book && (
-      <div className="height-without-header flex flex-col">
+      <>
         <Header leftBtn={<IoArrowBackOutline style={{ width: '24px', height: '24px' }} onClick={handleGoBack} />} />
-        <BookShelf cover={book.cover} title={book.title} />
-        <section className="p-6 text-center">
-          <h1 className={`${book.title.length > 50 ? 'text-[0.9rem]' : book.title.length < 30 && 'text-lg'} font-bold`}>
-            {book.title}
-          </h1>
-          <p className="m-1 text-xs text-sub">{`저자 ${book.author}`}</p>
-        </section>
-        <section className="flex w-full grow flex-col items-center px-7 pb-9">
-          <div className="w-full pb-6 text-base font-semibold">
+
+        <div className="flex h-[calc(100%_-_13rem)] flex-col overflow-hidden pb-4">
+          <BookShelf cover={book.cover} title={book.title} />
+          <section className="flex h-36 flex-shrink-0 flex-col items-center justify-center px-6 pt-6 text-center">
+            <h1
+              className={`${book.title.length > 50 ? 'text-[0.9rem]' : book.title.length < 30 && 'text-lg'} font-bold`}
+            >
+              {book.title}
+            </h1>
+            <p className="m-1 text-xs opacity-70">{`저자 ${book.author}`}</p>
+          </section>
+          <div className="h-28 w-full px-7 pb-6 text-base font-semibold">
             책정보
             <hr className="mb-2 h-0.5 border-none bg-gray" />
             <div className="grid grid-cols-2 grid-rows-2 text-[0.815rem] font-normal">
@@ -80,19 +95,27 @@ const BookDetail = () => {
               <p className="truncate pr-2">{`ISBN : ${book.isbn}`}</p>
             </div>
           </div>
-          <div className="relative w-full grow text-base font-semibold">
+
+          <div className="relative w-full flex-shrink overflow-hidden px-6 text-base font-semibold">
             줄거리
-            {isClamped && <span className="absolute right-0 text-xs text-sub">더보기</span>}
+            {isClamped && <span className="absolute right-6 text-xs opacity-70">더보기</span>}
             <hr className="mb-2 h-0.5 border-none bg-gray" />
-            <div className="line-clamp-6 w-full overflow-hidden break-words text-[0.815rem]" ref={plotRef}>
+            <div
+              className={`h-full w-full break-words text-[0.815rem] ${isClamped ? `line-clamp-${clampLine} ` : ''} `}
+              ref={plotRef}
+            >
+              {book.plot}
               {book.plot}
             </div>
           </div>
+        </div>
+
+        <div className="flex-shrink-0 px-6" ref={buttonRef}>
           <Button handleClick={handleSaveBook}>책 저장하기</Button>
-        </section>
+        </div>
         <ExistingRecordModal isOpen={isOpen} close={close} scrollPos={scrollPos} />
         {isRecording && <ReadingRecordForm onClose={() => setIsRecording(false)} isbn={book.isbn} />}
-      </div>
+      </>
     )
   );
 };
