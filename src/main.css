@@ -6,6 +6,10 @@
   body {
     @apply text-text;
     @apply list-none;
+  }
+  input,
+  textarea,
+  button {
     @apply focus:outline-none;
   }
 }
