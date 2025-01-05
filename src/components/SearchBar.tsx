@@ -41,12 +41,7 @@ const SearchBar = ({
       <span className="mr-1">
         <FcSearch style={{ width: '28px', height: '28px' }} />
       </span>
-      <input
-        className="h-[36px] w-full text-sm focus:outline-none"
-        placeholder={placeholder}
-        value={value}
-        onChange={handleChange}
-      />
+      <input className="h-[36px] w-full text-sm" placeholder={placeholder} value={value} onChange={handleChange} />
       {value && (
         <button type="button" onClick={handleClear} aria-label="clear button" className="ml-1">
           <BiX style={{ width: '24px', height: '24px' }} />

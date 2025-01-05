@@ -92,7 +92,7 @@ const PageModal = ({ close, setPage, setPages }: PageModalProps) => {
           <span className="relative">
             <p className="absolute top-0 text-xl font-bold">P.</p>
             <input
-              className="border-b-4 border-main text-center font-medium outline-none"
+              className="border-b-4 border-main text-center font-medium"
               placeholder="페이지 입력"
               ref={pageRef}
               type="number"
@@ -103,7 +103,7 @@ const PageModal = ({ close, setPage, setPages }: PageModalProps) => {
             <span className="relative">
               <p className="absolute top-0 text-xl font-bold">P.</p>
               <input
-                className="w-full border-b-4 border-main text-center font-medium outline-none"
+                className="w-full border-b-4 border-main text-center font-medium"
                 maxLength={5}
                 placeholder="페이지 입력"
                 ref={pagesStartRef}
@@ -114,7 +114,7 @@ const PageModal = ({ close, setPage, setPages }: PageModalProps) => {
             <span className="relative">
               <p className="absolute top-0 text-xl font-bold">P.</p>
               <input
-                className="w-full border-b-4 border-main text-center font-medium outline-none"
+                className="w-full border-b-4 border-main text-center font-medium"
                 maxLength={5}
                 placeholder="페이지 입력"
                 ref={pagesEndRef}

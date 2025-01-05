@@ -41,7 +41,7 @@ const EditNickname = () => {
         />
         <div className="my-7 h-10 w-full border-b-4 border-accent">
           <input
-            className="h-full w-full text-center text-lg font-semibold focus:outline-none"
+            className="h-full w-full text-center text-lg font-semibold"
             value={nickName}
             onChange={(e) => updateNickName(e.target.value)}
           />

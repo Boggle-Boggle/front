@@ -58,7 +58,7 @@ const NickNameInput = ({ nickName, isValid, updateNickName, onNext }: NickNameIn
         <form className="relative flex-grow">
           <div className="h-10 w-full border-b-4 border-accent">
             <input
-              className="h-full w-full text-lg font-semibold focus:outline-none"
+              className="h-full w-full text-lg font-semibold"
               value={nickName}
               onChange={(e) => updateNickName(e.target.value)}
             />
