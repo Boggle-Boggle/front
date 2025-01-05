@@ -7,6 +7,8 @@ import { Suspense, useEffect } from 'react';
 import { MdOutlineHeadsetMic } from 'react-icons/md';
 import * as THREE from 'three';
 
+import LoginBtn from './LoginBtn';
+
 const Login = () => {
   const { scene } = useGLTF(`${import.meta.env.VITE_IMG_BASE_URL || ''}/assets/Splash.glb`);
 
@@ -27,8 +29,8 @@ const Login = () => {
   }, [scene]);
 
   return (
-    <div className="bottom-3 flex h-screen flex-col items-center justify-center bg-[#CBBAB9] pb-14 pt-24">
-      <h1 className="text-font text-center text-[32px] text-main">
+    <div className="bottom-3 flex h-screen flex-col items-center justify-center bg-main py-[5.5rem]">
+      <h1 className="text-font text-center text-[32px] text-accent">
         <span className="font-bold">빼곡</span>하게 채우는 <br /> 나만의
         <span className="font-bold"> 책장</span>
       </h1>
@@ -40,7 +42,7 @@ const Login = () => {
             shadowMapType: THREE.PCFSoftShadowMap,
           }}
           onCreated={({ gl }) => {
-            gl.setClearColor('#CBBAB9');
+            gl.setClearColor('#EEEDEB');
           }}
         >
           <ambientLight intensity={1.2} />
@@ -60,12 +62,14 @@ const Login = () => {
           </mesh>
         </Canvas>
       </section>
-      <div className="grid w-4/5 grid-cols-3 gap-4 bg-slate-300">
-        <div className="h-16 bg-pink-600 p-2">로그인</div>
-        <div className="h-full bg-pink-600 p-2">로그인</div>
-        <div className="h-full bg-pink-600 p-2">로그인</div>
+
+      <p className="pb-4 text-xs opacity-50">SNS계정으로 간편하게 로그인</p>
+      <div className="flex h-24 w-[70%] justify-around">
+        <LoginBtn type="kakao" />
+        <LoginBtn type="google" />
+        <LoginBtn type="apple" />
       </div>
-      <a href="/" className="m-8 flex items-center text-xs text-sub underline">
+      <a href="/" className="absolute bottom-8 flex items-center text-xs underline opacity-50">
         <MdOutlineHeadsetMic style={{ marginRight: '5px' }} />
         가입/로그인 오류 문의
       </a>
