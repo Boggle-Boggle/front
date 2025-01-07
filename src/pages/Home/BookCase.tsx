@@ -5,6 +5,8 @@ import { useQuery } from '@tanstack/react-query';
 import { Suspense, useEffect, useState } from 'react';
 import * as THREE from 'three';
 
+import Loading from 'pages/Loading';
+
 import { getBookCase } from 'services/record';
 
 import Book from './Book';
@@ -56,15 +58,14 @@ const BookCase = () => {
   }, [scene]);
 
   return (
-    <div className="h-full w-full items-center justify-center">
+    <div className="flex h-full w-full items-center justify-center">
       <Canvas camera={{ position: [0, 0, cameraZPosition] }}>
         <ambientLight intensity={1.7} />
         <directionalLight position={[7.5, 5, 7.5]} intensity={1} />
-        {/* TODO : 로딩중 Fallback */}
         <Suspense
           fallback={
             <Html center>
-              <div>로딩</div>
+              <Loading />
             </Html>
           }
         >
