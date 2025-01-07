@@ -18,7 +18,14 @@ module.exports = {
         header: '4rem',
         footer: '5rem',
       },
+      lineClamp: {
+        7: '7',
+        8: '8',
+        9: '9',
+        10: '10',
+        11: '11',
+      },
     },
   },
-  plugins: [require('@tailwindcss/line-clamp')],
+  // plugins: [require('@tailwindcss/line-clamp')],
 };

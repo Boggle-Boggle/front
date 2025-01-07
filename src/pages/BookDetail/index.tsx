@@ -1,10 +1,10 @@
 import { useQuery } from '@tanstack/react-query';
 
 import { useEffect, useRef, useState } from 'react';
+import { FiAlertCircle } from 'react-icons/fi';
 import { IoArrowBackOutline } from 'react-icons/io5';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import Button from 'components/Button';
 import Header from 'components/Header';
 
 import useModal from 'hooks/useModal';
@@ -20,11 +20,11 @@ const BookDetail = () => {
   const { isOpen, close, scrollPos, open } = useModal();
   const { isOpen: plotIsOpen, scrollPos: plotScrollPos, close: plotClose, open: plotOpen } = useModal();
   const [isRecording, setIsRecording] = useState<boolean>(false);
-  const [isClamped, setIsClamped] = useState<boolean>(true);
-  const [clampLine, setClampLine] = useState<number | null>(4);
+  const [isClamped, setIsClamped] = useState<boolean>(false);
+  const [clampLine, setClampLine] = useState<number | null>(null);
 
   const plotRef = useRef<HTMLDivElement>(null);
-  const buttonRef = useRef<HTMLDivElement>(null);
+  const observerTarget = useRef<HTMLDivElement>(null);
 
   const navigate = useNavigate();
   const { detailId = '' } = useParams();
@@ -51,21 +51,31 @@ const BookDetail = () => {
   };
 
   useEffect(() => {
-    if (plotRef.current && buttonRef.current) {
-      const plot = plotRef.current.getBoundingClientRect();
-      const button = buttonRef.current.getBoundingClientRect();
+    if (!book || !observerTarget.current) return;
 
-      if (plot.bottom > button.top - 10) {
-        setIsClamped(true);
-        if (button.top - plot.top < 110) setClampLine(3);
-        else if (button.top - plot.top < 125) setClampLine(4);
-        else setClampLine(5);
-      } else {
-        setIsClamped(false);
-        setClampLine(null);
-      }
-    }
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) setIsClamped(true);
+        });
+      },
+      { threshold: 0.5 },
+    );
+
+    observer.observe(observerTarget.current);
+
+    return () => {
+      observer.disconnect();
+    };
   }, [book]);
+
+  useEffect(() => {
+    if (!plotRef.current) return;
+
+    const plot = plotRef.current;
+
+    setClampLine(Math.floor((plot!.clientHeight - 20) / 25));
+  }, [isClamped, clampLine]);
 
   // TODO : notFound
   if (!book) return;
@@ -75,9 +85,16 @@ const BookDetail = () => {
   return (
     book && (
       <>
-        <Header leftBtn={<IoArrowBackOutline style={{ width: '24px', height: '24px' }} onClick={handleGoBack} />} />
+        <Header
+          leftBtn={<IoArrowBackOutline style={{ width: '24px', height: '24px' }} onClick={handleGoBack} />}
+          rightBtn={
+            <button onClick={handleSaveBook} type="button" className="font-semibold text-accent">
+              저장
+            </button>
+          }
+        />
 
-        <div className="flex h-[calc(100%_-_13rem)] flex-col overflow-hidden pb-4">
+        <div className="height-content relative flex flex-col pb-8">
           <BookShelf cover={book.cover} title={book.title} />
           <section className="flex h-36 flex-shrink-0 flex-col items-center justify-center px-6 pt-6 text-center">
             <h1
@@ -97,8 +114,10 @@ const BookDetail = () => {
               <p className="truncate pr-2">{`ISBN : ${book.isbn}`}</p>
             </div>
           </div>
-
-          <div className="relative w-full flex-shrink overflow-hidden px-6 text-base font-semibold">
+          <div
+            className="relative h-full w-full flex-shrink overflow-hidden px-6 text-base font-semibold"
+            ref={plotRef}
+          >
             줄거리
             {isClamped && (
               <button className="absolute right-6 text-xs opacity-70" type="button" onClick={plotOpen}>
@@ -107,17 +126,18 @@ const BookDetail = () => {
             )}
             <hr className="mb-2 h-0.5 border-none bg-gray" />
             <div
-              className={`w-full break-words text-[0.815rem] ${isClamped ? `line-clamp-${clampLine} ` : ''} `}
-              ref={plotRef}
+              className={`w-full overflow-hidden break-words text-[0.815rem] ${clampLine && `${`line-clamp-${clampLine}`}`}`}
             >
               {book.plot}
             </div>
+            <div className="h-4" ref={observerTarget} />
           </div>
         </div>
+        <p className="absolute bottom-footer left-5 mb-2 flex items-center text-xs font-semibold opacity-50">
+          <FiAlertCircle style={{ marginRight: '6px' }} />
+          <p className="font-bold underline">알라딘</p> 에서 제공한 정보입니다.
+        </p>
 
-        <div className="flex-shrink-0 px-6" ref={buttonRef}>
-          <Button handleClick={handleSaveBook}>책 저장하기</Button>
-        </div>
         <ExistingRecordModal isOpen={isOpen} close={close} scrollPos={scrollPos} />
         {plotIsOpen && (
           <PlotDetailModal isOpen={plotIsOpen} close={plotClose} scrollPos={plotScrollPos} plot={book.plot} />
