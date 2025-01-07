@@ -13,10 +13,12 @@ import { formatDateAndTime, formatBookGenre } from 'utils/format';
 
 import BookShelf from './BookShelf';
 import ExistingRecordModal from './ExistingRecordModal';
+import PlotDetailModal from './PlotDetailModal';
 import ReadingRecordForm from './ReadingRecordForm';
 
 const BookDetail = () => {
   const { isOpen, close, scrollPos, open } = useModal();
+  const { isOpen: plotIsOpen, scrollPos: plotScrollPos, close: plotClose, open: plotOpen } = useModal();
   const [isRecording, setIsRecording] = useState<boolean>(false);
   const [isClamped, setIsClamped] = useState<boolean>(true);
   const [clampLine, setClampLine] = useState<number | null>(4);
@@ -53,7 +55,7 @@ const BookDetail = () => {
       const plot = plotRef.current.getBoundingClientRect();
       const button = buttonRef.current.getBoundingClientRect();
 
-      if (plot.bottom > button.top - 16) {
+      if (plot.bottom > button.top - 10) {
         setIsClamped(true);
         if (button.top - plot.top < 110) setClampLine(3);
         else if (button.top - plot.top < 125) setClampLine(4);
@@ -98,13 +100,16 @@ const BookDetail = () => {
 
           <div className="relative w-full flex-shrink overflow-hidden px-6 text-base font-semibold">
             줄거리
-            {isClamped && <span className="absolute right-6 text-xs opacity-70">더보기</span>}
+            {isClamped && (
+              <button className="absolute right-6 text-xs opacity-70" type="button" onClick={plotOpen}>
+                더보기
+              </button>
+            )}
             <hr className="mb-2 h-0.5 border-none bg-gray" />
             <div
-              className={`h-full w-full break-words text-[0.815rem] ${isClamped ? `line-clamp-${clampLine} ` : ''} `}
+              className={`w-full break-words text-[0.815rem] ${isClamped ? `line-clamp-${clampLine} ` : ''} `}
               ref={plotRef}
             >
-              {book.plot}
               {book.plot}
             </div>
           </div>
@@ -114,6 +119,9 @@ const BookDetail = () => {
           <Button handleClick={handleSaveBook}>책 저장하기</Button>
         </div>
         <ExistingRecordModal isOpen={isOpen} close={close} scrollPos={scrollPos} />
+        {plotIsOpen && (
+          <PlotDetailModal isOpen={plotIsOpen} close={plotClose} scrollPos={plotScrollPos} plot={book.plot} />
+        )}
         {isRecording && <ReadingRecordForm onClose={() => setIsRecording(false)} isbn={book.isbn} />}
       </>
     )
