@@ -69,7 +69,7 @@ const LibraryEditedModal = ({ onClose, handleOpenSelect, libraries, refetchLibra
           placeholder="추가하고 싶은 서재명을 입력하세요"
           value={values}
           onChange={(e) => handleChange(e)}
-          className="h-10 w-[92%] rounded-md p-3 pr-2 focus:outline-none"
+          className="h-10 w-[92%] rounded-md p-3 pr-2"
         />
         <button type="submit" aria-label="서재 추가">
           <CheckBox type="plus" isChecked={values.length > 0} />

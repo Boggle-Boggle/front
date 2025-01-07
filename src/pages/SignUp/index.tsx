@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 
 import useNickNameInput from 'hooks/useNickNameInput';
-import { getTermsAgreement } from 'services/signup';
+import { getTermsAgreement } from 'services/user';
 
 import { TermWithAgree } from 'types/user';
 

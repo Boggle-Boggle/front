@@ -53,6 +53,7 @@ const Search = () => {
         setValue={setValue}
         fetchResult={fetchResult}
         allowEmptyVal={false}
+        hasDebounce={false}
       />
 
       {query ? (

@@ -192,23 +192,19 @@ const Note = () => {
 
         <section className="height-without-footer border-mains flex flex-col overflow-hidden rounded-tl-3xl border border-main bg-white pb-header">
           <img src={bookmark} className="header absolute right-10 top-header block h-12 w-12" alt="" />
-          <button
-            className="w-full px-5 py-3 text-start font-semibold opacity-50 focus:outline-none"
-            type="button"
-            onClick={open}
-          >
+          <button className="w-full px-5 py-3 text-start font-semibold opacity-50" type="button" onClick={open}>
             {`${selectedDate[0] + 2000}년 ${selectedDate[1]}월 ${selectedDate[2]}일`}
           </button>
           <textarea
             rows={1}
-            className="w-full resize-none overflow-hidden border-b-[1px] border-main px-5 pb-3 font-bold focus:outline-none"
+            className="w-full resize-none overflow-hidden border-b-[1px] border-main px-5 pb-3 font-bold"
             value={title}
             placeholder="제목을 작성해주시핑"
             onChange={(e) => handleChangeTitle(e)}
             ref={textareaRef}
           />
           <textarea
-            className="w-full flex-grow resize-none overflow-auto px-5 py-3 focus:outline-none"
+            className="w-full flex-grow resize-none overflow-auto px-5 py-3"
             value={content}
             placeholder="내용을 작성해주시핑"
             onChange={(e) => handleChangeContent(e)}

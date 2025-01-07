@@ -1,9 +1,20 @@
+const baseUrl = import.meta.env.VITE_SERVER_BASE_URL;
+
 const LOGIN_TYPE = {
   kakao: {
     title: '카카오',
-    imgUrl: '/assets/icons/kakao_login.png',
+    imgUrl: `${import.meta.env.VITE_IMG_BASE_URL || ''}/assets/logo/kakao.png`,
+    redirect: `/oauth2/authorization/kakao?redirect_uri=${import.meta.env.VITE_KAKAO_REDIRECT_URL}`,
+  },
+  google: {
+    title: '구글',
+    imgUrl: `${import.meta.env.VITE_IMG_BASE_URL || ''}/assets/logo/google.png`,
     redirect: '',
-    color: 'bg-[#FCE51E]',
+  },
+  apple: {
+    title: '애플',
+    imgUrl: `${import.meta.env.VITE_IMG_BASE_URL || ''}/assets/logo/apple.png`,
+    redirect: '',
   },
 };
 
@@ -14,25 +25,15 @@ type LoginBtnProps = {
 };
 
 const LoginBtn = ({ type }: LoginBtnProps) => {
-  const { title, imgUrl, color } = LOGIN_TYPE[type];
+  const { title, redirect, imgUrl } = LOGIN_TYPE[type];
 
   const handleClick = () => {
-    const baseUrl = import.meta.env.VITE_SERVER_BASE_URL;
-    const apiPath = `/oauth2/authorization/kakao?redirect_uri=${import.meta.env.VITE_KAKAO_REDIRECT_URL}`;
-
-    window.location.href = baseUrl + apiPath;
+    window.location.href = baseUrl + redirect;
   };
 
   return (
-    <button
-      type="submit"
-      className={`h-[50px] w-[345px] rounded-lg ${color} flex items-center justify-center drop-shadow`}
-      onClick={handleClick}
-    >
-      <span>
-        <img alt={`${title}로그인`} src={imgUrl} className="h-[18px] w-[18px]" />
-      </span>
-      <p className="pl-5 text-base">{title}로 로그인</p>
+    <button type="button" className="h-12 w-12" aria-label={`${title}로그인`} onClick={handleClick}>
+      <img src={imgUrl} alt="" className="h-full w-full rounded-[50%] bg-white shadow-xl" />
     </button>
   );
 };

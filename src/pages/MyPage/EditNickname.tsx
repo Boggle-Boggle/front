@@ -8,7 +8,7 @@ import Button from 'components/Button';
 import Header from 'components/Header';
 
 import useNickNameInput from 'hooks/useNickNameInput';
-import { updateNickname } from 'services/signup';
+import { updateNickname } from 'services/user';
 
 const EditNickname = () => {
   const navigate = useNavigate();
@@ -41,7 +41,7 @@ const EditNickname = () => {
         />
         <div className="my-7 h-10 w-full border-b-4 border-accent">
           <input
-            className="h-full w-full text-center text-lg font-semibold focus:outline-none"
+            className="h-full w-full text-center text-lg font-semibold"
             value={nickName}
             onChange={(e) => updateNickName(e.target.value)}
           />

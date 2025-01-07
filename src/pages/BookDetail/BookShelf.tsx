@@ -5,8 +5,17 @@ type BookShelfProps = {
 
 const BookShelf = ({ cover, title }: BookShelfProps) => {
   return (
-    <section className="flex w-full flex-col items-center">
-      <img src={cover} alt={`${title} 커버`} className="z-10 h-56 w-40" />
+    <section className="flex h-[30%] w-full flex-shrink-0 flex-col items-center">
+      <div className="relative z-10 flex aspect-[210/297] h-full">
+        <img src={cover} alt={`${title} 커버`} className="shadow-[3px_-2px_5px_0_rgba(0,0,0,0.3)]" />
+
+        <img
+          src={`${import.meta.env.VITE_IMG_BASE_URL || ''}/assets/shadow.png`}
+          alt=""
+          className="absolute -bottom-[0.125rem] right-0 z-50 w-10 translate-x-8 opacity-95"
+        />
+        <span className="absolute left-[0.325rem] top-[3px] h-[calc(100%-6px)] w-[0.05rem] bg-black opacity-50 blur-[2px]" />
+      </div>
       <div className="relative w-full">
         <div
           style={{ clipPath: 'polygon(10% 0%, 80% 0%, 10000000% 100%, 0% 100%)' }}

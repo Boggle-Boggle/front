@@ -7,9 +7,17 @@ type SearchBarProps = {
   setValue: React.Dispatch<React.SetStateAction<string>>;
   fetchResult: () => void;
   allowEmptyVal: boolean;
+  hasDebounce?: boolean;
 };
 
-const SearchBar = ({ placeholder, value, setValue, fetchResult, allowEmptyVal }: SearchBarProps) => {
+const SearchBar = ({
+  placeholder,
+  value,
+  setValue,
+  fetchResult,
+  allowEmptyVal,
+  hasDebounce = true,
+}: SearchBarProps) => {
   const handleClear = () => setValue('');
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -17,7 +25,7 @@ const SearchBar = ({ placeholder, value, setValue, fetchResult, allowEmptyVal }:
     setValue(searchValue);
 
     if (searchValue.length === 0 && !allowEmptyVal) return;
-    fetchResult();
+    if (hasDebounce) fetchResult();
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -33,12 +41,7 @@ const SearchBar = ({ placeholder, value, setValue, fetchResult, allowEmptyVal }:
       <span className="mr-1">
         <FcSearch style={{ width: '28px', height: '28px' }} />
       </span>
-      <input
-        className="h-[36px] w-full text-sm focus:outline-none"
-        placeholder={placeholder}
-        value={value}
-        onChange={handleChange}
-      />
+      <input className="h-[36px] w-full text-sm" placeholder={placeholder} value={value} onChange={handleChange} />
       {value && (
         <button type="button" onClick={handleClear} aria-label="clear button" className="ml-1">
           <BiX style={{ width: '24px', height: '24px' }} />

@@ -1,10 +1,10 @@
 import { useQuery } from '@tanstack/react-query';
 
 import { useEffect, useRef, useState } from 'react';
+import { FiAlertCircle } from 'react-icons/fi';
 import { IoArrowBackOutline } from 'react-icons/io5';
 import { useNavigate, useParams } from 'react-router-dom';
 
-import Button from 'components/Button';
 import Header from 'components/Header';
 
 import useModal from 'hooks/useModal';
@@ -13,20 +13,18 @@ import { formatDateAndTime, formatBookGenre } from 'utils/format';
 
 import BookShelf from './BookShelf';
 import ExistingRecordModal from './ExistingRecordModal';
+import PlotDetailModal from './PlotDetailModal';
 import ReadingRecordForm from './ReadingRecordForm';
 
 const BookDetail = () => {
   const { isOpen, close, scrollPos, open } = useModal();
+  const { isOpen: plotIsOpen, scrollPos: plotScrollPos, close: plotClose, open: plotOpen } = useModal();
   const [isRecording, setIsRecording] = useState<boolean>(false);
   const [isClamped, setIsClamped] = useState<boolean>(false);
-  const plotRef = useRef<HTMLDivElement>(null);
+  const [clampLine, setClampLine] = useState<number | null>(null);
 
-  useEffect(() => {
-    if (plotRef.current) {
-      const plot = plotRef.current;
-      setIsClamped(plot.clientHeight < plot.scrollHeight);
-    }
-  }, []);
+  const plotRef = useRef<HTMLDivElement>(null);
+  const observerTarget = useRef<HTMLDivElement>(null);
 
   const navigate = useNavigate();
   const { detailId = '' } = useParams();
@@ -52,25 +50,61 @@ const BookDetail = () => {
     setIsRecording(true);
   };
 
-  if (!book) {
-    return <div>{/* TODO : 책이 없음 페이지 표시 + 책 직접 등록 */}</div>;
-  }
+  useEffect(() => {
+    if (!book || !observerTarget.current) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) setIsClamped(true);
+        });
+      },
+      { threshold: 0.5 },
+    );
+
+    observer.observe(observerTarget.current);
+
+    return () => {
+      observer.disconnect();
+    };
+  }, [book]);
+
+  useEffect(() => {
+    if (!plotRef.current) return;
+
+    const plot = plotRef.current;
+
+    setClampLine(Math.floor((plot!.clientHeight - 20) / 25));
+  }, [isClamped, clampLine]);
+
+  // TODO : notFound
+  if (!book) return;
 
   const { yy, mm, dd } = formatDateAndTime(book.pubDate);
 
   return (
     book && (
-      <div className="height-without-header flex flex-col">
-        <Header leftBtn={<IoArrowBackOutline style={{ width: '24px', height: '24px' }} onClick={handleGoBack} />} />
-        <BookShelf cover={book.cover} title={book.title} />
-        <section className="p-6 text-center">
-          <h1 className={`${book.title.length > 50 ? 'text-[0.9rem]' : book.title.length < 30 && 'text-lg'} font-bold`}>
-            {book.title}
-          </h1>
-          <p className="m-1 text-xs text-sub">{`저자 ${book.author}`}</p>
-        </section>
-        <section className="flex w-full grow flex-col items-center px-7 pb-9">
-          <div className="w-full pb-6 text-base font-semibold">
+      <>
+        <Header
+          leftBtn={<IoArrowBackOutline style={{ width: '24px', height: '24px' }} onClick={handleGoBack} />}
+          rightBtn={
+            <button onClick={handleSaveBook} type="button" className="font-semibold text-accent">
+              저장
+            </button>
+          }
+        />
+
+        <div className="height-content relative flex flex-col pb-8">
+          <BookShelf cover={book.cover} title={book.title} />
+          <section className="flex h-36 flex-shrink-0 flex-col items-center justify-center px-6 pt-6 text-center">
+            <h1
+              className={`${book.title.length > 50 ? 'text-[0.9rem]' : book.title.length < 30 && 'text-lg'} font-bold`}
+            >
+              {book.title}
+            </h1>
+            <p className="m-1 text-xs opacity-70">{`저자 ${book.author}`}</p>
+          </section>
+          <div className="h-28 w-full px-7 pb-6 text-base font-semibold">
             책정보
             <hr className="mb-2 h-0.5 border-none bg-gray" />
             <div className="grid grid-cols-2 grid-rows-2 text-[0.815rem] font-normal">
@@ -80,19 +114,36 @@ const BookDetail = () => {
               <p className="truncate pr-2">{`ISBN : ${book.isbn}`}</p>
             </div>
           </div>
-          <div className="relative w-full grow text-base font-semibold">
+          <div
+            className="relative h-full w-full flex-shrink overflow-hidden px-6 text-base font-semibold"
+            ref={plotRef}
+          >
             줄거리
-            {isClamped && <span className="absolute right-0 text-xs text-sub">더보기</span>}
+            {isClamped && (
+              <button className="absolute right-6 text-xs opacity-70" type="button" onClick={plotOpen}>
+                더보기
+              </button>
+            )}
             <hr className="mb-2 h-0.5 border-none bg-gray" />
-            <div className="line-clamp-6 w-full overflow-hidden break-words text-[0.815rem]" ref={plotRef}>
+            <div
+              className={`w-full overflow-hidden break-words text-[0.815rem] ${clampLine && `${`line-clamp-${clampLine}`}`}`}
+            >
               {book.plot}
             </div>
+            <div className="h-4" ref={observerTarget} />
           </div>
-          <Button handleClick={handleSaveBook}>책 저장하기</Button>
-        </section>
+        </div>
+        <p className="absolute bottom-footer left-5 mb-2 flex items-center text-xs font-semibold opacity-50">
+          <FiAlertCircle style={{ marginRight: '6px' }} />
+          <p className="font-bold underline">알라딘</p> 에서 제공한 정보입니다.
+        </p>
+
         <ExistingRecordModal isOpen={isOpen} close={close} scrollPos={scrollPos} />
+        {plotIsOpen && (
+          <PlotDetailModal isOpen={plotIsOpen} close={plotClose} scrollPos={plotScrollPos} plot={book.plot} />
+        )}
         {isRecording && <ReadingRecordForm onClose={() => setIsRecording(false)} isbn={book.isbn} />}
-      </div>
+      </>
     )
   );
 };

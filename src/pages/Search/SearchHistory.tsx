@@ -51,12 +51,7 @@ const SearchHistory = () => {
             <li className="mr-3 inline-flex rounded-full border border-sub px-2 text-sm text-sub" key={keyword}>
               <Link to={`?q=${keyword}`} className="flex items-center">
                 {keyword}
-                <button
-                  aria-label="remove button"
-                  type="button"
-                  className="focus:outline-none"
-                  onClick={(e) => handleRemove(e, keyword)}
-                >
+                <button aria-label="remove button" type="button" onClick={(e) => handleRemove(e, keyword)}>
                   <BiX style={{ width: '1rem', height: '1rem', marginLeft: '0.1rem' }} />
                 </button>
               </Link>

@@ -1,11 +1,11 @@
-import Header from 'components/Header';
+// import Header from 'components/Header';
 
 import BookCase from './BookCase';
 
 const Home = () => {
   return (
     <div className="flex h-full w-full items-center justify-center bg-[#CBBAB9]">
-      <Header />
+      {/* <Header /> */}
       <BookCase />
     </div>
   );
