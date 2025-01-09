@@ -1,10 +1,11 @@
-import { useState } from 'react';
-
 import { RATING_STATUS } from 'types/record';
 
-const EditRating = () => {
-  const [rating, setRating] = useState<number>(5);
+type EditRatingPros = {
+  rating: number;
+  setRating: React.Dispatch<React.SetStateAction<number>>;
+};
 
+const EditRating = ({ rating, setRating }: EditRatingPros) => {
   const handleTouchMove = (e: React.TouchEvent) => {
     const touch = e.touches[0];
     const target = e.currentTarget as HTMLElement;

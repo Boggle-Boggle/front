@@ -88,7 +88,7 @@ export type RecordType = {
   isVisible: boolean;
 };
 
-type RecordLibraries = {
+export type RecordLibraries = {
   libraryId: number;
   libraryName: string;
 };
@@ -145,6 +145,6 @@ export type EditRecord = {
   readingRecordId: number;
   rating: number;
   readDateList: (RecordDate & { status: StatusType })[];
-  libraries: RecordLibraries & { selected: boolean }[];
+  libraries: (RecordLibraries & { selected: boolean })[];
   isBookVisible: false;
 };
