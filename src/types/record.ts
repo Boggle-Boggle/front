@@ -148,3 +148,10 @@ export type EditRecord = {
   libraries: (RecordLibraries & { selected: boolean })[];
   isBookVisible: false;
 };
+
+export type UpdateRecordParams = {
+  rating?: number;
+  readDateList?: (RecordDate & { status: StatusType })[];
+  libraryIdList?: number[];
+  isVisible?: boolean;
+};

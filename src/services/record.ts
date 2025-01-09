@@ -1,5 +1,5 @@
 import { BookCase } from 'types/book';
-import { AddNoteParams, RecordType, Record, Notes, RecordDate, EditRecord } from 'types/record';
+import { AddNoteParams, RecordType, Record, Notes, RecordDate, EditRecord, UpdateRecordParams } from 'types/record';
 
 import api from '.';
 
@@ -45,4 +45,8 @@ export const getEditRecord = async (recordId: string) => {
   const response = await api.get(`/reading-record/${recordId}/edit`);
 
   return response.data.data as EditRecord;
+};
+
+export const updateEditRecord = async (recordId: number, record: UpdateRecordParams) => {
+  await api.patch(`/reading-record/${recordId}`, record);
 };
