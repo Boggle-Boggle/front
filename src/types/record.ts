@@ -140,3 +140,11 @@ export type Notes = {
   readDate: RecordDate;
   notes: Note[];
 };
+
+export type EditRecord = {
+  readingRecordId: number;
+  rating: number;
+  readDateList: (RecordDate & { status: StatusType })[];
+  libraries: RecordLibraries & { selected: boolean }[];
+  isBookVisible: false;
+};
