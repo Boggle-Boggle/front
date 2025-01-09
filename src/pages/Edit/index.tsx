@@ -2,10 +2,10 @@ import { IoArrowBackOutline } from 'react-icons/io5';
 
 import Header from 'components/Header';
 
-import Libraries from './Libraries';
-import Rating from './Rating';
-import ReadingDate from './ReadingDate';
-import Visible from './Visible';
+import EditLibraries from './EditLibraries';
+import EditRating from './EditRating';
+import EditReadingDate from './EditReadingDate';
+import EditVisible from './EditVisible';
 
 const Edit = () => {
   return (
@@ -17,10 +17,10 @@ const Edit = () => {
       />
 
       <section className="height-content overflow-y-scroll pb-4">
-        <ReadingDate />
-        <Libraries />
-        <Rating />
-        <Visible />
+        <EditReadingDate />
+        <EditLibraries />
+        <EditRating />
+        <EditVisible />
       </section>
     </div>
   );

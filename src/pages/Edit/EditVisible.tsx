@@ -1,6 +1,6 @@
 import CheckBox from 'components/CheckBox';
 
-const Visible = () => {
+const EditVisible = () => {
   return (
     <>
       <p className="flex h-14 items-center border-t-[3px] border-main px-6 font-semibold">책 숨기기</p>
@@ -12,4 +12,4 @@ const Visible = () => {
   );
 };
 
-export default Visible;
+export default EditVisible;

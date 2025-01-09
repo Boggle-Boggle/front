@@ -3,7 +3,7 @@ import { LuPencil } from 'react-icons/lu';
 
 import CheckBox from 'components/CheckBox';
 
-const ReadingDate = () => {
+const EditReadingDate = () => {
   const dates = [1, 2, 3, 4];
   return (
     <div className="border-t-[3px] border-main">
@@ -30,4 +30,4 @@ const ReadingDate = () => {
   );
 };
 
-export default ReadingDate;
+export default EditReadingDate;

@@ -1,6 +1,6 @@
 import CheckBox from 'components/CheckBox';
 
-const Libraries = () => {
+const EditLibraries = () => {
   const libraries = [1, 2, 3];
   return (
     <div className="border-t-[3px] border-main">
@@ -22,4 +22,4 @@ const Libraries = () => {
   );
 };
 
-export default Libraries;
+export default EditLibraries;

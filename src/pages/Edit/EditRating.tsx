@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import { RATING_STATUS } from 'types/record';
 
-const Rating = () => {
+const EditRating = () => {
   const [rating, setRating] = useState<number>(5);
 
   const handleTouchMove = (e: React.TouchEvent) => {
@@ -43,4 +43,4 @@ const Rating = () => {
   );
 };
 
-export default Rating;
+export default EditRating;
