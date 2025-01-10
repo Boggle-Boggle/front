@@ -35,6 +35,10 @@ export const getNote = async (recordId: string) => {
   return response.data.data as Notes[];
 };
 
+export const deleteNote = async (recordId: number) => {
+  await api.delete(`/reading-record/${recordId}`);
+};
+
 export const getReadDates = async (recordId: string) => {
   const response = await api.get(`/reading-record/${recordId}/read-dates`);
 

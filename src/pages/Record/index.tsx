@@ -7,7 +7,7 @@ import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import Header from 'components/Header';
 import Loading from 'pages/Loading';
 
-import { getRecord } from 'services/record';
+import { deleteNote, getRecord } from 'services/record';
 
 import NoteTab from './NoteTab';
 import RecordTab from './RecordTab';
@@ -30,6 +30,11 @@ const Record = () => {
 
   const handleGoToNote = () => {
     navigate(`/note/write`, { state: { recordId } });
+  };
+
+  const handleDeleteNote = () => {
+    deleteNote(Number(recordId));
+    navigate(`/library`);
   };
 
   const setObserver = useCallback((node: HTMLDivElement | null) => {
@@ -76,7 +81,11 @@ const Record = () => {
                   >
                     수정하기
                   </button>
-                  <button type="button" className="flex-grow border-t border-text border-opacity-30">
+                  <button
+                    type="button"
+                    className="flex-grow border-t border-text border-opacity-30"
+                    onClick={handleDeleteNote}
+                  >
                     삭제하기
                   </button>
                 </div>
