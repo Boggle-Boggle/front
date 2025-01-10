@@ -6,6 +6,7 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 
 import Auth from 'pages/Auth';
 import BookDetail from 'pages/BookDetail';
+import Edit from 'pages/Edit';
 import Home from 'pages/Home';
 import Library from 'pages/Library';
 import Login from 'pages/Login';
@@ -44,6 +45,7 @@ const router = createBrowserRouter([
           { path: 'note/write', element: <Note /> },
           { path: 'note/:noteId', element: <div>노트 조회 페이지</div> },
           { path: 'record/:recordId', element: <Record /> },
+          { path: 'edit/:recordId', element: <Edit /> },
         ],
       },
     ],

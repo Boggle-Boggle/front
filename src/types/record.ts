@@ -88,7 +88,7 @@ export type RecordType = {
   isVisible: boolean;
 };
 
-type RecordLibraries = {
+export type RecordLibraries = {
   libraryId: number;
   libraryName: string;
 };
@@ -139,4 +139,19 @@ export type Note = {
 export type Notes = {
   readDate: RecordDate;
   notes: Note[];
+};
+
+export type EditRecord = {
+  readingRecordId: number;
+  rating: number;
+  readDateList: (RecordDate & { status: StatusType })[];
+  libraries: (RecordLibraries & { selected: boolean })[];
+  isBookVisible: false;
+};
+
+export type UpdateRecordParams = {
+  rating?: number;
+  readDateList?: (RecordDate & { status: StatusType })[];
+  libraryIdList?: number[];
+  isVisible?: boolean;
 };

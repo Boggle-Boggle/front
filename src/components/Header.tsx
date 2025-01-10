@@ -8,7 +8,7 @@ type HeaderProps = {
 const Header = ({ leftBtn, title, rightBtn, backgroundColor }: HeaderProps) => {
   return (
     <div
-      className={` ${backgroundColor ? `fixed ${backgroundColor}` : 'sticky'} z-30 grid h-16 w-full grid-cols-[100px_auto_100px] items-center px-3`}
+      className={` ${backgroundColor ? `fixed ${backgroundColor}` : 'sticky'} z-30 grid h-16 w-full grid-cols-[28px_auto_28px] items-center px-3`}
     >
       <span className={`justify-self-start ${leftBtn ? '' : 'invisible'}`}>{leftBtn}</span>
       <span className="tex w-full justify-self-center text-center font-semibold">{title}</span>
