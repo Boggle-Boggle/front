@@ -130,7 +130,7 @@ const RecordTab = ({ book }: RecordTabProps) => {
           );
         return (
           <li key={library.libraryId}>
-            <RecordItem content={library.libraryName} />;
+            <RecordItem content={library.libraryName} />
           </li>
         );
       })}
