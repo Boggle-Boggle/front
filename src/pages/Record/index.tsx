@@ -144,7 +144,9 @@ const Record = () => {
             {selected === '독서노트' && recordId && (
               <>
                 <NoteTab recordId={recordId} />
-
+                <NoteTab recordId={recordId} />
+                <NoteTab recordId={recordId} />
+                <div className="h-20" />
                 <button
                   type="button"
                   className="fixed bottom-[6rem] right-[1rem] flex h-16 w-16 items-center justify-center rounded-full bg-accent shadow-lg"
