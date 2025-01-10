@@ -13,7 +13,7 @@ type ReadDateItemProps = {
 };
 
 const ReadDateItem = ({ notes, startDate, endDate, idx }: ReadDateItemProps) => {
-  const [isToggled, handleToggle] = useReducer((prev) => !prev, false);
+  const [isToggled, handleToggle] = useReducer((prev) => !prev, true);
 
   return (
     <>
