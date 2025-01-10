@@ -1,8 +1,8 @@
 import { useQuery } from '@tanstack/react-query';
 
-import { useCallback, useReducer, useState } from 'react';
+import { useCallback, useEffect, useReducer, useState } from 'react';
 import { FiArrowLeft, FiMoreVertical, FiEdit } from 'react-icons/fi';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
 import Header from 'components/Header';
 import Loading from 'pages/Loading';
@@ -20,6 +20,7 @@ const Record = () => {
   const [isToggled, handleToggle] = useReducer((prev) => !prev, false);
 
   const navigate = useNavigate();
+  const location = useLocation();
   const { recordId } = useParams();
 
   const { data, isLoading } = useQuery({
@@ -44,6 +45,10 @@ const Record = () => {
       };
     }
   }, []);
+
+  useEffect(() => {
+    if (location.state === '독서노트') setSelected(location.state);
+  }, [location.state]);
 
   if (isLoading) return <Loading />;
 

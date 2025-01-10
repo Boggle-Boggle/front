@@ -99,7 +99,7 @@ const Note = () => {
 
     // 노트 작성 후 쿼리무효화
     queryClient.invalidateQueries({ queryKey: ['note', recordId] });
-    navigate(`/record/${recordId}`);
+    navigate(`/record/${recordId}`, { state: '독서노트' });
   };
 
   const handleChangeTitle = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
