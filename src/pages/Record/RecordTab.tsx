@@ -43,8 +43,10 @@ const RecordTab = ({ book }: RecordTabProps) => {
           )
         }
       />
-      {isToggledInfo && (
-        <section className="border-b border-main p-4">
+      <section
+        className={`grid ${isToggledInfo ? 'grid-rows-[1fr] pt-4' : 'grid-rows-[0fr]'} transition-all duration-200`}
+      >
+        <div className={`overflow-hidden border-b border-main px-4 ${isToggledInfo && 'pb-4'}`}>
           <p className="text-xs font-bold">책정보</p>
           <span className="mt-2 flex">
             <p className="mr-2 text-xs opacity-70">저자</p>
@@ -77,9 +79,8 @@ const RecordTab = ({ book }: RecordTabProps) => {
           <p className={`mt-2 text-xs leading-5 opacity-70 ${isToggledExpand || 'line-clamp-4'}`} ref={plotRef}>
             {bookData.plot}
           </p>
-        </section>
-      )}
-
+        </div>
+      </section>
       {recordData.readDateList.map((date, idx) => {
         const startDate = date.startReadDate && formatDateTimeToDate(date.startReadDate);
         const endDate = date.endReadDate && formatDateTimeToDate(date.endReadDate);

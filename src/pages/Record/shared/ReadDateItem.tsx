@@ -33,14 +33,18 @@ const ReadDateItem = ({ notes, startDate, endDate, idx }: ReadDateItemProps) => 
           <GoChevronDown style={{ width: '20px', height: '20px' }} />
         )}
       </button>
-      {isToggled &&
-        (notes.length > 0 ? (
-          notes.map((note) => <NoteItem note={note} readDateIndex={idx} />)
-        ) : (
-          <div className="= flex h-20 items-center justify-center border-b-4 border-main">
-            <p className="text-sm opacity-50">작성된 독서노트 없음</p>
-          </div>
-        ))}
+
+      <section className={`grid ${isToggled ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'} transition-all duration-200`}>
+        <div className="overflow-hidden">
+          {notes.length > 0 ? (
+            notes.map((note) => <NoteItem note={note} readDateIndex={idx} />)
+          ) : (
+            <div className="= flex h-20 items-center justify-center border-b-4 border-main">
+              <p className="text-sm opacity-50">작성된 독서노트 없음</p>
+            </div>
+          )}
+        </div>
+      </section>
     </section>
   );
 };
