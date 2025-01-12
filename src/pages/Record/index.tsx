@@ -123,7 +123,7 @@ const Record = () => {
               className="absolute bottom-10 z-10 h-60 w-40 shadow-[3px_2px_5px_0_rgba(0,0,0,0.3)]"
             />
             <span className="absolute bottom-10 z-30 h-[14.9rem] w-[0.0625rem] -translate-x-[4.5rem] bg-black opacity-50 blur-[2px]" />
-            <span className="absolute -bottom-10 w-full">
+            <span className="absolute -bottom-10 z-[5] w-full">
               <ShelfSvg />
             </span>
           </section>
