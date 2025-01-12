@@ -47,24 +47,24 @@ const RecordTab = ({ book }: RecordTabProps) => {
         <section className="border-b border-main p-4">
           <p className="text-xs font-bold">책정보</p>
           <span className="mt-2 flex">
-            <p className="mr-2 text-xs font-semibold">저자</p>
-            <p className="text-xs opacity-70">{bookData.author}</p>
+            <p className="mr-2 text-xs opacity-70">저자</p>
+            <p className="text-xs">{bookData.author}</p>
           </span>
           <span className="mt-2 flex">
-            <p className="mr-2 text-xs font-semibold">분야</p>
-            <p className="text-xs opacity-70">{bookData.genre}</p>
+            <p className="mr-2 text-xs opacity-70">분야</p>
+            <p className="text-xs">{bookData.genre}</p>
           </span>
           <span className="mt-2 flex">
-            <p className="mr-2 text-xs font-semibold">출판사</p>
-            <p className="text-xs opacity-70">{bookData.publisher}</p>
+            <p className="mr-2 text-xs opacity-70">출판사</p>
+            <p className="text-xs">{bookData.publisher}</p>
           </span>
           <span className="mt-2 flex">
-            <p className="mr-2 text-xs font-semibold">발행일</p>
-            <p className="text-xs opacity-70">{formatDateTimeToDate(bookData.pubDate)}</p>
+            <p className="mr-2 text-xs opacity-70">발행일</p>
+            <p className="text-xs">{formatDateTimeToDate(bookData.pubDate)}</p>
           </span>
           <span className="mt-2 flex">
-            <p className="mr-2 text-xs font-semibold">페이지</p>
-            <p className="text-xs opacity-70">{bookData.page} p</p>
+            <p className="mr-2 text-xs opacity-70">페이지</p>
+            <p className="text-xs">{bookData.page} p</p>
           </span>
           <span className="mt-4 flex justify-between text-xs font-bold">
             책소개
