@@ -103,7 +103,7 @@ const Record = () => {
         />
 
         <div
-          className="height-without-footer relative flex-col overflow-y-auto overflow-x-hidden bg-white pt-header"
+          className="height-without-footer relative flex-col overflow-y-auto overflow-x-hidden pt-header"
           ref={(node) => {
             setObserver(node);
           }}
@@ -133,10 +133,10 @@ const Record = () => {
             <p className="my-2 text-center text-xs opacity-50">{data.bookData.author}</p>
           </section>
 
-          <section className="relative bg-white">
+          <section className="relative">
             <ul className="grid h-9 w-full grid-cols-2 items-center justify-center">
               {TABS.map((tab) => (
-                <li key={tab}>
+                <li key={tab} className="border-t border-white bg-white">
                   <button
                     className={`flex h-full w-full items-center justify-center border-b-[3px] pb-2 ${selected === tab ? 'border-black' : 'border-main'}`}
                     onClick={() => setSelected(tab)}
@@ -147,16 +147,10 @@ const Record = () => {
                 </li>
               ))}
             </ul>
-            {selected === '독서기록' && (
-              <>
-                <RecordTab book={data} />
-                <RecordTab book={data} />
-              </>
-            )}
+
+            {selected === '독서기록' && <RecordTab book={data} />}
             {selected === '독서노트' && recordId && (
               <>
-                <NoteTab recordId={recordId} />
-                <NoteTab recordId={recordId} />
                 <NoteTab recordId={recordId} />
                 <div className="h-20" />
                 <button

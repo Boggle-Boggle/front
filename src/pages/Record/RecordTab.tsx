@@ -27,7 +27,7 @@ const RecordTab = ({ book }: RecordTabProps) => {
   }, []);
 
   return (
-    <>
+    <section className="bg-white">
       <RecordItem
         icons={<CiCircleInfo style={{ width: '20px', height: '20px' }} />}
         title="도서정보"
@@ -142,7 +142,7 @@ const RecordTab = ({ book }: RecordTabProps) => {
       />
 
       <RecordItem />
-    </>
+    </section>
   );
 };
 

@@ -16,7 +16,7 @@ const ReadDateItem = ({ notes, startDate, endDate, idx }: ReadDateItemProps) => 
   const [isToggled, handleToggle] = useReducer((prev) => !prev, true);
 
   return (
-    <>
+    <section className="bg-white">
       <button
         className="flex w-full justify-between border-b-4 border-main px-4 py-[0.875rem]"
         onClick={handleToggle}
@@ -33,8 +33,15 @@ const ReadDateItem = ({ notes, startDate, endDate, idx }: ReadDateItemProps) => 
           <GoChevronDown style={{ width: '20px', height: '20px' }} />
         )}
       </button>
-      {isToggled && notes.map((note) => <NoteItem note={note} readDateIndex={idx} />)}
-    </>
+      {isToggled &&
+        (notes.length > 0 ? (
+          notes.map((note) => <NoteItem note={note} readDateIndex={idx} />)
+        ) : (
+          <div className="= flex h-20 items-center justify-center border-b-4 border-main">
+            <p className="text-sm opacity-50">작성된 독서노트 없음</p>
+          </div>
+        ))}
+    </section>
   );
 };
 
