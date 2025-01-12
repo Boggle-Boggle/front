@@ -99,7 +99,7 @@ const Note = () => {
 
     // 노트 작성 후 쿼리무효화
     queryClient.invalidateQueries({ queryKey: ['note', recordId] });
-    navigate(`/record/${recordId}`, { state: '독서노트' });
+    navigate(`/record/${recordId}`, { state: '독서노트', replace: true });
   };
 
   const handleChangeTitle = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -182,7 +182,12 @@ const Note = () => {
               </ul>
             </button>
           }
-          leftBtn={<IoArrowBackOutline style={{ width: '24px', height: '24px' }} onClick={() => navigate(-1)} />}
+          leftBtn={
+            <IoArrowBackOutline
+              style={{ width: '24px', height: '24px' }}
+              onClick={() => navigate(`/record/${recordId}`, { replace: true })}
+            />
+          }
           rightBtn={
             <button className="font-black" onClick={handleSave} type="submit">
               저장
