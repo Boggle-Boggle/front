@@ -43,7 +43,6 @@ const router = createBrowserRouter([
           { path: 'search', element: <Search /> },
           { path: 'detail/:detailId', element: <BookDetail /> },
           { path: 'note/write', element: <Note /> },
-          { path: 'note/:noteId', element: <div>노트 조회 페이지</div> },
           { path: 'record/:recordId', element: <Record /> },
           { path: 'edit/:recordId', element: <Edit /> },
         ],
