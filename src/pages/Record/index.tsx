@@ -1,13 +1,13 @@
 import { useQuery } from '@tanstack/react-query';
 
-import { useCallback, useReducer, useState } from 'react';
+import { useCallback, useEffect, useReducer, useState } from 'react';
 import { FiArrowLeft, FiMoreVertical, FiEdit } from 'react-icons/fi';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
 import Header from 'components/Header';
 import Loading from 'pages/Loading';
 
-import { getRecord } from 'services/record';
+import { deleteNote, getRecord } from 'services/record';
 
 import NoteTab from './NoteTab';
 import RecordTab from './RecordTab';
@@ -20,6 +20,7 @@ const Record = () => {
   const [isToggled, handleToggle] = useReducer((prev) => !prev, false);
 
   const navigate = useNavigate();
+  const location = useLocation();
   const { recordId } = useParams();
 
   const { data, isLoading } = useQuery({
@@ -31,10 +32,15 @@ const Record = () => {
     navigate(`/note/write`, { state: { recordId } });
   };
 
+  const handleDeleteNote = () => {
+    deleteNote(Number(recordId));
+    navigate(`/library`);
+  };
+
   const setObserver = useCallback((node: HTMLDivElement | null) => {
     if (node) {
       const handleScroll = () => {
-        setHasHeaderBackground(node.scrollTop > 200);
+        setHasHeaderBackground(node.scrollTop > 400);
       };
 
       node.addEventListener('scroll', handleScroll);
@@ -45,12 +51,23 @@ const Record = () => {
     }
   }, []);
 
+  useEffect(() => {
+    if (location.state === '독서노트') setSelected(location.state);
+  }, [location.state]);
+
   if (isLoading) return <Loading />;
 
   return (
     data && (
       <>
         <Header
+          title={
+            hasHeaderBackground ? (
+              <p className={`${data.bookData.title.length > 20 ? 'text-sm' : 'text-base'}`}>{data.bookData.title}</p>
+            ) : (
+              ''
+            )
+          }
           leftBtn={
             <FiArrowLeft
               style={{ width: '24px', height: '24px', color: hasHeaderBackground ? 'black' : 'white' }}
@@ -71,7 +88,11 @@ const Record = () => {
                   >
                     수정하기
                   </button>
-                  <button type="button" className="flex-grow border-t border-text border-opacity-30">
+                  <button
+                    type="button"
+                    className="flex-grow border-t border-text border-opacity-30"
+                    onClick={handleDeleteNote}
+                  >
                     삭제하기
                   </button>
                 </div>
@@ -82,7 +103,7 @@ const Record = () => {
         />
 
         <div
-          className="height-without-footer relative flex-col overflow-y-auto overflow-x-hidden bg-white pt-header"
+          className="height-without-footer relative flex-col overflow-y-auto overflow-x-hidden pt-header"
           ref={(node) => {
             setObserver(node);
           }}
@@ -102,7 +123,7 @@ const Record = () => {
               className="absolute bottom-10 z-10 h-60 w-40 shadow-[3px_2px_5px_0_rgba(0,0,0,0.3)]"
             />
             <span className="absolute bottom-10 z-30 h-[14.9rem] w-[0.0625rem] -translate-x-[4.5rem] bg-black opacity-50 blur-[2px]" />
-            <span className="absolute -bottom-10 w-full">
+            <span className="absolute -bottom-10 z-[5] w-full">
               <ShelfSvg />
             </span>
           </section>
@@ -112,10 +133,10 @@ const Record = () => {
             <p className="my-2 text-center text-xs opacity-50">{data.bookData.author}</p>
           </section>
 
-          <section className="relative bg-white">
+          <section className="relative">
             <ul className="grid h-9 w-full grid-cols-2 items-center justify-center">
               {TABS.map((tab) => (
-                <li key={tab}>
+                <li key={tab} className="border-t border-white bg-white">
                   <button
                     className={`flex h-full w-full items-center justify-center border-b-[3px] pb-2 ${selected === tab ? 'border-black' : 'border-main'}`}
                     onClick={() => setSelected(tab)}
@@ -126,11 +147,12 @@ const Record = () => {
                 </li>
               ))}
             </ul>
+
             {selected === '독서기록' && <RecordTab book={data} />}
             {selected === '독서노트' && recordId && (
               <>
                 <NoteTab recordId={recordId} />
-
+                <div className="h-20" />
                 <button
                   type="button"
                   className="fixed bottom-[6rem] right-[1rem] flex h-16 w-16 items-center justify-center rounded-full bg-accent shadow-lg"

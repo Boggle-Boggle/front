@@ -27,7 +27,7 @@ const RecordTab = ({ book }: RecordTabProps) => {
   }, []);
 
   return (
-    <>
+    <section className="bg-white">
       <RecordItem
         icons={<CiCircleInfo style={{ width: '20px', height: '20px' }} />}
         title="도서정보"
@@ -43,28 +43,30 @@ const RecordTab = ({ book }: RecordTabProps) => {
           )
         }
       />
-      {isToggledInfo && (
-        <section className="border-b border-main p-4">
+      <section
+        className={`grid ${isToggledInfo ? 'grid-rows-[1fr] pt-4' : 'grid-rows-[0fr]'} transition-all duration-200`}
+      >
+        <div className={`overflow-hidden border-b border-main px-4 ${isToggledInfo && 'pb-4'}`}>
           <p className="text-xs font-bold">책정보</p>
           <span className="mt-2 flex">
-            <p className="mr-2 text-xs font-semibold">저자</p>
-            <p className="text-xs opacity-70">{bookData.author}</p>
+            <p className="mr-2 text-xs opacity-70">저자</p>
+            <p className="text-xs">{bookData.author}</p>
           </span>
           <span className="mt-2 flex">
-            <p className="mr-2 text-xs font-semibold">분야</p>
-            <p className="text-xs opacity-70">{bookData.genre}</p>
+            <p className="mr-2 text-xs opacity-70">분야</p>
+            <p className="text-xs">{bookData.genre}</p>
           </span>
           <span className="mt-2 flex">
-            <p className="mr-2 text-xs font-semibold">출판사</p>
-            <p className="text-xs opacity-70">{bookData.publisher}</p>
+            <p className="mr-2 text-xs opacity-70">출판사</p>
+            <p className="text-xs">{bookData.publisher}</p>
           </span>
           <span className="mt-2 flex">
-            <p className="mr-2 text-xs font-semibold">발행일</p>
-            <p className="text-xs opacity-70">{formatDateTimeToDate(bookData.pubDate)}</p>
+            <p className="mr-2 text-xs opacity-70">발행일</p>
+            <p className="text-xs">{formatDateTimeToDate(bookData.pubDate)}</p>
           </span>
           <span className="mt-2 flex">
-            <p className="mr-2 text-xs font-semibold">페이지</p>
-            <p className="text-xs opacity-70">{bookData.page} p</p>
+            <p className="mr-2 text-xs opacity-70">페이지</p>
+            <p className="text-xs">{bookData.page} p</p>
           </span>
           <span className="mt-4 flex justify-between text-xs font-bold">
             책소개
@@ -77,9 +79,8 @@ const RecordTab = ({ book }: RecordTabProps) => {
           <p className={`mt-2 text-xs leading-5 opacity-70 ${isToggledExpand || 'line-clamp-4'}`} ref={plotRef}>
             {bookData.plot}
           </p>
-        </section>
-      )}
-
+        </div>
+      </section>
       {recordData.readDateList.map((date, idx) => {
         const startDate = date.startReadDate && formatDateTimeToDate(date.startReadDate);
         const endDate = date.endReadDate && formatDateTimeToDate(date.endReadDate);
@@ -130,7 +131,7 @@ const RecordTab = ({ book }: RecordTabProps) => {
           );
         return (
           <li key={library.libraryId}>
-            <RecordItem content={library.libraryName} />;
+            <RecordItem content={library.libraryName} />
           </li>
         );
       })}
@@ -142,7 +143,7 @@ const RecordTab = ({ book }: RecordTabProps) => {
       />
 
       <RecordItem />
-    </>
+    </section>
   );
 };
 

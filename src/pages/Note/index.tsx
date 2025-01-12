@@ -99,7 +99,7 @@ const Note = () => {
 
     // 노트 작성 후 쿼리무효화
     queryClient.invalidateQueries({ queryKey: ['note', recordId] });
-    navigate(`/record/${recordId}`);
+    navigate(`/record/${recordId}`, { state: '독서노트', replace: true });
   };
 
   const handleChangeTitle = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -182,7 +182,12 @@ const Note = () => {
               </ul>
             </button>
           }
-          leftBtn={<IoArrowBackOutline style={{ width: '24px', height: '24px' }} onClick={() => navigate(-1)} />}
+          leftBtn={
+            <IoArrowBackOutline
+              style={{ width: '24px', height: '24px' }}
+              onClick={() => navigate(`/record/${recordId}`, { replace: true })}
+            />
+          }
           rightBtn={
             <button className="font-black" onClick={handleSave} type="submit">
               저장
@@ -192,6 +197,10 @@ const Note = () => {
 
         <section className="height-without-footer border-mains flex flex-col overflow-hidden rounded-tl-3xl border border-main bg-white pb-header">
           <img src={bookmark} className="header absolute right-10 top-header block h-12 w-12" alt="" />
+          {page && <p className="absolute right-2 top-header pt-2 opacity-50">{`p.${page}`}</p>}
+          {pages && (
+            <p className="absolute right-2 top-header pt-2 opacity-50">{`p.${pages.startPage}-p.${pages.endPage}`}</p>
+          )}
           <button className="w-full px-5 py-3 text-start font-semibold opacity-50" type="button" onClick={open}>
             {`${selectedDate[0] + 2000}년 ${selectedDate[1]}월 ${selectedDate[2]}일`}
           </button>
@@ -209,6 +218,15 @@ const Note = () => {
             placeholder="내용을 작성해주시핑"
             onChange={(e) => handleChangeContent(e)}
           />
+          <div className="h-40 overflow-y-auto border-t border-main px-4 py-2">
+            <p className="flex items-center">
+              <LuTags style={{ width: '20px', height: '20px', color: '#9B9999', marginRight: '4px' }} />
+              태그
+            </p>
+            {tags.map((tag) => (
+              <p className="inline-flex pr-2 text-sm opacity-70">{`#${tag}`}</p>
+            ))}
+          </div>
         </section>
         <div
           className={`absolute ${isKeyboardActive ? 'bottom-0' : 'bottom-footer'} h-13 flex w-full items-center justify-between bg-main`}

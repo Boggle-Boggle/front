@@ -17,7 +17,7 @@ const NoteItem = ({ note, readDateIndex }: NoteItemProps) => {
   const { recordId } = useParams();
 
   const handleGoToNote = () => {
-    navigate(`/note/write`, { state: { recordId, note, readDateIndex } });
+    navigate(`/note/write`, { state: { recordId, note, readDateIndex }, replace: true });
   };
 
   return (
