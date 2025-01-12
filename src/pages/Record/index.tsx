@@ -40,7 +40,7 @@ const Record = () => {
   const setObserver = useCallback((node: HTMLDivElement | null) => {
     if (node) {
       const handleScroll = () => {
-        setHasHeaderBackground(node.scrollTop > 200);
+        setHasHeaderBackground(node.scrollTop > 400);
       };
 
       node.addEventListener('scroll', handleScroll);
@@ -61,6 +61,13 @@ const Record = () => {
     data && (
       <>
         <Header
+          title={
+            hasHeaderBackground ? (
+              <p className={`${data.bookData.title.length > 20 ? 'text-sm' : 'text-base'}`}>{data.bookData.title}</p>
+            ) : (
+              ''
+            )
+          }
           leftBtn={
             <FiArrowLeft
               style={{ width: '24px', height: '24px', color: hasHeaderBackground ? 'black' : 'white' }}
@@ -140,7 +147,12 @@ const Record = () => {
                 </li>
               ))}
             </ul>
-            {selected === '독서기록' && <RecordTab book={data} />}
+            {selected === '독서기록' && (
+              <>
+                <RecordTab book={data} />
+                <RecordTab book={data} />
+              </>
+            )}
             {selected === '독서노트' && recordId && (
               <>
                 <NoteTab recordId={recordId} />
