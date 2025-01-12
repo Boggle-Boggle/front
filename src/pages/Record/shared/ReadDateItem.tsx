@@ -1,4 +1,4 @@
-import { useReducer } from 'react';
+import { useEffect, useState } from 'react';
 import { GoChevronDown, GoChevronUp } from 'react-icons/go';
 
 import { Note } from 'types/record';
@@ -13,18 +13,22 @@ type ReadDateItemProps = {
 };
 
 const ReadDateItem = ({ notes, startDate, endDate, idx }: ReadDateItemProps) => {
-  const [isToggled, handleToggle] = useReducer((prev) => !prev, true);
+  const [isToggled, setIsToggled] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (notes.length > 0) setIsToggled(true);
+  }, [notes]);
 
   return (
     <section className="bg-white">
       <button
         className="flex w-full justify-between border-b-4 border-main px-4 py-[0.875rem]"
-        onClick={handleToggle}
+        onClick={() => setIsToggled(!isToggled)}
         type="button"
         aria-label={isToggled ? '도서 정보 자세히 보기' : '도서 정보 간략히 보기'}
       >
         <p className="font-bold">
-          {idx}회독
+          {idx === 0 ? '회독정보없음' : `${idx}회독`}
           {idx > 0 && <span className="ml-1 font-normal opacity-50">{`${startDate}~${endDate}`}</span>}
         </p>
         {isToggled ? (

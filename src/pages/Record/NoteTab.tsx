@@ -25,6 +25,8 @@ const NoteTab = ({ recordId }: NoteTabProps) => {
       const startDate = (readDate.startReadDate && formatDateTimeToDate(readDate.startReadDate)) ?? '';
       const endDate = readDate.endReadDate ? formatDateTimeToDate(readDate.endReadDate) : '독서중';
 
+      if (idx === 0 && notes.length === 0) return;
+
       return <ReadDateItem startDate={startDate} endDate={endDate} notes={notes} idx={idx} />;
     })
   );
