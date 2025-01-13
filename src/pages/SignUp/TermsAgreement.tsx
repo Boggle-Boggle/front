@@ -4,6 +4,7 @@ import { GoArrowLeft, GoChevronRight } from 'react-icons/go';
 
 import Button from 'components/Button';
 import Header from 'components/Header';
+import Highlight from 'components/Highlight';
 
 import { TermWithAgree } from 'types/user';
 
@@ -71,14 +72,12 @@ const TermsAgreement = ({ terms, setTerms, onPrev, onNext }: TermsAgreementProps
           <br /> 이용하기 전{' '}
           <span className="relative inline-block">
             <span className="relative z-10">몇 가지</span>
-            <span className="absolute bottom-1 left-0 h-3 w-full bg-accent opacity-50" />
-            <span className="absolute bottom-1 right-0 h-3 w-1 bg-accent opacity-50" />
+            <Highlight />
           </span>
           <br />
           <span className="relative inline-block">
             <span className="relative z-10">동의</span>
-            <span className="absolute bottom-1 left-0 h-3 w-full bg-accent opacity-50" />
-            <span className="absolute bottom-1 right-0 h-3 w-1 bg-accent opacity-50" />
+            <Highlight />
           </span>
           가 필요해요
         </h1>

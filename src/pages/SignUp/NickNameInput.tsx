@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 import Button from 'components/Button';
 import Header from 'components/Header';
+import Highlight from 'components/Highlight';
 
 import { isDuplicateNickname } from 'services/user';
 
@@ -42,14 +43,12 @@ const NickNameInput = ({ nickName, isValid, updateNickName, onNext }: NickNameIn
         <h1 className="text-[32px] font-semibold text-text">
           <span className="relative inline-block">
             <span className="relative z-10">빼곡에서</span>
-            <span className="absolute bottom-1 left-0 h-3 w-full bg-accent opacity-50" />
-            <span className="absolute bottom-1 right-0 h-3 w-1 bg-accent opacity-50" />
+            <Highlight />
           </span>
           <br />
           <span className="relative inline-block">
             <span className="relative z-10">사용할 닉네임</span>
-            <span className="absolute bottom-1 left-0 h-3 w-full bg-accent opacity-50" />
-            <span className="absolute bottom-1 right-0 h-3 w-1 bg-accent opacity-50" />
+            <Highlight />
           </span>
           을
           <br /> 작성해주세요
