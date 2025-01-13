@@ -19,7 +19,7 @@ export const getTermsAgreement = async () => {
 };
 
 export const agreeTerms = async (terms: AgreementStatus[]) => {
-  await api.patch('/user/terms', terms);
+  await api.put('/user/terms', terms);
 };
 
 export const getMyPageInfo = async () => {
