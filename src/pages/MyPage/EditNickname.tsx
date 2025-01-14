@@ -39,7 +39,7 @@ const EditNickname = () => {
   return (
     <section className="h-full bg-white">
       <Header leftBtn={<FaAngleLeft onClick={() => navigate(-1)} style={{ width: '24px', height: '24px' }} />} />
-      <section className="height-content flex flex-col items-center px-8">
+      <section className="height-without-header flex flex-col items-center px-8">
         <img
           className="mb-5 h-36 w-36 rounded-full bg-white shadow-lg"
           src="https://item.kakaocdn.net/do/b563e153db82fde06e1423472ccf192c960f4ab09fe6e38bae8c63030c9b37f9"
