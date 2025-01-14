@@ -1,3 +1,4 @@
+import { useGLTF } from '@react-three/drei';
 import { useQuery } from '@tanstack/react-query';
 
 import { useEffect, useState } from 'react';
@@ -14,6 +15,7 @@ import TermsAgreement from './TermsAgreement';
 type StepType = '닉네임입력' | '약관동의' | '가입완료';
 
 const SignUp = () => {
+  const { scene } = useGLTF(`${import.meta.env.VITE_IMG_BASE_URL || ''}/assets/Splash.glb`);
   const { nickName, isValid, updateNickName } = useNickNameInput();
   const [step, setStep] = useState<StepType>('닉네임입력');
   const [terms, setTerms] = useState<TermWithAgree[]>([]);
@@ -55,7 +57,7 @@ const SignUp = () => {
           onNext={() => setStep('가입완료')}
         />
       )}
-      {step === '가입완료' && <Complete nickName={nickName} terms={createTermsAgreement()} />}
+      {step === '가입완료' && <Complete nickName={nickName} terms={createTermsAgreement()} scene={scene} />}
     </div>
   );
 };
