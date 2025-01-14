@@ -8,7 +8,7 @@ import Button from 'components/Button';
 import Header from 'components/Header';
 
 import useNickNameInput from 'hooks/useNickNameInput';
-import { updateNickname } from 'services/user';
+import { isDuplicateNickname, updateNickname } from 'services/user';
 
 const EditNickname = () => {
   const navigate = useNavigate();
@@ -19,6 +19,12 @@ const EditNickname = () => {
   const { nickname } = location.state;
 
   const handleSave = async () => {
+    const isDuplicated = await isDuplicateNickname(nickName);
+
+    if (isDuplicated) {
+      alert(`사용중인 닉네임입니다.\n다른 닉네임을 입력해주세요`);
+      return;
+    }
     await updateNickname(nickName);
 
     queryClient.invalidateQueries({ queryKey: ['myPage'] });
