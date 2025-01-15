@@ -1,7 +1,7 @@
 import { SetStateAction } from 'react';
 
 import CheckBox from 'components/CheckBox';
-import FullScreenModal from 'components/FullScreenModal';
+import HalfScreenModal from 'components/HalfScreenModal';
 import Header from 'components/Header';
 
 import { Libraries, CustomLibrary, StatusLibrary } from 'types/library';
@@ -35,7 +35,7 @@ const LibrarySelectModal = ({
   };
 
   return (
-    <FullScreenModal
+    <HalfScreenModal
       handleClose={() => {
         onClose(false);
       }}
@@ -80,7 +80,7 @@ const LibrarySelectModal = ({
           ))}
         </Content>
       </section>
-    </FullScreenModal>
+    </HalfScreenModal>
   );
 };
 

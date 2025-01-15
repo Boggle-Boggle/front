@@ -3,7 +3,7 @@ import { QueryObserverResult, RefetchOptions, useMutation, useQueryClient } from
 import { SetStateAction, useState } from 'react';
 
 import CheckBox from 'components/CheckBox';
-import FullScreenModal from 'components/FullScreenModal';
+import HalfScreenModal from 'components/HalfScreenModal';
 import Header from 'components/Header';
 
 import { addLibrary, removeLibrary } from 'services/library';
@@ -55,7 +55,7 @@ const LibraryEditedModal = ({ onClose, handleOpenSelect, libraries, refetchLibra
   };
 
   return (
-    <FullScreenModal>
+    <HalfScreenModal>
       <Header
         title={<span className="text-base">서재 편집</span>}
         rightBtn={
@@ -95,7 +95,7 @@ const LibraryEditedModal = ({ onClose, handleOpenSelect, libraries, refetchLibra
           ))}
         </Content>
       </div>
-    </FullScreenModal>
+    </HalfScreenModal>
   );
 };
 

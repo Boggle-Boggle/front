@@ -2,7 +2,7 @@ import { useRef, useState } from 'react';
 import { ImFileEmpty, ImFilesEmpty } from 'react-icons/im';
 
 import Button from 'components/Button';
-import FullScreenModal from 'components/FullScreenModal';
+import HalfScreenModal from 'components/HalfScreenModal';
 
 import { AddNoteParams } from 'types/record';
 
@@ -50,7 +50,7 @@ const PageModal = ({ close, setPage, setPages }: PageModalProps) => {
   };
 
   return (
-    <FullScreenModal handleClose={close} hasCloseMark bgColor="bg-white">
+    <HalfScreenModal handleClose={close} hasCloseMark bgColor="bg-white">
       <section className="relative flex h-full w-full flex-col items-center px-10 py-6">
         <p className="pb-1 text-lg font-bold">페이지 입력</p>
         <p className="text-sm opacity-50">함께 기재하고 싶은 페이지 번호를 입력해주세요</p>
@@ -127,7 +127,7 @@ const PageModal = ({ close, setPage, setPages }: PageModalProps) => {
           완료
         </Button>
       </section>
-    </FullScreenModal>
+    </HalfScreenModal>
   );
 };
 
