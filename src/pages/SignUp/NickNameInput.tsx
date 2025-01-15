@@ -21,7 +21,11 @@ const NickNameInput = ({ nickName, isValid, updateNickName, onNext }: NickNameIn
 
   const handleNext = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!isValid) return;
+    if (!isValid) {
+      // TODO : 벨리데이션 추가
+      alert(`공백은 사용할 수 없어요`);
+      return;
+    }
 
     const isDuplicated = await isDuplicateNickname(nickName);
 

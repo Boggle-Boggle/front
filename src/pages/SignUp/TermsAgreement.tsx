@@ -36,7 +36,12 @@ const TermsAgreement = ({ terms, setTerms, onPrev, onNext }: TermsAgreementProps
   }, [terms]);
 
   const handleNext = () => {
-    if (isAllMandatoryChecked) onNext();
+    if (!isAllMandatoryChecked) {
+      alert('모든 필수 약관에 동의가 필요합니다');
+      return;
+    }
+
+    onNext();
   };
 
   const handleTermsClick = (id: number) => {
