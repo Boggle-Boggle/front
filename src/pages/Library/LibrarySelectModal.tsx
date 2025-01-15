@@ -32,6 +32,7 @@ const LibrarySelectModal = ({
 
   const handleClick = (selected: CustomLibrary | StatusLibrary) => {
     setSelectedLibrary(selected);
+    onClose(false);
   };
 
   return (

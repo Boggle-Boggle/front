@@ -49,6 +49,7 @@ const LibrarySortModal = ({ onClose, refetchBooks }: LibrarySortModalProps) => {
   const handleOptionChange = (sortingOption: SortingType) => {
     refetchSortingType();
     mutate(sortingOption);
+    onClose(false);
   };
 
   return (
