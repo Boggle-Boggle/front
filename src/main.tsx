@@ -1,6 +1,6 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
-import React from 'react';
+import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom/client';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 
@@ -9,6 +9,7 @@ import BookDetail from 'pages/BookDetail';
 import Edit from 'pages/Edit';
 import Home from 'pages/Home';
 import Library from 'pages/Library';
+import Loading from 'pages/Loading';
 import Login from 'pages/Login';
 import MyPage from 'pages/MyPage';
 import DeleteAccount from 'pages/MyPage/DeleteAccount';
@@ -59,7 +60,9 @@ const queryClient = new QueryClient();
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
-      <RouterProvider router={router} />
+      <Suspense fallback={<Loading />}>
+        <RouterProvider router={router} />
+      </Suspense>
     </QueryClientProvider>
   </React.StrictMode>,
 );
