@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { BiX } from 'react-icons/bi';
 import { FaCheck } from 'react-icons/fa6';
 import { GoArrowLeft, GoChevronRight } from 'react-icons/go';
 
@@ -8,7 +9,6 @@ import Highlight from 'components/Highlight';
 
 import { TermWithAgree } from 'types/user';
 
-import Term from './Term';
 import TermsItem from './TermsItem';
 
 type TermsAgreementProps = {
@@ -123,11 +123,15 @@ const TermsAgreement = ({ terms, setTerms, onPrev, onNext }: TermsAgreementProps
         </form>
       </section>
       {selectedTerm && (
-        <Term
-          selectedTerm={selectedTerm}
-          handleCheckboxChange={handleCheckboxChange}
-          setSelectedTerm={setSelectedTerm}
-        />
+        <div className="absolute top-0 z-20 w-full bg-white">
+          <Header
+            title={selectedTerm.title ?? '약관동의'}
+            rightBtn={<BiX style={{ width: '28px', height: '28px' }} onClick={() => setSelectedTerm(null)} />}
+          />
+          <section className="height-without-header mx-4 flex flex-col overflow-y-auto">
+            <p className="h-full overflow-y-scroll whitespace-pre-wrap">{selectedTerm.content}</p>
+          </section>
+        </div>
       )}
     </>
   );
