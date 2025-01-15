@@ -21,7 +21,7 @@ const HalfScreenModal = ({
         type="button"
         onClick={handleClose}
       />
-      <section className={`fixed bottom-0 z-30 max-h-[70%] min-h-[50%] w-full rounded-t-2xl ${bgColor}`}>
+      <section className={`fixed bottom-0 z-30 flex max-h-[70%] min-h-[50%] w-full flex-col rounded-t-2xl ${bgColor}`}>
         {hasCloseMark && (
           <button
             type="button"

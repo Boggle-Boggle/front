@@ -56,14 +56,16 @@ const LibraryEditedModal = ({ onClose, handleOpenSelect, libraries, refetchLibra
 
   return (
     <HalfScreenModal>
-      <Header
-        title={<span className="text-base">서재 편집</span>}
-        rightBtn={
-          <button onClick={handleClose} type="button">
-            완료
-          </button>
-        }
-      />
+      <div>
+        <Header
+          title={<span className="text-base">서재 편집</span>}
+          rightBtn={
+            <button onClick={handleClose} type="button">
+              완료
+            </button>
+          }
+        />
+      </div>
       <form className="flex h-10 w-full items-center justify-between px-4" onSubmit={(e) => handleAddLibrary(e)}>
         <input
           placeholder="추가하고 싶은 서재명을 입력하세요"

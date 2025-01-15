@@ -40,15 +40,17 @@ const LibrarySelectModal = ({
         onClose(false);
       }}
     >
-      <Header
-        title={<span className="text-base"> 서재</span>}
-        rightBtn={
-          <button onClick={handleOpenEdit} className="opacity-50" type="button">
-            편집
-          </button>
-        }
-      />
-      <section className="h-[calc(100%_-_4rem)] overflow-y-auto pb-5">
+      <div>
+        <Header
+          title={<span className="text-base"> 서재</span>}
+          rightBtn={
+            <button onClick={handleOpenEdit} className="opacity-50" type="button">
+              편집
+            </button>
+          }
+        />
+      </div>
+      <section className="h-full overflow-y-auto pb-8">
         <div className="mb-2 ml-4">기본 서재</div>
         <Content>
           {statusLibrary.map(({ status, libraryName, bookCount }) => (
