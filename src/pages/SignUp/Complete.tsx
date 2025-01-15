@@ -50,7 +50,7 @@ const Complete = ({ nickName, terms, scene }: CompleteProps) => {
 
   return (
     <section className="flex h-dvh w-full flex-col justify-center p-9 py-14">
-      <h1 className="text-[32px] font-semibold text-text">
+      <h1 className="text-[2rem] font-semibold leading-[3rem]">
         <span className="relative inline-block">
           <span className="relative z-10">회원가입이</span>
           <Highlight />
@@ -61,7 +61,7 @@ const Complete = ({ nickName, terms, scene }: CompleteProps) => {
           <Highlight />
         </span>
       </h1>
-      <p className="py-2 text-sm text-sub">빼곡을 이용할 준비가 되셨나요?</p>
+      <p className="py-2 text-sm opacity-50">빼곡을 이용할 준비가 되셨나요?</p>
 
       <section className="h-3/5 flex-grow px-4">
         <Canvas shadows>

@@ -40,7 +40,7 @@ const NickNameInput = ({ nickName, isValid, updateNickName, onNext }: NickNameIn
         leftBtn={<GoArrowLeft style={{ width: '24px', height: '24px' }} onClick={handleLeftBtnClick} />}
       />
       <section className="height-without-header flex w-full flex-col p-9">
-        <h1 className="text-[32px] font-semibold text-text">
+        <h1 className="text-[2rem] font-semibold leading-[3rem]">
           <span className="relative inline-block">
             <span className="relative z-10">빼곡에서</span>
             <Highlight />
@@ -53,7 +53,7 @@ const NickNameInput = ({ nickName, isValid, updateNickName, onNext }: NickNameIn
           을
           <br /> 작성해주세요
         </h1>
-        <p className="pb-10 pt-2 text-sm text-sub">최대 15글자까지 입력할 수 있어요</p>
+        <p className="pb-10 pt-2 text-sm opacity-50">최대 15글자까지 입력할 수 있어요</p>
         <form className="relative flex-grow">
           <div className="h-10 w-full border-b-4 border-accent">
             <input

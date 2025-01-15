@@ -67,7 +67,7 @@ const TermsAgreement = ({ terms, setTerms, onPrev, onNext }: TermsAgreementProps
         />
       )}
       <section className="height-without-header flex w-full flex-col p-9">
-        <h1 className="text-[32px] font-semibold">
+        <h1 className="text-[2rem] font-semibold leading-[3rem]">
           빼곡을
           <br /> 이용하기 전{' '}
           <span className="relative inline-block">
@@ -81,7 +81,7 @@ const TermsAgreement = ({ terms, setTerms, onPrev, onNext }: TermsAgreementProps
           </span>
           가 필요해요
         </h1>
-        <p className="pb-10 pt-2 text-sm text-sub">원활한 사용을 위해 약관에 동의해주세요</p>
+        <p className="pb-10 pt-2 text-sm opacity-50">원활한 사용을 위해 약관에 동의해주세요</p>
         <form onSubmit={handleNext} className="relative flex-grow">
           <label
             htmlFor="termsAllAgreement"
