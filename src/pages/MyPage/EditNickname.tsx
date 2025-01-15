@@ -8,7 +8,7 @@ import Button from 'components/Button';
 import Header from 'components/Header';
 
 import useNickNameInput from 'hooks/useNickNameInput';
-import { updateNickname } from 'services/user';
+import { isDuplicateNickname, updateNickname } from 'services/user';
 
 const EditNickname = () => {
   const navigate = useNavigate();
@@ -19,6 +19,12 @@ const EditNickname = () => {
   const { nickname } = location.state;
 
   const handleSave = async () => {
+    const isDuplicated = await isDuplicateNickname(nickName);
+
+    if (isDuplicated) {
+      alert(`사용중인 닉네임입니다.\n다른 닉네임을 입력해주세요`);
+      return;
+    }
     await updateNickname(nickName);
 
     queryClient.invalidateQueries({ queryKey: ['myPage'] });
@@ -33,7 +39,7 @@ const EditNickname = () => {
   return (
     <section className="h-full bg-white">
       <Header leftBtn={<FaAngleLeft onClick={() => navigate(-1)} style={{ width: '24px', height: '24px' }} />} />
-      <section className="height-content flex flex-col items-center px-8">
+      <section className="height-without-header flex flex-col items-center px-8">
         <img
           className="mb-5 h-36 w-36 rounded-full bg-white shadow-lg"
           src="https://item.kakaocdn.net/do/b563e153db82fde06e1423472ccf192c960f4ab09fe6e38bae8c63030c9b37f9"

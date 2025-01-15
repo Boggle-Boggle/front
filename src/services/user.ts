@@ -1,6 +1,31 @@
-import { AgreementStatus, MyPage, Terms } from 'types/user';
+import useAuthStore from 'stores/useAuthStore';
+
+import { AgreementStatus, Authorization, MyPage, Terms } from 'types/user';
 
 import api from '.';
+
+export const getRefresh = async () => {
+  const { login, logout } = useAuthStore.getState();
+
+  try {
+    const refreshResponse = await api.get('/auth/refresh');
+    const newAccessToken: string = refreshResponse.data.data;
+
+    logout();
+    login(newAccessToken);
+
+    return newAccessToken;
+  } catch (error) {
+    logout();
+    throw new Error('리프레시 토큰 갱신 실패');
+  }
+};
+
+export const getAuthorization = async () => {
+  const response = await api.get('/user/authorization');
+
+  return response.data.data as Authorization;
+};
 
 export const isDuplicateNickname = async (nickname: string) => {
   const response = await api.get(`/user/nickname?nickname=${nickname}`);
@@ -19,7 +44,7 @@ export const getTermsAgreement = async () => {
 };
 
 export const agreeTerms = async (terms: AgreementStatus[]) => {
-  await api.patch('/user/terms', terms);
+  await api.put('/user/terms', terms);
 };
 
 export const getMyPageInfo = async () => {

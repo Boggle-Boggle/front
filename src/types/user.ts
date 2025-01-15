@@ -24,3 +24,5 @@ export type MyPage = {
   monthlyReadingCnt: number;
   totalNote: number;
 };
+
+export type Authorization = 'GUEST' | 'USER' | 'LIMITED_USER';

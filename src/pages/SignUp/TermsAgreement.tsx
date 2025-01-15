@@ -1,13 +1,14 @@
 import { useEffect, useState } from 'react';
+import { BiX } from 'react-icons/bi';
 import { FaCheck } from 'react-icons/fa6';
 import { GoArrowLeft, GoChevronRight } from 'react-icons/go';
 
 import Button from 'components/Button';
 import Header from 'components/Header';
+import Highlight from 'components/Highlight';
 
 import { TermWithAgree } from 'types/user';
 
-import Term from './Term';
 import TermsItem from './TermsItem';
 
 type TermsAgreementProps = {
@@ -35,7 +36,12 @@ const TermsAgreement = ({ terms, setTerms, onPrev, onNext }: TermsAgreementProps
   }, [terms]);
 
   const handleNext = () => {
-    if (isAllMandatoryChecked) onNext();
+    if (!isAllMandatoryChecked) {
+      alert('모든 필수 약관에 동의가 필요합니다');
+      return;
+    }
+
+    onNext();
   };
 
   const handleTermsClick = (id: number) => {
@@ -66,23 +72,21 @@ const TermsAgreement = ({ terms, setTerms, onPrev, onNext }: TermsAgreementProps
         />
       )}
       <section className="height-without-header flex w-full flex-col p-9">
-        <h1 className="text-[32px] font-semibold">
+        <h1 className="text-[2rem] font-semibold leading-[3rem]">
           빼곡을
           <br /> 이용하기 전{' '}
           <span className="relative inline-block">
             <span className="relative z-10">몇 가지</span>
-            <span className="absolute bottom-1 left-0 h-3 w-full bg-accent opacity-50" />
-            <span className="absolute bottom-1 right-0 h-3 w-1 bg-accent opacity-50" />
+            <Highlight />
           </span>
           <br />
           <span className="relative inline-block">
             <span className="relative z-10">동의</span>
-            <span className="absolute bottom-1 left-0 h-3 w-full bg-accent opacity-50" />
-            <span className="absolute bottom-1 right-0 h-3 w-1 bg-accent opacity-50" />
+            <Highlight />
           </span>
           가 필요해요
         </h1>
-        <p className="pb-10 pt-2 text-sm text-sub">원활한 사용을 위해 약관에 동의해주세요</p>
+        <p className="pb-10 pt-2 text-sm opacity-50">원활한 사용을 위해 약관에 동의해주세요</p>
         <form onSubmit={handleNext} className="relative flex-grow">
           <label
             htmlFor="termsAllAgreement"
@@ -124,11 +128,15 @@ const TermsAgreement = ({ terms, setTerms, onPrev, onNext }: TermsAgreementProps
         </form>
       </section>
       {selectedTerm && (
-        <Term
-          selectedTerm={selectedTerm}
-          handleCheckboxChange={handleCheckboxChange}
-          setSelectedTerm={setSelectedTerm}
-        />
+        <div className="absolute top-0 z-20 w-full bg-white">
+          <Header
+            title={selectedTerm.title ?? '약관동의'}
+            rightBtn={<BiX style={{ width: '28px', height: '28px' }} onClick={() => setSelectedTerm(null)} />}
+          />
+          <section className="height-without-header mx-4 flex flex-col overflow-y-auto">
+            <p className="h-full overflow-y-scroll whitespace-pre-wrap">{selectedTerm.content}</p>
+          </section>
+        </div>
       )}
     </>
   );
