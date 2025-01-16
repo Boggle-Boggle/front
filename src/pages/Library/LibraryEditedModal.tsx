@@ -82,9 +82,9 @@ const LibraryEditedModal = ({ onClose, handleOpenSelect, libraries, refetchLibra
         <Content>
           {libraries.libraryList.map(({ libraryName, libraryId }) => (
             <ContentItem>
-              <li key={libraryId} className="flex">
+              <li key={libraryId} className="flex h-full items-center">
                 <button
-                  className="pr-2"
+                  className="h-full pr-2"
                   type="button"
                   aria-label="서재 삭제"
                   onClick={() => handleRemoveLibrary(libraryId)}
