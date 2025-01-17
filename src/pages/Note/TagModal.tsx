@@ -20,6 +20,7 @@ const TagModal = ({ close, tags, setTags }: TagModalProps) => {
 
     if (tag.length && !tags.includes(tag)) setTags([...tags, inputRef.current.value]);
     inputRef.current.value = '';
+    inputRef.current.focus();
   };
 
   const handleDelete = (keyword: string) => {
