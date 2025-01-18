@@ -7,6 +7,8 @@ import Button from 'components/Button';
 import Header from 'components/Header';
 import Highlight from 'components/Highlight';
 
+import useDevice from 'hooks/useDevice';
+
 import { TermWithAgree } from 'types/user';
 
 import TermsItem from './TermsItem';
@@ -22,18 +24,7 @@ const TermsAgreement = ({ terms, setTerms, onPrev, onNext }: TermsAgreementProps
   const [isAllChecked, setIsAllChecked] = useState<boolean>(false);
   const [selectedTerm, setSelectedTerm] = useState<TermWithAgree | null>(null);
   const [isAllMandatoryChecked, setIsAllMandatoryChecked] = useState<boolean>(false);
-
-  useEffect(() => {
-    const allChecked = terms.every((term) => term.isAgree);
-    setIsAllChecked(allChecked);
-
-    const newIsAllMAndatoryChecked = terms.every((term) => {
-      if (term.mandatory) return term.isAgree === term.mandatory;
-      return true;
-    });
-
-    setIsAllMandatoryChecked(newIsAllMAndatoryChecked);
-  }, [terms]);
+  const { isIOS } = useDevice();
 
   const handleNext = () => {
     if (!isAllMandatoryChecked) {
@@ -63,6 +54,18 @@ const TermsAgreement = ({ terms, setTerms, onPrev, onNext }: TermsAgreementProps
     setTerms((preStatus) => preStatus?.map((status) => ({ ...status, isAgree: newCheckStatus })));
   };
 
+  useEffect(() => {
+    const allChecked = terms.every((term) => term.isAgree);
+    setIsAllChecked(allChecked);
+
+    const newIsAllMAndatoryChecked = terms.every((term) => {
+      if (term.mandatory) return term.isAgree === term.mandatory;
+      return true;
+    });
+
+    setIsAllMandatoryChecked(newIsAllMAndatoryChecked);
+  }, [terms]);
+
   return (
     <>
       {!selectedTerm && (
@@ -71,7 +74,9 @@ const TermsAgreement = ({ terms, setTerms, onPrev, onNext }: TermsAgreementProps
           leftBtn={<GoArrowLeft style={{ width: '24px', height: '24px' }} onClick={onPrev} />}
         />
       )}
-      <section className="height-without-header flex w-full flex-col p-9">
+      <section
+        className={`${isIOS ? 'height-without-headerIOS' : 'height-without-headerAnd'} flex w-full flex-col p-9`}
+      >
         <h1 className="text-[2rem] font-semibold leading-[3rem]">
           빼곡을
           <br /> 이용하기 전{' '}
