@@ -8,7 +8,6 @@ import { useNavigate, useLocation } from 'react-router-dom';
 
 import Header from 'components/Header';
 
-import useKeyboardStatus from 'hooks/useKeyboardStatus';
 import useModal from 'hooks/useModal';
 import { addNote, getReadDates, updateNote } from 'services/record';
 import { formatDate, formatDateAndTime, generateDate } from 'utils/format';
@@ -44,7 +43,6 @@ const Note = () => {
   const [isEditTag, setIsEditTag] = useState<boolean>(false);
 
   const textareaRef = useRef<HTMLTextAreaElement>(null);
-  const isKeyboardActive = useKeyboardStatus();
 
   const queryClient = useQueryClient();
   const navigate = useNavigate();
@@ -195,7 +193,7 @@ const Note = () => {
           }
         />
 
-        <section className="height-without-footer border-mains flex flex-col overflow-hidden rounded-tl-3xl border border-main bg-white pb-header">
+        <section className="border-mains height-without-header flex flex-col overflow-hidden rounded-tl-3xl border border-main bg-white pb-header">
           <img src={bookmark} className="header absolute right-10 top-header block h-12 w-12" alt="" />
           {page && <p className="absolute right-2 top-header pt-2 opacity-50">{`p.${page}`}</p>}
           {pages && (
@@ -228,9 +226,8 @@ const Note = () => {
             ))}
           </div>
         </section>
-        <div
-          className={`absolute ${isKeyboardActive ? 'bottom-0' : 'bottom-footer'} h-13 flex w-full items-center justify-between bg-main`}
-        >
+
+        <div className="absolute bottom-1 flex h-12 w-full items-center justify-between bg-main">
           <section className="flex">
             <button
               className="px-3 py-2"
@@ -259,7 +256,15 @@ const Note = () => {
             initialDate={selectedDate}
           />
         )}
-        {isEditPage && <PageModal close={() => setIsEditPage(false)} setPage={setPage} setPages={setPages} />}
+        {isEditPage && (
+          <PageModal
+            close={() => setIsEditPage(false)}
+            page={page}
+            pages={pages}
+            setPage={setPage}
+            setPages={setPages}
+          />
+        )}
         {isEditTag && <TagModal close={() => setIsEditTag(false)} tags={tags} setTags={setTags} />}
       </div>
     )

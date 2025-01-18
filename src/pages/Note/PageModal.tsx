@@ -1,56 +1,78 @@
-import { useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ImFileEmpty, ImFilesEmpty } from 'react-icons/im';
 
 import Button from 'components/Button';
-import FullScreenModal from 'components/FullScreenModal';
+import HalfScreenModal from 'components/HalfScreenModal';
 
 import { AddNoteParams } from 'types/record';
 
 type PageModalProps = {
-  close: () => void;
+  page: number | null;
+  pages: AddNoteParams['pages'];
   setPage: React.Dispatch<React.SetStateAction<number | null>>;
   setPages: React.Dispatch<React.SetStateAction<AddNoteParams['pages']>>;
+  close: () => void;
 };
-const PageModal = ({ close, setPage, setPages }: PageModalProps) => {
+const PageModal = ({ page, pages, setPage, setPages, close }: PageModalProps) => {
   const [selected, setSelected] = useState<'page' | 'pages'>('page');
-  const pageRef = useRef<HTMLInputElement | null>(null);
-  const pagesStartRef = useRef<HTMLInputElement | null>(null);
-  const pagesEndRef = useRef<HTMLInputElement | null>(null);
+  const [pageValue, setPageValue] = useState<string>('');
+  const [startPageValue, setStartPageValue] = useState<string>('');
+  const [endPageValue, setEndPageValue] = useState<string>('');
+
+  const handlePageChange = (e: React.ChangeEvent<HTMLInputElement>, type: 'page' | 'startPage' | 'endPage') => {
+    const { value } = e.target;
+
+    const numericValue = Number(value);
+
+    if (numericValue > 99999 || numericValue < 0) return;
+
+    if (type === 'page') setPageValue(value);
+    if (type === 'startPage') setStartPageValue(value);
+    if (type === 'endPage') setEndPageValue(value);
+  };
 
   const handleClick = () => {
-    if (selected === 'page' && pageRef.current) {
-      const page = parseInt(pageRef.current.value, 10);
-
-      if (Number.isInteger(page) && page > 0) {
-        setPage(page);
-        setPages(null);
-        close();
-      } else alert('페이지 번호가 올바르지 않아요');
+    if (selected === 'page') {
+      setPage(Number(pageValue));
+      setPages(null);
+      close();
     }
 
-    if (selected === 'pages' && pagesStartRef.current && pagesEndRef.current) {
-      const startPage = parseInt(pagesStartRef.current.value, 10);
-      const endPage = parseInt(pagesEndRef.current.value, 10);
+    if (selected === 'pages') {
+      if (startPageValue === '' || endPageValue === '' || Number(startPageValue) > Number(endPageValue)) {
+        alert('페이지번호가 올바르지 않아요');
+        return;
+      }
 
-      if (
-        Number.isInteger(startPage) &&
-        startPage > 0 &&
-        Number.isInteger(endPage) &&
-        endPage > 0 &&
-        startPage < endPage
-      ) {
-        setPages({
-          startPage,
-          endPage,
-        });
-        setPage(null);
-        close();
-      } else alert('페이지 번호가 올바르지 않아요');
+      const newPages = {
+        startPage: Number(startPageValue),
+        endPage: Number(endPageValue),
+      };
+
+      setPages(newPages);
+      setPage(null);
+      close();
     }
   };
 
+  useEffect(() => {
+    if (page) {
+      setPageValue(page.toString());
+
+      return;
+    }
+
+    if (!pages) return;
+    setSelected('pages');
+    const startPage = pages?.startPage;
+    const endPages = pages?.endPage;
+
+    setStartPageValue(startPage.toString());
+    setEndPageValue(endPages.toString());
+  }, [page, pages, setPage]);
+
   return (
-    <FullScreenModal handleClose={close} hasCloseMark bgColor="bg-white">
+    <HalfScreenModal handleClose={close} hasCloseMark bgColor="bg-white">
       <section className="relative flex h-full w-full flex-col items-center px-10 py-6">
         <p className="pb-1 text-lg font-bold">페이지 입력</p>
         <p className="text-sm opacity-50">함께 기재하고 싶은 페이지 번호를 입력해주세요</p>
@@ -94,8 +116,11 @@ const PageModal = ({ close, setPage, setPages }: PageModalProps) => {
             <input
               className="border-b-4 border-main text-center font-medium"
               placeholder="페이지 입력"
-              ref={pageRef}
+              value={pageValue}
+              onChange={(e) => handlePageChange(e, 'page')}
               type="number"
+              inputMode="numeric"
+              aria-label="페이지 입력"
             />
           </span>
         ) : (
@@ -104,10 +129,12 @@ const PageModal = ({ close, setPage, setPages }: PageModalProps) => {
               <p className="absolute top-0 text-xl font-bold">P.</p>
               <input
                 className="w-full border-b-4 border-main text-center font-medium"
-                maxLength={5}
                 placeholder="페이지 입력"
-                ref={pagesStartRef}
+                value={startPageValue}
+                onChange={(e) => handlePageChange(e, 'startPage')}
                 type="number"
+                inputMode="numeric"
+                aria-label="페이지 입력"
               />
             </span>
             <span className="text mx-6 mt-3 flex h-[2px] w-6 items-center justify-center bg-text font-bold opacity-50" />
@@ -115,10 +142,12 @@ const PageModal = ({ close, setPage, setPages }: PageModalProps) => {
               <p className="absolute top-0 text-xl font-bold">P.</p>
               <input
                 className="w-full border-b-4 border-main text-center font-medium"
-                maxLength={5}
                 placeholder="페이지 입력"
-                ref={pagesEndRef}
+                value={endPageValue}
+                onChange={(e) => handlePageChange(e, 'endPage')}
                 type="number"
+                inputMode="numeric"
+                aria-label="페이지 입력"
               />
             </span>
           </div>
@@ -127,7 +156,7 @@ const PageModal = ({ close, setPage, setPages }: PageModalProps) => {
           완료
         </Button>
       </section>
-    </FullScreenModal>
+    </HalfScreenModal>
   );
 };
 

@@ -12,14 +12,23 @@
   button {
     @apply focus:outline-none;
   }
+
+  input[type='number']::-webkit-outer-spin-button,
+  input[type='number']::-webkit-inner-spin-button {
+    @apply appearance-none;
+    margin: 0;
+  }
 }
 
 @layer utilities {
   .height-without-header {
     height: calc(100vh - 4rem);
   }
-  .height-without-footer {
-    height: calc(100vh - 5rem);
+  .height-without-footerIOS {
+    height: calc(100vh - 6rem);
+  }
+  .height-without-footerAnd {
+    height: calc(100vh - 5.5rem);
   }
   .height-content {
     height: calc(100vh - 9rem);

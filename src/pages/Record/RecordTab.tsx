@@ -15,7 +15,7 @@ type RecordTabProps = {
 const RecordTab = ({ book }: RecordTabProps) => {
   const { bookData, recordData } = book;
   const [isClamped, setIsClamped] = useState<boolean>(true);
-  const [isToggledInfo, handleInfoToggle] = useReducer((prev) => !prev, true);
+  const [isToggledInfo, handleInfoToggle] = useReducer((prev) => !prev, false);
   const [isToggledExpand, handleExpandToggle] = useReducer((prev) => !prev, false);
   const plotRef = useRef<HTMLDivElement>(null);
 
@@ -141,8 +141,6 @@ const RecordTab = ({ book }: RecordTabProps) => {
         title={recordData.isBookVisible ? '책장에서 보임' : '책장에서 숨김'}
         content={recordData.isBookVisible ? '책장에서 보임' : '책장에서 숨김'}
       />
-
-      <RecordItem />
     </section>
   );
 };

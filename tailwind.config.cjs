@@ -1,4 +1,5 @@
 /** @type {import('tailwindcss').Config} */
+
 module.exports = {
   content: ['./src/**/*.{js,jsx,ts,tsx}', './index.html'],
   theme: {
@@ -16,7 +17,8 @@ module.exports = {
       },
       spacing: {
         header: '4rem',
-        footer: '5rem',
+        footerIOS: '6rem',
+        footerAnd: '5.5rem',
       },
       lineClamp: {
         7: '7',
