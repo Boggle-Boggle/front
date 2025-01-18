@@ -3,7 +3,7 @@ import { FiX } from 'react-icons/fi';
 
 import Button from 'components/Button';
 import CheckBox from 'components/CheckBox';
-import HalfScreenModal from 'components/HalfScreenModal';
+import FullScreenModal from 'components/FullScreenModal';
 
 type TagModalProps = {
   close: () => void;
@@ -18,13 +18,8 @@ const TagModal = ({ close, tags, setTags }: TagModalProps) => {
     if (!inputRef.current) return;
     const tag = inputRef.current.value;
 
-    if (tag.length < 1) return;
-
-    if (tag.length > 8) alert('태그 길이는 8글자까지 허용해요');
-    else if (!tags.includes(tag)) setTags([...tags, inputRef.current.value]);
-
+    if (tag.length && !tags.includes(tag)) setTags([...tags, inputRef.current.value]);
     inputRef.current.value = '';
-    inputRef.current.focus();
   };
 
   const handleDelete = (keyword: string) => {
@@ -34,7 +29,7 @@ const TagModal = ({ close, tags, setTags }: TagModalProps) => {
   };
 
   return (
-    <HalfScreenModal handleClose={close} hasCloseMark bgColor="bg-white">
+    <FullScreenModal handleClose={close} hasCloseMark bgColor="bg-white">
       <section className="relative flex h-full w-full flex-col items-center px-10 py-6">
         <p className="pb-1 text-lg font-bold">태그 추가</p>
         <p className="text-sm opacity-50">작성한 독서노트에 필요한 태그를 달아보세요</p>
@@ -61,7 +56,7 @@ const TagModal = ({ close, tags, setTags }: TagModalProps) => {
           완료
         </Button>
       </section>
-    </HalfScreenModal>
+    </FullScreenModal>
   );
 };
 

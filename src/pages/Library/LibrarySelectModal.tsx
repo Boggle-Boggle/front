@@ -1,7 +1,7 @@
 import { SetStateAction } from 'react';
 
 import CheckBox from 'components/CheckBox';
-import HalfScreenModal from 'components/HalfScreenModal';
+import FullScreenModal from 'components/FullScreenModal';
 import Header from 'components/Header';
 
 import { Libraries, CustomLibrary, StatusLibrary } from 'types/library';
@@ -32,26 +32,23 @@ const LibrarySelectModal = ({
 
   const handleClick = (selected: CustomLibrary | StatusLibrary) => {
     setSelectedLibrary(selected);
-    onClose(false);
   };
 
   return (
-    <HalfScreenModal
+    <FullScreenModal
       handleClose={() => {
         onClose(false);
       }}
     >
-      <div>
-        <Header
-          title={<span className="text-base"> 서재</span>}
-          rightBtn={
-            <button onClick={handleOpenEdit} className="opacity-50" type="button">
-              편집
-            </button>
-          }
-        />
-      </div>
-      <section className="h-full overflow-y-auto pb-8">
+      <Header
+        title={<span className="text-base"> 서재</span>}
+        rightBtn={
+          <button onClick={handleOpenEdit} className="opacity-50" type="button">
+            편집
+          </button>
+        }
+      />
+      <section className="h-[calc(100%_-_4rem)] overflow-y-auto pb-5">
         <div className="mb-2 ml-4">기본 서재</div>
         <Content>
           {statusLibrary.map(({ status, libraryName, bookCount }) => (
@@ -83,7 +80,7 @@ const LibrarySelectModal = ({
           ))}
         </Content>
       </section>
-    </HalfScreenModal>
+    </FullScreenModal>
   );
 };
 

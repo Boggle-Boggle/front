@@ -3,7 +3,6 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom/client';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
-import { DeviceProvider } from 'stores/useDeviceStore';
 
 import Auth from 'pages/Auth';
 import BookDetail from 'pages/BookDetail';
@@ -43,11 +42,11 @@ const router = createBrowserRouter([
           { path: 'myPage/VersionInfo', element: <VersionInfo /> },
           { path: 'search', element: <Search /> },
           { path: 'detail/:detailId', element: <BookDetail /> },
+          { path: 'note/write', element: <Note /> },
           { path: 'record/:recordId', element: <Record /> },
           { path: 'edit/:recordId', element: <Edit /> },
         ],
       },
-      { path: 'note/write', element: <Note /> },
       { path: 'myPage/nickname', element: <EditNickname /> },
     ],
   },
@@ -60,12 +59,10 @@ const queryClient = new QueryClient();
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <DeviceProvider>
-      <QueryClientProvider client={queryClient}>
-        <Suspense fallback={<Loading />}>
-          <RouterProvider router={router} />
-        </Suspense>
-      </QueryClientProvider>
-    </DeviceProvider>
+    <QueryClientProvider client={queryClient}>
+      <Suspense fallback={<Loading />}>
+        <RouterProvider router={router} />
+      </Suspense>
+    </QueryClientProvider>
   </React.StrictMode>,
 );

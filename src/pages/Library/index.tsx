@@ -1,7 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 
 import { useEffect, useRef, useState } from 'react';
-import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
 import { FiMoreVertical, FiGrid, FiList } from 'react-icons/fi';
 
 import Header from 'components/Header';
@@ -113,13 +112,8 @@ const Library = () => {
           </div>
         }
         title={
-          <button onClick={() => setIsToggledLibrarySelect(true)} type="button" className="inline-flex items-center">
+          <button onClick={() => setIsToggledLibrarySelect(true)} type="button">
             {`${title}(${data?.pages[0]?.totalResultCnt ?? 0})`}
-            {isToggledLibrarySelect ? (
-              <FaChevronUp style={{ marginLeft: '4px' }} />
-            ) : (
-              <FaChevronDown style={{ marginLeft: '4px' }} />
-            )}
           </button>
         }
       />

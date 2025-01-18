@@ -3,7 +3,7 @@ import { QueryObserverResult, RefetchOptions, useMutation, useQueryClient } from
 import { SetStateAction, useState } from 'react';
 
 import CheckBox from 'components/CheckBox';
-import HalfScreenModal from 'components/HalfScreenModal';
+import FullScreenModal from 'components/FullScreenModal';
 import Header from 'components/Header';
 
 import { addLibrary, removeLibrary } from 'services/library';
@@ -55,17 +55,15 @@ const LibraryEditedModal = ({ onClose, handleOpenSelect, libraries, refetchLibra
   };
 
   return (
-    <HalfScreenModal>
-      <div>
-        <Header
-          title={<span className="text-base">서재 편집</span>}
-          rightBtn={
-            <button onClick={handleClose} type="button">
-              완료
-            </button>
-          }
-        />
-      </div>
+    <FullScreenModal>
+      <Header
+        title={<span className="text-base">서재 편집</span>}
+        rightBtn={
+          <button onClick={handleClose} type="button">
+            완료
+          </button>
+        }
+      />
       <form className="flex h-10 w-full items-center justify-between px-4" onSubmit={(e) => handleAddLibrary(e)}>
         <input
           placeholder="추가하고 싶은 서재명을 입력하세요"
@@ -82,9 +80,9 @@ const LibraryEditedModal = ({ onClose, handleOpenSelect, libraries, refetchLibra
         <Content>
           {libraries.libraryList.map(({ libraryName, libraryId }) => (
             <ContentItem>
-              <li key={libraryId} className="flex h-full items-center">
+              <li key={libraryId} className="flex">
                 <button
-                  className="h-full pr-2"
+                  className="pr-2"
                   type="button"
                   aria-label="서재 삭제"
                   onClick={() => handleRemoveLibrary(libraryId)}
@@ -97,7 +95,7 @@ const LibraryEditedModal = ({ onClose, handleOpenSelect, libraries, refetchLibra
           ))}
         </Content>
       </div>
-    </HalfScreenModal>
+    </FullScreenModal>
   );
 };
 

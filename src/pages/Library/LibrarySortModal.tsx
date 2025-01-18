@@ -10,7 +10,7 @@ import {
 import { SetStateAction } from 'react';
 
 import CheckBox from 'components/CheckBox';
-import HalfScreenModal from 'components/HalfScreenModal';
+import FullScreenModal from 'components/FullScreenModal';
 import Header from 'components/Header';
 
 import { changeLibrarySorting, getLibrarySorting } from 'services/library';
@@ -49,11 +49,10 @@ const LibrarySortModal = ({ onClose, refetchBooks }: LibrarySortModalProps) => {
   const handleOptionChange = (sortingOption: SortingType) => {
     refetchSortingType();
     mutate(sortingOption);
-    onClose(false);
   };
 
   return (
-    <HalfScreenModal
+    <FullScreenModal
       handleClose={() => {
         onClose(false);
       }}
@@ -72,7 +71,7 @@ const LibrarySortModal = ({ onClose, refetchBooks }: LibrarySortModalProps) => {
             </li>
           ))}
       </Content>
-    </HalfScreenModal>
+    </FullScreenModal>
   );
 };
 

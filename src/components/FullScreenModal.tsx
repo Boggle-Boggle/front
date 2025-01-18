@@ -1,18 +1,18 @@
 import { FaXmark } from 'react-icons/fa6';
 
-type HalfScreenModalProps = {
+type FullScreenModalProps = {
   children: React.ReactNode;
   handleClose?: () => void;
   hasCloseMark?: boolean;
   bgColor?: string;
 };
 
-const HalfScreenModal = ({
+const FullScreenModal = ({
   children,
   handleClose,
   hasCloseMark = false,
   bgColor = 'bg-main',
-}: HalfScreenModalProps) => {
+}: FullScreenModalProps) => {
   return (
     <>
       <button
@@ -21,7 +21,7 @@ const HalfScreenModal = ({
         type="button"
         onClick={handleClose}
       />
-      <section className={`fixed bottom-0 z-30 flex max-h-[70%] min-h-[50%] w-full flex-col rounded-t-2xl ${bgColor}`}>
+      <section className={`min-h-1/2 absolute bottom-0 z-30 w-full rounded-2xl ${bgColor}`}>
         {hasCloseMark && (
           <button
             type="button"
@@ -39,4 +39,4 @@ const HalfScreenModal = ({
   );
 };
 
-export default HalfScreenModal;
+export default FullScreenModal;
