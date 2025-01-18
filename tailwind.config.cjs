@@ -16,7 +16,8 @@ module.exports = {
         navigator: '0 -3px 6px -2px rgba(0, 0, 0, 0.1)',
       },
       spacing: {
-        header: '4rem',
+        headerIOS: '6rem',
+        headerAnd: '4rem',
         footerIOS: '6rem',
         footerAnd: '5.5rem',
       },
