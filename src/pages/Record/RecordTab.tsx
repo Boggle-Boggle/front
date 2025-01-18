@@ -141,8 +141,6 @@ const RecordTab = ({ book }: RecordTabProps) => {
         title={recordData.isBookVisible ? '책장에서 보임' : '책장에서 숨김'}
         content={recordData.isBookVisible ? '책장에서 보임' : '책장에서 숨김'}
       />
-
-      <RecordItem />
     </section>
   );
 };

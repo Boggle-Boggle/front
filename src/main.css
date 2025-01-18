@@ -24,8 +24,11 @@
   .height-without-header {
     height: calc(100vh - 4rem);
   }
-  .height-without-footer {
-    height: calc(100vh - 5rem);
+  .height-without-footerIOS {
+    height: calc(100vh - 6rem);
+  }
+  .height-without-footerAnd {
+    height: calc(100vh - 5.5rem);
   }
   .height-content {
     height: calc(100vh - 9rem);

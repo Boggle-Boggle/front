@@ -193,7 +193,7 @@ const Note = () => {
           }
         />
 
-        <section className="height-without-footer border-mains flex flex-col overflow-hidden rounded-tl-3xl border border-main bg-white pb-header">
+        <section className="border-mains height-without-header flex flex-col overflow-hidden rounded-tl-3xl border border-main bg-white pb-header">
           <img src={bookmark} className="header absolute right-10 top-header block h-12 w-12" alt="" />
           {page && <p className="absolute right-2 top-header pt-2 opacity-50">{`p.${page}`}</p>}
           {pages && (

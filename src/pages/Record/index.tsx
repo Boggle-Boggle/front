@@ -7,6 +7,7 @@ import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import Header from 'components/Header';
 import Loading from 'pages/Loading';
 
+import useDevice from 'hooks/useDevice';
 import { deleteNote, getRecord } from 'services/record';
 
 import NoteTab from './NoteTab';
@@ -19,6 +20,7 @@ const Record = () => {
   const [selected, setSelected] = useState<(typeof TABS)[number]>('독서기록');
   const [isToggled, handleToggle] = useReducer((prev) => !prev, false);
 
+  const { isIOS } = useDevice();
   const navigate = useNavigate();
   const location = useLocation();
   const { recordId } = useParams();
@@ -103,7 +105,7 @@ const Record = () => {
         />
 
         <div
-          className="height-without-footer relative flex-col overflow-y-auto overflow-x-hidden pt-header"
+          className={`${isIOS ? 'height-without-footerIOS' : 'height-without-footerAnd'} relative flex-col overflow-y-auto overflow-x-hidden pt-header`}
           ref={(node) => {
             setObserver(node);
           }}

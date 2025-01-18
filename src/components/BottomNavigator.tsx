@@ -4,16 +4,20 @@ import { LuHome } from 'react-icons/lu';
 import { PiBooksDuotone } from 'react-icons/pi';
 import { NavLink } from 'react-router-dom';
 
+import useDevice from 'hooks/useDevice';
 import useKeyboardStatus from 'hooks/useKeyboardStatus';
 
 // TODO : 선택된 탭 보더 처리
 const BottomNavigator = () => {
+  const { isIOS } = useDevice();
   const isKeyboardActive = useKeyboardStatus();
 
   if (isKeyboardActive) return null;
 
   return (
-    <ul className="fixed bottom-0 z-20 grid h-footer w-full max-w-screen-sm grid-cols-4 items-center rounded-t-xl bg-white shadow-navigator">
+    <ul
+      className={`fixed bottom-0 z-20 grid w-full max-w-screen-sm grid-cols-4 items-center rounded-t-xl bg-white ${isIOS ? 'h-footerIOS pb-4' : 'h-footerAnd'} shadow-navigator`}
+    >
       <li className="m-auto">
         <NavLink
           to="/"
