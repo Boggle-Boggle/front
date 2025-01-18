@@ -227,7 +227,7 @@ const Note = () => {
           </div>
         </section>
 
-        <div className="absolute bottom-1 flex h-12 w-full items-center justify-between bg-main">
+        <div className="absolute bottom-1 flex h-12 w-full items-center justify-between bg-main px-2">
           <section className="flex">
             <button
               className="px-3 py-2"

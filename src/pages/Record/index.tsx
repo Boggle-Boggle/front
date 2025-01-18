@@ -157,7 +157,7 @@ const Record = () => {
                 <div className="h-20" />
                 <button
                   type="button"
-                  className="fixed bottom-[6rem] right-[1rem] flex h-16 w-16 items-center justify-center rounded-full bg-accent shadow-lg"
+                  className="fixed bottom-[6.5rem] right-[1rem] flex h-16 w-16 items-center justify-center rounded-full bg-accent shadow-lg"
                   onClick={handleGoToNote}
                   aria-label="독서노트 작성하기"
                 >
