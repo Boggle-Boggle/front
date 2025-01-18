@@ -14,7 +14,7 @@ const LogoutModal = ({ isOpen, close, scrollPos }: LogoutModalProps) => {
 
   return (
     <Modal isOpen={isOpen} scrollPos={scrollPos} onClose={close} hasCloseMark={false}>
-      <section className="w-72 p-4 text-center">
+      <section className="w-72 px-4 py-8 text-center">
         <p className="text-lg font-semibold">로그아웃</p>
         <p className="opacity-50">정말 로그아웃 하시겠습니까?</p>
 

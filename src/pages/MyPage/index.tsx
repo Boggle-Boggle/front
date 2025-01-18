@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 
 import Loading from 'pages/Loading';
 
+import useDevice from 'hooks/useDevice';
 import useModal from 'hooks/useModal';
 import { getMyPageInfo, getTermsAgreement } from 'services/user';
 
@@ -14,6 +15,7 @@ import Content from './shared/Content';
 import ContentItem from './shared/ContentItem';
 
 const MyPage = () => {
+  const { isIOS } = useDevice();
   const { isOpen, open, close, scrollPos } = useModal();
   const navigate = useNavigate();
 
@@ -32,7 +34,7 @@ const MyPage = () => {
   return (
     myPage &&
     terms && (
-      <div className="bg-main px-5 py-[6.5rem]">
+      <div className={`bg-main px-5 ${isIOS ? 'py-[8.5rem]' : 'py-[6.5rem]'}`}>
         <section className="relative flex h-52 flex-col items-center rounded-lg bg-white pb-4 pt-20">
           <img
             className="absolute -top-[4.5rem] left-1/2 h-36 w-36 -translate-x-1/2 rounded-full bg-white"
