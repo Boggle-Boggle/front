@@ -39,19 +39,26 @@ const Record = () => {
     navigate(`/library`);
   };
 
-  const setObserver = useCallback((node: HTMLDivElement | null) => {
-    if (node) {
-      const handleScroll = () => {
-        setHasHeaderBackground(node.scrollTop > 400);
-      };
+  const setObserver = useCallback(
+    (node: HTMLDivElement | null) => {
+      if (node) {
+        const handleScroll = () => {
+          if (isIOS) {
+            setHasHeaderBackground(node.scrollTop > 460);
+            return;
+          }
+          setHasHeaderBackground(node.scrollTop > 380);
+        };
 
-      node.addEventListener('scroll', handleScroll);
+        node.addEventListener('scroll', handleScroll);
 
-      return () => {
-        node.removeEventListener('scroll', handleScroll);
-      };
-    }
-  }, []);
+        return () => {
+          node.removeEventListener('scroll', handleScroll);
+        };
+      }
+    },
+    [isIOS],
+  );
 
   useEffect(() => {
     if (location.state === '독서노트') setSelected(location.state);
@@ -118,7 +125,7 @@ const Record = () => {
           />
           <div className="absolute inset-0 h-[22rem] w-full overflow-hidden bg-black opacity-30" />
 
-          <section className="relative flex h-72 justify-center">
+          <section className={`${isIOS ? 'mt-headerIOS' : 'mt-headerAnd'} relative flex h-72 justify-center`}>
             <img
               src={data.bookData.cover}
               alt={`${data.bookData.title} 책 표지`}

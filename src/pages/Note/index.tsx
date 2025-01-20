@@ -8,6 +8,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 
 import Header from 'components/Header';
 
+import useDevice from 'hooks/useDevice';
 import useModal from 'hooks/useModal';
 import { addNote, getReadDates, updateNote } from 'services/record';
 import { formatDate, formatDateAndTime, generateDate } from 'utils/format';
@@ -49,6 +50,7 @@ const Note = () => {
   const location = useLocation();
 
   const { isOpen, open, close, scrollPos } = useModal();
+  const { isIOS } = useDevice();
 
   const { recordId, note, readDateIndex } = location.state;
 
@@ -193,12 +195,16 @@ const Note = () => {
           }
         />
 
-        <section className="border-mains height-without-header flex flex-col overflow-hidden rounded-tl-3xl border border-main bg-white pb-header">
-          <img src={bookmark} className="header absolute right-10 top-header block h-12 w-12" alt="" />
-          {page && <p className="absolute right-2 top-header pt-2 opacity-50">{`p.${page}`}</p>}
-          {pages && (
-            <p className="absolute right-2 top-header pt-2 opacity-50">{`p.${pages.startPage}-p.${pages.endPage}`}</p>
-          )}
+        <section
+          className={`border-mains ${isIOS ? 'height-without-headerIOS' : 'height-without-headerAnd'} flex flex-col overflow-hidden rounded-tl-3xl border border-main bg-white`}
+        >
+          <img
+            src={bookmark}
+            className={`${isIOS ? 'headerIOS top-headerIOS' : 'headerAnd top-headerAnd'} absolute right-10 block h-12 w-12`}
+            alt=""
+          />
+          {page && page !== 0 && <p className="absolute right-2 pt-2 opacity-50">{`p.${page}`}</p>}
+          {pages && <p className="absolute right-2 pt-2 opacity-50">{`p.${pages.startPage}-p.${pages.endPage}`}</p>}
           <button className="w-full px-5 py-3 text-start font-semibold opacity-50" type="button" onClick={open}>
             {`${selectedDate[0] + 2000}년 ${selectedDate[1]}월 ${selectedDate[2]}일`}
           </button>
