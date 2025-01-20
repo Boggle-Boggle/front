@@ -4,7 +4,6 @@ import { SetStateAction, useState } from 'react';
 
 import CheckBox from 'components/CheckBox';
 import HalfScreenModal from 'components/HalfScreenModal';
-import Header from 'components/Header';
 
 import { addLibrary, removeLibrary } from 'services/library';
 
@@ -56,16 +55,14 @@ const LibraryEditedModal = ({ onClose, handleOpenSelect, libraries, refetchLibra
 
   return (
     <HalfScreenModal>
-      <div>
-        <Header
-          title={<span className="text-base">서재 편집</span>}
-          rightBtn={
-            <button onClick={handleClose} type="button">
-              완료
-            </button>
-          }
-        />
+      <div className="h-headerAnd z-30 grid w-full grid-cols-[30px_auto_30px] items-center px-4">
+        <span className="justify-self-start" />
+        <span className="w-full justify-self-center text-center font-semibold">서재 편집</span>
+        <button className="justify-self-end text-accent" type="button" onClick={handleClose}>
+          완료
+        </button>
       </div>
+
       <form className="flex h-10 w-full items-center justify-between px-4" onSubmit={(e) => handleAddLibrary(e)}>
         <input
           placeholder="추가하고 싶은 서재명을 입력하세요"
