@@ -127,7 +127,7 @@ const Record = () => {
         />
 
         <div
-          className={`${isIOS ? 'height-without-footerIOS' : 'height-without-footerAnd'} relative flex-col overflow-y-auto overflow-x-hidden pt-header`}
+          className={`${isIOS ? 'height-without-footerIOS' : 'height-without-footerAnd'} relative flex-col overflow-y-auto overflow-x-hidden`}
           ref={(node) => {
             setObserver(node);
           }}

@@ -98,7 +98,7 @@ const BookDetail = () => {
 
         <div className={`${isIOS ? 'height-contentIOS' : 'height-contentAnd'} relative flex flex-col pb-8`}>
           <BookShelf cover={book.cover} title={book.title} />
-          <section className="flex h-36 flex-shrink-0 flex-col items-center justify-center px-6 pt-6 text-center">
+          <section className="flex h-[7.5rem] flex-shrink-0 flex-col items-center justify-center px-6 text-center">
             <h1
               className={`${book.title.length > 50 ? 'text-[0.9rem]' : book.title.length < 30 && 'text-lg'} font-bold`}
             >
