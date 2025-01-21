@@ -1,12 +1,13 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 
-import { useEffect, useReducer, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { IoIosArrowDown } from 'react-icons/io';
 import { IoArrowBackOutline } from 'react-icons/io5';
 import { LuBookmarkPlus, LuTags, LuTrash2 } from 'react-icons/lu';
 import { useNavigate, useLocation } from 'react-router-dom';
 
 import Header from 'components/Header';
+import Memo from 'components/Memo';
 
 import useDevice from 'hooks/useDevice';
 import useModal from 'hooks/useModal';
@@ -26,7 +27,7 @@ const MAX_CONTENT = 256;
 
 const Note = () => {
   const [noteId, setNoteID] = useState<number | null>(null);
-  const [isToggled, handleToggled] = useReducer((prev) => !prev, false);
+  const [isMemoToggled, setIsMemoToggled] = useState<boolean>(false);
 
   const [readDateId, setReadDateId] = useState<(RecordDate & { readDateIndex: number }) | null>(null);
   const [selectedDate, setSelectedDate] = useState<[number, number, number]>(() => {
@@ -159,28 +160,40 @@ const Note = () => {
       <div className="h-screen bg-gray">
         <Header
           title={
-            <button
-              type="button"
-              aria-label="회독 선택"
-              className={`relative inline-flex ${readDateIds && readDateIds && readDateIds.length === 0 && 'opacity-50'} `}
-              onClick={handleToggled}
-            >
-              {readDateId ? `${readDateId.readDateIndex + 1}회독` : '회독정보없음'}
-              {readDateIds && readDateIds.length > 0 && (
-                <IoIosArrowDown style={{ width: '20px', height: '20px', marginLeft: '1px' }} />
+            <>
+              <button
+                type="button"
+                aria-label="회독 선택"
+                className={`relative inline-flex ${readDateIds && readDateIds && readDateIds.length === 0 && 'opacity-50'} `}
+                onClick={() => setIsMemoToggled(true)}
+              >
+                {readDateId ? `${readDateId.readDateIndex + 1}회독` : '회독정보없음'}
+                {readDateIds && readDateIds.length > 0 && (
+                  <IoIosArrowDown style={{ width: '20px', height: '20px', marginLeft: '1px' }} />
+                )}
+              </button>
+              {isMemoToggled && (
+                <Memo handleClose={() => setIsMemoToggled(false)}>
+                  <ul className="absolute left-1/2 top-1/2 z-30 flex max-h-80 w-28 -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center overflow-auto rounded-lg bg-white shadow-lg">
+                    {readDateIds &&
+                      readDateIds.map((readDate, idx) => (
+                        <li key={readDate.readDateId} className="mt-[1px] h-12 w-full border-b border-main">
+                          <button
+                            className="h-full w-full"
+                            type="button"
+                            onClick={() => {
+                              setIsMemoToggled(false);
+                              setReadDateId(readDate);
+                            }}
+                          >
+                            {idx + 1}회독
+                          </button>
+                        </li>
+                      ))}
+                  </ul>
+                </Memo>
               )}
-              <ul className="absolute -top-2 left-1/2 z-10 flex max-h-80 w-28 -translate-x-1/2 flex-col items-center justify-center overflow-auto rounded-lg bg-white shadow-lg">
-                {isToggled &&
-                  readDateIds &&
-                  readDateIds.map((readDate, idx) => (
-                    <li key={readDate.readDateId} className="mt-[1px] h-12 w-full border-b border-main">
-                      <button className="h-full w-full" type="button" onClick={() => setReadDateId(readDate)}>
-                        {idx + 1}회독
-                      </button>
-                    </li>
-                  ))}
-              </ul>
-            </button>
+            </>
           }
           leftBtn={
             <IoArrowBackOutline
