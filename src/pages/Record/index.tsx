@@ -9,8 +9,10 @@ import Memo from 'components/Memo';
 import Loading from 'pages/Loading';
 
 import useDevice from 'hooks/useDevice';
+import useModal from 'hooks/useModal';
 import { deleteRecord, getRecord } from 'services/record';
 
+import DeleteModal from './DeleteModal';
 import NoteTab from './NoteTab';
 import RecordTab from './RecordTab';
 import ShelfSvg from './ShelfSvg';
@@ -20,6 +22,7 @@ const Record = () => {
   const [hasHeaderBackground, setHasHeaderBackground] = useState<boolean>(false);
   const [selected, setSelected] = useState<(typeof TABS)[number]>('독서기록');
   const [isMemoToggled, setIsMemoToggled] = useState<boolean>(false);
+  const { isOpen, open, close, scrollPos } = useModal();
 
   const { isIOS } = useDevice();
   const navigate = useNavigate();
@@ -35,9 +38,14 @@ const Record = () => {
     navigate(`/note/write`, { state: { recordId } });
   };
 
-  const handleDeleteNote = () => {
-    deleteRecord(Number(recordId));
+  const handleDeleteNote = async () => {
+    await deleteRecord(Number(recordId));
     navigate(`/library`);
+  };
+
+  const handleModalOpen = () => {
+    setIsMemoToggled(false);
+    open();
   };
 
   const setObserver = useCallback(
@@ -106,7 +114,7 @@ const Record = () => {
                     <button
                       type="button"
                       className="flex-grow border-t border-text border-opacity-30"
-                      onClick={handleDeleteNote}
+                      onClick={handleModalOpen}
                     >
                       삭제하기
                     </button>
@@ -181,6 +189,8 @@ const Record = () => {
             )}
           </section>
         </div>
+
+        {isOpen && <DeleteModal close={close} isOpen={isOpen} scrollPos={scrollPos} deleteNote={handleDeleteNote} />}
       </>
     )
   );
