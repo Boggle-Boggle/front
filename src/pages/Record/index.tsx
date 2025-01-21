@@ -9,7 +9,7 @@ import Memo from 'components/Memo';
 import Loading from 'pages/Loading';
 
 import useDevice from 'hooks/useDevice';
-import { deleteNote, getRecord } from 'services/record';
+import { deleteRecord, getRecord } from 'services/record';
 
 import NoteTab from './NoteTab';
 import RecordTab from './RecordTab';
@@ -36,7 +36,7 @@ const Record = () => {
   };
 
   const handleDeleteNote = () => {
-    deleteNote(Number(recordId));
+    deleteRecord(Number(recordId));
     navigate(`/library`);
   };
 

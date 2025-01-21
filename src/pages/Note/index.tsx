@@ -11,7 +11,7 @@ import Memo from 'components/Memo';
 
 import useDevice from 'hooks/useDevice';
 import useModal from 'hooks/useModal';
-import { addNote, getReadDates, updateNote } from 'services/record';
+import { addNote, deleteNote, getReadDates, updateNote } from 'services/record';
 import { formatDate, formatDateAndTime, generateDate } from 'utils/format';
 
 import { AddNoteParams, RecordDate } from 'types/record';
@@ -60,7 +60,7 @@ const Note = () => {
     queryFn: () => getReadDates(recordId),
   });
 
-  const handleSave = () => {
+  const handleSave = async () => {
     if (!recordId) return;
 
     if (!title && !content) {
@@ -85,10 +85,10 @@ const Note = () => {
         newNote.pages = pages;
       }
 
-      updateNote(recordId, noteId, newNote);
+      await updateNote(recordId, noteId, newNote);
     } //
     else
-      addNote(recordId, {
+      await addNote(recordId, {
         readDateId: readDateId?.readDateId ?? null,
         selectedDate: formatDate(...selectedDate),
         title,
@@ -122,6 +122,12 @@ const Note = () => {
     const newContent = e.target.value;
 
     if (newContent.length < MAX_CONTENT) setContent(newContent);
+  };
+
+  const handleDeleteNote = async () => {
+    if (noteId) await deleteNote(recordId, noteId);
+
+    navigate(`/record/${recordId}`, { replace: true });
   };
 
   // 첫 화면 렌더링 시 초기값을 세팅하는 이펙트
@@ -260,7 +266,7 @@ const Note = () => {
               <LuTags style={{ width: '20px', height: '20px', color: '#9B9999' }} />
             </button>
           </section>
-          <button className="px-3 py-2" onClick={() => {}} type="button" aria-label="독서노트 삭제하기">
+          <button className="px-3 py-2" onClick={handleDeleteNote} type="button" aria-label="독서노트 삭제하기">
             <LuTrash2 style={{ width: '20px', height: '20px', color: '#9B9999' }} />
           </button>
           {/* TODO : 글자수 처리 로직 추후 구현 */}
