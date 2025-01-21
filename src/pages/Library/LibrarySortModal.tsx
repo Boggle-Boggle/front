@@ -30,11 +30,7 @@ type LibrarySortModalProps = {
 const LibrarySortModal = ({ onClose, refetchBooks }: LibrarySortModalProps) => {
   const sortingOptions = Object.keys(SortingTitle) as SortingType[];
   const queryClient = useQueryClient();
-  const {
-    data: selectedOption,
-    refetch: refetchSortingType,
-    isFetched,
-  } = useQuery({ queryKey: ['librarySorting'], queryFn: getLibrarySorting });
+  const { data: selectedOption, isFetched } = useQuery({ queryKey: ['librarySorting'], queryFn: getLibrarySorting });
 
   const { mutate } = useMutation({
     mutationFn: changeLibrarySorting,
@@ -46,7 +42,6 @@ const LibrarySortModal = ({ onClose, refetchBooks }: LibrarySortModalProps) => {
   });
 
   const handleOptionChange = (sortingOption: SortingType) => {
-    refetchSortingType();
     mutate(sortingOption);
     onClose(false);
   };

@@ -161,6 +161,7 @@ const Library = () => {
           handleOpenSelect={() => setIsToggledLibrarySelect(true)}
           libraries={libraries}
           refetchLibraries={refetchLibraries}
+          setSelectedLibrary={setSelectedLibrary}
         />
       )}
       {isToggledSort && <LibrarySortModal onClose={setIsToggledSort} refetchBooks={refetchBooks} />}
