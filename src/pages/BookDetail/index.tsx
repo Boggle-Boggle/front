@@ -135,9 +135,14 @@ const BookDetail = () => {
             <div className="h-4" ref={observerTarget} />
           </div>
         </div>
-        <p className="absolute bottom-footer left-5 mb-2 flex items-center text-xs font-semibold opacity-50">
+        <p
+          className={`absolute ${isIOS ? 'bottom-footerIOS' : 'bottom-footerAnd'} left-5 mb-2 flex items-center text-xs font-semibold opacity-50`}
+        >
           <FiAlertCircle style={{ marginRight: '6px' }} />
-          <p className="font-bold underline">알라딘</p> 에서 제공한 정보입니다.
+          <a className="font-bold underline" href={book.link}>
+            알라딘
+          </a>{' '}
+          에서 제공한 정보입니다.
         </p>
 
         <ExistingRecordModal isOpen={isOpen} close={close} scrollPos={scrollPos} />

@@ -10,6 +10,7 @@ export type Book = {
 export type BookDetail = Book & {
   genre: string;
   plot: string;
+  link: string;
 };
 
 export type BookCase = {
