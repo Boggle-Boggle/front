@@ -44,7 +44,7 @@ const Edit = () => {
 
     updateEditRecord(Number(recordId), newRecord);
 
-    navigate(`/record/${recordId}`);
+    navigate(`/record/${recordId}`, { replace: true });
   };
 
   useEffect(() => {

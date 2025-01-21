@@ -1,10 +1,11 @@
 import { useQuery } from '@tanstack/react-query';
 
-import { useCallback, useEffect, useReducer, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { FiArrowLeft, FiMoreVertical, FiEdit } from 'react-icons/fi';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
 import Header from 'components/Header';
+import Memo from 'components/Memo';
 import Loading from 'pages/Loading';
 
 import useDevice from 'hooks/useDevice';
@@ -18,7 +19,7 @@ const TABS = ['독서기록', '독서노트'] as const;
 const Record = () => {
   const [hasHeaderBackground, setHasHeaderBackground] = useState<boolean>(false);
   const [selected, setSelected] = useState<(typeof TABS)[number]>('독서기록');
-  const [isToggled, handleToggle] = useReducer((prev) => !prev, false);
+  const [isMemoToggled, setIsMemoToggled] = useState<boolean>(false);
 
   const { isIOS } = useDevice();
   const navigate = useNavigate();
@@ -84,29 +85,35 @@ const Record = () => {
             />
           }
           rightBtn={
-            <button aria-label="수정/삭제하기" onClick={handleToggle} type="button" className="relative">
-              <FiMoreVertical
-                style={{ width: '24px', height: '24px', color: hasHeaderBackground ? 'black' : 'white' }}
-              />
-              {isToggled && (
-                <div className="absolute right-0 flex h-20 w-24 flex-col rounded-[4px] bg-main text-sm shadow-[0_4px_4px_0_rgba(0,0,0,0.25)]">
-                  <button
-                    type="button"
-                    className="flex-grow"
-                    onClick={() => navigate(`/edit/${recordId}`, { state: { title: data.bookData.title } })}
-                  >
-                    수정하기
-                  </button>
-                  <button
-                    type="button"
-                    className="flex-grow border-t border-text border-opacity-30"
-                    onClick={handleDeleteNote}
-                  >
-                    삭제하기
-                  </button>
-                </div>
+            <>
+              <button aria-label="수정/삭제하기" onClick={() => setIsMemoToggled(true)} type="button">
+                <FiMoreVertical
+                  style={{ width: '24px', height: '24px', color: hasHeaderBackground ? 'black' : 'white' }}
+                />
+              </button>
+              {isMemoToggled && (
+                <Memo handleClose={() => setIsMemoToggled(false)}>
+                  <div className="absolute right-0 z-30 flex h-20 w-24 flex-col rounded-[4px] bg-main text-sm shadow-[0_4px_4px_0_rgba(0,0,0,0.25)]">
+                    <button
+                      type="button"
+                      className="flex-grow"
+                      onClick={() =>
+                        navigate(`/edit/${recordId}`, { state: { title: data.bookData.title }, replace: true })
+                      }
+                    >
+                      수정하기
+                    </button>
+                    <button
+                      type="button"
+                      className="flex-grow border-t border-text border-opacity-30"
+                      onClick={handleDeleteNote}
+                    >
+                      삭제하기
+                    </button>
+                  </div>
+                </Memo>
               )}
-            </button>
+            </>
           }
           backgroundColor={hasHeaderBackground ? 'bg-white transition-colors' : 'bg-none transition-colors'}
         />
