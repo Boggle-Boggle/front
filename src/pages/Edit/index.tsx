@@ -6,6 +6,7 @@ import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
 import Header from 'components/Header';
 
+import useDevice from 'hooks/useDevice';
 import { getEditRecord, updateEditRecord } from 'services/record';
 
 import { RecordDate, RecordLibraries, StatusType, UpdateRecordParams } from 'types/record';
@@ -26,6 +27,7 @@ const Edit = () => {
   const { title } = location.state;
 
   const { recordId = '' } = useParams();
+  const { isIOS } = useDevice();
 
   const { data } = useQuery({ queryKey: ['edit', recordId], queryFn: () => getEditRecord(recordId) });
 
@@ -69,7 +71,7 @@ const Edit = () => {
       />
 
       {data && (
-        <section className="height-content overflow-y-scroll pb-4">
+        <section className={`${isIOS ? 'height-contentIOS' : 'height-contentAnd'} overflow-y-scroll pb-4`}>
           <EditReadingDate readDates={readDates} />
           <EditLibraries libraries={libraries!} setLibraries={setLibraries} />
           <EditRating rating={rating} setRating={setRating} />

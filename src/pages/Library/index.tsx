@@ -8,6 +8,7 @@ import Header from 'components/Header';
 import SearchBar from 'components/SearchBar';
 import Loading from 'pages/Loading';
 
+import useDevice from 'hooks/useDevice';
 import useInfiniteScroll from 'hooks/useInfiniteScroll';
 import { getLibraries, getLibraryBooks } from 'services/library';
 import searchDebounce from 'utils/debounce';
@@ -28,6 +29,8 @@ const Library = () => {
   const [isToggledLibrarySelect, setIsToggledLibrarySelect] = useState<boolean>(false);
   const [isToggledLibraryEdit, setIsToggledLibraryEdit] = useState<boolean>(false);
   const [isToggledSort, setIsToggledSort] = useState<boolean>(false);
+
+  const { isIOS } = useDevice();
 
   const [selectedLibrary, setSelectedLibrary] = useState<CustomLibrary | StatusLibrary>({
     status: 'all',
@@ -133,7 +136,9 @@ const Library = () => {
       {data && (
         <>
           {layout === 'list' && (
-            <section className="height-content mt-4 overflow-y-scroll bg-main pb-8">
+            <section
+              className={`${isIOS ? 'height-contentIOS' : 'height-contentAnd'} mt-4 overflow-y-scroll bg-main pb-8`}
+            >
               <ListLayout allBooks={allBooks} />
             </section>
           )}

@@ -1,6 +1,6 @@
 const NoResultItems = () => {
   return (
-    <section className="height-content flex flex-col items-center justify-center whitespace-pre-wrap px-16 pb-36 font-bold leading-8 text-sub">
+    <section className="ont-bold flex h-3/4 flex-col items-center justify-center whitespace-pre-wrap px-16 leading-8 text-sub">
       <img src={`${import.meta.env.VITE_IMG_BASE_URL || ''}/assets/reading1.png`} alt="" className="my-14" />
       <p>검색어와 일치하는 책이 없어요</p>
       {/* <p>걱정마세요</p>

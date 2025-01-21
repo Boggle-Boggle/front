@@ -7,6 +7,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 import Header from 'components/Header';
 
+import useDevice from 'hooks/useDevice';
 import useModal from 'hooks/useModal';
 import { getBookDetail, hasReadingRecord } from 'services/search';
 import { formatDateAndTime, formatBookGenre } from 'utils/format';
@@ -28,6 +29,7 @@ const BookDetail = () => {
 
   const navigate = useNavigate();
   const { detailId = '' } = useParams();
+  const { isIOS } = useDevice();
 
   const handleGoBack = () => {
     navigate(-1);
@@ -94,7 +96,7 @@ const BookDetail = () => {
           }
         />
 
-        <div className="height-content relative flex flex-col pb-8">
+        <div className={`${isIOS ? 'height-contentIOS' : 'height-contentAnd'} relative flex flex-col pb-8`}>
           <BookShelf cover={book.cover} title={book.title} />
           <section className="flex h-36 flex-shrink-0 flex-col items-center justify-center px-6 pt-6 text-center">
             <h1
