@@ -4,7 +4,10 @@ import { useNavigate } from 'react-router-dom';
 import Button from 'components/Button';
 import Header from 'components/Header';
 
+import useDevice from 'hooks/useDevice';
+
 const DeleteAccount = () => {
+  const { isIOS } = useDevice();
   const navigate = useNavigate();
   const handleGoBack = () => navigate('/myPage');
 
@@ -14,7 +17,9 @@ const DeleteAccount = () => {
         leftBtn={<FaAngleLeft onClick={handleGoBack} style={{ width: '24px', height: '24px' }} />}
         title="탈퇴하기"
       />
-      <section className="height-content flex flex-col items-center justify-between">
+      <section
+        className={`${isIOS ? 'height-without-headerIOS' : 'height-without-headerAnd'} flex flex-col items-center justify-between`}
+      >
         <section className="flex flex-col items-center pt-16">
           <img src={`${import.meta.env.VITE_IMG_BASE_URL || ''}/assets/scared.png`} alt="" className="h-32 w-32" />
           <p className="py-9 text-2xl font-bold">정말 탈퇴하시겠습니까?</p>

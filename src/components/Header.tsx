@@ -1,3 +1,5 @@
+import useDevice from 'hooks/useDevice';
+
 type HeaderProps = {
   leftBtn?: JSX.Element;
   title?: JSX.Element | string;
@@ -6,12 +8,14 @@ type HeaderProps = {
 };
 
 const Header = ({ leftBtn, title, rightBtn, backgroundColor }: HeaderProps) => {
+  const { isIOS } = useDevice();
+
   return (
     <div
-      className={` ${backgroundColor ? `fixed ${backgroundColor}` : 'sticky'} z-30 grid h-16 w-full grid-cols-[28px_auto_28px] items-center px-3`}
+      className={` ${isIOS ? 'h-headerIOS pt-[47px]' : 'h-headerAnd items-center'} ${backgroundColor ? `fixed ${backgroundColor}` : 'sticky'} z-30 grid w-full grid-cols-[30px_auto_30px] px-2`}
     >
       <span className={`justify-self-start ${leftBtn ? '' : 'invisible'}`}>{leftBtn}</span>
-      <span className="tex w-full justify-self-center text-center font-semibold">{title}</span>
+      <span className="w-full justify-self-center px-2 text-center font-semibold">{title}</span>
       <span className={`justify-self-end ${rightBtn ? '' : 'invisible'}`}>{rightBtn}</span>
     </div>
   );

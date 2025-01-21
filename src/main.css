@@ -21,7 +21,10 @@
 }
 
 @layer utilities {
-  .height-without-header {
+  .height-without-headerIOS {
+    height: calc(100vh - 6rem);
+  }
+  .height-without-headerAnd {
     height: calc(100vh - 4rem);
   }
   .height-without-footerIOS {
@@ -30,7 +33,10 @@
   .height-without-footerAnd {
     height: calc(100vh - 5.5rem);
   }
-  .height-content {
+  .height-contentAnd {
+    height: calc(100vh - 9rem);
+  }
+  .height-contentIOS {
     height: calc(100vh - 9rem);
   }
 }

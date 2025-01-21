@@ -11,7 +11,6 @@ import { SetStateAction } from 'react';
 
 import CheckBox from 'components/CheckBox';
 import HalfScreenModal from 'components/HalfScreenModal';
-import Header from 'components/Header';
 
 import { changeLibrarySorting, getLibrarySorting } from 'services/library';
 
@@ -31,11 +30,7 @@ type LibrarySortModalProps = {
 const LibrarySortModal = ({ onClose, refetchBooks }: LibrarySortModalProps) => {
   const sortingOptions = Object.keys(SortingTitle) as SortingType[];
   const queryClient = useQueryClient();
-  const {
-    data: selectedOption,
-    refetch: refetchSortingType,
-    isFetched,
-  } = useQuery({ queryKey: ['librarySorting'], queryFn: getLibrarySorting });
+  const { data: selectedOption, isFetched } = useQuery({ queryKey: ['librarySorting'], queryFn: getLibrarySorting });
 
   const { mutate } = useMutation({
     mutationFn: changeLibrarySorting,
@@ -47,7 +42,6 @@ const LibrarySortModal = ({ onClose, refetchBooks }: LibrarySortModalProps) => {
   });
 
   const handleOptionChange = (sortingOption: SortingType) => {
-    refetchSortingType();
     mutate(sortingOption);
     onClose(false);
   };
@@ -58,7 +52,12 @@ const LibrarySortModal = ({ onClose, refetchBooks }: LibrarySortModalProps) => {
         onClose(false);
       }}
     >
-      <Header title={<span className="text-base">정렬</span>} />
+      <div className="h-headerAnd z-30 grid w-full grid-cols-[30px_auto_30px] items-center px-4">
+        <span className="justify-self-start" />
+        <span className="w-full justify-self-center text-center font-semibold">정렬</span>
+        <span className="justify-self-end" />
+      </div>
+
       <Content>
         {isFetched &&
           sortingOptions.map((sortingOption) => (

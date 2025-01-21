@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 import Loading from 'pages/Loading';
 
+import useDevice from 'hooks/useDevice';
 import useInfiniteScroll from 'hooks/useInfiniteScroll';
 import { getSearchBooks } from 'services/search';
 
@@ -15,6 +16,8 @@ type SearchResultProps = {
 
 const SearchResult = ({ query }: SearchResultProps) => {
   const navigate = useNavigate();
+  const { isIOS } = useDevice();
+
   const { data, refetch, observerTarget, isLoading } = useInfiniteScroll(
     ['searchBooks', query],
     ({ pageParam = 1 }) => getSearchBooks(query, pageParam as number),
@@ -36,7 +39,9 @@ const SearchResult = ({ query }: SearchResultProps) => {
   const allBooks = data?.pages.flatMap((page) => page.items) || [];
 
   return allBooks.length ? (
-    <ul className="height-content bottom-0 mt-3 h-full w-full overflow-y-auto rounded-tl-3xl bg-white px-5 py-4">
+    <ul
+      className={`${isIOS ? 'height-contentIOS' : 'height-contentAnd'} bottom-0 mt-3 h-full w-full overflow-y-auto rounded-tl-3xl bg-white px-5 py-4`}
+    >
       {allBooks.map((book) => (
         <li key={book.isbn}>
           <button

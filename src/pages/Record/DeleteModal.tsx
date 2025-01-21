@@ -1,32 +1,29 @@
 import Button from 'components/Button';
 import Modal from 'components/Modal';
 
-import useLogout from 'hooks/useLogout';
-
-type LogoutModalProps = {
+type DeleteModalProps = {
   isOpen: boolean;
   close: () => void;
   scrollPos: number;
+  deleteNote: () => void;
 };
 
-const LogoutModal = ({ isOpen, close, scrollPos }: LogoutModalProps) => {
-  const { logout } = useLogout();
-
+const DeleteModal = ({ isOpen, close, scrollPos, deleteNote }: DeleteModalProps) => {
   return (
     <Modal isOpen={isOpen} scrollPos={scrollPos} onClose={close} hasCloseMark={false}>
       <section className="w-80 px-5 py-6 text-center">
-        <p className="text-lg font-semibold">로그아웃</p>
-        <p className="opacity-50">정말 로그아웃 하시겠습니까?</p>
+        <p className="text-lg font-semibold">독서 기록을 삭제할까요?</p>
+        <p className="text-sm opacity-50">작성된 독서노트도 모두 삭제됩니다</p>
 
         <section className="mt-7 grid grid-cols-2 gap-3">
           <Button handleClick={close} className="bg-main">
             취소
           </Button>
-          <Button handleClick={logout}>로그아웃</Button>
+          <Button handleClick={deleteNote}>삭제</Button>
         </section>
       </section>
     </Modal>
   );
 };
 
-export default LogoutModal;
+export default DeleteModal;

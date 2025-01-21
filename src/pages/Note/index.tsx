@@ -1,15 +1,17 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 
-import { useEffect, useReducer, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { IoIosArrowDown } from 'react-icons/io';
 import { IoArrowBackOutline } from 'react-icons/io5';
 import { LuBookmarkPlus, LuTags, LuTrash2 } from 'react-icons/lu';
 import { useNavigate, useLocation } from 'react-router-dom';
 
 import Header from 'components/Header';
+import Memo from 'components/Memo';
 
+import useDevice from 'hooks/useDevice';
 import useModal from 'hooks/useModal';
-import { addNote, getReadDates, updateNote } from 'services/record';
+import { addNote, deleteNote, getReadDates, updateNote } from 'services/record';
 import { formatDate, formatDateAndTime, generateDate } from 'utils/format';
 
 import { AddNoteParams, RecordDate } from 'types/record';
@@ -25,7 +27,7 @@ const MAX_CONTENT = 256;
 
 const Note = () => {
   const [noteId, setNoteID] = useState<number | null>(null);
-  const [isToggled, handleToggled] = useReducer((prev) => !prev, false);
+  const [isMemoToggled, setIsMemoToggled] = useState<boolean>(false);
 
   const [readDateId, setReadDateId] = useState<(RecordDate & { readDateIndex: number }) | null>(null);
   const [selectedDate, setSelectedDate] = useState<[number, number, number]>(() => {
@@ -49,6 +51,7 @@ const Note = () => {
   const location = useLocation();
 
   const { isOpen, open, close, scrollPos } = useModal();
+  const { isIOS } = useDevice();
 
   const { recordId, note, readDateIndex } = location.state;
 
@@ -57,7 +60,7 @@ const Note = () => {
     queryFn: () => getReadDates(recordId),
   });
 
-  const handleSave = () => {
+  const handleSave = async () => {
     if (!recordId) return;
 
     if (!title && !content) {
@@ -82,10 +85,10 @@ const Note = () => {
         newNote.pages = pages;
       }
 
-      updateNote(recordId, noteId, newNote);
+      await updateNote(recordId, noteId, newNote);
     } //
     else
-      addNote(recordId, {
+      await addNote(recordId, {
         readDateId: readDateId?.readDateId ?? null,
         selectedDate: formatDate(...selectedDate),
         title,
@@ -119,6 +122,12 @@ const Note = () => {
     const newContent = e.target.value;
 
     if (newContent.length < MAX_CONTENT) setContent(newContent);
+  };
+
+  const handleDeleteNote = async () => {
+    if (noteId) await deleteNote(recordId, noteId);
+
+    navigate(`/record/${recordId}`, { replace: true });
   };
 
   // 첫 화면 렌더링 시 초기값을 세팅하는 이펙트
@@ -157,28 +166,40 @@ const Note = () => {
       <div className="h-screen bg-gray">
         <Header
           title={
-            <button
-              type="button"
-              aria-label="회독 선택"
-              className={`relative inline-flex ${readDateIds && readDateIds && readDateIds.length === 0 && 'opacity-50'} `}
-              onClick={handleToggled}
-            >
-              {readDateId ? `${readDateId.readDateIndex + 1}회독` : '회독정보없음'}
-              {readDateIds && readDateIds.length > 0 && (
-                <IoIosArrowDown style={{ width: '20px', height: '20px', marginLeft: '1px' }} />
+            <>
+              <button
+                type="button"
+                aria-label="회독 선택"
+                className={`relative inline-flex ${readDateIds && readDateIds && readDateIds.length === 0 && 'opacity-50'} `}
+                onClick={() => setIsMemoToggled(true)}
+              >
+                {readDateId ? `${readDateId.readDateIndex + 1}회독` : '회독정보없음'}
+                {readDateIds && readDateIds.length > 0 && (
+                  <IoIosArrowDown style={{ width: '20px', height: '20px', marginLeft: '1px' }} />
+                )}
+              </button>
+              {isMemoToggled && (
+                <Memo handleClose={() => setIsMemoToggled(false)}>
+                  <ul className="absolute left-1/2 top-1/2 z-30 flex max-h-80 w-28 -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center overflow-auto rounded-lg bg-white shadow-lg">
+                    {readDateIds &&
+                      readDateIds.map((readDate, idx) => (
+                        <li key={readDate.readDateId} className="mt-[1px] h-12 w-full border-b border-main">
+                          <button
+                            className="h-full w-full"
+                            type="button"
+                            onClick={() => {
+                              setIsMemoToggled(false);
+                              setReadDateId(readDate);
+                            }}
+                          >
+                            {idx + 1}회독
+                          </button>
+                        </li>
+                      ))}
+                  </ul>
+                </Memo>
               )}
-              <ul className="absolute -top-2 left-1/2 z-10 flex max-h-80 w-28 -translate-x-1/2 flex-col items-center justify-center overflow-auto rounded-lg bg-white shadow-lg">
-                {isToggled &&
-                  readDateIds &&
-                  readDateIds.map((readDate, idx) => (
-                    <li key={readDate.readDateId} className="mt-[1px] h-12 w-full border-b border-main">
-                      <button className="h-full w-full" type="button" onClick={() => setReadDateId(readDate)}>
-                        {idx + 1}회독
-                      </button>
-                    </li>
-                  ))}
-              </ul>
-            </button>
+            </>
           }
           leftBtn={
             <IoArrowBackOutline
@@ -193,12 +214,16 @@ const Note = () => {
           }
         />
 
-        <section className="border-mains height-without-header flex flex-col overflow-hidden rounded-tl-3xl border border-main bg-white pb-header">
-          <img src={bookmark} className="header absolute right-10 top-header block h-12 w-12" alt="" />
-          {page && <p className="absolute right-2 top-header pt-2 opacity-50">{`p.${page}`}</p>}
-          {pages && (
-            <p className="absolute right-2 top-header pt-2 opacity-50">{`p.${pages.startPage}-p.${pages.endPage}`}</p>
-          )}
+        <section
+          className={`border-mains ${isIOS ? 'height-without-headerIOS' : 'height-without-headerAnd'} flex flex-col overflow-hidden rounded-tl-3xl border border-main bg-white`}
+        >
+          <img
+            src={bookmark}
+            className={`${isIOS ? 'headerIOS top-headerIOS' : 'headerAnd top-headerAnd'} absolute right-10 block h-12 w-12`}
+            alt=""
+          />
+          {page && page !== 0 && <p className="absolute right-2 pt-2 opacity-50">{`p.${page}`}</p>}
+          {pages && <p className="absolute right-2 pt-2 opacity-50">{`p.${pages.startPage}-p.${pages.endPage}`}</p>}
           <button className="w-full px-5 py-3 text-start font-semibold opacity-50" type="button" onClick={open}>
             {`${selectedDate[0] + 2000}년 ${selectedDate[1]}월 ${selectedDate[2]}일`}
           </button>
@@ -227,7 +252,7 @@ const Note = () => {
           </div>
         </section>
 
-        <div className="absolute bottom-1 flex h-12 w-full items-center justify-between bg-main">
+        <div className="absolute bottom-1 flex h-12 w-full items-center justify-between bg-main px-2">
           <section className="flex">
             <button
               className="px-3 py-2"
@@ -241,7 +266,7 @@ const Note = () => {
               <LuTags style={{ width: '20px', height: '20px', color: '#9B9999' }} />
             </button>
           </section>
-          <button className="px-3 py-2" onClick={() => {}} type="button" aria-label="독서노트 삭제하기">
+          <button className="px-3 py-2" onClick={handleDeleteNote} type="button" aria-label="독서노트 삭제하기">
             <LuTrash2 style={{ width: '20px', height: '20px', color: '#9B9999' }} />
           </button>
           {/* TODO : 글자수 처리 로직 추후 구현 */}

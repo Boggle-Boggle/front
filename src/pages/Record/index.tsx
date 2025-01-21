@@ -1,15 +1,18 @@
 import { useQuery } from '@tanstack/react-query';
 
-import { useCallback, useEffect, useReducer, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { FiArrowLeft, FiMoreVertical, FiEdit } from 'react-icons/fi';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
 import Header from 'components/Header';
+import Memo from 'components/Memo';
 import Loading from 'pages/Loading';
 
 import useDevice from 'hooks/useDevice';
-import { deleteNote, getRecord } from 'services/record';
+import useModal from 'hooks/useModal';
+import { deleteRecord, getRecord } from 'services/record';
 
+import DeleteModal from './DeleteModal';
 import NoteTab from './NoteTab';
 import RecordTab from './RecordTab';
 import ShelfSvg from './ShelfSvg';
@@ -18,7 +21,8 @@ const TABS = ['독서기록', '독서노트'] as const;
 const Record = () => {
   const [hasHeaderBackground, setHasHeaderBackground] = useState<boolean>(false);
   const [selected, setSelected] = useState<(typeof TABS)[number]>('독서기록');
-  const [isToggled, handleToggle] = useReducer((prev) => !prev, false);
+  const [isMemoToggled, setIsMemoToggled] = useState<boolean>(false);
+  const { isOpen, open, close, scrollPos } = useModal();
 
   const { isIOS } = useDevice();
   const navigate = useNavigate();
@@ -34,24 +38,36 @@ const Record = () => {
     navigate(`/note/write`, { state: { recordId } });
   };
 
-  const handleDeleteNote = () => {
-    deleteNote(Number(recordId));
+  const handleDeleteNote = async () => {
+    await deleteRecord(Number(recordId));
     navigate(`/library`);
   };
 
-  const setObserver = useCallback((node: HTMLDivElement | null) => {
-    if (node) {
-      const handleScroll = () => {
-        setHasHeaderBackground(node.scrollTop > 400);
-      };
+  const handleModalOpen = () => {
+    setIsMemoToggled(false);
+    open();
+  };
 
-      node.addEventListener('scroll', handleScroll);
+  const setObserver = useCallback(
+    (node: HTMLDivElement | null) => {
+      if (node) {
+        const handleScroll = () => {
+          if (isIOS) {
+            setHasHeaderBackground(node.scrollTop > 460);
+            return;
+          }
+          setHasHeaderBackground(node.scrollTop > 380);
+        };
 
-      return () => {
-        node.removeEventListener('scroll', handleScroll);
-      };
-    }
-  }, []);
+        node.addEventListener('scroll', handleScroll);
+
+        return () => {
+          node.removeEventListener('scroll', handleScroll);
+        };
+      }
+    },
+    [isIOS],
+  );
 
   useEffect(() => {
     if (location.state === '독서노트') setSelected(location.state);
@@ -77,35 +93,41 @@ const Record = () => {
             />
           }
           rightBtn={
-            <button aria-label="수정/삭제하기" onClick={handleToggle} type="button" className="relative">
-              <FiMoreVertical
-                style={{ width: '24px', height: '24px', color: hasHeaderBackground ? 'black' : 'white' }}
-              />
-              {isToggled && (
-                <div className="absolute right-0 flex h-20 w-24 flex-col rounded-[4px] bg-main text-sm shadow-[0_4px_4px_0_rgba(0,0,0,0.25)]">
-                  <button
-                    type="button"
-                    className="flex-grow"
-                    onClick={() => navigate(`/edit/${recordId}`, { state: { title: data.bookData.title } })}
-                  >
-                    수정하기
-                  </button>
-                  <button
-                    type="button"
-                    className="flex-grow border-t border-text border-opacity-30"
-                    onClick={handleDeleteNote}
-                  >
-                    삭제하기
-                  </button>
-                </div>
+            <>
+              <button aria-label="수정/삭제하기" onClick={() => setIsMemoToggled(true)} type="button">
+                <FiMoreVertical
+                  style={{ width: '24px', height: '24px', color: hasHeaderBackground ? 'black' : 'white' }}
+                />
+              </button>
+              {isMemoToggled && (
+                <Memo handleClose={() => setIsMemoToggled(false)}>
+                  <div className="absolute right-0 z-30 flex h-20 w-24 flex-col rounded-[4px] bg-main text-sm shadow-[0_4px_4px_0_rgba(0,0,0,0.25)]">
+                    <button
+                      type="button"
+                      className="flex-grow"
+                      onClick={() =>
+                        navigate(`/edit/${recordId}`, { state: { title: data.bookData.title }, replace: true })
+                      }
+                    >
+                      수정하기
+                    </button>
+                    <button
+                      type="button"
+                      className="flex-grow border-t border-text border-opacity-30"
+                      onClick={handleModalOpen}
+                    >
+                      삭제하기
+                    </button>
+                  </div>
+                </Memo>
               )}
-            </button>
+            </>
           }
           backgroundColor={hasHeaderBackground ? 'bg-white transition-colors' : 'bg-none transition-colors'}
         />
 
         <div
-          className={`${isIOS ? 'height-without-footerIOS' : 'height-without-footerAnd'} relative flex-col overflow-y-auto overflow-x-hidden pt-header`}
+          className={`${isIOS ? 'height-without-footerIOS' : 'height-without-footerAnd'} relative flex-col overflow-y-auto overflow-x-hidden`}
           ref={(node) => {
             setObserver(node);
           }}
@@ -118,7 +140,7 @@ const Record = () => {
           />
           <div className="absolute inset-0 h-[22rem] w-full overflow-hidden bg-black opacity-30" />
 
-          <section className="relative flex h-72 justify-center">
+          <section className={`${isIOS ? 'mt-headerIOS' : 'mt-headerAnd'} relative flex h-72 justify-center`}>
             <img
               src={data.bookData.cover}
               alt={`${data.bookData.title} 책 표지`}
@@ -157,7 +179,7 @@ const Record = () => {
                 <div className="h-20" />
                 <button
                   type="button"
-                  className="fixed bottom-[6rem] right-[1rem] flex h-16 w-16 items-center justify-center rounded-full bg-accent shadow-lg"
+                  className="fixed bottom-[6.5rem] right-[1rem] flex h-16 w-16 items-center justify-center rounded-full bg-accent shadow-lg"
                   onClick={handleGoToNote}
                   aria-label="독서노트 작성하기"
                 >
@@ -167,6 +189,8 @@ const Record = () => {
             )}
           </section>
         </div>
+
+        {isOpen && <DeleteModal close={close} isOpen={isOpen} scrollPos={scrollPos} deleteNote={handleDeleteNote} />}
       </>
     )
   );

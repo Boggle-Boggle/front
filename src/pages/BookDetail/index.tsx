@@ -7,6 +7,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 import Header from 'components/Header';
 
+import useDevice from 'hooks/useDevice';
 import useModal from 'hooks/useModal';
 import { getBookDetail, hasReadingRecord } from 'services/search';
 import { formatDateAndTime, formatBookGenre } from 'utils/format';
@@ -28,6 +29,7 @@ const BookDetail = () => {
 
   const navigate = useNavigate();
   const { detailId = '' } = useParams();
+  const { isIOS } = useDevice();
 
   const handleGoBack = () => {
     navigate(-1);
@@ -94,9 +96,9 @@ const BookDetail = () => {
           }
         />
 
-        <div className="height-content relative flex flex-col pb-8">
+        <div className={`${isIOS ? 'height-contentIOS' : 'height-contentAnd'} relative flex flex-col pb-8`}>
           <BookShelf cover={book.cover} title={book.title} />
-          <section className="flex h-36 flex-shrink-0 flex-col items-center justify-center px-6 pt-6 text-center">
+          <section className="flex h-[7.5rem] flex-shrink-0 flex-col items-center justify-center px-6 text-center">
             <h1
               className={`${book.title.length > 50 ? 'text-[0.9rem]' : book.title.length < 30 && 'text-lg'} font-bold`}
             >
@@ -133,9 +135,14 @@ const BookDetail = () => {
             <div className="h-4" ref={observerTarget} />
           </div>
         </div>
-        <p className="absolute bottom-footer left-5 mb-2 flex items-center text-xs font-semibold opacity-50">
+        <p
+          className={`absolute ${isIOS ? 'bottom-footerIOS' : 'bottom-footerAnd'} left-5 mb-2 flex items-center text-xs font-semibold opacity-50`}
+        >
           <FiAlertCircle style={{ marginRight: '6px' }} />
-          <p className="font-bold underline">알라딘</p> 에서 제공한 정보입니다.
+          <a className="font-bold underline" href={book.link}>
+            알라딘
+          </a>{' '}
+          에서 제공한 정보입니다.
         </p>
 
         <ExistingRecordModal isOpen={isOpen} close={close} scrollPos={scrollPos} />

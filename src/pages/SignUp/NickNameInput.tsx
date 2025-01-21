@@ -5,6 +5,7 @@ import Button from 'components/Button';
 import Header from 'components/Header';
 import Highlight from 'components/Highlight';
 
+import useDevice from 'hooks/useDevice';
 import { isDuplicateNickname } from 'services/user';
 
 type NickNameInputProps = {
@@ -15,6 +16,7 @@ type NickNameInputProps = {
 };
 
 const NickNameInput = ({ nickName, isValid, updateNickName, onNext }: NickNameInputProps) => {
+  const { isIOS } = useDevice();
   const navigate = useNavigate();
 
   const handleLeftBtnClick = () => navigate('/login');
@@ -43,7 +45,9 @@ const NickNameInput = ({ nickName, isValid, updateNickName, onNext }: NickNameIn
         title={<>회원가입</>}
         leftBtn={<GoArrowLeft style={{ width: '24px', height: '24px' }} onClick={handleLeftBtnClick} />}
       />
-      <section className="height-without-header flex w-full flex-col p-9">
+      <section
+        className={` ${isIOS ? 'height-without-headerIOS' : 'height-without-headerAnd'} flex w-full flex-col p-9`}
+      >
         <h1 className="text-[2rem] font-semibold leading-[3rem]">
           <span className="relative inline-block">
             <span className="relative z-10">빼곡에서</span>

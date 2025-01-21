@@ -15,18 +15,22 @@ export const getRecord = async (recordId: string) => {
   return response.data.data as Record;
 };
 
+export const deleteRecord = async (recordId: number) => {
+  await api.delete(`/reading-record/${recordId}`);
+};
+
 export const getBookCase = async () => {
   const response = await api.get('/bookshelf');
 
   return response.data.data.books as BookCase[];
 };
 
-export const addNote = (recordId: number, note: AddNoteParams) => {
-  api.post(`/reading-record/${recordId}/note`, note);
+export const addNote = async (recordId: number, note: AddNoteParams) => {
+  await api.post(`/reading-record/${recordId}/note`, note);
 };
 
-export const updateNote = (recordId: number, noteId: number, note: Partial<AddNoteParams>) => {
-  api.patch(`/reading-record/${recordId}/note/${noteId}`, note);
+export const updateNote = async (recordId: number, noteId: number, note: Partial<AddNoteParams>) => {
+  await api.patch(`/reading-record/${recordId}/note/${noteId}`, note);
 };
 
 export const getNote = async (recordId: string) => {
@@ -35,8 +39,8 @@ export const getNote = async (recordId: string) => {
   return response.data.data as Notes[];
 };
 
-export const deleteNote = async (recordId: number) => {
-  await api.delete(`/reading-record/${recordId}`);
+export const deleteNote = async (recordId: number, noteId: number) => {
+  await api.delete(`/reading-record/${recordId}/note/${noteId}`);
 };
 
 export const getReadDates = async (recordId: string) => {
