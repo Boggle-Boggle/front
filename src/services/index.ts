@@ -47,9 +47,9 @@ api.interceptors.response.use(
 
     const { retryCount, incrementRetry, resetRetry } = useRetryStore.getState();
     console.log(error);
-    alert(retryCount);
-    alert(message);
-    alert(response.data.message);
+    // alert(retryCount);
+    // alert(message);
+    // alert(response.data.message);
 
     if (response.status === 401 && retryCount < 3) {
       incrementRetry();
