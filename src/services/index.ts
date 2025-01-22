@@ -42,10 +42,13 @@ api.interceptors.response.use(
   },
 
   async (error) => {
-    const { response, config } = error;
+    const { response, config, message } = error;
     const { login, logout } = useAuthStore.getState();
 
     const { retryCount, incrementRetry, resetRetry } = useRetryStore.getState();
+    console.log(error);
+    alert(retryCount);
+    alert(message);
 
     if (response.status === 401 && retryCount < 5) {
       incrementRetry();
