@@ -1,11 +1,24 @@
 import axios from 'axios';
 import useAuthStore from 'stores/useAuthStore';
+import { create } from 'zustand';
 
 const api = axios.create({
   baseURL: import.meta.env.VITE_SERVER_BASE_URL,
   timeout: 1000,
   withCredentials: true,
 });
+
+type RetryStore = {
+  retryCount: number;
+  incrementRetry: () => void;
+  resetRetry: () => void;
+};
+
+const useRetryStore = create<RetryStore>((set) => ({
+  retryCount: 0,
+  incrementRetry: () => set((state) => ({ retryCount: state.retryCount + 1 })),
+  resetRetry: () => set({ retryCount: 0 }),
+}));
 
 api.interceptors.request.use(
   (config) => {
@@ -32,20 +45,22 @@ api.interceptors.response.use(
     const { response, config } = error;
     const { login, logout } = useAuthStore.getState();
 
-    if (response.status === 401) {
+    const { retryCount, incrementRetry, resetRetry } = useRetryStore.getState();
+
+    if (response.status === 401 && retryCount < 5) {
+      incrementRetry();
+
       try {
         const refreshResponse = await api.get('/auth/refresh');
         const newAccessToken = refreshResponse.data.data;
-        const newConfig = { ...config };
 
         logout();
         login(newAccessToken);
 
-        newConfig.headers.Authorization = `Bearer ${newAccessToken}`;
-        return await api(newConfig);
+        config.headers.Authorization = `Bearer ${newAccessToken}`;
+        return await api(config);
       } catch (err) {
-        // TODO : 로그인 재시도 안내 구현
-
+        resetRetry();
         return Promise.reject(err);
       }
     }
