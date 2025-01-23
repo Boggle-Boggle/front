@@ -25,7 +25,7 @@ type ReadingRecordFormProps = {
 const ReadingRecordForm = ({ isbn, onClose }: ReadingRecordFormProps) => {
   const [step, setStep] = useState<StepType>('상태');
 
-  const [selectedStatus, setSelectedStatus] = useState<StatusType>('reading');
+  const [selectedStatus, setSelectedStatus] = useState<StatusType>('completed');
   const [rating, setRating] = useState<number>(5);
   const [ratingTitle, setRatingTitle] = useState<RatingTitleType>('최고예요');
   const [startDate, setStartDate] = useState<DateType>(null);
