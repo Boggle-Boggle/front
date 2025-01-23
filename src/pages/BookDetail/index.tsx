@@ -120,7 +120,7 @@ const BookDetail = () => {
             className="relative h-full w-full flex-shrink overflow-hidden px-6 text-base font-semibold"
             ref={plotRef}
           >
-            줄거리
+            책소개
             {isClamped && (
               <button className="absolute right-6 text-xs opacity-70" type="button" onClick={plotOpen}>
                 더보기
