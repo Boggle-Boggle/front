@@ -92,7 +92,7 @@ const RecordTab = ({ book }: RecordTabProps) => {
               <RecordItem
                 icons={<CiCalendarDate style={{ width: '20px', height: '20px' }} />}
                 title="독서기간"
-                content={`${startDate} ~ ${endDate ?? '독서중'}`}
+                content={`${startDate} ~ ${endDate ?? '읽는중'}`}
               />
             </li>
           );
@@ -101,7 +101,7 @@ const RecordTab = ({ book }: RecordTabProps) => {
             <RecordItem
               icons={<CiCalendarDate style={{ width: '20px', height: '20px' }} />}
               title="독서기간"
-              content={`${startDate} ~ ${endDate ?? '독서중'}`}
+              content={`${startDate} ~ ${endDate ?? '읽는중'}`}
             />
           </li>
         );
