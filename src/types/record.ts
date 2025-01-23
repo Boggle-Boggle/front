@@ -73,8 +73,6 @@ export const RATING_STATUS = [
   },
 ] as const;
 
-export type RatingTitleType = (typeof RATING_STATUS)[number]['title'];
-
 // Date
 export type DateType = [number, number, number] | null;
 
