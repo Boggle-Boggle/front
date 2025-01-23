@@ -62,6 +62,7 @@ const ReadingRecordForm = ({ isbn, onClose }: ReadingRecordFormProps) => {
           <Status
             onNext={() => {
               if (selectedStatus === 'completed') setStep('별점');
+              else if (selectedStatus === 'reading') setStep('날짜');
               else setStep('서재');
             }}
             selected={selectedStatus}
@@ -73,7 +74,11 @@ const ReadingRecordForm = ({ isbn, onClose }: ReadingRecordFormProps) => {
         )}
         {step === '날짜' && (
           <ReadingDate
-            onPrev={() => setStep('별점')}
+            onPrev={() => {
+              if (selectedStatus === 'reading') setStep('상태');
+              else setStep('별점');
+            }}
+            isReading={selectedStatus === 'reading'}
             onNext={() => setStep('서재')}
             startDate={startDate}
             setStartDate={setStartDate}
