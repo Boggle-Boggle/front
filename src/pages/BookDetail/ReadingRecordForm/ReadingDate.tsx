@@ -29,7 +29,10 @@ const ReadingDate = ({ startDate, endDate, setStartDate, setEndDate, onPrev, onN
       return;
     }
 
-    if (startDate[0] <= endDate[0] && startDate[1] <= endDate[1] && startDate[2] <= endDate[2]) {
+    const start = new Date(startDate[0], startDate[1] - 1, startDate[2]);
+    const end = new Date(endDate[0], endDate[1] - 1, endDate[2]);
+
+    if (start <= end) {
       onNext();
     } else {
       alert('종료날짜는 시작날짜 이후여야 합니다.');
