@@ -48,7 +48,7 @@ const LibraryEditedModal = ({
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.value.length > 15) return;
+    if (e.target.value.length > 14) return;
     setValues(e.target.value);
   };
 
@@ -62,7 +62,7 @@ const LibraryEditedModal = ({
   return (
     <HalfScreenModal>
       <section>
-        <div className="h-headerAnd z-30 grid w-full grid-cols-[30px_auto_30px] items-center px-4">
+        <div className="z-30 grid h-headerAnd w-full grid-cols-[30px_auto_30px] items-center px-4">
           <span className="justify-self-start" />
           <span className="w-full justify-self-center text-center font-semibold">서재 편집</span>
           <button className="justify-self-end text-accent" type="button" onClick={handleClose}>

@@ -14,13 +14,20 @@ const EditLibraries = ({ libraries, setLibraries }: EditLibrariesProps) => {
     );
     setLibraries(newLibraries);
   };
+
   return (
     <div className="border-t-[3px] border-main">
       <p className="relative flex h-14 items-center justify-between px-6 font-semibold">
         서재구분
-        <button className="text-sm font-normal opacity-50" type="button" aria-label="독서기간 추가">
+        {/* TODO : 서재 편집 디자인 수정후 2차 배포 */}
+        {/* <button
+          className="text-sm font-normal opacity-50"
+          type="button"
+          aria-label="독서기간 추가"
+          onClick={handleEdit}
+        >
           편집
-        </button>
+        </button> */}
       </p>
       <ul>
         {libraries.map(({ libraryId, libraryName, selected }) => (

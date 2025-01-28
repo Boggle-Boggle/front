@@ -23,16 +23,16 @@ import { BookDetail } from './book';
 // Status
 export const REDING_STATUS = [
   {
-    status: 'reading',
-    title: '읽는 중인 책',
-    subTitle: '책을 읽고 있는 중이신가요? \n 나중에 다 읽은 책으로 변경할 수 있어요',
-    img: img1,
-  },
-  {
     status: 'completed',
     title: '다 읽은 책',
     subTitle: '대단해요! 책을 다 읽으셨나요? \n 등록 후 책에 대한 이야기를 남겨보세요',
     img: img2,
+  },
+  {
+    status: 'reading',
+    title: '읽는 중인 책',
+    subTitle: '책을 읽고 있는 중이신가요? \n 나중에 다 읽은 책으로 변경할 수 있어요',
+    img: img1,
   },
   {
     status: 'pending',
@@ -73,8 +73,6 @@ export const RATING_STATUS = [
   },
 ] as const;
 
-export type RatingTitleType = (typeof RATING_STATUS)[number]['title'];
-
 // Date
 export type DateType = [number, number, number] | null;
 
@@ -94,7 +92,7 @@ export type RecordLibraries = {
 };
 
 export type RecordDate = {
-  readDateId: number;
+  readDateId: number | null;
   startReadDate: string | null;
   endReadDate: string | null;
 };

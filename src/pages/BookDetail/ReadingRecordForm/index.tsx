@@ -6,7 +6,7 @@ import { FaXmark } from 'react-icons/fa6';
 import { getLibraries } from 'services/library';
 import { formatDate } from 'utils/format';
 
-import { DateType, RatingTitleType, StatusType } from 'types/record';
+import { DateType, StatusType } from 'types/record';
 
 import Complete from './Complete';
 import Libraries from './Libraries';
@@ -25,9 +25,8 @@ type ReadingRecordFormProps = {
 const ReadingRecordForm = ({ isbn, onClose }: ReadingRecordFormProps) => {
   const [step, setStep] = useState<StepType>('상태');
 
-  const [selectedStatus, setSelectedStatus] = useState<StatusType>('reading');
+  const [selectedStatus, setSelectedStatus] = useState<StatusType>('completed');
   const [rating, setRating] = useState<number>(5);
-  const [ratingTitle, setRatingTitle] = useState<RatingTitleType>('최고예요');
   const [startDate, setStartDate] = useState<DateType>(null);
   const [endDate, setEndDate] = useState<DateType>(null);
   const [selectedLibraries, setSelectedLibraries] = useState<number[]>([]);
@@ -63,6 +62,7 @@ const ReadingRecordForm = ({ isbn, onClose }: ReadingRecordFormProps) => {
           <Status
             onNext={() => {
               if (selectedStatus === 'completed') setStep('별점');
+              else if (selectedStatus === 'reading') setStep('날짜');
               else setStep('서재');
             }}
             selected={selectedStatus}
@@ -70,18 +70,15 @@ const ReadingRecordForm = ({ isbn, onClose }: ReadingRecordFormProps) => {
           />
         )}
         {step === '별점' && (
-          <Rating
-            onPrev={() => setStep('상태')}
-            onNext={() => setStep('날짜')}
-            rating={rating}
-            setRating={setRating}
-            status={ratingTitle}
-            setStatus={setRatingTitle}
-          />
+          <Rating onPrev={() => setStep('상태')} onNext={() => setStep('날짜')} rating={rating} setRating={setRating} />
         )}
         {step === '날짜' && (
           <ReadingDate
-            onPrev={() => setStep('별점')}
+            onPrev={() => {
+              if (selectedStatus === 'reading') setStep('상태');
+              else setStep('별점');
+            }}
+            isReading={selectedStatus === 'reading'}
             onNext={() => setStep('서재')}
             startDate={startDate}
             setStartDate={setStartDate}

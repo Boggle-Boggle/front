@@ -1,7 +1,7 @@
 import { RATING_STATUS } from 'types/record';
 
 type EditRatingPros = {
-  rating: number;
+  rating: number | null;
   setRating: React.Dispatch<React.SetStateAction<number>>;
 };
 
@@ -22,7 +22,7 @@ const EditRating = ({ rating, setRating }: EditRatingPros) => {
       <p className="flex h-14 items-center border-t-[3px] border-main px-6 font-semibold">별점</p>
       <section className="flex flex-col items-center px-5 pb-5">
         <span className="mb-5 inline-flex rounded-2xl border-2 border-yellow-300 px-4 py-1 font-semibold">
-          {rating.toFixed(1)}
+          {(rating ?? 0).toFixed(1)}
         </span>
         <ul className="justify-center- flex w-full px-2" onTouchMove={handleTouchMove}>
           {RATING_STATUS.map(({ status, title, img }) => (
@@ -31,7 +31,7 @@ const EditRating = ({ rating, setRating }: EditRatingPros) => {
               key={status}
             >
               <img
-                src={status - rating >= 1 ? img.empty : status - rating <= 0 ? img.filled : img.half}
+                src={status - (rating ?? 0) >= 1 ? img.empty : status - (rating ?? 0) <= 0 ? img.filled : img.half}
                 className="mb-3 w-12"
                 alt=""
               />

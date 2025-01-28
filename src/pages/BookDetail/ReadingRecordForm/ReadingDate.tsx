@@ -10,6 +10,7 @@ import SubTitle from './shared/SubTitle';
 import Title from './shared/Title';
 
 type DateProps = {
+  isReading: boolean;
   startDate: DateType;
   endDate: DateType;
   setStartDate: React.Dispatch<React.SetStateAction<DateType>>;
@@ -18,7 +19,7 @@ type DateProps = {
   onNext: () => void;
 };
 
-const ReadingDate = ({ startDate, endDate, setStartDate, setEndDate, onPrev, onNext }: DateProps) => {
+const ReadingDate = ({ isReading, startDate, endDate, setStartDate, setEndDate, onPrev, onNext }: DateProps) => {
   const [isChangingStartDate, setIsChangeStartDate] = useState<boolean>(false);
   const [isChangingEndDate, setIsChangeEndDate] = useState<boolean>(false);
 
@@ -29,7 +30,10 @@ const ReadingDate = ({ startDate, endDate, setStartDate, setEndDate, onPrev, onN
       return;
     }
 
-    if (startDate[0] <= endDate[0] && startDate[1] <= endDate[1] && startDate[2] <= endDate[2]) {
+    const start = new Date(startDate[0], startDate[1] - 1, startDate[2]);
+    const end = new Date(endDate[0], endDate[1] - 1, endDate[2]);
+
+    if (start <= end) {
       onNext();
     } else {
       alert('종료날짜는 시작날짜 이후여야 합니다.');
@@ -42,9 +46,10 @@ const ReadingDate = ({ startDate, endDate, setStartDate, setEndDate, onPrev, onN
       <SubTitle message="읽기 시작한 날짜와 다 읽은 날짜를 입력해주세요" />
 
       <section>
-        <div
-          className="mb-4 flex items-center justify-between rounded-[10px] border-2 border-accent bg-white p-4 text-sm"
+        <button
+          className="mb-4 flex w-full items-center justify-between rounded-[10px] border-2 border-accent bg-white p-4 text-sm"
           onClick={() => setIsChangeStartDate(true)}
+          type="button"
         >
           {startDate ? (
             <>
@@ -52,7 +57,7 @@ const ReadingDate = ({ startDate, endDate, setStartDate, setEndDate, onPrev, onN
                 <LuCalendarCheck2
                   style={{ width: '30px', height: '30px', color: '#E6B9A6', display: 'inline-block' }}
                 />
-                <span className="ml-2 opacity-60">읽기시작한날</span>
+                <span className="ml-2 opacity-60">읽기 시작한 날</span>
               </div>
               <div className="text-base">
                 {`${startDate[0]}년 ${startDate[1]}월 ${startDate[2]}일`}
@@ -65,32 +70,46 @@ const ReadingDate = ({ startDate, endDate, setStartDate, setEndDate, onPrev, onN
               <LuCalendarCheck2 style={{ width: '30px', height: '30px', color: '#E6B9A6' }} />
             </>
           )}
-        </div>
+        </button>
 
-        <div
-          className="mb-4 flex items-center justify-between rounded-[10px] border-2 border-accent bg-white p-4 text-sm"
-          onClick={() => setIsChangeEndDate(true)}
-        >
-          {endDate ? (
-            <>
-              <div>
-                <LuCalendarCheck2
-                  style={{ width: '30px', height: '30px', color: '#E6B9A6', display: 'inline-block' }}
-                />
-                <span className="ml-2 opacity-60">다 읽은 날</span>
-              </div>
-              <div className="text-base">
-                {`${endDate[0]}년 ${endDate[1]}월 ${endDate[2]}일`}
-                <GoChevronRight style={{ display: 'inline-block' }} />
-              </div>
-            </>
-          ) : (
-            <>
-              <p className="opacity-50">책을 다 읽은 날짜를 입력해주세요</p>
-              <LuCalendarCheck2 style={{ width: '30px', height: '30px', color: '#E6B9A6' }} />
-            </>
-          )}
-        </div>
+        {isReading ? (
+          <div className="mb-4 flex items-center justify-between rounded-[10px] border-2 border-accent bg-white p-4 text-sm">
+            <div>
+              <LuCalendarCheck2 style={{ width: '30px', height: '30px', color: '#E6B9A6', display: 'inline-block' }} />
+              <span className="ml-2 opacity-60">다 읽은 날</span>
+            </div>
+            <div className="text-base">
+              미정
+              <GoChevronRight style={{ display: 'inline-block' }} />
+            </div>
+          </div>
+        ) : (
+          <button
+            className="mb-4 flex w-full items-center justify-between rounded-[10px] border-2 border-accent bg-white p-4 text-sm"
+            onClick={() => setIsChangeEndDate(true)}
+            type="button"
+          >
+            {endDate ? (
+              <>
+                <div>
+                  <LuCalendarCheck2
+                    style={{ width: '30px', height: '30px', color: '#E6B9A6', display: 'inline-block' }}
+                  />
+                  <span className="ml-2 opacity-60">다 읽은 날</span>
+                </div>
+                <div className="text-base">
+                  {`${endDate[0]}년 ${endDate[1]}월 ${endDate[2]}일`}
+                  <GoChevronRight style={{ display: 'inline-block' }} />
+                </div>
+              </>
+            ) : (
+              <>
+                <p className="opacity-50">책을 다 읽은 날짜를 입력해주세요</p>
+                <LuCalendarCheck2 style={{ width: '30px', height: '30px', color: '#E6B9A6' }} />
+              </>
+            )}
+          </button>
+        )}
       </section>
 
       <ButtonSet onPrev={onPrev} onNext={handleNext} />

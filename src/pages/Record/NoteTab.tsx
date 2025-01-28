@@ -23,7 +23,7 @@ const NoteTab = ({ recordId }: NoteTabProps) => {
     data !== undefined &&
     data.map(({ readDate, notes }, idx) => {
       const startDate = (readDate.startReadDate && formatDateTimeToDate(readDate.startReadDate)) ?? '';
-      const endDate = readDate.endReadDate ? formatDateTimeToDate(readDate.endReadDate) : '독서중';
+      const endDate = readDate.endReadDate ? formatDateTimeToDate(readDate.endReadDate) : '읽는중';
 
       if (idx === 0 && notes.length === 0) return;
 

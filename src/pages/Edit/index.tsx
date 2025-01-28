@@ -71,8 +71,8 @@ const Edit = () => {
       />
 
       {data && (
-        <section className={`${isIOS ? 'height-contentIOS' : 'height-contentAnd'} overflow-y-scroll pb-4`}>
-          <EditReadingDate readDates={readDates} />
+        <section className={`${isIOS ? 'height-contentIOS' : 'height-contentAnd'} overflow-y-scroll pb-20`}>
+          <EditReadingDate recordId={Number(recordId)} readDates={readDates} />
           <EditLibraries libraries={libraries!} setLibraries={setLibraries} />
           <EditRating rating={rating} setRating={setRating} />
           <EditVisible isVisible={isVisible} setIsVisible={setIsVisible} />
