@@ -12,10 +12,11 @@ import { RecordDate, StatusType } from 'types/record';
 import EditReadingDateModal from './EditReadingDateModal';
 
 type EditReadingDatePros = {
+  recordId: number;
   readDates: (RecordDate & { status: StatusType })[];
 };
 
-const EditReadingDate = ({ readDates }: EditReadingDatePros) => {
+const EditReadingDate = ({ recordId, readDates }: EditReadingDatePros) => {
   const { isOpen, close, open } = useModal();
 
   return (
@@ -48,7 +49,7 @@ const EditReadingDate = ({ readDates }: EditReadingDatePros) => {
           })}
         </ul>
       </div>
-      {isOpen && <EditReadingDateModal close={close} />}
+      {isOpen && <EditReadingDateModal recordId={recordId} readDates={readDates} close={close} />}
     </>
   );
 };

@@ -92,7 +92,7 @@ export type RecordLibraries = {
 };
 
 export type RecordDate = {
-  readDateId: number;
+  readDateId: number | null;
   startReadDate: string | null;
   endReadDate: string | null;
 };

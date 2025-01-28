@@ -1,3 +1,5 @@
+import { useQueryClient } from '@tanstack/react-query';
+
 import { useState } from 'react';
 import { GoChevronRight } from 'react-icons/go';
 import { GrDeploy } from 'react-icons/gr';
@@ -7,23 +9,79 @@ import Button from 'components/Button';
 import HalfScreenModal from 'components/HalfScreenModal';
 import DateSelector from 'pages/BookDetail/ReadingRecordForm/shared/DateSelector';
 
-import { DateType } from 'types/record';
+import { updateEditRecord } from 'services/record';
+import { formatDate } from 'utils/format';
+
+import { DateType, RecordDate, StatusType } from 'types/record';
 
 type EditReadingDateModalProps = {
+  recordId: number;
+  readDates: (RecordDate & { status: StatusType })[];
   close: () => void;
 };
 
-const EditReadingDateModal = ({ close }: EditReadingDateModalProps) => {
+const EditReadingDateModal = ({ recordId, readDates, close }: EditReadingDateModalProps) => {
   const [selected, setSelected] = useState<'reading' | 'complete'>('complete');
   const [startDate, setStartDate] = useState<DateType>(null);
   const [endDate, setEndDate] = useState<DateType>(null);
   const [isChangingStartDate, setIsChangeStartDate] = useState<boolean>(false);
   const [isChangingEndDate, setIsChangeEndDate] = useState<boolean>(false);
 
+  const queryClient = useQueryClient();
+
+  const handleAddReadingDate = async () => {
+    if (selected === 'reading') {
+      if (!startDate) {
+        alert('날짜를 선택해주세요');
+
+        return;
+      }
+
+      const newReadDate: RecordDate & { status: StatusType } = {
+        readDateId: null,
+        status: 'reading',
+        startReadDate: formatDate(...startDate),
+        endReadDate: null,
+      };
+
+      await updateEditRecord(Number(recordId), { readDateList: [...readDates, newReadDate] });
+      await queryClient.invalidateQueries({ queryKey: ['edit', recordId.toString()] });
+
+      close();
+
+      return;
+    }
+
+    if (!startDate || !endDate) {
+      alert('날짜를 선택해주세요');
+
+      return;
+    }
+
+    const start = new Date(startDate[0], startDate[1] - 1, startDate[2]);
+    const end = new Date(endDate[0], endDate[1] - 1, endDate[2]);
+
+    if (start <= end) {
+      const newReadDate: RecordDate & { status: StatusType } = {
+        readDateId: null,
+        status: 'completed',
+        startReadDate: formatDate(...startDate),
+        endReadDate: formatDate(...endDate),
+      };
+
+      await updateEditRecord(Number(recordId), { readDateList: [...readDates, newReadDate] });
+      await queryClient.invalidateQueries({ queryKey: ['edit', recordId.toString()] });
+
+      close();
+    } else {
+      alert('종료날짜는 시작날짜 이후여야 합니다.');
+    }
+  };
+
   return (
     <>
       {!isChangingStartDate && !isChangingEndDate && (
-        <HalfScreenModal bgColor="bg-white">
+        <HalfScreenModal bgColor="bg-white" handleClose={close}>
           <section className="relative flex h-full w-full flex-col p-6">
             <p className="pb-1 text-center text-lg font-bold">독서기간 수정</p>
             <p className="text-center text-sm opacity-50">진행도를 선택한 뒤 기간을 입력해보세요</p>
@@ -117,7 +175,7 @@ const EditReadingDateModal = ({ close }: EditReadingDateModalProps) => {
                 )}
               </section>
             </div>
-            <Button handleClick={close} className="mt-4 w-full text-white">
+            <Button handleClick={handleAddReadingDate} className="mt-4 w-full text-white">
               완료
             </Button>
           </section>
