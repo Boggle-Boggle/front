@@ -5,6 +5,7 @@ import Button from 'components/Button';
 import Header from 'components/Header';
 
 import useDevice from 'hooks/useDevice';
+import { deleteAccount } from 'services/user';
 
 const DeleteAccount = () => {
   const { isIOS } = useDevice();
@@ -31,7 +32,7 @@ const DeleteAccount = () => {
           <Button handleClick={handleGoBack} className="bg-main">
             계속 이용할래요
           </Button>
-          <Button handleClick={() => {}}>네 탈퇴할게요</Button>
+          <Button handleClick={deleteAccount}>네 탈퇴할게요</Button>
         </section>
       </section>
     </section>
