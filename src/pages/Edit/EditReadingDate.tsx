@@ -1,9 +1,12 @@
+import { useQueryClient } from '@tanstack/react-query';
+
 import { FiPlus } from 'react-icons/fi';
 import { LuPencil } from 'react-icons/lu';
 
 import CheckBox from 'components/CheckBox';
 
 import useModal from 'hooks/useModal';
+import { updateEditRecord } from 'services/record';
 import { formatDateTimeToDate } from 'utils/format';
 
 import { STATUS } from 'types/library';
@@ -18,6 +21,14 @@ type EditReadingDatePros = {
 
 const EditReadingDate = ({ recordId, readDates }: EditReadingDatePros) => {
   const { isOpen, close, open } = useModal();
+  const queryClient = useQueryClient();
+
+  const handleDeleteDate = async (readDateId: number) => {
+    const newReadDates = readDates.filter((readDate) => readDate.readDateId !== readDateId);
+
+    await updateEditRecord(Number(recordId), { readDateList: newReadDates });
+    await queryClient.invalidateQueries({ queryKey: ['edit', recordId.toString()] });
+  };
 
   return (
     <>
@@ -35,7 +46,9 @@ const EditReadingDate = ({ recordId, readDates }: EditReadingDatePros) => {
 
             return (
               <li className="relative flex h-14 w-full items-center border-t-[1px] border-main px-6" key={readDateId}>
-                <CheckBox color="red" type="minus" />
+                <button type="button" aria-label="회독 삭제" onClick={() => handleDeleteDate(readDateId as number)}>
+                  <CheckBox color="red" type="minus" />
+                </button>
                 <p className="px-[0.376rem] text-sm font-semibold">{idx + 1}회독</p>
                 <span className="rounded-3xl border border-accent px-1 py-[2px] text-xs text-accent">
                   {STATUS[status]}
