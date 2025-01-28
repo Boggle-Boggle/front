@@ -24,7 +24,6 @@ export const getRefresh = async () => {
 export const getAuthorization = async () => {
   const response = await api.get('/user/authorization');
 
-  console.log(response);
   return response.data.data as Authorization;
 };
 
@@ -52,4 +51,8 @@ export const getMyPageInfo = async () => {
   const response = await api.get('/mypage');
 
   return response.data.data as MyPage;
+};
+
+export const deleteAccount = async () => {
+  await api.delete('/user');
 };
