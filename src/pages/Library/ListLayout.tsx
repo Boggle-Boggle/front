@@ -12,7 +12,7 @@ const ListLayout = ({ allBooks }: ListLayoutProps) => {
   const navigate = useNavigate();
 
   return (
-    <section className="p-4">
+    <section className="h-full overflow-y-scroll">
       {allBooks &&
         allBooks.map(({ readingRecordId, imageUrl, title, rating, recentReadDate, readingCount }) => {
           const startDate = recentReadDate && formatDateTimeToDate(recentReadDate.startReadDate);

@@ -136,14 +136,14 @@ const Library = () => {
       {data && (
         <>
           {layout === 'list' && (
-            <section
-              className={`${isIOS ? 'height-contentIOS' : 'height-contentAnd'} mt-4 overflow-y-scroll bg-main pb-8`}
-            >
+            <section className={`${isIOS ? 'height-contentIOS' : 'height-contentAnd'} p- bg-main px-4 pb-16 pt-4`}>
               <ListLayout allBooks={allBooks} />
             </section>
           )}
           {layout === 'grid' && (
-            <section className="mt-3 h-[calc(100%_-_9.75rem_-_36px)] overflow-y-scroll">
+            <section
+              className={` ${isIOS ? 'h-[calc(100%_-_14.5rem)]' : 'h-[calc(100%_-_12.5rem)]'} mt-3 overflow-y-scroll`}
+            >
               <GridLayout allBooks={allBooks} />
             </section>
           )}
