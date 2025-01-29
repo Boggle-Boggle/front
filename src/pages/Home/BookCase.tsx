@@ -1,13 +1,12 @@
 import { Html, OrbitControls, OrbitControlsChangeEvent, useGLTF } from '@react-three/drei';
 import { Canvas } from '@react-three/fiber';
-import { useQuery } from '@tanstack/react-query';
 
 import { Suspense, useEffect, useState } from 'react';
 import * as THREE from 'three';
 
 import Loading from 'pages/Loading';
 
-import { getBookCase } from 'services/record';
+import { BookCase as BookCaseType } from 'types/book';
 
 import Book from './Book';
 
@@ -22,7 +21,11 @@ const getBookProperties = (page: number) => {
   return { width: 2.1, offset: 0.21 };
 };
 
-const BookCase = () => {
+type BookCaseProps = {
+  books: BookCaseType[];
+};
+
+const BookCase = ({ books }: BookCaseProps) => {
   const startX = -0.62;
   const startY = 0.815;
   const rowHeight = 0.575;
@@ -31,11 +34,6 @@ const BookCase = () => {
 
   useGLTF.preload(`${import.meta.env.VITE_IMG_BASE_URL || ''}/assets/bookshelf.glb`);
   const { scene } = useGLTF(`${import.meta.env.VITE_IMG_BASE_URL || ''}/assets/bookshelf.glb`);
-
-  const { data: books } = useQuery({
-    queryKey: ['book'],
-    queryFn: () => getBookCase(),
-  });
 
   const getZoomLevel = (e?: OrbitControlsChangeEvent) => {
     if (!e) return;

@@ -1,5 +1,3 @@
-import { useState } from 'react';
-
 import Button from 'components/Button';
 import HalfScreenModal from 'components/HalfScreenModal';
 import Selector from 'pages/BookDetail/ReadingRecordForm/shared/Selector';
@@ -50,14 +48,24 @@ export const DATE_STATUS = {
 };
 
 type SelectPeriodModalProps = {
+  selectedYear: number | null;
+  selectedMonth: number | null;
+  setSelectedYear: React.Dispatch<React.SetStateAction<number | null>>;
+  setSelectedMonth: React.Dispatch<React.SetStateAction<number | null>>;
   close: () => void;
+  fetchBooks: () => void;
 };
 
-const SelectPeriodModal = ({ close }: SelectPeriodModalProps) => {
-  const [selectedYear, setSelectedYear] = useState<number | null>(2025);
-  const [selectedMonth, setSelectedMonth] = useState<number | null>(1);
-
+const SelectPeriodModal = ({
+  selectedYear,
+  selectedMonth,
+  setSelectedYear,
+  setSelectedMonth,
+  close,
+  fetchBooks,
+}: SelectPeriodModalProps) => {
   const handleSelect = () => {
+    fetchBooks();
     close();
   };
 
