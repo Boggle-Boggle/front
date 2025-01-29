@@ -9,12 +9,12 @@ const LOGIN_TYPE = {
   google: {
     title: '구글',
     imgUrl: `${import.meta.env.VITE_IMG_BASE_URL || ''}/assets/logo/google.png`,
-    redirect: '',
+    redirect: `/oauth2/authorization/google?redirect_uri=${import.meta.env.VITE_KAKAO_REDIRECT_URL}`,
   },
   apple: {
     title: '애플',
     imgUrl: `${import.meta.env.VITE_IMG_BASE_URL || ''}/assets/logo/apple.png`,
-    redirect: '',
+    redirect: `/oauth2/authorization/apple?redirect_uri=${import.meta.env.VITE_KAKAO_REDIRECT_URL}`,
   },
 };
 
