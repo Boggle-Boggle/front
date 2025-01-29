@@ -231,14 +231,14 @@ const Note = () => {
             rows={1}
             className="w-full resize-none overflow-hidden border-b-[1px] border-main px-5 pb-3 font-bold"
             value={title}
-            placeholder="제목을 작성해주시핑"
+            placeholder="제목을 작성해주세요"
             onChange={(e) => handleChangeTitle(e)}
             ref={textareaRef}
           />
           <textarea
             className="w-full flex-grow resize-none overflow-auto px-5 py-3"
             value={content}
-            placeholder="내용을 작성해주시핑"
+            placeholder="내용을 작성해주세요"
             onChange={(e) => handleChangeContent(e)}
           />
           <div className="h-40 overflow-y-auto border-t border-main px-4 py-2">
