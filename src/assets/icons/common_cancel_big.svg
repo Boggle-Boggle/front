@@ -1,1 +1,11 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15.98 15.98"><defs><style>.cls-1{fill:none;stroke:#2f3645;stroke-linecap:round;stroke-linejoin:round;stroke-width:1.5px;}</style></defs><g id="레이어_2" data-name="레이어 2"><g id="레이어_1-2" data-name="레이어 1"><g id="common_canccel_big" data-name="common/canccel_big"><line class="cls-1" x1="0.75" y1="0.75" x2="15.23" y2="15.23"/><line class="cls-1" x1="15.23" y1="0.75" x2="0.75" y2="15.23"/></g></g></g></svg>
+<svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_2547_5101)">
+<path d="M0.75 0.75L15.23 15.23" stroke="#2F3645" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M15.23 0.75L0.75 15.23" stroke="#2F3645" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<defs>
+<clipPath id="clip0_2547_5101">
+<rect width="15.98" height="15.98" fill="white"/>
+</clipPath>
+</defs>
+</svg>

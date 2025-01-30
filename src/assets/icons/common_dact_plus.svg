@@ -1,1 +1,12 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><defs><style>.cls-1{fill:#eeedeb;}.cls-2{fill:none;stroke:#fff;stroke-linecap:round;stroke-linejoin:round;stroke-width:1.5px;}</style></defs><g id="레이어_2" data-name="레이어 2"><g id="레이어_1-2" data-name="레이어 1"><g id="common_dact_plus" data-name="common/dact_plus"><circle class="cls-1" cx="10" cy="10" r="10"/><line class="cls-2" x1="9.98" y1="4.02" x2="9.98" y2="16"/><line class="cls-2" x1="3.99" y1="10.01" x2="15.97" y2="10.01"/></g></g></g></svg>
+<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_2547_5130)">
+<path d="M10 20C15.5228 20 20 15.5228 20 10C20 4.47715 15.5228 0 10 0C4.47715 0 0 4.47715 0 10C0 15.5228 4.47715 20 10 20Z" fill="#EEEDEB"/>
+<path d="M9.97998 4.02002V16" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M3.98999 10.01H15.97" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<defs>
+<clipPath id="clip0_2547_5130">
+<rect width="20" height="20" fill="white"/>
+</clipPath>
+</defs>
+</svg>

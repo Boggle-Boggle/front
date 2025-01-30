@@ -1,1 +1,13 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16.24 16.19"><defs><style>.cls-1{fill:none;stroke:#2f3645;stroke-linecap:round;stroke-linejoin:round;stroke-width:1.5px;}</style></defs><g id="레이어_2" data-name="레이어 2"><g id="레이어_2-2" data-name="레이어 2"><g id="reading_note_write" data-name="reading_note/write"><path class="cls-1" d="M15.36,6.86V13.6a1.84,1.84,0,0,1-1.85,1.84H2.61A1.85,1.85,0,0,1,.75,13.6V2.76A1.85,1.85,0,0,1,2.61.92H9.35"/><path class="cls-1" d="M12.86,1h1.38a1,1,0,0,1,1,1V4.34a0,0,0,0,1,0,0H11.86a0,0,0,0,1,0,0V2.05a1,1,0,0,1,1-1Z" transform="translate(5.87 -8.79) rotate(45)"/><polyline class="cls-1" points="4.4 9.45 11.19 2.66 13.58 5.05 6.79 11.84"/><polyline class="cls-1" points="4.39 9.44 3.56 12.69 6.81 11.86"/></g></g></g></svg>
+<svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_2547_5004)">
+<path d="M15.36 6.86019V13.6002C15.36 13.8427 15.3121 14.0828 15.219 14.3066C15.1259 14.5305 14.9895 14.7338 14.8175 14.9048C14.6456 15.0758 14.4416 15.2111 14.2172 15.303C13.9928 15.3949 13.7525 15.4415 13.51 15.4402H2.61C2.36705 15.4415 2.12623 15.395 1.90127 15.3032C1.67631 15.2114 1.47163 15.0763 1.29892 14.9054C1.1262 14.7346 0.988826 14.5314 0.894642 14.3074C0.800459 14.0834 0.75131 13.8431 0.75 13.6002V2.76019C0.75131 2.51725 0.800459 2.27694 0.894642 2.05299C0.988826 1.82903 1.1262 1.62583 1.29892 1.45497C1.47163 1.28411 1.67631 1.14894 1.90127 1.05718C2.12623 0.965425 2.36705 0.918876 2.61 0.920193H9.35" stroke="#2F3645" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M14.2562 1.01057L15.232 1.98638C15.4195 2.17392 15.5249 2.42827 15.5249 2.69349C15.5249 2.9587 15.4195 3.21306 15.232 3.40059L13.5774 5.05522L11.1873 2.6652L12.8066 1.04593C12.9941 0.858392 13.2485 0.753036 13.5137 0.753036C13.7789 0.753036 14.0333 0.858392 14.2208 1.04593L14.2562 1.01057Z" stroke="#2F3645" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M4.3999 9.45016L11.1899 2.66016L13.5799 5.05016L6.7899 11.8402" stroke="#2F3645" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M4.39006 9.44019L3.56006 12.6902L6.81006 11.8602" stroke="#2F3645" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<defs>
+<clipPath id="clip0_2547_5004">
+<rect width="16.24" height="16.19" fill="white"/>
+</clipPath>
+</defs>
+</svg>

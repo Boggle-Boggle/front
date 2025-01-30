@@ -1,1 +1,15 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20.12 16.14"><defs><style>.cls-1{fill:none;stroke:#2f3645;stroke-linecap:round;stroke-linejoin:round;stroke-width:1.5px;}</style></defs><g id="레이어_2" data-name="레이어 2"><g id="레이어_1-2" data-name="레이어 1"><g id="library_list" data-name="library/list"><rect class="cls-1" x="0.75" y="0.75" width="5.78" height="5.78" rx="1"/><rect class="cls-1" x="0.75" y="9.61" width="5.78" height="5.78" rx="1"/><line class="cls-1" x1="10.13" y1="1.54" x2="19.37" y2="1.54"/><line class="cls-1" x1="10.13" y1="5.33" x2="15.48" y2="5.33"/><line class="cls-1" x1="10.13" y1="10.6" x2="19.37" y2="10.6"/><line class="cls-1" x1="10.13" y1="14.4" x2="15.48" y2="14.4"/></g></g></g></svg>
+<svg width="21" height="17" viewBox="0 0 21 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_2547_5175)">
+<path d="M5.53 0.75H1.75C1.19772 0.75 0.75 1.19772 0.75 1.75V5.53C0.75 6.08228 1.19772 6.53 1.75 6.53H5.53C6.08228 6.53 6.53 6.08228 6.53 5.53V1.75C6.53 1.19772 6.08228 0.75 5.53 0.75Z" stroke="#2F3645" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M5.53 9.60999H1.75C1.19772 9.60999 0.75 10.0577 0.75 10.61V14.39C0.75 14.9423 1.19772 15.39 1.75 15.39H5.53C6.08228 15.39 6.53 14.9423 6.53 14.39V10.61C6.53 10.0577 6.08228 9.60999 5.53 9.60999Z" stroke="#2F3645" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M10.1299 1.54004H19.3699" stroke="#2F3645" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M10.1299 5.32996H15.4799" stroke="#2F3645" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M10.1299 10.6H19.3699" stroke="#2F3645" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M10.1299 14.4H15.4799" stroke="#2F3645" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<defs>
+<clipPath id="clip0_2547_5175">
+<rect width="20.12" height="16.14" fill="white"/>
+</clipPath>
+</defs>
+</svg>

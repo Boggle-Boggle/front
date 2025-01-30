@@ -1,1 +1,12 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><defs><style>.cls-1{fill:#e6b9a6;}.cls-2{fill:none;stroke:#fff;stroke-linecap:round;stroke-linejoin:round;stroke-width:2.5px;}</style></defs><g id="레이어_2" data-name="레이어 2"><g id="레이어_1-2" data-name="레이어 1"><g id="common_act_check" data-name="common/act_check"><circle class="cls-1" cx="10" cy="10" r="10"/><line class="cls-2" x1="5.65" y1="11.18" x2="8.24" y2="13.77"/><line class="cls-2" x1="15.07" y1="6.94" x2="8.28" y2="13.73"/></g></g></g></svg>
+<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g clip-path="url(#clip0_2547_5083)">
+<path d="M10 20C15.5228 20 20 15.5228 20 10C20 4.47715 15.5228 0 10 0C4.47715 0 0 4.47715 0 10C0 15.5228 4.47715 20 10 20Z" fill="#E6B9A6"/>
+<path d="M5.6499 11.1799L8.2399 13.7699" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M15.07 6.93994L8.28003 13.7299" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<defs>
+<clipPath id="clip0_2547_5083">
+<rect width="20" height="20" fill="white"/>
+</clipPath>
+</defs>
+</svg>
