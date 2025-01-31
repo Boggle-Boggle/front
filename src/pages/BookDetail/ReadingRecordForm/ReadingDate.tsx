@@ -24,20 +24,28 @@ const ReadingDate = ({ isReading, startDate, endDate, setStartDate, setEndDate, 
   const [isChangingEndDate, setIsChangeEndDate] = useState<boolean>(false);
 
   const handleNext = () => {
-    if (!startDate || !endDate) {
+    if (!isReading) {
+      if (!startDate || !endDate) {
+        alert('날짜를 선택해주세요');
+
+        return;
+      }
+
+      const start = new Date(startDate[0], startDate[1] - 1, startDate[2]);
+      const end = new Date(endDate[0], endDate[1] - 1, endDate[2]);
+
+      if (start <= end) onNext();
+      else alert('종료날짜는 시작날짜 이후여야 합니다.');
+      return;
+    }
+
+    if (!startDate) {
       alert('날짜를 선택해주세요');
 
       return;
     }
 
-    const start = new Date(startDate[0], startDate[1] - 1, startDate[2]);
-    const end = new Date(endDate[0], endDate[1] - 1, endDate[2]);
-
-    if (start <= end) {
-      onNext();
-    } else {
-      alert('종료날짜는 시작날짜 이후여야 합니다.');
-    }
+    onNext();
   };
 
   return (
