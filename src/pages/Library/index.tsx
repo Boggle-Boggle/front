@@ -130,9 +130,9 @@ const Library = () => {
           >
             {`${title}(${data?.pages[0]?.totalResultCnt ?? 0})`}
             {isToggledLibrarySelect ? (
-              <Icon Component={CommonDown} size="xs" />
+              <Icon Component={CommonDown} size="xs" style={{ marginLeft: '4px' }} />
             ) : (
-              <Icon Component={CommonUp} size="xs" />
+              <Icon Component={CommonUp} size="xs" style={{ marginLeft: '4px' }} />
             )}
           </button>
         }
@@ -147,7 +147,7 @@ const Library = () => {
       {data && (
         <>
           {layout === 'list' && (
-            <section className={`${isIOS ? 'height-contentIOS' : 'height-contentAnd'} p- bg-main px-4 pb-16 pt-4`}>
+            <section className={`${isIOS ? 'height-contentIOS' : 'height-contentAnd'} bg-main px-4 pb-16 pt-4`}>
               <ListLayout allBooks={allBooks} />
             </section>
           )}

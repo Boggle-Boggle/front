@@ -178,13 +178,7 @@ const RecordTab = ({ book }: RecordTabProps) => {
       <RecordItem
         icons={<Icon Component={RecordRating} size="sm" />}
         title="내 평점"
-        content={
-          recordData.rating ? (
-            <Star rating={recordData.rating} size="lg" />
-          ) : (
-            <p className="text-sm opacity-50">평점 없음</p>
-          )
-        }
+        content={<Star rating={recordData.rating ?? 0} size="lg" />}
       />
 
       <RecordItem
