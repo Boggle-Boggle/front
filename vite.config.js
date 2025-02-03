@@ -12,7 +12,7 @@ export default defineConfig({
   server: {
     https: true,
     cors: {
-      origin: 'https://bbaegok.duckdns.org',
+      origin: 'https://api.bbaegok.store/backend',
       credentials: true,
     },
   },
