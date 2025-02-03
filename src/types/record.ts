@@ -1,7 +1,6 @@
+import { REDING_STATUS } from 'pages/BookDetail/ReadingRecordForm/Status';
+
 // TODO : IMG
-import img1 from 'assets/1.png';
-import img2 from 'assets/2.png';
-import img3 from 'assets/3.png';
 import emptyStar1 from 'assets/stars/empty/star1.png';
 import emptyStar2 from 'assets/stars/empty/star2.png';
 import emptyStar3 from 'assets/stars/empty/star3.png';
@@ -19,28 +18,6 @@ import halfStar4 from 'assets/stars/half/star4.png';
 import halfStar5 from 'assets/stars/half/star5.png';
 
 import { BookDetail } from './book';
-
-// Status
-export const REDING_STATUS = [
-  {
-    status: 'completed',
-    title: '다 읽은 책',
-    subTitle: '대단해요! 책을 다 읽으셨나요? \n 등록 후 책에 대한 이야기를 남겨보세요',
-    img: img2,
-  },
-  {
-    status: 'reading',
-    title: '읽는 중인 책',
-    subTitle: '책을 읽고 있는 중이신가요? \n 나중에 다 읽은 책으로 변경할 수 있어요',
-    img: img1,
-  },
-  {
-    status: 'pending',
-    title: '읽어보고 싶은 책',
-    subTitle: '읽고 싶은 책인가요? \n 잊어버리지 않게 미리 등록해두세요!',
-    img: img3,
-  },
-] as const;
 
 export type StatusType = (typeof REDING_STATUS)[number]['status'];
 

@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react';
-import { ImFileEmpty, ImFilesEmpty } from 'react-icons/im';
 
 import Button from 'components/Button';
 import HalfScreenModal from 'components/HalfScreenModal';
+import Icon from 'components/Icon';
 
 import { AddNoteParams } from 'types/record';
+
+import { ReadingNoteMultiplePages, ReadingNoteSinglePage } from 'assets/icons';
 
 type PageModalProps = {
   page: number | null;
@@ -82,10 +84,9 @@ const PageModal = ({ page, pages, setPage, setPages, close }: PageModalProps) =>
             type="button"
             onClick={() => setSelected('page')}
           >
-            <ImFileEmpty
+            <Icon
+              Component={ReadingNoteSinglePage}
               style={{
-                width: '24px',
-                height: '24px',
                 color: selected === 'page' ? '#E6B9A6' : '#2F3645',
                 margin: '0 auto',
                 marginBottom: '4px',
@@ -98,10 +99,9 @@ const PageModal = ({ page, pages, setPage, setPages, close }: PageModalProps) =>
             type="button"
             onClick={() => setSelected('pages')}
           >
-            <ImFilesEmpty
+            <Icon
+              Component={ReadingNoteMultiplePages}
               style={{
-                width: '24px',
-                height: '24px',
                 color: selected === 'pages' ? '#E6B9A6' : '#2F3645',
                 margin: '0 auto',
                 marginBottom: '4px',

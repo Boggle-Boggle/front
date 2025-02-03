@@ -1,9 +1,12 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
-import { BiX } from 'react-icons/bi';
 import { Link } from 'react-router-dom';
 
+import Icon from 'components/Icon';
+
 import { getSearchHistories, removeSearchHistory, removeAllSearchHistory } from 'services/search';
+
+import { CommonCancel } from 'assets/icons';
 
 const SearchHistory = () => {
   const queryClient = useQueryClient();
@@ -37,7 +40,7 @@ const SearchHistory = () => {
       최근검색어
       {histories && histories.length !== 0 && (
         <button
-          className="absolute right-4 top-3 text-xs text-sub"
+          className="absolute right-4 top-3 text-xs opacity-70"
           aria-label="clear button"
           type="button"
           onClick={() => deleteAllHistories()}
@@ -48,11 +51,11 @@ const SearchHistory = () => {
       <ul className="scrollbar-hide mt-3 flex h-7 overflow-x-auto whitespace-nowrap">
         {histories &&
           histories.map((keyword) => (
-            <li className="mr-3 inline-flex rounded-full border border-sub px-2 text-sm text-sub" key={keyword}>
+            <li className="mr-3 inline-flex rounded-full border px-2 text-sm opacity-70" key={keyword}>
               <Link to={`?q=${keyword}`} className="flex items-center">
                 {keyword}
                 <button aria-label="remove button" type="button" onClick={(e) => handleRemove(e, keyword)}>
-                  <BiX style={{ width: '1rem', height: '1rem', marginLeft: '0.1rem' }} />
+                  <Icon Component={CommonCancel} size="xs" style={{ marginLeft: '4px' }} />
                 </button>
               </Link>
             </li>

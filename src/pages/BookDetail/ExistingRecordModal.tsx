@@ -1,7 +1,7 @@
 import Button from 'components/Button';
 import Modal from 'components/Modal';
 
-import Book1 from '../../assets/book1.png';
+import recordExistImg from 'assets/img/record_exist.png';
 
 type ExistingRecordModalProps = {
   isOpen: boolean;
@@ -18,7 +18,7 @@ const ExistingRecordModal = ({ isOpen, close, scrollPos }: ExistingRecordModalPr
     isOpen && (
       <Modal isOpen={isOpen} onClose={close} scrollPos={scrollPos}>
         <div className="flex min-h-[400px] w-72 flex-col items-center justify-center">
-          <img src={Book1} className="h-36 w-36" alt="" />
+          <img src={recordExistImg} className="w-36" alt="" />
           <h1 className="py-5 text-base font-bold">이전 기록이 있어요!</h1>
           <p className="text-center text-sm">
             이 책에 대한{' '}

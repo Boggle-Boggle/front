@@ -1,16 +1,17 @@
 import { useQuery } from '@tanstack/react-query';
 
 import { useEffect, useRef, useState } from 'react';
-import { FiAlertCircle } from 'react-icons/fi';
-import { IoArrowBackOutline } from 'react-icons/io5';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import Header from 'components/Header';
+import Icon from 'components/Icon';
 
 import useDevice from 'hooks/useDevice';
 import useModal from 'hooks/useModal';
 import { getBookDetail, hasReadingRecord } from 'services/search';
 import { formatDateAndTime, formatBookGenre } from 'utils/format';
+
+import { RecordInfo, CommonBack } from 'assets/icons';
 
 import BookShelf from './BookShelf';
 import ExistingRecordModal from './ExistingRecordModal';
@@ -58,7 +59,7 @@ const BookDetail = () => {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (!entry.isIntersecting) setIsClamped(true);
+          if (entry.isIntersecting) setIsClamped(true);
         });
       },
       { threshold: 0.5 },
@@ -88,7 +89,11 @@ const BookDetail = () => {
     book && (
       <>
         <Header
-          leftBtn={<IoArrowBackOutline style={{ width: '24px', height: '24px' }} onClick={handleGoBack} />}
+          leftBtn={
+            <button onClick={handleGoBack} aria-label="뒤로가기" type="button">
+              <Icon Component={CommonBack} />
+            </button>
+          }
           rightBtn={
             <button onClick={handleSaveBook} type="button" className="font-semibold text-accent">
               저장
@@ -127,9 +132,7 @@ const BookDetail = () => {
               </button>
             )}
             <hr className="mb-2 h-0.5 border-none bg-gray" />
-            <div
-              className={`w-full overflow-hidden break-words text-[0.815rem] ${clampLine && `${`line-clamp-${clampLine}`}`}`}
-            >
+            <div className={`w-full overflow-hidden break-words text-[0.815rem] ${clampLine && `${`line-clamp-4`}`}`}>
               {book.plot}
             </div>
             <div className="h-4" ref={observerTarget} />
@@ -138,7 +141,7 @@ const BookDetail = () => {
         <p
           className={`absolute ${isIOS ? 'bottom-footerIOS' : 'bottom-footerAnd'} left-5 mb-2 flex items-center text-xs font-semibold opacity-50`}
         >
-          <FiAlertCircle style={{ marginRight: '6px' }} />
+          <Icon Component={RecordInfo} size="xs" style={{ marginRight: '6px' }} />
           <a className="font-bold underline" href={book.link}>
             알라딘
           </a>{' '}

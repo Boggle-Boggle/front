@@ -1,14 +1,9 @@
-import { useEffect } from 'react';
+import SpinnerImg from 'assets/Spinner.gif';
 
 const Loading = () => {
-  useEffect(() => {
-    const img = new Image();
-    img.src = `${import.meta.env.VITE_IMG_BASE_URL || ''}/assets/Spinner.gif`;
-  }, []);
-
   return (
     <section className="absolute left-0 top-0 flex h-full w-full items-center justify-center">
-      <img src={`${import.meta.env.VITE_IMG_BASE_URL || ''}/assets/Spinner.gif`} alt="로딩중" className="w-14" />
+      <img src={SpinnerImg} alt="로딩중" className="w-14" />
     </section>
   );
 };

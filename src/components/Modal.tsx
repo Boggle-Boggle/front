@@ -1,6 +1,9 @@
 import { ReactNode, useEffect } from 'react';
 import { createPortal } from 'react-dom';
-import { FaXmark } from 'react-icons/fa6';
+
+import { CommonCancel } from 'assets/icons';
+
+import Icon from './Icon';
 
 type ModalProps = {
   children: ReactNode;
@@ -41,7 +44,7 @@ const Modal = ({ onClose, children, isOpen, scrollPos, hasCloseMark = true }: Mo
         {children}
         {hasCloseMark && (
           <button type="button" onClick={onClose} className="absolute right-3 top-3" aria-label="닫기">
-            <FaXmark style={{ width: '20px', height: '20px' }} />
+            <Icon Component={CommonCancel} size="sm" />
           </button>
         )}
       </div>

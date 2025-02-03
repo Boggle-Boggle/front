@@ -1,10 +1,9 @@
 import { useQuery } from '@tanstack/react-query';
 
 import { useEffect, useRef, useState } from 'react';
-import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
-import { FiMoreVertical, FiGrid, FiList } from 'react-icons/fi';
 
 import Header from 'components/Header';
+import Icon from 'components/Icon';
 import SearchBar from 'components/SearchBar';
 import Loading from 'pages/Loading';
 
@@ -14,6 +13,8 @@ import { getLibraries, getLibraryBooks } from 'services/library';
 import searchDebounce from 'utils/debounce';
 
 import { CustomLibrary, StatusLibrary } from 'types/library';
+
+import { CommonDown, CommonUp, LibraryCover, LibraryList, LibrarySort } from 'assets/icons';
 
 import GridLayout from './GridLayout';
 import LibraryEditedModal from './LibraryEditedModal';
@@ -106,22 +107,32 @@ const Library = () => {
         rightBtn={
           <div className="flex">
             {layout === 'list' && (
-              <FiGrid style={{ width: '24px', height: '24px' }} onClick={() => setLayout('grid')} />
+              <button onClick={() => setLayout('grid')} type="button" aria-label="그리드 레이아웃으로 전환">
+                <Icon Component={LibraryCover} />
+              </button>
             )}
             {layout === 'grid' && (
-              <FiList style={{ width: '24px', height: '24px' }} onClick={() => setLayout('list')} />
+              <button onClick={() => setLayout('list')} type="button" aria-label="리스트 레이아웃으로 전환">
+                <Icon Component={LibraryList} />
+              </button>
             )}
             <span className="w-2" />
-            <FiMoreVertical style={{ width: '24px', height: '24px' }} onClick={() => setIsToggledSort(true)} />
+            <button onClick={() => setIsToggledSort(true)} type="button" aria-label="정렬하기">
+              <Icon Component={LibrarySort} />
+            </button>
           </div>
         }
         title={
-          <button onClick={() => setIsToggledLibrarySelect(true)} type="button" className="inline-flex items-center">
+          <button
+            onClick={() => setIsToggledLibrarySelect(true)}
+            type="button"
+            className="inline-flex items-center justify-center"
+          >
             {`${title}(${data?.pages[0]?.totalResultCnt ?? 0})`}
             {isToggledLibrarySelect ? (
-              <FaChevronUp style={{ marginLeft: '4px' }} />
+              <Icon Component={CommonDown} size="xs" style={{ marginLeft: '4px' }} />
             ) : (
-              <FaChevronDown style={{ marginLeft: '4px' }} />
+              <Icon Component={CommonUp} size="xs" style={{ marginLeft: '4px' }} />
             )}
           </button>
         }
@@ -136,14 +147,14 @@ const Library = () => {
       {data && (
         <>
           {layout === 'list' && (
-            <section
-              className={`${isIOS ? 'height-contentIOS' : 'height-contentAnd'} mt-4 overflow-y-scroll bg-main pb-8`}
-            >
+            <section className={`${isIOS ? 'height-contentIOS' : 'height-contentAnd'} bg-main px-4 pb-16 pt-4`}>
               <ListLayout allBooks={allBooks} />
             </section>
           )}
           {layout === 'grid' && (
-            <section className="mt-3 h-[calc(100%_-_9.75rem_-_36px)] overflow-y-scroll">
+            <section
+              className={` ${isIOS ? 'h-[calc(100%_-_14.5rem)]' : 'h-[calc(100%_-_12.5rem)]'} mt-3 overflow-y-scroll`}
+            >
               <GridLayout allBooks={allBooks} />
             </section>
           )}

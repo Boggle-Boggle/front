@@ -1,15 +1,17 @@
 import { useQuery } from '@tanstack/react-query';
 
 import { useEffect, useState } from 'react';
-import { IoArrowBackOutline } from 'react-icons/io5';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
 import Header from 'components/Header';
+import Icon from 'components/Icon';
 
 import useDevice from 'hooks/useDevice';
 import { getEditRecord, updateEditRecord } from 'services/record';
 
 import { RecordDate, RecordLibraries, StatusType, UpdateRecordParams } from 'types/record';
+
+import { CommonBack } from 'assets/icons';
 
 import EditLibraries from './EditLibraries';
 import EditRating from './EditRating';
@@ -62,7 +64,11 @@ const Edit = () => {
     <div className="bg-white">
       <Header
         title={<p className={`${title.length > 20 ? 'text-sm' : 'text-base'}`}>{title}</p>}
-        leftBtn={<IoArrowBackOutline style={{ width: '24px', height: '24px' }} onClick={() => navigate(-1)} />}
+        leftBtn={
+          <button type="button" onClick={() => navigate(-1)} aria-label="뒤로가기">
+            <Icon Component={CommonBack} />
+          </button>
+        }
         rightBtn={
           <button className="font-semibold text-accent" type="button" onClick={handleSave}>
             저장

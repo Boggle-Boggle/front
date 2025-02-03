@@ -1,4 +1,6 @@
-import { FaChevronRight } from 'react-icons/fa';
+import Icon from 'components/Icon';
+
+import { CommonNext } from 'assets/icons';
 
 type ContentItemProps = {
   children: string;
@@ -14,7 +16,7 @@ const ContentItem = ({ children, handleClick }: ContentItemProps) => {
         onClick={handleClick}
       >
         {children}
-        <FaChevronRight style={{ opacity: '50%' }} />
+        <Icon Component={CommonNext} size="xs" style={{ opacity: '50%' }} />
       </button>
     </li>
   );

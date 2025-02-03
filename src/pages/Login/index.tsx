@@ -4,8 +4,11 @@ import { Html, useGLTF } from '@react-three/drei';
 import { Canvas } from '@react-three/fiber';
 
 import { Suspense, useEffect } from 'react';
-import { MdOutlineHeadsetMic } from 'react-icons/md';
 import * as THREE from 'three';
+
+import Icon from 'components/Icon';
+
+import { LoginConsultation } from 'assets/icons';
 
 import LoginBtn from './LoginBtn';
 
@@ -70,7 +73,7 @@ const Login = () => {
         <LoginBtn type="apple" />
       </div>
       <a href="/" className="absolute bottom-8 flex items-center text-xs underline opacity-50">
-        <MdOutlineHeadsetMic style={{ marginRight: '5px' }} />
+        <Icon Component={LoginConsultation} size="sm" style={{ marginRight: '5px' }} />
         가입/로그인 오류 문의
       </a>
     </div>

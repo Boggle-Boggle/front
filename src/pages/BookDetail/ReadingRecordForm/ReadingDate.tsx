@@ -1,8 +1,10 @@
 import { useState } from 'react';
-import { GoChevronRight } from 'react-icons/go';
-import { LuCalendarCheck2 } from 'react-icons/lu';
+
+import Icon from 'components/Icon';
 
 import { DateType } from 'types/record';
+
+import { RecordPeriod, RecordSelectDate, CommonNext } from 'assets/icons';
 
 import ButtonSet from './shared/ButtonSet';
 import DateSelector from './shared/DateSelector';
@@ -24,20 +26,28 @@ const ReadingDate = ({ isReading, startDate, endDate, setStartDate, setEndDate, 
   const [isChangingEndDate, setIsChangeEndDate] = useState<boolean>(false);
 
   const handleNext = () => {
-    if (!startDate || !endDate) {
+    if (!isReading) {
+      if (!startDate || !endDate) {
+        alert('날짜를 선택해주세요');
+
+        return;
+      }
+
+      const start = new Date(startDate[0], startDate[1] - 1, startDate[2]);
+      const end = new Date(endDate[0], endDate[1] - 1, endDate[2]);
+
+      if (start <= end) onNext();
+      else alert('종료날짜는 시작날짜 이후여야 합니다.');
+      return;
+    }
+
+    if (!startDate) {
       alert('날짜를 선택해주세요');
 
       return;
     }
 
-    const start = new Date(startDate[0], startDate[1] - 1, startDate[2]);
-    const end = new Date(endDate[0], endDate[1] - 1, endDate[2]);
-
-    if (start <= end) {
-      onNext();
-    } else {
-      alert('종료날짜는 시작날짜 이후여야 합니다.');
-    }
+    onNext();
   };
 
   return (
@@ -54,20 +64,18 @@ const ReadingDate = ({ isReading, startDate, endDate, setStartDate, setEndDate, 
           {startDate ? (
             <>
               <div>
-                <LuCalendarCheck2
-                  style={{ width: '30px', height: '30px', color: '#E6B9A6', display: 'inline-block' }}
-                />
+                <Icon Component={RecordSelectDate} size="lg" style={{ color: '#E6B9A6', display: 'inline-block' }} />
                 <span className="ml-2 opacity-60">읽기 시작한 날</span>
               </div>
-              <div className="text-base">
+              <div className="flex items-center text-base">
                 {`${startDate[0]}년 ${startDate[1]}월 ${startDate[2]}일`}
-                <GoChevronRight style={{ display: 'inline-block' }} />
+                <Icon Component={CommonNext} style={{ width: '16px', display: 'inline-block' }} />
               </div>
             </>
           ) : (
             <>
               <p className="opacity-50">책을 읽기 시작한 날짜를 입력해주세요</p>
-              <LuCalendarCheck2 style={{ width: '30px', height: '30px', color: '#E6B9A6' }} />
+              <Icon Component={RecordPeriod} size="lg" style={{ color: '#E6B9A6' }} />
             </>
           )}
         </button>
@@ -75,12 +83,13 @@ const ReadingDate = ({ isReading, startDate, endDate, setStartDate, setEndDate, 
         {isReading ? (
           <div className="mb-4 flex items-center justify-between rounded-[10px] border-2 border-accent bg-white p-4 text-sm">
             <div>
-              <LuCalendarCheck2 style={{ width: '30px', height: '30px', color: '#E6B9A6', display: 'inline-block' }} />
+              <Icon Component={RecordSelectDate} size="lg" style={{ color: '#E6B9A6', display: 'inline-block' }} />
+
               <span className="ml-2 opacity-60">다 읽은 날</span>
             </div>
-            <div className="text-base">
+            <div className="flex items-center text-base">
               미정
-              <GoChevronRight style={{ display: 'inline-block' }} />
+              <Icon Component={CommonNext} style={{ width: '16px', display: 'inline-block' }} />
             </div>
           </div>
         ) : (
@@ -92,20 +101,18 @@ const ReadingDate = ({ isReading, startDate, endDate, setStartDate, setEndDate, 
             {endDate ? (
               <>
                 <div>
-                  <LuCalendarCheck2
-                    style={{ width: '30px', height: '30px', color: '#E6B9A6', display: 'inline-block' }}
-                  />
+                  <Icon Component={RecordSelectDate} size="lg" style={{ color: '#E6B9A6', display: 'inline-block' }} />
                   <span className="ml-2 opacity-60">다 읽은 날</span>
                 </div>
-                <div className="text-base">
+                <div className="flex items-center text-base">
                   {`${endDate[0]}년 ${endDate[1]}월 ${endDate[2]}일`}
-                  <GoChevronRight style={{ display: 'inline-block' }} />
+                  <Icon Component={CommonNext} style={{ width: '16px' }} />
                 </div>
               </>
             ) : (
               <>
                 <p className="opacity-50">책을 다 읽은 날짜를 입력해주세요</p>
-                <LuCalendarCheck2 style={{ width: '30px', height: '30px', color: '#E6B9A6' }} />
+                <Icon Component={RecordPeriod} size="lg" style={{ color: '#E6B9A6' }} />
               </>
             )}
           </button>

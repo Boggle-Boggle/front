@@ -1,15 +1,17 @@
 import { useQueryClient } from '@tanstack/react-query';
 
 import { useEffect } from 'react';
-import { FaAngleLeft } from 'react-icons/fa6';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import Button from 'components/Button';
 import Header from 'components/Header';
+import Icon from 'components/Icon';
 
 import useDevice from 'hooks/useDevice';
 import useNickNameInput from 'hooks/useNickNameInput';
 import { isDuplicateNickname, updateNickname } from 'services/user';
+
+import { CommonBack } from 'assets/icons';
 
 const EditNickname = () => {
   const navigate = useNavigate();
@@ -40,7 +42,13 @@ const EditNickname = () => {
 
   return (
     <section className="h-full overflow-hidden bg-white">
-      <Header leftBtn={<FaAngleLeft onClick={() => navigate(-1)} style={{ width: '24px', height: '24px' }} />} />
+      <Header
+        leftBtn={
+          <button onClick={() => navigate(-1)} type="button" aria-label="뒤로가기">
+            <Icon Component={CommonBack} />
+          </button>
+        }
+      />
       <section
         className={`${isIOS ? 'height-without-headerIOS' : 'height-without-headerAnd'} flex flex-col items-center px-8`}
       >

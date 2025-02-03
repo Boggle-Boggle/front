@@ -1,7 +1,8 @@
-import { FaCheck } from 'react-icons/fa6';
-import { GoChevronRight } from 'react-icons/go';
+import Icon from 'components/Icon';
 
 import { TermWithAgree } from 'types/user';
+
+import { CommonActCheck, CommonNext } from 'assets/icons';
 
 type TermsItemProps = {
   term: TermWithAgree;
@@ -24,12 +25,12 @@ const TermsItem = ({ term, handleCheckboxChange, handleTermsClick }: TermsItemPr
           checked={isAgree}
           onChange={() => handleCheckboxChange(term.id)}
         />
-        {isAgree && <FaCheck style={{ width: '20px', height: '20px', color: 'white' }} />}
+        {isAgree && <Icon Component={CommonActCheck} />}
       </span>
       <p className="text-sm text-sub">{mandatory ? '(필수)' : '(선택)'}</p>
       <button className="flex h-full grow justify-between pl-3" onClick={handleTermsClick} type="button">
         <p className="mx-1 text-sm">{title}</p>
-        <GoChevronRight style={{ color: '#2F3645' }} />
+        <Icon Component={CommonNext} size="sm" />
       </button>
     </label>
   );

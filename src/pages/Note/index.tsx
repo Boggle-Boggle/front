@@ -1,12 +1,10 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 
 import { useEffect, useRef, useState } from 'react';
-import { IoIosArrowDown } from 'react-icons/io';
-import { IoArrowBackOutline } from 'react-icons/io5';
-import { LuBookmarkPlus, LuTags, LuTrash2 } from 'react-icons/lu';
 import { useNavigate, useLocation } from 'react-router-dom';
 
 import Header from 'components/Header';
+import Icon from 'components/Icon';
 import Memo from 'components/Memo';
 
 import useDevice from 'hooks/useDevice';
@@ -16,7 +14,8 @@ import { formatDate, formatDateAndTime, generateDate } from 'utils/format';
 
 import { AddNoteParams, RecordDate } from 'types/record';
 
-import bookmark from 'assets/bookmarkBig.png';
+import { CommonBack, CommonUp, ReadingNotePageInput, ReadingNoteTags, ReadingNoteTrash } from 'assets/icons';
+import bookmarkImg from 'assets/library/note_bookmark.png';
 
 import DatePickModal from './DatePickModal';
 import PageModal from './PageModal';
@@ -175,12 +174,12 @@ const Note = () => {
               >
                 {readDateId ? `${readDateId.readDateIndex + 1}회독` : '회독정보없음'}
                 {readDateIds && readDateIds.length > 0 && (
-                  <IoIosArrowDown style={{ width: '20px', height: '20px', marginLeft: '1px' }} />
+                  <Icon Component={CommonUp} size="sm" style={{ marginLeft: '1px' }} />
                 )}
               </button>
               {isMemoToggled && (
                 <Memo handleClose={() => setIsMemoToggled(false)}>
-                  <ul className="absolute left-1/2 top-1/2 z-30 flex max-h-80 w-28 -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center overflow-auto rounded-lg bg-white shadow-lg">
+                  <ul className="absolute left-1/2 z-30 flex max-h-80 w-28 -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center overflow-auto rounded-lg bg-white shadow-lg">
                     {readDateIds &&
                       readDateIds.map((readDate, idx) => (
                         <li key={readDate.readDateId} className="mt-[1px] h-12 w-full border-b border-main">
@@ -202,10 +201,13 @@ const Note = () => {
             </>
           }
           leftBtn={
-            <IoArrowBackOutline
-              style={{ width: '24px', height: '24px' }}
+            <button
               onClick={() => navigate(`/record/${recordId}`, { replace: true })}
-            />
+              aria-label="뒤로가기"
+              type="button"
+            >
+              <Icon Component={CommonBack} />
+            </button>
           }
           rightBtn={
             <button className="font-black" onClick={handleSave} type="submit">
@@ -218,7 +220,7 @@ const Note = () => {
           className={`border-mains ${isIOS ? 'height-without-headerIOS' : 'height-without-headerAnd'} flex flex-col overflow-hidden rounded-tl-3xl border border-main bg-white`}
         >
           <img
-            src={bookmark}
+            src={bookmarkImg}
             className={`${isIOS ? 'headerIOS top-headerIOS' : 'headerAnd top-headerAnd'} absolute right-10 block h-12 w-12`}
             alt=""
           />
@@ -231,19 +233,19 @@ const Note = () => {
             rows={1}
             className="w-full resize-none overflow-hidden border-b-[1px] border-main px-5 pb-3 font-bold"
             value={title}
-            placeholder="제목을 작성해주시핑"
+            placeholder="제목을 작성해주세요"
             onChange={(e) => handleChangeTitle(e)}
             ref={textareaRef}
           />
           <textarea
             className="w-full flex-grow resize-none overflow-auto px-5 py-3"
             value={content}
-            placeholder="내용을 작성해주시핑"
+            placeholder="내용을 작성해주세요"
             onChange={(e) => handleChangeContent(e)}
           />
           <div className="h-40 overflow-y-auto border-t border-main px-4 py-2">
             <p className="flex items-center">
-              <LuTags style={{ width: '20px', height: '20px', color: '#9B9999', marginRight: '4px' }} />
+              <Icon Component={ReadingNoteTags} size="sm" style={{ color: '#9B9999', marginRight: '4px' }} />
               태그
             </p>
             {tags.map((tag) => (
@@ -260,14 +262,14 @@ const Note = () => {
               type="button"
               aria-label="페이지 입력하기"
             >
-              <LuBookmarkPlus style={{ width: '20px', height: '20px', color: '#9B9999' }} />
+              <Icon Component={ReadingNotePageInput} size="sm" style={{ color: '#9B9999' }} />
             </button>
             <button className="px-3 py-2" onClick={() => setIsEditTag(true)} type="button" aria-label="태그 추가하기">
-              <LuTags style={{ width: '20px', height: '20px', color: '#9B9999' }} />
+              <Icon Component={ReadingNoteTags} size="sm" style={{ color: '#9B9999' }} />
             </button>
           </section>
           <button className="px-3 py-2" onClick={handleDeleteNote} type="button" aria-label="독서노트 삭제하기">
-            <LuTrash2 style={{ width: '20px', height: '20px', color: '#9B9999' }} />
+            <Icon Component={ReadingNoteTrash} size="sm" style={{ color: '#9B9999' }} />
           </button>
           {/* TODO : 글자수 처리 로직 추후 구현 */}
           {/* <span className="pr-3 text-sm">{content?.length ?? 0}자/256자</span> */}

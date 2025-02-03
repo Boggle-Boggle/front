@@ -1,9 +1,7 @@
 import { useQueryClient } from '@tanstack/react-query';
 
-import { FiPlus } from 'react-icons/fi';
-import { LuPencil } from 'react-icons/lu';
-
 import CheckBox from 'components/CheckBox';
+import Icon from 'components/Icon';
 
 import useModal from 'hooks/useModal';
 import { updateEditRecord } from 'services/record';
@@ -11,6 +9,8 @@ import { formatDateTimeToDate } from 'utils/format';
 
 import { STATUS } from 'types/library';
 import { RecordDate, StatusType } from 'types/record';
+
+import { CommonPlus, CommonPencil } from 'assets/icons';
 
 import EditReadingDateModal from './EditReadingDateModal';
 
@@ -36,7 +36,8 @@ const EditReadingDate = ({ recordId, readDates }: EditReadingDatePros) => {
         <p className="relative flex h-14 items-center justify-between px-6 font-semibold">
           독서기간
           <button className="text-xs font-normal opacity-50" type="button" aria-label="독서기간 추가" onClick={open}>
-            <FiPlus style={{ width: '24px', height: '24px' }} />
+            {/* <FiPlus style={{ width: '24px', height: '24px' }} /> */}
+            <Icon Component={CommonPlus} size="sm" />
           </button>
         </p>
         <ul>
@@ -55,7 +56,7 @@ const EditReadingDate = ({ recordId, readDates }: EditReadingDatePros) => {
                 </span>
                 <div className="absolute right-6 flex items-center text-sm opacity-50">
                   {`${startDate} - ${endDate ?? '읽는중'}`}
-                  <LuPencil style={{ marginLeft: '3px' }} />
+                  <Icon Component={CommonPencil} size="xs" style={{ marginLeft: '3px' }} />
                 </div>
               </li>
             );

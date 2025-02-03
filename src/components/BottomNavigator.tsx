@@ -1,11 +1,11 @@
-import { FaRegUserCircle } from 'react-icons/fa';
-import { FiSearch } from 'react-icons/fi';
-import { LuHome } from 'react-icons/lu';
-import { PiBooksDuotone } from 'react-icons/pi';
 import { NavLink } from 'react-router-dom';
 
 import useDevice from 'hooks/useDevice';
 import useKeyboardStatus from 'hooks/useKeyboardStatus';
+
+import { NavigationBookSearch, NavigationHome, NavigationLibrary, NavigationMyPage } from 'assets/icons';
+
+import Icon from './Icon';
 
 // TODO : 선택된 탭 보더 처리
 const BottomNavigator = () => {
@@ -25,7 +25,7 @@ const BottomNavigator = () => {
             isActive ? 'flex flex-col items-center text-xs font-bold' : 'flex flex-col items-center text-xs'
           }
         >
-          <LuHome style={{ width: '1.5rem', height: '1.5rem', marginBottom: '0.35rem' }} />홈
+          <Icon Component={NavigationHome} />홈
         </NavLink>
       </li>
       <li className="m-auto">
@@ -35,7 +35,7 @@ const BottomNavigator = () => {
             isActive ? 'flex flex-col items-center text-xs font-bold' : 'flex flex-col items-center text-xs'
           }
         >
-          <FiSearch style={{ width: '1.5rem', height: '1.5rem', marginBottom: '0.35rem' }} />
+          <Icon Component={NavigationBookSearch} />
           검색
         </NavLink>
       </li>
@@ -46,7 +46,7 @@ const BottomNavigator = () => {
             isActive ? 'flex flex-col items-center text-xs font-bold' : 'flex flex-col items-center text-xs'
           }
         >
-          <PiBooksDuotone style={{ width: '1.5rem', height: '1.5rem', marginBottom: '0.35rem' }} />
+          <Icon Component={NavigationLibrary} />
           서재
         </NavLink>
       </li>
@@ -57,7 +57,7 @@ const BottomNavigator = () => {
             isActive ? 'flex flex-col items-center text-xs font-bold' : 'flex flex-col items-center text-xs'
           }
         >
-          <FaRegUserCircle style={{ width: '1.5rem', height: '1.5rem', marginBottom: '0.35rem' }} />
+          <Icon Component={NavigationMyPage} />
           마이페이지
         </NavLink>
       </li>

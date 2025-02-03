@@ -1,3 +1,5 @@
+import shadow from 'assets/library/shadow.png';
+
 type BookShelfProps = {
   cover: string;
   title: string;
@@ -12,11 +14,7 @@ const BookShelf = ({ cover, title }: BookShelfProps) => {
           alt={`${title} 커버`}
           className="absolute bottom-0 z-10 h-full w-40 shadow-[3px_2px_5px_0_rgba(0,0,0,0.3)]"
         />
-        <img
-          src={`${import.meta.env.VITE_IMG_BASE_URL || ''}/assets/shadow.png`}
-          alt=""
-          className="absolute -bottom-[0.125rem] right-0 z-50 w-10 translate-x-9 opacity-95"
-        />
+        <img src={shadow} alt="" className="absolute -bottom-[0.125rem] right-0 z-50 w-10 translate-x-9 opacity-95" />
         <span className="absolute left-[0.325rem] top-0 z-20 h-[calc(100%-6px)] w-[0.05rem] bg-black opacity-50 blur-[2px]" />
       </div>
       <div className="relative w-full">

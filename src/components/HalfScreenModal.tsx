@@ -1,4 +1,6 @@
-import { FaXmark } from 'react-icons/fa6';
+import { CommonCancel } from 'assets/icons';
+
+import Icon from './Icon';
 
 type HalfScreenModalProps = {
   children: React.ReactNode;
@@ -7,6 +9,7 @@ type HalfScreenModalProps = {
   bgColor?: string;
 };
 
+// TODO : 아이콘 확인하기
 const HalfScreenModal = ({
   children,
   handleClose,
@@ -29,7 +32,7 @@ const HalfScreenModal = ({
             className="absolute right-3 top-3 z-40 opacity-50"
             aria-label="닫기"
           >
-            <FaXmark style={{ width: '20px', height: '20px' }} />
+            <Icon Component={CommonCancel} />
           </button>
         )}
 

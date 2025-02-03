@@ -1,5 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 
+import Star from 'components/Star';
+
 import { formatDateTimeToDate } from 'utils/format';
 
 import { LibraryBook } from 'types/library';
@@ -12,7 +14,7 @@ const ListLayout = ({ allBooks }: ListLayoutProps) => {
   const navigate = useNavigate();
 
   return (
-    <section className="p-4">
+    <section className="h-full overflow-y-scroll">
       {allBooks &&
         allBooks.map(({ readingRecordId, imageUrl, title, rating, recentReadDate, readingCount }) => {
           const startDate = recentReadDate && formatDateTimeToDate(recentReadDate.startReadDate);
@@ -25,7 +27,7 @@ const ListLayout = ({ allBooks }: ListLayoutProps) => {
 
           return (
             <li
-              className="relative mb-9 h-[6.25rem] w-full rounded-[0.4375rem] bg-white shadow-[1px_1px_4px_0_rgba(0,0,0,0.1)]"
+              className="relative mb-8 mt-4 h-[6.25rem] w-full rounded-[0.4375rem] bg-white shadow-[1px_1px_4px_0_rgba(0,0,0,0.1)]"
               key={readingRecordId}
             >
               <button className="h-full w-full" type="button" onClick={() => navigate(`/record/${readingRecordId}`)}>
@@ -36,11 +38,7 @@ const ListLayout = ({ allBooks }: ListLayoutProps) => {
                 />
                 <span className="absolute bottom-0 left-6 block h-[6.825rem] w-[0.0625rem] bg-black opacity-50 blur-[2px]" />
                 <div className="ml-[7.25rem] flex h-full flex-col items-start justify-between py-[0.5rem]">
-                  <img
-                    src={`${import.meta.env.VITE_IMG_BASE_URL || ''}/assets/stars.png`}
-                    alt={`${rating}점`}
-                    className="w-20"
-                  />
+                  <Star rating={rating ?? 0} size="sm" />
                   <p className="line-clamp-2 justify-center pr-2 text-start text-sm font-semibold leading-5">{title}</p>
                   <p className="text-[0.8rem] opacity-50">{readDate}</p>
                 </div>

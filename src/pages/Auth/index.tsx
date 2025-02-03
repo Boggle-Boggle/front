@@ -18,10 +18,9 @@ const Auth = () => {
       const accessToken = queryParam.get('token');
 
       try {
-        const authorization = await getAuthorization();
-
         if (accessToken) {
           login(accessToken);
+          const authorization = await getAuthorization();
 
           if (authorization === 'GUEST') navigate('/signup');
           else if (authorization === 'USER') navigate('/');

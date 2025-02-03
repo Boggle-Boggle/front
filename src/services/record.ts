@@ -19,8 +19,13 @@ export const deleteRecord = async (recordId: number) => {
   await api.delete(`/reading-record/${recordId}`);
 };
 
-export const getBookCase = async () => {
-  const response = await api.get('/bookshelf');
+export const getBookCase = async (year?: number | null, month?: number | null) => {
+  const queryString = new URLSearchParams();
+
+  if (year) queryString.append('year', `20${year.toString()}`);
+  if (month && month !== 13) queryString.append('month', month.toString());
+
+  const response = await api.get(`/bookshelf?${queryString.toString()}`);
 
   return response.data.data.books as BookCase[];
 };

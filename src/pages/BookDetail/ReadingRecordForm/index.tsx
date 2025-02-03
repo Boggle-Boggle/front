@@ -1,12 +1,15 @@
 import { useQuery } from '@tanstack/react-query';
 
 import { useState } from 'react';
-import { FaXmark } from 'react-icons/fa6';
+
+import Icon from 'components/Icon';
 
 import { getLibraries } from 'services/library';
 import { formatDate } from 'utils/format';
 
 import { DateType, StatusType } from 'types/record';
+
+import { CommonCancel } from 'assets/icons';
 
 import Complete from './Complete';
 import Libraries from './Libraries';
@@ -108,7 +111,7 @@ const ReadingRecordForm = ({ isbn, onClose }: ReadingRecordFormProps) => {
         )}
         {step === '완료' && <Complete record={createRecord()} />}
         <button type="button" onClick={onClose} className="absolute right-3 top-3" aria-label="책 저장하기">
-          <FaXmark style={{ width: '20px', height: '20px' }} />
+          <Icon Component={CommonCancel} />
         </button>
       </section>
     </>
