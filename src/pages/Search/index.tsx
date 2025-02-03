@@ -10,6 +10,7 @@ import SearchBar from 'components/SearchBar';
 import { addSearchHistory } from 'services/search';
 
 import { CommonBack } from 'assets/icons';
+import searchBookImg from 'assets/img/search_book.png';
 
 import SearchHistory from './SearchHistory';
 import SearchResult from './SearchResult';
@@ -67,7 +68,7 @@ const Search = () => {
         <>
           <SearchHistory />
           <div className="flex flex-col items-center justify-center pt-28">
-            <img src="src/assets/img/search_book.png" alt="" />
+            <img src={searchBookImg} alt="" />
             {/* TODO : 2차배포
               오른쪽 상단의 아이콘을 클릭하면 <br />
               바코드 검색이 가능합니다. */}

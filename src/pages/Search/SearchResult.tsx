@@ -40,7 +40,7 @@ const SearchResult = ({ query }: SearchResultProps) => {
 
   return allBooks.length ? (
     <ul
-      className={`${isIOS ? 'height-contentIOS' : 'height-contentAnd'} bottom-0 mt-3 h-full w-full overflow-y-auto rounded-tl-3xl bg-white px-5 py-4`}
+      className={`${isIOS ? 'height-contentIOS' : 'height-contentAnd'} bottom-0 mt-3 h-full w-full overflow-y-auto rounded-tl-3xl bg-white px-5 pb-footerAnd pt-4`}
     >
       {allBooks.map((book) => (
         <li key={book.isbn}>

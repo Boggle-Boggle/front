@@ -1,20 +1,24 @@
+import appleLogoImg from 'assets/logo/apple.png';
+import googleLogoImg from 'assets/logo/google.png';
+import kakaoLogoImg from 'assets/logo/kakao.png';
+
 const baseUrl = import.meta.env.VITE_SERVER_BASE_URL;
 
 const LOGIN_TYPE = {
   kakao: {
     title: '카카오',
-    imgUrl: `${import.meta.env.VITE_IMG_BASE_URL || ''}/assets/logo/kakao.png`,
-    redirect: `/oauth2/authorization/kakao?redirect_uri=${import.meta.env.VITE_KAKAO_REDIRECT_URL}`,
+    imgUrl: kakaoLogoImg,
+    redirect: `/oauth2/authorization/kakao?redirect_uri=${import.meta.env.VITE_LOGIN_REDIRECT_URL}`,
   },
   google: {
     title: '구글',
-    imgUrl: `${import.meta.env.VITE_IMG_BASE_URL || ''}/assets/logo/google.png`,
-    redirect: `/oauth2/authorization/google?redirect_uri=${import.meta.env.VITE_KAKAO_REDIRECT_URL}`,
+    imgUrl: googleLogoImg,
+    redirect: `/oauth2/authorization/google?redirect_uri=${import.meta.env.VITE_LOGIN_REDIRECT_URL}`,
   },
   apple: {
     title: '애플',
-    imgUrl: `${import.meta.env.VITE_IMG_BASE_URL || ''}/assets/logo/apple.png`,
-    redirect: `/oauth2/authorization/apple?redirect_uri=${import.meta.env.VITE_KAKAO_REDIRECT_URL}`,
+    imgUrl: appleLogoImg,
+    redirect: `/oauth2/authorization/apple?redirect_uri=${import.meta.env.VITE_LOGIN_REDIRECT_URL}`,
   },
 };
 

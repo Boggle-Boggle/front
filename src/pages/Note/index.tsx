@@ -14,8 +14,8 @@ import { formatDate, formatDateAndTime, generateDate } from 'utils/format';
 
 import { AddNoteParams, RecordDate } from 'types/record';
 
-import bookmark from 'assets/bookmarkBig.png';
 import { CommonBack, CommonUp, ReadingNotePageInput, ReadingNoteTags, ReadingNoteTrash } from 'assets/icons';
+import bookmarkImg from 'assets/library/note_bookmark.png';
 
 import DatePickModal from './DatePickModal';
 import PageModal from './PageModal';
@@ -220,7 +220,7 @@ const Note = () => {
           className={`border-mains ${isIOS ? 'height-without-headerIOS' : 'height-without-headerAnd'} flex flex-col overflow-hidden rounded-tl-3xl border border-main bg-white`}
         >
           <img
-            src={bookmark}
+            src={bookmarkImg}
             className={`${isIOS ? 'headerIOS top-headerIOS' : 'headerAnd top-headerAnd'} absolute right-10 block h-12 w-12`}
             alt=""
           />

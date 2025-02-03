@@ -10,6 +10,7 @@ import useModal from 'hooks/useModal';
 import { getMyPageInfo, getTermsAgreement } from 'services/user';
 
 import { CommonPencil, MyPageBooks, MyPageMonth, MyPageNotes } from 'assets/icons';
+import ProfileSvg from 'assets/img/profile.svg?react';
 
 import LogoutModal from './LogoutModal';
 import Content from './shared/Content';
@@ -37,12 +38,9 @@ const MyPage = () => {
     terms && (
       <div className={`bg-main px-5 ${isIOS ? 'py-[8.5rem]' : 'py-[6.5rem]'}`}>
         <section className="relative flex h-52 flex-col items-center rounded-lg bg-white pb-4 pt-20">
-          <img
-            className="absolute -top-[4.5rem] left-1/2 h-36 w-36 -translate-x-1/2 rounded-full bg-white"
-            src="https://item.kakaocdn.net/do/b563e153db82fde06e1423472ccf192c960f4ab09fe6e38bae8c63030c9b37f9"
-            alt=""
-          />
-
+          <div className="absolute -top-[4.5rem] h-32 w-32 rounded-[50%] border-[3px] border-white">
+            <ProfileSvg width="100%" height="100%" />
+          </div>
           <button
             className="flex items-center justify-center text-xl font-bold"
             type="button"

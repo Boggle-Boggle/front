@@ -1,6 +1,7 @@
 import { useEffect, useReducer, useRef, useState } from 'react';
 
 import Icon from 'components/Icon';
+import Star from 'components/Star';
 
 import { formatDateTimeToDate } from 'utils/format';
 
@@ -177,7 +178,13 @@ const RecordTab = ({ book }: RecordTabProps) => {
       <RecordItem
         icons={<Icon Component={RecordRating} size="sm" />}
         title="내 평점"
-        content={recordData.rating ?? <p className="text-sm opacity-50">평점 없음</p>}
+        content={
+          recordData.rating ? (
+            <Star rating={recordData.rating} size="lg" />
+          ) : (
+            <p className="text-sm opacity-50">평점 없음</p>
+          )
+        }
       />
 
       <RecordItem

@@ -2,8 +2,8 @@ import Icon from 'components/Icon';
 
 import { StatusType } from 'types/record';
 
-import bookmark from 'assets/bookmark.png';
 import { RecordFinishedReading, RecordReading, RecordWish } from 'assets/icons';
+import bookmark from 'assets/library/status_bookmark.png';
 
 import ButtonSet from './shared/ButtonSet';
 import SubTitle from './shared/SubTitle';
@@ -15,7 +15,7 @@ type StatusProps = {
   onNext: () => void;
 };
 
-const REDING_STATUS = [
+export const REDING_STATUS = [
   {
     status: 'completed',
     title: '다 읽은 책',
