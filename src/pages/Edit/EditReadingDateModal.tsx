@@ -1,18 +1,18 @@
 import { useQueryClient } from '@tanstack/react-query';
 
 import { useState } from 'react';
-import { GoChevronRight } from 'react-icons/go';
-import { GrDeploy } from 'react-icons/gr';
-import { LuCalendarCheck2 } from 'react-icons/lu';
 
 import Button from 'components/Button';
 import HalfScreenModal from 'components/HalfScreenModal';
+import Icon from 'components/Icon';
 import DateSelector from 'pages/BookDetail/ReadingRecordForm/shared/DateSelector';
 
 import { updateEditRecord } from 'services/record';
 import { formatDate } from 'utils/format';
 
 import { DateType, RecordDate, StatusType } from 'types/record';
+
+import { RecordSelectDate, RecordPeriod, CommonNext, RecordReading, RecordFinishedReading } from 'assets/icons';
 
 type EditReadingDateModalProps = {
   recordId: number;
@@ -93,14 +93,27 @@ const EditReadingDateModal = ({ recordId, readDates, close }: EditReadingDateMod
                   type="button"
                   onClick={() => setSelected('complete')}
                 >
-                  <GrDeploy style={{ width: '20px', height: '20px' }} />다 읽은 책이에요
+                  <Icon
+                    Component={RecordReading}
+                    style={{
+                      color: selected === 'complete' ? '#E6B9A6' : 'inherit',
+                      display: 'inline-block',
+                    }}
+                  />
+                  다 읽은 책이에요
                 </button>
                 <button
                   className={`flex h-[4.5rem] w-[48%] flex-col justify-around rounded-[10px] border-2 px-4 py-2 ${selected === 'reading' ? 'border-accent bg-accent bg-opacity-10 text-accent' : 'border-main'}`}
                   type="button"
                   onClick={() => setSelected('reading')}
                 >
-                  <GrDeploy style={{ width: '20px', height: '20px' }} />
+                  <Icon
+                    Component={RecordFinishedReading}
+                    style={{
+                      color: selected === 'reading' ? '#E6B9A6' : 'inherit',
+                      display: 'inline-block',
+                    }}
+                  />
                   읽는 중인 책이에요
                 </button>
               </div>
@@ -115,20 +128,18 @@ const EditReadingDateModal = ({ recordId, readDates, close }: EditReadingDateMod
                   {startDate ? (
                     <>
                       <div>
-                        <LuCalendarCheck2
-                          style={{ width: '30px', height: '30px', color: '#E6B9A6', display: 'inline-block' }}
-                        />
+                        <Icon Component={RecordSelectDate} style={{ color: '#E6B9A6', display: 'inline-block' }} />
                         <span className="ml-2 opacity-60">읽기 시작한 날</span>
                       </div>
                       <div className="text-base">
                         {`${startDate[0]}년 ${startDate[1]}월 ${startDate[2]}일`}
-                        <GoChevronRight style={{ display: 'inline-block' }} />
+                        <Icon Component={CommonNext} size="xs" style={{ display: 'inline-block' }} />
                       </div>
                     </>
                   ) : (
                     <>
                       <p className="opacity-50">책을 읽기 시작한 날짜를 입력해주세요</p>
-                      <LuCalendarCheck2 style={{ width: '30px', height: '30px', color: '#E6B9A6' }} />
+                      <Icon Component={RecordPeriod} style={{ color: '#E6B9A6', display: 'inline-block' }} />
                     </>
                   )}
                 </button>
@@ -136,14 +147,12 @@ const EditReadingDateModal = ({ recordId, readDates, close }: EditReadingDateMod
                 {selected === 'reading' ? (
                   <div className="mb-4 flex items-center justify-between rounded-[10px] border-2 border-accent bg-white p-4 text-sm">
                     <div>
-                      <LuCalendarCheck2
-                        style={{ width: '30px', height: '30px', color: '#E6B9A6', display: 'inline-block' }}
-                      />
+                      <Icon Component={RecordSelectDate} style={{ color: '#E6B9A6', display: 'inline-block' }} />
                       <span className="ml-2 opacity-60">다 읽은 날</span>
                     </div>
                     <div className="text-base">
                       미정
-                      <GoChevronRight style={{ display: 'inline-block' }} />
+                      <Icon Component={CommonNext} size="xs" style={{ display: 'inline-block' }} />
                     </div>
                   </div>
                 ) : (
@@ -155,20 +164,18 @@ const EditReadingDateModal = ({ recordId, readDates, close }: EditReadingDateMod
                     {endDate ? (
                       <>
                         <div>
-                          <LuCalendarCheck2
-                            style={{ width: '30px', height: '30px', color: '#E6B9A6', display: 'inline-block' }}
-                          />
+                          <Icon Component={RecordSelectDate} style={{ color: '#E6B9A6', display: 'inline-block' }} />
                           <span className="ml-2 opacity-60">다 읽은 날</span>
                         </div>
                         <div className="text-base">
                           {`${endDate[0]}년 ${endDate[1]}월 ${endDate[2]}일`}
-                          <GoChevronRight style={{ display: 'inline-block' }} />
+                          <Icon Component={CommonNext} size="xs" style={{ display: 'inline-block' }} />
                         </div>
                       </>
                     ) : (
                       <>
                         <p className="opacity-50">책을 다 읽은 날짜를 입력해주세요</p>
-                        <LuCalendarCheck2 style={{ width: '30px', height: '30px', color: '#E6B9A6' }} />
+                        <Icon Component={RecordPeriod} style={{ color: '#E6B9A6', display: 'inline-block' }} />
                       </>
                     )}
                   </button>

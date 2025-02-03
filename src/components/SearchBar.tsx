@@ -1,5 +1,6 @@
-import { BiX } from 'react-icons/bi';
-import { FcSearch } from 'react-icons/fc';
+import { CommonCancel, CommonSearch } from 'assets/icons';
+
+import Icon from './Icon';
 
 type SearchBarProps = {
   placeholder: string;
@@ -39,12 +40,12 @@ const SearchBar = ({
   return (
     <form onSubmit={handleSubmit} className="mx-7 flex items-center rounded-xl bg-white px-3">
       <span className="mr-1">
-        <FcSearch style={{ width: '28px', height: '28px' }} />
+        <Icon Component={CommonSearch} size="xs" />
       </span>
       <input className="h-[36px] w-full text-sm" placeholder={placeholder} value={value} onChange={handleChange} />
       {value && (
         <button type="button" onClick={handleClear} aria-label="clear button" className="ml-1">
-          <BiX style={{ width: '24px', height: '24px' }} />
+          <Icon Component={CommonCancel} size="xs" />
         </button>
       )}
       <button type="submit" className="hidden" aria-label="submit button" />

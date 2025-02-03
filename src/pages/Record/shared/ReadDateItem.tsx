@@ -1,7 +1,10 @@
 import { useEffect, useState } from 'react';
-import { GoChevronDown, GoChevronUp } from 'react-icons/go';
+
+import Icon from 'components/Icon';
 
 import { Note } from 'types/record';
+
+import { CommonUp, CommonDown } from 'assets/icons';
 
 import NoteItem from './NoteItem';
 
@@ -31,11 +34,7 @@ const ReadDateItem = ({ notes, startDate, endDate, idx }: ReadDateItemProps) => 
           {idx === 0 ? '회독정보없음' : `${idx}회독`}
           {idx > 0 && <span className="ml-1 font-normal opacity-50">{`(${startDate}~${endDate})`}</span>}
         </p>
-        {isToggled ? (
-          <GoChevronUp style={{ width: '20px', height: '20px' }} />
-        ) : (
-          <GoChevronDown style={{ width: '20px', height: '20px' }} />
-        )}
+        {isToggled ? <Icon Component={CommonDown} size="xs" /> : <Icon Component={CommonUp} size="xs" />}
       </button>
 
       <section className={`grid ${isToggled ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'} transition-all duration-200`}>

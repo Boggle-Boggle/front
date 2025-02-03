@@ -1,6 +1,9 @@
-import { REDING_STATUS, StatusType } from 'types/record';
+import Icon from 'components/Icon';
+
+import { StatusType } from 'types/record';
 
 import bookmark from 'assets/bookmark.png';
+import { RecordFinishedReading, RecordReading, RecordWish } from 'assets/icons';
 
 import ButtonSet from './shared/ButtonSet';
 import SubTitle from './shared/SubTitle';
@@ -11,6 +14,27 @@ type StatusProps = {
   setSelected: React.Dispatch<React.SetStateAction<StatusType>>;
   onNext: () => void;
 };
+
+const REDING_STATUS = [
+  {
+    status: 'completed',
+    title: '다 읽은 책',
+    subTitle: '대단해요! 책을 다 읽으셨나요? \n 등록 후 책에 대한 이야기를 남겨보세요',
+    img: <Icon Component={RecordFinishedReading} size="xl" />,
+  },
+  {
+    status: 'reading',
+    title: '읽는 중인 책',
+    subTitle: '책을 읽고 있는 중이신가요? \n 나중에 다 읽은 책으로 변경할 수 있어요',
+    img: <Icon Component={RecordReading} size="xl" />,
+  },
+  {
+    status: 'pending',
+    title: '읽어보고 싶은 책',
+    subTitle: '읽고 싶은 책인가요? \n 잊어버리지 않게 미리 등록해두세요!',
+    img: <Icon Component={RecordWish} size="xl" />,
+  },
+] as const;
 
 const Status = ({ selected, setSelected, onNext }: StatusProps) => {
   const handleSelect = (status: StatusType) => {
@@ -34,7 +58,7 @@ const Status = ({ selected, setSelected, onNext }: StatusProps) => {
                 <p className="pb-1 text-lg font-semibold">{title}</p>
                 <p className="whitespace-pre-line text-xs opacity-60">{subTitle}</p>
               </div>
-              <img src={img} className="right-0 h-14 w-14" alt="" />
+              {img}
               {status === selected && <img src={bookmark} className="absolute -top-1 left-4" alt="선택됨" />}
             </button>
           </li>

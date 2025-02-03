@@ -1,16 +1,18 @@
 import { useQuery } from '@tanstack/react-query';
 
 import { useCallback, useEffect, useState } from 'react';
-import { FiArrowLeft, FiMoreVertical, FiEdit } from 'react-icons/fi';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
 import Header from 'components/Header';
+import Icon from 'components/Icon';
 import Memo from 'components/Memo';
 import Loading from 'pages/Loading';
 
 import useDevice from 'hooks/useDevice';
 import useModal from 'hooks/useModal';
 import { deleteRecord, getRecord } from 'services/record';
+
+import { CommonBack, CommonSetting, RecordEdit } from 'assets/icons';
 
 import DeleteModal from './DeleteModal';
 import NoteTab from './NoteTab';
@@ -87,17 +89,14 @@ const Record = () => {
             )
           }
           leftBtn={
-            <FiArrowLeft
-              style={{ width: '24px', height: '24px', color: hasHeaderBackground ? 'black' : 'white' }}
-              onClick={() => navigate(-1)}
-            />
+            <button type="button" onClick={() => navigate(-1)} aria-label="뒤로가기">
+              <Icon Component={CommonBack} style={{ color: hasHeaderBackground ? 'black' : 'white' }} />
+            </button>
           }
           rightBtn={
             <>
               <button aria-label="수정/삭제하기" onClick={() => setIsMemoToggled(true)} type="button">
-                <FiMoreVertical
-                  style={{ width: '24px', height: '24px', color: hasHeaderBackground ? 'black' : 'white' }}
-                />
+                <Icon Component={CommonSetting} style={{ color: hasHeaderBackground ? 'black' : 'white' }} />
               </button>
               {isMemoToggled && (
                 <Memo handleClose={() => setIsMemoToggled(false)}>
@@ -183,7 +182,7 @@ const Record = () => {
                   onClick={handleGoToNote}
                   aria-label="독서노트 작성하기"
                 >
-                  <FiEdit style={{ width: '24px', height: '24px', color: 'white' }} />
+                  <Icon Component={RecordEdit} style={{ color: '#ffffff' }} size="lg" />
                 </button>
               </>
             )}

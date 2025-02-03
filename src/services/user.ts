@@ -11,7 +11,6 @@ export const getRefresh = async () => {
     const refreshResponse = await api.get('/auth/refresh');
     const newAccessToken: string = refreshResponse.data.data;
 
-    logout();
     login(newAccessToken);
 
     return newAccessToken;

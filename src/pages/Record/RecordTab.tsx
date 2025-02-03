@@ -1,10 +1,12 @@
 import { useEffect, useReducer, useRef, useState } from 'react';
-import { CiCircleInfo, CiCalendarDate, CiUnread, CiStar, CiShoppingTag } from 'react-icons/ci';
-import { GoChevronDown, GoChevronUp } from 'react-icons/go';
+
+import Icon from 'components/Icon';
 
 import { formatDateTimeToDate } from 'utils/format';
 
 import { Record } from 'types/record';
+
+import { RecordInfo, RecordPeriod, RecordCategory, RecordRating, RecordHide, CommonUp, CommonDown } from 'assets/icons';
 
 import RecordItem from './shared/RecordItem';
 
@@ -31,16 +33,16 @@ const RecordTab = ({ book }: RecordTabProps) => {
   return (
     <section className="bg-white">
       <RecordItem
-        icons={<CiCircleInfo style={{ width: '20px', height: '20px' }} />}
+        icons={<Icon Component={RecordInfo} size="sm" />}
         title="도서정보"
         content={
           isToggledInfo ? (
             <button onClick={handleInfoToggle} aria-label="도서 정보 자세히 보기" type="button">
-              <GoChevronUp style={{ width: '20px', height: '20px' }} />
+              <Icon Component={CommonDown} size="xs" />
             </button>
           ) : (
             <button onClick={handleInfoToggle} aria-label="도서 정보 간략히 보기" type="button">
-              <GoChevronDown style={{ width: '20px', height: '20px' }} />
+              <Icon Component={CommonUp} size="xs" />
             </button>
           )
         }
@@ -85,7 +87,7 @@ const RecordTab = ({ book }: RecordTabProps) => {
       </section>
 
       <RecordItem
-        icons={<CiCalendarDate style={{ width: '20px', height: '20px' }} />}
+        icons={<Icon Component={RecordPeriod} size="sm" />}
         title="독서기간"
         content={
           !recordData.readDateList.length ? (
@@ -93,12 +95,12 @@ const RecordTab = ({ book }: RecordTabProps) => {
           ) : isToggledDate ? (
             <button onClick={handleDateToggle} aria-label="독서기간 자세히 보기" type="button" className="inline-flex">
               <p className="mr-2 text-sm opacity-50">{`${recordData.readDateList.length}회독`}</p>
-              <GoChevronUp style={{ width: '20px', height: '20px' }} />
+              <Icon Component={CommonDown} size="xs" />
             </button>
           ) : (
             <button onClick={handleDateToggle} aria-label="독서기간 간략히 보기" type="button" className="inline-flex">
               <p className="mr-2 text-sm opacity-50">{`${recordData.readDateList.length}회독`}</p>
-              <GoChevronDown style={{ width: '20px', height: '20px' }} />
+              <Icon Component={CommonUp} size="xs" />
             </button>
           )
         }
@@ -129,7 +131,7 @@ const RecordTab = ({ book }: RecordTabProps) => {
       </section>
 
       <RecordItem
-        icons={<CiShoppingTag style={{ width: '20px', height: '20px' }} />}
+        icons={<Icon Component={RecordCategory} size="sm" />}
         title="서재분류"
         content={
           !recordData.libraries.length ? (
@@ -144,7 +146,7 @@ const RecordTab = ({ book }: RecordTabProps) => {
               <p className="mr-2 text-sm opacity-50">
                 {`${recordData.libraries[0].libraryName} 외 ${recordData.libraries.length - 1}개`}
               </p>
-              <GoChevronUp style={{ width: '20px', height: '20px' }} />
+              <Icon Component={CommonDown} size="xs" />
             </button>
           ) : (
             <button
@@ -156,7 +158,7 @@ const RecordTab = ({ book }: RecordTabProps) => {
               <p className="mr-2 text-sm opacity-50">
                 {`${recordData.libraries[0].libraryName} 외 ${recordData.libraries.length - 1}개`}
               </p>
-              <GoChevronDown style={{ width: '20px', height: '20px' }} />
+              <Icon Component={CommonUp} size="xs" />
             </button>
           )
         }
@@ -173,13 +175,13 @@ const RecordTab = ({ book }: RecordTabProps) => {
       </section>
 
       <RecordItem
-        icons={<CiStar style={{ width: '20px', height: '20px' }} />}
+        icons={<Icon Component={RecordRating} size="sm" />}
         title="내 평점"
         content={recordData.rating ?? <p className="text-sm opacity-50">평점 없음</p>}
       />
 
       <RecordItem
-        icons={<CiUnread style={{ width: '20px', height: '20px' }} />}
+        icons={<Icon Component={RecordHide} size="sm" />}
         title={recordData.isBookVisible ? '책장에서 보임' : '책장에서 숨김'}
         content={recordData.isBookVisible ? '보이기' : '숨기기'}
       />

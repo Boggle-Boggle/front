@@ -1,15 +1,15 @@
 import { useEffect, useState } from 'react';
-import { BiX } from 'react-icons/bi';
-import { FaCheck } from 'react-icons/fa6';
-import { GoArrowLeft, GoChevronRight } from 'react-icons/go';
 
 import Button from 'components/Button';
 import Header from 'components/Header';
 import Highlight from 'components/Highlight';
+import Icon from 'components/Icon';
 
 import useDevice from 'hooks/useDevice';
 
 import { TermWithAgree } from 'types/user';
+
+import { CommonActCheck, CommonBack, CommonCancel, CommonNext } from 'assets/icons';
 
 import TermsItem from './TermsItem';
 
@@ -71,7 +71,11 @@ const TermsAgreement = ({ terms, setTerms, onPrev, onNext }: TermsAgreementProps
       {!selectedTerm && (
         <Header
           title={<>회원가입</>}
-          leftBtn={<GoArrowLeft style={{ width: '24px', height: '24px' }} onClick={onPrev} />}
+          leftBtn={
+            <button onClick={onPrev} type="button" aria-label="뒤로가기">
+              <Icon Component={CommonBack} />
+            </button>
+          }
         />
       )}
       <section
@@ -107,7 +111,8 @@ const TermsAgreement = ({ terms, setTerms, onPrev, onNext }: TermsAgreementProps
                 checked={isAllChecked}
                 onChange={handleAllCheck}
               />
-              {isAllChecked && <FaCheck style={{ width: '20px', height: '20px', color: 'white' }} />}
+
+              {isAllChecked && <Icon Component={CommonActCheck} />}
             </span>
             <p className="text-base font-semibold">모든 약관에 동의합니다</p>
           </label>
@@ -126,7 +131,7 @@ const TermsAgreement = ({ terms, setTerms, onPrev, onNext }: TermsAgreementProps
             <Button handleClick={handleNext} disabled={!isAllMandatoryChecked}>
               빼곡 시작하기
               <span>
-                <GoChevronRight style={{ color: 'white' }} />
+                <Icon Component={CommonNext} size="sm" />
               </span>
             </Button>
           </div>
@@ -136,7 +141,11 @@ const TermsAgreement = ({ terms, setTerms, onPrev, onNext }: TermsAgreementProps
         <div className="absolute top-0 z-20 w-full bg-white">
           <Header
             title={selectedTerm.title ?? '약관동의'}
-            rightBtn={<BiX style={{ width: '28px', height: '28px' }} onClick={() => setSelectedTerm(null)} />}
+            rightBtn={
+              <button onClick={() => setSelectedTerm(null)} type="button" aria-label="뒤로가기">
+                <Icon Component={CommonCancel} />
+              </button>
+            }
           />
           <section className="height-without-header mx-4 flex flex-col overflow-y-auto">
             <p className="h-full overflow-y-scroll whitespace-pre-wrap">{selectedTerm.content}</p>

@@ -1,16 +1,16 @@
 import { useQueryClient } from '@tanstack/react-query';
 
 import { useState } from 'react';
-import { BiX } from 'react-icons/bi';
-import { FiPlus } from 'react-icons/fi';
-import { GoChevronLeft, GoChevronRight } from 'react-icons/go';
 
 import Button from 'components/Button';
 import CheckBox from 'components/CheckBox';
+import Icon from 'components/Icon';
 
 import { addLibrary } from 'services/library';
 
 import { CustomLibrary } from 'types/library';
+
+import { CommonPlus, CommonNext, CommonPrev } from 'assets/icons';
 
 import ButtonSet from './shared/ButtonSet';
 import SubTitle from './shared/SubTitle';
@@ -95,7 +95,7 @@ const Libraries = ({ libraries, selected, setSelected, onPrev, onNext }: Library
             type="button"
             onClick={() => setIsAdding(true)}
           >
-            <FiPlus style={{ width: '16px', height: '16px', marginRight: '4px' }} />
+            <Icon Component={CommonPlus} size="xs" style={{ width: '16px', marginRight: '4px' }} />
             서재 추가하기
           </button>
         </li>
@@ -129,7 +129,7 @@ const Libraries = ({ libraries, selected, setSelected, onPrev, onNext }: Library
           <li className="mb-2 flex w-full justify-between rounded-[10px] bg-white p-4 text-[15px] shadow-md">
             {library}
             <button type="button" onClick={() => handleDelete(library)} aria-label={`${library} 서재 삭제`}>
-              <BiX style={{ width: '24px', height: '24px' }} />
+              <Icon Component={CommonPlus} size="xs" style={{ width: '16px', marginRight: '4px' }} />
             </button>
           </li>
         ))}
@@ -137,11 +137,12 @@ const Libraries = ({ libraries, selected, setSelected, onPrev, onNext }: Library
 
       <section className="mt-6 flex justify-between">
         <Button handleClick={onPrev} className="w-2/5 bg-main text-black shadow-sm">
-          <GoChevronLeft />
+          <Icon Component={CommonPrev} size="xs" />
           이전
         </Button>
         <Button handleClick={handleSave} className="w-2/5 text-white shadow-sm">
-          저장 <GoChevronRight />
+          저장
+          <Icon Component={CommonNext} size="xs" />
         </Button>
       </section>
     </>

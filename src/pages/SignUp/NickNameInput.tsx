@@ -1,12 +1,14 @@
-import { GoArrowLeft, GoChevronRight } from 'react-icons/go';
 import { useNavigate } from 'react-router-dom';
 
 import Button from 'components/Button';
 import Header from 'components/Header';
 import Highlight from 'components/Highlight';
+import Icon from 'components/Icon';
 
 import useDevice from 'hooks/useDevice';
 import { isDuplicateNickname } from 'services/user';
+
+import { CommonBack, CommonNext } from 'assets/icons';
 
 type NickNameInputProps = {
   nickName: string;
@@ -43,7 +45,11 @@ const NickNameInput = ({ nickName, isValid, updateNickName, onNext }: NickNameIn
     <>
       <Header
         title={<>회원가입</>}
-        leftBtn={<GoArrowLeft style={{ width: '24px', height: '24px' }} onClick={handleLeftBtnClick} />}
+        leftBtn={
+          <button onClick={handleLeftBtnClick} type="button" aria-label="뒤로가기">
+            <Icon Component={CommonBack} />
+          </button>
+        }
       />
       <section
         className={` ${isIOS ? 'height-without-headerIOS' : 'height-without-headerAnd'} flex w-full flex-col p-9`}
@@ -74,7 +80,7 @@ const NickNameInput = ({ nickName, isValid, updateNickName, onNext }: NickNameIn
             <Button handleClick={handleNext} disabled={!isValid}>
               다음
               <span>
-                <GoChevronRight style={{ color: 'white' }} />
+                <Icon Component={CommonNext} size="sm" />
               </span>
             </Button>
           </div>

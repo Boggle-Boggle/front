@@ -1,21 +1,35 @@
-import { FaAngleLeft } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
+import useAuthStore from 'stores/useAuthStore';
 
 import Button from 'components/Button';
 import Header from 'components/Header';
+import Icon from 'components/Icon';
 
 import useDevice from 'hooks/useDevice';
 import { deleteAccount } from 'services/user';
 
+import { CommonBack } from 'assets/icons';
+
 const DeleteAccount = () => {
   const { isIOS } = useDevice();
+  const { logout } = useAuthStore();
   const navigate = useNavigate();
   const handleGoBack = () => navigate('/myPage');
+
+  const handleDeleteAccount = async () => {
+    await deleteAccount();
+    logout();
+    navigate('/login');
+  };
 
   return (
     <section className="h-full bg-white">
       <Header
-        leftBtn={<FaAngleLeft onClick={handleGoBack} style={{ width: '24px', height: '24px' }} />}
+        leftBtn={
+          <button type="button" aria-label="뒤로가기" onClick={handleGoBack}>
+            <Icon Component={CommonBack} size="sm" />
+          </button>
+        }
         title="탈퇴하기"
       />
       <section
@@ -32,7 +46,7 @@ const DeleteAccount = () => {
           <Button handleClick={handleGoBack} className="bg-main">
             계속 이용할래요
           </Button>
-          <Button handleClick={deleteAccount}>네 탈퇴할게요</Button>
+          <Button handleClick={handleDeleteAccount}>네 탈퇴할게요</Button>
         </section>
       </section>
     </section>

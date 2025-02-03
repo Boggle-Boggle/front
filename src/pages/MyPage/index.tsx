@@ -1,14 +1,15 @@
 import { useQuery } from '@tanstack/react-query';
 
-import { BiBook, BiBookOpen, BiCool } from 'react-icons/bi';
-import { RiPencilLine } from 'react-icons/ri';
 import { useNavigate } from 'react-router-dom';
 
+import Icon from 'components/Icon';
 import Loading from 'pages/Loading';
 
 import useDevice from 'hooks/useDevice';
 import useModal from 'hooks/useModal';
 import { getMyPageInfo, getTermsAgreement } from 'services/user';
+
+import { CommonPencil, MyPageBooks, MyPageMonth, MyPageNotes } from 'assets/icons';
 
 import LogoutModal from './LogoutModal';
 import Content from './shared/Content';
@@ -45,24 +46,26 @@ const MyPage = () => {
           <button
             className="flex items-center justify-center text-xl font-bold"
             type="button"
+            aria-label=""
             onClick={() => navigate('nickname', { state: { nickname: myPage.nickname } })}
           >
             {myPage.nickname}
-            <RiPencilLine style={{ width: '20px', height: '20px', opacity: '50%', paddingLeft: '2px' }} />
+            <Icon style={{ opacity: '50%' }} size="xs" Component={CommonPencil} />
           </button>
           <ul className="flex w-full flex-grow justify-between pt-3">
             <li className="flex w-full flex-col items-center justify-center">
-              <BiBook style={{ width: '24px', height: '24px', opacity: '50%' }} />
+              <Icon style={{ opacity: '50%' }} Component={MyPageBooks} />
+
               <p className="my-1 text-xs opacity-50">총 읽은 책</p>
               <p className="font-bold">{myPage.totalReadingCnt}권</p>
             </li>
             <li className="flex w-full flex-col items-center justify-center border-l-2 border-r-2 border-main">
-              <BiCool style={{ width: '24px', height: '24px', opacity: '50%' }} />
+              <Icon style={{ opacity: '50%' }} Component={MyPageMonth} />
               <p className="my-1 text-xs opacity-50">이번달 읽은 책</p>
               <p className="font-bold">{myPage.monthlyReadingCnt}권</p>
             </li>
             <li className="flex w-full flex-col items-center justify-center">
-              <BiBookOpen style={{ width: '24px', height: '24px', opacity: '50%' }} />
+              <Icon style={{ opacity: '50%' }} Component={MyPageNotes} />
               <p className="my-1 text-xs opacity-50">작성한 독서노트</p>
               <p className="font-bold">{myPage.totalNote}장</p>
             </li>
