@@ -138,7 +138,7 @@ const TermsAgreement = ({ terms, setTerms, onPrev, onNext }: TermsAgreementProps
         </form>
       </section>
       {selectedTerm && (
-        <div className="absolute top-0 z-20 w-full bg-white">
+        <div className="absolute top-0 z-20 h-full w-full bg-white">
           <Header
             title={selectedTerm.title ?? '약관동의'}
             rightBtn={
@@ -147,8 +147,10 @@ const TermsAgreement = ({ terms, setTerms, onPrev, onNext }: TermsAgreementProps
               </button>
             }
           />
-          <section className="height-without-header mx-4 flex flex-col overflow-y-auto">
-            <p className="h-full overflow-y-scroll whitespace-pre-wrap">{selectedTerm.content}</p>
+          <section
+            className={` ${isIOS ? 'height-without-headerIOS' : 'height-without-headerAnd'} mx-4 flex flex-col overflow-y-auto whitespace-pre-wrap`}
+          >
+            {selectedTerm.content}
           </section>
         </div>
       )}
