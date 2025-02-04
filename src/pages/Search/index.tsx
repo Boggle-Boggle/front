@@ -40,7 +40,7 @@ const Search = () => {
   }, [query]);
 
   return (
-    <div className="relative h-screen bg-main">
+    <div className="relative h-screen overflow-hidden bg-main">
       {query ? (
         <Header
           title={<>도서 검색</>}
