@@ -56,7 +56,7 @@ const BookCase = ({ books }: BookCaseProps) => {
   }, [scene]);
 
   return (
-    <div className="flex h-full w-full items-center justify-center">
+    <div className="relative z-0 flex h-full w-full items-center justify-center">
       <Canvas camera={{ position: [0, 0, cameraZPosition] }}>
         <ambientLight intensity={1.7} />
         <directionalLight position={[7.5, 5, 7.5]} intensity={1} />
@@ -102,7 +102,7 @@ const BookCase = ({ books }: BookCaseProps) => {
           enablePan={false}
           maxPolarAngle={Math.PI / 2}
           minPolarAngle={Math.PI / 2}
-          enableZoom
+          enableZoom={false}
           minDistance={1.5}
           maxDistance={cameraZPosition}
           onChange={(e) => getZoomLevel(e)}
