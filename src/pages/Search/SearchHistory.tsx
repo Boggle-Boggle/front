@@ -53,9 +53,9 @@ const SearchHistory = () => {
           histories.map((keyword) => (
             <li className="mr-3 inline-flex rounded-full border px-2 text-sm opacity-70" key={keyword}>
               <Link to={`?q=${keyword}`} className="flex items-center">
-                {keyword}
+                <p className="mr-1">{keyword}</p>
                 <button aria-label="remove button" type="button" onClick={(e) => handleRemove(e, keyword)}>
-                  <Icon Component={CommonCancel} size="xs" style={{ marginLeft: '4px' }} />
+                  <Icon Component={CommonCancel} size="xs" />
                 </button>
               </Link>
             </li>
