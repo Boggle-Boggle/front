@@ -32,8 +32,8 @@ const Login = () => {
   }, [scene]);
 
   return (
-    <div className="bottom-3 flex h-screen flex-col items-center justify-center bg-main py-[5.5rem]">
-      <h1 className="text-font text-center text-[32px] text-accent">
+    <div className="bottom-3 flex h-screen flex-col items-center justify-center bg-[#CBBAB9] py-[5.5rem]">
+      <h1 className="text-font text-center text-[32px] text-white">
         <span className="font-bold">빼곡</span>하게 채우는 <br /> 나만의
         <span className="font-bold"> 책장</span>
       </h1>
@@ -45,7 +45,7 @@ const Login = () => {
             shadowMapType: THREE.PCFSoftShadowMap,
           }}
           onCreated={({ gl }) => {
-            gl.setClearColor('#EEEDEB');
+            gl.setClearColor('#CBBAB9');
           }}
         >
           <ambientLight intensity={1.2} />
