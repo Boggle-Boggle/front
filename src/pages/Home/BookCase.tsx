@@ -1,7 +1,7 @@
-import { Html, OrbitControls, OrbitControlsChangeEvent, useGLTF } from '@react-three/drei';
+import { Html, OrbitControls, useGLTF } from '@react-three/drei';
 import { Canvas } from '@react-three/fiber';
 
-import { Suspense, useEffect, useState } from 'react';
+import { Suspense, useEffect } from 'react';
 import * as THREE from 'three';
 
 import Loading from 'pages/Loading';
@@ -30,19 +30,9 @@ const BookCase = ({ books }: BookCaseProps) => {
   const startY = 0.815;
   const rowHeight = 0.575;
   const cameraZPosition = window.innerWidth < 350 ? 3 : 2.5;
-  const [zoomLevel, setZoomLevel] = useState<number>(cameraZPosition);
 
   useGLTF.preload(`${import.meta.env.VITE_IMG_BASE_URL || ''}/assets/bookshelf.glb`);
   const { scene } = useGLTF(`${import.meta.env.VITE_IMG_BASE_URL || ''}/assets/bookshelf.glb`);
-
-  const getZoomLevel = (e?: OrbitControlsChangeEvent) => {
-    if (!e) return;
-
-    const controls = e.target;
-    const distance = controls.object.position.z;
-
-    setZoomLevel(distance);
-  };
 
   useEffect(() => {
     if (!scene) return;
@@ -70,7 +60,7 @@ const BookCase = ({ books }: BookCaseProps) => {
           <primitive object={scene} />
           {books &&
             books.reduce<{ previousX: number; previousY: number; elements: React.ReactNode[] }>(
-              (acc, { title, page }) => {
+              (acc, { title, page, readingRecordId }) => {
                 const { width, offset } = getBookProperties(page);
                 const xPosition = acc.previousX + offset / 2;
                 const yPosition = acc.previousY;
@@ -83,7 +73,7 @@ const BookCase = ({ books }: BookCaseProps) => {
                     title={title}
                     width={width}
                     page={page}
-                    zoomLevel={zoomLevel}
+                    readingRecordId={readingRecordId}
                   />,
                 );
 
@@ -105,7 +95,6 @@ const BookCase = ({ books }: BookCaseProps) => {
           enableZoom={false}
           minDistance={1.5}
           maxDistance={cameraZPosition}
-          onChange={(e) => getZoomLevel(e)}
         />
       </Canvas>
     </div>
