@@ -148,7 +148,7 @@ const BookDetail = () => {
           에서 제공한 정보입니다.
         </p>
 
-        <ExistingRecordModal isOpen={isOpen} close={close} scrollPos={scrollPos} />
+        <ExistingRecordModal isOpen={isOpen} close={close} scrollPos={scrollPos} detailId={detailId} />
         {plotIsOpen && (
           <PlotDetailModal isOpen={plotIsOpen} close={plotClose} scrollPos={plotScrollPos} plot={book.plot} />
         )}
