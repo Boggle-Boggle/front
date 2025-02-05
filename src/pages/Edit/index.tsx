@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
@@ -24,6 +24,7 @@ const Edit = () => {
   const [rating, setRating] = useState<number>(0);
   const [isVisible, setIsVisible] = useState<boolean>(false);
 
+  const queryClient = useQueryClient();
   const location = useLocation();
   const navigate = useNavigate();
   const { title } = location.state;
@@ -33,7 +34,7 @@ const Edit = () => {
 
   const { data } = useQuery({ queryKey: ['edit', recordId], queryFn: () => getEditRecord(recordId) });
 
-  const handleSave = () => {
+  const handleSave = async () => {
     if (!data) return;
 
     const newRecord: Partial<UpdateRecordParams> = {};
@@ -46,7 +47,8 @@ const Edit = () => {
     if (rating !== data.rating) newRecord.rating = rating;
     if (isVisible !== data.isBookVisible) newRecord.isVisible = isVisible;
 
-    updateEditRecord(Number(recordId), newRecord);
+    await updateEditRecord(Number(recordId), newRecord);
+    await queryClient.invalidateQueries({ queryKey: ['record', recordId] });
 
     navigate(`/record/${recordId}`, { replace: true });
   };
