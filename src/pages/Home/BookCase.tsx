@@ -30,6 +30,7 @@ const BookCase = ({ books }: BookCaseProps) => {
   const startY = 0.815;
   const rowHeight = 0.575;
   const cameraZPosition = window.innerWidth < 350 ? 3 : 2.5;
+  let floor = 0;
 
   useGLTF.preload(`${import.meta.env.VITE_IMG_BASE_URL || ''}/assets/bookshelf.glb`);
   const { scene } = useGLTF(`${import.meta.env.VITE_IMG_BASE_URL || ''}/assets/bookshelf.glb`);
@@ -67,19 +68,21 @@ const BookCase = ({ books }: BookCaseProps) => {
 
                 acc.previousX = xPosition + offset / 2;
 
-                acc.elements.push(
-                  <Book
-                    position={[xPosition, yPosition, 0.1]}
-                    title={title}
-                    width={width}
-                    page={page}
-                    readingRecordId={readingRecordId}
-                  />,
-                );
+                if (floor < 4)
+                  acc.elements.push(
+                    <Book
+                      position={[xPosition, yPosition, 0.1]}
+                      title={title}
+                      width={width}
+                      page={page}
+                      readingRecordId={readingRecordId}
+                    />,
+                  );
 
                 if (acc.previousX > 0.56) {
                   acc.previousY = yPosition - rowHeight;
                   acc.previousX = startX;
+                  floor += 1;
                 }
 
                 return acc;
