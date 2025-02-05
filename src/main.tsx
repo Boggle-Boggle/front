@@ -44,6 +44,7 @@ const router = createBrowserRouter([
           { path: 'edit/:recordId', element: <Edit /> },
         ],
       },
+      // 바텀 네비바가 필요 없는 영역
       { path: 'note/write', element: <Note /> },
       { path: 'myPage/nickname', element: <EditNickname /> },
       { path: 'myPage/terms', element: <Term /> },
