@@ -2,6 +2,8 @@ import Button from 'components/Button';
 import HalfScreenModal from 'components/HalfScreenModal';
 import Selector from 'pages/BookDetail/ReadingRecordForm/shared/Selector';
 
+// ㅋㅋ..날짜 하드코딩 값...
+// 25년 이내로 수정 예정이므로 25년까지로 둠..
 export const DATE_STATUS = {
   YEARS: [
     '2001년',
@@ -56,6 +58,7 @@ type SelectPeriodModalProps = {
   fetchBooks: () => void;
 };
 
+// 렌더링 할 책장을 정하는 모달
 const SelectPeriodModal = ({
   selectedYear,
   selectedMonth,
@@ -77,7 +80,9 @@ const SelectPeriodModal = ({
         <section className="flex">
           {selectedYear !== null && selectedMonth !== null && (
             <>
+              {/* 년도 */}
               <Selector list={DATE_STATUS.YEARS} selected={selectedYear} setSelected={setSelectedYear} />
+              {/* 월 */}
               <Selector list={DATE_STATUS.MONTH} selected={selectedMonth} setSelected={setSelectedMonth} />
             </>
           )}
