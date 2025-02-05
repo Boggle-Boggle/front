@@ -53,6 +53,7 @@ const Search = () => {
       ) : (
         <Header title={<>도서 검색</>} />
       )}
+      {/* 검색바 */}
       <SearchBar
         placeholder="제목 및 저자로 검색이 가능해요"
         value={value}
@@ -61,11 +62,12 @@ const Search = () => {
         allowEmptyVal={false}
         hasDebounce={false}
       />
-
+      {/* 쿼리가 있을 경우 검색결과를 로드 아니면 기본 화면 로드  */}
       {query ? (
         <SearchResult query={query} />
       ) : (
         <>
+          {/* 최근검색어 */}
           <SearchHistory />
           <div className="flex flex-col items-center justify-center pt-28">
             <img src={searchBookImg} alt="" />

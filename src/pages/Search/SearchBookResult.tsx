@@ -5,6 +5,7 @@ import { Book } from 'types/book';
 type SearchBookResultProps = {
   book: Book;
 };
+
 const SearchBookResult = ({ book }: SearchBookResultProps) => {
   const { yy, mm, dd } = formatDateAndTime(book.pubDate);
 
