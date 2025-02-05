@@ -25,16 +25,21 @@ type BookCaseProps = {
   books: BookCaseType[];
 };
 
+// 쓰리디 책장
 const BookCase = ({ books }: BookCaseProps) => {
+  // 첫 책이 꽂힐 시작 위치를 정의
   const startX = -0.62;
   const startY = 0.815;
   const rowHeight = 0.575;
+
+  // 기기별로 책장의 줌 정도를 결정
   const cameraZPosition = window.innerWidth < 350 ? 3 : 2.5;
   let floor = 0;
 
   useGLTF.preload(`${import.meta.env.VITE_IMG_BASE_URL || ''}/assets/bookshelf.glb`);
   const { scene } = useGLTF(`${import.meta.env.VITE_IMG_BASE_URL || ''}/assets/bookshelf.glb`);
 
+  // 책장신이 렌더링 될 때 책장을 화면의 중심으로 배치함
   useEffect(() => {
     if (!scene) return;
 
@@ -58,7 +63,9 @@ const BookCase = ({ books }: BookCaseProps) => {
             </Html>
           }
         >
+          {/* 쓰리디 책장을 렌더링 */}
           <primitive object={scene} />
+          {/* 책장에 책을 꽂음. 모든 책의 좌표를 계산해야 하기 때문에, books 배열을 엘리먼트로 변환한 뒤 렌더링할 수 있도록 함 */}
           {books &&
             books.reduce<{ previousX: number; previousY: number; elements: React.ReactNode[] }>(
               (acc, { title, page, readingRecordId }) => {
@@ -68,6 +75,7 @@ const BookCase = ({ books }: BookCaseProps) => {
 
                 acc.previousX = xPosition + offset / 2;
 
+                // 4줄까지만 렌더링을 하기 위해 조건문 추가
                 if (floor < 4)
                   acc.elements.push(
                     <Book
@@ -87,6 +95,7 @@ const BookCase = ({ books }: BookCaseProps) => {
 
                 return acc;
               },
+
               { previousX: startX, previousY: startY, elements: [] },
             ).elements}
         </Suspense>
