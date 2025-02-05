@@ -16,16 +16,19 @@ import LogoutModal from './LogoutModal';
 import Content from './shared/Content';
 import ContentItem from './shared/ContentItem';
 
+// 마이페이지
 const MyPage = () => {
   const { isIOS } = useDevice();
   const { isOpen, open, close, scrollPos } = useModal();
   const navigate = useNavigate();
 
+  // 마이페이지에 들어가는 정보를 받아오는 쿼리
   const { data: myPage, isLoading: isMyPageLoading } = useQuery({
     queryKey: ['myPage'],
     queryFn: () => getMyPageInfo(),
   });
 
+  // 약관 정보를 받아오는 쿼리
   const { data: terms, isLoading: isTermsLoading } = useQuery({
     queryKey: ['termsAgreement'],
     queryFn: () => getTermsAgreement(),
@@ -37,10 +40,12 @@ const MyPage = () => {
     myPage &&
     terms && (
       <div className={`bg-main px-5 ${isIOS ? 'py-[8.5rem]' : 'py-[6.5rem]'}`}>
+        {/* 상단 프로필 섹션 */}
         <section className="relative flex h-52 flex-col items-center rounded-lg bg-white pb-4 pt-20">
           <div className="absolute -top-[4.5rem] h-32 w-32 rounded-[50%] border-[3px] border-white">
             <ProfileSvg width="100%" height="100%" />
           </div>
+          {/* 버튼 클릭시 닉네임 수정페이지로 이동 */}
           <button
             className="flex items-center justify-center text-xl font-bold"
             type="button"
@@ -70,6 +75,9 @@ const MyPage = () => {
           </ul>
         </section>
 
+        {/* 하단 마이페이지 메뉴 */}
+        {/* 임의의 데이터라 수정될 예정. 일관된 스타일을 유지하기 위헤 컨텐츠, 컨텐츠 아이템 컴포넌트를 사용함 */}
+        {/* 약관, 버전정보, 서비스 탈퇴는 바텀 내비게이션이 필요없음. 바텀네비가 업슨 페이지로 각각 렌더링 */}
         <Content>
           <ContentItem>자주묻는질문</ContentItem>
           <ContentItem>문의하기</ContentItem>
@@ -79,6 +87,7 @@ const MyPage = () => {
         </Content>
         <Content>
           {terms.terms.map((term) => (
+            // 약관에 필요한 데이터를 상태로 같이 전달함
             <ContentItem handleClick={() => navigate('terms', { state: { title: term.title, content: term.content } })}>
               {term.title}
             </ContentItem>

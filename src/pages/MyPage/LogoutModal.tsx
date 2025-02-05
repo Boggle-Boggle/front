@@ -9,6 +9,8 @@ type LogoutModalProps = {
   scrollPos: number;
 };
 
+// 로그아웃을 처리하는 모달
+// 로컬스토리지를 비워준다.
 const LogoutModal = ({ isOpen, close, scrollPos }: LogoutModalProps) => {
   const { logout } = useLogout();
 

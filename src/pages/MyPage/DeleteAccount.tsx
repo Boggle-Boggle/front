@@ -17,6 +17,8 @@ const DeleteAccount = () => {
   const navigate = useNavigate();
   const handleGoBack = () => navigate('/myPage');
 
+  // 게정을 삭제하는 함수
+  // api 요청 후 로컬스토리지 값을 비운뒤 login 페이지로 리다이렉트
   const handleDeleteAccount = async () => {
     await deleteAccount();
     logout();

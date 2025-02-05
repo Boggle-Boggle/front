@@ -22,6 +22,7 @@ const EditNickname = () => {
   const { nickName, setNickName, updateNickName } = useNickNameInput();
   const { nickname } = location.state;
 
+  // 닉네임을 수정하는 함수
   const handleSave = async () => {
     const isDuplicated = await isDuplicateNickname(nickName);
 
@@ -36,6 +37,7 @@ const EditNickname = () => {
     navigate('/myPage');
   };
 
+  // 페이지 진입시 현재 닉네임을 보여주기 위함..
   useEffect(() => {
     setNickName(nickname);
   }, [nickname, setNickName]);
