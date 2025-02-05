@@ -17,6 +17,7 @@ type ExistingRecordModalProps = {
 const ExistingRecordModal = ({ isOpen, close, scrollPos, detailId }: ExistingRecordModalProps) => {
   const navigate = useNavigate();
 
+  // 이어서 작성하기 버튼을 눌러 해당 책의 기록으로 넘어감
   const handleClick = async () => {
     const readingRecord = await hasReadingRecord(detailId);
     navigate(`/record/${readingRecord}`);

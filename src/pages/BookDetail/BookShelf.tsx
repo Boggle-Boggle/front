@@ -8,6 +8,7 @@ type BookShelfProps = {
 const BookShelf = ({ cover, title }: BookShelfProps) => {
   return (
     <section className="flex h-48 flex-shrink-0 flex-col items-center">
+      {/* 책 커버 및 그림자 영역 */}
       <div className="relative z-10 flex aspect-[210/297] h-full">
         <img
           src={cover}
@@ -17,6 +18,8 @@ const BookShelf = ({ cover, title }: BookShelfProps) => {
         <img src={shadow} alt="" className="absolute -bottom-[0.125rem] right-0 z-50 w-10 translate-x-9 opacity-95" />
         <span className="absolute left-[0.325rem] top-0 z-20 h-[calc(100%-6px)] w-[0.05rem] bg-black opacity-50 blur-[2px]" />
       </div>
+
+      {/* 선반영역 */}
       <div className="relative w-full">
         <div
           style={{ clipPath: 'polygon(10% 0%, 80% 0%, 10000000% 100%, 0% 100%)' }}

@@ -11,6 +11,7 @@ type PlotDetailModalProps = {
   plot: string;
 };
 
+// 더보기모달 ;;
 const PlotDetailModal = ({ plot, isOpen, close, scrollPos }: PlotDetailModalProps) => {
   return (
     <Modal onClose={close} isOpen={isOpen} scrollPos={scrollPos} hasCloseMark={false}>
