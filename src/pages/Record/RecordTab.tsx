@@ -185,7 +185,7 @@ const RecordTab = ({ book }: RecordTabProps) => {
 
       <RecordItem
         icons={<Icon Component={RecordHide} size="sm" />}
-        title={recordData.isBookVisible ? '책장에서 보임' : '책장에서 숨김'}
+        title="책장에서 숨김"
         content={recordData.isBookVisible ? '보이기' : '숨기기'}
       />
     </section>
