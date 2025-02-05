@@ -28,6 +28,9 @@ module.exports = {
         10: '10',
         11: '11',
       },
+      fontFamily: {
+        book: ['HakgyoansimNadeuriTTF-B', 'sans-serif'],
+      },
     },
   },
   // plugins: [require('@tailwindcss/line-clamp')],

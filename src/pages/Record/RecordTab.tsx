@@ -108,27 +108,29 @@ const RecordTab = ({ book }: RecordTabProps) => {
       />
 
       <section className={`grid ${isToggledDate ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'} transition-all duration-200`}>
-        {recordData.readDateList.map((date, idx) => {
-          const startDate = date.startReadDate && formatDateTimeToDate(date.startReadDate);
-          const endDate = date.endReadDate && formatDateTimeToDate(date.endReadDate);
+        <ul className="overflow-hidden">
+          {recordData.readDateList.map((date, idx) => {
+            const startDate = date.startReadDate && formatDateTimeToDate(date.startReadDate);
+            const endDate = date.endReadDate && formatDateTimeToDate(date.endReadDate);
 
-          if (!startDate) return;
-          return (
-            <li key={date.readDateId} className="overflow-hidden">
-              <RecordItem
-                title={
-                  <div className="inline-flex">
-                    <p className="px-[0.376rem] text-sm">{idx + 1}회독</p>
-                    <span className="rounded-3xl border border-accent px-1 py-[1px] text-xs text-accent">
-                      {endDate ? '다읽음' : '읽는중'}
-                    </span>
-                  </div>
-                }
-                content={`${startDate} ~ ${endDate ?? '읽는중'}`}
-              />
-            </li>
-          );
-        })}
+            if (!startDate) return;
+            return (
+              <li key={date.readDateId}>
+                <RecordItem
+                  title={
+                    <div className="inline-flex">
+                      <p className="px-[0.376rem] text-sm">{idx + 1}회독</p>
+                      <span className="rounded-3xl border border-accent px-1 py-[1px] text-xs text-accent">
+                        {endDate ? '다읽음' : '읽는중'}
+                      </span>
+                    </div>
+                  }
+                  content={`${startDate} ~ ${endDate ?? '읽는중'}`}
+                />
+              </li>
+            );
+          })}
+        </ul>
       </section>
 
       <RecordItem
@@ -183,7 +185,7 @@ const RecordTab = ({ book }: RecordTabProps) => {
 
       <RecordItem
         icons={<Icon Component={RecordHide} size="sm" />}
-        title={recordData.isBookVisible ? '책장에서 보임' : '책장에서 숨김'}
+        title="책장에서 숨김"
         content={recordData.isBookVisible ? '보이기' : '숨기기'}
       />
     </section>

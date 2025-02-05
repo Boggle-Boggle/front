@@ -32,7 +32,17 @@ const LibraryEditedModal = ({
 
   const { mutate } = useMutation({
     mutationFn: async () => {
+      let isDuplicate = false;
       if (!values) return;
+
+      libraries.libraryList.forEach((library) => {
+        if (library.libraryName === values) isDuplicate = true;
+      });
+
+      if (isDuplicate) {
+        alert('동일한 이름을 가진 서재가 있어요');
+        return;
+      }
       await addLibrary(values);
     },
     onSuccess: () => {
@@ -84,6 +94,11 @@ const LibraryEditedModal = ({
         <div className="m-4 mb-2">사용자 지정 서재</div>
         <div className="h-[calc(100%_-_9.5rem)] overflow-y-auto pb-8">
           <Content>
+            {libraries.libraryList.length === 0 && (
+              <ContentItem>
+                <p className="opacity-50">사용자 지정 서재 없음</p>
+              </ContentItem>
+            )}
             {libraries.libraryList.map(({ libraryName, libraryId }) => (
               <ContentItem>
                 <li key={libraryId} className="flex h-full items-center">

@@ -18,6 +18,7 @@ import { CommonBack, CommonUp, ReadingNotePageInput, ReadingNoteTags, ReadingNot
 import bookmarkImg from 'assets/library/note_bookmark.png';
 
 import DatePickModal from './DatePickModal';
+import DeleteModal from './DeleteModal';
 import PageModal from './PageModal';
 import TagModal from './TagModal';
 
@@ -49,7 +50,18 @@ const Note = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const { isOpen, open, close, scrollPos } = useModal();
+  const {
+    isOpen: isDateModalOpen,
+    open: openDateModal,
+    close: closeDateModal,
+    scrollPos: dateModalScrollPos,
+  } = useModal();
+  const {
+    isOpen: isDeleteModalOpen,
+    open: openDeleteModal,
+    close: closeDeleteModal,
+    scrollPos: deleteModalScrollPos,
+  } = useModal();
   const { isIOS } = useDevice();
 
   const { recordId, note, readDateIndex } = location.state;
@@ -126,7 +138,7 @@ const Note = () => {
   const handleDeleteNote = async () => {
     if (noteId) await deleteNote(recordId, noteId);
 
-    navigate(`/record/${recordId}`, { replace: true });
+    navigate(`/record/${recordId}`, { state: '독서노트', replace: true });
   };
 
   // 첫 화면 렌더링 시 초기값을 세팅하는 이펙트
@@ -226,7 +238,11 @@ const Note = () => {
           />
           {page && page !== 0 && <p className="absolute right-2 pt-2 opacity-50">{`p.${page}`}</p>}
           {pages && <p className="absolute right-2 pt-2 opacity-50">{`p.${pages.startPage}-p.${pages.endPage}`}</p>}
-          <button className="w-full px-5 py-3 text-start font-semibold opacity-50" type="button" onClick={open}>
+          <button
+            className="w-full px-5 py-3 text-start font-semibold opacity-50"
+            type="button"
+            onClick={openDateModal}
+          >
             {`${selectedDate[0] + 2000}년 ${selectedDate[1]}월 ${selectedDate[2]}일`}
           </button>
           <textarea
@@ -268,19 +284,27 @@ const Note = () => {
               <Icon Component={ReadingNoteTags} size="sm" style={{ color: '#9B9999' }} />
             </button>
           </section>
-          <button className="px-3 py-2" onClick={handleDeleteNote} type="button" aria-label="독서노트 삭제하기">
+          <button className="px-3 py-2" onClick={openDeleteModal} type="button" aria-label="독서노트 삭제하기">
             <Icon Component={ReadingNoteTrash} size="sm" style={{ color: '#9B9999' }} />
           </button>
           {/* TODO : 글자수 처리 로직 추후 구현 */}
           {/* <span className="pr-3 text-sm">{content?.length ?? 0}자/256자</span> */}
         </div>
-        {isOpen && (
+        {isDateModalOpen && (
           <DatePickModal
-            isOpen={isOpen}
-            close={close}
-            scrollPos={scrollPos}
+            isOpen={isDateModalOpen}
+            close={closeDateModal}
+            scrollPos={dateModalScrollPos}
             setSelectedDate={setSelectedDate}
             initialDate={selectedDate}
+          />
+        )}
+        {isDeleteModalOpen && (
+          <DeleteModal
+            close={closeDeleteModal}
+            isOpen={isDeleteModalOpen}
+            scrollPos={deleteModalScrollPos}
+            deleteNote={handleDeleteNote}
           />
         )}
         {isEditPage && (

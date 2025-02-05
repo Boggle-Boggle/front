@@ -28,9 +28,11 @@ const NoteItem = ({ note, readDateIndex }: NoteItemProps) => {
       <p className="font-bold">{title}</p>
       <p className="pb-4 pt-2 text-xs opacity-50">
         {selectedDate && formatDateTimeToDate(selectedDate)}
-        {'\r'}
-        {page && `P.${page}`}
-        {pages && `P.${pages.startPage}~P.${pages.endPage}`}
+
+        <span className="pl-2">
+          {page && `P.${page}`}
+          {pages && `P.${pages.startPage}~P.${pages.endPage}`}
+        </span>
       </p>
       <p className="pb-[0.875rem] text-xs leading-5">{content}</p>
 
@@ -41,7 +43,8 @@ const NoteItem = ({ note, readDateIndex }: NoteItemProps) => {
               Component={ReadingNoteTags}
               size="xs"
               style={{ display: 'inline', marginBottom: '3px', color: '#E6B9A6' }}
-            />{' '}
+            />
+            {'   '}
             태그
           </p>
           {tags.map((tag) => (

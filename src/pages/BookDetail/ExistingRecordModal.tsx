@@ -1,5 +1,9 @@
+import { useNavigate } from 'react-router-dom';
+
 import Button from 'components/Button';
 import Modal from 'components/Modal';
+
+import { hasReadingRecord } from 'services/search';
 
 import recordExistImg from 'assets/img/record_exist.png';
 
@@ -7,11 +11,15 @@ type ExistingRecordModalProps = {
   isOpen: boolean;
   close: () => void;
   scrollPos: number;
+  detailId: string;
 };
 
-const ExistingRecordModal = ({ isOpen, close, scrollPos }: ExistingRecordModalProps) => {
-  const handleClick = () => {
-    // TODO : console.log('이어서 작성하기');
+const ExistingRecordModal = ({ isOpen, close, scrollPos, detailId }: ExistingRecordModalProps) => {
+  const navigate = useNavigate();
+
+  const handleClick = async () => {
+    const readingRecord = await hasReadingRecord(detailId);
+    navigate(`/record/${readingRecord}`);
   };
 
   return (

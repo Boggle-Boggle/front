@@ -42,7 +42,7 @@ const LibrarySelectModal = ({
       }}
     >
       <section>
-        <div className="h-headerAnd z-30 grid w-full grid-cols-[30px_auto_30px] items-center px-4">
+        <div className="z-30 grid h-headerAnd w-full grid-cols-[30px_auto_30px] items-center px-4">
           <span className="justify-self-start" />
           <span className="w-full justify-self-center text-center font-semibold">서재</span>
           <button className="justify-self-end opacity-50" type="button" onClick={handleOpenEdit}>
@@ -61,7 +61,10 @@ const LibrarySelectModal = ({
                   onClick={() => handleClick({ status, libraryName, bookCount })}
                 >
                   <ContentItem>
-                    {libraryName}
+                    <p>
+                      {libraryName}
+                      <span className="px-1 opacity-50">({bookCount})</span>
+                    </p>
                     <CheckBox isChecked={selectedLibrary.libraryName === libraryName} />
                   </ContentItem>
                 </button>
@@ -70,6 +73,11 @@ const LibrarySelectModal = ({
           </Content>
           <div className="m-4 mb-2">사용자 지정 서재</div>
           <Content>
+            {customLibrary.length === 0 && (
+              <ContentItem>
+                <p className="opacity-50">사용자 지정 서재 없음</p>
+              </ContentItem>
+            )}
             {customLibrary.map(({ libraryId, libraryName, bookCount }) => (
               <li key={libraryId}>
                 <button
@@ -78,7 +86,10 @@ const LibrarySelectModal = ({
                   onClick={() => handleClick({ libraryId, libraryName, bookCount })}
                 >
                   <ContentItem>
-                    {libraryName}
+                    <p>
+                      {libraryName}
+                      <span className="px-1 opacity-50">({bookCount})</span>
+                    </p>
                     <CheckBox isChecked={'libraryId' in selectedLibrary && selectedLibrary.libraryId === libraryId} />
                   </ContentItem>
                 </button>
