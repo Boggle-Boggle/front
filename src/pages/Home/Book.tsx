@@ -41,7 +41,6 @@ const Book = ({ position, title, width, page, readingRecordId }: BookProps) => {
   const filteredTitle = title.replace(/[^a-zA-Z0-9가-힣 ?!]/g, '');
 
   const handleNavigate = () => {
-    alert('3');
     navigate(`/record/${readingRecordId}`);
   };
 
