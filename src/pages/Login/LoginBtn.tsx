@@ -36,8 +36,8 @@ const LoginBtn = ({ type }: LoginBtnProps) => {
   };
 
   return (
-    <button type="button" className="h-12 w-12" aria-label={`${title}로그인`} onClick={handleClick}>
-      <img src={imgUrl} alt="" className="h-full w-full rounded-[50%] bg-white shadow-xl" />
+    <button type="button" aria-label={`${title}로그인`} onClick={handleClick}>
+      <img src={imgUrl} alt="" className="h-12 w-12 rounded-[50%] shadow-xl" />
     </button>
   );
 };
