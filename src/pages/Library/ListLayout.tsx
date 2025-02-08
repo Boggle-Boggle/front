@@ -36,7 +36,7 @@ const ListLayout = ({ allBooks }: ListLayoutProps) => {
                   alt={`${title} 북커버`}
                   className="absolute bottom-0 left-4 aspect-[12/16] h-[6.825rem] shadow-[3px_0px_4px_0_rgba(0,0,0,0.25)]"
                 />
-                <span className="absolute bottom-0 left-6 block h-[6.825rem] w-[0.0625rem] bg-black opacity-50 blur-[2px]" />
+                <span className="absolute bottom-0 left-5 block h-[6.825rem] w-[0.05rem] bg-black opacity-50 blur-[2px]" />
                 <div className="ml-[7.25rem] flex h-full flex-col items-start justify-between py-[0.5rem]">
                   <Star rating={rating ?? 0} size="sm" />
                   <p className="line-clamp-2 justify-center pr-2 text-start text-sm font-semibold leading-5">{title}</p>
