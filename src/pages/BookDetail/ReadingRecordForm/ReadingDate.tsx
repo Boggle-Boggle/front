@@ -68,7 +68,7 @@ const ReadingDate = ({ isReading, startDate, endDate, setStartDate, setEndDate, 
                 <span className="ml-2 opacity-60">읽기 시작한 날</span>
               </div>
               <div className="flex items-center text-base">
-                {`${startDate[0]}년 ${startDate[1]}월 ${startDate[2]}일`}
+                {`${startDate[0] >= 2000 ? startDate[0] : 2000 + startDate[0]}년 ${startDate[1]}월 ${startDate[2]}일`}
                 <Icon Component={CommonNext} style={{ width: '16px', display: 'inline-block' }} />
               </div>
             </>

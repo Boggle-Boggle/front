@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 import CheckBox from 'components/CheckBox';
 import Icon from 'components/Icon';
 
@@ -9,6 +11,7 @@ import { RecordDate, StatusType } from 'types/record';
 
 import { CommonPlus, CommonPencil } from 'assets/icons';
 
+import AddReadingDateModalProps from './AddReadingDateModal';
 import EditReadingDateModal from './EditReadingDateModal';
 
 type EditReadingDatePros = {
@@ -17,11 +20,19 @@ type EditReadingDatePros = {
 };
 
 const EditReadingDate = ({ readDates, setReadDates }: EditReadingDatePros) => {
-  const { isOpen, close, open } = useModal();
+  const { isOpen: isOpenAddModal, close: closeAddModal, open: openAddModal } = useModal();
+  const { isOpen: isOpenEditModal, close: closeEditModal, open: openEditModal } = useModal();
+
+  const [editDateIndex, setEditDateIndex] = useState<number>(0);
 
   const handleDeleteDate = async (deleteIdx: number) => {
     const newReadDates = readDates.filter((_, idx) => deleteIdx !== idx);
     setReadDates(newReadDates);
+  };
+
+  const handleEditDate = (index: number) => {
+    setEditDateIndex(index);
+    openEditModal();
   };
 
   return (
@@ -29,7 +40,12 @@ const EditReadingDate = ({ readDates, setReadDates }: EditReadingDatePros) => {
       <div className="border-t-[3px] border-main">
         <p className="relative flex h-14 items-center justify-between px-6 font-semibold">
           독서기간
-          <button className="text-xs font-normal opacity-50" type="button" aria-label="독서기간 추가" onClick={open}>
+          <button
+            className="text-xs font-normal opacity-50"
+            type="button"
+            aria-label="독서기간 추가"
+            onClick={openAddModal}
+          >
             <Icon Component={CommonPlus} size="sm" />
           </button>
         </p>
@@ -49,14 +65,26 @@ const EditReadingDate = ({ readDates, setReadDates }: EditReadingDatePros) => {
                 </span>
                 <div className="absolute right-6 flex items-center text-sm opacity-50">
                   {`${startDate} - ${endDate ?? '읽는중'}`}
-                  <Icon Component={CommonPencil} size="xs" style={{ marginLeft: '3px' }} />
+                  <button type="button" aria-label="회독 정보 수정" onClick={() => handleEditDate(idx)}>
+                    <Icon Component={CommonPencil} size="xs" style={{ marginLeft: '3px' }} />
+                  </button>
                 </div>
               </li>
             );
           })}
         </ul>
       </div>
-      {isOpen && <EditReadingDateModal setReadDates={setReadDates} readDates={readDates} close={close} />}
+      {isOpenAddModal && (
+        <AddReadingDateModalProps setReadDates={setReadDates} readDates={readDates} close={closeAddModal} />
+      )}
+      {isOpenEditModal && (
+        <EditReadingDateModal
+          editDateIndex={editDateIndex}
+          setReadDates={setReadDates}
+          readDates={readDates}
+          close={closeEditModal}
+        />
+      )}
     </>
   );
 };

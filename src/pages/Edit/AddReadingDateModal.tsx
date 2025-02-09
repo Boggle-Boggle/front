@@ -1,25 +1,24 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import Button from 'components/Button';
 import HalfScreenModal from 'components/HalfScreenModal';
 import Icon from 'components/Icon';
 import DateSelector from 'pages/BookDetail/ReadingRecordForm/shared/DateSelector';
 
-import { formatDate, formatDateAndTime } from 'utils/format';
+import { formatDate } from 'utils/format';
 
 import { DateType, RecordDate, StatusType } from 'types/record';
 
 import { RecordSelectDate, RecordPeriod, CommonNext, RecordReading, RecordFinishedReading } from 'assets/icons';
 
-type EditReadingDateModalProps = {
-  editDateIndex: number;
+type AddReadingDateModalProps = {
   readDates: (RecordDate & { status: StatusType })[];
   setReadDates: React.Dispatch<React.SetStateAction<(RecordDate & { status: StatusType })[]>>;
   close: () => void;
 };
 
-const EditReadingDateModal = ({ editDateIndex, readDates, setReadDates, close }: EditReadingDateModalProps) => {
-  const [selected, setSelected] = useState<'reading' | 'completed'>('completed');
+const AddReadingDateModal = ({ readDates, setReadDates, close }: AddReadingDateModalProps) => {
+  const [selected, setSelected] = useState<'reading' | 'complete'>('complete');
   const [startDate, setStartDate] = useState<DateType>(null);
   const [endDate, setEndDate] = useState<DateType>(null);
   const [isChangingStartDate, setIsChangeStartDate] = useState<boolean>(false);
@@ -33,20 +32,14 @@ const EditReadingDateModal = ({ editDateIndex, readDates, setReadDates, close }:
         return;
       }
 
-      const newReadDates = readDates.map((readDate, idx) => {
-        if (idx !== editDateIndex) return readDate;
+      const newReadDate: RecordDate & { status: StatusType } = {
+        readDateId: null,
+        status: 'reading',
+        startReadDate: formatDate(...startDate),
+        endReadDate: null,
+      };
 
-        const newReadDate: RecordDate & { status: StatusType } = {
-          readDateId: readDates[editDateIndex].readDateId,
-          status: 'reading',
-          startReadDate: formatDate(...startDate),
-          endReadDate: null,
-        };
-
-        return newReadDate;
-      });
-
-      setReadDates([...newReadDates]);
+      setReadDates([...readDates, newReadDate]);
 
       close();
 
@@ -63,44 +56,20 @@ const EditReadingDateModal = ({ editDateIndex, readDates, setReadDates, close }:
     const end = new Date(endDate[0], endDate[1] - 1, endDate[2]);
 
     if (start <= end) {
-      const newReadDates = readDates.map((readDate, idx) => {
-        if (idx !== editDateIndex) return readDate;
+      const newReadDate: RecordDate & { status: StatusType } = {
+        readDateId: null,
+        status: 'completed',
+        startReadDate: formatDate(...startDate),
+        endReadDate: formatDate(...endDate),
+      };
 
-        const newReadDate: RecordDate & { status: StatusType } = {
-          readDateId: readDates[editDateIndex].readDateId,
-          status: 'completed',
-          startReadDate: formatDate(...startDate),
-          endReadDate: formatDate(...endDate),
-        };
-
-        return newReadDate;
-      });
-
-      setReadDates([...newReadDates]);
+      setReadDates([...readDates, newReadDate]);
 
       close();
     } else {
       alert('종료날짜는 시작날짜 이후여야 합니다.');
     }
   };
-
-  useEffect(() => {
-    const { status, startReadDate, endReadDate } = readDates[editDateIndex];
-
-    if (status === 'pending') return;
-
-    setSelected(status);
-
-    if (startReadDate) {
-      const { yy: startYY, mm: startMM, dd: startDD } = formatDateAndTime(startReadDate);
-      setStartDate([+startYY, +startMM, +startDD]);
-    }
-
-    if (endReadDate) {
-      const { yy: endYY, mm: endMM, dd: endDD } = formatDateAndTime(endReadDate);
-      setEndDate([+endYY, +endMM, +endDD]);
-    }
-  }, [editDateIndex, readDates]);
 
   return (
     <>
@@ -113,14 +82,14 @@ const EditReadingDateModal = ({ editDateIndex, readDates, setReadDates, close }:
               <p className="pb-1 pt-2 text-lg font-bold">진행도</p>
               <div className="flex w-full justify-between text-sm">
                 <button
-                  className={`flex h-[4.5rem] w-[48%] flex-col justify-around rounded-[10px] border-2 px-4 py-2 ${selected === 'completed' ? 'border-accent bg-accent bg-opacity-10 text-accent' : 'border-main'}`}
+                  className={`flex h-[4.5rem] w-[48%] flex-col justify-around rounded-[10px] border-2 px-4 py-2 ${selected === 'complete' ? 'border-accent bg-accent bg-opacity-10 text-accent' : 'border-main'}`}
                   type="button"
-                  onClick={() => setSelected('completed')}
+                  onClick={() => setSelected('complete')}
                 >
                   <Icon
                     Component={RecordReading}
                     style={{
-                      color: selected === 'completed' ? '#E6B9A6' : 'inherit',
+                      color: selected === 'complete' ? '#E6B9A6' : 'inherit',
                       display: 'inline-block',
                     }}
                   />
@@ -156,7 +125,7 @@ const EditReadingDateModal = ({ editDateIndex, readDates, setReadDates, close }:
                         <span className="ml-2 opacity-60">읽기 시작한 날</span>
                       </div>
                       <div className="text-base">
-                        {`${startDate[0] >= 2000 ? startDate[0] : 2000 + startDate[0]}년 ${startDate[1]}월 ${startDate[2]}일`}
+                        {`${startDate[0]}년 ${startDate[1]}월 ${startDate[2]}일`}
                         <Icon Component={CommonNext} size="xs" style={{ display: 'inline-block' }} />
                       </div>
                     </>
@@ -237,4 +206,4 @@ const EditReadingDateModal = ({ editDateIndex, readDates, setReadDates, close }:
   );
 };
 
-export default EditReadingDateModal;
+export default AddReadingDateModal;
