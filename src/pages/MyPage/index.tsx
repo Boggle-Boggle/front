@@ -74,11 +74,13 @@ const MyPage = () => {
         </section>
 
         <Content>
-          <ContentItem>자주묻는질문</ContentItem>
-          <ContentItem>문의하기</ContentItem>
+          <a href={import.meta.env.VITE_MYPAGE_QNA_URL} target="_blank" rel="noopener noreferrer">
+            <ContentItem>자주묻는질문</ContentItem>
+          </a>
+          <a href={import.meta.env.VITE_MYPAGE_FORM_URL} target="_blank" rel="noopener noreferrer">
+            <ContentItem>문의하기</ContentItem>
+          </a>
           <ContentItem handleClick={() => navigate('versionInfo')}>버전정보</ContentItem>
-          <ContentItem>개발자 소개</ContentItem>
-          <ContentItem>평점</ContentItem>
         </Content>
         <Content>
           {terms.terms.map((term) => (
@@ -86,7 +88,6 @@ const MyPage = () => {
               {term.title}
             </ContentItem>
           ))}
-          <ContentItem>오픈소스 라이선스</ContentItem>
         </Content>
         <Content>
           <ContentItem handleClick={open}>로그아웃</ContentItem>
