@@ -1,5 +1,3 @@
-import { useQueryClient } from '@tanstack/react-query';
-
 import { useState } from 'react';
 
 import Button from 'components/Button';
@@ -7,7 +5,6 @@ import HalfScreenModal from 'components/HalfScreenModal';
 import Icon from 'components/Icon';
 import DateSelector from 'pages/BookDetail/ReadingRecordForm/shared/DateSelector';
 
-import { updateEditRecord } from 'services/record';
 import { formatDate } from 'utils/format';
 
 import { DateType, RecordDate, StatusType } from 'types/record';
@@ -15,19 +12,17 @@ import { DateType, RecordDate, StatusType } from 'types/record';
 import { RecordSelectDate, RecordPeriod, CommonNext, RecordReading, RecordFinishedReading } from 'assets/icons';
 
 type EditReadingDateModalProps = {
-  recordId: number;
   readDates: (RecordDate & { status: StatusType })[];
+  setReadDates: React.Dispatch<React.SetStateAction<(RecordDate & { status: StatusType })[]>>;
   close: () => void;
 };
 
-const EditReadingDateModal = ({ recordId, readDates, close }: EditReadingDateModalProps) => {
+const EditReadingDateModal = ({ readDates, setReadDates, close }: EditReadingDateModalProps) => {
   const [selected, setSelected] = useState<'reading' | 'complete'>('complete');
   const [startDate, setStartDate] = useState<DateType>(null);
   const [endDate, setEndDate] = useState<DateType>(null);
   const [isChangingStartDate, setIsChangeStartDate] = useState<boolean>(false);
   const [isChangingEndDate, setIsChangeEndDate] = useState<boolean>(false);
-
-  const queryClient = useQueryClient();
 
   const handleAddReadingDate = async () => {
     if (selected === 'reading') {
@@ -44,8 +39,7 @@ const EditReadingDateModal = ({ recordId, readDates, close }: EditReadingDateMod
         endReadDate: null,
       };
 
-      await updateEditRecord(Number(recordId), { readDateList: [...readDates, newReadDate] });
-      await queryClient.invalidateQueries({ queryKey: ['edit', recordId.toString()] });
+      setReadDates([...readDates, newReadDate]);
 
       close();
 
@@ -69,8 +63,7 @@ const EditReadingDateModal = ({ recordId, readDates, close }: EditReadingDateMod
         endReadDate: formatDate(...endDate),
       };
 
-      await updateEditRecord(Number(recordId), { readDateList: [...readDates, newReadDate] });
-      await queryClient.invalidateQueries({ queryKey: ['edit', recordId.toString()] });
+      setReadDates([...readDates, newReadDate]);
 
       close();
     } else {
