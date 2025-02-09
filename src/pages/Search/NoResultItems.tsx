@@ -1,4 +1,4 @@
-import bookNoResultImg from 'assets/img/book_no_result.png';
+import bookNoResultImg from 'assets/img/book_no_result.svg';
 
 const NoResultItems = () => {
   return (

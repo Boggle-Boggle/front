@@ -5,7 +5,7 @@ import Modal from 'components/Modal';
 
 import { hasReadingRecord } from 'services/search';
 
-import recordExistImg from 'assets/img/record_exist.png';
+import recordExistImg from 'assets/img/record_exist.svg';
 
 type ExistingRecordModalProps = {
   isOpen: boolean;
