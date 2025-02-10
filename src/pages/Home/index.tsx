@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import Header from 'components/Header';
 import Icon from 'components/Icon';
@@ -14,8 +14,8 @@ import BookCase from './BookCase';
 import SelectPeriodModal from './SelectPeriodModal';
 
 const Home = () => {
-  const [selectedYear, setSelectedYear] = useState<number | null>(null);
-  const [selectedMonth, setSelectedMonth] = useState<number | null>(null);
+  const [selectedYear, setSelectedYear] = useState<number | null>(25);
+  const [selectedMonth, setSelectedMonth] = useState<number | null>(13);
 
   const { data: books, refetch } = useQuery({
     queryKey: ['book', null, null],
@@ -23,15 +23,6 @@ const Home = () => {
   });
 
   const { isOpen, close, open } = useModal();
-
-  useEffect(() => {
-    const date = new Date();
-    const initialYear = date.getFullYear() % 100;
-    const initialMonth = date.getMonth() + 1;
-
-    setSelectedYear(initialYear);
-    setSelectedMonth(initialMonth);
-  }, []);
 
   return (
     <>
