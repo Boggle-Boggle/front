@@ -129,7 +129,7 @@ const Libraries = ({ libraries, selected, setSelected, onPrev, onNext }: Library
           <li className="mb-2 flex w-full justify-between rounded-[10px] bg-white p-4 text-[15px] shadow-md">
             {library}
             <button type="button" onClick={() => handleDelete(library)} aria-label={`${library} 서재 삭제`}>
-              <Icon Component={CommonPlus} size="xs" style={{ width: '16px', marginRight: '4px' }} />
+              <CheckBox type="minus" color="red" />
             </button>
           </li>
         ))}
