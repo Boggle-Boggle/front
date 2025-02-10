@@ -93,12 +93,12 @@ const EditReadingDateModal = ({ editDateIndex, readDates, setReadDates, close }:
 
     if (startReadDate) {
       const { yy: startYY, mm: startMM, dd: startDD } = formatDateAndTime(startReadDate);
-      setStartDate([+startYY, +startMM, +startDD]);
+      setStartDate([+startYY > 2000 ? +startYY - 2000 : +startYY, +startMM, +startDD]);
     }
 
     if (endReadDate) {
       const { yy: endYY, mm: endMM, dd: endDD } = formatDateAndTime(endReadDate);
-      setEndDate([+endYY, +endMM, +endDD]);
+      setEndDate([+endYY > 2000 ? +endYY - 2000 : +endYY, +endMM, +endDD]);
     }
   }, [editDateIndex, readDates]);
 

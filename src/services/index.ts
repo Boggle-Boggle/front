@@ -47,7 +47,7 @@ api.interceptors.response.use(
 
     const { retryCount, incrementRetry, resetRetry } = useRetryStore.getState();
 
-    // const { code } = response.data;
+    const { code } = response.data;
     if (response.status === 401) {
       if (retryCount < 4) {
         incrementRetry();
@@ -70,6 +70,12 @@ api.interceptors.response.use(
         alert('로그인 기한이 만료되었어요. 다시 로그인 해주세요');
         logout();
       }
+    }
+
+    // 게스트로그인 / 탈퇴유저
+    if (code === 16003 || code === 13001) {
+      alert('약관에 동의하지 않았어요. 회원가입을 다시 진행해주세요');
+      logout();
     }
 
     return Promise.reject(error);
