@@ -7,7 +7,7 @@ import { addRecord } from 'services/record';
 
 import { RecordType } from 'types/record';
 
-import recordSaveImg from 'assets/img/record_save.png';
+import recordSaveImg from 'assets/img/record_save.svg';
 
 import SubTitle from './shared/SubTitle';
 import Title from './shared/Title';

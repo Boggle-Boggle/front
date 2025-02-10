@@ -10,7 +10,7 @@ import SearchBar from 'components/SearchBar';
 import { addSearchHistory } from 'services/search';
 
 import { CommonBack } from 'assets/icons';
-import searchBookImg from 'assets/img/search_book.png';
+import searchBookImg from 'assets/img/search_book.svg';
 
 import SearchHistory from './SearchHistory';
 import SearchResult from './SearchResult';

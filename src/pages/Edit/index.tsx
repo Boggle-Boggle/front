@@ -49,6 +49,7 @@ const Edit = () => {
 
     await updateEditRecord(Number(recordId), newRecord);
     await queryClient.invalidateQueries({ queryKey: ['record', recordId] });
+    await queryClient.invalidateQueries({ queryKey: ['edit', recordId] });
 
     navigate(`/record/${recordId}`, { replace: true });
   };
@@ -80,7 +81,7 @@ const Edit = () => {
 
       {data && (
         <section className={`${isIOS ? 'height-contentIOS' : 'height-contentAnd'} overflow-y-scroll pb-20`}>
-          <EditReadingDate recordId={Number(recordId)} readDates={readDates} />
+          <EditReadingDate readDates={readDates} setReadDates={setReadDates} />
           <EditLibraries libraries={libraries!} setLibraries={setLibraries} />
           <EditRating rating={rating} setRating={setRating} />
           <EditVisible isVisible={isVisible} setIsVisible={setIsVisible} />

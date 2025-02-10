@@ -9,7 +9,7 @@ import useDevice from 'hooks/useDevice';
 import { deleteAccount } from 'services/user';
 
 import { CommonBack } from 'assets/icons';
-import deleteAccountImg from 'assets/img/delete_account.png';
+import deleteAccountImg from 'assets/img/delete_account.svg';
 
 const DeleteAccount = () => {
   const { isIOS } = useDevice();

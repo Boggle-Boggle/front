@@ -100,7 +100,7 @@ const Record = () => {
               </button>
               {isMemoToggled && (
                 <Memo handleClose={() => setIsMemoToggled(false)}>
-                  <div className="absolute right-0 z-30 flex h-20 w-24 flex-col rounded-[4px] bg-main text-sm shadow-[0_4px_4px_0_rgba(0,0,0,0.25)]">
+                  <div className="absolute right-3 z-30 flex h-20 w-24 flex-col rounded-[4px] bg-main text-sm shadow-[0_4px_4px_0_rgba(0,0,0,0.25)]">
                     <button
                       type="button"
                       className="flex-grow"

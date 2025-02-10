@@ -12,6 +12,7 @@ import useNickNameInput from 'hooks/useNickNameInput';
 import { isDuplicateNickname, updateNickname } from 'services/user';
 
 import { CommonBack } from 'assets/icons';
+import ProfileSvg from 'assets/img/profile.svg';
 
 const EditNickname = () => {
   const navigate = useNavigate();
@@ -52,13 +53,9 @@ const EditNickname = () => {
       <section
         className={`${isIOS ? 'height-without-headerIOS' : 'height-without-headerAnd'} flex flex-col items-center px-8`}
       >
-        <img
-          className="mb-5 h-36 w-36 rounded-full bg-white shadow-lg"
-          src="https://item.kakaocdn.net/do/b563e153db82fde06e1423472ccf192c960f4ab09fe6e38bae8c63030c9b37f9"
-          alt=""
-        />
+        <img className="mb-5 h-36 w-36 rounded-full bg-white object-cover shadow-lg" src={ProfileSvg} alt="" />
         <div className="my-7 h-10 w-full border-b-4 border-accent">
-          <textarea
+          <input
             className="h-full w-full text-center text-lg font-semibold"
             value={nickName}
             onChange={(e) => updateNickName(e.target.value)}

@@ -10,7 +10,7 @@ import useModal from 'hooks/useModal';
 import { getMyPageInfo, getTermsAgreement } from 'services/user';
 
 import { CommonPencil, MyPageBooks, MyPageMonth, MyPageNotes } from 'assets/icons';
-import ProfileSvg from 'assets/img/profile.svg?react';
+import ProfileSvg from 'assets/img/profile.svg';
 
 import LogoutModal from './LogoutModal';
 import Content from './shared/Content';
@@ -38,9 +38,12 @@ const MyPage = () => {
     terms && (
       <div className={`bg-main px-5 ${isIOS ? 'py-[8.5rem]' : 'py-[6.5rem]'}`}>
         <section className="relative flex h-52 flex-col items-center rounded-lg bg-white pb-4 pt-20">
-          <div className="absolute -top-[4.5rem] h-32 w-32 rounded-[50%] border-[3px] border-white">
-            <ProfileSvg width="100%" height="100%" />
-          </div>
+          <img
+            src={ProfileSvg}
+            className="absolute -top-[4.5rem] h-32 w-32 rounded-[50%] border-[5px] border-white object-cover"
+            alt=""
+          />
+
           <button
             className="flex items-center justify-center text-xl font-bold"
             type="button"
@@ -71,11 +74,13 @@ const MyPage = () => {
         </section>
 
         <Content>
-          <ContentItem>자주묻는질문</ContentItem>
-          <ContentItem>문의하기</ContentItem>
+          <a href={import.meta.env.VITE_MYPAGE_QNA_URL} target="_blank" rel="noopener noreferrer">
+            <ContentItem>자주묻는질문</ContentItem>
+          </a>
+          <a href={import.meta.env.VITE_MYPAGE_FORM_URL} target="_blank" rel="noopener noreferrer">
+            <ContentItem>문의하기</ContentItem>
+          </a>
           <ContentItem handleClick={() => navigate('versionInfo')}>버전정보</ContentItem>
-          <ContentItem>개발자 소개</ContentItem>
-          <ContentItem>평점</ContentItem>
         </Content>
         <Content>
           {terms.terms.map((term) => (
@@ -83,7 +88,6 @@ const MyPage = () => {
               {term.title}
             </ContentItem>
           ))}
-          <ContentItem>오픈소스 라이선스</ContentItem>
         </Content>
         <Content>
           <ContentItem handleClick={open}>로그아웃</ContentItem>

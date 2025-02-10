@@ -1,10 +1,9 @@
-import { useQueryClient } from '@tanstack/react-query';
+import { useState } from 'react';
 
 import CheckBox from 'components/CheckBox';
 import Icon from 'components/Icon';
 
 import useModal from 'hooks/useModal';
-import { updateEditRecord } from 'services/record';
 import { formatDateTimeToDate } from 'utils/format';
 
 import { STATUS } from 'types/library';
@@ -12,22 +11,28 @@ import { RecordDate, StatusType } from 'types/record';
 
 import { CommonPlus, CommonPencil } from 'assets/icons';
 
+import AddReadingDateModalProps from './AddReadingDateModal';
 import EditReadingDateModal from './EditReadingDateModal';
 
 type EditReadingDatePros = {
-  recordId: number;
   readDates: (RecordDate & { status: StatusType })[];
+  setReadDates: React.Dispatch<React.SetStateAction<(RecordDate & { status: StatusType })[]>>;
 };
 
-const EditReadingDate = ({ recordId, readDates }: EditReadingDatePros) => {
-  const { isOpen, close, open } = useModal();
-  const queryClient = useQueryClient();
+const EditReadingDate = ({ readDates, setReadDates }: EditReadingDatePros) => {
+  const { isOpen: isOpenAddModal, close: closeAddModal, open: openAddModal } = useModal();
+  const { isOpen: isOpenEditModal, close: closeEditModal, open: openEditModal } = useModal();
 
-  const handleDeleteDate = async (readDateId: number) => {
-    const newReadDates = readDates.filter((readDate) => readDate.readDateId !== readDateId);
+  const [editDateIndex, setEditDateIndex] = useState<number>(0);
 
-    await updateEditRecord(Number(recordId), { readDateList: newReadDates });
-    await queryClient.invalidateQueries({ queryKey: ['edit', recordId.toString()] });
+  const handleDeleteDate = async (deleteIdx: number) => {
+    const newReadDates = readDates.filter((_, idx) => deleteIdx !== idx);
+    setReadDates(newReadDates);
+  };
+
+  const handleEditDate = (index: number) => {
+    setEditDateIndex(index);
+    openEditModal();
   };
 
   return (
@@ -35,8 +40,12 @@ const EditReadingDate = ({ recordId, readDates }: EditReadingDatePros) => {
       <div className="border-t-[3px] border-main">
         <p className="relative flex h-14 items-center justify-between px-6 font-semibold">
           독서기간
-          <button className="text-xs font-normal opacity-50" type="button" aria-label="독서기간 추가" onClick={open}>
-            {/* <FiPlus style={{ width: '24px', height: '24px' }} /> */}
+          <button
+            className="text-xs font-normal opacity-50"
+            type="button"
+            aria-label="독서기간 추가"
+            onClick={openAddModal}
+          >
             <Icon Component={CommonPlus} size="sm" />
           </button>
         </p>
@@ -47,7 +56,7 @@ const EditReadingDate = ({ recordId, readDates }: EditReadingDatePros) => {
 
             return (
               <li className="relative flex h-14 w-full items-center border-t-[1px] border-main px-6" key={readDateId}>
-                <button type="button" aria-label="회독 삭제" onClick={() => handleDeleteDate(readDateId as number)}>
+                <button type="button" aria-label="회독 삭제" onClick={() => handleDeleteDate(idx)}>
                   <CheckBox color="red" type="minus" />
                 </button>
                 <p className="px-[0.376rem] text-sm font-semibold">{idx + 1}회독</p>
@@ -56,14 +65,26 @@ const EditReadingDate = ({ recordId, readDates }: EditReadingDatePros) => {
                 </span>
                 <div className="absolute right-6 flex items-center text-sm opacity-50">
                   {`${startDate} - ${endDate ?? '읽는중'}`}
-                  <Icon Component={CommonPencil} size="xs" style={{ marginLeft: '3px' }} />
+                  <button type="button" aria-label="회독 정보 수정" onClick={() => handleEditDate(idx)}>
+                    <Icon Component={CommonPencil} size="xs" style={{ marginLeft: '3px' }} />
+                  </button>
                 </div>
               </li>
             );
           })}
         </ul>
       </div>
-      {isOpen && <EditReadingDateModal recordId={recordId} readDates={readDates} close={close} />}
+      {isOpenAddModal && (
+        <AddReadingDateModalProps setReadDates={setReadDates} readDates={readDates} close={closeAddModal} />
+      )}
+      {isOpenEditModal && (
+        <EditReadingDateModal
+          editDateIndex={editDateIndex}
+          setReadDates={setReadDates}
+          readDates={readDates}
+          close={closeEditModal}
+        />
+      )}
     </>
   );
 };

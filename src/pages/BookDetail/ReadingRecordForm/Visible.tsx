@@ -1,7 +1,6 @@
 import CheckBox from 'components/CheckBox';
 
-// TODO : 책장
-import recordSaveImg from 'assets/img/record_save.png';
+import recordSaveImg from 'assets/img/bookshelf.png';
 
 import ButtonSet from './shared/ButtonSet';
 import SubTitle from './shared/SubTitle';
@@ -21,8 +20,7 @@ const Visible = ({ isVisible, setIsVisible, onPrev, onNext }: VisibleProps) => {
       <SubTitle
         message={`등록시 기본적으로 책장에 책이 꽂히게 됩니다.\n책을 숨기고 싶다면 아래 체크박스에 체크해주세요`}
       />
-
-      <img src={recordSaveImg} className="mx-auto mb-14 mt-10" alt="" />
+      <img src={recordSaveImg} className="mx-auto mb-14" alt="" />
       <button
         className="mb-8 flex w-full items-center justify-between rounded-[10px] bg-white p-4 font-semibold shadow-md"
         onClick={() => setIsVisible(!isVisible)}

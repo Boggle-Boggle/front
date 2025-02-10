@@ -47,21 +47,28 @@ api.interceptors.response.use(
 
     const { retryCount, incrementRetry, resetRetry } = useRetryStore.getState();
 
-    if (response.status === 401 && retryCount < 3) {
-      incrementRetry();
+    // const { code } = response.data;
+    if (response.status === 401) {
+      if (retryCount < 4) {
+        incrementRetry();
 
-      try {
-        const refreshResponse = await api.get('/auth/refresh');
-        const newAccessToken = refreshResponse.data.data;
+        try {
+          const refreshResponse = await api.get('/auth/refresh');
+          const newAccessToken = refreshResponse.data.data;
 
+          // logout();
+          login(newAccessToken);
+
+          config.headers.Authorization = `Bearer ${newAccessToken}`;
+          return await api(config);
+        } catch (err) {
+          resetRetry();
+          return Promise.reject(err);
+        }
+      } //
+      else {
+        alert('로그인 기한이 만료되었어요. 다시 로그인 해주세요');
         logout();
-        login(newAccessToken);
-
-        config.headers.Authorization = `Bearer ${newAccessToken}`;
-        return await api(config);
-      } catch (err) {
-        resetRetry();
-        return Promise.reject(err);
       }
     }
 
