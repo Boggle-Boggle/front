@@ -18,7 +18,7 @@ const LOGIN_TYPE = {
   apple: {
     title: '애플',
     imgUrl: appleLogoImg,
-    redirect: `/oauth2/authorization/apple?redirect_uri=${import.meta.env.VITE_LOGIN_REDIRECT_URL}`,
+    redirect: `/oauth2/apple?redirect_uri=${import.meta.env.VITE_LOGIN_REDIRECT_URL}`,
   },
 };
 
