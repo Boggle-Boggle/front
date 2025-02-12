@@ -9,7 +9,7 @@ import Icon from 'components/Icon';
 import useDevice from 'hooks/useDevice';
 import useModal from 'hooks/useModal';
 import { getBookDetail, hasReadingRecord } from 'services/search';
-import { formatDateAndTime, formatBookGenre } from 'utils/format';
+import { formatDateAndTime, formatBookGenre, getHttpsLink } from 'utils/format';
 
 import { RecordInfo, CommonBack } from 'assets/icons';
 
@@ -142,7 +142,7 @@ const BookDetail = () => {
           className={`absolute ${isIOS ? 'bottom-footerIOS' : 'bottom-footerAnd'} left-5 mb-2 flex items-center text-xs font-semibold opacity-50`}
         >
           <Icon Component={RecordInfo} size="xs" style={{ marginRight: '6px' }} />
-          <a className="font-bold underline" href={book.link}>
+          <a className="font-bold underline" href={getHttpsLink(book.link)}>
             알라딘
           </a>{' '}
           에서 제공한 정보입니다.
