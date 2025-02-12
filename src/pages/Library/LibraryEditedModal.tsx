@@ -71,52 +71,51 @@ const LibraryEditedModal = ({
 
   return (
     <HalfScreenModal>
-      <section>
-        <div className="z-30 grid h-headerAnd w-full grid-cols-[30px_auto_30px] items-center px-4">
-          <span className="justify-self-start" />
-          <span className="w-full justify-self-center text-center font-semibold">서재 편집</span>
-          <button className="justify-self-end text-accent" type="button" onClick={handleClose}>
-            완료
-          </button>
-        </div>
+      <div className="fixed z-30 grid h-headerAnd w-full grid-cols-[30px_auto_30px] items-center rounded-t-2xl bg-main px-4">
+        <span className="justify-self-start" />
+        <span className="w-full justify-self-center text-center font-semibold">서재 편집</span>
+        <button className="justify-self-end text-accent" type="button" onClick={handleClose}>
+          완료
+        </button>
+      </div>
 
-        <div className="flex h-10 w-full items-center justify-between px-4">
-          <input
-            placeholder="추가하고 싶은 서재명을 입력하세요"
-            value={values}
-            onChange={(e) => handleChange(e)}
-            className="h-10 w-[92%] rounded-md p-3 pr-2"
-          />
-          <button type="submit" aria-label="서재 추가" onClick={() => mutate()}>
-            <CheckBox type="plus" isChecked={values.length > 0} />
-          </button>
-        </div>
-        <div className="m-4 mb-2">사용자 지정 서재</div>
-        <div className="h-[calc(100%_-_9.5rem)] overflow-y-auto pb-8">
-          <Content>
-            {libraries.libraryList.length === 0 && (
-              <ContentItem>
-                <p className="opacity-50">사용자 지정 서재 없음</p>
-              </ContentItem>
-            )}
-            {libraries.libraryList.map(({ libraryName, libraryId }) => (
-              <ContentItem>
-                <li key={libraryId} className="flex h-full items-center">
-                  <button
-                    className="h-full pr-2"
-                    type="button"
-                    aria-label="서재 삭제"
-                    onClick={() => handleRemoveLibrary(libraryId)}
-                  >
-                    <CheckBox type="minus" color="red" />
-                  </button>
-                  {libraryName}
-                </li>
-              </ContentItem>
-            ))}
-          </Content>
-        </div>
-      </section>
+      <div className="flex w-full items-center justify-between px-4 pt-headerAnd">
+        <input
+          placeholder="추가하고 싶은 서재명을 입력하세요"
+          value={values}
+          onChange={(e) => handleChange(e)}
+          className="h-10 w-[92%] rounded-md p-3 pr-2"
+        />
+        <button type="submit" aria-label="서재 추가" onClick={() => mutate()}>
+          <CheckBox type="plus" isChecked={values.length > 0} />
+        </button>
+      </div>
+
+      <div className="m-4 mb-2">사용자 지정 서재</div>
+      <div className="overflow-y-auto pb-8">
+        <Content>
+          {libraries.libraryList.length === 0 && (
+            <ContentItem>
+              <p className="opacity-50">사용자 지정 서재 없음</p>
+            </ContentItem>
+          )}
+          {libraries.libraryList.map(({ libraryName, libraryId }) => (
+            <ContentItem>
+              <li key={libraryId} className="flex h-full items-center">
+                <button
+                  className="h-full pr-2"
+                  type="button"
+                  aria-label="서재 삭제"
+                  onClick={() => handleRemoveLibrary(libraryId)}
+                >
+                  <CheckBox type="minus" color="red" />
+                </button>
+                {libraryName}
+              </li>
+            </ContentItem>
+          ))}
+        </Content>
+      </div>
     </HalfScreenModal>
   );
 };
