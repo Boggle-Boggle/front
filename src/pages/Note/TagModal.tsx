@@ -20,10 +20,8 @@ const TagModal = ({ close, tags, setTags }: TagModalProps) => {
     if (!inputRef.current) return;
     const tag = inputRef.current.value;
 
-    if (tag.length < 1) return;
-
-    if (tag.length > 8) alert('태그 길이는 8글자까지 허용해요');
-    else if (!tags.includes(tag)) setTags([...tags, inputRef.current.value]);
+    if (tag.length < 1 || tag.length > 8) return;
+    if (!tags.includes(tag)) setTags([...tags, inputRef.current.value]);
 
     inputRef.current.value = '';
     inputRef.current.focus();

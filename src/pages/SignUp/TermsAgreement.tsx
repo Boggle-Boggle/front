@@ -1,5 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useReducer, useState } from 'react';
 
+import Alert from 'components/Alert';
 import Button from 'components/Button';
 import Header from 'components/Header';
 import Highlight from 'components/Highlight';
@@ -24,11 +25,13 @@ const TermsAgreement = ({ terms, setTerms, onPrev, onNext }: TermsAgreementProps
   const [isAllChecked, setIsAllChecked] = useState<boolean>(false);
   const [selectedTerm, setSelectedTerm] = useState<TermWithAgree | null>(null);
   const [isAllMandatoryChecked, setIsAllMandatoryChecked] = useState<boolean>(false);
+  const [isAlertActive, handleAlertActive] = useReducer((prev) => !prev, false);
+
   const { isIOS } = useDevice();
 
   const handleNext = () => {
     if (!isAllMandatoryChecked) {
-      alert('모든 필수 약관에 동의가 필요합니다');
+      handleAlertActive();
       return;
     }
 
@@ -68,6 +71,7 @@ const TermsAgreement = ({ terms, setTerms, onPrev, onNext }: TermsAgreementProps
 
   return (
     <>
+      {isAlertActive && <Alert message="모든 약관에 동의해주세요" onClose={handleAlertActive} />}
       {!selectedTerm && (
         <Header
           title={<>회원가입</>}

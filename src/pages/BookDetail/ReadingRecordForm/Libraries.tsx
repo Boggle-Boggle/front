@@ -1,7 +1,8 @@
 import { useQueryClient } from '@tanstack/react-query';
 
-import { useState } from 'react';
+import { useReducer, useState } from 'react';
 
+import Alert from 'components/Alert';
 import Button from 'components/Button';
 import CheckBox from 'components/CheckBox';
 import Icon from 'components/Icon';
@@ -27,6 +28,7 @@ const Libraries = ({ libraries, selected, setSelected, onPrev, onNext }: Library
   const [isAdding, setIsAdding] = useState<boolean>(false);
   const [inputValue, setInputValue] = useState<string>('');
   const [addLibraries, setAddLibraries] = useState<string[]>([]);
+  const [isAlertActive, handleAlertActive] = useReducer((prev) => !prev, false);
 
   const queryClient = useQueryClient();
 
@@ -51,7 +53,8 @@ const Libraries = ({ libraries, selected, setSelected, onPrev, onNext }: Library
     });
 
     if (isDuplicate) {
-      alert('이미 존재하는 서재입니다.');
+      handleAlertActive();
+
       return;
     }
 
@@ -105,6 +108,7 @@ const Libraries = ({ libraries, selected, setSelected, onPrev, onNext }: Library
     </>
   ) : (
     <>
+      {isAlertActive && <Alert message="서재가 이미 존재해요" onClose={handleAlertActive} />}
       <Title message="서재를 추가해보세요!" />
       <SubTitle message="" />
 

@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useReducer, useState } from 'react';
 
+import Alert from 'components/Alert';
 import Button from 'components/Button';
 import HalfScreenModal from 'components/HalfScreenModal';
 import Icon from 'components/Icon';
@@ -23,12 +24,12 @@ const AddReadingDateModal = ({ readDates, setReadDates, close }: AddReadingDateM
   const [endDate, setEndDate] = useState<DateType>(null);
   const [isChangingStartDate, setIsChangeStartDate] = useState<boolean>(false);
   const [isChangingEndDate, setIsChangeEndDate] = useState<boolean>(false);
+  const [isAlertActive, handleAlertActive] = useReducer((prev) => !prev, false);
 
   const handleAddReadingDate = async () => {
     if (selected === 'reading') {
       if (!startDate) {
-        alert('날짜를 선택해주세요');
-
+        handleAlertActive();
         return;
       }
 
@@ -47,7 +48,7 @@ const AddReadingDateModal = ({ readDates, setReadDates, close }: AddReadingDateM
     }
 
     if (!startDate || !endDate) {
-      alert('날짜를 선택해주세요');
+      handleAlertActive();
 
       return;
     }
@@ -66,13 +67,12 @@ const AddReadingDateModal = ({ readDates, setReadDates, close }: AddReadingDateM
       setReadDates([...readDates, newReadDate]);
 
       close();
-    } else {
-      alert('종료날짜는 시작날짜 이후여야 합니다.');
-    }
+    } else handleAlertActive();
   };
 
   return (
     <>
+      {isAlertActive && <Alert message="올바르지 않은 날짜에요" onClose={handleAlertActive} />}
       {!isChangingStartDate && !isChangingEndDate && (
         <HalfScreenModal bgColor="bg-white" handleClose={close}>
           <section className="relative flex h-full w-full flex-col p-6">
