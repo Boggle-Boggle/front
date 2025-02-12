@@ -1,7 +1,8 @@
 import { QueryObserverResult, RefetchOptions, useMutation, useQueryClient } from '@tanstack/react-query';
 
-import { SetStateAction, useState } from 'react';
+import { SetStateAction, useReducer, useState } from 'react';
 
+import Alert from 'components/Alert';
 import CheckBox from 'components/CheckBox';
 import HalfScreenModal from 'components/HalfScreenModal';
 
@@ -27,6 +28,7 @@ const LibraryEditedModal = ({
   refetchLibraries,
   setSelectedLibrary,
 }: LibraryEditedModalProps) => {
+  const [isAlertActive, handleAlertActive] = useReducer((prev) => !prev, false);
   const [values, setValues] = useState<string>('');
   const queryClient = useQueryClient();
 
@@ -40,7 +42,7 @@ const LibraryEditedModal = ({
       });
 
       if (isDuplicate) {
-        alert('동일한 이름을 가진 서재가 있어요');
+        handleAlertActive();
         return;
       }
       await addLibrary(values);
@@ -70,9 +72,10 @@ const LibraryEditedModal = ({
   };
 
   return (
-    <HalfScreenModal>
-      <section>
-        <div className="z-30 grid h-headerAnd w-full grid-cols-[30px_auto_30px] items-center px-4">
+    <>
+      {isAlertActive && <Alert message="동일한 이름을 가진 서재가 있어요" onClose={handleAlertActive} />}
+      <HalfScreenModal>
+        <div className="fixed z-30 grid h-headerAnd w-full grid-cols-[30px_auto_30px] items-center rounded-t-2xl bg-main px-4">
           <span className="justify-self-start" />
           <span className="w-full justify-self-center text-center font-semibold">서재 편집</span>
           <button className="justify-self-end text-accent" type="button" onClick={handleClose}>
@@ -80,7 +83,7 @@ const LibraryEditedModal = ({
           </button>
         </div>
 
-        <div className="flex h-10 w-full items-center justify-between px-4">
+        <div className="flex w-full items-center justify-between px-4 pt-headerAnd">
           <input
             placeholder="추가하고 싶은 서재명을 입력하세요"
             value={values}
@@ -91,8 +94,9 @@ const LibraryEditedModal = ({
             <CheckBox type="plus" isChecked={values.length > 0} />
           </button>
         </div>
+
         <div className="m-4 mb-2">사용자 지정 서재</div>
-        <div className="h-[calc(100%_-_9.5rem)] overflow-y-auto pb-8">
+        <div className="overflow-y-auto pb-8">
           <Content>
             {libraries.libraryList.length === 0 && (
               <ContentItem>
@@ -116,8 +120,8 @@ const LibraryEditedModal = ({
             ))}
           </Content>
         </div>
-      </section>
-    </HalfScreenModal>
+      </HalfScreenModal>
+    </>
   );
 };
 

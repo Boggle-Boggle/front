@@ -1,5 +1,7 @@
+import { useReducer } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import Alert from 'components/Alert';
 import Button from 'components/Button';
 import Header from 'components/Header';
 import Highlight from 'components/Highlight';
@@ -18,6 +20,9 @@ type NickNameInputProps = {
 };
 
 const NickNameInput = ({ nickName, isValid, updateNickName, onNext }: NickNameInputProps) => {
+  const [isWhiteSpaceAlertActive, handleWhiteSpaceAlertActive] = useReducer((prev) => !prev, false);
+  const [isDuplicateAlertActive, handleDuplicateAlertActive] = useReducer((prev) => !prev, false);
+
   const { isIOS } = useDevice();
   const navigate = useNavigate();
 
@@ -27,14 +32,16 @@ const NickNameInput = ({ nickName, isValid, updateNickName, onNext }: NickNameIn
     e.preventDefault();
     if (!isValid) {
       // TODO : 벨리데이션 추가
-      alert(`공백은 사용할 수 없어요`);
+      handleWhiteSpaceAlertActive();
+
       return;
     }
 
     const isDuplicated = await isDuplicateNickname(nickName);
 
     if (isDuplicated) {
-      alert(`사용중인 닉네임입니다.\n다른 닉네임을 입력해주세요`);
+      handleDuplicateAlertActive();
+
       return;
     }
 
@@ -43,6 +50,12 @@ const NickNameInput = ({ nickName, isValid, updateNickName, onNext }: NickNameIn
 
   return (
     <>
+      {isWhiteSpaceAlertActive && <Alert message="공백은 사용할 수 없어요" onClose={handleWhiteSpaceAlertActive} />}
+
+      {isDuplicateAlertActive && (
+        <Alert message={`사용중인 닉네임이에요 \n다른 닉네임을 입력해주세요`} onClose={handleDuplicateAlertActive} />
+      )}
+
       <Header
         title={<>회원가입</>}
         leftBtn={

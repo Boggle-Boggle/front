@@ -3,10 +3,11 @@
 import { Html, useGLTF } from '@react-three/drei';
 import { Canvas } from '@react-three/fiber';
 
-import { Suspense, useEffect } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import * as THREE from 'three';
 
 import Icon from 'components/Icon';
+import Loading from 'pages/Loading';
 
 import { LoginConsultation } from 'assets/icons';
 
@@ -14,6 +15,7 @@ import LoginBtn from './LoginBtn';
 
 const Login = () => {
   const { scene } = useGLTF(`${import.meta.env.VITE_IMG_BASE_URL || ''}/assets/Splash.glb`);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     if (!scene) return;
@@ -68,10 +70,17 @@ const Login = () => {
 
       <p className="pb-4 text-xs opacity-50">SNS계정으로 간편하게 로그인</p>
       <div className="flex h-24 w-[70%] justify-around">
-        <LoginBtn type="kakao" />
-        <LoginBtn type="google" />
-        <LoginBtn type="apple" />
+        {isLoading ? (
+          <Loading />
+        ) : (
+          <>
+            <LoginBtn type="kakao" setIsLoading={setIsLoading} />
+            <LoginBtn type="google" setIsLoading={setIsLoading} />
+            <LoginBtn type="apple" setIsLoading={setIsLoading} />
+          </>
+        )}
       </div>
+
       <a href="/" className="absolute bottom-8 flex items-center text-xs underline opacity-50">
         <Icon Component={LoginConsultation} size="sm" style={{ marginRight: '5px' }} />
         가입/로그인 오류 문의

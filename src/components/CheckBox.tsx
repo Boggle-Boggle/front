@@ -13,7 +13,7 @@ const CheckBox = ({ isSquare, color = 'accent', type = 'checked', isChecked = tr
 
   return (
     <button
-      className={`h-6 w-6 ${isSquare ? 'rounded-md' : 'rounded-full'} text-white ${isChecked ? currentColor : type === 'plus' ? 'bg-[#D9D9D9]' : 'bg-main'} flex items-center justify-center`}
+      className={`h-6 w-6 ${isSquare ? 'rounded-md' : 'rounded-full'} shrink-0 text-white ${isChecked ? currentColor : type === 'plus' ? 'bg-[#D9D9D9]' : 'bg-main'} flex items-center justify-center`}
       type="button"
       onClick={handleClick}
     >

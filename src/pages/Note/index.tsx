@@ -1,8 +1,9 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useReducer, useRef, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 
+import Alert from 'components/Alert';
 import Header from 'components/Header';
 import Icon from 'components/Icon';
 import Memo from 'components/Memo';
@@ -46,6 +47,8 @@ const Note = () => {
 
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
+  const [isAlertActive, handleAlertActive] = useReducer((prev) => !prev, false);
+
   const queryClient = useQueryClient();
   const navigate = useNavigate();
   const location = useLocation();
@@ -75,7 +78,7 @@ const Note = () => {
     if (!recordId) return;
 
     if (!title && !content) {
-      alert('제목이나 내용을 작성해주세요');
+      handleAlertActive();
       return;
     }
 
@@ -174,150 +177,153 @@ const Note = () => {
 
   return (
     isFetched && (
-      <div className="h-screen bg-gray">
-        <Header
-          title={
-            <>
-              <button
-                type="button"
-                aria-label="회독 선택"
-                className={`relative inline-flex ${readDateIds && readDateIds && readDateIds.length === 0 && 'opacity-50'} `}
-                onClick={() => setIsMemoToggled(true)}
-              >
-                {readDateId ? `${readDateId.readDateIndex + 1}회독` : '회독정보없음'}
-                {readDateIds && readDateIds.length > 0 && (
-                  <Icon Component={CommonUp} size="sm" style={{ marginLeft: '1px' }} />
+      <>
+        {isAlertActive && <Alert message="제목이나 내용이 비어있어요" onClose={handleAlertActive} />}
+        <div className="h-screen bg-gray">
+          <Header
+            title={
+              <>
+                <button
+                  type="button"
+                  aria-label="회독 선택"
+                  className={`relative inline-flex ${readDateIds && readDateIds && readDateIds.length === 0 && 'opacity-50'} `}
+                  onClick={() => setIsMemoToggled(true)}
+                >
+                  {readDateId ? `${readDateId.readDateIndex + 1}회독` : '회독정보없음'}
+                  {readDateIds && readDateIds.length > 0 && (
+                    <Icon Component={CommonUp} size="sm" style={{ marginLeft: '1px' }} />
+                  )}
+                </button>
+                {isMemoToggled && (
+                  <Memo handleClose={() => setIsMemoToggled(false)}>
+                    <ul className="absolute left-1/2 z-30 flex max-h-80 w-28 -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center overflow-auto rounded-lg bg-white shadow-lg">
+                      {readDateIds &&
+                        readDateIds.map((readDate, idx) => (
+                          <li key={readDate.readDateId} className="mt-[1px] h-12 w-full border-b border-main">
+                            <button
+                              className="h-full w-full"
+                              type="button"
+                              onClick={() => {
+                                setIsMemoToggled(false);
+                                setReadDateId(readDate);
+                              }}
+                            >
+                              {idx + 1}회독
+                            </button>
+                          </li>
+                        ))}
+                    </ul>
+                  </Memo>
                 )}
+              </>
+            }
+            leftBtn={
+              <button
+                onClick={() => navigate(`/record/${recordId}`, { replace: true })}
+                aria-label="뒤로가기"
+                type="button"
+              >
+                <Icon Component={CommonBack} />
               </button>
-              {isMemoToggled && (
-                <Memo handleClose={() => setIsMemoToggled(false)}>
-                  <ul className="absolute left-1/2 z-30 flex max-h-80 w-28 -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center overflow-auto rounded-lg bg-white shadow-lg">
-                    {readDateIds &&
-                      readDateIds.map((readDate, idx) => (
-                        <li key={readDate.readDateId} className="mt-[1px] h-12 w-full border-b border-main">
-                          <button
-                            className="h-full w-full"
-                            type="button"
-                            onClick={() => {
-                              setIsMemoToggled(false);
-                              setReadDateId(readDate);
-                            }}
-                          >
-                            {idx + 1}회독
-                          </button>
-                        </li>
-                      ))}
-                  </ul>
-                </Memo>
-              )}
-            </>
-          }
-          leftBtn={
-            <button
-              onClick={() => navigate(`/record/${recordId}`, { replace: true })}
-              aria-label="뒤로가기"
-              type="button"
-            >
-              <Icon Component={CommonBack} />
-            </button>
-          }
-          rightBtn={
-            <button className="font-black" onClick={handleSave} type="submit">
-              저장
-            </button>
-          }
-        />
-
-        <section
-          className={`border-mains ${isIOS ? 'height-without-headerIOS' : 'height-without-headerAnd'} flex flex-col overflow-hidden rounded-tl-3xl border border-main bg-white`}
-        >
-          <img
-            src={bookmarkImg}
-            className={`${isIOS ? 'headerIOS top-headerIOS' : 'headerAnd top-headerAnd'} absolute right-10 block h-12 w-12`}
-            alt=""
+            }
+            rightBtn={
+              <button className="font-black" onClick={handleSave} type="submit">
+                저장
+              </button>
+            }
           />
-          {page && page !== 0 && <p className="absolute right-2 pt-2 opacity-50">{`p.${page}`}</p>}
-          {pages && <p className="absolute right-2 pt-2 opacity-50">{`p.${pages.startPage}-p.${pages.endPage}`}</p>}
-          <button
-            className="w-full px-5 py-3 text-start font-semibold opacity-50"
-            type="button"
-            onClick={openDateModal}
+
+          <section
+            className={`border-mains ${isIOS ? 'height-without-headerIOS' : 'height-without-headerAnd'} flex flex-col overflow-hidden rounded-tl-3xl border border-main bg-white`}
           >
-            {`${selectedDate[0] + 2000}년 ${selectedDate[1]}월 ${selectedDate[2]}일`}
-          </button>
-          <textarea
-            rows={1}
-            className="w-full resize-none overflow-hidden border-b-[1px] border-main px-5 pb-3 font-bold"
-            value={title}
-            placeholder="제목을 작성해주세요"
-            onChange={(e) => handleChangeTitle(e)}
-            ref={textareaRef}
-          />
-          <textarea
-            className="w-full flex-grow resize-none overflow-auto px-5 py-3"
-            value={content}
-            placeholder="내용을 작성해주세요"
-            onChange={(e) => handleChangeContent(e)}
-          />
-          <div className="h-40 overflow-y-auto border-t border-main px-4 py-2">
-            <p className="flex items-center">
-              <Icon Component={ReadingNoteTags} size="sm" style={{ color: '#9B9999', marginRight: '4px' }} />
-              태그
-            </p>
-            {tags.map((tag) => (
-              <p className="inline-flex pr-2 text-sm opacity-70">{`#${tag}`}</p>
-            ))}
-          </div>
-        </section>
-
-        <div className="absolute bottom-1 flex h-12 w-full items-center justify-between bg-main px-2">
-          <section className="flex">
+            <img
+              src={bookmarkImg}
+              className={`${isIOS ? 'headerIOS top-headerIOS' : 'headerAnd top-headerAnd'} absolute right-10 block h-12 w-12`}
+              alt=""
+            />
+            {page && page !== 0 && <p className="absolute right-2 pt-2 opacity-50">{`p.${page}`}</p>}
+            {pages && <p className="absolute right-2 pt-2 opacity-50">{`p.${pages.startPage}-p.${pages.endPage}`}</p>}
             <button
-              className="px-3 py-2"
-              onClick={() => setIsEditPage(true)}
+              className="w-full px-5 py-3 text-start font-semibold opacity-50"
               type="button"
-              aria-label="페이지 입력하기"
+              onClick={openDateModal}
             >
-              <Icon Component={ReadingNotePageInput} size="sm" style={{ color: '#9B9999' }} />
+              {`${selectedDate[0] + 2000}년 ${selectedDate[1]}월 ${selectedDate[2]}일`}
             </button>
-            <button className="px-3 py-2" onClick={() => setIsEditTag(true)} type="button" aria-label="태그 추가하기">
-              <Icon Component={ReadingNoteTags} size="sm" style={{ color: '#9B9999' }} />
-            </button>
+            <textarea
+              rows={1}
+              className="w-full resize-none overflow-hidden border-b-[1px] border-main px-5 pb-3 font-bold"
+              value={title}
+              placeholder="제목을 작성해주세요"
+              onChange={(e) => handleChangeTitle(e)}
+              ref={textareaRef}
+            />
+            <textarea
+              className="w-full flex-grow resize-none overflow-auto px-5 py-3"
+              value={content}
+              placeholder="내용을 작성해주세요"
+              onChange={(e) => handleChangeContent(e)}
+            />
+            <div className="h-40 overflow-y-auto border-t border-main px-4 py-2">
+              <p className="flex items-center">
+                <Icon Component={ReadingNoteTags} size="sm" style={{ color: '#9B9999', marginRight: '4px' }} />
+                태그
+              </p>
+              {tags.map((tag) => (
+                <p className="inline-flex pr-2 text-sm opacity-70">{`#${tag}`}</p>
+              ))}
+            </div>
           </section>
-          <button className="px-3 py-2" onClick={openDeleteModal} type="button" aria-label="독서노트 삭제하기">
-            <Icon Component={ReadingNoteTrash} size="sm" style={{ color: '#9B9999' }} />
-          </button>
-          {/* TODO : 글자수 처리 로직 추후 구현 */}
-          {/* <span className="pr-3 text-sm">{content?.length ?? 0}자/256자</span> */}
+
+          <div className="absolute bottom-1 flex h-12 w-full items-center justify-between bg-main px-2">
+            <section className="flex">
+              <button
+                className="px-3 py-2"
+                onClick={() => setIsEditPage(true)}
+                type="button"
+                aria-label="페이지 입력하기"
+              >
+                <Icon Component={ReadingNotePageInput} size="sm" style={{ color: '#9B9999' }} />
+              </button>
+              <button className="px-3 py-2" onClick={() => setIsEditTag(true)} type="button" aria-label="태그 추가하기">
+                <Icon Component={ReadingNoteTags} size="sm" style={{ color: '#9B9999' }} />
+              </button>
+            </section>
+            <button className="px-3 py-2" onClick={openDeleteModal} type="button" aria-label="독서노트 삭제하기">
+              <Icon Component={ReadingNoteTrash} size="sm" style={{ color: '#9B9999' }} />
+            </button>
+            {/* TODO : 글자수 처리 로직 추후 구현 */}
+            {/* <span className="pr-3 text-sm">{content?.length ?? 0}자/256자</span> */}
+          </div>
+          {isDateModalOpen && (
+            <DatePickModal
+              isOpen={isDateModalOpen}
+              close={closeDateModal}
+              scrollPos={dateModalScrollPos}
+              setSelectedDate={setSelectedDate}
+              initialDate={selectedDate}
+            />
+          )}
+          {isDeleteModalOpen && (
+            <DeleteModal
+              close={closeDeleteModal}
+              isOpen={isDeleteModalOpen}
+              scrollPos={deleteModalScrollPos}
+              deleteNote={handleDeleteNote}
+            />
+          )}
+          {isEditPage && (
+            <PageModal
+              close={() => setIsEditPage(false)}
+              page={page}
+              pages={pages}
+              setPage={setPage}
+              setPages={setPages}
+            />
+          )}
+          {isEditTag && <TagModal close={() => setIsEditTag(false)} tags={tags} setTags={setTags} />}
         </div>
-        {isDateModalOpen && (
-          <DatePickModal
-            isOpen={isDateModalOpen}
-            close={closeDateModal}
-            scrollPos={dateModalScrollPos}
-            setSelectedDate={setSelectedDate}
-            initialDate={selectedDate}
-          />
-        )}
-        {isDeleteModalOpen && (
-          <DeleteModal
-            close={closeDeleteModal}
-            isOpen={isDeleteModalOpen}
-            scrollPos={deleteModalScrollPos}
-            deleteNote={handleDeleteNote}
-          />
-        )}
-        {isEditPage && (
-          <PageModal
-            close={() => setIsEditPage(false)}
-            page={page}
-            pages={pages}
-            setPage={setPage}
-            setPages={setPages}
-          />
-        )}
-        {isEditTag && <TagModal close={() => setIsEditTag(false)} tags={tags} setTags={setTags} />}
-      </div>
+      </>
     )
   );
 };

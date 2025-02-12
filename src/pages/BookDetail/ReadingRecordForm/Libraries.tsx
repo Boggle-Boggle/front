@@ -1,7 +1,8 @@
 import { useQueryClient } from '@tanstack/react-query';
 
-import { useState } from 'react';
+import { useReducer, useState } from 'react';
 
+import Alert from 'components/Alert';
 import Button from 'components/Button';
 import CheckBox from 'components/CheckBox';
 import Icon from 'components/Icon';
@@ -27,6 +28,7 @@ const Libraries = ({ libraries, selected, setSelected, onPrev, onNext }: Library
   const [isAdding, setIsAdding] = useState<boolean>(false);
   const [inputValue, setInputValue] = useState<string>('');
   const [addLibraries, setAddLibraries] = useState<string[]>([]);
+  const [isAlertActive, handleAlertActive] = useReducer((prev) => !prev, false);
 
   const queryClient = useQueryClient();
 
@@ -51,7 +53,8 @@ const Libraries = ({ libraries, selected, setSelected, onPrev, onNext }: Library
     });
 
     if (isDuplicate) {
-      alert('이미 존재하는 서재입니다.');
+      handleAlertActive();
+
       return;
     }
 
@@ -75,7 +78,18 @@ const Libraries = ({ libraries, selected, setSelected, onPrev, onNext }: Library
       <Title message="책을 서재에 분류해 보세요!" />
       <SubTitle message="필요한 서재가 없다면 아래에서 추가해보세요" />
 
-      <ul className="max-h-96 overflow-y-auto pb-2">
+      <ul className="max-h-96 overflow-y-auto">
+        <li>
+          <button
+            className="mb-4 flex w-full items-center justify-center rounded-[10px] bg-white p-4 text-[15px] shadow-md"
+            type="button"
+            onClick={() => setIsAdding(true)}
+          >
+            <Icon Component={CommonPlus} size="xs" style={{ width: '16px', marginRight: '4px' }} />
+            서재 추가하기
+          </button>
+        </li>
+
         {libraries.map(({ libraryId, libraryName }) => (
           <li key={libraryId}>
             <button
@@ -88,23 +102,13 @@ const Libraries = ({ libraries, selected, setSelected, onPrev, onNext }: Library
             </button>
           </li>
         ))}
-
-        <li>
-          <button
-            className="flex w-full items-center justify-center rounded-[10px] bg-white p-4 text-[15px] shadow-md"
-            type="button"
-            onClick={() => setIsAdding(true)}
-          >
-            <Icon Component={CommonPlus} size="xs" style={{ width: '16px', marginRight: '4px' }} />
-            서재 추가하기
-          </button>
-        </li>
       </ul>
 
       <ButtonSet onPrev={onPrev} onNext={onNext} />
     </>
   ) : (
     <>
+      {isAlertActive && <Alert message="서재가 이미 존재해요" onClose={handleAlertActive} />}
       <Title message="서재를 추가해보세요!" />
       <SubTitle message="" />
 

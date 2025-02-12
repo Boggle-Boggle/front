@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useReducer, useState } from 'react';
 
+import Alert from 'components/Alert';
 import Icon from 'components/Icon';
 
 import { DateType } from 'types/record';
@@ -24,11 +25,12 @@ type DateProps = {
 const ReadingDate = ({ isReading, startDate, endDate, setStartDate, setEndDate, onPrev, onNext }: DateProps) => {
   const [isChangingStartDate, setIsChangeStartDate] = useState<boolean>(false);
   const [isChangingEndDate, setIsChangeEndDate] = useState<boolean>(false);
+  const [isAlertActive, handleAlertActive] = useReducer((prev) => !prev, false);
 
   const handleNext = () => {
     if (!isReading) {
       if (!startDate || !endDate) {
-        alert('날짜를 선택해주세요');
+        handleAlertActive();
 
         return;
       }
@@ -37,12 +39,13 @@ const ReadingDate = ({ isReading, startDate, endDate, setStartDate, setEndDate, 
       const end = new Date(endDate[0], endDate[1] - 1, endDate[2]);
 
       if (start <= end) onNext();
-      else alert('종료날짜는 시작날짜 이후여야 합니다.');
+      else handleAlertActive();
+
       return;
     }
 
     if (!startDate) {
-      alert('날짜를 선택해주세요');
+      handleAlertActive();
 
       return;
     }
@@ -52,6 +55,7 @@ const ReadingDate = ({ isReading, startDate, endDate, setStartDate, setEndDate, 
 
   return (
     <>
+      {isAlertActive && <Alert message="올바르지 않은 날짜에요" onClose={handleAlertActive} />}
       <Title message="책을 언제 읽었나요?" />
       <SubTitle message="읽기 시작한 날짜와 다 읽은 날짜를 입력해주세요" />
 

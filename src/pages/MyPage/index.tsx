@@ -74,7 +74,7 @@ const MyPage = () => {
         </section>
 
         <Content>
-          <a href={import.meta.env.VITE_MYPAGE_QNA_URL} target="_blank" rel="noopener noreferrer">
+          <a href={import.meta.env.VITE_MYPAGE_QNA_URL} rel="noopener noreferrer">
             <ContentItem>자주묻는질문</ContentItem>
           </a>
           <a href={import.meta.env.VITE_MYPAGE_FORM_URL} target="_blank" rel="noopener noreferrer">

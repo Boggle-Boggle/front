@@ -38,3 +38,9 @@ export const generateDate = () => {
 
   return { year, month, day };
 };
+
+export const getHttpsLink = (link: string) => {
+  const [http, domain] = link.split('://');
+
+  return `${http}s://${domain}`;
+};

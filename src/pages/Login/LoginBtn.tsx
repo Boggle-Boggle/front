@@ -26,12 +26,14 @@ type LoginType = typeof LOGIN_TYPE;
 
 type LoginBtnProps = {
   type: keyof LoginType;
+  setIsLoading: (isLoading: boolean) => void;
 };
 
-const LoginBtn = ({ type }: LoginBtnProps) => {
+const LoginBtn = ({ type, setIsLoading }: LoginBtnProps) => {
   const { title, redirect, imgUrl } = LOGIN_TYPE[type];
 
   const handleClick = () => {
+    setIsLoading(true);
     window.location.href = baseUrl + redirect;
   };
 

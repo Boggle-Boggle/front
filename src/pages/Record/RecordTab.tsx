@@ -170,11 +170,13 @@ const RecordTab = ({ book }: RecordTabProps) => {
       <section
         className={`grid ${isToggledLibrary ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'} transition-all duration-200`}
       >
-        {recordData.libraries.map((library) => (
-          <li key={library.libraryId} className="overflow-hidden">
-            <RecordItem content={library.libraryName} />
-          </li>
-        ))}
+        <ul className="overflow-hidden">
+          {recordData.libraries.map((library) => (
+            <li key={library.libraryId}>
+              <RecordItem content={library.libraryName} />
+            </li>
+          ))}
+        </ul>
       </section>
 
       <RecordItem

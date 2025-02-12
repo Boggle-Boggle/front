@@ -35,8 +35,7 @@ const HalfScreenModal = ({
             <Icon Component={CommonCancel} />
           </button>
         )}
-
-        {children}
+        <section className="overflow-auto">{children}</section>
       </section>
     </>
   );
