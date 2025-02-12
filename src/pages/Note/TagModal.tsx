@@ -37,10 +37,10 @@ const TagModal = ({ close, tags, setTags }: TagModalProps) => {
 
   return (
     <HalfScreenModal handleClose={close} hasCloseMark bgColor="bg-white">
-      <section className="relative flex h-full w-full flex-col items-center px-10 py-6">
+      <section className="flex h-full w-full flex-col items-center px-10 py-6">
         <p className="pb-1 text-lg font-bold">태그 추가</p>
-        <p className="text-sm opacity-50">작성한 독서노트에 필요한 태그를 달아보세요</p>
-        <div className="mb-4 mt-7 flex h-9 w-full items-center">
+        <p className="mb-7 text-sm opacity-50">작성한 독서노트에 필요한 태그를 달아보세요</p>
+        <div className="mb-4 flex h-9 w-full items-center">
           <input
             className="mr-3 h-full flex-grow rounded-md bg-main px-2 py-1"
             placeholder="추가하고 싶은 태그를 입력하세요"
