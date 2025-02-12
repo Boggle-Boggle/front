@@ -7,7 +7,7 @@ export const getLibraryBooks = async (params: GetLibraryBooksParams, pageNum: nu
   const queryString = new URLSearchParams();
 
   queryString.append('pageNum', pageNum.toString());
-  queryString.append('pageSize', '20');
+  queryString.append('pageSize', '21');
   if (params.libraryId !== undefined) queryString.append('libraryId', params.libraryId.toString());
   if (params.status && params.status !== 'all') queryString.append('status', params.status);
   if (params.keyword) queryString.append('keyword', params.keyword);
