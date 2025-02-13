@@ -55,12 +55,12 @@ const ReadingRecordForm = ({ isbn, onClose }: ReadingRecordFormProps) => {
   return (
     <>
       <button
-        className="absolute top-0 z-20 h-full w-full bg-black opacity-40"
+        className="absolute top-0 z-30 h-full w-full bg-black opacity-40"
         onClick={onClose}
         aria-label="취소"
         type="button"
       />
-      <section className="fixed bottom-0 z-30 h-auto w-full rounded-t-2xl bg-main p-7">
+      <section className="fixed bottom-0 z-30 m-auto h-auto w-full max-w-screen-sm rounded-t-2xl bg-main p-7">
         {step === '상태' && (
           <Status
             onNext={() => {

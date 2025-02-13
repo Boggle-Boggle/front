@@ -82,7 +82,7 @@ const SelectPeriodModal = ({
             </>
           )}
         </section>
-        <Button className="mx-auto mt-6 w-5/6 font-bold text-white" handleClick={handleSelect}>
+        <Button className="mx-auto mb-6 mt-auto w-5/6 font-bold text-white" handleClick={handleSelect}>
           선택
         </Button>
       </div>

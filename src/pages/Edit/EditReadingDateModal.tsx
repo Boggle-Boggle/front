@@ -6,7 +6,7 @@ import HalfScreenModal from 'components/HalfScreenModal';
 import Icon from 'components/Icon';
 import DateSelector from 'pages/BookDetail/ReadingRecordForm/shared/DateSelector';
 
-import { formatDate, formatDateAndTime } from 'utils/format';
+import { formatDate, formatDateAndTime, isValidDate } from 'utils/format';
 
 import { DateType, RecordDate, StatusType } from 'types/record';
 
@@ -34,6 +34,11 @@ const EditReadingDateModal = ({ editDateIndex, readDates, setReadDates, close }:
         return;
       }
 
+      if (!isValidDate(...startDate)) {
+        handleAlertActive();
+        return;
+      }
+
       const newReadDates = readDates.map((readDate, idx) => {
         if (idx !== editDateIndex) return readDate;
 
@@ -55,6 +60,11 @@ const EditReadingDateModal = ({ editDateIndex, readDates, setReadDates, close }:
     }
 
     if (!startDate || !endDate) {
+      handleAlertActive();
+      return;
+    }
+
+    if (!isValidDate(...endDate)) {
       handleAlertActive();
       return;
     }
@@ -216,7 +226,7 @@ const EditReadingDateModal = ({ editDateIndex, readDates, setReadDates, close }:
 
       {isChangingStartDate && (
         <HalfScreenModal>
-          <div className="fixed bottom-0 z-30 h-1/2 w-full">
+          <div className="fixed bottom-0 z-30 m-auto h-1/2 w-full max-w-screen-sm">
             <DateSelector
               initialDate={startDate}
               setDate={setStartDate}
@@ -229,7 +239,7 @@ const EditReadingDateModal = ({ editDateIndex, readDates, setReadDates, close }:
 
       {isChangingEndDate && (
         <HalfScreenModal>
-          <div className="fixed bottom-0 z-30 h-1/2 w-full">
+          <div className="fixed bottom-0 z-30 m-auto h-1/2 w-full max-w-screen-sm">
             <DateSelector initialDate={endDate} setDate={setEndDate} type="종료" setIsChangeDate={setIsChangeEndDate} />
           </div>
         </HalfScreenModal>

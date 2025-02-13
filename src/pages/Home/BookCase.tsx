@@ -11,14 +11,15 @@ import { BookCase as BookCaseType } from 'types/book';
 import Book from './Book';
 
 const getBookProperties = (page: number) => {
-  if (page <= 100) return { width: 0.7, offset: 0.07 };
-  if (page <= 200) return { width: 0.9, offset: 0.09 };
-  if (page <= 300) return { width: 1.1, offset: 0.11 };
-  if (page <= 400) return { width: 1.3, offset: 0.13 };
-  if (page <= 500) return { width: 1.5, offset: 0.15 };
-  if (page <= 600) return { width: 1.7, offset: 0.17 };
-  if (page <= 700) return { width: 1.9, offset: 0.19 };
-  return { width: 2.1, offset: 0.21 };
+  if (page <= 100) return { width: 1.1, offset: 0.07 };
+  if (page <= 200) return { width: 1.3, offset: 0.09 };
+  if (page <= 300) return { width: 1.5, offset: 0.11 };
+  if (page <= 400) return { width: 1.7, offset: 0.13 };
+  if (page <= 500) return { width: 1.8, offset: 0.15 };
+  if (page <= 600) return { width: 2.1, offset: 0.17 };
+  if (page <= 700) return { width: 2.3, offset: 0.19 };
+
+  return { width: 2.5, offset: 0.21 };
 };
 
 type BookCaseProps = {
@@ -49,7 +50,7 @@ const BookCase = ({ books }: BookCaseProps) => {
   return (
     <div className="relative z-0 flex h-full w-full items-center justify-center">
       <Canvas camera={{ position: [0, 0, cameraZPosition] }}>
-        <ambientLight intensity={1.7} />
+        <ambientLight intensity={2} />
         <directionalLight position={[7.5, 5, 7.5]} intensity={1} />
         <Suspense
           fallback={

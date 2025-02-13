@@ -12,7 +12,7 @@ const Header = ({ leftBtn, title, rightBtn, backgroundColor }: HeaderProps) => {
 
   return (
     <div
-      className={` ${isIOS ? 'h-headerIOS pt-[47px]' : 'h-headerAnd items-center'} ${backgroundColor ? `fixed ${backgroundColor}` : 'sticky'} z-30 grid w-full grid-cols-[30px_auto_30px] px-2`}
+      className={` ${isIOS ? 'h-headerIOS pt-[47px]' : 'h-headerAnd items-center'} ${backgroundColor ? `fixed m-auto max-w-screen-sm ${backgroundColor}` : 'sticky'} z-30 grid w-full grid-cols-[30px_auto_30px] px-2`}
     >
       <span className={`justify-self-start ${leftBtn ? '' : 'invisible'}`}>{leftBtn}</span>
       <span className="w-full justify-self-center px-2 text-center font-semibold">{title}</span>

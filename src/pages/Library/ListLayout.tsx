@@ -8,9 +8,10 @@ import { LibraryBook } from 'types/library';
 
 type ListLayoutProps = {
   allBooks: LibraryBook[];
+  observerTarget: React.RefObject<HTMLDivElement>;
 };
 
-const ListLayout = ({ allBooks }: ListLayoutProps) => {
+const ListLayout = ({ allBooks, observerTarget }: ListLayoutProps) => {
   const navigate = useNavigate();
 
   return (
@@ -51,6 +52,8 @@ const ListLayout = ({ allBooks }: ListLayoutProps) => {
             </li>
           );
         })}
+
+      <div className="h-1" ref={observerTarget} />
     </section>
   );
 };

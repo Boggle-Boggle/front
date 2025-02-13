@@ -41,7 +41,7 @@ const LibrarySelectModal = ({
         onClose(false);
       }}
     >
-      <div className="fixed z-30 grid h-headerAnd w-full grid-cols-[30px_auto_30px] items-center rounded-t-2xl bg-main px-4">
+      <div className="fixed z-30 m-auto grid h-headerAnd w-full max-w-screen-sm grid-cols-[30px_auto_30px] items-center rounded-t-2xl bg-main px-4">
         <span className="justify-self-start" />
         <span className="w-full justify-self-center text-center font-semibold">서재</span>
         <button className="justify-self-end opacity-50" type="button" onClick={handleOpenEdit}>

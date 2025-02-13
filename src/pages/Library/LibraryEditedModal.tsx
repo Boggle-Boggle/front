@@ -38,14 +38,14 @@ const LibraryEditedModal = ({
       if (!values) return;
 
       libraries.libraryList.forEach((library) => {
-        if (library.libraryName === values) isDuplicate = true;
+        if (library.libraryName === values.trimEnd()) isDuplicate = true;
       });
 
       if (isDuplicate) {
         handleAlertActive();
         return;
       }
-      await addLibrary(values);
+      await addLibrary(values.trimEnd());
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['libraries'] });
@@ -60,8 +60,10 @@ const LibraryEditedModal = ({
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.value.length > 14) return;
-    setValues(e.target.value);
+    const newInputValue = e.target.value.trimStart();
+    if (newInputValue.length > 15) return;
+
+    setValues(newInputValue);
   };
 
   const handleRemoveLibrary = async (removeId: number) => {
@@ -75,7 +77,7 @@ const LibraryEditedModal = ({
     <>
       {isAlertActive && <Alert message="동일한 이름을 가진 서재가 있어요" onClose={handleAlertActive} />}
       <HalfScreenModal>
-        <div className="fixed z-30 grid h-headerAnd w-full grid-cols-[30px_auto_30px] items-center rounded-t-2xl bg-main px-4">
+        <div className="fixed z-30 m-auto grid h-headerAnd w-full max-w-screen-sm grid-cols-[30px_auto_30px] items-center rounded-t-2xl bg-main px-4">
           <span className="justify-self-start" />
           <span className="w-full justify-self-center text-center font-semibold">서재 편집</span>
           <button className="justify-self-end text-accent" type="button" onClick={handleClose}>

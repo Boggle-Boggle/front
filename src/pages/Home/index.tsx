@@ -27,7 +27,7 @@ const Home = () => {
   return (
     <>
       <Header
-        backgroundColor="bg-[#CBBAB9]"
+        backgroundColor="bg-main"
         title={`${selectedYear ? selectedYear + 2000 : 2025}년 ${selectedMonth === 13 ? '전체보기' : `${selectedMonth}월`} (${books?.length ?? 0})`}
         rightBtn={
           <button aria-label="기간선택" type="button" onClick={open}>
@@ -35,7 +35,7 @@ const Home = () => {
           </button>
         }
       />
-      <div className="flex h-full w-full flex-col items-center justify-center bg-[#CBBAB9]">
+      <div className="flex h-full w-full flex-col items-center justify-center bg-main">
         <BookCase books={books ?? []} />
       </div>
       {isOpen && (

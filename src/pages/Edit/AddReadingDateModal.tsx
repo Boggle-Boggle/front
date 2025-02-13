@@ -6,7 +6,7 @@ import HalfScreenModal from 'components/HalfScreenModal';
 import Icon from 'components/Icon';
 import DateSelector from 'pages/BookDetail/ReadingRecordForm/shared/DateSelector';
 
-import { formatDate } from 'utils/format';
+import { formatDate, isValidDate } from 'utils/format';
 
 import { DateType, RecordDate, StatusType } from 'types/record';
 
@@ -33,6 +33,11 @@ const AddReadingDateModal = ({ readDates, setReadDates, close }: AddReadingDateM
         return;
       }
 
+      if (!isValidDate(...startDate)) {
+        handleAlertActive();
+        return;
+      }
+
       const newReadDate: RecordDate & { status: StatusType } = {
         readDateId: null,
         status: 'reading',
@@ -50,6 +55,11 @@ const AddReadingDateModal = ({ readDates, setReadDates, close }: AddReadingDateM
     if (!startDate || !endDate) {
       handleAlertActive();
 
+      return;
+    }
+
+    if (!isValidDate(...endDate)) {
+      handleAlertActive();
       return;
     }
 
@@ -76,7 +86,7 @@ const AddReadingDateModal = ({ readDates, setReadDates, close }: AddReadingDateM
       {!isChangingStartDate && !isChangingEndDate && (
         <HalfScreenModal bgColor="bg-white" handleClose={close}>
           <section className="relative flex h-full w-full flex-col p-6">
-            <p className="pb-1 text-center text-lg font-bold">독서기간 수정</p>
+            <p className="pb-1 text-center text-lg font-bold">독서기간 추가</p>
             <p className="text-center text-sm opacity-50">진행도를 선택한 뒤 기간을 입력해보세요</p>
             <div className="h-full w-full">
               <p className="pb-1 pt-2 text-lg font-bold">진행도</p>
@@ -125,7 +135,7 @@ const AddReadingDateModal = ({ readDates, setReadDates, close }: AddReadingDateM
                         <span className="ml-2 opacity-60">읽기 시작한 날</span>
                       </div>
                       <div className="text-base">
-                        {`${startDate[0]}년 ${startDate[1]}월 ${startDate[2]}일`}
+                        {`${startDate[0] >= 2000 ? startDate[0] : 2000 + startDate[0]}년 ${startDate[1]}월 ${startDate[2]}일`}
                         <Icon Component={CommonNext} size="xs" style={{ display: 'inline-block' }} />
                       </div>
                     </>
@@ -184,7 +194,7 @@ const AddReadingDateModal = ({ readDates, setReadDates, close }: AddReadingDateM
 
       {isChangingStartDate && (
         <HalfScreenModal>
-          <div className="fixed bottom-0 z-30 h-1/2 w-full">
+          <div className="fixed bottom-0 z-30 m-auto h-1/2 w-full max-w-screen-sm">
             <DateSelector
               initialDate={startDate}
               setDate={setStartDate}
@@ -197,7 +207,7 @@ const AddReadingDateModal = ({ readDates, setReadDates, close }: AddReadingDateM
 
       {isChangingEndDate && (
         <HalfScreenModal>
-          <div className="fixed bottom-0 z-30 h-1/2 w-full">
+          <div className="fixed bottom-0 z-30 m-auto h-1/2 w-full max-w-screen-sm">
             <DateSelector initialDate={endDate} setDate={setEndDate} type="종료" setIsChangeDate={setIsChangeEndDate} />
           </div>
         </HalfScreenModal>

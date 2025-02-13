@@ -1,6 +1,4 @@
-import { useQueryClient } from '@tanstack/react-query';
-
-import { useEffect, useReducer } from 'react';
+import { useReducer } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import Alert from 'components/Alert';
@@ -10,7 +8,6 @@ import Icon from 'components/Icon';
 
 import useDevice from 'hooks/useDevice';
 import useNickNameInput from 'hooks/useNickNameInput';
-import { isDuplicateNickname, updateNickname } from 'services/user';
 
 import { CommonBack } from 'assets/icons';
 import ProfileSvg from 'assets/img/profile.svg';
@@ -18,30 +15,13 @@ import ProfileSvg from 'assets/img/profile.svg';
 const EditNickname = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const queryClient = useQueryClient();
 
   const { isIOS } = useDevice();
   const [isAlertActive, handleAlertActive] = useReducer((prev) => !prev, false);
-  const { nickName, setNickName, updateNickName } = useNickNameInput();
   const { nickname } = location.state;
-
-  const handleSave = async () => {
-    const isDuplicated = await isDuplicateNickname(nickName);
-
-    if (isDuplicated) {
-      handleAlertActive();
-      return;
-    }
-    await updateNickname(nickName);
-
-    queryClient.invalidateQueries({ queryKey: ['myPage'] });
-
+  const { nickName, changeNickName, saveNickName } = useNickNameInput(nickname, handleAlertActive, () => {
     navigate('/myPage');
-  };
-
-  useEffect(() => {
-    setNickName(nickname);
-  }, [nickname, setNickName]);
+  });
 
   return (
     <>
@@ -64,13 +44,13 @@ const EditNickname = () => {
             <input
               className="h-full w-full text-center text-lg font-semibold"
               value={nickName}
-              onChange={(e) => updateNickName(e.target.value)}
+              onChange={(e) => changeNickName(e.target.value)}
             />
-            <p className="pt-2 opacity-70">최대 10글자/특수기호 사용 불가</p>
+            <p className="pt-2 opacity-70">최대 12글자까지 가능해요</p>
           </div>
 
           <div className="mt-auto flex w-full justify-center pb-7">
-            <Button handleClick={handleSave} className="w-full text-white">
+            <Button handleClick={saveNickName} className="w-full text-white">
               저장하기
             </Button>
           </div>

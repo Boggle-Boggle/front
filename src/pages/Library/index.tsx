@@ -148,8 +148,7 @@ const Library = () => {
         <>
           {layout === 'list' && (
             <section className={`${isIOS ? 'height-contentIOS' : 'height-contentAnd'} bg-main px-4 pb-9 pt-4`}>
-              <ListLayout allBooks={allBooks} />
-              <div className="h-1" ref={observerTarget} />
+              <ListLayout allBooks={allBooks} observerTarget={observerTarget} />
             </section>
           )}
           {layout === 'grid' && (

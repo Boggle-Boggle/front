@@ -37,19 +37,22 @@ const Libraries = ({ libraries, selected, setSelected, onPrev, onNext }: Library
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.value.length > 14) return;
-    setInputValue(e.target.value);
+    const newInputValue = e.target.value.trimStart();
+    if (newInputValue.length > 15) return;
+
+    setInputValue(newInputValue);
   };
 
   const handleAdd = async () => {
     let isDuplicate = false;
+    const newInputValue = inputValue.trimEnd();
 
     libraries.forEach((library) => {
-      if (library.libraryName === inputValue) isDuplicate = true;
+      if (library.libraryName === newInputValue) isDuplicate = true;
     });
 
     addLibraries.forEach((library) => {
-      if (library === inputValue) isDuplicate = true;
+      if (library === newInputValue) isDuplicate = true;
     });
 
     if (isDuplicate) {
@@ -58,7 +61,7 @@ const Libraries = ({ libraries, selected, setSelected, onPrev, onNext }: Library
       return;
     }
 
-    setAddLibraries([...addLibraries, inputValue]);
+    setAddLibraries([...addLibraries, newInputValue]);
     setInputValue('');
   };
 

@@ -15,31 +15,37 @@ type StatusProps = {
   onNext: () => void;
 };
 
-export const REDING_STATUS = [
-  {
-    status: 'completed',
-    title: '다 읽은 책',
-    subTitle: '대단해요! 책을 다 읽으셨나요? \n 등록 후 책에 대한 이야기를 남겨보세요',
-    img: <Icon Component={RecordFinishedReading} size="xl" />,
-  },
-  {
-    status: 'reading',
-    title: '읽는 중인 책',
-    subTitle: '책을 읽고 있는 중이신가요? \n 나중에 다 읽은 책으로 변경할 수 있어요',
-    img: <Icon Component={RecordReading} size="xl" />,
-  },
-  {
-    status: 'pending',
-    title: '읽어보고 싶은 책',
-    subTitle: '읽고 싶은 책인가요? \n 잊어버리지 않게 미리 등록해두세요!',
-    img: <Icon Component={RecordWish} size="xl" />,
-  },
-] as const;
-
 const Status = ({ selected, setSelected, onNext }: StatusProps) => {
   const handleSelect = (status: StatusType) => {
     setSelected(status);
   };
+
+  const REDING_STATUS = [
+    {
+      status: 'completed',
+      title: '다 읽은 책',
+      subTitle: '대단해요! 책을 다 읽으셨나요? \n 등록 후 책에 대한 이야기를 남겨보세요',
+      img: (
+        <Icon
+          Component={RecordFinishedReading}
+          size="xl"
+          style={{ color: selected === 'completed' ? '#E6B9A6' : 'black' }}
+        />
+      ),
+    },
+    {
+      status: 'reading',
+      title: '읽는 중인 책',
+      subTitle: '책을 읽고 있는 중이신가요? \n 나중에 다 읽은 책으로 변경할 수 있어요',
+      img: <Icon Component={RecordReading} size="xl" style={{ color: selected === 'reading' ? '#E6B9A6' : 'black' }} />,
+    },
+    {
+      status: 'pending',
+      title: '읽어보고 싶은 책',
+      subTitle: '읽고 싶은 책인가요? \n 잊어버리지 않게 미리 등록해두세요!',
+      img: <Icon Component={RecordWish} size="xl" style={{ color: selected === 'pending' ? '#E6B9A6' : 'black' }} />,
+    },
+  ] as const;
 
   return (
     <>

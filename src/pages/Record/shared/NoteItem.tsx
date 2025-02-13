@@ -34,7 +34,7 @@ const NoteItem = ({ note, readDateIndex }: NoteItemProps) => {
           {pages && `P.${pages.startPage}~P.${pages.endPage}`}
         </span>
       </p>
-      <p className="pb-[0.875rem] text-xs leading-5">{content}</p>
+      <p className="whitespace-pre-line pb-[0.875rem] text-xs leading-5">{content}</p>
 
       {tags && tags.length > 0 && (
         <div className="border-t-[1px] border-main pt-[0.875rem] font-bold">

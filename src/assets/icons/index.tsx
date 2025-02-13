@@ -23,9 +23,13 @@ import MyPageBooks from './myPage_books.svg?react';
 import MyPageMonth from './myPage_month.svg?react';
 import MyPageNotes from './myPage_notes.svg?react';
 import NavigationBookSearch from './navigation_book_search.svg?react';
+import NavigationBookSearchActive from './navigation_book_search_active.svg?react';
 import NavigationHome from './navigation_home.svg?react';
+import NavigationHomeActive from './navigation_home_active.svg?react';
 import NavigationLibrary from './navigation_library.svg?react';
+import NavigationLibraryActive from './navigation_library_active.svg?react';
 import NavigationMyPage from './navigation_my_page.svg?react';
+import NavigationMyPageActive from './navigation_my_page_active.svg?react';
 import ReadingNoteSinglePage from './readingNote__single_page.svg?react';
 import ReadingNoteMultiplePages from './readingNote_multiple_pages.svg?react';
 import ReadingNoteOCR from './readingNote_ocr.svg?react';
@@ -66,9 +70,13 @@ export {
   MyPageMonth,
   MyPageNotes,
   NavigationBookSearch,
+  NavigationBookSearchActive,
   NavigationHome,
+  NavigationHomeActive,
   NavigationLibrary,
+  NavigationLibraryActive,
   NavigationMyPage,
+  NavigationMyPageActive,
   ReadingNoteSinglePage,
   ReadingNoteMultiplePages,
   ReadingNotePageInput,
