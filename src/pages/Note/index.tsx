@@ -245,8 +245,10 @@ const Note = () => {
               className={`${isIOS ? 'headerIOS top-headerIOS' : 'headerAnd top-headerAnd'} absolute right-10 block h-12 w-12`}
               alt=""
             />
-            {page && page !== 0 && <p className="absolute right-2 pt-2 opacity-50">{`p.${page}`}</p>}
-            {pages && <p className="absolute right-2 pt-2 opacity-50">{`p.${pages.startPage}-p.${pages.endPage}`}</p>}
+            {page !== null && page !== 0 && <p className="absolute right-2 pt-2 opacity-50">{`p.${page}`}</p>}
+            {pages !== null && (
+              <p className="absolute right-2 pt-2 opacity-50">{`p.${pages.startPage}-p.${pages.endPage}`}</p>
+            )}
             <button
               className="w-full px-5 py-3 text-start font-semibold opacity-50"
               type="button"
