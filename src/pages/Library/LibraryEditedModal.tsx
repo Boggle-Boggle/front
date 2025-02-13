@@ -38,14 +38,14 @@ const LibraryEditedModal = ({
       if (!values) return;
 
       libraries.libraryList.forEach((library) => {
-        if (library.libraryName === values) isDuplicate = true;
+        if (library.libraryName === values.trimEnd()) isDuplicate = true;
       });
 
       if (isDuplicate) {
         handleAlertActive();
         return;
       }
-      await addLibrary(values);
+      await addLibrary(values.trimEnd());
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['libraries'] });
@@ -60,8 +60,10 @@ const LibraryEditedModal = ({
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.value.length > 14) return;
-    setValues(e.target.value);
+    const newInputValue = e.target.value.trimStart();
+    if (newInputValue.length > 15) return;
+
+    setValues(newInputValue);
   };
 
   const handleRemoveLibrary = async (removeId: number) => {
