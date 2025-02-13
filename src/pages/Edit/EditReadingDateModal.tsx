@@ -226,7 +226,7 @@ const EditReadingDateModal = ({ editDateIndex, readDates, setReadDates, close }:
 
       {isChangingStartDate && (
         <HalfScreenModal>
-          <div className="fixed bottom-0 z-30 h-1/2 w-full">
+          <div className="fixed bottom-0 z-30 m-auto h-1/2 w-full max-w-screen-sm">
             <DateSelector
               initialDate={startDate}
               setDate={setStartDate}
@@ -239,7 +239,7 @@ const EditReadingDateModal = ({ editDateIndex, readDates, setReadDates, close }:
 
       {isChangingEndDate && (
         <HalfScreenModal>
-          <div className="fixed bottom-0 z-30 h-1/2 w-full">
+          <div className="fixed bottom-0 z-30 m-auto h-1/2 w-full max-w-screen-sm">
             <DateSelector initialDate={endDate} setDate={setEndDate} type="종료" setIsChangeDate={setIsChangeEndDate} />
           </div>
         </HalfScreenModal>
