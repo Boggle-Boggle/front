@@ -1,5 +1,3 @@
-import { REDING_STATUS } from 'pages/BookDetail/ReadingRecordForm/Status';
-
 // TODO : IMG
 import emptyStar1 from 'assets/stars/empty/star1.png';
 import emptyStar2 from 'assets/stars/empty/star2.png';
@@ -19,7 +17,7 @@ import halfStar5 from 'assets/stars/half/star5.png';
 
 import { BookDetail } from './book';
 
-export type StatusType = (typeof REDING_STATUS)[number]['status'];
+export type StatusType = 'completed' | 'reading' | 'pending';
 
 // Rating
 export const RATING_STATUS = [
