@@ -117,19 +117,19 @@ const Note = () => {
     navigate(`/record/${recordId}`, { state: '독서노트', replace: true });
   };
 
+  const adjustHeight = () => {
+    if (textareaRef.current) {
+      textareaRef.current.style.height = 'auto';
+      textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
+    }
+  };
+
   const handleChangeTitle = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const newTitle = e.target.value;
-
     if (newTitle.length > MAX_TITLE) return;
 
     setTitle(newTitle);
-
-    if (textareaRef.current) {
-      const textArea = textareaRef.current;
-
-      textArea.style.height = 'auto';
-      textArea.style.height = `${textArea.scrollHeight}px`;
-    }
+    adjustHeight();
   };
 
   const handleChangeContent = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -173,6 +173,10 @@ const Note = () => {
     // 첫 등록인데 회독 정보가 있다. -> 가장 마지막 회독을 자동으로 선택
     else if (!note && readDateIds) setReadDateId(readDateIds[readDateIds.length - 1]);
     // 첫 등록인데 회독 정보가 없다. -> 회독정보가 널이여서 회독정보 없음을 띄워줘야함
+
+    setTimeout(() => {
+      adjustHeight();
+    }, 0);
   }, [note, readDateIds, readDateIndex]);
 
   return (
