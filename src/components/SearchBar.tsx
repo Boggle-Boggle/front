@@ -23,6 +23,9 @@ const SearchBar = ({
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const searchValue = e.target.value;
+
+    if (searchValue.length > 100) return;
+
     setValue(searchValue);
 
     if (searchValue.length === 0 && !allowEmptyVal) return;
