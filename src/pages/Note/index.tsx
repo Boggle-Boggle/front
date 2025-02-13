@@ -23,8 +23,8 @@ import DeleteModal from './DeleteModal';
 import PageModal from './PageModal';
 import TagModal from './TagModal';
 
-const MAX_TITLE = 30;
-const MAX_CONTENT = 256;
+const MAX_TITLE = 50;
+const MAX_CONTENT = 1024;
 
 const Note = () => {
   const [noteId, setNoteID] = useState<number | null>(null);
