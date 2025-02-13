@@ -1,18 +1,30 @@
-import { NavLink } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { NavLink, useLocation } from 'react-router-dom';
 
 import useDevice from 'hooks/useDevice';
-import useKeyboardStatus from 'hooks/useKeyboardStatus';
 
-import { NavigationBookSearch, NavigationHome, NavigationLibrary, NavigationMyPage } from 'assets/icons';
+import {
+  NavigationBookSearch,
+  NavigationBookSearchActive,
+  NavigationHome,
+  NavigationHomeActive,
+  NavigationLibrary,
+  NavigationLibraryActive,
+  NavigationMyPage,
+  NavigationMyPageActive,
+} from 'assets/icons';
 
 import Icon from './Icon';
 
 // TODO : 선택된 탭 보더 처리
 const BottomNavigator = () => {
   const { isIOS } = useDevice();
-  const isKeyboardActive = useKeyboardStatus();
+  const [activeTab, setActiveTab] = useState<string>('');
+  const location = useLocation(); // 현재 위치를 추적
 
-  if (isKeyboardActive) return null;
+  useEffect(() => {
+    setActiveTab(location.pathname); // 경로가 변경될 때마다 상태 업데이트
+  }, [location]);
 
   return (
     <ul
@@ -22,20 +34,22 @@ const BottomNavigator = () => {
         <NavLink
           to="/"
           className={({ isActive }) =>
-            isActive ? 'flex flex-col items-center text-xs font-bold' : 'flex flex-col items-center text-xs'
+            isActive
+              ? 'flex flex-col items-center text-xs font-bold text-[#be9685]'
+              : 'flex flex-col items-center text-xs'
           }
         >
-          <Icon Component={NavigationHome} />홈
+          <Icon Component={activeTab === '/' ? NavigationHomeActive : NavigationHome} />홈
         </NavLink>
       </li>
       <li className="m-auto">
         <NavLink
           to="/search"
           className={({ isActive }) =>
-            isActive ? 'flex flex-col items-center text-xs font-bold' : 'flex flex-col items-center text-xs'
+            isActive ? 'flex flex-col items-center text-xs font-bold text-accent' : 'flex flex-col items-center text-xs'
           }
         >
-          <Icon Component={NavigationBookSearch} />
+          <Icon Component={activeTab === '/search' ? NavigationBookSearchActive : NavigationBookSearch} />
           검색
         </NavLink>
       </li>
@@ -43,10 +57,12 @@ const BottomNavigator = () => {
         <NavLink
           to="/library"
           className={({ isActive }) =>
-            isActive ? 'flex flex-col items-center text-xs font-bold' : 'flex flex-col items-center text-xs'
+            isActive
+              ? 'flex flex-col items-center text-xs font-bold text-[#E6B9A6]'
+              : 'flex flex-col items-center text-xs'
           }
         >
-          <Icon Component={NavigationLibrary} />
+          <Icon Component={activeTab === '/library' ? NavigationLibraryActive : NavigationLibrary} />
           서재
         </NavLink>
       </li>
@@ -54,10 +70,10 @@ const BottomNavigator = () => {
         <NavLink
           to="/myPage"
           className={({ isActive }) =>
-            isActive ? 'flex flex-col items-center text-xs font-bold' : 'flex flex-col items-center text-xs'
+            isActive ? 'flex flex-col items-center text-xs font-bold text-accent' : 'flex flex-col items-center text-xs'
           }
         >
-          <Icon Component={NavigationMyPage} />
+          <Icon Component={activeTab === '/myPage' ? NavigationMyPageActive : NavigationMyPage} />
           마이페이지
         </NavLink>
       </li>
