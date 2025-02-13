@@ -8,52 +8,31 @@ import Highlight from 'components/Highlight';
 import Icon from 'components/Icon';
 
 import useDevice from 'hooks/useDevice';
-import { isDuplicateNickname } from 'services/user';
 
 import { CommonBack, CommonNext } from 'assets/icons';
 
 type NickNameInputProps = {
   nickName: string;
-  isValid: boolean;
-  onNext: () => void;
-  updateNickName: (name: string) => void;
+  changeNickName: (name: string) => void;
+  saveNickName: () => void;
 };
 
-const NickNameInput = ({ nickName, isValid, updateNickName, onNext }: NickNameInputProps) => {
-  const [isWhiteSpaceAlertActive, handleWhiteSpaceAlertActive] = useReducer((prev) => !prev, false);
-  const [isDuplicateAlertActive, handleDuplicateAlertActive] = useReducer((prev) => !prev, false);
+const NickNameInput = ({ nickName, changeNickName, saveNickName }: NickNameInputProps) => {
+  const [isAlertActive, handleAlertActive] = useReducer((prev) => !prev, false);
 
   const { isIOS } = useDevice();
   const navigate = useNavigate();
 
   const handleLeftBtnClick = () => navigate('/login');
-
   const handleNext = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!isValid) {
-      // TODO : 벨리데이션 추가
-      handleWhiteSpaceAlertActive();
-
-      return;
-    }
-
-    const isDuplicated = await isDuplicateNickname(nickName);
-
-    if (isDuplicated) {
-      handleDuplicateAlertActive();
-
-      return;
-    }
-
-    onNext();
+    saveNickName();
   };
 
   return (
     <>
-      {isWhiteSpaceAlertActive && <Alert message="공백은 사용할 수 없어요" onClose={handleWhiteSpaceAlertActive} />}
-
-      {isDuplicateAlertActive && (
-        <Alert message={`사용중인 닉네임이에요 \n다른 닉네임을 입력해주세요`} onClose={handleDuplicateAlertActive} />
+      {isAlertActive && (
+        <Alert message={`사용중인 닉네임이에요 \n다른 닉네임을 입력해주세요`} onClose={handleAlertActive} />
       )}
 
       <Header
@@ -86,11 +65,11 @@ const NickNameInput = ({ nickName, isValid, updateNickName, onNext }: NickNameIn
             <input
               className="h-full w-full text-lg font-semibold"
               value={nickName}
-              onChange={(e) => updateNickName(e.target.value)}
+              onChange={(e) => changeNickName(e.target.value)}
             />
           </div>
           <div className="absolute bottom-0 w-full">
-            <Button handleClick={handleNext} disabled={!isValid}>
+            <Button handleClick={handleNext}>
               다음
               <span>
                 <Icon Component={CommonNext} size="sm" />

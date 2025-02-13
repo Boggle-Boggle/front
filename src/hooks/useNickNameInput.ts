@@ -1,18 +1,40 @@
+import { useQueryClient } from '@tanstack/react-query';
+
 import { useState } from 'react';
 
-const useNickNameInput = () => {
-  const [nickName, setNickName] = useState<string>('');
-  const [isValid, setIsValid] = useState<boolean>(false);
+import { isDuplicateNickname, updateNickname } from 'services/user';
 
-  const updateNickName = (name: string) => {
-    if (name.length > 15) return;
-    if (name.length === 0) setIsValid(false);
-    else setIsValid(true);
+const useNickNameInput = (
+  initNickName: string,
+  handleAlertActive: React.DispatchWithoutAction,
+  successChange: () => void,
+) => {
+  const [nickName, setNickName] = useState<string>(initNickName);
 
+  const queryClient = useQueryClient();
+
+  const changeNickName = async (name: string) => {
+    if (name.length > 12) return;
     setNickName(name);
   };
 
-  return { nickName, setNickName, isValid, updateNickName };
+  const saveNickName = async () => {
+    const trimmedNickName = nickName.trim();
+
+    const isDuplicated = await isDuplicateNickname(trimmedNickName);
+
+    if (isDuplicated) {
+      handleAlertActive();
+      return;
+    }
+    await updateNickname(trimmedNickName);
+
+    queryClient.invalidateQueries({ queryKey: ['myPage'] });
+
+    successChange();
+  };
+
+  return { nickName, saveNickName, changeNickName };
 };
 
 export default useNickNameInput;
