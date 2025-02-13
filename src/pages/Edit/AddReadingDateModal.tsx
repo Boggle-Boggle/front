@@ -6,7 +6,7 @@ import HalfScreenModal from 'components/HalfScreenModal';
 import Icon from 'components/Icon';
 import DateSelector from 'pages/BookDetail/ReadingRecordForm/shared/DateSelector';
 
-import { formatDate } from 'utils/format';
+import { formatDate, isValidDate } from 'utils/format';
 
 import { DateType, RecordDate, StatusType } from 'types/record';
 
@@ -33,6 +33,11 @@ const AddReadingDateModal = ({ readDates, setReadDates, close }: AddReadingDateM
         return;
       }
 
+      if (!isValidDate(...startDate)) {
+        handleAlertActive();
+        return;
+      }
+
       const newReadDate: RecordDate & { status: StatusType } = {
         readDateId: null,
         status: 'reading',
@@ -50,6 +55,11 @@ const AddReadingDateModal = ({ readDates, setReadDates, close }: AddReadingDateM
     if (!startDate || !endDate) {
       handleAlertActive();
 
+      return;
+    }
+
+    if (!isValidDate(...endDate)) {
+      handleAlertActive();
       return;
     }
 
@@ -125,7 +135,7 @@ const AddReadingDateModal = ({ readDates, setReadDates, close }: AddReadingDateM
                         <span className="ml-2 opacity-60">읽기 시작한 날</span>
                       </div>
                       <div className="text-base">
-                        {`${startDate[0]}년 ${startDate[1]}월 ${startDate[2]}일`}
+                        {`${startDate[0] >= 2000 ? startDate[0] : 2000 + startDate[0]}년 ${startDate[1]}월 ${startDate[2]}일`}
                         <Icon Component={CommonNext} size="xs" style={{ display: 'inline-block' }} />
                       </div>
                     </>

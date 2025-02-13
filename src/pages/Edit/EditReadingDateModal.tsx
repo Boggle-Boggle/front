@@ -6,7 +6,7 @@ import HalfScreenModal from 'components/HalfScreenModal';
 import Icon from 'components/Icon';
 import DateSelector from 'pages/BookDetail/ReadingRecordForm/shared/DateSelector';
 
-import { formatDate, formatDateAndTime } from 'utils/format';
+import { formatDate, formatDateAndTime, isValidDate } from 'utils/format';
 
 import { DateType, RecordDate, StatusType } from 'types/record';
 
@@ -34,6 +34,11 @@ const EditReadingDateModal = ({ editDateIndex, readDates, setReadDates, close }:
         return;
       }
 
+      if (!isValidDate(...startDate)) {
+        handleAlertActive();
+        return;
+      }
+
       const newReadDates = readDates.map((readDate, idx) => {
         if (idx !== editDateIndex) return readDate;
 
@@ -55,6 +60,11 @@ const EditReadingDateModal = ({ editDateIndex, readDates, setReadDates, close }:
     }
 
     if (!startDate || !endDate) {
+      handleAlertActive();
+      return;
+    }
+
+    if (!isValidDate(...endDate)) {
       handleAlertActive();
       return;
     }

@@ -44,3 +44,13 @@ export const getHttpsLink = (link: string) => {
 
   return `${http}s://${domain}`;
 };
+
+export const isValidDate = (year: number, month: number, day: number) => {
+  const newYear = year < 2000 ? 2000 + year : year;
+  const date = new Date(newYear, month - 1, day);
+
+  const result = date.getFullYear() === newYear && date.getMonth() === month - 1 && date.getDate() === day;
+
+  console.log(result);
+  return result;
+};
