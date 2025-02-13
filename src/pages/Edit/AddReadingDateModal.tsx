@@ -86,7 +86,7 @@ const AddReadingDateModal = ({ readDates, setReadDates, close }: AddReadingDateM
       {!isChangingStartDate && !isChangingEndDate && (
         <HalfScreenModal bgColor="bg-white" handleClose={close}>
           <section className="relative flex h-full w-full flex-col p-6">
-            <p className="pb-1 text-center text-lg font-bold">독서기간 수정</p>
+            <p className="pb-1 text-center text-lg font-bold">독서기간 추가</p>
             <p className="text-center text-sm opacity-50">진행도를 선택한 뒤 기간을 입력해보세요</p>
             <div className="h-full w-full">
               <p className="pb-1 pt-2 text-lg font-bold">진행도</p>
