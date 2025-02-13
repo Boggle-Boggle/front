@@ -55,7 +55,7 @@ const ReadingRecordForm = ({ isbn, onClose }: ReadingRecordFormProps) => {
   return (
     <>
       <button
-        className="absolute top-0 z-20 h-full w-full bg-black opacity-40"
+        className="absolute top-0 z-30 h-full w-full bg-black opacity-40"
         onClick={onClose}
         aria-label="취소"
         type="button"
