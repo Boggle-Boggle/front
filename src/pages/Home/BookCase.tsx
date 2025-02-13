@@ -49,7 +49,7 @@ const BookCase = ({ books }: BookCaseProps) => {
   return (
     <div className="relative z-0 flex h-full w-full items-center justify-center">
       <Canvas camera={{ position: [0, 0, cameraZPosition] }}>
-        <ambientLight intensity={1.7} />
+        <ambientLight intensity={2} />
         <directionalLight position={[7.5, 5, 7.5]} intensity={1} />
         <Suspense
           fallback={
