@@ -28,9 +28,12 @@ const Book = ({ position, title, width, page, readingRecordId }: BookProps) => {
     clonedScene.traverse((child) => {
       if ((child as THREE.Mesh).isMesh) {
         const mesh = child as THREE.Mesh;
-        mesh.material = new THREE.MeshStandardMaterial({
-          color: colors[page % colors.length],
-        });
+
+        if (mesh.name === '책들003') {
+          mesh.material = new THREE.MeshStandardMaterial({
+            color: colors[page % colors.length],
+          });
+        }
       }
     });
 
@@ -49,7 +52,7 @@ const Book = ({ position, title, width, page, readingRecordId }: BookProps) => {
       <primitive object={bookScene} />
       <Html position={[0, 0, 0.035]} center>
         <div
-          className="font-book flex h-[100px] w-[22px] flex-col items-center justify-center pb-2 text-[14.5px] leading-[0.85] text-[#5a5a5a]"
+          className="flex h-[100px] w-[22px] flex-col items-center justify-center pb-2 font-book text-[14.5px] leading-[0.85] text-[#5a5a5a]"
           onClick={handleNavigate}
         >
           {Array.from(filteredTitle.length > MAX_TITLE_LEN ? filteredTitle.slice(0, MAX_TITLE_LEN) : filteredTitle).map(
