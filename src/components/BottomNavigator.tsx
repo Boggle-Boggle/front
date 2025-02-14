@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 
 import useDevice from 'hooks/useDevice';
+import useKeyboardStatus from 'hooks/useKeyboardStatus';
 
 import {
   NavigationBookSearch,
@@ -21,6 +22,8 @@ const BottomNavigator = () => {
   const [activeTab, setActiveTab] = useState<string>('');
   const location = useLocation();
 
+  const isKeyboardActive = useKeyboardStatus();
+
   useEffect(() => {
     setActiveTab(location.pathname);
   }, [location]);
@@ -34,6 +37,8 @@ const BottomNavigator = () => {
 
     if (activeTab.includes('myPage')) return 'myPage';
   };
+
+  if (isKeyboardActive) return;
 
   return (
     <ul
