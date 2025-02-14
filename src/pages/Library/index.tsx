@@ -126,7 +126,7 @@ const Library = () => {
           <button
             onClick={() => setIsToggledLibrarySelect(true)}
             type="button"
-            className="inline-flex items-center justify-center"
+            className={`inline-flex items-center justify-center ${title.length > 13 && 'text-sm'}`}
           >
             {`${title}(${data?.pages[0]?.totalResultCnt ?? 0})`}
             {isToggledLibrarySelect ? (
