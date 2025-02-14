@@ -8,14 +8,13 @@ import { LibraryBook } from 'types/library';
 
 type ListLayoutProps = {
   allBooks: LibraryBook[];
-  observerTarget: React.RefObject<HTMLDivElement>;
 };
 
-const ListLayout = ({ allBooks, observerTarget }: ListLayoutProps) => {
+const ListLayout = ({ allBooks }: ListLayoutProps) => {
   const navigate = useNavigate();
 
   return (
-    <section className="h-full overflow-y-scroll">
+    <ul>
       {allBooks &&
         allBooks.map(({ readingRecordId, imageUrl, title, rating, recentReadDate, readingCount }) => {
           const startDate = recentReadDate && formatDateTimeToDate(recentReadDate.startReadDate);
@@ -52,9 +51,7 @@ const ListLayout = ({ allBooks, observerTarget }: ListLayoutProps) => {
             </li>
           );
         })}
-
-      <div className="h-1" ref={observerTarget} />
-    </section>
+    </ul>
   );
 };
 

@@ -146,19 +146,20 @@ const Library = () => {
       />
       {data && (
         <>
-          {layout === 'list' && (
-            <section className={`${isIOS ? 'height-contentIOS' : 'height-contentAnd'} bg-main px-4 pb-9 pt-4`}>
-              <ListLayout allBooks={allBooks} observerTarget={observerTarget} />
-            </section>
-          )}
-          {layout === 'grid' && (
-            <section
-              className={` ${isIOS ? 'h-[calc(100%_-_14.5rem)]' : 'h-[calc(100%_-_12.5rem)]'} mt-3 overflow-y-scroll`}
-            >
-              <GridLayout allBooks={allBooks} />
-              <div className="h-[0.5px]" ref={observerTarget} />
-            </section>
-          )}
+          {layout === 'list' && <div className="h-4" />}
+          <section
+            className={` ${isIOS ? 'h-[calc(100%_-_14.5rem)]' : 'h-[calc(100%_-_12.5rem)]'} mt-3 overflow-y-scroll`}
+          >
+            {layout === 'grid' && <GridLayout allBooks={allBooks} />}
+
+            {layout === 'list' && (
+              <section className="px-4">
+                <ListLayout allBooks={allBooks} />
+              </section>
+            )}
+
+            <div className="h-2" ref={observerTarget} />
+          </section>
         </>
       )}
 

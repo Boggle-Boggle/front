@@ -34,7 +34,9 @@ const useInfiniteScroll = <T>(
   );
 
   useEffect(() => {
-    const observer = new IntersectionObserver(handleObserver);
+    const observer = new IntersectionObserver(handleObserver, {
+      threshold: 0.01,
+    });
 
     if (observerTarget.current) {
       observer.observe(observerTarget.current);
