@@ -1,19 +1,18 @@
 import { LibraryBook } from 'types/library';
 
 import GridItem from './GridItem';
+import NoBook from './NoBook';
 
 type GridLayoutProps = {
   allBooks: LibraryBook[];
 };
 
 const GridLayout = ({ allBooks }: GridLayoutProps) => {
+  if (allBooks.length === 0) return <NoBook />;
+
   const chunkedBooks = [];
   for (let i = 0; i < allBooks.length; i += 3) {
     chunkedBooks.push(allBooks.slice(i, i + 3));
-  }
-
-  while (chunkedBooks.length < 4) {
-    chunkedBooks.push([]);
   }
 
   return chunkedBooks.map((books) => (
@@ -21,7 +20,7 @@ const GridLayout = ({ allBooks }: GridLayoutProps) => {
       style={{ height: window.innerHeight * 0.18 }}
       className="relative flex w-full items-end justify-end shadow-[20px_30px_40px_rgba(0,0,0,0.15)]"
     >
-      <div className="z-10 mb-5 grid h-[7rem] w-full grid-cols-3 items-end gap-12 px-7">
+      <div className="z-10 mb-5 grid h-[112px] w-full grid-cols-3 items-end gap-12 px-7">
         {books[0] && <GridItem book={books[0]} />}
         {books[1] && <GridItem book={books[1]} />}
         {books[2] && <GridItem book={books[2]} />}

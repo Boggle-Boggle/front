@@ -6,12 +6,16 @@ import { formatDateTimeToDate } from 'utils/format';
 
 import { LibraryBook } from 'types/library';
 
+import NoBook from './NoBook';
+
 type ListLayoutProps = {
   allBooks: LibraryBook[];
 };
 
 const ListLayout = ({ allBooks }: ListLayoutProps) => {
   const navigate = useNavigate();
+
+  if (allBooks.length === 0) return <NoBook />;
 
   return (
     <ul>
