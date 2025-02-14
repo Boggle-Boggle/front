@@ -61,7 +61,7 @@ const LibraryEditedModal = ({
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newInputValue = e.target.value.trimStart();
-    if (newInputValue.length > 15) return;
+    if (newInputValue.length > 12) return;
 
     setValues(newInputValue);
   };
