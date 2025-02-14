@@ -16,15 +16,24 @@ import {
 
 import Icon from './Icon';
 
-// TODO : 선택된 탭 보더 처리
 const BottomNavigator = () => {
   const { isIOS } = useDevice();
   const [activeTab, setActiveTab] = useState<string>('');
-  const location = useLocation(); // 현재 위치를 추적
+  const location = useLocation();
 
   useEffect(() => {
-    setActiveTab(location.pathname); // 경로가 변경될 때마다 상태 업데이트
+    setActiveTab(location.pathname);
   }, [location]);
+
+  const getCurrentActive = () => {
+    if (activeTab === '/') return 'home';
+
+    if (activeTab.includes('search') || activeTab.includes('detail')) return 'search';
+
+    if (activeTab.includes('library') || activeTab.includes('record')) return 'library';
+
+    if (activeTab.includes('myPage')) return 'myPage';
+  };
 
   return (
     <ul
@@ -33,47 +42,35 @@ const BottomNavigator = () => {
       <li className="m-auto">
         <NavLink
           to="/"
-          className={({ isActive }) =>
-            isActive
-              ? 'flex flex-col items-center text-xs font-bold text-[#be9685]'
-              : 'flex flex-col items-center text-xs'
-          }
+          className={`flex flex-col items-center text-xs ${getCurrentActive() === 'home' && 'font-bold text-accent'}`}
         >
-          <Icon Component={activeTab === '/' ? NavigationHomeActive : NavigationHome} />홈
+          <Icon Component={getCurrentActive() === 'home' ? NavigationHomeActive : NavigationHome} />홈
         </NavLink>
       </li>
       <li className="m-auto">
         <NavLink
           to="/search"
-          className={({ isActive }) =>
-            isActive ? 'flex flex-col items-center text-xs font-bold text-accent' : 'flex flex-col items-center text-xs'
-          }
+          className={`flex flex-col items-center text-xs ${getCurrentActive() === 'search' && 'font-bold text-accent'}`}
         >
-          <Icon Component={activeTab === '/search' ? NavigationBookSearchActive : NavigationBookSearch} />
+          <Icon Component={getCurrentActive() === 'search' ? NavigationBookSearchActive : NavigationBookSearch} />
           검색
         </NavLink>
       </li>
       <li className="m-auto">
         <NavLink
           to="/library"
-          className={({ isActive }) =>
-            isActive
-              ? 'flex flex-col items-center text-xs font-bold text-[#E6B9A6]'
-              : 'flex flex-col items-center text-xs'
-          }
+          className={`flex flex-col items-center text-xs ${getCurrentActive() === 'library' && 'font-bold text-accent'}`}
         >
-          <Icon Component={activeTab === '/library' ? NavigationLibraryActive : NavigationLibrary} />
+          <Icon Component={getCurrentActive() === 'library' ? NavigationLibraryActive : NavigationLibrary} />
           서재
         </NavLink>
       </li>
       <li className="m-auto">
         <NavLink
           to="/myPage"
-          className={({ isActive }) =>
-            isActive ? 'flex flex-col items-center text-xs font-bold text-accent' : 'flex flex-col items-center text-xs'
-          }
+          className={`flex flex-col items-center text-xs ${getCurrentActive() === 'myPage' && 'font-bold text-accent'}`}
         >
-          <Icon Component={activeTab === '/myPage' ? NavigationMyPageActive : NavigationMyPage} />
+          <Icon Component={getCurrentActive() === 'myPage' ? NavigationMyPageActive : NavigationMyPage} />
           마이페이지
         </NavLink>
       </li>
