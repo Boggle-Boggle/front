@@ -13,7 +13,7 @@ const sizeMap: Record<IconSize, number | string> = {
   sm: '1.325rem',
   md: '1.75rem',
   lg: '2rem',
-  xl: '2.25rem',
+  xl: '2.6rem',
 };
 
 const Icon = ({ size = 'md', style, Component }: IconProps) => {

@@ -10,7 +10,7 @@ import useModal from 'hooks/useModal';
 import { getMyPageInfo, getTermsAgreement } from 'services/user';
 
 import { CommonPencil, MyPageBooks, MyPageMonth, MyPageNotes } from 'assets/icons';
-import ProfileSvg from 'assets/img/profile.svg';
+import ProfileImg from 'assets/img/profile.png';
 
 import LogoutModal from './LogoutModal';
 import Content from './shared/Content';
@@ -39,8 +39,8 @@ const MyPage = () => {
       <div className={`bg-main px-5 ${isIOS ? 'py-[8.5rem]' : 'py-[6.5rem]'}`}>
         <section className="relative flex h-52 flex-col items-center rounded-lg bg-white pb-4 pt-20">
           <img
-            src={ProfileSvg}
-            className="absolute -top-[4.5rem] h-32 w-32 rounded-[50%] border-[5px] border-white object-cover"
+            src={ProfileImg}
+            className="absolute -top-[3.5rem] h-32 w-32 rounded-[50%] border-[4px] border-white object-cover"
             alt=""
           />
 

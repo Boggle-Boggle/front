@@ -38,7 +38,7 @@ const Libraries = ({ libraries, selected, setSelected, onPrev, onNext }: Library
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newInputValue = e.target.value.trimStart();
-    if (newInputValue.length > 15) return;
+    if (newInputValue.length > 12) return;
 
     setInputValue(newInputValue);
   };

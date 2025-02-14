@@ -37,7 +37,7 @@ const DeleteAccount = () => {
         className={`${isIOS ? 'height-without-headerIOS' : 'height-without-headerAnd'} flex flex-col items-center justify-between`}
       >
         <section className="flex flex-col items-center pt-28">
-          <img src={deleteAccountImg} alt="" className="h-32" />
+          <img src={deleteAccountImg} alt="" className="h-28" />
           <p className="py-9 text-2xl font-bold">정말 탈퇴하시겠습니까?</p>
           <p className="whitespace-pre-line text-center text-lg opacity-70">
             계정을 탈퇴하시면 저장된 책들과{'\n'} 작성한 독서노트 등 모든 활동 정보가 {'\n'}삭제되며 복구가 어렵습니다.
