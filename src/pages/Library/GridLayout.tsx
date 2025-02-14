@@ -16,11 +16,8 @@ const GridLayout = ({ allBooks }: GridLayoutProps) => {
   }
 
   return chunkedBooks.map((books) => (
-    <section
-      style={{ height: window.innerHeight * 0.18 }}
-      className="relative flex w-full items-end justify-end shadow-[20px_30px_40px_rgba(0,0,0,0.15)]"
-    >
-      <div className="z-10 mb-5 grid h-[112px] w-full grid-cols-3 items-end gap-12 px-7">
+    <section className="relative flex w-full items-end justify-end pt-8 shadow-[20px_30px_40px_rgba(0,0,0,0.15)]">
+      <div className="z-10 mb-5 grid h-28 w-full grid-cols-3 items-end gap-12 px-7">
         {books[0] && <GridItem book={books[0]} />}
         {books[1] && <GridItem book={books[1]} />}
         {books[2] && <GridItem book={books[2]} />}

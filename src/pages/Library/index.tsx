@@ -104,6 +104,7 @@ const Library = () => {
   return (
     <>
       <Header
+        backgroundColor="bg-main"
         rightBtn={
           <div className="flex">
             {layout === 'list' && (
@@ -137,30 +138,27 @@ const Library = () => {
           </button>
         }
       />
-      <SearchBar
-        placeholder="서재 안 도서 검색"
-        value={value}
-        setValue={setValue}
-        fetchResult={debouncedSearch}
-        allowEmptyVal
-      />
+      <div className={`${isIOS ? 'mt-[5.9rem]' : 'mt-[3.9rem]'} fixed z-20 w-full bg-main pb-4 pt-[1px]`}>
+        <SearchBar
+          placeholder="서재 안 도서 검색"
+          value={value}
+          setValue={setValue}
+          fetchResult={debouncedSearch}
+          allowEmptyVal
+        />
+      </div>
       {data && (
-        <>
-          {layout === 'list' && <div className="h-4" />}
-          <section
-            className={` ${isIOS ? 'h-[calc(100%_-_14.5rem)]' : 'h-[calc(100%_-_12.5rem)]'} mt-3 overflow-y-scroll`}
-          >
-            {layout === 'grid' && <GridLayout allBooks={allBooks} />}
+        <section className={` ${isIOS ? 'mt-[8.25rem]' : 'mt-[7rem]'} mt-9 overflow-y-scroll`}>
+          {layout === 'grid' && <GridLayout allBooks={allBooks} />}
 
-            {layout === 'list' && (
-              <section className="px-4">
-                <ListLayout allBooks={allBooks} />
-              </section>
-            )}
+          {layout === 'list' && (
+            <section className="px-4">
+              <ListLayout allBooks={allBooks} />
+            </section>
+          )}
 
-            <div className="h-2" ref={observerTarget} />
-          </section>
-        </>
+          <div className="h-2" ref={observerTarget} />
+        </section>
       )}
 
       {isToggledLibrarySelect && libraries && (
