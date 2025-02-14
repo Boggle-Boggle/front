@@ -4,7 +4,7 @@ import Header from 'components/Header';
 import Icon from 'components/Icon';
 
 import { CommonBack } from 'assets/icons';
-import ProfileSvg from 'assets/img/profile.svg';
+import LogoImg from 'assets/img/logo.png';
 
 const VersionInfo = () => {
   const navigate = useNavigate();
@@ -23,7 +23,7 @@ const VersionInfo = () => {
       />
       <section className="absolute left-0 top-0 flex h-full w-full flex-col items-center justify-center">
         <img
-          src={ProfileSvg}
+          src={LogoImg}
           className="flex h-28 w-28 items-center justify-center rounded-xl bg-main object-cover shadow-md"
           alt=""
         />
