@@ -14,6 +14,7 @@ import BookCase from './BookCase';
 import SelectPeriodModal from './SelectPeriodModal';
 
 const Home = () => {
+  const [title, setTitle] = useState<string>('2025년 전체보기');
   const [selectedYear, setSelectedYear] = useState<number | null>(25);
   const [selectedMonth, setSelectedMonth] = useState<number | null>(13);
 
@@ -28,7 +29,7 @@ const Home = () => {
     <>
       <Header
         backgroundColor="bg-main"
-        title={`${selectedYear ? selectedYear + 2000 : 2025}년 ${selectedMonth === 13 ? '전체보기' : `${selectedMonth}월`} (${books?.length ?? 0})`}
+        title={`${title} (${books?.length ?? 0})`}
         rightBtn={
           <button aria-label="기간선택" type="button" onClick={open}>
             <Icon Component={MainDate} />
@@ -40,6 +41,7 @@ const Home = () => {
       </div>
       {isOpen && (
         <SelectPeriodModal
+          setTitle={setTitle}
           selectedYear={selectedYear}
           setSelectedYear={setSelectedYear}
           selectedMonth={selectedMonth}
