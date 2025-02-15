@@ -18,7 +18,7 @@ const SearchResult = ({ query }: SearchResultProps) => {
   const navigate = useNavigate();
   const { isIOS } = useDevice();
 
-  const { data, refetch, observerTarget, isLoading } = useInfiniteScroll(
+  const { data, refetch, observerTarget, isLoading, isFetchingNextPage } = useInfiniteScroll(
     ['searchBooks', query],
     ({ pageParam = 1 }) => getSearchBooks(query, pageParam as number),
     false,
@@ -56,6 +56,12 @@ const SearchResult = ({ query }: SearchResultProps) => {
         </li>
       ))}
       <div ref={observerTarget} className="h-7" />
+
+      {isFetchingNextPage && (
+        <div className="flex justify-center py-3">
+          <Loading />
+        </div>
+      )}
     </ul>
   ) : (
     <NoResultItems />
