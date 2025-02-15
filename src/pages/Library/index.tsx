@@ -148,7 +148,7 @@ const Library = () => {
         />
       </div>
       {data && (
-        <section className={` ${isIOS ? 'mt-[8.25rem]' : 'mt-[7rem]'} mt-9 overflow-y-scroll`}>
+        <section className={` ${isIOS ? 'mt-[8.25rem]' : 'mt-[7rem]'} mt-9 overflow-y-scroll pb-20`}>
           {layout === 'grid' && <GridLayout allBooks={allBooks} />}
 
           {layout === 'list' && (
