@@ -1,3 +1,5 @@
+import { createPortal } from 'react-dom';
+
 import { CommonCancel } from 'assets/icons';
 
 import Icon from './Icon';
@@ -16,7 +18,7 @@ const HalfScreenModal = ({
   hasCloseMark = false,
   bgColor = 'bg-main',
 }: HalfScreenModalProps) => {
-  return (
+  return createPortal(
     <>
       <button
         className="absolute top-0 z-40 h-full w-full bg-black opacity-40"
@@ -39,7 +41,8 @@ const HalfScreenModal = ({
         )}
         <section className="overflow-auto">{children}</section>
       </section>
-    </>
+    </>,
+    document.getElementById('modal') as HTMLElement,
   );
 };
 

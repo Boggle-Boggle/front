@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import Loading from 'pages/Loading';
@@ -15,16 +15,22 @@ type SearchResultProps = {
 };
 
 const SearchResult = ({ query }: SearchResultProps) => {
+  const scrollRef = useRef<HTMLUListElement>(null);
   const navigate = useNavigate();
   const { isIOS } = useDevice();
 
-  const { data, refetch, observerTarget, isLoading } = useInfiniteScroll(
+  const { data, refetch, observerTarget, isLoading, isFetchingNextPage } = useInfiniteScroll(
     ['searchBooks', query],
     ({ pageParam = 1 }) => getSearchBooks(query, pageParam as number),
     false,
   );
 
   const handleGoDetail = (isbn: string) => {
+    const scrollContainer = scrollRef.current;
+
+    if (scrollContainer) {
+      sessionStorage.setItem('scroll', scrollContainer.scrollTop.toString());
+    }
     navigate(`/detail/${isbn}`);
   };
 
@@ -34,12 +40,22 @@ const SearchResult = ({ query }: SearchResultProps) => {
     }
   }, [query, refetch]);
 
+  useEffect(() => {
+    const saveScrollPosition = sessionStorage.getItem('scroll');
+
+    if (scrollRef.current && saveScrollPosition) {
+      scrollRef.current.scrollTo({ top: parseInt(saveScrollPosition, 10), behavior: 'instant' });
+    }
+    sessionStorage.removeItem('scroll');
+  }, []);
+
   if (isLoading) return <Loading />;
 
   const allBooks = data?.pages.flatMap((page) => page.items) || [];
 
   return allBooks.length ? (
     <ul
+      ref={scrollRef}
       className={`${isIOS ? 'height-contentIOS' : 'height-contentAnd'} bottom-0 mt-3 h-full w-full overflow-y-auto rounded-tl-3xl bg-white px-5 pb-footerAnd pt-4`}
     >
       {allBooks.map((book) => (
@@ -56,6 +72,12 @@ const SearchResult = ({ query }: SearchResultProps) => {
         </li>
       ))}
       <div ref={observerTarget} className="h-7" />
+
+      {isFetchingNextPage && (
+        <div className="flex justify-center py-3">
+          <Loading />
+        </div>
+      )}
     </ul>
   ) : (
     <NoResultItems />

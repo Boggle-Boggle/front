@@ -10,7 +10,7 @@ import useDevice from 'hooks/useDevice';
 import useNickNameInput from 'hooks/useNickNameInput';
 
 import { CommonBack } from 'assets/icons';
-import ProfileImg from 'assets/img/profile.png';
+import ProfileImg from 'assets/img/profile.svg';
 
 const EditNickname = () => {
   const navigate = useNavigate();

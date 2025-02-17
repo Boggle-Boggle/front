@@ -10,7 +10,7 @@ import useModal from 'hooks/useModal';
 import { getMyPageInfo, getTermsAgreement } from 'services/user';
 
 import { CommonPencil, MyPageBooks, MyPageMonth, MyPageNotes } from 'assets/icons';
-import ProfileImg from 'assets/img/profile.png';
+import ProfileImg from 'assets/img/profile.svg';
 
 import LogoutModal from './LogoutModal';
 import Content from './shared/Content';

@@ -52,6 +52,7 @@ type SelectPeriodModalProps = {
   selectedMonth: number | null;
   setSelectedYear: React.Dispatch<React.SetStateAction<number | null>>;
   setSelectedMonth: React.Dispatch<React.SetStateAction<number | null>>;
+  setTitle: React.Dispatch<React.SetStateAction<string>>;
   close: () => void;
   fetchBooks: () => void;
 };
@@ -61,11 +62,15 @@ const SelectPeriodModal = ({
   selectedMonth,
   setSelectedYear,
   setSelectedMonth,
+  setTitle,
   close,
   fetchBooks,
 }: SelectPeriodModalProps) => {
   const handleSelect = () => {
     fetchBooks();
+
+    const newTitle = `${selectedYear ? selectedYear + 2000 : 2025}년 ${selectedMonth === 13 ? '전체보기' : `${selectedMonth}월`}`;
+    setTitle(newTitle);
     close();
   };
 
