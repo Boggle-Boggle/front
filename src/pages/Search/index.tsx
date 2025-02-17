@@ -37,6 +37,7 @@ const Search = () => {
 
   useEffect(() => {
     setValue(query);
+    sessionStorage.removeItem('scroll');
   }, [query]);
 
   return (
