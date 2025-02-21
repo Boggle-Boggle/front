@@ -44,6 +44,7 @@ const Libraries = ({ libraries, selected, setSelected, onPrev, onNext }: Library
   };
 
   const handleAdd = async () => {
+    if (inputValue === '') return;
     let isDuplicate = false;
     const newInputValue = inputValue.trimEnd();
 
