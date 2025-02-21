@@ -146,17 +146,17 @@ const Record = () => {
               className="absolute bottom-10 z-10 h-60 w-40 shadow-[3px_2px_5px_0_rgba(0,0,0,0.3)]"
             />
             <span className="absolute bottom-10 z-30 h-[14.9rem] w-[0.0625rem] -translate-x-[4.5rem] bg-black opacity-50 blur-[2px]" />
-            <span className="absolute -bottom-10 z-[5] w-full">
+            <span className="absolute -bottom-10 z-[1] w-full bg-white">
               <ShelfSvg />
             </span>
           </section>
 
           <section className="relative flex h-28 w-full flex-col justify-center bg-white px-7">
-            <p className="text-center font-bold leading-tight">{data.bookData.title}</p>
+            <p className="z-20 text-center font-bold leading-tight">{data.bookData.title}</p>
             <p className="my-2 text-center text-xs opacity-50">{data.bookData.author}</p>
           </section>
 
-          <section className="relative">
+          <section className="relative max-w-screen-sm">
             <ul className="grid h-9 w-full grid-cols-2 items-center justify-center">
               {TABS.map((tab) => (
                 <li key={tab} className="border-t border-white bg-white">
@@ -176,14 +176,16 @@ const Record = () => {
               <>
                 <NoteTab recordId={recordId} />
                 <div className="h-20" />
-                <button
-                  type="button"
-                  className="fixed bottom-[6.5rem] right-[1rem] flex h-16 w-16 items-center justify-center rounded-full bg-accent shadow-lg"
-                  onClick={handleGoToNote}
-                  aria-label="독서노트 작성하기"
-                >
-                  <Icon Component={RecordEdit} style={{ color: '#ffffff' }} size="lg" />
-                </button>
+                <div className="fixed bottom-0 h-footerIOS w-full max-w-screen-sm">
+                  <button
+                    type="button"
+                    className="absolute bottom-[6.5rem] right-[1rem] flex h-16 w-16 items-center justify-center rounded-full bg-accent shadow-lg"
+                    onClick={handleGoToNote}
+                    aria-label="독서노트 작성하기"
+                  >
+                    <Icon Component={RecordEdit} style={{ color: '#ffffff' }} size="lg" />
+                  </button>
+                </div>
               </>
             )}
           </section>
