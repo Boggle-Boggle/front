@@ -45,7 +45,8 @@ const Note = () => {
   const [isEditPage, setIsEditPage] = useState<boolean>(false);
   const [isEditTag, setIsEditTag] = useState<boolean>(false);
 
-  const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const titleRef = useRef<HTMLTextAreaElement>(null);
+  const contentRef = useRef<HTMLTextAreaElement>(null);
 
   const [isAlertActive, handleAlertActive] = useReducer((prev) => !prev, false);
 
@@ -117,10 +118,15 @@ const Note = () => {
     navigate(`/record/${recordId}`, { state: '독서노트', replace: true });
   };
 
-  const adjustHeight = () => {
-    if (textareaRef.current) {
-      textareaRef.current.style.height = 'auto';
-      textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
+  const adjustHeight = (target: 'title' | 'content') => {
+    if (target === 'title' && titleRef.current) {
+      titleRef.current.style.height = 'auto';
+      titleRef.current.style.height = `${titleRef.current.scrollHeight}px`;
+      return;
+    }
+    if (contentRef.current) {
+      contentRef.current.style.height = 'auto';
+      contentRef.current.style.height = `${contentRef.current.scrollHeight}px`;
     }
   };
 
@@ -129,13 +135,14 @@ const Note = () => {
     if (newTitle.length > MAX_TITLE) return;
 
     setTitle(newTitle);
-    adjustHeight();
+    adjustHeight('title');
   };
 
   const handleChangeContent = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const newContent = e.target.value;
 
     if (newContent.length < MAX_CONTENT) setContent(newContent);
+    adjustHeight('content');
   };
 
   const handleDeleteNote = async () => {
@@ -175,7 +182,8 @@ const Note = () => {
     // 첫 등록인데 회독 정보가 없다. -> 회독정보가 널이여서 회독정보 없음을 띄워줘야함
 
     setTimeout(() => {
-      adjustHeight();
+      adjustHeight('title');
+      adjustHeight('content');
     }, 0);
   }, [note, readDateIds, readDateIndex]);
 
@@ -262,15 +270,16 @@ const Note = () => {
               value={title}
               placeholder="제목을 작성해주세요"
               onChange={(e) => handleChangeTitle(e)}
-              ref={textareaRef}
+              ref={titleRef}
             />
             <textarea
-              className="w-full flex-grow resize-none overflow-auto px-5 py-3"
+              className="w-full resize-none overflow-auto px-5 py-3"
               value={content}
               placeholder="내용을 작성해주세요"
               onChange={(e) => handleChangeContent(e)}
+              ref={contentRef}
             />
-            <div className="h-40 overflow-y-auto border-t border-main px-4 py-2">
+            <div className="fixed bottom-0 h-40 w-full overflow-y-auto border-t border-main bg-white px-4 py-2">
               <p className="flex items-center">
                 <Icon Component={ReadingNoteTags} size="sm" style={{ color: '#9B9999', marginRight: '4px' }} />
                 태그
