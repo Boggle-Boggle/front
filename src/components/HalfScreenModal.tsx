@@ -19,7 +19,7 @@ const HalfScreenModal = ({
   bgColor = 'bg-main',
 }: HalfScreenModalProps) => {
   return createPortal(
-    <>
+    <section className="flex items-center justify-center">
       <button
         className="absolute top-0 z-40 h-full w-full bg-black opacity-40"
         aria-label="취소"
@@ -41,7 +41,7 @@ const HalfScreenModal = ({
         )}
         <section className="overflow-auto">{children}</section>
       </section>
-    </>,
+    </section>,
     document.getElementById('modal') as HTMLElement,
   );
 };

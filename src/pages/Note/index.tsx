@@ -279,7 +279,7 @@ const Note = () => {
               onChange={(e) => handleChangeContent(e)}
               ref={contentRef}
             />
-            <div className="fixed bottom-0 h-40 w-full overflow-y-auto border-t border-main bg-white px-4 py-2">
+            <div className="fixed bottom-0 h-40 w-full max-w-screen-sm overflow-y-auto border-t border-main bg-white px-4 py-2">
               <p className="flex items-center">
                 <Icon Component={ReadingNoteTags} size="sm" style={{ color: '#9B9999', marginRight: '4px' }} />
                 태그
