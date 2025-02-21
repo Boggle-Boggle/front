@@ -69,7 +69,7 @@ const Search = () => {
         <>
           <SearchHistory />
           <div className="flex flex-col items-center justify-center pt-28">
-            <img src={searchBookImg} alt="" className="w-2/5" />
+            <img src={searchBookImg} alt="" className="w-[30%]" />
             {/* TODO : 2차배포
               오른쪽 상단의 아이콘을 클릭하면 <br />
               바코드 검색이 가능합니다. */}

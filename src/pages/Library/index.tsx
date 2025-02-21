@@ -138,7 +138,9 @@ const Library = () => {
           </button>
         }
       />
-      <div className={`${isIOS ? 'mt-[5.9rem]' : 'mt-[3.9rem]'} fixed z-20 w-full bg-main pb-4 pt-[1px]`}>
+      <div
+        className={`${isIOS ? 'mt-[5.9rem]' : 'mt-[3.9rem]'} fixed z-20 w-full max-w-screen-sm bg-main pb-4 pt-[1px]`}
+      >
         <SearchBar
           placeholder="서재 안 도서 검색"
           value={value}

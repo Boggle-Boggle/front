@@ -15,7 +15,7 @@ const GridItem = ({ book }: GridItemProps) => {
 
   return (
     <button type="button" onClick={() => navigate(`/record/${readingRecordId}`)} className="h-full w-full">
-      <div className="relative aspect-[13/16] h-[95%] w-full shadow-[2px_0_10px_0_rgba(0,0,0,0.5)]">
+      <div className="relative m-auto aspect-[13/16] h-28 w-full max-w-20 shadow-[2px_0_10px_0_rgba(0,0,0,0.5)]">
         <img src={imageUrl} alt={`${title} 북커버`} className="z-20 h-full max-h-full w-full max-w-full object-cover" />
         <span className="absolute left-1 top-0 h-full w-[0.0625rem] bg-black opacity-50 blur-[2px]" />
         <img src={shadowImg} alt="" className="absolute -bottom-1 right-0 z-50 translate-x-[1.45rem] opacity-95" />
