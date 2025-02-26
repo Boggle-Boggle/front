@@ -1,7 +1,7 @@
 # 빼곡 - 빼곡하게 채우는 나만의 책장
 
 
-### 📌 목차
+### 목차
 1️⃣ [서비스 소개](https://github.com/Boggle-Boggle/front/tree/dev?tab=readme-ov-file#1%EF%B8%8F%E2%83%A3-%EC%84%9C%EB%B9%84%EC%8A%A4-%EC%86%8C%EA%B0%9C) <br/>
 2️⃣ [주요 기능](https://github.com/Boggle-Boggle/front/tree/dev?tab=readme-ov-file#2%EF%B8%8F%E2%83%A3-%EC%A3%BC%EC%9A%94-%EA%B8%B0%EB%8A%A5) <br/>
 3️⃣ [기술 스택](https://github.com/Boggle-Boggle/front/tree/dev?tab=readme-ov-file#3%EF%B8%8F%E2%83%A3-%EA%B8%B0%EC%88%A0-%EC%8A%A4%ED%83%9D) <br/>
@@ -30,9 +30,11 @@
 
 <details>
   <summary><b>테스트 계정</b></summary>
-
-  - **테스트 ID** : bbaegokTest@gmail.com
-  - **테스트 PW** : Qorhr12345
+  
+구글 로그인 클릭 후 아래 테스트 ID, PW으로 테스팅할 수 있습니다.
+  
+   - **테스트 ID** : bbaegokTest@gmail.com
+   - **테스트 PW** : Qorhr12345
 
 
 </details>
@@ -72,7 +74,7 @@
 - `TanStack Query(v5.51.14)` : 서버 상태를 관리하기 위해 캐싱이 편리하고 데이터의 최신 상태를 직관적으로 확인할 수 있어 사용
 - `Zustand(v4.5.4)` : 간결하게 전역상태관리를 구축할 수 있기 때문에 사용
 - `Three.js(v0.170.0)` : WebGL을 직접 다루는 것보다 효율적으로 3D책장을 구현하기 위해 사용
-- `Tailwind CSS(v3.4.7)` : 배워보고싶어서 씀
+- `Tailwind CSS(v3.4.7)` : 배워보고 싶어서 사용
 - `StoryBook(v0.170.0)` : 디자인 시스템을 구축하고, 디자이너가 컴포넌트를 쉽게 확인할 수 있도록 사용
 - `Figma` : UI/UX 디자인 협업을 위해 사용
 - `Vite (v5.3.4)` : 리액트 공식문서에서 추천, 빠른 개발서버 가동을 위해 사용
