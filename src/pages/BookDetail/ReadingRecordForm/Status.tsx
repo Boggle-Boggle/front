@@ -15,6 +15,7 @@ type StatusProps = {
   onNext: () => void;
 };
 
+// img에 컴포넌트가 들어가서 이 파일에 추가함
 export const REDING_STATUS = [
   {
     status: 'completed',
@@ -36,6 +37,7 @@ export const REDING_STATUS = [
   },
 ] as const;
 
+// 다읽음, 읽는중, 위시 세 개의 상태를 선택할 수 있는 컴포넌트
 const Status = ({ selected, setSelected, onNext }: StatusProps) => {
   const handleSelect = (status: StatusType) => {
     setSelected(status);

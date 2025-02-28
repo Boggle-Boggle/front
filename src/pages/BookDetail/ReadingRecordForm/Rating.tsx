@@ -12,11 +12,13 @@ type RatingProps = {
   onNext: () => void;
 };
 
+// 별점 주는 컴포넌트
 const Rating = ({ rating, setRating, onPrev, onNext }: RatingProps) => {
   const updateStatus = (rating: number) => {
     setRating(rating);
   };
 
+  // 터치이벤트를 통해 점수를 변경하는 함수
   const handleTouchMove = (e: React.TouchEvent) => {
     const touch = e.touches[0];
     const target = e.currentTarget as HTMLElement;
@@ -35,9 +37,11 @@ const Rating = ({ rating, setRating, onPrev, onNext }: RatingProps) => {
       <SubTitle message="재미있거나 유익했나요? 책에 대한 별점을 남겨주세요" />
 
       <section className="mb-6 flex flex-col items-center rounded-[10px] border-2 border-accent bg-white px-3 py-6">
+        {/* 별점 점수를 렌더링 */}
         <span className="mb-5 inline-block rounded-2xl border-2 border-yellow-300 px-4 py-1 font-semibold">
           {rating.toFixed(1)}
         </span>
+        {/* 5개의 별을 점수에 맞게 렌더링 */}
         <ul className="flex w-full justify-center px-2" onTouchMove={handleTouchMove}>
           {RATING_STATUS.map(({ status, title, img }) => (
             <li

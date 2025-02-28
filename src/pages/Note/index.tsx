@@ -189,6 +189,20 @@ const Note = () => {
                   <Icon Component={CommonUp} size="sm" style={{ marginLeft: '1px' }} />
                 )}
               </button>
+              {/* review
+              <Actions actions=[readDateIds.map((, idx) =>({ label: `${idx} 회독`}) )] onClose onSelect onOpen>
+                <button
+                  type="button"
+                  aria-label="회독 선택"
+                  className={`relative inline-flex ${readDateIds && readDateIds && readDateIds.length === 0 && 'opacity-50'} `}
+                  
+                >
+                  {readDateId ? `${readDateId.readDateIndex + 1}회독` : '회독정보없음'}
+                  {readDateIds && readDateIds.length > 0 && (
+                    <Icon Component={CommonUp} size="sm" style={{ marginLeft: '1px' }} />
+                  )}
+                </button>
+              </Actions> */}
               {isMemoToggled && (
                 <Memo handleClose={() => setIsMemoToggled(false)}>
                   <ul className="absolute left-1/2 z-30 flex max-h-80 w-28 -translate-x-1/2 -translate-y-1/2 flex-col items-center justify-center overflow-auto rounded-lg bg-white shadow-lg">

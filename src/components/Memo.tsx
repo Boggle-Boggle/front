@@ -3,6 +3,8 @@ type MemoProps = {
   handleClose: () => void;
 };
 
+// reivew : 이름 바꾸기
+
 const Memo = ({ children, handleClose }: MemoProps) => {
   return (
     <>

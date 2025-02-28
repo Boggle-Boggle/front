@@ -53,6 +53,7 @@ const Complete = ({ nickName, terms, scene }: CompleteProps) => {
       <h1 className="text-[2rem] font-semibold leading-[3rem]">
         <span className="relative inline-block">
           <span className="relative z-10">회원가입이</span>
+          {/* review: text prop으로 받도록 */}
           <Highlight />
         </span>
         <br />

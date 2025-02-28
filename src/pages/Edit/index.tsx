@@ -32,7 +32,16 @@ const Edit = () => {
   const { recordId = '' } = useParams();
   const { isIOS } = useDevice();
 
-  const { data } = useQuery({ queryKey: ['edit', recordId], queryFn: () => getEditRecord(recordId) });
+  const { data } = useQuery({
+    queryKey: ['edit', recordId],
+    queryFn: async () => {
+      const { readDateList, libraries, rating, isBookVisible } = await getEditRecord(recordId);
+      setReadDates(data.readDateList);
+      setLibraries(data.libraries);
+      setRating(data.rating);
+      setIsVisible(data.isBookVisible);
+    },
+  });
 
   const handleSave = async () => {
     if (!data) return;
@@ -53,14 +62,14 @@ const Edit = () => {
     navigate(`/record/${recordId}`, { replace: true });
   };
 
-  useEffect(() => {
-    if (!data) return;
+  // useEffect(() => {
+  //   if (!data) return;
 
-    setReadDates(data.readDateList);
-    setLibraries(data.libraries);
-    setRating(data.rating);
-    setIsVisible(data.isBookVisible);
-  }, [data]);
+  //   setReadDates(data.readDateList);
+  //   setLibraries(data.libraries);
+  //   setRating(data.rating);
+  //   setIsVisible(data.isBookVisible);
+  // }, [data]);
 
   return (
     <div className="bg-white">

@@ -10,12 +10,7 @@ type HalfScreenModalProps = {
 };
 
 // TODO : 아이콘 확인하기
-const HalfScreenModal = ({
-  children,
-  handleClose,
-  hasCloseMark = false,
-  bgColor = 'bg-main',
-}: HalfScreenModalProps) => {
+const HalfScreenModal = ({ children, onClose, hasCloseMark = false, bgColor = 'bg-main' }: HalfScreenModalProps) => {
   return (
     <>
       <button

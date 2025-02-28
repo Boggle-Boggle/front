@@ -1,18 +1,19 @@
+import { Response } from 'types/api';
 import { BookCase } from 'types/book';
 import { AddNoteParams, RecordType, Record, Notes, RecordDate, EditRecord, UpdateRecordParams } from 'types/record';
 
 import api from '.';
 
 export const addRecord = async (record: RecordType) => {
-  const response = await api.post(`/reading-record`, record);
+  const response = await api.post<Response<number>>(`/reading-record`, record);
 
-  return response.data.data as number;
+  return response.data.data;
 };
 
 export const getRecord = async (recordId: string) => {
-  const response = await api.get(`/reading-record/${recordId}`);
+  const response = await api.get<Response<Record>>(`/reading-record/${recordId}`);
 
-  return response.data.data as Record;
+  return response.data.data;
 };
 
 export const deleteRecord = async (recordId: number) => {

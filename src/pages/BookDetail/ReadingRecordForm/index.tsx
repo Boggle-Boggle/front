@@ -25,9 +25,12 @@ type ReadingRecordFormProps = {
   onClose: () => void;
 };
 
+// 독서 기록을 추가하는 프로세스
 const ReadingRecordForm = ({ isbn, onClose }: ReadingRecordFormProps) => {
+  // 현재 진행중인 상태
   const [step, setStep] = useState<StepType>('상태');
 
+  // 상태/별점/날짜(시작날짜,끝날짜)/서재/숨기기여부
   const [selectedStatus, setSelectedStatus] = useState<StatusType>('completed');
   const [rating, setRating] = useState<number>(5);
   const [startDate, setStartDate] = useState<DateType>(null);
@@ -35,6 +38,7 @@ const ReadingRecordForm = ({ isbn, onClose }: ReadingRecordFormProps) => {
   const [selectedLibraries, setSelectedLibraries] = useState<number[]>([]);
   const [isVisible, setIsVisible] = useState<boolean>(true);
 
+  // 독서 기록을 생성하는 함수
   const createRecord = () => {
     return {
       isbn,
@@ -47,6 +51,7 @@ const ReadingRecordForm = ({ isbn, onClose }: ReadingRecordFormProps) => {
     };
   };
 
+  // 서재 종류를 가져오는 쿼리
   const { data: libraries } = useQuery({
     queryKey: ['libraries'],
     queryFn: () => getLibraries(),

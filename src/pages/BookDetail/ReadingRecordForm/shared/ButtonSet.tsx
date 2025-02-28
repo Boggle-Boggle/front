@@ -11,7 +11,7 @@ type ButtonSetProps = {
 const ButtonSet = ({ onPrev, onNext }: ButtonSetProps) => {
   return onPrev ? (
     <section className="mt-6 flex justify-between">
-      <Button handleClick={onPrev} className="w-2/5 bg-main text-black shadow-sm">
+      <Button background="accent" handleClick={onPrev} className="w-2/5 bg-main text-black shadow-sm">
         <Icon Component={CommonPrev} size="xs" />
         이전
       </Button>
