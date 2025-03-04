@@ -14,10 +14,7 @@
 
 ## 1️⃣ 서비스 소개
 
-
-<p align="center">
-  <img src="https://github.com/user-attachments/assets/8a7fc7b6-6e12-4c5f-9aeb-946a5cbd90b8"  width='50%'>
-</p>
+![그래픽이미지 최종](https://github.com/user-attachments/assets/bc754346-b0df-4aa2-b4cd-683463dded98)
 
 ### [구글 플레이스토어 바로가기](https://play.google.com/store/apps/details?id=bbaegok.app)
 
