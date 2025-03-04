@@ -85,7 +85,7 @@
     <td><img src="https://github.com/user-attachments/assets/0956712a-4481-4ba6-a51c-3eaf42543182" width="300"></td>
     <td width='800'>
       🔸 검색한 도서의 상세 정보를 조회하고 기록을 남길 수 있습니다.<br>
-      🔸 OS 스타일의 DatePicker를 React 웹 환경에서 직접 구현했습니다.<br>
+      🔸 IOS 스타일의 DatePicker를 React 웹 환경에서 직접 구현했습니다.<br>
       🔸 단계별 진행 로직을 적용하여 사용자의 입력 과정을 직관적으로 안내합니다.<br>
       🔸 이전 단계로 돌아가도 입력한 정보가 유지되어 편리하게 수정할 수 있습니다.<br>      
       🔸 0.5점 단위 별점 컴포넌트를 직접 구현하여 세밀한 평가가 가능합니다.
