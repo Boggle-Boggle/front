@@ -38,6 +38,9 @@ const SearchBar = ({
     if (value.length === 0 && !allowEmptyVal) return;
 
     fetchResult();
+    if (document.activeElement instanceof HTMLElement) {
+      document.activeElement.blur();
+    }
   };
 
   return (
