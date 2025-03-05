@@ -180,12 +180,15 @@ const Note = () => {
     // 첫 등록인데 회독 정보가 있다. -> 가장 마지막 회독을 자동으로 선택
     else if (!note && readDateIds) setReadDateId(readDateIds[readDateIds.length - 1]);
     // 첫 등록인데 회독 정보가 없다. -> 회독정보가 널이여서 회독정보 없음을 띄워줘야함
-
-    setTimeout(() => {
-      adjustHeight('title');
-      adjustHeight('content');
-    }, 0);
   }, [note, readDateIds, readDateIndex]);
+
+  useEffect(() => {
+    adjustHeight('title');
+  }, [title]);
+
+  useEffect(() => {
+    adjustHeight('content');
+  }, [content]);
 
   return (
     isFetched && (
