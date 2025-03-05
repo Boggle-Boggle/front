@@ -126,11 +126,9 @@ const BookDetail = () => {
             ref={plotRef}
           >
             책소개
-            {isClamped && (
-              <button className="absolute right-6 text-xs opacity-70" type="button" onClick={plotOpen}>
-                더보기
-              </button>
-            )}
+            <button className="absolute right-6 text-xs opacity-70" type="button" onClick={plotOpen}>
+              더보기
+            </button>
             <hr className="mb-2 h-0.5 border-none bg-gray" />
             <div className={`w-full overflow-hidden break-words text-[0.815rem] ${clampLine && `${`line-clamp-4`}`}`}>
               {book.plot}
