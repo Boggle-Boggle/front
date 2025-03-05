@@ -1,12 +1,19 @@
 import { useEffect, useState } from 'react';
 
 const useKeyboardStatus = () => {
-  const [isKeyboardActive, setIsKeyboardActive] = useState<boolean>(false);
+  const [initialHeight, setInitialHeight] = useState<number | null>(null);
+  const [isKeyboardActive, setIsKeyboardActive] = useState(false);
 
   useEffect(() => {
+    if (initialHeight === null) {
+      setInitialHeight(window.innerHeight);
+    }
+
     const handleResize = () => {
+      if (!initialHeight) return;
       if (window.visualViewport?.height === undefined) return;
-      const isSmallViewport = window.visualViewport?.height < window.innerHeight || window.innerHeight < 700;
+
+      const isSmallViewport = window.visualViewport.height < initialHeight * 0.85;
       setIsKeyboardActive(isSmallViewport);
     };
 
@@ -17,7 +24,7 @@ const useKeyboardStatus = () => {
       window.visualViewport?.removeEventListener('resize', handleResize);
       window.removeEventListener('resize', handleResize);
     };
-  }, []);
+  }, [initialHeight]);
 
   return isKeyboardActive;
 };
