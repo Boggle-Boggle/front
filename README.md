@@ -17,7 +17,7 @@
 ![그래픽이미지 최종](https://github.com/user-attachments/assets/bc754346-b0df-4aa2-b4cd-683463dded98)
 
 ### [구글 플레이스토어 바로가기](https://play.google.com/store/apps/details?id=bbaegok.app)
-
+### (심사중) [앱 스토어 바로가기]()
 
 
 책장 UI에 3D 효과를 적용해 아기자기하게 책을 정리하고 한눈에 확인할 수 있는 독서기록 앱입니다.
