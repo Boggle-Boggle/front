@@ -139,7 +139,7 @@ const BookDetail = () => {
           </div>
         </div>
         <p
-          className={`absolute ${isIOS ? 'bottom-footerIOS' : 'bottom-footerAnd'} left-5 mb-2 flex items-center text-xs font-semibold opacity-50`}
+          className={`absolute ${isIOS ? 'bottom-footerIOS' : 'bottom-footerAnd'} left-5 flex w-full items-center bg-main pb-2 text-xs font-semibold text-pink-500`}
         >
           <Icon Component={RecordInfo} size="xs" style={{ marginRight: '6px' }} />
           <a className="font-bold underline" href={getHttpsLink(book.link)} rel="noopener noreferrer">
