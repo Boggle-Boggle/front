@@ -67,7 +67,6 @@ const Login = () => {
           </mesh>
         </Canvas>
       </section>
-
       <p className="pb-4 text-xs opacity-50">SNS계정으로 간편하게 로그인</p>
       <div className="flex h-24 w-[70%] justify-around">
         {isLoading ? (
@@ -81,7 +80,12 @@ const Login = () => {
         )}
       </div>
 
-      <a href="/" className="absolute bottom-8 flex items-center text-xs underline opacity-50">
+      <a
+        href={import.meta.env.VITE_MYPAGE_FORM_URL}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="absolute bottom-8 flex items-center text-xs underline opacity-50"
+      >
         <Icon Component={LoginConsultation} size="sm" style={{ marginRight: '5px' }} />
         가입/로그인 오류 문의
       </a>
