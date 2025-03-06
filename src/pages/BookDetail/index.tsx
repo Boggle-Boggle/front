@@ -126,11 +126,9 @@ const BookDetail = () => {
             ref={plotRef}
           >
             책소개
-            {isClamped && (
-              <button className="absolute right-6 text-xs opacity-70" type="button" onClick={plotOpen}>
-                더보기
-              </button>
-            )}
+            <button className="absolute right-6 text-xs opacity-70" type="button" onClick={plotOpen}>
+              더보기
+            </button>
             <hr className="mb-2 h-0.5 border-none bg-gray" />
             <div className={`w-full overflow-hidden break-words text-[0.815rem] ${clampLine && `${`line-clamp-4`}`}`}>
               {book.plot}
@@ -139,7 +137,7 @@ const BookDetail = () => {
           </div>
         </div>
         <p
-          className={`absolute ${isIOS ? 'bottom-footerIOS' : 'bottom-footerAnd'} left-5 mb-2 flex items-center text-xs font-semibold opacity-50`}
+          className={`absolute ${isIOS ? 'bottom-footerIOS' : 'bottom-footerAnd'} left-5 flex w-full items-center bg-main pb-2 text-xs font-semibold`}
         >
           <Icon Component={RecordInfo} size="xs" style={{ marginRight: '6px' }} />
           <a className="font-bold underline" href={getHttpsLink(book.link)} rel="noopener noreferrer">

@@ -15,6 +15,7 @@ import Login from 'pages/Login';
 import MyPage from 'pages/MyPage';
 import DeleteAccount from 'pages/MyPage/DeleteAccount';
 import EditNickname from 'pages/MyPage/EditNickname';
+import QnA from 'pages/MyPage/QnA';
 import Term from 'pages/MyPage/Term';
 import VersionInfo from 'pages/MyPage/VersionInfo';
 import Note from 'pages/Note';
@@ -49,6 +50,7 @@ const router = createBrowserRouter([
       { path: 'myPage/terms', element: <Term /> },
       { path: 'myPage/VersionInfo', element: <VersionInfo /> },
       { path: 'myPage/deleteAccount', element: <DeleteAccount /> },
+      { path: 'myPage/QnA', element: <QnA /> },
     ],
   },
   { path: 'signUp', element: <SignUp /> },

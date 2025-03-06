@@ -14,13 +14,10 @@
 
 ## 1️⃣ 서비스 소개
 
-
-<p align="center">
-  <img src="https://github.com/user-attachments/assets/8a7fc7b6-6e12-4c5f-9aeb-946a5cbd90b8"  width='50%'>
-</p>
+![그래픽이미지 최종](https://github.com/user-attachments/assets/bc754346-b0df-4aa2-b4cd-683463dded98)
 
 ### [구글 플레이스토어 바로가기](https://play.google.com/store/apps/details?id=bbaegok.app)
-
+### (심사중) [앱 스토어 바로가기]()
 
 
 책장 UI에 3D 효과를 적용해 아기자기하게 책을 정리하고 한눈에 확인할 수 있는 독서기록 앱입니다.
@@ -29,7 +26,7 @@
 
 
 <details>
-  <summary><b>테스트 계정</b></summary>
+  <summary><b>  테스트 계정</b></summary>
   
 구글 로그인 클릭 후 아래 테스트 ID, PW으로 테스팅할 수 있습니다.
   
@@ -46,12 +43,101 @@
 
 
 
+
+
 ## 2️⃣ 주요 기능
 
 
+### 📚 책장 조회 (3D 책장)
 
+<table style="width: 80%;">
+  <tr>
+    <td><img src="https://github.com/user-attachments/assets/46f4df31-ed48-407a-94a5-8d6d59611c33" width="300"></td>
+    <td width='800'>
+      🔸 Three.js를 활용해 3D 책장을 구현했으며 책 페이지에 따라 두께가 결정됩니다.<br>
+      🔸 책장은 다 읽은 책을 기준으로 채워지며, 기간을 선택해 조회 가능합니다.<br>
+      🔸 책 페이지 수를 기반으로 색상을 랜덤 적용하는 알고리즘을 구현했습니다.<br>
+      🔸 이전 책의 두께를 고려해 reduce를 활용한 누적 계산 방식으로 다음 책의 위치를 동적으로 결정하여, 자연스럽고 일관된 배치가 이루어지도록 구현했습니다.
+    </td>
+  </tr>
+</table>
 
+### 🔍 도서 검색
 
+<table style="width: 80%;">
+  <tr>
+    <td><img src="https://github.com/user-attachments/assets/b8ab1b33-faed-4d3b-aa7b-e6e31bf6d009" width="300"></td>
+    <td width='800'>
+      🔸 관심있는 도서를 검색할 수 있으며 최근 검색어 기록을 제공합니다.<br>
+      🔸 상세 조회 페이지에서 뒤로 가기를 눌러도 이전 스크롤 위치가 유지되어 편리한 탐색이 가능합니다.<br>
+      🔸 검색 결과에 무한스크롤을 적용하여 성능을 개선했습니다.
+    </td>
+  </tr>
+</table>
+
+### 📝 도서 기록
+
+<table style="width: 80%;">
+  <tr>
+    <td><img src="https://github.com/user-attachments/assets/0956712a-4481-4ba6-a51c-3eaf42543182" width="300"></td>
+    <td width='800'>
+      🔸 검색한 도서의 상세 정보를 조회하고 기록을 남길 수 있습니다.<br>
+      🔸 IOS 스타일의 DatePicker를 React 웹 환경에서 직접 구현했습니다.<br>
+      🔸 단계별 진행 로직을 적용하여 사용자의 입력 과정을 직관적으로 안내합니다.<br>
+      🔸 이전 단계로 돌아가도 입력한 정보가 유지되어 편리하게 수정할 수 있습니다.<br>      
+      🔸 0.5점 단위 별점 컴포넌트를 직접 구현하여 세밀한 평가가 가능합니다.
+    </td>
+  </tr>
+</table>
+
+### 📂 서재 조회
+
+<table style="width: 80%;">
+  <tr>
+    <td><img src="https://github.com/user-attachments/assets/bc7b72e9-c9c6-4ce5-aaec-95def3e04056" width="300"></td>
+    <td width='800'>
+<!--       - 세션 스토리지에 서재 정보(선택한 서재, 정렬 기준)를 저장하여 새로고침 후에도 유지됩니다.<br> -->
+      🔸 그리드형 / 리스트형 레이아웃을 지원하여 사용자 취향에 맞는 서재 조회 방법을 제공합니다.<br>
+      🔸 검색어 입력에 Debounce를 적용하여 불필요한 API 요청을 줄이고, 서재에 있는 도서를 검색할 수 있습니다.
+    </td>
+  </tr>
+</table>
+
+### 📖 독서 기록 조회
+
+<table style="width: 80%;">
+  <tr>
+    <td><img src="https://github.com/user-attachments/assets/c5f95387-d7ba-4013-9b81-7f6f2eda04ee" width="300"></td>
+    <td width='800'>
+      🔸 독서 기록의 상세 정보와 독서 노트를 확인할 수 있습니다.<br>
+      🔸 토글 애니메이션을 적용하여 부드러운 UI 인터랙션을 제공합니다.
+    </td>
+  </tr>
+</table>
+
+### ✍️ 독서 노트 작성 및 수정
+
+<table style="width: 80%;">
+  <tr>
+    <td><img src="https://github.com/user-attachments/assets/9491c723-7bb2-4d71-8fdd-1b679c32e424" width="300"></td>
+    <td width='800'>
+      🔸 독서 기록에 페이지별 독서 노트를 작성 및 수정할 수 있습니다.<br>
+      🔸 태그 기능으로 독서 노트를 키워드로 저장할 수 있습니다.
+    </td>
+  </tr>
+</table>
+
+### 🔄 독서 기록 수정
+
+<table style="width: 80%;">
+  <tr>
+    <td><img src="https://github.com/user-attachments/assets/65d4f8b3-638e-4347-9208-9de5b815fe0f" width="300"></td>
+    <td width='800'>
+      🔸 같은 책을 여러 번 읽은 경우를 고려하여, 회독 정보를 추가 및 수정할 수 있는 기능을 구현했습니다.<br>
+      🔸 회독 추가와 수정을 상황에 맞게 처리하기 위해 API 요청 방식(등록/수정)을 명확히 분리하면서도, 사용자에게는 일관된 인터페이스로 자연스럽게 제공하도록 설계했습니다.
+    </td>
+  </tr>
+</table>
 
 
 <br/>
