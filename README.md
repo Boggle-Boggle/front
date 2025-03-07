@@ -19,6 +19,9 @@
 ### [구글 플레이스토어 바로가기](https://play.google.com/store/apps/details?id=bbaegok.app)
 ### (심사중) [앱 스토어 바로가기]()
 
+<!--
+<a href='https://play.google.com/store/apps/details?id=bbaegok.app&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'><img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png' width='200'/></a> -->
+
 
 책장 UI에 3D 효과를 적용해 아기자기하게 책을 정리하고 한눈에 확인할 수 있는 독서기록 앱입니다.
 
@@ -177,8 +180,9 @@
 
 ##  4️⃣ 트러블 슈팅 및 기술포스팅
 
-- **[pnpm의 심볼릭링크된 의존성에서 타입추론 오류 해결하기](https://www.notion.so/pnpm-12971e97a783430a8b5aa09ffc7ba3aa?pvs=21)**
-- **[SameSite 정책을 이해하고 로컬 환경에서 액세스 토큰 재발급 문제 해결하기](https://www.notion.so/SameSite-14c2522077a080159261ef67f98fa65d?pvs=21)**
+- **[pnpm의 심볼릭링크된 의존성에서 타입추론 오류 해결하기](https://velog.io/@devkyoung2/pnpm%EC%9D%98-%EC%8B%AC%EB%B3%BC%EB%A6%AD%EB%A7%81%ED%81%AC-%EB%90%9C-%EC%9D%98%EC%A1%B4%EC%84%B1%EC%97%90%EC%84%9C-%ED%83%80%EC%9E%85%EC%B6%94%EB%A1%A0-%EC%98%A4%EB%A5%98-%ED%95%B4%EA%B2%B0%ED%95%98%EA%B8%B0)**
+- **[SameSite 정책을 이해하고 로컬 환경에서 액세스 토큰 재발급 문제 해결하기](https://velog.io/@devkyoung2/SameSite-%EC%A0%95%EC%B1%85%EC%9D%84-%EC%9D%B4%ED%95%B4%ED%95%98%EA%B3%A0-%EB%A1%9C%EC%BB%AC-%ED%99%98%EA%B2%BD%EC%97%90%EC%84%9C-%EC%95%A1%EC%84%B8%EC%8A%A4-%ED%86%A0%ED%81%B0-%EC%9E%AC%EB%B0%9C%EA%B8%89-%EB%AC%B8%EC%A0%9C-%ED%95%B4%EA%B2%B0%ED%95%98%EA%B8%B0)**
+- **[구글 플레이 스토어에 앱 출시하기(feat. 빼곡)](https://velog.io/@devkyoung2/%EA%B5%AC%EA%B8%80-%ED%94%8C%EB%A0%88%EC%9D%B4-%EC%8A%A4%ED%86%A0%EC%96%B4%EC%97%90-%EC%95%B1-%EC%B6%9C%EC%8B%9C%ED%95%98%EA%B8%B0)**
 
 
 
