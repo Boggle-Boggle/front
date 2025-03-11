@@ -2,6 +2,8 @@ import axios from 'axios';
 import useAuthStore from 'stores/useAuthStore';
 import { create } from 'zustand';
 
+import CustomError from 'utils/customError';
+
 const api = axios.create({
   baseURL: import.meta.env.VITE_SERVER_BASE_URL,
   timeout: 1000,
@@ -49,6 +51,7 @@ api.interceptors.response.use(
 
     const { code } = response.data;
     if (response.status === 401) {
+      // 4번의 재시도 후 종료
       if (retryCount < 4) {
         incrementRetry();
 
@@ -63,19 +66,35 @@ api.interceptors.response.use(
           return await api(config);
         } catch (err) {
           resetRetry();
+
           return Promise.reject(err);
         }
       } //
       else {
-        // alert('로그인 기한이 만료되었어요. 다시 로그인 해주세요');
         logout();
+
+        const newCustomError = new CustomError('로그인 기한이 만료되었어요. 다시 로그인 해주세요', error) as Error;
+
+        return Promise.reject(newCustomError);
       }
     }
 
-    // 게스트로그인 / 탈퇴유저
-    if (code === 16003 || code === 13001) {
-      // alert('약관에 동의하지 않았어요. 회원가입을 다시 진행해주세요');
+    // 게스트로그인
+    if (code === 13001) {
       logout();
+
+      const newCustomError = new CustomError('탈퇴한 회원입니다. 회원가입을 다시 진행해주세요', error) as Error;
+
+      return Promise.reject(newCustomError);
+    }
+
+    // 탈퇴유저
+    if (code === 16003) {
+      logout();
+
+      const newCustomError = new CustomError('약관에 동의하지 않았어요. 회원가입을 다시 진행해주세요', error) as Error;
+
+      return Promise.reject(newCustomError);
     }
 
     return Promise.reject(error);
