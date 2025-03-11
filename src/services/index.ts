@@ -2,7 +2,7 @@ import axios from 'axios';
 import useAuthStore from 'stores/useAuthStore';
 import { create } from 'zustand';
 
-import CustomError from 'utils/Error';
+import CustomError from 'utils/customError';
 
 const api = axios.create({
   baseURL: import.meta.env.VITE_SERVER_BASE_URL,

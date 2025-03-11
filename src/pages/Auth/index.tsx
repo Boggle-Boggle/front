@@ -6,7 +6,7 @@ import Alert from 'components/Alert';
 import Loading from 'pages/Loading';
 
 import { getAuthorization } from 'services/user';
-import CustomError from 'utils/Error';
+import CustomError from 'utils/customError';
 
 function isCustomError(error: unknown): error is CustomError {
   return (error as CustomError).custom !== undefined;
