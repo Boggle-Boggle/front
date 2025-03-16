@@ -17,7 +17,7 @@
 ![그래픽이미지 최종](https://github.com/user-attachments/assets/bc754346-b0df-4aa2-b4cd-683463dded98)
 
 ### [구글 플레이스토어 바로가기](https://play.google.com/store/apps/details?id=bbaegok.app)
-### (심사중) [앱 스토어 바로가기]()
+### [앱 스토어 바로가기](https://apps.apple.com/kr/app/%EB%B9%BC%EA%B3%A1-%EB%8F%85%EC%84%9C%EA%B8%B0%EB%A1%9D-%EC%95%B1/id6742702941)
 
 <!--
 <a href='https://play.google.com/store/apps/details?id=bbaegok.app&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'><img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png' width='200'/></a> -->
