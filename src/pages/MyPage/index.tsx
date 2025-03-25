@@ -40,7 +40,7 @@ const MyPage = () => {
         <section className="relative flex h-52 flex-col items-center rounded-lg bg-white pb-4 pt-20">
           <img
             src={ProfileImg}
-            className="absolute -top-[3.5rem] h-32 w-32 rounded-[50%] border-[4px] border-white object-cover"
+            className="absolute -top-[3.5rem] h-32 w-32 rounded-[50%] border-[4px] border-white bg-accent object-cover"
             alt=""
           />
 

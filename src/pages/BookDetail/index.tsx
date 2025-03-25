@@ -95,7 +95,7 @@ const BookDetail = () => {
             </button>
           }
           rightBtn={
-            <button onClick={handleSaveBook} type="button" className="font-semibold text-accent">
+            <button onClick={handleSaveBook} type="button" className="min-w-8 text-lg font-bold">
               저장
             </button>
           }
@@ -137,9 +137,9 @@ const BookDetail = () => {
           </div>
         </div>
         <p
-          className={`absolute ${isIOS ? 'bottom-footerIOS' : 'bottom-footerAnd'} left-5 flex w-full items-center bg-main pb-2 text-xs font-semibold`}
+          className={`absolute ${isIOS ? 'bottom-footerIOS' : 'bottom-footerAnd'} flex w-full items-center bg-main pb-2 text-xs font-semibold`}
         >
-          <Icon Component={RecordInfo} size="xs" style={{ marginRight: '6px' }} />
+          <Icon Component={RecordInfo} size="xs" style={{ marginRight: '6px', marginLeft: '10px' }} />
           <a className="font-bold underline" href={getHttpsLink(book.link)} rel="noopener noreferrer">
             알라딘
           </a>{' '}
