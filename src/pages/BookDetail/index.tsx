@@ -95,7 +95,7 @@ const BookDetail = () => {
             </button>
           }
           rightBtn={
-            <button onClick={handleSaveBook} type="button" className="font-semibold text-accent">
+            <button onClick={handleSaveBook} type="button" className="min-w-8 text-lg font-bold">
               저장
             </button>
           }
