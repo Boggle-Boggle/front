@@ -18,10 +18,10 @@ const Rating = ({ rating, setRating, onPrev, onNext }: RatingProps) => {
   };
 
   const handleTouchMove = (e: React.TouchEvent) => {
-    const touch = e.touches[0];
-    const target = e.currentTarget as HTMLElement;
-    const rect = target.getBoundingClientRect();
-    const touchPosition = touch.clientX - rect.left;
+    const touch = e.touches[0]; // 첫번째 손가락
+    const target = e.currentTarget as HTMLElement; // 이벤트 타겟
+    const rect = target.getBoundingClientRect(); // 터치이벤트가 발생한 요소
+    const touchPosition = touch.clientX - rect.left; // 손가락이 클릭된 x좌표 - 요소의 왼쪽 경계
     const newRating = Math.round((touchPosition / rect.width) * 10) / 2;
 
     if (newRating >= 0 && newRating <= 5) {
@@ -38,6 +38,7 @@ const Rating = ({ rating, setRating, onPrev, onNext }: RatingProps) => {
         <span className="mb-5 inline-block rounded-2xl border-2 border-yellow-300 px-4 py-1 font-semibold">
           {rating.toFixed(1)}
         </span>
+
         <ul className="flex w-full justify-center px-2" onTouchMove={handleTouchMove} onTouchStart={handleTouchMove}>
           {RATING_STATUS.map(({ status, title, img }) => (
             <li
