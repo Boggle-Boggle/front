@@ -38,7 +38,7 @@ const Rating = ({ rating, setRating, onPrev, onNext }: RatingProps) => {
         <span className="mb-5 inline-block rounded-2xl border-2 border-yellow-300 px-4 py-1 font-semibold">
           {rating.toFixed(1)}
         </span>
-        <ul className="flex w-full justify-center px-2" onTouchMove={handleTouchMove}>
+        <ul className="flex w-full justify-center px-2" onTouchMove={handleTouchMove} onTouchStart={handleTouchMove}>
           {RATING_STATUS.map(({ status, title, img }) => (
             <li
               className="bg-slate-30 mx-[2px] flex w-1/6 grow flex-col items-center justify-center place-self-start text-[10px]"
