@@ -68,7 +68,11 @@ const Edit = () => {
       <Header
         title={<p className={`${title.length > 20 ? 'text-sm' : 'text-base'}`}>{title}</p>}
         leftBtn={
-          <button type="button" onClick={() => navigate(-1)} aria-label="뒤로가기">
+          <button
+            type="button"
+            onClick={() => navigate(`/record/${recordId}`, { replace: true })}
+            aria-label="뒤로가기"
+          >
             <Icon Component={CommonBack} />
           </button>
         }
