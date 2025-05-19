@@ -50,6 +50,30 @@ api.interceptors.response.use(
     const { retryCount, incrementRetry, resetRetry } = useRetryStore.getState();
 
     const { code } = response.data;
+
+    // 게스트로그인
+    if (code === 13001) {
+      logout();
+
+      const newCustomError = new CustomError('탈퇴한 회원입니다. 회원가입을 다시 진행해주세요', error) as Error;
+
+      return Promise.reject(newCustomError);
+    }
+
+    // 탈퇴유저
+    if (code === 16003) {
+      logout();
+
+      const newCustomError = new CustomError('약관에 동의하지 않았어요. 회원가입을 다시 진행해주세요', error) as Error;
+
+      return Promise.reject(newCustomError);
+    }
+
+    // 사용자 없음
+    if (code === 13000) {
+      logout();
+    }
+
     if (response.status === 401) {
       // 4번의 재시도 후 종료
       if (retryCount < 4) {
@@ -77,24 +101,6 @@ api.interceptors.response.use(
 
         return Promise.reject(newCustomError);
       }
-    }
-
-    // 게스트로그인
-    if (code === 13001) {
-      logout();
-
-      const newCustomError = new CustomError('탈퇴한 회원입니다. 회원가입을 다시 진행해주세요', error) as Error;
-
-      return Promise.reject(newCustomError);
-    }
-
-    // 탈퇴유저
-    if (code === 16003) {
-      logout();
-
-      const newCustomError = new CustomError('약관에 동의하지 않았어요. 회원가입을 다시 진행해주세요', error) as Error;
-
-      return Promise.reject(newCustomError);
     }
 
     return Promise.reject(error);
