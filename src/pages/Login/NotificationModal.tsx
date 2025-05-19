@@ -16,7 +16,7 @@ const NotificationModal = ({ close }: NotificationModalProps) => {
       className="fixed inset-0 z-[5000] m-auto flex max-w-screen-sm items-center justify-center bg-black/40"
       role="presentation"
     >
-      <div className="relative w-5/6 rounded-md bg-white px-5 py-6 text-center shadow-lg">
+      <div className="relative w-5/6 rounded-md bg-white px-5 py-6 shadow-lg">
         <p className="text-center text-lg font-semibold">
           서비스 이용에 불편을 드려
           <br />
