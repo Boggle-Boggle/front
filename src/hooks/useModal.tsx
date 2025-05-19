@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
-const useModal = () => {
-  const [isOpen, setIsOpen] = useState(false);
+const useModal = (initialStatus: boolean = false) => {
+  const [isOpen, setIsOpen] = useState(initialStatus);
   const [scrollPos, setScrollPos] = useState(0);
 
   const open = () => {
