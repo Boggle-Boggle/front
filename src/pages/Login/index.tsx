@@ -9,17 +9,17 @@ import * as THREE from 'three';
 import Icon from 'components/Icon';
 import Loading from 'pages/Loading';
 
-import useModal from 'hooks/useModal';
+// import useModal from 'hooks/useModal';
 
 import { LoginConsultation } from 'assets/icons';
 
 import LoginBtn from './LoginBtn';
-import NotificationModal from './NotificationModal';
+// import NotificationModal from './NotificationModal';
 
 const Login = () => {
   const { scene } = useGLTF(`${import.meta.env.VITE_IMG_BASE_URL || ''}/assets/Splash.glb`);
   const [isLoading, setIsLoading] = useState(false);
-  const { isOpen, close } = useModal(true);
+  // const { isOpen, close } = useModal(true);
 
   useEffect(() => {
     if (!scene) return;
@@ -94,7 +94,7 @@ const Login = () => {
         가입/로그인 오류 문의
       </a>
 
-      {isOpen && <NotificationModal isOpen={isOpen} close={close} />}
+      {/* {isOpen && <NotificationModal isOpen={isOpen} close={close} />} */}
     </div>
   );
 };
