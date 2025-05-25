@@ -52,7 +52,7 @@ export const getMyPageInfo = async () => {
   return response.data.data as MyPage;
 };
 
-export const deleteAccount = async (type: DrawType, text: string) => {
+export const deleteAccount = async (type: DrawType, withdrawText: string | null) => {
   let withdrawType = '';
 
   switch (type) {
@@ -82,10 +82,5 @@ export const deleteAccount = async (type: DrawType, text: string) => {
       return;
   }
 
-  await api.delete('/user', {
-    data: {
-      withdrawType,
-      withdrawText: text.length === 0 ? null : text,
-    },
-  });
+  await api.delete('/user', { data: { withdrawType, withdrawText } });
 };
