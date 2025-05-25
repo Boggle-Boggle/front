@@ -1,3 +1,5 @@
+import DRAW_TYPE_LIST from 'constants/user';
+
 export type Terms = {
   version: string;
   terms: Term[];
@@ -26,3 +28,5 @@ export type MyPage = {
 };
 
 export type Authorization = 'GUEST' | 'USER' | 'LIMITED_USER';
+
+export type DrawType = (typeof DRAW_TYPE_LIST)[number];
