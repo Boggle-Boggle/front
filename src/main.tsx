@@ -27,42 +27,35 @@ import SignUp from 'pages/SignUp';
 import App from './App';
 import './main.css';
 
-// const router = createBrowserRouter([
-//   {
-//     path: '/',
-//     element: <PrivateRoute />,
-//     children: [
-//       {
-//         path: '/',
-//         element: <App />,
-//         children: [
-//           { path: '/', element: <Home /> },
-//           { path: 'library', element: <Library /> },
-//           { path: 'myPage', element: <MyPage /> },
-//           { path: 'search', element: <Search /> },
-//           { path: 'detail/:detailId', element: <BookDetail /> },
-//           { path: 'record/:recordId', element: <Record /> },
-//           { path: 'edit/:recordId', element: <Edit /> },
-//         ],
-//       },
-//       { path: 'note/write', element: <Note /> },
-//       { path: 'myPage/nickname', element: <EditNickname /> },
-//       { path: 'myPage/terms', element: <Term /> },
-//       { path: 'myPage/VersionInfo', element: <VersionInfo /> },
-//       { path: 'myPage/deleteAccount', element: <DeleteAccount /> },
-//       { path: 'myPage/QnA', element: <QnA /> },
-//     ],
-//   },
-//   { path: 'signUp', element: <SignUp /> },
-//   { path: '/login', element: <Login /> },
-//   { path: '/oauth/redirect', element: <Auth /> },
-// ]);
-
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <div>dd</div>,
+    element: <PrivateRoute />,
+    children: [
+      {
+        path: '/',
+        element: <App />,
+        children: [
+          { path: '/', element: <Home /> },
+          { path: 'library', element: <Library /> },
+          { path: 'myPage', element: <MyPage /> },
+          { path: 'search', element: <Search /> },
+          { path: 'detail/:detailId', element: <BookDetail /> },
+          { path: 'record/:recordId', element: <Record /> },
+          { path: 'edit/:recordId', element: <Edit /> },
+        ],
+      },
+      { path: 'note/write', element: <Note /> },
+      { path: 'myPage/nickname', element: <EditNickname /> },
+      { path: 'myPage/terms', element: <Term /> },
+      { path: 'myPage/VersionInfo', element: <VersionInfo /> },
+      { path: 'myPage/deleteAccount', element: <DeleteAccount /> },
+      { path: 'myPage/QnA', element: <QnA /> },
+    ],
   },
+  { path: 'signUp', element: <SignUp /> },
+  { path: '/login', element: <Login /> },
+  { path: '/oauth/redirect', element: <Auth /> },
 ]);
 
 const queryClient = new QueryClient();
