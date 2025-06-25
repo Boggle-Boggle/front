@@ -12,7 +12,7 @@
   }
 
   * {
-    @apply font-pretendard text-text;
+    @apply font-pretendard text-black;
     @apply list-none focus:outline-none;
   }
 }
