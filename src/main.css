@@ -10,6 +10,11 @@
     --color-secondary: #f4f5ce;
     --color-secondary-light: #aedef5;
   }
+
+  * {
+    @apply font-pretendard text-text;
+    @apply list-none focus:outline-none;
+  }
 }
 
 /* 테마색상 */
@@ -52,88 +57,6 @@
   /* Peach Candy */
   /* Rainbow Toyroom */
   /* Grey Scale */
-}
-
-/* body {
-  padding: env(safe-area-inset-top, 20px) env(safe-area-inset-right, 20px) env(safe-area-inset-bottom, 20px)
-    env(safe-area-inset-left, 20px);
-} */
-
-/* 
-/////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////
-//                           레거시 코드                          //
-/////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////
-*/
-@layer base {
-  body {
-    @apply list-none font-pretendard text-text;
-  }
-  input,
-  textarea,
-  button {
-    @apply focus:outline-none;
-  }
-
-  input[type='number']::-webkit-outer-spin-button,
-  input[type='number']::-webkit-inner-spin-button {
-    @apply appearance-none;
-    margin: 0;
-  }
-}
-
-@layer utilities {
-  .height-without-headerIOS {
-    height: calc(100vh - 6rem);
-  }
-  .height-without-headerAnd {
-    height: calc(100vh - 4rem);
-  }
-  .height-without-footerIOS {
-    height: calc(100vh - 6rem);
-  }
-  .height-without-footerAnd {
-    height: calc(100vh - 5.5rem);
-  }
-  .height-contentAnd {
-    height: calc(100vh - 9rem);
-  }
-  .height-contentIOS {
-    height: calc(100vh - 9rem);
-  }
-}
-/* 초미니 : 320 이상 */
-/* 미니 : 350 이상 */
-/* 기본 : 385 이상  */
-/* 프로 : 405 이상 */
-@media (min-width: 320px) {
-  html {
-    font-size: 13px;
-  }
-}
-
-@media (min-width: 350px) {
-  html {
-    font-size: 15px;
-  }
-  @media (min-height: 850px) {
-    html {
-      font-size: 16px;
-    }
-  }
-}
-
-@media (min-width: 375px) {
-  html {
-    font-size: 16px;
-  }
-}
-
-@media (min-width: 405px) {
-  html {
-    font-size: 17px;
-  }
 }
 
 .scrollbar-hide {
@@ -180,3 +103,57 @@
   src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Bold.woff') format('woff');
   font-weight: 700;
 }
+
+/* 초미니 : 320 이상 */
+/* 미니 : 350 이상 */
+/* 기본 : 385 이상  */
+/* 프로 : 405 이상 */
+/* @media (min-width: 320px) {
+  html {
+    font-size: 13px;
+  }
+}
+
+@media (min-width: 350px) {
+  html {
+    font-size: 15px;
+  }
+  @media (min-height: 850px) {
+    html {
+      font-size: 16px;
+    }
+  }
+}
+
+@media (min-width: 375px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+@media (min-width: 405px) {
+  html {
+    font-size: 17px;
+  }
+} */
+
+/* @layer utilities {
+  .height-without-headerIOS {
+    height: calc(100vh - 6rem);
+  }
+  .height-without-headerAnd {
+    height: calc(100vh - 4rem);
+  }
+  .height-without-footerIOS {
+    height: calc(100vh - 6rem);
+  }
+  .height-without-footerAnd {
+    height: calc(100vh - 5.5rem);
+  }
+  .height-contentAnd {
+    height: calc(100vh - 9rem);
+  }
+  .height-contentIOS {
+    height: calc(100vh - 9rem);
+  }
+} */
