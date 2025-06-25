@@ -41,7 +41,7 @@ module.exports = {
       spacing: {
         mobile: '16px',
         tablet: '40px',
-        'safe-top': 'env(safe-area-inset-top, 50px)',
+        'safe-top': 'env(safe-area-inset-top)',
         'safe-bottom': 'env(safe-area-inset-bottom)',
 
         headerIOS: '6rem',
