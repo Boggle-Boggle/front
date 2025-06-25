@@ -5,10 +5,15 @@
 @layer base {
   :root {
     /* 색상 */
-    --color-primary: #6fc444;
+    --color-primary: #8bcfa7;
     --color-primary-light: #a6d68e;
     --color-secondary: #f4f5ce;
     --color-secondary-light: #aedef5;
+  }
+
+  * {
+    @apply font-pretendard text-black;
+    @apply list-none focus:outline-none;
   }
 }
 
@@ -54,60 +59,56 @@
   /* Grey Scale */
 }
 
-/* body {
-  padding: env(safe-area-inset-top, 20px) env(safe-area-inset-right, 20px) env(safe-area-inset-bottom, 20px)
-    env(safe-area-inset-left, 20px);
-} */
-
-/* 
-/////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////
-//                           레거시 코드                          //
-/////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////
-*/
-@layer base {
-  body {
-    @apply list-none font-pretendard text-text;
-  }
-  input,
-  textarea,
-  button {
-    @apply focus:outline-none;
-  }
-
-  input[type='number']::-webkit-outer-spin-button,
-  input[type='number']::-webkit-inner-spin-button {
-    @apply appearance-none;
-    margin: 0;
-  }
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
-@layer utilities {
-  .height-without-headerIOS {
-    height: calc(100vh - 6rem);
-  }
-  .height-without-headerAnd {
-    height: calc(100vh - 4rem);
-  }
-  .height-without-footerIOS {
-    height: calc(100vh - 6rem);
-  }
-  .height-without-footerAnd {
-    height: calc(100vh - 5.5rem);
-  }
-  .height-contentAnd {
-    height: calc(100vh - 9rem);
-  }
-  .height-contentIOS {
-    height: calc(100vh - 9rem);
-  }
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
 }
+
+@font-face {
+  font-family: 'Gyeonggi_Title_Medium';
+  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2410-3@1.0/Title_Bold.woff') format('woff');
+  font-weight: 700;
+}
+
+@font-face {
+  font-family: 'MaruBuri';
+  src: url('https://hangeul.pstatic.net/hangeul_static/webfont/MaruBuri/MaruBuri-Regular.woff') format('woff');
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: 'MaruBuri';
+  src: url('https://hangeul.pstatic.net/hangeul_static/webfont/MaruBuri/MaruBuri-Bold.woff') format('woff');
+  font-weight: 700;
+}
+
+@font-face {
+  font-family: 'Pretendard';
+  src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Light.woff') format('woff');
+  font-weight: 300;
+}
+
+@font-face {
+  font-family: 'Pretendard';
+  src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Medium.woff') format('woff');
+  font-weight: 500;
+}
+
+@font-face {
+  font-family: 'Pretendard';
+  src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Bold.woff') format('woff');
+  font-weight: 700;
+}
+
 /* 초미니 : 320 이상 */
 /* 미니 : 350 이상 */
 /* 기본 : 385 이상  */
 /* 프로 : 405 이상 */
-@media (min-width: 320px) {
+/* @media (min-width: 320px) {
   html {
     font-size: 13px;
   }
@@ -134,48 +135,25 @@
   html {
     font-size: 17px;
   }
-}
+} */
 
-.scrollbar-hide {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
-
-.scrollbar-hide::-webkit-scrollbar {
-  display: none;
-}
-
-@font-face {
-  font-family: 'HakgyoansimNadeuriTTF-B';
-  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2408-5@1.0/HakgyoansimNadeuriTTF-B.woff2') format('woff2');
-  font-weight: 700;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'Pretendard';
-  src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Thin.woff') format('woff');
-  font-weight: 100;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'Pretendard';
-  src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
-  font-weight: 400;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'Pretendard';
-  src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-SemiBold.woff') format('woff');
-  font-weight: 600;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'Pretendard';
-  src: url('https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Bold.woff') format('woff');
-  font-weight: 700;
-  font-style: normal;
-}
+/* @layer utilities {
+  .height-without-headerIOS {
+    height: calc(100vh - 6rem);
+  }
+  .height-without-headerAnd {
+    height: calc(100vh - 4rem);
+  }
+  .height-without-footerIOS {
+    height: calc(100vh - 6rem);
+  }
+  .height-without-footerAnd {
+    height: calc(100vh - 5.5rem);
+  }
+  .height-contentAnd {
+    height: calc(100vh - 9rem);
+  }
+  .height-contentIOS {
+    height: calc(100vh - 9rem);
+  }
+} */
