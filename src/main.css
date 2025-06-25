@@ -3,8 +3,72 @@
 @tailwind utilities;
 
 @layer base {
+  :root {
+    /* 색상 */
+    --color-primary: #6fc444;
+    --color-primary-light: #a6d68e;
+    --color-secondary: #f4f5ce;
+    --color-secondary-light: #aedef5;
+  }
+}
+
+/* 테마색상 */
+@layer base {
+  html[data-theme='RedGrapefruit'] {
+    --color-primary: #f45e50;
+    --color-primary-light: #ed8e85;
+    --color-secondary: #fbbaba;
+    --color-secondary-light: #fff4f4;
+  }
+
+  html[data-theme='LemonadeBreeze'] {
+    --color-primary: #c4d966;
+    --color-primary-light: #fff5a8;
+    --color-secondary: #fffbea;
+    --color-secondary-light: #ddffc8;
+  }
+
+  html[data-theme='GreenFlowerGarden'] {
+    --color-primary: #6fc444;
+    --color-primary-light: #a6d68e;
+    --color-secondary: #f4f5ce;
+    --color-secondary-light: #aedef5;
+  }
+
+  html[data-theme='CalmPistachio'] {
+    --color-primary: #4e9fac;
+    --color-primary-light: #92c7cf;
+    --color-secondary: #fbf9f1;
+    --color-secondary-light: #c7e9ea;
+  }
+
+  html[data-theme='BlueToy'] {
+    --color-primary: #509bff;
+    --color-primary-light: #98c3fd;
+    --color-secondary: #fffdea;
+    --color-secondary-light: #c7f5f1;
+  }
+
+  /* Peach Candy */
+  /* Rainbow Toyroom */
+  /* Grey Scale */
+}
+
+/* body {
+  padding: env(safe-area-inset-top, 20px) env(safe-area-inset-right, 20px) env(safe-area-inset-bottom, 20px)
+    env(safe-area-inset-left, 20px);
+} */
+
+/* 
+/////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////
+//                           레거시 코드                          //
+/////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////
+*/
+@layer base {
   body {
-    @apply font-pretendard list-none text-text;
+    @apply list-none font-pretendard text-text;
   }
   input,
   textarea,
