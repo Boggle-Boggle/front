@@ -42,7 +42,7 @@ const BottomNavigator = () => {
 
   return (
     <ul
-      className={`fixed bottom-0 z-20 grid w-full max-w-screen-sm grid-cols-4 items-center rounded-t-xl bg-white ${isIOS ? 'h-footerIOS pb-4' : 'h-footerAnd'} shadow-navigator`}
+      className={`fixed bottom-0 z-20 grid w-full max-w-screen-sm grid-cols-4 items-center rounded-t-xl bg-white ${isIOS ? 'h-footerIOS pb-4' : 'h-footerAnd'} `}
     >
       <li className="m-auto">
         <NavLink

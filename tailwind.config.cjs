@@ -13,8 +13,7 @@ module.exports = {
 
         // 시스템 컬러
         information: '#2c80ff',
-        warning: '#ffd900',
-        success: '#8bcfa7',
+        warning: '#FFE23C',
         danger: '#fc6533',
 
         // 블랙
@@ -25,6 +24,7 @@ module.exports = {
         'neutral-20': '#eeeeee',
         white: '#ffffff',
 
+        // 기존 컬러(삭제예정)
         main: '#EEEDEB',
         accent: '#E6B9A6',
         sub: '#939185',
@@ -44,38 +44,22 @@ module.exports = {
         'safe-top': 'env(safe-area-inset-top)',
         'safe-bottom': 'env(safe-area-inset-bottom)',
 
+        // 기존 spacing(삭제예정)
         headerIOS: '6rem',
         headerAnd: '4rem',
         footerIOS: '6rem',
         footerAnd: '5.5rem',
-      },
-      // 타블렛 반응형
-      // screens: {
-      //   mobile: { max: '600px' },
-      //   tablet: { min: '601px', max: '1200px' },
-      // },
-      /////////////////////////////////////////////////////////////////
-      /////////////////////////////////////////////////////////////////
-      //                           레거시 코드                          //
-      /////////////////////////////////////////////////////////////////
-      /////////////////////////////////////////////////////////////////
-      boxShadow: {
-        navigator: '0 -3px 6px -2px rgba(0, 0, 0, 0.1)',
-      },
-
-      lineClamp: {
-        7: '7',
-        8: '8',
-        9: '9',
-        10: '10',
-        11: '11',
       },
       fontFamily: {
         book: ['Gyeonggi_Title_Medium', 'sans-serif'],
         pretendard: ['Pretendard', 'sans-serif'],
         serif: ['MaruBuri', 'sans-serif'],
       },
+      // 타블렛 반응형(추가 예정)
+      // screens: {
+      //   mobile: { max: '600px' },
+      //   tablet: { min: '601px', max: '1200px' },
+      // }
     },
   },
-  // plugins: [require('@tailwindcss/line-clamp')],
 };
