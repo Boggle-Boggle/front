@@ -71,8 +71,9 @@ module.exports = {
         11: '11',
       },
       fontFamily: {
-        book: ['HakgyoansimNadeuriTTF-B', 'sans-serif'],
+        book: ['Gyeonggi_Title_Medium', 'sans-serif'],
         pretendard: ['Pretendard', 'sans-serif'],
+        serif: ['MaruBuri', 'sans-serif'],
       },
     },
   },
