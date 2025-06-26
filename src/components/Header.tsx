@@ -13,7 +13,11 @@ const Header = ({ leftBtn, title, rightBtn, withSpacer = true }: HeaderProps) =>
         <span className="w-full justify-self-center px-2 text-center font-semibold">{title}</span>
         <span className={`justify-self-end ${rightBtn || 'invisible'}`}>{rightBtn}</span>
       </div>
-      {withSpacer && <div className="pt-safe-top h-12 bg-pink-200" />}
+      {withSpacer && (
+        <div className="pt-safe-top bg-pink-200">
+          <div className="h-12 bg-slate-300" />
+        </div>
+      )}
     </>
   );
 };
