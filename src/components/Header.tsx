@@ -14,8 +14,8 @@ const Header = ({ leftBtn, title, rightBtn, withSpacer = true }: HeaderProps) =>
         <span className={`justify-self-end ${rightBtn || 'invisible'}`}>{rightBtn}</span>
       </div>
       {withSpacer && (
-        <div className="pt-safe-top bg-pink-200">
-          <div className="h-12 bg-slate-300" />
+        <div className="pt-safe-top">
+          <div className="h-12" />
         </div>
       )}
     </>
