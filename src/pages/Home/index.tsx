@@ -28,7 +28,6 @@ const Home = () => {
   return (
     <>
       <Header
-        backgroundColor="bg-main"
         title={`${title} (${books?.length ?? 0})`}
         rightBtn={
           <button aria-label="기간선택" type="button" onClick={open}>

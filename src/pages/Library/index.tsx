@@ -104,7 +104,6 @@ const Library = () => {
   return (
     <>
       <Header
-        backgroundColor="bg-main"
         rightBtn={
           <div className="flex">
             {layout === 'list' && (

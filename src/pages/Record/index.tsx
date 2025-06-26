@@ -122,7 +122,6 @@ const Record = () => {
               )}
             </>
           }
-          backgroundColor={hasHeaderBackground ? 'bg-white transition-colors' : 'bg-none transition-colors'}
         />
 
         <div
