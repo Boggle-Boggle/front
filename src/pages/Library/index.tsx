@@ -7,7 +7,6 @@ import Icon from 'components/Icon';
 import SearchBar from 'components/SearchBar';
 import Loading from 'pages/Loading';
 
-import useDevice from 'hooks/useDevice';
 import useInfiniteScroll from 'hooks/useInfiniteScroll';
 import { getLibraries, getLibraryBooks } from 'services/library';
 import searchDebounce from 'utils/debounce';
@@ -30,8 +29,6 @@ const Library = () => {
   const [isToggledLibrarySelect, setIsToggledLibrarySelect] = useState<boolean>(false);
   const [isToggledLibraryEdit, setIsToggledLibraryEdit] = useState<boolean>(false);
   const [isToggledSort, setIsToggledSort] = useState<boolean>(false);
-
-  const { isIOS } = useDevice();
 
   const [selectedLibrary, setSelectedLibrary] = useState<CustomLibrary | StatusLibrary>({
     status: 'all',
@@ -104,7 +101,6 @@ const Library = () => {
   return (
     <>
       <Header
-        backgroundColor="bg-main"
         rightBtn={
           <div className="flex">
             {layout === 'list' && (
@@ -138,9 +134,7 @@ const Library = () => {
           </button>
         }
       />
-      <div
-        className={`${isIOS ? 'mt-[5.9rem]' : 'mt-[3.9rem]'} fixed z-20 w-full max-w-screen-sm bg-main pb-4 pt-[1px]`}
-      >
+      <div className="fixed z-20 w-full max-w-screen-sm bg-main pb-4 pt-[1px]">
         <SearchBar
           placeholder="서재 안 도서 검색"
           value={value}
@@ -150,7 +144,7 @@ const Library = () => {
         />
       </div>
       {data && (
-        <section className={` ${isIOS ? 'mt-[8.25rem]' : 'mt-[7rem]'} mt-9 overflow-y-scroll pb-20`}>
+        <section className="mt-9 overflow-y-scroll pb-20">
           {layout === 'grid' && <GridLayout allBooks={allBooks} />}
 
           {layout === 'list' && (

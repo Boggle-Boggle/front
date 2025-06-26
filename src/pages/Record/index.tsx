@@ -81,6 +81,7 @@ const Record = () => {
     data && (
       <>
         <Header
+          withSpacer={false}
           title={
             hasHeaderBackground ? (
               <p className={`${data.bookData.title.length > 20 ? 'text-sm' : 'text-base'}`}>{data.bookData.title}</p>
@@ -122,7 +123,6 @@ const Record = () => {
               )}
             </>
           }
-          backgroundColor={hasHeaderBackground ? 'bg-white transition-colors' : 'bg-none transition-colors'}
         />
 
         <div
