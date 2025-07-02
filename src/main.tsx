@@ -24,7 +24,9 @@ import Record from 'pages/Record';
 import Search from 'pages/Search';
 import SignUp from 'pages/SignUp';
 
-import App from './App';
+import WithBottomNavLayout from './WithBottomNavLayout';
+import WithoutBottomNavLayout from './WithoutBottomNavLayout';
+
 import './main.css';
 
 const router = createBrowserRouter([
@@ -33,8 +35,7 @@ const router = createBrowserRouter([
     element: <PrivateRoute />,
     children: [
       {
-        path: '/',
-        element: <App />,
+        element: <WithBottomNavLayout />,
         children: [
           { path: '/', element: <Home /> },
           { path: 'library', element: <Library /> },
@@ -45,20 +46,31 @@ const router = createBrowserRouter([
           { path: 'edit/:recordId', element: <Edit /> },
         ],
       },
-      { path: 'note/write', element: <Note /> },
-      { path: 'myPage/nickname', element: <EditNickname /> },
-      { path: 'myPage/terms', element: <Term /> },
-      { path: 'myPage/VersionInfo', element: <VersionInfo /> },
-      { path: 'myPage/deleteAccount', element: <DeleteAccount /> },
-      { path: 'myPage/QnA', element: <QnA /> },
+      {
+        element: <WithoutBottomNavLayout />,
+        children: [
+          { path: 'note/write', element: <Note /> },
+          { path: 'myPage/nickname', element: <EditNickname /> },
+          { path: 'myPage/terms', element: <Term /> },
+          { path: 'myPage/VersionInfo', element: <VersionInfo /> },
+          { path: 'myPage/deleteAccount', element: <DeleteAccount /> },
+          { path: 'myPage/QnA', element: <QnA /> },
+        ],
+      },
     ],
   },
+  { path: 'login', element: <Login /> },
   { path: 'signUp', element: <SignUp /> },
-  { path: '/login', element: <Login /> },
-  { path: '/oauth/redirect', element: <Auth /> },
+  { path: 'oauth/redirect', element: <Auth /> },
 ]);
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: import.meta.env.MODE === 'production',
+    },
+  },
+});
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>

@@ -2,13 +2,13 @@ import { Outlet } from 'react-router-dom';
 
 import BottomNavigator from 'components/BottomNavigator';
 
-const App = () => {
+const WithBottomNavLayout = () => {
   return (
-    <section className="relative h-full w-full overflow-scroll">
+    <section className="h-dvh w-full overflow-scroll">
       <Outlet />
       <BottomNavigator />
     </section>
   );
 };
 
-export default App;
+export default WithBottomNavLayout;
