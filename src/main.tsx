@@ -58,7 +58,13 @@ const router = createBrowserRouter([
   { path: '/oauth/redirect', element: <Auth /> },
 ]);
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: import.meta.env.MODE === 'production',
+    },
+  },
+});
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
