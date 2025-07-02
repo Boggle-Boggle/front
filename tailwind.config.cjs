@@ -61,6 +61,9 @@ module.exports = {
         pretendard: ['Pretendard', 'sans-serif'],
         serif: ['MaruBuri', 'sans-serif'],
       },
+      maxWidth: {
+        mobile: '600px',
+      },
       // 타블렛 반응형(추가 예정)
       // screens: {
       //   mobile: { max: '600px' },
