@@ -13,16 +13,16 @@ module.exports = {
 
         // 시스템 컬러
         information: '#2c80ff',
-        warning: '#FFE23C',
+        warning: '#E3B92E',
         danger: '#fc6533',
 
         // 블랙
-        black: '#303030',
+        'neutral-100': '#303030',
         'neutral-80': '#555555',
         'neutral-60': '#888888',
         'neutral-40': '#cacaca',
         'neutral-20': '#eeeeee',
-        white: '#ffffff',
+        'neutral-0': '#ffffff',
 
         // 기존 컬러(삭제예정)
         main: '#EEEDEB',
@@ -34,9 +34,15 @@ module.exports = {
       },
       fontSize: {
         h1: ['1.75rem', { fontWeight: '700' }],
-        title: ['1.375rem', { fontWeight: '700' }],
-        body: ['1rem', { fontWeight: '500' }],
-        caption: ['0.875rem', { fontWeight: '500' }],
+        h2: ['1.75rem', { fontWeight: '300' }],
+        h3: ['1.375rem', { fontWeight: '300' }],
+        title1: ['1.375rem', { fontWeight: '700' }],
+        title2: ['1.25rem', { fontWeight: '700' }],
+        title3: ['1rem', { fontWeight: '700' }],
+        body1: ['1rem', { fontWeight: '500' }],
+        body2: ['0.875rem', { fontWeight: '700' }],
+        caption1: ['0.875rem', { fontWeight: '500' }],
+        caption2: ['0.875rem', { fontWeight: '300' }],
       },
       spacing: {
         mobile: '16px',
