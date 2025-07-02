@@ -12,8 +12,8 @@
   }
 
   * {
-    @apply font-pretendard text-black;
-    @apply list-none focus:outline-none;
+    @apply bg-neutral-0 font-pretendard text-neutral-100;
+    @apply select-none list-none focus:outline-none;
   }
 }
 
