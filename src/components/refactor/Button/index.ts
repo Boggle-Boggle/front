@@ -1,3 +1,4 @@
+import BottomButton from './BottomButton';
 import Button from './Button';
 
-export { Button };
+export { Button, BottomButton };
