@@ -1,7 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 
 module.exports = {
-  content: ['./src/**/*.{js,jsx,ts,tsx}', './index.html'],
+  content: ['./src/**/*.{js,jsx,ts,tsx}', './index.html', './.storybook/**/*.{js,ts,jsx,tsx}'],
   theme: {
     extend: {
       colors: {
@@ -33,16 +33,16 @@ module.exports = {
         red: '#D62321',
       },
       fontSize: {
-        h1: ['1.75rem', { fontWeight: '700' }],
-        h2: ['1.75rem', { fontWeight: '300' }],
-        h3: ['1.375rem', { fontWeight: '300' }],
-        title1: ['1.375rem', { fontWeight: '700' }],
-        title2: ['1.25rem', { fontWeight: '700' }],
-        title3: ['1rem', { fontWeight: '700' }],
-        body1: ['1rem', { fontWeight: '500' }],
-        body2: ['0.875rem', { fontWeight: '700' }],
-        caption1: ['0.875rem', { fontWeight: '500' }],
-        caption2: ['0.875rem', { fontWeight: '300' }],
+        h1: ['1.75rem', { fontWeight: '700', lineHeight: '140%' }],
+        h2: ['1.75rem', { fontWeight: '300', lineHeight: '140%' }],
+        h3: ['1.375rem', { fontWeight: '300', lineHeight: '140%' }],
+        title1: ['1.375rem', { fontWeight: '700', lineHeight: '140%' }],
+        title2: ['1.25rem', { fontWeight: '700', lineHeight: '140%' }],
+        title3: ['1rem', { fontWeight: '700', lineHeight: '140%' }],
+        body1: ['1rem', { fontWeight: '500', lineHeight: '140%' }],
+        body2: ['0.875rem', { fontWeight: '700', lineHeight: '140%' }],
+        caption1: ['0.875rem', { fontWeight: '500', lineHeight: '140%' }],
+        caption2: ['0.875rem', { fontWeight: '300', lineHeight: '140%' }],
       },
       spacing: {
         mobile: '16px',
