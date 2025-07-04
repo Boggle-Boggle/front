@@ -54,5 +54,10 @@
     "typescript": "^5.5.4",
     "vite": "^5.3.4",
     "vite-plugin-svgr": "^4.3.0"
+  },
+  "pnpm": {
+    "patchedDependencies": {
+      "ast-types": "patches/ast-types.patch"
+    }
   }
 }
