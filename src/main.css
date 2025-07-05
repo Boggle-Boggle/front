@@ -3,17 +3,17 @@
 @tailwind utilities;
 
 @layer base {
+  * {
+    @apply font-pretendard text-neutral-100;
+    @apply select-none list-none focus:outline-none;
+  }
+
   :root {
     /* 색상 */
     --color-primary: #8bcfa7;
     --color-primary-light: #a6d68e;
     --color-secondary: #f4f5ce;
     --color-secondary-light: #aedef5;
-  }
-
-  * {
-    @apply bg-neutral-0 font-pretendard text-neutral-100;
-    @apply select-none list-none focus:outline-none;
   }
 }
 
