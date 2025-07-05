@@ -32,6 +32,12 @@ module.exports = {
         gray: '#DCD7D6',
         red: '#D62321',
       },
+
+      fontFamily: {
+        book: ['Gyeonggi_Title_Medium', 'sans-serif'],
+        pretendard: ['Pretendard', 'sans-serif'],
+        serif: ['MaruBuri', 'sans-serif'],
+      },
       fontSize: {
         h1: ['1.75rem', { fontWeight: '700', lineHeight: '140%' }],
         h2: ['1.75rem', { fontWeight: '300', lineHeight: '140%' }],
@@ -44,6 +50,7 @@ module.exports = {
         caption1: ['0.875rem', { fontWeight: '500', lineHeight: '140%' }],
         caption2: ['0.875rem', { fontWeight: '300', lineHeight: '140%' }],
       },
+
       spacing: {
         mobile: '16px',
         tablet: '40px',
@@ -56,14 +63,19 @@ module.exports = {
         footerIOS: '6rem',
         footerAnd: '5.5rem',
       },
-      fontFamily: {
-        book: ['Gyeonggi_Title_Medium', 'sans-serif'],
-        pretendard: ['Pretendard', 'sans-serif'],
-        serif: ['MaruBuri', 'sans-serif'],
-      },
       maxWidth: {
         mobile: '600px',
       },
+
+      zIndex: {
+        // toast: '',
+        // modal: '',
+        header: '500',
+        navigator: '500',
+        fixedBtn: '500',
+        highlight: '100',
+      },
+
       // 타블렛 반응형(추가 예정)
       // screens: {
       //   mobile: { max: '600px' },
