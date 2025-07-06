@@ -10,7 +10,7 @@
     "preview": "vite preview",
     "storybook": "storybook dev -p 6006",
     "build:storybook": "storybook build",
-    "build:icons": "npx @svgr/cli ./src/assets/refactor/icons --out-dir ./src/components/icons --icon --replace-attr-values \"#303030=currentColor\" --no-prettier --ext tsx"
+    "build:icons": "npx @svgr/cli ./src/assets/refactor/icons --out-dir ./src/components/icons --icon --replace-attr-values \"#303030=currentColor\" --no-prettier --ext tsx --typescript"
   },
   "dependencies": {
     "@react-three/drei": "^9.117.3",
