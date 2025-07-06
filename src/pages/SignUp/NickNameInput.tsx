@@ -6,6 +6,7 @@ import Button from 'components/Button';
 import Header from 'components/Header';
 import Highlight from 'components/Highlight';
 import Icon from 'components/Icon';
+import { ArrowBack, Home } from 'components/icons';
 
 import useDevice from 'hooks/useDevice';
 
@@ -35,6 +36,8 @@ const NickNameInput = ({ nickName, changeNickName, saveNickName }: NickNameInput
         <Alert message={`사용중인 닉네임이에요 \n다른 닉네임을 입력해주세요`} onClose={handleAlertActive} />
       )}
 
+      <Home className="h-6 w-6" />
+      <ArrowBack className="h-6 w-6" />
       <Header
         title={<>회원가입</>}
         leftBtn={

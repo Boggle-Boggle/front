@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 @layer base {
-  * {
+  *:not(svg *) {
     @apply font-pretendard text-neutral-100;
     @apply select-none list-none focus:outline-none;
   }
