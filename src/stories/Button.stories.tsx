@@ -41,7 +41,7 @@ const buttonArgs: React.ComponentProps<typeof Button> = {
   type: 'submit',
 };
 
-export const dafault: Story = {
+export const Default: Story = {
   args: {
     ...buttonArgs,
   },
