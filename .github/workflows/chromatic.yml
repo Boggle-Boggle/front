@@ -28,11 +28,20 @@ jobs:
         with:
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
           token: ${{ secrets.GITHUB_TOKEN }}
+          buildScriptName: build:storybook
 
   message:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
+
+      - name: Get last commit message
+        id: last_commit
+        run: echo "msg=$(git log -1 --pretty=format:'%s')" >> $GITHUB_OUTPUT
+
       - uses: tsickert/discord-webhook@v5.3.0
         with:
           webhook-url: ${{ secrets.DISCORD_WEBHOOK }}
-          content: "🚨🚨🚨🚨🚨🚨애애애애애앵‼️‼️‼️‼️‼️‼️🚨🚨🚨🚨🚨🚨📢📢📢📢📢📢📢긴급상황‼️‼️‼️긴급상황‼️‼️‼️‼️‼️📢📢📢📢📢📢📢🔊🔊🔊🔊🔊🔊스토리북 업데이트 발생‼️‼️‼️🔊🔊🔊🔊🔊🔊🔊🔊🔊🔥🔥🔥🔥🔥🔥🔥이멀젼씨‼️‼️‼️이멀젼씨‼️‼️🔥🔥🔥🔥🔥🔥🔥🛎🛎🛎🛎🛎🛎🛎모두주목해주세요땡땡땡땡땡🛎🛎🛎🛎🛎🎤🎤🎤🎤아아-마이크테스트-!마이크테스트-!🎤🎤🎤🎤🎙🎙🎙🎙🎙마이크테스트— 들린다면 응답하라—-🎙🎙🎙🎙🎙📣📣📣📣📣📣 ‼️‼️‼️‼️‼️‼️🚨🚨🚨🚨🚨🚨📢📢📢📢📢📢📢긴급상황‼️‼️‼️긴급상황‼️‼️‼️‼️‼️📢📢📢📢📢📢📢🔊🔊🔊🔊🔊🔊스토리북 업데이트 발생‼️‼️‼️🔊🔊🔊🔊🔊🔊🔊🔊🔊🔥🔥🔥🔥🔥🔥🔥이멀젼씨‼️‼️‼️이멀젼씨‼️‼️🔥🔥🔥🔥🔥🔥🔥🛎🛎🛎🛎🛎🛎🛎모두주목해주세요땡땡땡땡땡🛎🛎🛎🛎🛎🎤🎤🎤🎤아아-마이크테스트-!마이크테스트-!🎤🎤🎤🎤🎙🎙🎙🎙🎙마이크테스트— 들린다면 응답하라—-🎙🎙🎙🎙🎙📣📣📣📣📣📣"
+          content: |
+            🚨 **스토리북 업데이트**
+            📝 커밋 메시지: `${{ steps.last_commit.outputs.msg }}`
