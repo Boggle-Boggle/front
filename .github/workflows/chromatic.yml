@@ -7,8 +7,6 @@ on:
     paths:
       - 'src/stories/**'
       - '.storybook/**'      
-      - 'package.json' 
-      - 'pnpm-lock.yaml'    
 
 jobs:
   chromatic:
@@ -44,4 +42,4 @@ jobs:
           webhook-url: ${{ secrets.DISCORD_WEBHOOK }}
           content: |
             🚨 **스토리북 업데이트**
-            📝 커밋 메시지: `${{ steps.last_commit.outputs.msg }}`
+            📝 `${{ steps.last_commit.outputs.msg }}`
