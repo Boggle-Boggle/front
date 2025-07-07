@@ -24,15 +24,10 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      - name: Build Storybook
-        run: pnpm run build:storybook
-
-      - name: Publish to Chromatic
-        uses: chromaui/action@latest
+      - uses: chromaui/action@latest
         with:
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
           token: ${{ secrets.GITHUB_TOKEN }}
-          onlyChanged: true
 
   message:
     needs: chromatic
