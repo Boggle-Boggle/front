@@ -15,7 +15,7 @@ const Radio = ({ id, name, checked, onChange, size = 'medium', variant = 'primar
       : 'border-neutral-80 peer-checked:border-neutral-80';
 
   const sizeInnerClass = size === 'small' ? 'h-[10.7px] w-[10.7px]' : 'h-[15px] w-[15px]';
-  const sizeOuterClass = size === 'small' ? 'h-4 w-4' : 'h-6 w-6';
+  const sizeOuterClass = size === 'small' ? 'size-4' : 'size-6';
 
   return (
     <label htmlFor={id}>

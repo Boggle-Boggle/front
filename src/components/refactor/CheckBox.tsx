@@ -10,7 +10,7 @@ const CheckBox = ({ size = 'medium', variant = 'primary', checked = false, onCha
     variant === 'primary'
       ? 'border-neutral-40 peer-checked:bg-primary '
       : 'border-neutral-60 peer-checked:bg-neutral-80 ';
-  const sizeClass = size === 'small' ? 'h-3 w-3 text-body2' : 'h-6 w-6  text-title2';
+  const sizeClass = size === 'small' ? 'size-3 text-body2' : 'size-6  text-title2';
 
   return (
     <label htmlFor="checkbox">
