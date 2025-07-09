@@ -1,10 +1,12 @@
 import { Outlet } from 'react-router-dom';
 
+import ToastContainer from 'components/refactor/Toast/ToastContainer';
+
 const App = () => {
   return (
     <>
-      {/* 전역 컨테이너 추가 */}
       <Outlet />
+      <ToastContainer />
     </>
   );
 };
