@@ -26,6 +26,6 @@ export const useToastStore = create<ToastStoreType>((set, get) => ({
     // 3초 뒤 삭제
     setTimeout(() => {
       get().removeToast(id);
-    }, 3000);
+    }, 2200);
   },
 }));
