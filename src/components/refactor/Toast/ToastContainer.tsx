@@ -7,7 +7,7 @@ const ToastContainer = () => {
 
   return (
     <section className="fixed bottom-6 z-toast flex w-full max-w-mobile flex-col px-mobile">
-      {toasts.map((toast, i) => {
+      {toasts.map((toast) => {
         return (
           <div key={toast.id} className="mt-1">
             <Toast {...toast} />
