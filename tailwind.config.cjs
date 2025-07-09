@@ -68,12 +68,27 @@ module.exports = {
       },
 
       zIndex: {
-        // toast: '',
         // modal: '',
+        toast: '700',
         header: '500',
         navigator: '500',
         fixedBtn: '500',
         highlight: '100',
+      },
+
+      keyframes: {
+        fadeIn: {
+          '0%': { opacity: '0' },
+          '100%': { opacity: '1' },
+        },
+        fadeOut: {
+          '0%': { opacity: '1' },
+          '100%': { opacity: '0' },
+        },
+      },
+      animation: {
+        fadeIn: 'fadeIn 0.3s ease-out forwards',
+        fadeOut: 'fadeOut 0.3s ease-out forwards',
       },
 
       // 타블렛 반응형(추가 예정)
