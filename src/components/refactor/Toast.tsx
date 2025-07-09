@@ -1,6 +1,6 @@
 import { IconCircleCancel, IconCircleCheck, IconCircleInfo } from 'components/icons';
 
-type ToastProps = {
+export type ToastProps = {
   type: 'info' | 'error' | 'success';
   description: string;
   title?: string;
