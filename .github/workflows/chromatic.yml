@@ -43,3 +43,4 @@ jobs:
           content: |
             🚨 **스토리북 업데이트**
             📝 `${{ steps.last_commit.outputs.msg }}`
+            🌐 [구경하러가기](https://dev--686758463d9d0508e73ed980.chromatic.com/?path=/story/components-button--dafault)
