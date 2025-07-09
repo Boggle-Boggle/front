@@ -24,44 +24,50 @@ import Record from 'pages/Record';
 import Search from 'pages/Search';
 import SignUp from 'pages/SignUp';
 
-import WithBottomNavLayout from './WithBottomNavLayout';
-import WithoutBottomNavLayout from './WithoutBottomNavLayout';
+import WithBottomNavLayout from 'pages/Layout/WithBottomNavLayout';
+import WithoutBottomNavLayout from 'pages/Layout/WithoutBottomNavLayout';
 
 import './main.css';
-
+import App from './App';
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <PrivateRoute />,
+    element: <App />,
     children: [
       {
-        element: <WithBottomNavLayout />,
+        path: '/',
+        element: <PrivateRoute />,
         children: [
-          { path: '/', element: <Home /> },
-          { path: 'library', element: <Library /> },
-          { path: 'myPage', element: <MyPage /> },
-          { path: 'search', element: <Search /> },
-          { path: 'detail/:detailId', element: <BookDetail /> },
-          { path: 'record/:recordId', element: <Record /> },
-          { path: 'edit/:recordId', element: <Edit /> },
+          {
+            element: <WithBottomNavLayout />,
+            children: [
+              { path: '/', element: <Home /> },
+              { path: 'library', element: <Library /> },
+              { path: 'myPage', element: <MyPage /> },
+              { path: 'search', element: <Search /> },
+              { path: 'detail/:detailId', element: <BookDetail /> },
+              { path: 'record/:recordId', element: <Record /> },
+              { path: 'edit/:recordId', element: <Edit /> },
+            ],
+          },
+          {
+            element: <WithoutBottomNavLayout />,
+            children: [
+              { path: 'note/write', element: <Note /> },
+              { path: 'myPage/nickname', element: <EditNickname /> },
+              { path: 'myPage/terms', element: <Term /> },
+              { path: 'myPage/VersionInfo', element: <VersionInfo /> },
+              { path: 'myPage/deleteAccount', element: <DeleteAccount /> },
+              { path: 'myPage/QnA', element: <QnA /> },
+            ],
+          },
         ],
       },
-      {
-        element: <WithoutBottomNavLayout />,
-        children: [
-          { path: 'note/write', element: <Note /> },
-          { path: 'myPage/nickname', element: <EditNickname /> },
-          { path: 'myPage/terms', element: <Term /> },
-          { path: 'myPage/VersionInfo', element: <VersionInfo /> },
-          { path: 'myPage/deleteAccount', element: <DeleteAccount /> },
-          { path: 'myPage/QnA', element: <QnA /> },
-        ],
-      },
+      { path: 'login', element: <Login /> },
+      { path: 'signUp', element: <SignUp /> },
+      { path: 'oauth/redirect', element: <Auth /> },
     ],
   },
-  { path: 'login', element: <Login /> },
-  { path: 'signUp', element: <SignUp /> },
-  { path: 'oauth/redirect', element: <Auth /> },
 ]);
 
 const queryClient = new QueryClient({
