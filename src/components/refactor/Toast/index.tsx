@@ -1,14 +1,15 @@
-import { IconCircleCancel, IconCircleCheck, IconCircleInfo } from 'components/icons';
 import { useEffect, useState } from 'react';
+
+import { IconCircleCancel, IconCircleCheck, IconCircleInfo } from 'components/icons';
 
 export type ToastProps = {
   type: 'info' | 'error' | 'success';
   description: string;
   title?: string;
-  dismissible?: boolean;
+  // dismissible?: boolean;
 };
 
-const Toast = ({ type, description, title, dismissible = false }: ToastProps) => {
+const Toast = ({ type, description, title }: ToastProps) => {
   const [isLeaving, setIsLeaving] = useState(false);
 
   useEffect(() => {
