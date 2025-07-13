@@ -19,7 +19,7 @@ module.exports = {
     'prettier',
     'plugin:storybook/recommended',
   ],
-  ignorePatterns: ['dist', '.eslintrc.cjs', 'vite.config.js', 'tailwind.config.cjs'],
+  ignorePatterns: ['dist', '*.cjs', 'vite.config.js'],
   plugins: ['@typescript-eslint', 'react-refresh'],
   rules: {
     'react/react-in-jsx-scope': 'off',
