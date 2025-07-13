@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-props-no-spreading */
 import type { Meta, StoryObj } from '@storybook/react-vite';
 
 import { useState } from 'react';

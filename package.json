@@ -9,7 +9,7 @@
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "storybook": "storybook dev -p 6006",
-    "icons": "npx @svgr/cli ./src/assets/refactor/icons --out-dir ./src/components/icons --replace-attr-values \"#303030=currentColor\"--ignore-existing --typescript --index-template svgr-template.js",
+    "icons": "npx @svgr/cli ./src/assets/refactor/icons  --index-template svgr-template.cjs",
     "build-storybook": "storybook build"
   },
   "dependencies": {

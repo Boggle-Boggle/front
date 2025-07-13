@@ -47,7 +47,6 @@ const Auth = () => {
           }, 2500);
         }
       } catch (error) {
-        console.log(error);
         if (isCustomError(error) && error.custom) {
           if (error.message === '탈퇴한 회원입니다. 회원가입을 다시 진행해주세요') handleWithdrawnAlertActive();
           else if (error.message === '로그인 기한이 만료되었어요. 다시 로그인 해주세요') handleRefreshAlertActive();

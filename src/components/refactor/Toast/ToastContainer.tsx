@@ -1,5 +1,4 @@
-/* eslint-disable react/jsx-props-no-spreading */
-import { useToastStore } from 'stores/useToastStore';
+import useToastStore from 'stores/useToastStore';
 
 import Toast from '.';
 

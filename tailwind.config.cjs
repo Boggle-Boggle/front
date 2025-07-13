@@ -52,10 +52,14 @@ module.exports = {
       },
 
       spacing: {
-        mobile: '16px',
-        tablet: '40px',
+        mobile: '1rem',
+        tablet: '2.5rem',
         'safe-top': 'env(safe-area-inset-top)',
         'safe-bottom': 'env(safe-area-inset-bottom)',
+
+        'icon-sm': '1rem',
+        'icon-md': '1.5rem',
+        'icon-lg': '2rem',
 
         // 기존 spacing(삭제예정)
         headerIOS: '6rem',
@@ -66,7 +70,6 @@ module.exports = {
       maxWidth: {
         mobile: '600px',
       },
-
       zIndex: {
         // modal: '',
         toast: '700',

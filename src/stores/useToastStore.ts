@@ -1,5 +1,6 @@
-import { ToastProps } from 'components/refactor/Toast';
 import { create } from 'zustand';
+
+import { ToastProps } from 'components/refactor/Toast';
 
 type Toast = ToastProps & { id: string };
 
@@ -9,7 +10,7 @@ type ToastStoreType = {
   removeToast: (id: string) => void;
 };
 
-export const useToastStore = create<ToastStoreType>((set, get) => ({
+const useToastStore = create<ToastStoreType>((set, get) => ({
   toasts: [],
   removeToast: (id) => {
     set((state) => ({
@@ -29,3 +30,5 @@ export const useToastStore = create<ToastStoreType>((set, get) => ({
     }, 2200);
   },
 }));
+
+export default useToastStore;

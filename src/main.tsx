@@ -9,6 +9,8 @@ import Auth from 'pages/Auth';
 import BookDetail from 'pages/BookDetail';
 import Edit from 'pages/Edit';
 import Home from 'pages/Home';
+import WithBottomNavLayout from 'pages/Layout/WithBottomNavLayout';
+import WithoutBottomNavLayout from 'pages/Layout/WithoutBottomNavLayout';
 import Library from 'pages/Library';
 import Loading from 'pages/Loading';
 import Login from 'pages/Login';
@@ -24,11 +26,9 @@ import Record from 'pages/Record';
 import Search from 'pages/Search';
 import SignUp from 'pages/SignUp';
 
-import WithBottomNavLayout from 'pages/Layout/WithBottomNavLayout';
-import WithoutBottomNavLayout from 'pages/Layout/WithoutBottomNavLayout';
-
-import './main.css';
 import App from './App';
+import './main.css';
+
 const router = createBrowserRouter([
   {
     path: '/',
