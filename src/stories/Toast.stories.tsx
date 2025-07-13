@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
 
-import { useToastStore } from 'stores/useToastStore';
+import useToastStore from 'stores/useToastStore';
 
 import { Button } from 'components/refactor/Button';
 import Toast from 'components/refactor/Toast';
