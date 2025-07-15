@@ -68,7 +68,7 @@ module.exports = {
         footerAnd: '5.5rem',
       },
       maxWidth: {
-        mobile: '600px',
+        mobile: '37.5rem',
       },
       zIndex: {
         // modal: '',

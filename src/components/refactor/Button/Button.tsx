@@ -6,6 +6,7 @@ const Button = ({
   onClick,
   children,
   disabled = false,
+  form,
   type = 'button',
   width = 'long',
   size = 'medium',
@@ -15,7 +16,9 @@ const Button = ({
   const disabledClass = 'bg-neutral-0 text-neutral-40 border-neutral-20';
   const widthClass = width === 'long' ? 'w-full' : 'w-fit';
   const sizeClass =
-    size === 'small' ? 'rounded-lg py-[0.625rem] px-5 text-title3' : 'rounded-xl py-4 px-[1.625rem] text-body1';
+    size === 'small'
+      ? 'h-[2.625rem] rounded-lg py-[0.625rem] px-5 text-title3'
+      : 'h-[3.375rem] rounded-xl py-4 px-[1.625rem] text-body1';
   const variantClass =
     variant === 'primary'
       ? 'bg-primary text-neutral-0 border-primary'
@@ -39,6 +42,7 @@ const Button = ({
       disabled={disabled}
       type={type}
       className={`${base} ${sizeClass} ${widthClass} ${disabled ? disabledClass : variantClass}`}
+      form={form}
     >
       {children}
     </button>
