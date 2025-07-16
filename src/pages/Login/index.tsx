@@ -1,75 +1,34 @@
-/* eslint-disable no-param-reassign */
-/* eslint-disable react/no-unknown-property */
-import { Html, useGLTF } from '@react-three/drei';
-import { Canvas } from '@react-three/fiber';
-
-import { Suspense, useEffect, useState } from 'react';
-import * as THREE from 'three';
-
-import Loading from 'pages/Loading';
-
-// import useModal from 'hooks/useModal';
+import { IconHeadphone } from 'components/icons';
+import Highlight from 'components/refactor/Highlight';
 
 import LoginBtn from './LoginBtn';
-// import NotificationModal from './NotificationModal';
 
 const Login = () => {
-  const { scene } = useGLTF(`${import.meta.env.VITE_IMG_BASE_URL || ''}/assets/Splash.glb`);
-  const [isLoading, setIsLoading] = useState(false);
-  // const { isOpen, close } = useModal(true);
-
-  useEffect(() => {
-    if (!scene) return;
-
-    scene.scale.set(3, 3, 1);
-
-    const box = new THREE.Box3().setFromObject(scene);
-    const center = new THREE.Vector3();
-    box.getCenter(center);
-    scene.position.sub(center);
-
-    scene.traverse((child) => {
-      child.castShadow = true;
-      child.receiveShadow = true;
-    });
-  }, [scene]);
-
   return (
-    <div className="bottom-3 flex h-screen flex-col items-center justify-center bg-[#CBBAB9] py-[5.5rem]">
-      <h1 className="text-font text-center text-[32px] text-white">
-        <span className="font-bold">빼곡</span>하게 채우는 <br /> 나만의
-        <span className="font-bold"> 책장</span>
+    <div className="h-dvh w-full text-center">
+      <h1 className="pt-10 text-2xl text-h3">
+        <Highlight>빼곡하게 채우는</Highlight>
+        <p className="text-h1">나만의 책장</p>
       </h1>
-      <section className="my-4 h-full w-full flex-grow">
-        <Canvas
-          shadows
-          gl={{
-            antialias: true,
-            shadowMapType: THREE.PCFSoftShadowMap,
-          }}
-          onCreated={({ gl }) => {
-            gl.setClearColor('#CBBAB9');
-          }}
-        >
-          <ambientLight intensity={1.2} />
-          <directionalLight castShadow intensity={2.3} position={[-9, 5, 11.5]} />
-          <Suspense
-            fallback={
-              <Html center>
-                <div>로딩 중...</div>
-              </Html>
-            }
-          >
-            <primitive object={scene} />
-          </Suspense>
-          <mesh receiveShadow position={[-4, -3, 0]} rotation={[-Math.PI / 2, 0, 0]}>
-            <planeGeometry args={[40, 40]} />
-            <shadowMaterial opacity={0.04} />
-          </mesh>
-        </Canvas>
-      </section>
-      <p className="pb-4 text-xs opacity-50">SNS계정으로 간편하게 로그인</p>
-      <div className="flex h-24 w-[70%] justify-around">
+
+      <div className="flex h-[450px] w-full items-center justify-center bg-secondary-light opacity-40">
+        임시 책장 영역
+      </div>
+
+      <div className="flex w-full items-center gap-5 px-mobile">
+        <span className="h-px flex-1 bg-neutral-100" />
+        SNS로 간편로그인
+        <span className="h-px flex-1 bg-neutral-100" />
+      </div>
+
+      <div className="mt-6 flex w-full justify-center gap-8">
+        <LoginBtn type="kakao" isRecent />
+        <LoginBtn type="google" isRecent={false} />
+        <LoginBtn type="apple" isRecent={false} />
+      </div>
+
+      {/* 
+        TODO : 로그인 API 연동시 로딩상태/에러핸들링 구현
         {isLoading ? (
           <Loading />
         ) : (
@@ -78,19 +37,15 @@ const Login = () => {
             <LoginBtn type="google" setIsLoading={setIsLoading} />
             <LoginBtn type="apple" setIsLoading={setIsLoading} />
           </>
-        )}
-      </div>
+        )} */}
 
       <a
         href={import.meta.env.VITE_MYPAGE_FORM_URL}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="absolute bottom-8 flex items-center text-xs underline opacity-50"
+        className="absolute bottom-[10px] mx-auto flex w-full items-center justify-center pb-safe-bottom text-caption2 text-neutral-60"
       >
-        가입/로그인 오류 문의
+        <IconHeadphone />
+        가입/로그인 오류 문의하기
       </a>
-
-      {/* {isOpen && <NotificationModal isOpen={isOpen} close={close} />} */}
     </div>
   );
 };

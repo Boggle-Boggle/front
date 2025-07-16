@@ -14,7 +14,7 @@ const Header = ({ leftBtn, title, rightBtn, withSpacer = true }: HeaderProps) =>
 
   return (
     <>
-      <div className="fixed z-header grid h-12 w-full max-w-mobile grid-cols-[48px_auto_48px] items-center px-mobile pt-safe-top">
+      <div className="fixed z-header grid h-12 w-full max-w-mobile grid-cols-[48px_auto_48px] items-center pt-safe-top">
         {leftBtn === true ? (
           <IconArrowLeft className="size-icon-md" onClick={() => navigate(-1)} />
         ) : (
@@ -23,11 +23,7 @@ const Header = ({ leftBtn, title, rightBtn, withSpacer = true }: HeaderProps) =>
         <span className="w-full justify-self-center px-2 text-center text-body1">{title}</span>
         <span className={`justify-self-end ${rightBtn || 'invisible'}`}>{rightBtn}</span>
       </div>
-      {withSpacer && (
-        <div className="pt-safe-top">
-          <div className="h-12" />
-        </div>
-      )}
+      {withSpacer && <div className="mt-safe-top h-12" />}
     </>
   );
 };
