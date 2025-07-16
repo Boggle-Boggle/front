@@ -4,15 +4,12 @@ import { useCallback, useEffect, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
 import Header from 'components/Header';
-import Icon from 'components/Icon';
 import Memo from 'components/Memo';
 import Loading from 'pages/Loading';
 
 import useDevice from 'hooks/useDevice';
 import useModal from 'hooks/useModal';
 import { deleteRecord, getRecord } from 'services/record';
-
-import { CommonBack, CommonSetting, RecordEdit } from 'assets/icons';
 
 import DeleteModal from './DeleteModal';
 import NoteTab from './NoteTab';
@@ -89,16 +86,10 @@ const Record = () => {
               ''
             )
           }
-          leftBtn={
-            <button type="button" onClick={() => navigate(-1)} aria-label="뒤로가기">
-              <Icon Component={CommonBack} style={{ color: hasHeaderBackground ? 'black' : 'white' }} />
-            </button>
-          }
+          leftBtn={<button type="button" onClick={() => navigate(-1)} aria-label="뒤로가기" />}
           rightBtn={
             <>
-              <button aria-label="수정/삭제하기" onClick={() => setIsMemoToggled(true)} type="button">
-                <Icon Component={CommonSetting} style={{ color: hasHeaderBackground ? 'black' : 'white' }} />
-              </button>
+              <button aria-label="수정/삭제하기" onClick={() => setIsMemoToggled(true)} type="button" />
               {isMemoToggled && (
                 <Memo handleClose={() => setIsMemoToggled(false)}>
                   <div className="absolute right-3 z-30 flex h-20 w-24 flex-col rounded-[4px] bg-main text-sm shadow-[0_4px_4px_0_rgba(0,0,0,0.25)]">
@@ -182,9 +173,7 @@ const Record = () => {
                     className="absolute bottom-[6.5rem] right-[1rem] flex h-16 w-16 items-center justify-center rounded-full bg-accent shadow-lg"
                     onClick={handleGoToNote}
                     aria-label="독서노트 작성하기"
-                  >
-                    <Icon Component={RecordEdit} style={{ color: '#ffffff' }} size="lg" />
-                  </button>
+                  />
                 </div>
               </>
             )}

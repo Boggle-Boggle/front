@@ -5,11 +5,8 @@ import Alert from 'components/Alert';
 import Button from 'components/Button';
 import Header from 'components/Header';
 import Highlight from 'components/Highlight';
-import Icon from 'components/Icon';
 
 import useDevice from 'hooks/useDevice';
-
-import { CommonBack, CommonNext } from 'assets/icons';
 
 type NickNameInputProps = {
   nickName: string;
@@ -37,11 +34,7 @@ const NickNameInput = ({ nickName, changeNickName, saveNickName }: NickNameInput
 
       <Header
         title={<>회원가입</>}
-        leftBtn={
-          <button onClick={handleLeftBtnClick} type="button" aria-label="뒤로가기">
-            <Icon Component={CommonBack} />
-          </button>
-        }
+        leftBtn={<button onClick={handleLeftBtnClick} type="button" aria-label="뒤로가기" />}
       />
       <section
         className={` ${isIOS ? 'height-without-headerIOS' : 'height-without-headerAnd'} flex w-full flex-col p-9`}
@@ -69,12 +62,7 @@ const NickNameInput = ({ nickName, changeNickName, saveNickName }: NickNameInput
             />
           </div>
           <div className="absolute bottom-0 w-full">
-            <Button handleClick={handleNext}>
-              다음
-              <span>
-                <Icon Component={CommonNext} size="sm" />
-              </span>
-            </Button>
+            <Button handleClick={handleNext}>다음</Button>
           </div>
         </form>
       </section>

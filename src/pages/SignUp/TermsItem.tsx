@@ -1,8 +1,4 @@
-import Icon from 'components/Icon';
-
 import { TermWithAgree } from 'types/user';
-
-import { CommonActCheck, CommonNext } from 'assets/icons';
 
 type TermsItemProps = {
   term: TermWithAgree;
@@ -24,13 +20,11 @@ const TermsItem = ({ term, handleCheckboxChange, handleTermsClick }: TermsItemPr
           className="mr-2 hidden h-6 w-6"
           checked={isAgree}
           onChange={() => handleCheckboxChange(term.id)}
-        />
-        {isAgree && <Icon Component={CommonActCheck} />}
+        />{' '}
       </span>
       <p className="text-sm text-sub">{mandatory ? '(필수)' : '(선택)'}</p>
       <button className="flex h-full grow justify-between pl-3" onClick={handleTermsClick} type="button">
         <p className="mx-1 text-sm">{title}</p>
-        <Icon Component={CommonNext} size="sm" />
       </button>
     </label>
   );

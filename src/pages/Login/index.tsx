@@ -6,12 +6,9 @@ import { Canvas } from '@react-three/fiber';
 import { Suspense, useEffect, useState } from 'react';
 import * as THREE from 'three';
 
-import Icon from 'components/Icon';
 import Loading from 'pages/Loading';
 
 // import useModal from 'hooks/useModal';
-
-import { LoginConsultation } from 'assets/icons';
 
 import LoginBtn from './LoginBtn';
 // import NotificationModal from './NotificationModal';
@@ -90,7 +87,6 @@ const Login = () => {
         rel="noopener noreferrer"
         className="absolute bottom-8 flex items-center text-xs underline opacity-50"
       >
-        <Icon Component={LoginConsultation} size="sm" style={{ marginRight: '5px' }} />
         가입/로그인 오류 문의
       </a>
 

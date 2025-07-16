@@ -4,12 +4,10 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import Alert from 'components/Alert';
 import Button from 'components/Button';
 import Header from 'components/Header';
-import Icon from 'components/Icon';
 
 import useDevice from 'hooks/useDevice';
 import useNickNameInput from 'hooks/useNickNameInput';
 
-import { CommonBack } from 'assets/icons';
 import ProfileImg from 'assets/img/profile.svg';
 
 const EditNickname = () => {
@@ -29,13 +27,7 @@ const EditNickname = () => {
         <Alert message={`사용중인 닉네임이에요 \n다른 닉네임을 입력해주세요`} onClose={handleAlertActive} />
       )}
       <section className="h-full overflow-hidden bg-white">
-        <Header
-          leftBtn={
-            <button onClick={() => navigate(-1)} type="button" aria-label="뒤로가기">
-              <Icon Component={CommonBack} />
-            </button>
-          }
-        />
+        <Header leftBtn={<button onClick={() => navigate(-1)} type="button" aria-label="뒤로가기" />} />
         <section
           className={`${isIOS ? 'height-without-headerIOS' : 'height-without-headerAnd'} flex flex-col items-center px-8`}
         >

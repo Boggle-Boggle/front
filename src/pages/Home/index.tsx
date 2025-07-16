@@ -3,12 +3,9 @@ import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 
 import Header from 'components/Header';
-import Icon from 'components/Icon';
 
 import useModal from 'hooks/useModal';
 import { getBookCase } from 'services/record';
-
-import { MainDate } from 'assets/icons';
 
 import BookCase from './BookCase';
 import SelectPeriodModal from './SelectPeriodModal';
@@ -30,11 +27,7 @@ const Home = () => {
       <Header
         withSpacer={false}
         title={`${title} (${books?.length ?? 0})`}
-        rightBtn={
-          <button aria-label="기간선택" type="button" onClick={open}>
-            <Icon Component={MainDate} />
-          </button>
-        }
+        rightBtn={<button aria-label="기간선택" type="button" onClick={open} />}
       />
       <div className="flex h-full w-full flex-col items-center justify-center bg-main">
         <BookCase books={books ?? []} />

@@ -1,8 +1,5 @@
 import Header from 'components/Header';
-import Icon from 'components/Icon';
 import Modal from 'components/Modal';
-
-import { CommonCancel } from 'assets/icons';
 
 type PlotDetailModalProps = {
   isOpen: boolean;
@@ -17,11 +14,7 @@ const PlotDetailModal = ({ plot, isOpen, close, scrollPos }: PlotDetailModalProp
       <section className="h-[30rem] w-80">
         <Header
           title={<span className="opacity-70">책소개</span>}
-          rightBtn={
-            <button type="button" onClick={close} className="absolute right-3 top-3" aria-label="닫기">
-              <Icon Component={CommonCancel} size="sm" />
-            </button>
-          }
+          rightBtn={<button type="button" onClick={close} className="absolute right-3 top-3" aria-label="닫기" />}
         />
 
         <section className="h-[23rem] overflow-y-auto px-7 text-sm">{plot}</section>

@@ -3,14 +3,11 @@ import { useReducer, useState } from 'react';
 import Alert from 'components/Alert';
 import Button from 'components/Button';
 import HalfScreenModal from 'components/HalfScreenModal';
-import Icon from 'components/Icon';
 import DateSelector from 'pages/BookDetail/ReadingRecordForm/shared/DateSelector';
 
 import { formatDate, isValidDate } from 'utils/format';
 
 import { DateType, RecordDate, StatusType } from 'types/record';
-
-import { RecordSelectDate, RecordPeriod, CommonNext, RecordReading, RecordFinishedReading } from 'assets/icons';
 
 type AddReadingDateModalProps = {
   readDates: (RecordDate & { status: StatusType })[];
@@ -96,13 +93,6 @@ const AddReadingDateModal = ({ readDates, setReadDates, close }: AddReadingDateM
                   type="button"
                   onClick={() => setSelected('complete')}
                 >
-                  <Icon
-                    Component={RecordReading}
-                    style={{
-                      color: selected === 'complete' ? '#E6B9A6' : 'inherit',
-                      display: 'inline-block',
-                    }}
-                  />
                   다 읽은 책이에요
                 </button>
                 <button
@@ -110,13 +100,6 @@ const AddReadingDateModal = ({ readDates, setReadDates, close }: AddReadingDateM
                   type="button"
                   onClick={() => setSelected('reading')}
                 >
-                  <Icon
-                    Component={RecordFinishedReading}
-                    style={{
-                      color: selected === 'reading' ? '#E6B9A6' : 'inherit',
-                      display: 'inline-block',
-                    }}
-                  />
                   읽는 중인 책이에요
                 </button>
               </div>
@@ -131,32 +114,23 @@ const AddReadingDateModal = ({ readDates, setReadDates, close }: AddReadingDateM
                   {startDate ? (
                     <>
                       <div>
-                        <Icon Component={RecordSelectDate} style={{ color: '#E6B9A6', display: 'inline-block' }} />
                         <span className="ml-2 opacity-60">읽기 시작한 날</span>
                       </div>
                       <div className="text-base">
                         {`${startDate[0] >= 2000 ? startDate[0] : 2000 + startDate[0]}년 ${startDate[1]}월 ${startDate[2]}일`}
-                        <Icon Component={CommonNext} size="xs" style={{ display: 'inline-block' }} />
                       </div>
                     </>
                   ) : (
-                    <>
-                      <p className="opacity-50">책을 읽기 시작한 날짜를 입력해주세요</p>
-                      <Icon Component={RecordPeriod} style={{ color: '#E6B9A6', display: 'inline-block' }} />
-                    </>
+                    <p className="opacity-50">책을 읽기 시작한 날짜를 입력해주세요</p>
                   )}
                 </button>
 
                 {selected === 'reading' ? (
                   <div className="mb-4 flex items-center justify-between rounded-[10px] border-2 border-accent bg-white p-4 text-sm">
                     <div>
-                      <Icon Component={RecordSelectDate} style={{ color: '#E6B9A6', display: 'inline-block' }} />
                       <span className="ml-2 opacity-60">다 읽은 날</span>
                     </div>
-                    <div className="text-base">
-                      미정
-                      <Icon Component={CommonNext} size="xs" style={{ display: 'inline-block' }} />
-                    </div>
+                    <div className="text-base">미정</div>
                   </div>
                 ) : (
                   <button
@@ -167,19 +141,14 @@ const AddReadingDateModal = ({ readDates, setReadDates, close }: AddReadingDateM
                     {endDate ? (
                       <>
                         <div>
-                          <Icon Component={RecordSelectDate} style={{ color: '#E6B9A6', display: 'inline-block' }} />
                           <span className="ml-2 opacity-60">다 읽은 날</span>
                         </div>
                         <div className="text-base">
                           {`${endDate[0] >= 2000 ? endDate[0] : 2000 + endDate[0]}년 ${endDate[1]}월 ${endDate[2]}일`}
-                          <Icon Component={CommonNext} size="xs" style={{ display: 'inline-block' }} />
                         </div>
                       </>
                     ) : (
-                      <>
-                        <p className="opacity-50">책을 다 읽은 날짜를 입력해주세요</p>
-                        <Icon Component={RecordPeriod} style={{ color: '#E6B9A6', display: 'inline-block' }} />
-                      </>
+                      <p className="opacity-50">책을 다 읽은 날짜를 입력해주세요</p>
                     )}
                   </button>
                 )}

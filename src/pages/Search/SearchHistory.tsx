@@ -2,11 +2,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 import { Link } from 'react-router-dom';
 
-import Icon from 'components/Icon';
-
 import { getSearchHistories, removeSearchHistory, removeAllSearchHistory } from 'services/search';
-
-import { CommonCancel } from 'assets/icons';
 
 const SearchHistory = () => {
   const queryClient = useQueryClient();
@@ -54,9 +50,7 @@ const SearchHistory = () => {
             <li className="mr-3 inline-flex rounded-full border px-2 text-sm opacity-70" key={keyword}>
               <Link to={`?q=${keyword}`} className="flex items-center">
                 <p className="mr-1">{keyword}</p>
-                <button aria-label="remove button" type="button" onClick={(e) => handleRemove(e, keyword)}>
-                  <Icon Component={CommonCancel} size="xs" />
-                </button>
+                <button aria-label="remove button" type="button" onClick={(e) => handleRemove(e, keyword)} />
               </Link>
             </li>
           ))}

@@ -3,7 +3,6 @@ import { useQuery } from '@tanstack/react-query';
 import { useEffect, useRef, useState } from 'react';
 
 import Header from 'components/Header';
-import Icon from 'components/Icon';
 import SearchBar from 'components/SearchBar';
 import Loading from 'pages/Loading';
 
@@ -12,8 +11,6 @@ import { getLibraries, getLibraryBooks } from 'services/library';
 import searchDebounce from 'utils/debounce';
 
 import { CustomLibrary, StatusLibrary } from 'types/library';
-
-import { CommonDown, CommonUp, LibraryCover, LibraryList, LibrarySort } from 'assets/icons';
 
 import GridLayout from './GridLayout';
 import LibraryEditedModal from './LibraryEditedModal';
@@ -104,19 +101,13 @@ const Library = () => {
         rightBtn={
           <div className="flex">
             {layout === 'list' && (
-              <button onClick={() => setLayout('grid')} type="button" aria-label="그리드 레이아웃으로 전환">
-                <Icon Component={LibraryCover} />
-              </button>
+              <button onClick={() => setLayout('grid')} type="button" aria-label="그리드 레이아웃으로 전환" />
             )}
             {layout === 'grid' && (
-              <button onClick={() => setLayout('list')} type="button" aria-label="리스트 레이아웃으로 전환">
-                <Icon Component={LibraryList} />
-              </button>
+              <button onClick={() => setLayout('list')} type="button" aria-label="리스트 레이아웃으로 전환" />
             )}
             <span className="w-2" />
-            <button onClick={() => setIsToggledSort(true)} type="button" aria-label="정렬하기">
-              <Icon Component={LibrarySort} />
-            </button>
+            <button onClick={() => setIsToggledSort(true)} type="button" aria-label="정렬하기" />
           </div>
         }
         title={
@@ -126,11 +117,6 @@ const Library = () => {
             className={`inline-flex items-center justify-center ${title.length > 13 && 'text-sm'}`}
           >
             {`${title}(${data?.pages[0]?.totalResultCnt ?? 0})`}
-            {isToggledLibrarySelect ? (
-              <Icon Component={CommonDown} size="xs" style={{ marginLeft: '4px' }} />
-            ) : (
-              <Icon Component={CommonUp} size="xs" style={{ marginLeft: '4px' }} />
-            )}
           </button>
         }
       />

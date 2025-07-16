@@ -1,9 +1,5 @@
 import { createPortal } from 'react-dom';
 
-import Icon from 'components/Icon';
-
-import { CommonCancel } from 'assets/icons';
-
 type NotificationModalProps = {
   isOpen: boolean;
   close: () => void;
@@ -44,9 +40,7 @@ const NotificationModal = ({ close }: NotificationModalProps) => {
           빼곡팀 일동 드림.
         </p>
 
-        <button type="button" onClick={close} className="absolute right-3 top-3" aria-label="닫기">
-          <Icon Component={CommonCancel} size="sm" />
-        </button>
+        <button type="button" onClick={close} className="absolute right-3 top-3" aria-label="닫기" />
       </div>
     </div>,
     document.getElementById('modal') as HTMLElement,

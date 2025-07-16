@@ -3,9 +3,6 @@ import { useRef } from 'react';
 import Button from 'components/Button';
 import CheckBox from 'components/CheckBox';
 import HalfScreenModal from 'components/HalfScreenModal';
-import Icon from 'components/Icon';
-
-import { CommonCancel } from 'assets/icons';
 
 type TagModalProps = {
   close: () => void;
@@ -57,9 +54,7 @@ const TagModal = ({ close, tags, setTags }: TagModalProps) => {
               key={tag}
             >
               {`#${tag}`}
-              <button type="button" onClick={() => handleDelete(tag)} aria-label="태그 삭제하기">
-                <Icon Component={CommonCancel} size="xs" style={{ color: '#E6B9A6', marginLeft: '3px' }} />
-              </button>
+              <button type="button" onClick={() => handleDelete(tag)} aria-label="태그 삭제하기" />
             </li>
           ))}
         </div>

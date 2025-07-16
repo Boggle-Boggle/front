@@ -4,19 +4,6 @@ import { NavLink, useLocation } from 'react-router-dom';
 import useDevice from 'hooks/useDevice';
 import useKeyboardStatus from 'hooks/useKeyboardStatus';
 
-import {
-  NavigationBookSearch,
-  NavigationBookSearchActive,
-  NavigationHome,
-  NavigationHomeActive,
-  NavigationLibrary,
-  NavigationLibraryActive,
-  NavigationMyPage,
-  NavigationMyPageActive,
-} from 'assets/icons';
-
-import Icon from './Icon';
-
 const BottomNavigator = () => {
   const { isIOS } = useDevice();
   const [activeTab, setActiveTab] = useState<string>('');
@@ -48,36 +35,25 @@ const BottomNavigator = () => {
         <NavLink
           to="/"
           className={`flex flex-col items-center text-xs ${getCurrentActive() === 'home' && 'font-bold text-accent'}`}
-        >
-          <Icon Component={getCurrentActive() === 'home' ? NavigationHomeActive : NavigationHome} />홈
-        </NavLink>
+        />
       </li>
       <li className="m-auto">
         <NavLink
           to="/search"
           className={`flex flex-col items-center text-xs ${getCurrentActive() === 'search' && 'font-bold text-accent'}`}
-        >
-          <Icon Component={getCurrentActive() === 'search' ? NavigationBookSearchActive : NavigationBookSearch} />
-          검색
-        </NavLink>
+        />
       </li>
       <li className="m-auto">
         <NavLink
           to="/library"
           className={`flex flex-col items-center text-xs ${getCurrentActive() === 'library' && 'font-bold text-accent'}`}
-        >
-          <Icon Component={getCurrentActive() === 'library' ? NavigationLibraryActive : NavigationLibrary} />
-          서재
-        </NavLink>
+        />
       </li>
       <li className="m-auto">
         <NavLink
           to="/myPage"
           className={`flex flex-col items-center text-xs ${getCurrentActive() === 'myPage' && 'font-bold text-accent'}`}
-        >
-          <Icon Component={getCurrentActive() === 'myPage' ? NavigationMyPageActive : NavigationMyPage} />
-          마이페이지
-        </NavLink>
+        />
       </li>
     </ul>
   );

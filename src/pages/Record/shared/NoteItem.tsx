@@ -1,12 +1,8 @@
 import { useNavigate, useParams } from 'react-router-dom';
 
-import Icon from 'components/Icon';
-
 import { formatDateTimeToDate } from 'utils/format';
 
 import { Note } from 'types/record';
-
-import { ReadingNoteTags } from 'assets/icons';
 
 type NoteItemProps = {
   note: Note;
@@ -38,15 +34,7 @@ const NoteItem = ({ note, readDateIndex }: NoteItemProps) => {
 
       {tags && tags.length > 0 && (
         <div className="border-t-[1px] border-main pt-[0.875rem] font-bold">
-          <p>
-            <Icon
-              Component={ReadingNoteTags}
-              size="xs"
-              style={{ display: 'inline', marginBottom: '3px', color: '#E6B9A6' }}
-            />
-            {'   '}
-            태그
-          </p>
+          <p>태그</p>
           {tags.map((tag) => (
             <p className="mr-2 mt-1 inline-flex text-xs opacity-70">{`#${tag}`}</p>
           ))}

@@ -1,9 +1,5 @@
 import { createPortal } from 'react-dom';
 
-import { CommonCancel } from 'assets/icons';
-
-import Icon from './Icon';
-
 type HalfScreenModalProps = {
   children: React.ReactNode;
   handleClose?: () => void;
@@ -35,9 +31,7 @@ const HalfScreenModal = ({
             onClick={handleClose}
             className="absolute right-3 top-3 z-40 opacity-50"
             aria-label="닫기"
-          >
-            <Icon Component={CommonCancel} />
-          </button>
+          />
         )}
         <section className="overflow-auto">{children}</section>
       </section>

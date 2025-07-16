@@ -5,13 +5,10 @@ import { useReducer, useState } from 'react';
 import Alert from 'components/Alert';
 import Button from 'components/Button';
 import CheckBox from 'components/CheckBox';
-import Icon from 'components/Icon';
 
 import { addLibrary } from 'services/library';
 
 import { CustomLibrary } from 'types/library';
-
-import { CommonPlus, CommonNext, CommonPrev } from 'assets/icons';
 
 import ButtonSet from './shared/ButtonSet';
 import SubTitle from './shared/SubTitle';
@@ -89,7 +86,6 @@ const Libraries = ({ libraries, selected, setSelected, onPrev, onNext }: Library
             type="button"
             onClick={() => setIsAdding(true)}
           >
-            <Icon Component={CommonPlus} size="xs" style={{ width: '16px', marginRight: '4px' }} />
             서재 추가하기
           </button>
         </li>
@@ -145,12 +141,10 @@ const Libraries = ({ libraries, selected, setSelected, onPrev, onNext }: Library
 
       <section className="mt-6 flex justify-between">
         <Button handleClick={onPrev} className="w-2/5 bg-main text-black shadow-sm">
-          <Icon Component={CommonPrev} size="xs" />
           이전
         </Button>
         <Button handleClick={handleSave} className="w-2/5 text-white shadow-sm">
           저장
-          <Icon Component={CommonNext} size="xs" />
         </Button>
       </section>
     </>

@@ -4,13 +4,10 @@ import Alert from 'components/Alert';
 import Button from 'components/Button';
 import Header from 'components/Header';
 import Highlight from 'components/Highlight';
-import Icon from 'components/Icon';
 
 import useDevice from 'hooks/useDevice';
 
 import { TermWithAgree } from 'types/user';
-
-import { CommonActCheck, CommonBack, CommonCancel, CommonNext } from 'assets/icons';
 
 import TermsItem from './TermsItem';
 
@@ -73,14 +70,7 @@ const TermsAgreement = ({ terms, setTerms, onPrev, onNext }: TermsAgreementProps
     <>
       {isAlertActive && <Alert message="모든 약관에 동의해주세요" onClose={handleAlertActive} />}
       {!selectedTerm && (
-        <Header
-          title={<>회원가입</>}
-          leftBtn={
-            <button onClick={onPrev} type="button" aria-label="뒤로가기">
-              <Icon Component={CommonBack} />
-            </button>
-          }
-        />
+        <Header title={<>회원가입</>} leftBtn={<button onClick={onPrev} type="button" aria-label="뒤로가기" />} />
       )}
       <section
         className={`${isIOS ? 'height-without-headerIOS' : 'height-without-headerAnd'} flex w-full flex-col p-9`}
@@ -115,8 +105,6 @@ const TermsAgreement = ({ terms, setTerms, onPrev, onNext }: TermsAgreementProps
                 checked={isAllChecked}
                 onChange={handleAllCheck}
               />
-
-              {isAllChecked && <Icon Component={CommonActCheck} />}
             </span>
             <p className="text-base font-semibold">모든 약관에 동의합니다</p>
           </label>
@@ -134,9 +122,6 @@ const TermsAgreement = ({ terms, setTerms, onPrev, onNext }: TermsAgreementProps
           <div className="absolute bottom-0 w-full">
             <Button handleClick={handleNext} disabled={!isAllMandatoryChecked}>
               빼곡 시작하기
-              <span>
-                <Icon Component={CommonNext} size="sm" />
-              </span>
             </Button>
           </div>
         </form>
@@ -145,11 +130,7 @@ const TermsAgreement = ({ terms, setTerms, onPrev, onNext }: TermsAgreementProps
         <div className="absolute top-0 z-20 h-full w-full bg-white">
           <Header
             title={selectedTerm.title ?? '약관동의'}
-            rightBtn={
-              <button onClick={() => setSelectedTerm(null)} type="button" aria-label="뒤로가기">
-                <Icon Component={CommonCancel} />
-              </button>
-            }
+            rightBtn={<button onClick={() => setSelectedTerm(null)} type="button" aria-label="뒤로가기" />}
           />
           <section
             className={` ${isIOS ? 'height-without-headerIOS' : 'height-without-headerAnd'} mx-4 flex flex-col overflow-y-auto whitespace-pre-wrap`}

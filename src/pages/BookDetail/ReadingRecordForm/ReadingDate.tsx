@@ -1,13 +1,10 @@
 import { useReducer, useState } from 'react';
 
 import Alert from 'components/Alert';
-import Icon from 'components/Icon';
 
 import { isValidDate } from 'utils/format';
 
 import { DateType } from 'types/record';
-
-import { RecordPeriod, RecordSelectDate, CommonNext } from 'assets/icons';
 
 import ButtonSet from './shared/ButtonSet';
 import DateSelector from './shared/DateSelector';
@@ -80,33 +77,23 @@ const ReadingDate = ({ isReading, startDate, endDate, setStartDate, setEndDate, 
           {startDate ? (
             <>
               <div>
-                <Icon Component={RecordSelectDate} size="lg" style={{ color: '#E6B9A6', display: 'inline-block' }} />
                 <span className="ml-2 opacity-60">읽기 시작한 날</span>
               </div>
               <div className="flex items-center text-base">
                 {`${startDate[0] >= 2000 ? startDate[0] : 2000 + startDate[0]}년 ${startDate[1]}월 ${startDate[2]}일`}
-                <Icon Component={CommonNext} style={{ width: '16px', display: 'inline-block' }} />
               </div>
             </>
           ) : (
-            <>
-              <p className="opacity-50">책을 읽기 시작한 날짜를 입력해주세요</p>
-              <Icon Component={RecordPeriod} size="lg" style={{ color: '#E6B9A6' }} />
-            </>
+            <p className="opacity-50">책을 읽기 시작한 날짜를 입력해주세요</p>
           )}
         </button>
 
         {isReading ? (
           <div className="mb-4 flex items-center justify-between rounded-[10px] border-2 border-accent bg-white p-4 text-sm">
             <div>
-              <Icon Component={RecordSelectDate} size="lg" style={{ color: '#E6B9A6', display: 'inline-block' }} />
-
               <span className="ml-2 opacity-60">다 읽은 날</span>
             </div>
-            <div className="flex items-center text-base">
-              미정
-              <Icon Component={CommonNext} style={{ width: '16px', display: 'inline-block' }} />
-            </div>
+            <div className="flex items-center text-base">미정</div>
           </div>
         ) : (
           <button
@@ -117,19 +104,14 @@ const ReadingDate = ({ isReading, startDate, endDate, setStartDate, setEndDate, 
             {endDate ? (
               <>
                 <div>
-                  <Icon Component={RecordSelectDate} size="lg" style={{ color: '#E6B9A6', display: 'inline-block' }} />
                   <span className="ml-2 opacity-60">다 읽은 날</span>
                 </div>
                 <div className="flex items-center text-base">
                   {`${endDate[0] >= 2000 ? endDate[0] : 2000 + endDate[0]}년 ${endDate[1]}월 ${endDate[2]}일`}
-                  <Icon Component={CommonNext} style={{ width: '16px' }} />
                 </div>
               </>
             ) : (
-              <>
-                <p className="opacity-50">책을 다 읽은 날짜를 입력해주세요</p>
-                <Icon Component={RecordPeriod} size="lg" style={{ color: '#E6B9A6' }} />
-              </>
+              <p className="opacity-50">책을 다 읽은 날짜를 입력해주세요</p>
             )}
           </button>
         )}

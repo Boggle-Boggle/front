@@ -1,11 +1,8 @@
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import Header from 'components/Header';
-import Icon from 'components/Icon';
 
 import useDevice from 'hooks/useDevice';
-
-import { CommonCancel } from 'assets/icons';
 
 const Term = () => {
   const navigate = useNavigate();
@@ -17,11 +14,7 @@ const Term = () => {
     <div className="h-full w-full bg-white">
       <Header
         title={title}
-        rightBtn={
-          <button type="button" aria-label="뒤로가기" onClick={() => navigate('/myPage')}>
-            <Icon Component={CommonCancel} size="sm" />
-          </button>
-        }
+        rightBtn={<button type="button" aria-label="뒤로가기" onClick={() => navigate('/myPage')} />}
       />
       <p
         className={`${isIOS ? 'height-without-headerIOS' : 'height-without-headerAnd'} overflow-y-scroll whitespace-pre-wrap px-4`}
