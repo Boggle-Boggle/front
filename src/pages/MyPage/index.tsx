@@ -8,8 +8,6 @@ import useDevice from 'hooks/useDevice';
 import useModal from 'hooks/useModal';
 import { getMyPageInfo, getTermsAgreement } from 'services/user';
 
-import ProfileImg from 'assets/img/profile.svg';
-
 import LogoutModal from './LogoutModal';
 import Content from './shared/Content';
 import ContentItem from './shared/ContentItem';
@@ -36,12 +34,6 @@ const MyPage = () => {
     terms && (
       <div className={`bg-main px-5 ${isIOS ? 'py-[8.5rem]' : 'py-[6.5rem]'}`}>
         <section className="relative flex h-52 flex-col items-center rounded-lg bg-white pb-4 pt-20">
-          <img
-            src={ProfileImg}
-            className="absolute -top-[3.5rem] h-32 w-32 rounded-[50%] border-[4px] border-white bg-accent object-cover"
-            alt=""
-          />
-
           <button
             className="flex items-center justify-center text-xl font-bold"
             type="button"

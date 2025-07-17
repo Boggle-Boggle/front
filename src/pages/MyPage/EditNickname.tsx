@@ -8,8 +8,6 @@ import Header from 'components/Header';
 import useDevice from 'hooks/useDevice';
 import useNickNameInput from 'hooks/useNickNameInput';
 
-import ProfileImg from 'assets/img/profile.svg';
-
 const EditNickname = () => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -31,7 +29,6 @@ const EditNickname = () => {
         <section
           className={`${isIOS ? 'height-without-headerIOS' : 'height-without-headerAnd'} flex flex-col items-center px-8`}
         >
-          <img className="mb-5 h-36 w-36 rounded-full bg-accent object-cover shadow-lg" src={ProfileImg} alt="" />
           <div className="my-7 h-10 w-full border-b-4 border-accent">
             <input
               className="h-full w-full text-center text-lg font-semibold"
