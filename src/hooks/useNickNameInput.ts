@@ -5,11 +5,11 @@ import { useState } from 'react';
 import { isDuplicateNickname, updateNickname } from 'services/user';
 
 const useNickNameInput = (
-  initNickName: string,
-  handleAlertActive: React.DispatchWithoutAction,
+  // initNickName: string,
+  // handleAlertActive: React.DispatchWithoutAction,
   successChange: () => void,
 ) => {
-  const [nickName, setNickName] = useState<string>(initNickName);
+  const [nickName, setNickName] = useState<string>('');
 
   const queryClient = useQueryClient();
 
@@ -24,7 +24,7 @@ const useNickNameInput = (
     const isDuplicated = await isDuplicateNickname(trimmedNickName);
 
     if (isDuplicated) {
-      handleAlertActive();
+      // handleAlertActive();
       return;
     }
     await updateNickname(trimmedNickName);

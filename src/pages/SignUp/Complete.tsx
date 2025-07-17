@@ -1,43 +1,28 @@
-/* eslint-disable react/no-unknown-property */
-import { Html } from '@react-three/drei';
-import { Canvas } from '@react-three/fiber';
-
-import { Suspense, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import * as THREE from 'three';
 
-import Button from 'components/Button';
-import Highlight from 'components/Highlight';
+import { BottomButton } from 'components/refactor/Button';
+import Highlight from 'components/refactor/Highlight';
 
 import { agreeTerms, getRefresh, updateNickname } from 'services/user';
 
-import { AgreementStatus } from 'types/user';
+import signup_complete from 'assets/img/signup_complete.png';
 
 type CompleteProps = {
   nickName: string;
-  terms: AgreementStatus[];
-  scene: THREE.Group<THREE.Object3DEventMap>;
 };
 
-const Complete = ({ nickName, terms, scene }: CompleteProps) => {
+const Complete = ({ nickName }: CompleteProps) => {
   const navigate = useNavigate();
-
-  useEffect(() => {
-    if (!scene) return;
-
-    scene.scale.set(2.3, 2.3, 1);
-
-    const box = new THREE.Box3().setFromObject(scene);
-    const center = new THREE.Vector3();
-    box.getCenter(center);
-    scene.position.sub(center);
-  }, [scene]);
 
   useEffect(() => {
     const completeSignUp = async () => {
       try {
         await updateNickname(nickName);
-        await agreeTerms(terms);
+        await agreeTerms([
+          { id: 1, isAgree: true },
+          { id: 2, isAgree: true },
+        ]);
         await getRefresh();
       } catch (error) {
         // TODO : 위의 상황에서 에러 발생시 로그인 페이지로 이동(각각확인)
@@ -46,45 +31,21 @@ const Complete = ({ nickName, terms, scene }: CompleteProps) => {
     };
 
     completeSignUp();
-  }, [nickName, terms, navigate]);
+  }, [nickName, navigate]);
 
   return (
-    <section className="flex h-dvh w-full flex-col justify-center p-9 py-14">
-      <h1 className="text-[2rem] font-semibold leading-[3rem]">
-        <span className="relative inline-block">
-          <span className="relative z-10">회원가입이</span>
-          <Highlight />
-        </span>
-        <br />
-        <span className="relative inline-block">
-          <span className="relative z-10">완료되었습니다.</span>
-          <Highlight />
-        </span>
-      </h1>
-      <p className="py-2 text-sm opacity-50">빼곡을 이용할 준비가 되셨나요?</p>
-
-      <section className="h-3/5 flex-grow px-4">
-        <Canvas shadows>
-          <ambientLight intensity={1.2} />
-          <directionalLight castShadow intensity={2.3} position={[-9, 5, 11.5]} />
-          <Suspense
-            fallback={
-              <Html center>
-                <div>로딩 중...</div>
-              </Html>
-            }
-          >
-            <primitive object={scene} />
-          </Suspense>
-          <mesh receiveShadow position={[-4, -3, 0]} rotation={[-Math.PI / 2, 0, 0]}>
-            <planeGeometry args={[40, 40]} />
-            <shadowMaterial opacity={0.04} />
-          </mesh>
-        </Canvas>
-      </section>
-
-      <Button handleClick={() => navigate('/')}>나만의 책장 만들기</Button>
-    </section>
+    <div className="h-dvh pb-2 text-center">
+      <div className="mt-12 whitespace-pre-line text-h1">
+        <Highlight>빼곡에 오신것을</Highlight>
+        {'\n'}
+        <Highlight>진심으로</Highlight>
+        {'\n'}
+        <Highlight>환영합니다!</Highlight>
+      </div>
+      <img src={signup_complete} className="m-auto size-96" alt="" />
+      <p className="text-title3">빼곡에서 즐거운 독서 생활을 즐겨보세요</p>
+      <BottomButton onClick={() => navigate('/')}>내 책장에 책 꽂으러 가기!</BottomButton>
+    </div>
   );
 };
 
