@@ -1,95 +1,103 @@
-import { useEffect, useReducer, useState } from 'react';
+// import { useEffect, useReducer, useState } from 'react';
 
-import Alert from 'components/Alert';
-import Button from 'components/Button';
 import Header from 'components/Header';
-import Highlight from 'components/Highlight';
+import { IconArrowLeft, IconArrowRight } from 'components/icons';
+import { BottomButton, Button } from 'components/refactor/Button';
+import CheckBox from 'components/refactor/CheckBox';
+import Highlight from 'components/refactor/Highlight';
 
-import useDevice from 'hooks/useDevice';
-
-import { TermWithAgree } from 'types/user';
-
-import TermsItem from './TermsItem';
+import { Term } from 'types/user';
 
 type TermsAgreementProps = {
-  terms: TermWithAgree[];
-  setTerms: React.Dispatch<React.SetStateAction<TermWithAgree[]>>;
+  terms: Term[];
   onPrev: () => void;
   onNext: () => void;
 };
 
-const TermsAgreement = ({ terms, setTerms, onPrev, onNext }: TermsAgreementProps) => {
-  const [isAllChecked, setIsAllChecked] = useState<boolean>(false);
-  const [selectedTerm, setSelectedTerm] = useState<TermWithAgree | null>(null);
-  const [isAllMandatoryChecked, setIsAllMandatoryChecked] = useState<boolean>(false);
-  const [isAlertActive, handleAlertActive] = useReducer((prev) => !prev, false);
+const TermsAgreement = ({ terms, onPrev, onNext }: TermsAgreementProps) => {
+  // const [selectedTerm, setSelectedTerm] = useState<TermWithAgree | null>(null);
+  // const [isAllMandatoryChecked, setIsAllMandatoryChecked] = useState<boolean>(false);
+  // const [isAlertActive, handleAlertActive] = useReducer((prev) => !prev, false);
 
-  const { isIOS } = useDevice();
+  // const handleNext = () => {
+  //   if (!isAllMandatoryChecked) {
+  //     handleAlertActive();
+  //     return;
+  //   }
 
-  const handleNext = () => {
-    if (!isAllMandatoryChecked) {
-      handleAlertActive();
-      return;
-    }
+  //   onNext();
+  // };
 
-    onNext();
-  };
+  // const handleTermsClick = (id: number) => {
+  //   if (!terms) return;
 
-  const handleTermsClick = (id: number) => {
-    if (!terms) return;
+  //   const newSelectedTerm = terms.filter((term) => term.id === id)[0];
+  //   setSelectedTerm(newSelectedTerm);
+  // };
 
-    const newSelectedTerm = terms.filter((term) => term.id === id)[0];
-    setSelectedTerm(newSelectedTerm);
-  };
+  // const handleCheckboxChange = (id: number) => {
+  //   if (!terms) return;
 
-  const handleCheckboxChange = (id: number) => {
-    if (!terms) return;
+  //   const newTerms = terms.map((term) => (term.id === id ? { ...term, isAgree: !term.isAgree } : term));
+  //   setTerms(() => newTerms);
+  // };
 
-    const newTerms = terms.map((term) => (term.id === id ? { ...term, isAgree: !term.isAgree } : term));
-    setTerms(() => newTerms);
-  };
+  // const handleAllCheck = () => {
+  //   const newCheckStatus = !isAllChecked;
+  //   setTerms((preStatus) => preStatus?.map((status) => ({ ...status, isAgree: newCheckStatus })));
+  // };
 
-  const handleAllCheck = () => {
-    const newCheckStatus = !isAllChecked;
-    setTerms((preStatus) => preStatus?.map((status) => ({ ...status, isAgree: newCheckStatus })));
-  };
+  // useEffect(() => {
+  //   const allChecked = terms.every((term) => term.isAgree);
+  //   setIsAllChecked(allChecked);
 
-  useEffect(() => {
-    const allChecked = terms.every((term) => term.isAgree);
-    setIsAllChecked(allChecked);
+  //   const newIsAllMAndatoryChecked = terms.every((term) => {
+  //     if (term.mandatory) return term.isAgree === term.mandatory;
+  //     return true;
+  //   });
 
-    const newIsAllMAndatoryChecked = terms.every((term) => {
-      if (term.mandatory) return term.isAgree === term.mandatory;
-      return true;
-    });
-
-    setIsAllMandatoryChecked(newIsAllMAndatoryChecked);
-  }, [terms]);
+  //   setIsAllMandatoryChecked(newIsAllMAndatoryChecked);
+  // }, [terms]);
 
   return (
     <>
-      {isAlertActive && <Alert message="모든 약관에 동의해주세요" onClose={handleAlertActive} />}
-      {!selectedTerm && (
-        <Header title={<>회원가입</>} leftBtn={<button onClick={onPrev} type="button" aria-label="뒤로가기" />} />
-      )}
-      <section
-        className={`${isIOS ? 'height-without-headerIOS' : 'height-without-headerAnd'} flex w-full flex-col p-9`}
-      >
-        <h1 className="text-[2rem] font-semibold leading-[3rem]">
-          빼곡을
-          <br /> 이용하기 전{' '}
-          <span className="relative inline-block">
-            <span className="relative z-10">몇 가지</span>
-            <Highlight />
-          </span>
-          <br />
-          <span className="relative inline-block">
-            <span className="relative z-10">동의</span>
-            <Highlight />
-          </span>
-          가 필요해요
+      <Header
+        title="회원가입"
+        leftBtn={
+          <button onClick={onPrev} aria-label="뒤로가기" type="button">
+            <IconArrowLeft className="size-icon-md" />
+          </button>
+        }
+      />
+      <div className="flex h-full flex-col justify-between px-mobile">
+        <h1 className="mt-10 whitespace-pre-line text-h1">
+          <Highlight>빼곡에 가입하시려면</Highlight>
+          {'\n'}
+          <Highlight>이용약관에 동의해주세요!</Highlight>
+          <p className="pt-2 text-caption1 text-neutral-80">회원가입을 마치기 전에 빼곡의 이용약관을 확인해주세요</p>
         </h1>
-        <p className="pb-10 pt-2 text-sm opacity-50">원활한 사용을 위해 약관에 동의해주세요</p>
+
+        <div className="mb-3">
+          <Button onClick={() => {}} variant="primaryLine">
+            모든 약관에 동의합니다
+          </Button>
+          <ul className="ml-[0.375rem] mr-3 mt-4 text-title3">
+            {terms.map(({ id, title }) => (
+              <li className="flex h-12 items-center justify-between" key={id}>
+                <p className="flex items-center">
+                  <span className="mr-2 text-body2 text-danger">필수</span>
+                  <p>{title}</p>
+                  <IconArrowRight />
+                </p>
+                <CheckBox onChange={() => {}} />
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+
+      <BottomButton onClick={onNext}>회원가입 완료하기</BottomButton>
+      {/* 
         <form onSubmit={handleNext} className="relative flex-grow">
           <label
             htmlFor="termsAllAgreement"
@@ -119,26 +127,7 @@ const TermsAgreement = ({ terms, setTerms, onPrev, onNext }: TermsAgreementProps
               </li>
             ))}
           </ul>
-          <div className="absolute bottom-0 w-full">
-            <Button handleClick={handleNext} disabled={!isAllMandatoryChecked}>
-              빼곡 시작하기
-            </Button>
-          </div>
-        </form>
-      </section>
-      {selectedTerm && (
-        <div className="absolute top-0 z-20 h-full w-full bg-white">
-          <Header
-            title={selectedTerm.title ?? '약관동의'}
-            rightBtn={<button onClick={() => setSelectedTerm(null)} type="button" aria-label="뒤로가기" />}
-          />
-          <section
-            className={` ${isIOS ? 'height-without-headerIOS' : 'height-without-headerAnd'} mx-4 flex flex-col overflow-y-auto whitespace-pre-wrap`}
-          >
-            {selectedTerm.content}
-          </section>
-        </div>
-      )}
+        </form> */}
     </>
   );
 };

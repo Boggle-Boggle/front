@@ -1,12 +1,7 @@
-import { useReducer } from 'react';
-import { useNavigate } from 'react-router-dom';
-
-import Alert from 'components/Alert';
-import Button from 'components/Button';
 import Header from 'components/Header';
-import Highlight from 'components/Highlight';
-
-import useDevice from 'hooks/useDevice';
+import { IconCircleCancelFilled } from 'components/icons';
+import { BottomButton } from 'components/refactor/Button';
+import Highlight from 'components/refactor/Highlight';
 
 type NickNameInputProps = {
   nickName: string;
@@ -15,56 +10,33 @@ type NickNameInputProps = {
 };
 
 const NickNameInput = ({ nickName, changeNickName, saveNickName }: NickNameInputProps) => {
-  const [isAlertActive, handleAlertActive] = useReducer((prev) => !prev, false);
-
-  const { isIOS } = useDevice();
-  const navigate = useNavigate();
-
-  const handleLeftBtnClick = () => navigate('/login');
-  const handleNext = async (e: React.FormEvent) => {
-    e.preventDefault();
-    saveNickName();
-  };
-
   return (
     <>
-      {isAlertActive && (
-        <Alert message={`사용중인 닉네임이에요 \n다른 닉네임을 입력해주세요`} onClose={handleAlertActive} />
-      )}
-
-      <Header
-        title={<>회원가입</>}
-        leftBtn={<button onClick={handleLeftBtnClick} type="button" aria-label="뒤로가기" />}
-      />
-      <section
-        className={` ${isIOS ? 'height-without-headerIOS' : 'height-without-headerAnd'} flex w-full flex-col p-9`}
-      >
-        <h1 className="text-[2rem] font-semibold leading-[3rem]">
-          <span className="relative inline-block">
-            <span className="relative z-10">빼곡에서</span>
-            <Highlight />
-          </span>
-          <br />
-          <span className="relative inline-block">
-            <span className="relative z-10">사용할 닉네임</span>
-            <Highlight />
-          </span>
-          을
-          <br /> 작성해주세요
+      <Header title="회원가입" leftBtn />
+      <section className="h-full px-mobile">
+        <h1 className="mt-10 whitespace-pre-line text-h1">
+          <Highlight>빼곡에서 사용하실</Highlight>
+          {'\n'}
+          <Highlight>닉네임을 만들어주세요</Highlight>
         </h1>
-        <p className="pb-10 pt-2 text-sm opacity-50">최대 15글자까지 입력할 수 있어요</p>
-        <form className="relative flex-grow">
-          <div className="h-10 w-full border-b-4 border-accent">
-            <input
-              className="h-full w-full text-lg font-semibold"
-              value={nickName}
-              onChange={(e) => changeNickName(e.target.value)}
-            />
-          </div>
-          <div className="absolute bottom-0 w-full">
-            <Button handleClick={handleNext}>다음</Button>
-          </div>
+        <p className="mb-6 pt-2 text-body2 text-warning">
+          ⚠️ 다른 이용자에게 불쾌감을 줄 수 있는 단어나 욕설, 선정적 표현은 신고가 누적 될 경우 닉네임이 변경 될 수
+          있어요.
+        </p>
+
+        <form className="relative" id="nicknameForm">
+          <input
+            className="h-10 w-full border-b-[1px] border-neutral-60 placeholder:text-neutral-40"
+            placeholder="닉네임을 입력해주세요"
+            value={nickName}
+            onChange={(e) => changeNickName(e.target.value)}
+          />
+          <IconCircleCancelFilled className="absolute right-2 top-1/2 size-icon-md -translate-y-1/2" />
         </form>
+
+        <BottomButton onClick={saveNickName} type="submit" form="nicknameForm">
+          다음으로
+        </BottomButton>
       </section>
     </>
   );
