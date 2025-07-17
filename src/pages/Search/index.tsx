@@ -4,13 +4,9 @@ import { useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
 import Header from 'components/Header';
-import Icon from 'components/Icon';
 import SearchBar from 'components/SearchBar';
 
 import { addSearchHistory } from 'services/search';
-
-import { CommonBack } from 'assets/icons';
-import searchBookImg from 'assets/img/search_book.svg';
 
 import SearchHistory from './SearchHistory';
 import SearchResult from './SearchResult';
@@ -45,11 +41,7 @@ const Search = () => {
       {query ? (
         <Header
           title={<>도서 검색</>}
-          leftBtn={
-            <button aria-label="뒤로가기" onClick={handleGoBack} type="button">
-              <Icon Component={CommonBack} />
-            </button>
-          }
+          leftBtn={<button aria-label="뒤로가기" onClick={handleGoBack} type="button" />}
         />
       ) : (
         <Header title={<>도서 검색</>} />
@@ -69,7 +61,6 @@ const Search = () => {
         <>
           <SearchHistory />
           <div className="flex flex-col items-center justify-center pt-28">
-            <img src={searchBookImg} alt="" className="w-[30%]" />
             {/* TODO : 2차배포
               오른쪽 상단의 아이콘을 클릭하면 <br />
               바코드 검색이 가능합니다. */}

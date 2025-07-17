@@ -1,7 +1,3 @@
-import Icon from 'components/Icon';
-
-import { CommonNext } from 'assets/icons';
-
 type ContentItemProps = {
   children: string;
   handleClick?: () => void;
@@ -16,7 +12,6 @@ const ContentItem = ({ children, handleClick }: ContentItemProps) => {
         onClick={handleClick}
       >
         {children}
-        <Icon Component={CommonNext} size="xs" style={{ opacity: '50%' }} />
       </button>
     </li>
   );

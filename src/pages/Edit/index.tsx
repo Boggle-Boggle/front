@@ -4,14 +4,11 @@ import { useEffect, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
 import Header from 'components/Header';
-import Icon from 'components/Icon';
 
 import useDevice from 'hooks/useDevice';
 import { getEditRecord, updateEditRecord } from 'services/record';
 
 import { RecordDate, RecordLibraries, StatusType, UpdateRecordParams } from 'types/record';
-
-import { CommonBack } from 'assets/icons';
 
 import EditLibraries from './EditLibraries';
 import EditRating from './EditRating';
@@ -72,9 +69,7 @@ const Edit = () => {
             type="button"
             onClick={() => navigate(`/record/${recordId}`, { replace: true })}
             aria-label="뒤로가기"
-          >
-            <Icon Component={CommonBack} />
-          </button>
+          />
         }
         rightBtn={
           <button className="font-semibold text-accent" type="button" onClick={handleSave}>

@@ -5,7 +5,6 @@ import { useNavigate, useLocation } from 'react-router-dom';
 
 import Alert from 'components/Alert';
 import Header from 'components/Header';
-import Icon from 'components/Icon';
 import Memo from 'components/Memo';
 
 import useDevice from 'hooks/useDevice';
@@ -15,7 +14,6 @@ import { formatDate, formatDateAndTime, generateDate } from 'utils/format';
 
 import { AddNoteParams, RecordDate } from 'types/record';
 
-import { CommonBack, CommonUp, ReadingNotePageInput, ReadingNoteTags, ReadingNoteTrash } from 'assets/icons';
 import bookmarkImg from 'assets/library/note_bookmark.png';
 
 import DatePickModal from './DatePickModal';
@@ -205,9 +203,6 @@ const Note = () => {
                   onClick={() => setIsMemoToggled(true)}
                 >
                   {readDateId ? `${readDateId.readDateIndex + 1}회독` : '회독정보없음'}
-                  {readDateIds && readDateIds.length > 0 && (
-                    <Icon Component={CommonUp} size="sm" style={{ marginLeft: '1px' }} />
-                  )}
                 </button>
                 {isMemoToggled && (
                   <Memo handleClose={() => setIsMemoToggled(false)}>
@@ -237,9 +232,7 @@ const Note = () => {
                 onClick={() => navigate(`/record/${recordId}`, { replace: true })}
                 aria-label="뒤로가기"
                 type="button"
-              >
-                <Icon Component={CommonBack} />
-              </button>
+              />
             }
             rightBtn={
               <button className="font-black" onClick={handleSave} type="submit">
@@ -283,10 +276,7 @@ const Note = () => {
               ref={contentRef}
             />
             <div className="fixed bottom-0 h-40 w-full max-w-screen-sm overflow-y-auto border-t border-main bg-white px-4 py-2">
-              <p className="flex items-center">
-                <Icon Component={ReadingNoteTags} size="sm" style={{ color: '#9B9999', marginRight: '4px' }} />
-                태그
-              </p>
+              <p className="flex items-center">태그</p>
               {tags.map((tag) => (
                 <p className="inline-flex pr-2 text-sm opacity-70">{`#${tag}`}</p>
               ))}
@@ -300,16 +290,15 @@ const Note = () => {
                 onClick={() => setIsEditPage(true)}
                 type="button"
                 aria-label="페이지 입력하기"
-              >
-                <Icon Component={ReadingNotePageInput} size="sm" style={{ color: '#9B9999' }} />
-              </button>
-              <button className="px-3 py-2" onClick={() => setIsEditTag(true)} type="button" aria-label="태그 추가하기">
-                <Icon Component={ReadingNoteTags} size="sm" style={{ color: '#9B9999' }} />
-              </button>
+              />
+              <button
+                className="px-3 py-2"
+                onClick={() => setIsEditTag(true)}
+                type="button"
+                aria-label="태그 추가하기"
+              />
             </section>
-            <button className="px-3 py-2" onClick={openDeleteModal} type="button" aria-label="독서노트 삭제하기">
-              <Icon Component={ReadingNoteTrash} size="sm" style={{ color: '#9B9999' }} />
-            </button>
+            <button className="px-3 py-2" onClick={openDeleteModal} type="button" aria-label="독서노트 삭제하기" />
             {/* TODO : 글자수 처리 로직 추후 구현 */}
             {/* <span className="pr-3 text-sm">{content?.length ?? 0}자/256자</span> */}
           </div>

@@ -6,8 +6,6 @@ import { deleteAccount } from 'services/user';
 
 import { DrawType } from 'types/user';
 
-import deleteAccountImg from 'assets/img/delete_account.svg';
-
 type DrawAccountProps = {
   drawType: DrawType | null;
   onNext: () => void;
@@ -37,8 +35,6 @@ const DrawAccount = ({ drawType, onNext }: DrawAccountProps) => {
           모든 활동 정보가 삭제되며 복구가 어렵습니다.
         </p>
       </h1>
-
-      <img src={deleteAccountImg} alt="" className="mx-auto h-36 w-48 text-center" />
 
       <textarea
         ref={textRef}

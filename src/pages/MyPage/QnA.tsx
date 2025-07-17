@@ -1,11 +1,8 @@
 import { useNavigate } from 'react-router-dom';
 
 import Header from 'components/Header';
-import Icon from 'components/Icon';
 
 import useDevice from 'hooks/useDevice';
-
-import { CommonBack } from 'assets/icons';
 
 const QnA = () => {
   const navigate = useNavigate();
@@ -13,11 +10,7 @@ const QnA = () => {
   return (
     <div className="h-full w-full bg-white">
       <Header
-        leftBtn={
-          <button type="button" onClick={() => navigate(-1)} aria-label="뒤로가기">
-            <Icon Component={CommonBack} />
-          </button>
-        }
+        leftBtn={<button type="button" onClick={() => navigate(-1)} aria-label="뒤로가기" />}
         title="자주묻는질문"
       />
 

@@ -2,13 +2,10 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import Header from 'components/Header';
-import Icon from 'components/Icon';
 
 import useDevice from 'hooks/useDevice';
 
 import { DrawType } from 'types/user';
-
-import { CommonBack } from 'assets/icons';
 
 import Complete from './Complete';
 import DrawAccount from './DrawAccount';
@@ -30,15 +27,7 @@ const DeleteAccount = () => {
 
   return (
     <section className="h-full bg-white">
-      {step !== '완료' && (
-        <Header
-          leftBtn={
-            <button type="button" aria-label="뒤로가기" onClick={handleGoBack}>
-              <Icon Component={CommonBack} size="sm" />
-            </button>
-          }
-        />
-      )}
+      {step !== '완료' && <Header leftBtn={<button type="button" aria-label="뒤로가기" onClick={handleGoBack} />} />}
       <section
         className={`${step !== '완료' ? (isIOS ? 'height-without-headerIOS' : 'height-without-headerAnd') : 'h-full'} flex flex-col justify-between p-8`}
       >

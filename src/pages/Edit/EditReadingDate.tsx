@@ -1,15 +1,12 @@
 import { useState } from 'react';
 
 import CheckBox from 'components/CheckBox';
-import Icon from 'components/Icon';
 
 import useModal from 'hooks/useModal';
 import { formatDateTimeToDate } from 'utils/format';
 
 import { STATUS } from 'types/library';
 import { RecordDate, StatusType } from 'types/record';
-
-import { CommonPlus, CommonPencil } from 'assets/icons';
 
 import AddReadingDateModalProps from './AddReadingDateModal';
 import EditReadingDateModal from './EditReadingDateModal';
@@ -45,9 +42,7 @@ const EditReadingDate = ({ readDates, setReadDates }: EditReadingDatePros) => {
             type="button"
             aria-label="독서기간 추가"
             onClick={openAddModal}
-          >
-            <Icon Component={CommonPlus} size="sm" />
-          </button>
+          />
         </p>
         <ul>
           {readDates.map(({ readDateId, startReadDate, endReadDate, status }, idx) => {
@@ -65,9 +60,7 @@ const EditReadingDate = ({ readDates, setReadDates }: EditReadingDatePros) => {
                 </span>
                 <div className="absolute right-6 flex items-center text-sm opacity-50">
                   {`${startDate} - ${endDate ?? '읽는중'}`}
-                  <button type="button" aria-label="회독 정보 수정" onClick={() => handleEditDate(idx)}>
-                    <Icon Component={CommonPencil} size="xs" style={{ marginLeft: '3px' }} />
-                  </button>
+                  <button type="button" aria-label="회독 정보 수정" onClick={() => handleEditDate(idx)} />
                 </div>
               </li>
             );

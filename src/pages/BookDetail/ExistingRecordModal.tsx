@@ -5,8 +5,6 @@ import Modal from 'components/Modal';
 
 import { hasReadingRecord } from 'services/search';
 
-import recordExistImg from 'assets/img/record_exist.svg';
-
 type ExistingRecordModalProps = {
   isOpen: boolean;
   close: () => void;
@@ -26,7 +24,6 @@ const ExistingRecordModal = ({ isOpen, close, scrollPos, detailId }: ExistingRec
     isOpen && (
       <Modal isOpen={isOpen} onClose={close} scrollPos={scrollPos}>
         <div className="flex min-h-[400px] w-72 flex-col items-center justify-center">
-          <img src={recordExistImg} className="w-36" alt="" />
           <h1 className="py-5 text-base font-bold">이전 기록이 있어요!</h1>
           <p className="text-center text-sm">
             이 책에 대한{' '}

@@ -4,14 +4,11 @@ import { useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 
 import Header from 'components/Header';
-import Icon from 'components/Icon';
 
 import useDevice from 'hooks/useDevice';
 import useModal from 'hooks/useModal';
 import { getBookDetail, hasReadingRecord } from 'services/search';
 import { formatDateAndTime, formatBookGenre, getHttpsLink } from 'utils/format';
-
-import { RecordInfo, CommonBack } from 'assets/icons';
 
 import BookShelf from './BookShelf';
 import ExistingRecordModal from './ExistingRecordModal';
@@ -89,11 +86,7 @@ const BookDetail = () => {
     book && (
       <>
         <Header
-          leftBtn={
-            <button onClick={handleGoBack} aria-label="뒤로가기" type="button">
-              <Icon Component={CommonBack} />
-            </button>
-          }
+          leftBtn={<button onClick={handleGoBack} aria-label="뒤로가기" type="button" />}
           rightBtn={
             <button onClick={handleSaveBook} type="button" className="min-w-8 text-lg font-bold">
               저장
@@ -139,7 +132,6 @@ const BookDetail = () => {
         <p
           className={`absolute ${isIOS ? 'bottom-footerIOS' : 'bottom-footerAnd'} flex w-full items-center bg-main pb-2 text-xs font-semibold`}
         >
-          <Icon Component={RecordInfo} size="xs" style={{ marginRight: '6px', marginLeft: '10px' }} />
           <a className="font-bold underline" href={getHttpsLink(book.link)} rel="noopener noreferrer">
             알라딘
           </a>{' '}

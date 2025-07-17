@@ -3,11 +3,8 @@ import { useEffect, useReducer, useState } from 'react';
 import Alert from 'components/Alert';
 import Button from 'components/Button';
 import HalfScreenModal from 'components/HalfScreenModal';
-import Icon from 'components/Icon';
 
 import { AddNoteParams } from 'types/record';
-
-import { ReadingNoteMultiplePages, ReadingNoteSinglePage } from 'assets/icons';
 
 type PageModalProps = {
   page: number | null;
@@ -89,14 +86,6 @@ const PageModal = ({ page, pages, setPage, setPages, close }: PageModalProps) =>
               type="button"
               onClick={() => setSelected('page')}
             >
-              <Icon
-                Component={ReadingNoteSinglePage}
-                style={{
-                  color: selected === 'page' ? '#E6B9A6' : '#2F3645',
-                  margin: '0 auto',
-                  marginBottom: '4px',
-                }}
-              />
               단일 페이지 입력
             </button>
             <button
@@ -104,14 +93,6 @@ const PageModal = ({ page, pages, setPage, setPages, close }: PageModalProps) =>
               type="button"
               onClick={() => setSelected('pages')}
             >
-              <Icon
-                Component={ReadingNoteMultiplePages}
-                style={{
-                  color: selected === 'pages' ? '#E6B9A6' : '#2F3645',
-                  margin: '0 auto',
-                  marginBottom: '4px',
-                }}
-              />
               페이지 범위 입력
             </button>
           </section>

@@ -1,9 +1,6 @@
-import bookNoResultImg from 'assets/img/book_no_result.svg';
-
 const NoResultItems = () => {
   return (
     <section className="flex h-1/2 flex-col items-center justify-center whitespace-pre-wrap">
-      <img src={bookNoResultImg} alt="" className="mb-4 mt-16 w-[30%]" />
       <p className="font-bold opacity-70">검색어와 일치하는 책이 없어요</p>
       {/* <p>걱정마세요</p>
       <p>검색 결과가 없는 책은 아래 버튼을 통해</p>
