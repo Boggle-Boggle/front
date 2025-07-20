@@ -60,6 +60,7 @@ module.exports = {
         'icon-sm': '1rem',
         'icon-md': '1.5rem',
         'icon-lg': '2rem',
+        'icon-navigation': '1.75rem',
 
         // 기존 spacing(삭제예정)
         headerIOS: '6rem',

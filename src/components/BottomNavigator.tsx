@@ -1,60 +1,62 @@
-import { useEffect, useState } from 'react';
-import { NavLink, useLocation } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
-import useDevice from 'hooks/useDevice';
-import useKeyboardStatus from 'hooks/useKeyboardStatus';
+// import useKeyboardStatus from 'hooks/useKeyboardStatus';
+import {
+  IconBookSearch,
+  IconBookSearchFilled,
+  IconEllipsisHorizontal,
+  IconHome,
+  IconHomeFilled,
+  IconLibrary,
+  IconLibraryFilled,
+} from './icons';
+
+const Navigator = [
+  {
+    caption: '내 책장',
+    url: '/',
+    icon: <IconHome className="size-icon-navigation text-neutral-40" />,
+    activeIcon: <IconHomeFilled className="size-icon-navigation text-primary" />,
+  },
+  {
+    caption: '도서 검색',
+    url: '/search',
+    icon: <IconBookSearch className="size-icon-navigation text-neutral-40" />,
+    activeIcon: <IconBookSearchFilled className="size-icon-navigation text-primary" />,
+  },
+  {
+    caption: '나의 책',
+    url: '/library',
+    icon: <IconLibrary className="size-icon-navigation text-neutral-40" />,
+    activeIcon: <IconLibraryFilled className="size-icon-navigation text-primary" />,
+  },
+  {
+    caption: '설정',
+    url: '/mypage',
+    icon: <IconEllipsisHorizontal className="size-icon-navigation text-neutral-40" />,
+    activeIcon: <IconEllipsisHorizontal className="size-icon-navigation text-primary" />,
+  },
+];
 
 const BottomNavigator = () => {
-  const { isIOS } = useDevice();
-  const [activeTab, setActiveTab] = useState<string>('');
-  const location = useLocation();
+  // const isKeyboardActive = useKeyboardStatus();
 
-  const isKeyboardActive = useKeyboardStatus();
-
-  useEffect(() => {
-    setActiveTab(location.pathname);
-  }, [location]);
-
-  const getCurrentActive = () => {
-    if (activeTab === '/') return 'home';
-
-    if (activeTab.includes('search') || activeTab.includes('detail')) return 'search';
-
-    if (activeTab.includes('library') || activeTab.includes('record')) return 'library';
-
-    if (activeTab.includes('myPage')) return 'myPage';
-  };
-
-  if (isKeyboardActive) return;
+  // if (isKeyboardActive) return;
 
   return (
-    <ul
-      className={`fixed bottom-0 z-20 grid w-full max-w-screen-sm grid-cols-4 items-center rounded-t-xl bg-white ${isIOS ? 'h-footerIOS pb-4' : 'h-footerAnd'} `}
-    >
-      <li className="m-auto">
-        <NavLink
-          to="/"
-          className={`flex flex-col items-center text-xs ${getCurrentActive() === 'home' && 'font-bold text-accent'}`}
-        />
-      </li>
-      <li className="m-auto">
-        <NavLink
-          to="/search"
-          className={`flex flex-col items-center text-xs ${getCurrentActive() === 'search' && 'font-bold text-accent'}`}
-        />
-      </li>
-      <li className="m-auto">
-        <NavLink
-          to="/library"
-          className={`flex flex-col items-center text-xs ${getCurrentActive() === 'library' && 'font-bold text-accent'}`}
-        />
-      </li>
-      <li className="m-auto">
-        <NavLink
-          to="/myPage"
-          className={`flex flex-col items-center text-xs ${getCurrentActive() === 'myPage' && 'font-bold text-accent'}`}
-        />
-      </li>
+    <ul className="fixed bottom-0 z-navigator grid h-[4.125rem] w-full max-w-mobile grid-cols-4 items-center rounded-t-2xl border-t border-neutral-20 bg-neutral-0 text-xs">
+      {Navigator.map(({ caption, url, icon, activeIcon }) => (
+        <li className="size-full" key={caption}>
+          <NavLink to={url} className="flex h-full flex-col items-center justify-center">
+            {({ isActive }) => (
+              <>
+                {isActive ? activeIcon : icon}
+                <p className={`${isActive ? 'text-primary' : 'text-neutral-40'}`}>{caption}</p>
+              </>
+            )}
+          </NavLink>
+        </li>
+      ))}
     </ul>
   );
 };
