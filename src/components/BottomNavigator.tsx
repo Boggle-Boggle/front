@@ -44,20 +44,23 @@ const BottomNavigator = () => {
   // if (isKeyboardActive) return;
 
   return (
-    <ul className="fixed bottom-0 z-navigator grid h-[4.125rem] w-full max-w-mobile grid-cols-4 items-center rounded-t-2xl border-t border-neutral-20 bg-neutral-0 text-xs">
-      {Navigator.map(({ caption, url, icon, activeIcon }) => (
-        <li className="size-full" key={caption}>
-          <NavLink to={url} className="flex h-full flex-col items-center justify-center">
-            {({ isActive }) => (
-              <>
-                {isActive ? activeIcon : icon}
-                <p className={`${isActive ? 'text-primary' : 'text-neutral-40'}`}>{caption}</p>
-              </>
-            )}
-          </NavLink>
-        </li>
-      ))}
-    </ul>
+    <div className="fixed bottom-0 z-navigator w-full max-w-mobile rounded-t-2xl border-t border-neutral-20 bg-neutral-0">
+      <ul className="grid h-[4.125rem] w-full grid-cols-4 items-center text-xs">
+        {Navigator.map(({ caption, url, icon, activeIcon }) => (
+          <li className="size-full" key={caption}>
+            <NavLink to={url} className="flex h-full flex-col items-center justify-center">
+              {({ isActive }) => (
+                <>
+                  {isActive ? activeIcon : icon}
+                  <p className={`${isActive ? 'text-primary' : 'text-neutral-40'}`}>{caption}</p>
+                </>
+              )}
+            </NavLink>
+          </li>
+        ))}
+      </ul>
+      <div className="h-safe-bottom" />
+    </div>
   );
 };
 
