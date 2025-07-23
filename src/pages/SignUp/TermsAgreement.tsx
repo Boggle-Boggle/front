@@ -1,7 +1,7 @@
 // import { useEffect, useReducer, useState } from 'react';
 
 import Header from 'components/Header';
-import { IconArrowLeft, IconArrowRight } from 'components/icons';
+import { IconArrowRight } from 'components/icons';
 import { BottomButton, Button } from 'components/refactor/Button';
 import CheckBox from 'components/refactor/CheckBox';
 import Highlight from 'components/refactor/Highlight';
@@ -61,14 +61,7 @@ const TermsAgreement = ({ terms, onPrev, onNext }: TermsAgreementProps) => {
 
   return (
     <>
-      <Header
-        title="회원가입"
-        leftBtn={
-          <button onClick={onPrev} aria-label="뒤로가기" type="button">
-            <IconArrowLeft className="size-icon-md" />
-          </button>
-        }
-      />
+      <Header title="회원가입" />
       <div className="flex h-full flex-col justify-between px-mobile">
         <h1 className="mt-10 whitespace-pre-line text-h1">
           <Highlight>빼곡에 가입하시려면</Highlight>

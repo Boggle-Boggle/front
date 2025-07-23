@@ -1,7 +1,4 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-
-import Header from 'components/Header';
 
 import useDevice from 'hooks/useDevice';
 
@@ -19,15 +16,8 @@ const DeleteAccount = () => {
 
   const { isIOS } = useDevice();
 
-  const navigate = useNavigate();
-  const handleGoBack = () => {
-    if (step === '탈퇴유형선택') navigate('/myPage');
-    else if (step === '탈퇴상세') setStep('탈퇴유형선택');
-  };
-
   return (
     <section className="h-full bg-white">
-      {step !== '완료' && <Header leftBtn={<button type="button" aria-label="뒤로가기" onClick={handleGoBack} />} />}
       <section
         className={`${step !== '완료' ? (isIOS ? 'height-without-headerIOS' : 'height-without-headerAnd') : 'h-full'} flex flex-col justify-between p-8`}
       >

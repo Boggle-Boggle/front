@@ -1,20 +1,12 @@
 import { useReducer } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
 
 import Alert from 'components/Alert';
-import Button from 'components/Button';
-import Header from 'components/Header';
 
 import useDevice from 'hooks/useDevice';
-import useNickNameInput from 'hooks/useNickNameInput';
 
 const EditNickname = () => {
-  const navigate = useNavigate();
-  const location = useLocation();
-
   const { isIOS } = useDevice();
   const [isAlertActive, handleAlertActive] = useReducer((prev) => !prev, false);
-  const { nickname } = location.state;
   // const { nickName, changeNickName, saveNickName } = useNickNameInput(nickname, handleAlertActive, () => {
   //   navigate('/myPage');
   // });
@@ -25,7 +17,6 @@ const EditNickname = () => {
         <Alert message={`사용중인 닉네임이에요 \n다른 닉네임을 입력해주세요`} onClose={handleAlertActive} />
       )}
       <section className="h-full overflow-hidden bg-white">
-        <Header leftBtn={<button onClick={() => navigate(-1)} type="button" aria-label="뒤로가기" />} />
         <section
           className={`${isIOS ? 'height-without-headerIOS' : 'height-without-headerAnd'} flex flex-col items-center px-8`}
         >

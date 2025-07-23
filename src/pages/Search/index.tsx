@@ -27,10 +27,6 @@ const Search = () => {
     queryClient.invalidateQueries({ queryKey: ['searchHistory'] });
   };
 
-  const handleGoBack = () => {
-    navigate('/search');
-  };
-
   useEffect(() => {
     setValue(query);
     sessionStorage.removeItem('scroll');
@@ -38,14 +34,7 @@ const Search = () => {
 
   return (
     <div className="relative h-screen overflow-hidden bg-main">
-      {query ? (
-        <Header
-          title={<>도서 검색</>}
-          leftBtn={<button aria-label="뒤로가기" onClick={handleGoBack} type="button" />}
-        />
-      ) : (
-        <Header title={<>도서 검색</>} />
-      )}
+      {query ? <Header title={<>도서 검색</>} /> : <Header title={<>도서 검색</>} />}
       <SearchBar
         placeholder="제목 및 저자로 검색이 가능해요"
         value={value}

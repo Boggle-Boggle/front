@@ -227,13 +227,6 @@ const Note = () => {
                 )}
               </>
             }
-            leftBtn={
-              <button
-                onClick={() => navigate(`/record/${recordId}`, { replace: true })}
-                aria-label="뒤로가기"
-                type="button"
-              />
-            }
             rightBtn={
               <button className="font-black" onClick={handleSave} type="submit">
                 저장

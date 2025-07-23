@@ -12,7 +12,7 @@ type NickNameInputProps = {
 const NickNameInput = ({ nickName, changeNickName, saveNickName }: NickNameInputProps) => {
   return (
     <>
-      <Header title="회원가입" leftBtn />
+      <Header title="회원가입" />
       <section className="h-full px-mobile">
         <h1 className="mt-10 whitespace-pre-line text-h1">
           <Highlight>빼곡에서 사용하실</Highlight>

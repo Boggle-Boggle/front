@@ -86,7 +86,6 @@ const Record = () => {
               ''
             )
           }
-          leftBtn={<button type="button" onClick={() => navigate(-1)} aria-label="뒤로가기" />}
           rightBtn={
             <>
               <button aria-label="수정/삭제하기" onClick={() => setIsMemoToggled(true)} type="button" />
