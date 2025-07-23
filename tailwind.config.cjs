@@ -57,6 +57,8 @@ module.exports = {
         'safe-top': 'env(safe-area-inset-top)',
         'safe-bottom': 'env(safe-area-inset-bottom)',
 
+        header: '3rem',
+
         'icon-sm': '1rem',
         'icon-md': '1.5rem',
         'icon-lg': '2rem',
