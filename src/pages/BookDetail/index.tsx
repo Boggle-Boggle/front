@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 
 import { useEffect, useRef, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 import Header from 'components/Header';
 
@@ -25,13 +25,8 @@ const BookDetail = () => {
   const plotRef = useRef<HTMLDivElement>(null);
   const observerTarget = useRef<HTMLDivElement>(null);
 
-  const navigate = useNavigate();
   const { detailId = '' } = useParams();
   const { isIOS } = useDevice();
-
-  const handleGoBack = () => {
-    navigate(-1);
-  };
 
   const { data: book } = useQuery({
     queryKey: ['bookDetail', detailId],
@@ -86,7 +81,6 @@ const BookDetail = () => {
     book && (
       <>
         <Header
-          leftBtn={<button onClick={handleGoBack} aria-label="뒤로가기" type="button" />}
           rightBtn={
             <button onClick={handleSaveBook} type="button" className="min-w-8 text-lg font-bold">
               저장

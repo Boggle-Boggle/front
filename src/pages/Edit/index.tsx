@@ -64,13 +64,6 @@ const Edit = () => {
     <div className="bg-white">
       <Header
         title={<p className={`${title.length > 20 ? 'text-sm' : 'text-base'}`}>{title}</p>}
-        leftBtn={
-          <button
-            type="button"
-            onClick={() => navigate(`/record/${recordId}`, { replace: true })}
-            aria-label="뒤로가기"
-          />
-        }
         rightBtn={
           <button className="font-semibold text-accent" type="button" onClick={handleSave}>
             저장

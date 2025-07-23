@@ -1,18 +1,12 @@
-import { useNavigate } from 'react-router-dom';
-
 import Header from 'components/Header';
 
 import useDevice from 'hooks/useDevice';
 
 const QnA = () => {
-  const navigate = useNavigate();
   const { isIOS } = useDevice();
   return (
     <div className="h-full w-full bg-white">
-      <Header
-        leftBtn={<button type="button" onClick={() => navigate(-1)} aria-label="뒤로가기" />}
-        title="자주묻는질문"
-      />
+      <Header title="자주묻는질문" />
 
       <section
         className={`${isIOS ? 'height-without-headerIOS' : 'height-without-headerAnd'} overflow-y-scroll whitespace-pre-wrap px-4`}
