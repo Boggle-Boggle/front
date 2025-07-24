@@ -29,8 +29,8 @@ const Home = () => {
         title={`${title} (${books?.length ?? 0})`}
         rightBtn={<button aria-label="기간선택" type="button" onClick={open} />}
       />
-      <div className="flex h-full w-full flex-col items-center justify-center bg-main">
-        <BookCase books={books ?? []} />
+      <div className="flex h-dvh flex-col items-center justify-center overflow-scroll">
+        <BookCase />
       </div>
       {isOpen && (
         <SelectPeriodModal
