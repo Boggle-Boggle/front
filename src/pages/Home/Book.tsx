@@ -1,66 +1,36 @@
-/* eslint-disable jsx-a11y/no-static-element-interactions */
-/* eslint-disable jsx-a11y/click-events-have-key-events */
-import { Html, useGLTF } from '@react-three/drei';
-
-import { useMemo } from 'react';
-import { useNavigate } from 'react-router-dom';
-import * as THREE from 'three';
-
-// TODO : 테마 다양하게 두기
-const colors = [0xe4b4b2, 0xe1c2a5, 0xd6c8c5, 0xb6bfbd, 0xdecdcc];
-
 type BookProps = {
-  position: [number, number, number];
-  title: string;
-  width: number;
   page: number;
-  readingRecordId: number;
+  title: string;
 };
 
-const Book = ({ position, title, width, page, readingRecordId }: BookProps) => {
-  useGLTF.preload(`${import.meta.env.VITE_IMG_BASE_URL || ''}/assets/book.glb`);
-  const { scene } = useGLTF(`${import.meta.env.VITE_IMG_BASE_URL || ''}/assets/book.glb`);
-  const navigate = useNavigate();
+const Book = ({ page, title }: BookProps) => {
+  const colors = ['bg-primary-light', 'bg-secondary', 'bg-secondary-light'];
+  const bgColorClass = colors[page % colors.length];
 
-  const bookScene = useMemo(() => {
-    const clonedScene = scene.clone();
+  const widthClass =
+    page >= 500
+      ? 'w-14'
+      : page >= 400
+        ? 'w-12'
+        : page >= 300
+          ? 'w-10'
+          : page >= 200
+            ? 'w-8'
+            : page >= 100
+              ? 'w-6'
+              : 'w-4';
 
-    clonedScene.traverse((child) => {
-      if ((child as THREE.Mesh).isMesh) {
-        const mesh = child as THREE.Mesh;
-
-        if (mesh.name === '책들003') {
-          mesh.material = new THREE.MeshStandardMaterial({
-            color: colors[page % colors.length],
-          });
-        }
-      }
-    });
-
-    return clonedScene;
-  }, [scene, page]);
-
-  const MAX_TITLE_LEN = window.innerWidth < 400 ? 8 : 10;
-  const filteredTitle = title.replace(/[^a-zA-Z0-9가-힣 ?!]/g, '');
-
-  const handleNavigate = () => {
-    navigate(`/record/${readingRecordId}`);
-  };
+  const filteredTitle = title.replace(/[^a-zA-Z0-9가-힣]+/g, '').slice(0, page >= 400 ? 21 : page >= 200 ? 14 : 7);
 
   return (
-    <group position={position} scale={[width, 1.5, 1]}>
-      <primitive object={bookScene} />
-      <Html position={[0, 0, 0.035]} center>
-        <div
-          className="flex h-[100px] w-[22px] flex-col items-center justify-center pb-2 font-book text-[14.5px] leading-[0.85] text-[#5a5a5a]"
-          onClick={handleNavigate}
-        >
-          {Array.from(filteredTitle.length > MAX_TITLE_LEN ? filteredTitle.slice(0, MAX_TITLE_LEN) : filteredTitle).map(
-            (char) => (char === ' ' ? <div className="h-[4px]">{'\u00A0'}</div> : <div>{char}</div>),
-          )}
-        </div>
-      </Html>
-    </group>
+    <div
+      style={{ boxShadow: 'inset 0px -1.11px 3.33px rgba(0, 0, 0, 0.25)', writingMode: 'vertical-lr' }}
+      className={`inline-flex h-full justify-center rounded-sm py-2 ${widthClass} ${bgColorClass}`}
+    >
+      <span className="flex w-full items-center justify-center text-center font-book text-[10px] opacity-40">
+        {filteredTitle}
+      </span>
+    </div>
   );
 };
 
