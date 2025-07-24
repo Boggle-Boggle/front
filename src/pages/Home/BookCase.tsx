@@ -1,106 +1,281 @@
-import { Html, OrbitControls, useGLTF } from '@react-three/drei';
-import { Canvas } from '@react-three/fiber';
-
-import { Suspense, useEffect } from 'react';
-import * as THREE from 'three';
-
-import Loading from 'pages/Loading';
-
-import { BookCase as BookCaseType } from 'types/book';
-
 import Book from './Book';
 
-const getBookProperties = (page: number) => {
-  if (page <= 100) return { width: 1.1, offset: 0.07 };
-  if (page <= 200) return { width: 1.3, offset: 0.09 };
-  if (page <= 300) return { width: 1.5, offset: 0.11 };
-  if (page <= 400) return { width: 1.7, offset: 0.13 };
-  if (page <= 500) return { width: 1.8, offset: 0.15 };
-  if (page <= 600) return { width: 2.1, offset: 0.17 };
-  if (page <= 700) return { width: 2.3, offset: 0.19 };
+const books = [
+  {
+    title: '턴! 턴! 턴! Turn! Turn! Turn!',
+    page: 85,
+    id: 1,
+  },
+  {
+    title: '여름을 한입 베어물었더니',
+    page: 192,
+    id: 2,
+  },
+  {
+    title: '코스모스',
+    page: 706,
+    id: 3,
+  },
+  {
+    title: '날씨가 좋으면 찾아가다가 돌아오겠어요',
+    page: 456,
+    id: 4,
+  },
+  {
+    title: '사과 APPLE',
+    page: 317,
+    id: 5,
+  },
+  {
+    title: '기억을 파는 가게',
+    page: 221,
+    id: 6,
+  },
+  {
+    title: '시간을 건너는 소녀',
+    page: 398,
+    id: 7,
+  },
+  {
+    title: '눈 감으면 들리는 노래',
+    page: 154,
+    id: 8,
+  },
+  {
+    title: '오늘도 무사히 지나가기를 간절히 바라고 바라고 티기고 티기고',
+    page: 288,
+    id: 9,
+  },
+  {
+    title: '바다를 닮은 너에게',
+    page: 522,
+    id: 10,
+  },
+  {
+    title: '별빛이 내린 거리에서 돌아다니기 권법',
+    page: 611,
+    id: 11,
+  },
+  {
+    title: '소리를 삼킨 이름들',
+    page: 203,
+    id: 12,
+  },
+  {
+    title: '구름 사이로 걸어간 날들',
+    page: 467,
+    id: 13,
+  },
+  {
+    title: '빛이 머무는 순간',
+    page: 359,
+    id: 14,
+  },
+  {
+    title: '턴! 턴! 턴! Turn! Turn! Turn!',
+    page: 85,
+    id: 1,
+  },
+  {
+    title: '여름을 한입 베어물었더니',
+    page: 192,
+    id: 2,
+  },
+  {
+    title: '코스모스',
+    page: 706,
+    id: 3,
+  },
+  {
+    title: '날씨가 좋으면 찾아가다가 돌아오겠어요',
+    page: 456,
+    id: 4,
+  },
+  {
+    title: '사과 APPLE',
+    page: 317,
+    id: 5,
+  },
+  {
+    title: '기억을 파는 가게',
+    page: 221,
+    id: 6,
+  },
+  {
+    title: '시간을 건너는 소녀',
+    page: 398,
+    id: 7,
+  },
+  {
+    title: '눈 감으면 들리는 노래',
+    page: 154,
+    id: 8,
+  },
+  {
+    title: '오늘도 무사히 지나가기를 간절히 바라고 바라고 티기고 티기고',
+    page: 288,
+    id: 9,
+  },
+  {
+    title: '바다를 닮은 너에게',
+    page: 522,
+    id: 10,
+  },
+  {
+    title: '별빛이 내린 거리에서 돌아다니기 권법',
+    page: 611,
+    id: 11,
+  },
+  {
+    title: '소리를 삼킨 이름들',
+    page: 203,
+    id: 12,
+  },
+  {
+    title: '구름 사이로 걸어간 날들',
+    page: 467,
+    id: 13,
+  },
+  {
+    title: '빛이 머무는 순간',
+    page: 359,
+    id: 14,
+  },
+  {
+    title: '턴! 턴! 턴! Turn! Turn! Turn!',
+    page: 85,
+    id: 1,
+  },
+  {
+    title: '여름을 한입 베어물었더니',
+    page: 192,
+    id: 2,
+  },
+  {
+    title: '코스모스',
+    page: 706,
+    id: 3,
+  },
+  {
+    title: '날씨가 좋으면 찾아가다가 돌아오겠어요',
+    page: 456,
+    id: 4,
+  },
+  {
+    title: '사과 APPLE',
+    page: 317,
+    id: 5,
+  },
+  {
+    title: '기억을 파는 가게',
+    page: 221,
+    id: 6,
+  },
+  {
+    title: '시간을 건너는 소녀',
+    page: 398,
+    id: 7,
+  },
+  {
+    title: '눈 감으면 들리는 노래',
+    page: 154,
+    id: 8,
+  },
+  {
+    title: '오늘도 무사히 지나가기를 간절히 바라고 바라고 티기고 티기고',
+    page: 288,
+    id: 9,
+  },
+  {
+    title: '바다를 닮은 너에게',
+    page: 522,
+    id: 10,
+  },
+  {
+    title: '별빛이 내린 거리에서 돌아다니기 권법',
+    page: 611,
+    id: 11,
+  },
+  {
+    title: '소리를 삼킨 이름들',
+    page: 203,
+    id: 12,
+  },
+  {
+    title: '구름 사이로 걸어간 날들',
+    page: 467,
+    id: 13,
+  },
+  {
+    title: '빛이 머무는 순간',
+    page: 359,
+    id: 14,
+  },
+];
 
-  return { width: 2.5, offset: 0.21 };
-};
+const BookCase = () => {
+  const allBooks = [];
+  let chunkedBooks = [];
+  let chunkedWidth = 0;
 
-type BookCaseProps = {
-  books: BookCaseType[];
-};
+  for (let i = 0; i < books.length; i += 1) {
+    const { page } = books[i];
 
-const BookCase = ({ books }: BookCaseProps) => {
-  const startX = -0.62;
-  const startY = 0.815;
-  const rowHeight = 0.575;
-  const cameraZPosition = window.innerWidth < 350 ? 3 : 2.5;
-  let floor = 0;
+    if (page >= 500) chunkedWidth += 54;
+    else if (page > 400) chunkedWidth += 48;
+    else if (page > 300) chunkedWidth += 40;
+    else if (page > 200) chunkedWidth += 32;
+    else if (page > 100) chunkedWidth += 24;
+    else chunkedWidth += 16;
 
-  useGLTF.preload(`${import.meta.env.VITE_IMG_BASE_URL || ''}/assets/bookshelf.glb`);
-  const { scene } = useGLTF(`${import.meta.env.VITE_IMG_BASE_URL || ''}/assets/bookshelf.glb`);
+    // inner 너비 - 양옆 패딩
+    if (chunkedWidth >= 300 - 16) {
+      allBooks.push(chunkedBooks);
 
-  useEffect(() => {
-    if (!scene) return;
+      chunkedBooks = [];
+      chunkedWidth = 0;
+      i -= 1;
+    } else chunkedBooks.push(books[i]);
+  }
 
-    scene.scale.set(1, 1.2, 1);
+  if (chunkedBooks.length > 0) allBooks.push(chunkedBooks);
 
-    const box = new THREE.Box3().setFromObject(scene);
-    const center = new THREE.Vector3();
-    box.getCenter(center);
-    scene.position.sub(center);
-  }, [scene]);
+  while (allBooks.length < 3) {
+    allBooks.push([]);
+  }
+
+  const outerHeight = 524 + 126 * (allBooks.length - 4);
+  const innerHeight = 484 + 126 * (allBooks.length - 4);
 
   return (
-    <div className="relative z-0 flex h-full w-full items-center justify-center">
-      <Canvas camera={{ position: [0, 0, cameraZPosition] }}>
-        <ambientLight intensity={2} />
-        <directionalLight position={[7.5, 5, 7.5]} intensity={1} />
-        <Suspense
-          fallback={
-            <Html center>
-              <Loading />
-            </Html>
-          }
-        >
-          <primitive object={scene} />
-          {books &&
-            books.reduce<{ previousX: number; previousY: number; elements: React.ReactNode[] }>(
-              (acc, { title, page, readingRecordId }) => {
-                const { width, offset } = getBookProperties(page);
-                const xPosition = acc.previousX + offset / 2;
-                const yPosition = acc.previousY;
+    <div
+      style={{
+        boxShadow: `inset 2px 2px 2px rgba(255, 255, 255, 0.6), inset -2px -3px 3px rgba(53, 27, 20, 0.25)`,
+        height: outerHeight,
+      }}
+      className="w-[21.438rem] rounded-[32px] border border-neutral-20 p-5"
+    >
+      <div
+        style={{
+          boxShadow: `2px 2px 2px rgba(255, 255, 255, 0.6), -2px -2px 2px rgba(53, 27, 20, 0.25)`,
+          height: innerHeight,
+        }}
+        className="w-[18.938rem] rounded-xl bg-neutral-20"
+      >
+        {allBooks.map((books, idx) => (
+          <div className="pt-4" key={books.toString()}>
+            <div className="h-[5.625rem] px-[0.625rem]">
+              {books.map(({ id, page, title }) => (
+                <Book page={page} title={title} key={id} />
+              ))}
+            </div>
 
-                acc.previousX = xPosition + offset / 2;
-
-                if (floor < 4)
-                  acc.elements.push(
-                    <Book
-                      position={[xPosition, yPosition, 0.1]}
-                      title={title}
-                      width={width}
-                      page={page}
-                      readingRecordId={readingRecordId}
-                    />,
-                  );
-
-                if (acc.previousX > 0.56) {
-                  acc.previousY = yPosition - rowHeight;
-                  acc.previousX = startX;
-                  floor += 1;
-                }
-
-                return acc;
-              },
-              { previousX: startX, previousY: startY, elements: [] },
-            ).elements}
-        </Suspense>
-        <OrbitControls
-          enableRotate={false}
-          enablePan={false}
-          maxPolarAngle={Math.PI / 2}
-          minPolarAngle={Math.PI / 2}
-          enableZoom={false}
-          minDistance={1.5}
-          maxDistance={cameraZPosition}
-        />
-      </Canvas>
+            {idx !== allBooks.length - 1 && (
+              <div style={{ boxShadow: 'inset 0px -4px 4px rgba(53, 27, 20, 0.25)' }} className="h-5 bg-neutral-0" />
+            )}
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
