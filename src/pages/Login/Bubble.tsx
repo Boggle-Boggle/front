@@ -1,4 +1,8 @@
-const Bubble = () => {
+type BubbleType = {
+  text: string;
+};
+
+const Bubble = ({ text }: BubbleType) => {
   const baseClass =
     'relative w-20 h-9 -translate-x-1/2 left-1/2  rounded-lg border border-neutral-40 bg-neutral-0 flex items-center justify-center';
 
@@ -15,7 +19,7 @@ const Bubble = () => {
   return (
     <div className="absolute -bottom-12">
       <div className={`${baseClass} ${beforeClass} ${afterClass}`}>
-        <span className="text-caption1 text-black">최근 로그인</span>
+        <span className="text-caption1 text-black">{text}</span>
       </div>
     </div>
   );

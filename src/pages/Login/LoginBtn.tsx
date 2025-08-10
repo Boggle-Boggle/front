@@ -32,7 +32,7 @@ const LoginBtn = ({ type, isRecent }: LoginBtnProps) => {
       onClick={handleClick}
     >
       <img src={imgUrl} alt="" className="size-[3.375rem] rounded-[50%] shadow-[0px_2px_10px_0px_#00000024]" />
-      {isRecent && <Bubble />}
+      {isRecent && <Bubble text="최근내용" />}
     </button>
   );
 };
