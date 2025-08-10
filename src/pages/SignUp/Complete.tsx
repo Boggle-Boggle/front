@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { BottomButton } from 'components/refactor/Button';
 import Highlight from 'components/refactor/Highlight';
 
-import { agreeTerms, getRefresh, updateNickname } from 'services/user';
+import { agreeTerms, refreshToken, updateNickname } from 'services/user';
 
 import signup_complete from 'assets/img/signup_complete.png';
 
@@ -23,7 +23,7 @@ const Complete = ({ nickName }: CompleteProps) => {
           { id: 1, isAgree: true },
           { id: 2, isAgree: true },
         ]);
-        await getRefresh();
+        await refreshToken();
       } catch (error) {
         // TODO : 위의 상황에서 에러 발생시 로그인 페이지로 이동(각각확인)
         navigate('/login');

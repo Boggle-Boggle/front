@@ -1,6 +1,6 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
-import React, { Suspense } from 'react';
+import { StrictMode, Suspense } from 'react';
 import ReactDOM from 'react-dom/client';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import { DeviceProvider } from 'stores/useDeviceStore';
@@ -65,7 +65,7 @@ const router = createBrowserRouter([
       },
       { path: 'login', element: <Login /> },
       { path: 'signUp', element: <SignUp /> },
-      { path: 'oauth/redirect', element: <Auth /> },
+      { path: 'oauth', element: <Auth /> },
     ],
   },
 ]);
@@ -79,7 +79,7 @@ const queryClient = new QueryClient({
 });
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
+  <StrictMode>
     <DeviceProvider>
       <QueryClientProvider client={queryClient}>
         <Suspense fallback={<Loading />}>
@@ -87,5 +87,6 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         </Suspense>
       </QueryClientProvider>
     </DeviceProvider>
-  </React.StrictMode>,
+    ,
+  </StrictMode>,
 );
