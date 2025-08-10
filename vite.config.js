@@ -7,11 +7,20 @@ import path from 'path';
 const __dirname = path.resolve();
 
 export default defineConfig({
-  plugins: [react(), mkcert({ certFileName: './localhost.pem', keyFileName: './localhost-key.pem' })],
+  plugins: [
+    react(),
+    mkcert({
+      certFileName: './localhost+2.pem',
+      keyFileName: './localhost+2-key.pem',
+    }),
+  ],
   server: {
     https: true,
+    host: 'front.bbaegok.store',
+    port: 5173,
+
     cors: {
-      origin: 'https://api.bbaegok.store/backend',
+      origin: 'front.bbaegok.store',
       credentials: true,
     },
   },
