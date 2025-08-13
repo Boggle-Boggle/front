@@ -38,6 +38,7 @@ module.exports = {
         pretendard: ['Pretendard', 'sans-serif'],
         serif: ['MaruBuri', 'sans-serif'],
       },
+
       fontSize: {
         h1: ['1.75rem', { fontWeight: '700', lineHeight: '140%' }],
         h2: ['1.75rem', { fontWeight: '300', lineHeight: '140%' }],
@@ -70,12 +71,14 @@ module.exports = {
         footerIOS: '6rem',
         footerAnd: '5.5rem',
       },
+
       maxWidth: {
         mobile: '37.5rem',
       },
+
       zIndex: {
-        // modal: '',
         toast: '700',
+        layer: '600',
         header: '500',
         navigator: '500',
         fixedBtn: '500',
@@ -92,6 +95,7 @@ module.exports = {
           '100%': { opacity: '0' },
         },
       },
+
       animation: {
         fadeIn: 'fadeIn 0.3s ease-out forwards',
         fadeOut: 'fadeOut 0.3s ease-out forwards',
