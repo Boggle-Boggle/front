@@ -6,12 +6,13 @@ import { IconArrowLeft } from 'components/icons';
 import IconButton from './refactor/Button/IconButton';
 
 type HeaderProps = {
+  prev?: () => void;
   title?: React.ReactNode;
   rightBtn?: React.ReactNode;
   withSpacer?: boolean;
 };
 
-const Header = ({ title, rightBtn, withSpacer = true }: HeaderProps) => {
+const Header = ({ prev, title, rightBtn, withSpacer = true }: HeaderProps) => {
   const navigate = useNavigate();
 
   const isTwoRightBtn = isValidElement(rightBtn) && Array.isArray(rightBtn?.props.children);
@@ -19,7 +20,7 @@ const Header = ({ title, rightBtn, withSpacer = true }: HeaderProps) => {
   return (
     <>
       <div className="fixed z-header flex h-12 w-full max-w-mobile items-center pt-safe-top">
-        <IconButton onClick={() => navigate(-1)} label="뒤로가기">
+        <IconButton onClick={prev || (() => navigate(-1))} label="뒤로가기">
           <IconArrowLeft className="size-icon-md" />
         </IconButton>
         {isTwoRightBtn && <div className="w-12" />}
