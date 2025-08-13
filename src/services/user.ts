@@ -1,24 +1,9 @@
 import useAuthStore from 'stores/useAuthStore';
 
+import { Response } from 'types/api';
 import { AgreementStatus, Authorization, MyPage, Terms, DrawType } from 'types/user';
 
 import api from '.';
-
-export const getRefresh = async () => {
-  const { login, logout } = useAuthStore.getState();
-
-  try {
-    const refreshResponse = await api.get('/auth/refresh');
-    const newAccessToken: string = refreshResponse.data.data;
-
-    login(newAccessToken);
-
-    return newAccessToken;
-  } catch (error) {
-    logout();
-    throw new Error('리프레시 토큰 갱신 실패');
-  }
-};
 
 export const getAuthorization = async () => {
   const response = await api.get('/user/authorization');
@@ -83,4 +68,40 @@ export const deleteAccount = async (type: DrawType, withdrawText: string | null)
   }
 
   await api.delete('/user', { data: { withdrawType, withdrawText } });
+};
+
+// refactor
+
+type RefreshType = {
+  accessToken: string;
+};
+
+export const refreshToken = async () => {
+  const { login, logout } = useAuthStore.getState();
+
+  try {
+    const refreshResponse: Response<RefreshType> = await api.get('/auth/refresh');
+    if (!refreshResponse.data) return;
+
+    const { accessToken } = refreshResponse.data;
+
+    login(accessToken);
+  } catch (error) {
+    logout();
+    throw new Error('리프레시 토큰 갱신 실패');
+  }
+};
+
+export const getTerms = async () => {
+  const response: Response<Terms> = await api.get('/terms');
+
+  return response.data?.terms;
+};
+
+type SignUpParams = {
+  nickname: string;
+  agreements: AgreementStatus[];
+};
+export const signUp = async (params: SignUpParams) => {
+  await api.post('/auth/signup', params);
 };

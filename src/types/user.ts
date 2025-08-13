@@ -1,16 +1,15 @@
 import DRAW_TYPE_LIST from 'constants/user';
 
 export type Terms = {
-  version: string;
   terms: Term[];
 };
 
 export type Term = {
   id: number;
+  version: number;
   title: string;
   content: string;
   mandatory: boolean;
-  agree: boolean;
 };
 
 export type AgreementStatus = {

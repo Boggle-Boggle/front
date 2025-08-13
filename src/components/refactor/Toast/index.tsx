@@ -31,7 +31,9 @@ const Toast = ({ type, description, title }: ToastProps) => {
     );
 
   return (
-    <div className={`${borderClass} ${isLeaving ? 'animate-fadeOut' : 'animate-fadeIn'} rounded-xl border px-4 py-2`}>
+    <div
+      className={`${borderClass} ${isLeaving ? 'animate-fadeOut' : 'animate-fadeIn'} rounded-xl border bg-neutral-0 px-4 py-2`}
+    >
       {title && (
         <div className="mb-1 flex items-center text-body2 text-neutral-80">
           {icon}
