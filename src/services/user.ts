@@ -91,3 +91,17 @@ export const refreshToken = async () => {
     throw new Error('리프레시 토큰 갱신 실패');
   }
 };
+
+export const getTerms = async () => {
+  const response: Response<Terms> = await api.get('/terms');
+
+  return response.data?.terms;
+};
+
+type SignUpParams = {
+  nickname: string;
+  agreements: AgreementStatus[];
+};
+export const signUp = async (params: SignUpParams) => {
+  await api.post('/auth/signup', params);
+};

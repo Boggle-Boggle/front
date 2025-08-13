@@ -1,11 +1,12 @@
 type CheckBoxProps = {
+  id: string;
   size?: 'small' | 'medium';
   variant?: 'primary' | 'grey';
   checked?: boolean;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
-const CheckBox = ({ size = 'medium', variant = 'primary', checked = false, onChange }: CheckBoxProps) => {
+const CheckBox = ({ id, size = 'medium', variant = 'primary', checked = false, onChange }: CheckBoxProps) => {
   const variantClass =
     variant === 'primary'
       ? 'border-neutral-40 peer-checked:bg-primary '
@@ -13,8 +14,8 @@ const CheckBox = ({ size = 'medium', variant = 'primary', checked = false, onCha
   const sizeClass = size === 'small' ? 'size-3 text-body2' : 'size-6  text-title2';
 
   return (
-    <label htmlFor="checkbox">
-      <input id="checkbox" type="checkbox" className="peer sr-only" checked={checked} onChange={onChange} />
+    <label htmlFor={`checkbox-${id}`}>
+      <input id={`checkbox-${id}`} type="checkbox" className="peer sr-only" checked={checked} onChange={onChange} />
       <span
         className={`flex items-center justify-center rounded-[4px] border-[1.5px] text-neutral-0 peer-checked:border-transparent ${variantClass} ${sizeClass}`}
       >
