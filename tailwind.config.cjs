@@ -94,11 +94,32 @@ module.exports = {
           '0%': { opacity: '1' },
           '100%': { opacity: '0' },
         },
+        slideUp: {
+          '0%': { transform: 'translateY(100%)' },
+          '100%': { transform: 'translateY(0)' },
+        },
+        slideDown: {
+          '0%': { transform: 'translateY(0)' },
+          '100%': { transform: 'translateY(100%)' },
+        },
+        slideLeft: {
+          '0%': { transform: 'translateX(-100%)' },
+          '100%': { transform: 'translateX(0)' },
+        },
+        slideRight: {
+          '0%': { transform: 'translateX(0)' },
+          '100%': { transform: 'translateX(-100%)' },
+        },
       },
-
       animation: {
-        fadeIn: 'fadeIn 0.3s ease-out forwards',
-        fadeOut: 'fadeOut 0.3s ease-out forwards',
+        fadeInSlow: 'fadeIn 0.3s ease-out forwards',
+        fadeOutSlow: 'fadeOut 0.3s ease-out forwards',
+        fadeIn: 'fadeIn 0.1s ease-out forwards',
+        fadeOut: 'fadeOut 0.1s ease-out forwards',
+        slideUp: 'slideUp 0.1s ease-out forwards',
+        slideDown: 'slideDown 0.1s ease-out forwards',
+        slideLeft: 'slideLeft 0.1s ease-out forwards',
+        slideRight: 'slideRight 0.1s ease-out forwards',
       },
 
       // 타블렛 반응형(추가 예정)
