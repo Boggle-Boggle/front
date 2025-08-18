@@ -1,22 +1,23 @@
 import { createPortal } from 'react-dom';
 import useLayerStore from 'stores/useLayerStore';
 
+import BottomSheet from './BottomSheet';
+import Modal from './Modal';
+import SideBar from './SideBar';
+
 const LayerContainer = () => {
-  const { layers, pop } = useLayerStore();
+  const { layers } = useLayerStore();
 
   return (
     layers.length > 0 &&
     createPortal(
-      <div
-        className="z-layer fixed grid h-dvh w-full max-w-mobile place-items-center bg-neutral-100 opacity-30"
-        onClick={pop}
-        role="presentation"
-      >
-        {/* TODO */}
-        {layers.map((layer) => (
-          <div key={layer.toString()} />
-        ))}
-      </div>,
+      <section className="fixed inset-0 z-layer mx-auto flex max-w-mobile flex-col items-center justify-center">
+        {layers.map(({ type, component }) => {
+          if (type === 'MODAL') return <Modal>{component}</Modal>;
+          if (type === 'BOTTOM_SHEET') return <BottomSheet>{component}</BottomSheet>;
+          return <SideBar>{component}</SideBar>;
+        })}
+      </section>,
       document.getElementById('modal') as HTMLElement,
     )
   );

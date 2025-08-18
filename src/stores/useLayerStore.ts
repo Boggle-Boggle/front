@@ -17,7 +17,7 @@ type LayerStoreType = {
 const useLayerStore = create<LayerStoreType>((set, get) => ({
   layers: [],
   push: (layer) => {
-    set(() => ({ layers: [...get().layers, layer] }));
+    set((state) => ({ layers: [...state.layers, layer] }));
   },
   pop: () => {
     const layer = [...get().layers];
