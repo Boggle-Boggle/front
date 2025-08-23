@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 
-type LayerType = 'MODAL' | 'SIDEBAR' | 'BOTTOM_SHEET';
+type LayerType = 'MODAL' | 'SIDEBAR' | 'BOTTOM_SHEET' | 'FULL_SCREEN';
 
 type Layer = {
   id: string;
