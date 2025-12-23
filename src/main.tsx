@@ -20,11 +20,13 @@ import Term from 'pages/MyPage/Term';
 import VersionInfo from 'pages/MyPage/VersionInfo';
 import Note from 'pages/Note';
 import PrivateRoute from 'pages/PrivateRoute';
+import Christmas2025 from 'pages/Promotion/Christmas2025';
 import Record from 'pages/Record';
 import Search from 'pages/Search';
 import SignUp from 'pages/SignUp';
 
 import App from './App';
+
 import './main.css';
 
 const router = createBrowserRouter([
@@ -37,6 +39,7 @@ const router = createBrowserRouter([
         element: <App />,
         children: [
           { path: '/', element: <Home /> },
+          { path: '/promotion/christmas2025', element: <Christmas2025 /> },
           { path: 'library', element: <Library /> },
           { path: 'myPage', element: <MyPage /> },
           { path: 'search', element: <Search /> },
