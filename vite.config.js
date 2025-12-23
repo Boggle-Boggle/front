@@ -7,8 +7,25 @@ import path from 'path';
 
 const __dirname = path.resolve();
 
+const svgrTemplate = (variables, { tpl }) =>
+  tpl`
+${variables.imports};
+
+${variables.interfaces || ''}
+
+const ${variables.componentName} = (${variables.props}) => (
+  ${variables.jsx}
+);
+
+${variables.exports};
+`;
+
 export default defineConfig({
-  plugins: [react(), svgr(), mkcert({ certFileName: './localhost.pem', keyFileName: './localhost-key.pem' })],
+  plugins: [
+    react(),
+    svgr({ svgrOptions: { template: svgrTemplate } }),
+    mkcert({ certFileName: './localhost.pem', keyFileName: './localhost-key.pem' }),
+  ],
   server: {
     https: true,
     cors: {
