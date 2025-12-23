@@ -31,6 +31,7 @@ module.exports = {
       fontFamily: {
         book: ['HakgyoansimNadeuriTTF-B', 'sans-serif'],
         pretendard: ['Pretendard', 'sans-serif'],
+        maruburi: ['MaruBuri', 'sans-serif'],
       },
     },
   },
