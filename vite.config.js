@@ -7,6 +7,8 @@ import path from 'path';
 
 const __dirname = path.resolve();
 
+
+// @svgr/babel-plugin-transform-svg-component 8.0.0 번들 버그 우회
 const svgrTemplate = (variables, { tpl }) =>
   tpl`
 ${variables.imports};
