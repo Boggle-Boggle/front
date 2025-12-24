@@ -12,6 +12,7 @@ import { MainDate } from 'assets/icons';
 
 import BookCase from './BookCase';
 import SelectPeriodModal from './SelectPeriodModal';
+// import PromotionModal from './PromotionModal';
 
 const Home = () => {
   const [title, setTitle] = useState<string>('2025년 전체보기');
@@ -50,6 +51,9 @@ const Home = () => {
           fetchBooks={refetch}
         />
       )}
+
+    {/* <PromotionModal /> */}
+  
     </>
   );
 };
