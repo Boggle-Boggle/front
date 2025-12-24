@@ -74,12 +74,14 @@ const MyPage = () => {
           </ul>
         </section>
 
-        <Content>
-          <ContentItem handleClick={() => navigate('promotion/christmas2025')}>
-            <img src={image2025} alt="2025" width={48} />
-            빼곡한 연말결산 보기
-          </ContentItem>
-        </Content>
+          <Content>
+            <ContentItem handleClick={() => navigate('/promotion/christmas2025')}>
+              <div className="flex items-center gap-2">
+                <img src={image2025} alt="2025" width={48} />
+                <span>빼곡한 연말결산 보기</span>
+              </div>
+            </ContentItem>
+          </Content>
 
         <Content>
           <ContentItem handleClick={() => navigate('QnA')}>자주묻는질문</ContentItem>

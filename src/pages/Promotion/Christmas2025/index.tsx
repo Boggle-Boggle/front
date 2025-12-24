@@ -1,6 +1,7 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import type { ReactNode } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import Header from 'components/Header';
@@ -53,6 +54,35 @@ const LineTitle = ({ text }: { text: string }) => {
   );
 };
 
+const AnimatedSection = ({ children, threshold = 0.2 }: { children: ReactNode; threshold?: number }) => {
+  const ref = useRef<HTMLDivElement>(null);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const node = ref.current;
+    if (!node) return undefined;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setVisible(true);
+          observer.unobserve(entry.target);
+        }
+      },
+      { threshold }
+    );
+
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, [threshold]);
+
+  return (
+    <div ref={ref} className={`transition-opacity duration-700 ${visible ? 'opacity-100' : 'opacity-0'}`}>
+      {children}
+    </div>
+  );
+};
+
 const Christmas2025 = () => {
   const navigate = useNavigate();
   const [mode, setMode] = useState<'together' | 'solo'>('together');
@@ -97,11 +127,18 @@ const Christmas2025 = () => {
     'flex-1 h-full rounded-full text-center text-title3 font-extrabold leading-none transition-all duration-150 active:scale-95';
 
   const handleDownload = () => {
-    // 카드 이미지 다운로드
+    if (!readingStyleCard) return;
+
+    const link = document.createElement('a');
+    link.href = readingStyleCard;
+    link.download = 'reading-style-card.png';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
 
   return (
-    <div>
+    <div className="pb-28">
       <Header
         title="빼곡한 연말결산"
         leftBtn={
@@ -242,11 +279,21 @@ const Christmas2025 = () => {
 
           <LineTitle text="빼곡한 유저 어워즈" />
           <div className="px-4">
-            <img src={awards1} alt="awards1" className="mt-10 w-full" />
-            <img src={awards2} alt="awards2" className="mt-6 w-full" />
-            <img src={awards3} alt="awards3" className="mt-6 w-full" />
-            <img src={awards4} alt="awards4" className="mt-6 w-full" />
-            <img src={awards5} alt="awards5" className="mb-12 mt-6 w-full" />
+            <AnimatedSection>
+              <img src={awards1} alt="awards1" className="mt-10 w-full" />
+            </AnimatedSection>
+            <AnimatedSection>
+              <img src={awards2} alt="awards2" className="mt-6 w-full" />
+            </AnimatedSection>
+            <AnimatedSection>
+              <img src={awards3} alt="awards3" className="mt-6 w-full" />
+            </AnimatedSection>
+            <AnimatedSection>
+              <img src={awards4} alt="awards4" className="mt-6 w-full" />
+            </AnimatedSection>
+            <AnimatedSection>
+              <img src={awards5} alt="awards5" className="mb-12 mt-6 w-full" />
+            </AnimatedSection>
           </div>
         </div>
       )}
@@ -375,7 +422,15 @@ const Christmas2025 = () => {
           {readingStyleCard && (
             <>
               <TrophyTitle text="독서 스타일 분석" />
-              <img src={readingStyleCard} alt="reading-style-card" className="m-auto my-8 w-[300px]" onClick={handleDownload} />
+              <AnimatedSection>
+                <img
+                  src={readingStyleCard}
+                  alt="reading-style-card"
+                  className="m-auto my-8 w-[300px]"
+                  style={{ boxShadow: '0px 0px 12px 0px #0000001A' }}
+                  onClick={handleDownload}
+                />
+              </AnimatedSection>
             </>
           )}
         </>
