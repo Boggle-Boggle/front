@@ -18,6 +18,7 @@ import EditNickname from 'pages/MyPage/EditNickname';
 import QnA from 'pages/MyPage/QnA';
 import Term from 'pages/MyPage/Term';
 import VersionInfo from 'pages/MyPage/VersionInfo';
+import MyPage2 from 'pages/MyPage/index2';
 import Note from 'pages/Note';
 import PrivateRoute from 'pages/PrivateRoute';
 import Christmas2025 from 'pages/Promotion/Christmas2025';
@@ -42,6 +43,7 @@ const router = createBrowserRouter([
           { path: '/promotion/christmas2025', element: <Christmas2025 /> },
           { path: 'library', element: <Library /> },
           { path: 'myPage', element: <MyPage /> },
+          { path: 'myPage2', element: <MyPage2 /> },
           { path: 'search', element: <Search /> },
           { path: 'detail/:detailId', element: <BookDetail /> },
           { path: 'record/:recordId', element: <Record /> },

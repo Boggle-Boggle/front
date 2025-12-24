@@ -32,8 +32,11 @@ export interface Promotion2025Response {
 }
 
 const getPromotion2025 = async (): Promise<Promotion2025Response> => {
-  const { data } = await api.get<Promotion2025Response>('/promo/christmas');
-  return data;
+  const response = await api.get('/promo/christmas');
+  return response.data.data as Promotion2025Response;
+
+
+
 };
 
 export default getPromotion2025;

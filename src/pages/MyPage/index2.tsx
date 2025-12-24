@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 import Icon from 'components/Icon';
 import Loading from 'pages/Loading';
+import image2025 from 'pages/Promotion/Christmas2025/assets/2025.png';
 
 import useDevice from 'hooks/useDevice';
 import useModal from 'hooks/useModal';
@@ -72,6 +73,13 @@ const MyPage = () => {
             </li>
           </ul>
         </section>
+
+        <Content>
+          <ContentItem handleClick={() => navigate('promotion/christmas2025')}>
+            <img src={image2025} alt="2025" width={48} />
+            빼곡한 연말결산 보기
+          </ContentItem>
+        </Content>
 
         <Content>
           <ContentItem handleClick={() => navigate('QnA')}>자주묻는질문</ContentItem>
