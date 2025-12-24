@@ -1,10 +1,13 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import Header from 'components/Header';
 import Icon from 'components/Icon';
+
+import type { Promotion2025Response } from 'services/promotion';
+import getPromotion2025 from 'services/promotion';
 
 import { CommonBack } from 'assets/icons';
 
@@ -53,6 +56,42 @@ const LineTitle = ({ text }: { text: string }) => {
 const Christmas2025 = () => {
   const navigate = useNavigate();
   const [mode, setMode] = useState<'together' | 'solo'>('together');
+  const [promotionData, setPromotionData] = useState<Promotion2025Response | null>(null);
+
+  useEffect(() => {
+    const fetchPromotion = async () => {
+      try {
+        const data = await getPromotion2025();
+        setPromotionData(data);
+      } catch (error) {
+
+        console.error('크리스마스 프로모션 데이터를 불러오지 못했습니다.', error);
+      }
+    };
+
+    fetchPromotion();
+  }, []);
+
+  const summary = promotionData?.summary ?? {
+    totalBookCount: 0,
+    excludePendingCount: 0,
+    totalNoteCount: 0,
+    averageRating: 0,
+  };
+  const bestBooks = promotionData?.ranking?.bestBooks ?? [];
+  const readingStyleType = promotionData?.readingStyle?.styleType;
+  const readingStyleCardMap: Record<
+    Promotion2025Response['readingStyle']['styleType'],
+    string
+  > = {
+    STEADY: typeRedImage, // 빨
+    INTENSIVE: typePurpleImage, // 보
+    LEISURELY: typeGreenImage, // 초
+    WAVE: typeBlueImage, // 파
+    STARTER: typePinkImage, // 핑
+    FINISHER: typeYellowImage, // 노
+  };
+  const readingStyleCard = readingStyleType ? readingStyleCardMap[readingStyleType] : null;
 
   const pillBase =
     'flex-1 h-full rounded-full text-center text-title3 font-extrabold leading-none transition-all duration-150 active:scale-95';
@@ -202,11 +241,13 @@ const Christmas2025 = () => {
           </div>
 
           <LineTitle text="빼곡한 유저 어워즈" />
-          <img src={awards1} alt="awards1" className="mt-10 w-full" />
-          <img src={awards2} alt="awards2" className="mt-6 w-full" />
-          <img src={awards3} alt="awards3" className="mt-6 w-full" />
-          <img src={awards4} alt="awards4" className="mt-6 w-full" />
-          <img src={awards5} alt="awards5" className="mb-12 mt-6 w-full" />
+          <div className="px-4">
+            <img src={awards1} alt="awards1" className="mt-10 w-full" />
+            <img src={awards2} alt="awards2" className="mt-6 w-full" />
+            <img src={awards3} alt="awards3" className="mt-6 w-full" />
+            <img src={awards4} alt="awards4" className="mt-6 w-full" />
+            <img src={awards5} alt="awards5" className="mb-12 mt-6 w-full" />
+          </div>
         </div>
       )}
 
@@ -215,7 +256,7 @@ const Christmas2025 = () => {
           <div className="relative mb-4 mt-12 text-center font-maruburi text-[20px] font-semibold text-[#D82828]">
             <img src={starImage} alt="star" className="relative z-10 inline-block w-[20px]" />
             <p className="relative z-10 text-[14px] font-bold">2025년</p>
-            <p className="relative z-10 text-[24px] font-bold">{5}권</p>
+            <p className="relative z-10 text-[24px] font-bold">{summary.totalBookCount}권</p>
             <p className="relative z-10 text-[18px] font-bold">꽂으셨습니다</p>
             <div className="relative z-10 mx-auto mt-1 h-[20px] w-[10px] rounded-sm bg-[#D82828]" />
 
@@ -226,7 +267,7 @@ const Christmas2025 = () => {
             <img src={bookImage} alt="book" className="mx-auto h-[64px] w-[141px]" />
             <div className="leading- absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-center">
               <p className="text-[14px]">내가 읽은 책</p>
-              <p className="text-[14px] font-bold">{100}권</p>
+              <p className="text-[14px] font-bold">{summary.excludePendingCount}권</p>
             </div>
           </div>
 
@@ -234,7 +275,7 @@ const Christmas2025 = () => {
             <img src={bookImage} alt="book" className="mx-auto h-[64px] w-[156px]" />
             <div className="leading- absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-center">
               <p className="text-[14px]">나의 독서노트</p>
-              <p className="text-[14px] font-bold">{100}장</p>
+              <p className="text-[14px] font-bold">{summary.totalNoteCount}장</p>
             </div>
           </div>
 
@@ -242,85 +283,101 @@ const Christmas2025 = () => {
             <img src={bookImage} alt="book" className="mx-auto h-[64px] w-[141px]" />
             <div className="leading- absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-center">
               <p className="text-[14px]">평균 평점</p>
-              <p className="text-[14px] font-bold">{4.6}점</p>
+              <p className="text-[14px] font-bold">{summary.averageRating}점</p>
             </div>
           </div>
 
           <img src={cloudImage} alt="cloud" className="mx-auto -mt-10 h-40 w-full object-cover object-top" />
-          <LineTitle text="빼곡한 올해의 나의 책" />
 
-          <div className="flex w-full flex-col items-center px-4 py-4 text-center">
-            <div className="relative">
-              <span className="flex size-[26px] items-center justify-center rounded-full bg-[#D82828] text-[16px] font-semibold text-white">
-                1
-              </span>
-              <img src={crownImage} alt="crown" className="absolute -top-2 left-1/2 w-[20px] -translate-x-1/2" />
-            </div>
-            <img
-              src="https://image.aladin.co.kr/product/31361/35/cover150/e282531099_1.jpg"
-              alt="book"
-              className="mb-3 mt-4 h-[126px] w-[90px] rounded-md"
-            />
+          {bestBooks.length > 0 && (
+            <>
+              <LineTitle text="빼곡한 올해의 나의 책" />
+              {bestBooks[0] && (
+                <>
+                  <div className="flex w-full flex-col items-center px-4 py-4 text-center">
+                    <div className="relative">
+                      <span className="flex size-[26px] items-center justify-center rounded-full bg-[#D82828] text-[16px] font-semibold text-white">
+                        1
+                      </span>
+                      <img src={crownImage} alt="crown" className="absolute -top-2 left-1/2 w-[20px] -translate-x-1/2" />
+                    </div>
+                    <img
+                      src={bestBooks[0].imageUrl}
+                      alt={bestBooks[0].title}
+                      className="mb-3 mt-4 h-[126px] w-[90px] rounded-md"
+                    />
 
-            <span className="text-[20px] font-bold text-[#555555]">급류</span>
-            <span className="text-[#555555]">지은이</span>
-            <span className="text-[14px] text-[#888888]">올해 총 0000회 읽으셨습니다</span>
-            <span className="text-[14px] text-[#888888]">독서노트 0000장 기록하셨습니다</span>
-            <span className="text-[14px] text-[#888888]">별점 0.0점 남기셨습니다</span>
-          </div>
+                    <span className="text-[20px] font-bold text-[#555555]">{bestBooks[0].title}</span>
+                    <span className="text-[#555555]">{bestBooks[0].publisher}</span>
+                    <span className="text-[14px] text-[#888888]">총 {bestBooks[0].readCount}회 읽었어요</span>
+                    <span className="text-[14px] text-[#888888]">독서노트 {bestBooks[0].noteCount}장 기록되었어요</span>
+                    <span className="text-[14px] text-[#888888]">별점 {bestBooks[0].rating}점 남겼어요</span>
+                  </div>
 
-          <img src={lineImage} alt="line" className="w-full px-4" />
-          <div className="flex w-full items-center px-4 py-4">
-            <span className="flex size-[26px] items-center justify-center self-start rounded-full bg-[#CACACA] text-[16px] font-semibold text-white">
-              2
-            </span>
-            <img
-              src="https://image.aladin.co.kr/product/31361/35/cover150/e282531099_1.jpg"
-              alt="book"
-              className="ml-4 h-[126px] w-[90px] rounded-md"
-            />
-            <div className="flex h-[126px] flex-col justify-between pl-[10px]">
-              <div className="flex flex-col">
-                <span className="font-bold text-[#555555]">급류</span>
-                <span className="text-[14px] text-[#888888]">지은이</span>
-              </div>
-              <div className="flex flex-col">
-                <span className="text-[12px] text-[#888888]">총 0000회 읽힘</span>
-                <span className="text-[12px] text-[#888888]">독서노트 0000회 남김</span>
-                <span className="text-[12px] text-[#888888]">별점 0.0점 남김</span>
-              </div>
-            </div>
-          </div>
+                  {bestBooks[1] && <img src={lineImage} alt="line" className="w-full px-4" />}
+                </>
+              )}
 
-          <div className="flex w-full items-center px-4 py-4">
-            <span className="flex size-[26px] items-center justify-center self-start rounded-full bg-[#CACACA] text-[16px] font-semibold text-white">
-              3
-            </span>
-            <img
-              src="https://image.aladin.co.kr/product/31361/35/cover150/e282531099_1.jpg"
-              alt="book"
-              className="ml-4 h-[126px] w-[90px] rounded-md"
-            />
-            <div className="flex h-[126px] flex-col justify-between pl-[10px]">
-              <div className="flex flex-col">
-                <span className="font-bold text-[#555555]">급류</span>
-                <span className="text-[14px] text-[#888888]">지은이</span>
-              </div>
-              <div className="flex flex-col">
-                <span className="text-[12px] text-[#888888]">총 0000회 읽힘</span>
-                <span className="text-[12px] text-[#888888]">독서노트 0000회 남김</span>
-                <span className="text-[12px] text-[#888888]">별점 0.0점 남김</span>
-              </div>
-            </div>
-          </div>
+              {bestBooks[1] && (
+                <>
+                  <div className="flex w-full items-center px-4 py-4">
+                    <span className="flex size-[26px] items-center justify-center self-start rounded-full bg-[#CACACA] text-[16px] font-semibold text-white">
+                      2
+                    </span>
+                    <img
+                      src={bestBooks[1].imageUrl}
+                      alt={bestBooks[1].title}
+                      className="ml-4 h-[126px] w-[90px] rounded-md"
+                    />
+                    <div className="flex h-[126px] flex-col justify-between pl-[10px]">
+                      <div className="flex flex-col">
+                        <span className="font-bold text-[#555555]">{bestBooks[1].title}</span>
+                        <span className="text-[14px] text-[#888888]">{bestBooks[1].publisher}</span>
+                      </div>
+                      <div className="flex flex-col">
+                        <span className="text-[12px] text-[#888888]">총 {bestBooks[1].readCount}회 읽었어요</span>
+                        <span className="text-[12px] text-[#888888]">독서노트 {bestBooks[1].noteCount}회 남겼어요</span>
+                        <span className="text-[12px] text-[#888888]">별점 {bestBooks[1].rating}점 남겼어요</span>
+                      </div>
+                    </div>
+                  </div>
 
-          <TrophyTitle text="독서 스타일 분석" />
-          <img src={typeRedImage} alt="card" className="m-auto my-8 w-[358px]" onClick={handleDownload} />
-          <img src={typeGreenImage} alt="card" className="m-auto my-8 w-[358px]" onClick={handleDownload} />
-          <img src={typeBlueImage} alt="card" className="m-auto my-8 w-[358px]" onClick={handleDownload} />
-          <img src={typeYellowImage} alt="card" className="m-auto my-8 w-[358px]" onClick={handleDownload} />
-          <img src={typePurpleImage} alt="card" className="m-auto my-8 w-[358px]" onClick={handleDownload} />
-          <img src={typePinkImage} alt="card" className="m-auto my-8 w-[358px]" onClick={handleDownload} />
+                  {bestBooks[2] && <img src={lineImage} alt="line" className="w-full px-4" />}
+                </>
+              )}
+
+              {bestBooks[2] && (
+                <div className="flex w-full items-center px-4 py-4">
+                  <span className="flex size-[26px] items-center justify-center self-start rounded-full bg-[#CACACA] text-[16px] font-semibold text-white">
+                    3
+                  </span>
+                  <img
+                    src={bestBooks[2].imageUrl}
+                    alt={bestBooks[2].title}
+                    className="ml-4 h-[126px] w-[90px] rounded-md"
+                  />
+                  <div className="flex h-[126px] flex-col justify-between pl-[10px]">
+                    <div className="flex flex-col">
+                      <span className="font-bold text-[#555555]">{bestBooks[2].title}</span>
+                      <span className="text-[14px] text-[#888888]">{bestBooks[2].publisher}</span>
+                    </div>
+                    <div className="flex flex-col">
+                      <span className="text-[12px] text-[#888888]">총 {bestBooks[2].readCount}회 읽었어요</span>
+                      <span className="text-[12px] text-[#888888]">독서노트 {bestBooks[2].noteCount}회 남겼어요</span>
+                      <span className="text-[12px] text-[#888888]">별점 {bestBooks[2].rating}점 남겼어요</span>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </>
+          )}
+
+          {readingStyleCard && (
+            <>
+              <TrophyTitle text="독서 스타일 분석" />
+              <img src={readingStyleCard} alt="reading-style-card" className="m-auto my-8 w-[300px]" onClick={handleDownload} />
+            </>
+          )}
         </>
       )}
 
