@@ -11,6 +11,7 @@ import { getMyPageInfo, getTermsAgreement } from 'services/user';
 
 import { CommonPencil, MyPageBooks, MyPageMonth, MyPageNotes } from 'assets/icons';
 import ProfileImg from 'assets/img/profile.svg';
+import image2025 from 'pages/Promotion/Christmas2025/assets/2025.png';
 
 import LogoutModal from './LogoutModal';
 import Content from './shared/Content';
@@ -72,6 +73,15 @@ const MyPage = () => {
             </li>
           </ul>
         </section>
+
+        <Content>
+            <ContentItem handleClick={() => navigate('/promotion/christmas2025')}>
+              <div className="flex items-center gap-2">
+                <img src={image2025} alt="2025" width={48} />
+                <span>빼곡한 연말결산 보기</span>
+              </div>
+            </ContentItem>
+          </Content>
 
         <Content>
           <ContentItem handleClick={() => navigate('QnA')}>자주묻는질문</ContentItem>
