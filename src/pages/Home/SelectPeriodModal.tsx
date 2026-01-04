@@ -70,7 +70,7 @@ const SelectPeriodModal = ({
   const handleSelect = () => {
     fetchBooks();
 
-    const newTitle = `${selectedYear ? selectedYear + 2000 : 2025}년 ${selectedMonth === 13 ? '전체보기' : `${selectedMonth}월`}`;
+    const newTitle = `${selectedYear ? selectedYear + 2000 : 2026}년 ${selectedMonth === 13 ? '전체보기' : `${selectedMonth}월`}`;
     setTitle(newTitle);
     close();
   };
