@@ -15,8 +15,8 @@ import SelectPeriodModal from './SelectPeriodModal';
 import PromotionModal from './PromotionModal';
 
 const Home = () => {
-  const [title, setTitle] = useState<string>('2025년 전체보기');
-  const [selectedYear, setSelectedYear] = useState<number | null>(25);
+  const [title, setTitle] = useState<string>('2026년 전체보기');
+  const [selectedYear, setSelectedYear] = useState<number | null>(26);
   const [selectedMonth, setSelectedMonth] = useState<number | null>(13);
 
   const { data: books, refetch } = useQuery({
