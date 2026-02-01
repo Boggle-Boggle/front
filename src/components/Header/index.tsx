@@ -1,34 +1,33 @@
-import { useNavigate } from 'react-router-dom';
-
-import IconButton from 'components/Button/IconButton';
-import { IconArrowLeft } from 'components/icons';
+import BackButton from './BackButton';
 
 type HeaderProps = {
-  prev?: () => void;
   title?: React.ReactNode;
+  leftBtn?: React.ReactNode;
   rightBtn?: React.ReactNode;
+  withBack?: boolean;
   withSpacer?: boolean;
   transparent?: boolean;
 };
 
-const Header = ({ prev, title, rightBtn, withSpacer = true, transparent = false }: HeaderProps) => {
-  const navigate = useNavigate();
-
+const Header = ({
+  title,
+  leftBtn,
+  rightBtn,
+  withBack = false,
+  withSpacer = true,
+  transparent = false,
+}: HeaderProps) => {
+  const transparentClass = transparent ? 'bg-transparent' : 'bg-neutral-0';
   return (
     <>
       <div
-        className={`fixed z-header grid h-header w-full max-w-mobile grid-cols-[1fr_auto_1fr] items-center pt-safe-top ${
-          transparent ? 'bg-transparent' : 'bg-neutral-0'
-        }`}
+        className={`fixed z-header grid h-header w-full max-w-mobile grid-cols-[1fr_auto_1fr] items-center pt-safe-top ${transparentClass}`}
       >
         <div className="flex justify-start">
-          <IconButton onClick={prev || (() => navigate(-1))} label="뒤로가기">
-            <IconArrowLeft className="size-icon-md" />
-          </IconButton>
+          {withBack && <BackButton />}
+          {leftBtn}
         </div>
-
         <h1 className="truncate px-2 text-center text-body1">{title}</h1>
-
         <div className="flex justify-end">{rightBtn}</div>
       </div>
 
