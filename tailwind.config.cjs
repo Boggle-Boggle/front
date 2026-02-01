@@ -13,7 +13,7 @@ module.exports = {
 
         // 시스템 컬러
         information: '#2c80ff',
-        warning: '#E3B92E',
+        warning: '#FFE23C',
         danger: '#fc6533',
 
         // 블랙
@@ -23,14 +23,6 @@ module.exports = {
         'neutral-40': '#cacaca',
         'neutral-20': '#eeeeee',
         'neutral-0': '#ffffff',
-
-        // 기존 컬러(삭제예정)
-        main: '#EEEDEB',
-        accent: '#E6B9A6',
-        sub: '#939185',
-        text: '#2F3645',
-        gray: '#DCD7D6',
-        red: '#D62321',
       },
 
       fontFamily: {
@@ -40,16 +32,18 @@ module.exports = {
       },
 
       fontSize: {
-        h1: ['1.75rem', { fontWeight: '700', lineHeight: '140%' }],
-        h2: ['1.75rem', { fontWeight: '300', lineHeight: '140%' }],
-        h3: ['1.375rem', { fontWeight: '300', lineHeight: '140%' }],
+        h1: ['1.75rem', { fontWeight: '700', lineHeight: '130%' }],
+        h2: ['1.75rem', { fontWeight: '300', lineHeight: '130%' }],
+        h3: ['1.375rem', { fontWeight: '300', lineHeight: '135%' }],
         title1: ['1.375rem', { fontWeight: '700', lineHeight: '140%' }],
         title2: ['1.25rem', { fontWeight: '700', lineHeight: '140%' }],
-        title3: ['1rem', { fontWeight: '700', lineHeight: '140%' }],
+        title3: ['1.125rem', { fontWeight: '500', lineHeight: '140%' }],
+        title4: ['1rem', { fontWeight: '700', lineHeight: '140%' }],
         body1: ['1rem', { fontWeight: '500', lineHeight: '140%' }],
         body2: ['0.875rem', { fontWeight: '700', lineHeight: '140%' }],
         caption1: ['0.875rem', { fontWeight: '500', lineHeight: '140%' }],
         caption2: ['0.875rem', { fontWeight: '300', lineHeight: '140%' }],
+        caption2: ['0.75rem', { fontWeight: '300', lineHeight: '120%' }],
       },
 
       spacing: {
@@ -64,12 +58,6 @@ module.exports = {
         'icon-md': '1.5rem',
         'icon-lg': '2rem',
         'icon-navigation': '1.75rem',
-
-        // 기존 spacing(삭제예정)
-        headerIOS: '6rem',
-        headerAnd: '4rem',
-        footerIOS: '6rem',
-        footerAnd: '5.5rem',
       },
 
       maxWidth: {

@@ -3,9 +3,9 @@
 @tailwind utilities;
 
 @layer base {
-  *:not(svg):not(svg *) {
+  body {
     @apply font-pretendard text-neutral-100;
-    @apply select-none list-none focus:outline-none;
+    @apply select-none list-none outline-none;
   }
 
   :root {
@@ -20,13 +20,13 @@
 /* 테마색상 */
 @layer base {
   html[data-theme='RedGrapefruit'] {
-    --color-primary: #f45e50;
+    --color-primary: #e9aca6;
     --color-primary-light: #ed8e85;
     --color-secondary: #fbbaba;
     --color-secondary-light: #fff4f4;
   }
 
-  html[data-theme='LemonadeBreeze'] {
+  html[data-theme='Lemonade'] {
     --color-primary: #c4d966;
     --color-primary-light: #fff5a8;
     --color-secondary: #fffbea;
@@ -34,7 +34,7 @@
   }
 
   html[data-theme='GreenFlowerGarden'] {
-    --color-primary: #6fc444;
+    --color-primary: #8bcfa7;
     --color-primary-light: #a6d68e;
     --color-secondary: #f4f5ce;
     --color-secondary-light: #aedef5;
@@ -48,15 +48,29 @@
   }
 
   html[data-theme='BlueToy'] {
-    --color-primary: #509bff;
+    --color-primary: #acc1de;
     --color-primary-light: #98c3fd;
     --color-secondary: #fffdea;
     --color-secondary-light: #c7f5f1;
   }
-
-  /* Peach Candy */
-  /* Rainbow Toyroom */
-  /* Grey Scale */
+  html[data-theme='RomanticPurple'] {
+    --color-primary: #b5b8f0;
+    --color-primary-light: #a294f9;
+    --color-secondary: #f5efff;
+    --color-secondary-light: #c1daff;
+  }
+  html[data-theme='PeachCandy'] {
+    --color-primary: #dda8c5;
+    --color-primary-light: #f49dcd;
+    --color-secondary: #ffcfde;
+    --color-secondary-light: #ffd9ee;
+  }
+  html[data-theme='GreyScale'] {
+    --color-primary: #0d0d0d;
+    --color-primary-light: #555555;
+    --color-secondary: #888888;
+    --color-secondary-light: #ffffff;
+  }
 }
 
 .scrollbar-hide {
