@@ -6,8 +6,8 @@ import App from './App';
 // const Auth = lazy(() => import('pages/Auth'));
 // const BookDetail = lazy(() => import('pages/BookDetail'));
 const Main = lazy(() => import('pages/Main'));
-const WithBottomNavLayout = lazy(() => import('pages/legacy/Layout/WithBottomNavLayout'));
-const WithoutBottomNavLayout = lazy(() => import('pages/legacy/Layout/WithoutBottomNavLayout'));
+const WithBottomNavLayout = lazy(() => import('pages/Layout/WithBottomNavLayout'));
+const WithoutBottomNavLayout = lazy(() => import('pages/Layout/WithoutBottomNavLayout'));
 // const Library = lazy(() => import('pages/Library'));
 // const Login = lazy(() => import('pages/Login'));
 // const MyPage = lazy(() => import('pages/MyPage'));
@@ -20,7 +20,7 @@ const WithoutBottomNavLayout = lazy(() => import('pages/legacy/Layout/WithoutBot
 // const Note = lazy(() => import('pages/Note'));
 const PrivateRoute = lazy(() => import('pages/PrivateRoute'));
 // const Record = lazy(() => import('pages/Record'));
-// const Search = lazy(() => import('pages/Record'));
+const Search = lazy(() => import('pages/Search'));
 // const SignUp = lazy(() => import('pages/SignUp'));
 
 const router = createBrowserRouter([
@@ -36,9 +36,9 @@ const router = createBrowserRouter([
             element: <WithBottomNavLayout />,
             children: [
               { path: '/', element: <Main /> },
+              { path: 'search', element: <Search /> },
               // { path: 'library', element: <Library /> },
               // { path: 'myPage', element: <MyPage /> },
-              // { path: 'search', element: <Search /> },
               // { path: 'detail/:detailId', element: <BookDetail /> },
               // { path: 'record/:recordId', element: <Record /> },
               // { path: 'edit/:recordId', element: <Edit /> },
