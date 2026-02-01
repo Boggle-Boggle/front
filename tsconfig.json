@@ -49,6 +49,9 @@
       ],
       "constants/*": [
         "src/constants/*"
+      ],
+      "routes/*": [
+        "src/routes/*"
       ]
     },
     /* Linting */
