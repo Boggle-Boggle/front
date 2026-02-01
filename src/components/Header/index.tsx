@@ -1,8 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 
+import IconButton from 'components/Button/IconButton';
 import { IconArrowLeft } from 'components/icons';
-
-import IconButton from './refactor/Button/IconButton';
 
 type HeaderProps = {
   prev?: () => void;

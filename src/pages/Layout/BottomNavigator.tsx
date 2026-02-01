@@ -9,7 +9,7 @@ import {
   IconHomeFilled,
   IconLibrary,
   IconLibraryFilled,
-} from './icons';
+} from 'components/icons';
 
 const Navigator = [
   {

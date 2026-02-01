@@ -1,6 +1,6 @@
 import { Outlet } from 'react-router-dom';
 
-import BottomNavigator from 'components/BottomNavigator';
+import BottomNavigator from './BottomNavigator';
 
 const WithBottomNavLayout = () => {
   return (
