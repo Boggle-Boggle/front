@@ -3,7 +3,7 @@ import { useEffect, useReducer, useState } from 'react';
 import Alert from 'components/Alert';
 import Button from 'components/Button';
 import HalfScreenModal from 'components/HalfScreenModal';
-import DateSelector from 'pages/BookDetail/ReadingRecordForm/shared/DateSelector';
+import DateSelector from 'pages/legacy/BookDetail/ReadingRecordForm/shared/DateSelector';
 
 import { formatDate, formatDateAndTime, isValidDate } from 'utils/format';
 
@@ -121,14 +121,14 @@ const EditReadingDateModal = ({ editDateIndex, readDates, setReadDates, close }:
               <p className="pb-1 pt-2 text-lg font-bold">진행도</p>
               <div className="flex w-full justify-between text-sm">
                 <button
-                  className={`flex h-[4.5rem] w-[48%] flex-col justify-around rounded-[10px] border-2 px-4 py-2 ${selected === 'completed' ? 'border-accent bg-accent bg-opacity-10 text-accent' : 'border-main'}`}
+                  className={`flex h-[4.5rem] w-[48%] flex-col justify-around rounded-[10px] border-2 px-4 py-2 ${selected === 'completed' ? 'border-accent bg-accent text-accent bg-opacity-10' : 'border-main'}`}
                   type="button"
                   onClick={() => setSelected('completed')}
                 >
                   다 읽은 책이에요
                 </button>
                 <button
-                  className={`flex h-[4.5rem] w-[48%] flex-col justify-around rounded-[10px] border-2 px-4 py-2 ${selected === 'reading' ? 'border-accent bg-accent bg-opacity-10 text-accent' : 'border-main'}`}
+                  className={`flex h-[4.5rem] w-[48%] flex-col justify-around rounded-[10px] border-2 px-4 py-2 ${selected === 'reading' ? 'border-accent bg-accent text-accent bg-opacity-10' : 'border-main'}`}
                   type="button"
                   onClick={() => setSelected('reading')}
                 >
@@ -139,7 +139,7 @@ const EditReadingDateModal = ({ editDateIndex, readDates, setReadDates, close }:
               <p className="pb-1 pt-4 text-lg font-bold">독서기간</p>
               <section>
                 <button
-                  className="mb-4 flex w-full items-center justify-between rounded-[10px] border-2 border-accent bg-white p-4 text-sm"
+                  className="border-accent mb-4 flex w-full items-center justify-between rounded-[10px] border-2 bg-white p-4 text-sm"
                   onClick={() => setIsChangeStartDate(true)}
                   type="button"
                 >
@@ -158,7 +158,7 @@ const EditReadingDateModal = ({ editDateIndex, readDates, setReadDates, close }:
                 </button>
 
                 {selected === 'reading' ? (
-                  <div className="mb-4 flex items-center justify-between rounded-[10px] border-2 border-accent bg-white p-4 text-sm">
+                  <div className="border-accent mb-4 flex items-center justify-between rounded-[10px] border-2 bg-white p-4 text-sm">
                     <div>
                       <span className="ml-2 opacity-60">다 읽은 날</span>
                     </div>
@@ -166,7 +166,7 @@ const EditReadingDateModal = ({ editDateIndex, readDates, setReadDates, close }:
                   </div>
                 ) : (
                   <button
-                    className="mb-4 flex w-full items-center justify-between rounded-[10px] border-2 border-accent bg-white p-4 text-sm"
+                    className="border-accent mb-4 flex w-full items-center justify-between rounded-[10px] border-2 bg-white p-4 text-sm"
                     onClick={() => setIsChangeEndDate(true)}
                     type="button"
                   >

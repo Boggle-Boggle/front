@@ -1,6 +1,6 @@
 import Button from 'components/Button';
 import HalfScreenModal from 'components/HalfScreenModal';
-import Selector from 'pages/BookDetail/ReadingRecordForm/shared/Selector';
+import Selector from 'pages/legacy/BookDetail/ReadingRecordForm/shared/Selector';
 
 export const DATE_STATUS = {
   YEARS: [
@@ -78,7 +78,7 @@ const SelectPeriodModal = ({
     <HalfScreenModal>
       <div className="absolute bottom-0 left-0 top-0 z-30 flex h-full w-full flex-col rounded-t-2xl bg-white">
         <p className="py-3 text-center">기간 선택</p>
-        <hr className="h-[2px] border-none bg-accent" />
+        <hr className="bg-accent h-[2px] border-none" />
         <section className="flex">
           {selectedYear !== null && selectedMonth !== null && (
             <>

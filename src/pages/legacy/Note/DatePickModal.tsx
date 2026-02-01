@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react';
 
 import Button from 'components/Button';
 import Modal from 'components/Modal';
-import { DATE_STATUS } from 'pages/BookDetail/ReadingRecordForm/shared/DateSelector';
-import Selector from 'pages/BookDetail/ReadingRecordForm/shared/Selector';
+import { DATE_STATUS } from 'pages/legacy/BookDetail/ReadingRecordForm/shared/DateSelector';
+import Selector from 'pages/legacy/BookDetail/ReadingRecordForm/shared/Selector';
 
 type DatePickModalProps = {
   isOpen: boolean;
@@ -48,7 +48,7 @@ const DatePickModal = ({ isOpen, close, scrollPos, setSelectedDate, initialDate 
       <section className="relative h-auto w-80 text-center">
         <div className="z-30 flex h-full w-full flex-col rounded-t-2xl bg-white">
           <p className="py-3 text-center"> 날짜 선택</p>
-          <hr className="h-[2px] border-none bg-accent" />
+          <hr className="bg-accent h-[2px] border-none" />
           <section className="flex">
             {selectedYear !== null && selectedMonth !== null && selectedDay !== null && (
               <>
