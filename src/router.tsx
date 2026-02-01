@@ -5,7 +5,7 @@ import App from './App';
 
 // const Auth = lazy(() => import('pages/Auth'));
 // const BookDetail = lazy(() => import('pages/BookDetail'));
-const Home = lazy(() => import('pages/legacy/Home'));
+const Main = lazy(() => import('pages/Main'));
 const WithBottomNavLayout = lazy(() => import('pages/legacy/Layout/WithBottomNavLayout'));
 const WithoutBottomNavLayout = lazy(() => import('pages/legacy/Layout/WithoutBottomNavLayout'));
 // const Library = lazy(() => import('pages/Library'));
@@ -35,7 +35,7 @@ const router = createBrowserRouter([
           {
             element: <WithBottomNavLayout />,
             children: [
-              { path: '/', element: <Home /> },
+              { path: '/', element: <Main /> },
               // { path: 'library', element: <Library /> },
               // { path: 'myPage', element: <MyPage /> },
               // { path: 'search', element: <Search /> },
