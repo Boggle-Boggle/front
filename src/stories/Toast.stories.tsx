@@ -2,9 +2,9 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 
 import useToastStore from 'stores/useToastStore';
 
-import { Button } from 'components/refactor/Button';
-import Toast from 'components/refactor/Toast';
-import ToastContainer from 'components/refactor/Toast/ToastContainer';
+import { Button } from 'components/Button';
+import Toast from 'components/Toast';
+import ToastContainer from 'components/Toast/ToastContainer';
 
 const meta: Meta<typeof Toast> = {
   title: 'Components/Toast',

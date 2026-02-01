@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 
-import { ToastProps } from 'components/refactor/Toast';
+import { ToastProps } from 'components/Toast';
 
 type Toast = ToastProps & { id: string };
 

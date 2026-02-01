@@ -3,8 +3,8 @@ import useToastStore from 'stores/useToastStore';
 
 import Header from 'components/Header';
 import { IconCircleCancelFilled } from 'components/icons';
-import { BottomButton } from 'components/refactor/Button';
-import IconButton from 'components/refactor/Button/IconButton';
+import { BottomButton } from 'components/Button';
+import IconButton from 'components/Button/IconButton';
 import Highlight from 'components/refactor/Highlight';
 
 import useInput from 'hooks/useInput';

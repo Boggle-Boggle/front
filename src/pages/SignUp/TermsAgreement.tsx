@@ -5,7 +5,7 @@ import useNicknameStore from 'stores/useNicknameStore';
 
 import Header from 'components/Header';
 import { IconArrowRight } from 'components/icons';
-import { BottomButton, Button } from 'components/refactor/Button';
+import { BottomButton, Button } from 'components/Button';
 import CheckBox from 'components/refactor/CheckBox';
 import Highlight from 'components/refactor/Highlight';
 

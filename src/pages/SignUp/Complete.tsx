@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 
-import { BottomButton } from 'components/refactor/Button';
+import { BottomButton } from 'components/Button';
 import Highlight from 'components/refactor/Highlight';
 
 import signup_complete from 'assets/img/signup_complete.png';
