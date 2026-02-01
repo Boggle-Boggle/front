@@ -4,10 +4,12 @@ import BookCase from './BookCase';
 
 const Main = () => {
   return (
-    <div className="flex h-dvh flex-col items-center justify-center overflow-scroll">
+    <>
       <Header withSpacer={false} title="타이틀" rightBtn={<button aria-label="기간선택" type="button" />} />
-      <BookCase />
-    </div>
+      <div className="flex h-dvh flex-col items-center justify-center overflow-scroll">
+        <BookCase />
+      </div>
+    </>
   );
 };
 
