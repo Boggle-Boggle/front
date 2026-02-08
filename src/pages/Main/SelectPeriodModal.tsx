@@ -1,5 +1,5 @@
-import Button from 'components/Button';
-import HalfScreenModal from 'components/HalfScreenModal';
+// import Button from 'components/Button';
+// import HalfScreenModal from 'components/HalfScreenModal';
 import Selector from 'pages/legacy/BookDetail/ReadingRecordForm/shared/Selector';
 
 export const DATE_STATUS = {
@@ -74,25 +74,26 @@ const SelectPeriodModal = ({
     close();
   };
 
-  return (
-    <HalfScreenModal>
-      <div className="absolute bottom-0 left-0 top-0 z-30 flex h-full w-full flex-col rounded-t-2xl bg-white">
-        <p className="py-3 text-center">기간 선택</p>
-        <hr className="bg-accent h-[2px] border-none" />
-        <section className="flex">
-          {selectedYear !== null && selectedMonth !== null && (
-            <>
-              <Selector list={DATE_STATUS.YEARS} selected={selectedYear} setSelected={setSelectedYear} />
-              <Selector list={DATE_STATUS.MONTH} selected={selectedMonth} setSelected={setSelectedMonth} />
-            </>
-          )}
-        </section>
-        <Button className="mx-auto mb-6 mt-auto w-5/6 font-bold text-white" handleClick={handleSelect}>
-          선택
-        </Button>
-      </div>
-    </HalfScreenModal>
-  );
+  return <div> dd</div>;
+  // return (
+  //   <HalfScreenModal>
+  //     <div className="absolute bottom-0 left-0 top-0 z-30 flex h-full w-full flex-col rounded-t-2xl bg-white">
+  //       <p className="py-3 text-center">기간 선택</p>
+  //       <hr className="bg-accent h-[2px] border-none" />
+  //       <section className="flex">
+  //         {selectedYear !== null && selectedMonth !== null && (
+  //           <>
+  //             <Selector list={DATE_STATUS.YEARS} selected={selectedYear} setSelected={setSelectedYear} />
+  //             <Selector list={DATE_STATUS.MONTH} selected={selectedMonth} setSelected={setSelectedMonth} />
+  //           </>
+  //         )}
+  //       </section>
+  //       <Button className="mx-auto mb-6 mt-auto w-5/6 font-bold text-white" handleClick={handleSelect}>
+  //         선택
+  //       </Button>
+  //     </div>
+  //   </HalfScreenModal>
+  // );
 };
 
 export default SelectPeriodModal;
