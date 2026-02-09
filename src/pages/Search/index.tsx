@@ -7,7 +7,7 @@ import TrendingSection from './sections/TrendingSection';
 
 const Search = () => {
   return (
-    <div className="start flex h-dvh flex-col items-center justify-center overflow-scroll">
+    <div className="h-full w-full flex-col items-center justify-start overflow-y-auto">
       <Searchbar className="w-full px-mobile" value="" onChange={() => {}} placeholder="책 제목을 입력해주세요" />
       <MostReadSection />
       <TrendingSection />
