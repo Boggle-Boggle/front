@@ -2,21 +2,26 @@ import Highlight from 'components/Highlight';
 import ArrowRight from 'components/icons/ArrowRight';
 
 type TitleProps = {
-  text?: string;
-  showMore?: boolean;
-  onMoreClick?: () => void;
+  text: string;
+  onLoadMore?: () => void;
 };
 
-export function Title({ text = '가장 많이 읽힌 책', showMore = true, onMoreClick }: TitleProps) {
+const Title = ({ text, onLoadMore }: TitleProps) => {
   return (
     <div className="flex w-full items-center justify-between px-mobile py-5">
       <Highlight text={text} className="text-title3" />
-      {showMore ? (
-        <button className="flex items-center gap-[3px] text-caption1 text-neutral-40" onClick={onMoreClick}>
+      {onLoadMore && (
+        <button
+          type="button"
+          className="flex items-center gap-[3px] text-caption1 text-neutral-40"
+          onClick={onLoadMore}
+        >
           <span>더보기</span>
           <ArrowRight />
         </button>
-      ) : null}
+      )}
     </div>
   );
-}
+};
+
+export default Title;
