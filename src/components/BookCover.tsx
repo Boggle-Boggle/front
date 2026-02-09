@@ -1,10 +1,12 @@
 type BookCoverProps = {
   size: 'mini' | 'small' | 'medium' | 'large';
+  url: string;
   label?: string;
-  hasShadow?: boolean;
+  shadowLeftBar?: boolean;
+  // shadowBackTriangle?: boolean;
 };
 
-export function BookCover({ size, label }: BookCoverProps) {
+export const BookCover = ({ size, url, label = '', shadowLeftBar }: BookCoverProps) => {
   const sizeClasses = {
     mini: 'w-[2.5rem] h-[3.5rem] rounded-[4px]',
     small: 'w-[5rem] h-[6.9375rem] rounded-[4px]',
@@ -13,8 +15,16 @@ export function BookCover({ size, label }: BookCoverProps) {
   };
 
   return (
-    <img className={sizeClasses[size]} src="https://image.aladin.co.kr/product/38515/3/cover500/e202637227_1.jpg" />
+    <div className="relative inline-block">
+      <img className={`relative z-20 ${sizeClasses[size]}`} src={url} alt={label} />
+      {shadowLeftBar && (
+        <span
+          className="pointer-events-none absolute left-0 top-0 z-30 h-full w-[9px] mix-blend-multiply"
+          style={{ background: 'linear-gradient(90deg, #FFFFFF 65%, #E0E0E0 100%)' }}
+        />
+      )}
+    </div>
   );
-}
+};
 
 export default BookCover;
