@@ -1,5 +1,5 @@
 import { HorizontalBookList } from '../shared/HorizontalBookList';
-import { Title } from '../shared/Title';
+import Title from '../shared/Title';
 
 const TrendingSection = () => {
   return (
