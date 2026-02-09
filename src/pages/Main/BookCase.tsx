@@ -245,21 +245,18 @@ const BookCase = () => {
   }
 
   const outerHeight = 524 + 126 * (allBooks.length - 4);
+  const outerBoxShadow = 'inset 2px 2px 2px rgba(255, 255, 255, 0.6), inset -2px -3px 3px rgba(53, 27, 20, 0.25)';
   const innerHeight = 484 + 126 * (allBooks.length - 4);
+  const innerBoxShadow = '2px 2px 2px rgba(255, 255, 255, 0.6), -2px -2px 2px rgba(53, 27, 20, 0.25)';
+  const dividerHeight = 20 + 126 * (allBooks.length - 4);
 
   return (
     <div
-      style={{
-        boxShadow: `inset 2px 2px 2px rgba(255, 255, 255, 0.6), inset -2px -3px 3px rgba(53, 27, 20, 0.25)`,
-        height: outerHeight,
-      }}
+      style={{ boxShadow: outerBoxShadow, height: outerHeight }}
       className="w-[21.438rem] rounded-[32px] border border-neutral-20 p-5"
     >
       <div
-        style={{
-          boxShadow: `2px 2px 2px rgba(255, 255, 255, 0.6), -2px -2px 2px rgba(53, 27, 20, 0.25)`,
-          height: innerHeight,
-        }}
+        style={{ boxShadow: innerBoxShadow, height: innerHeight }}
         className="w-[18.938rem] rounded-xl bg-neutral-20"
       >
         {allBooks.map((books, idx) => (

@@ -1,14 +1,15 @@
-import Cancel from './icons/Cancel';
-import Search from './icons/Search';
+import Cancel from 'components/icons/Cancel';
+import Search from 'components/icons/Search';
 
 type SearchbarProps = {
   value: string;
   onChange: (value: string) => void;
   onSubmit?: () => void;
   placeholder?: string;
+  className?: string;
 };
 
-const Searchbar = ({ value, onChange, onSubmit, placeholder }: SearchbarProps) => {
+const Searchbar = ({ value, onChange, onSubmit, placeholder, className }: SearchbarProps) => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     onSubmit?.();
@@ -21,7 +22,7 @@ const Searchbar = ({ value, onChange, onSubmit, placeholder }: SearchbarProps) =
   return (
     <form
       onSubmit={handleSubmit}
-      className="h-10 w-full rounded-[28px] border border-neutral-20 bg-neutral-0 px-4 py-2"
+      className={'flex h-10 w-full rounded-[28px] border border-neutral-20 px-4 py-2' + className}
     >
       <input
         type="text"
