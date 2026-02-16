@@ -1,165 +1,339 @@
-AI Coding Agent & Collaboration Guidelines
-Purpose
-This document defines the standard code conventions and architectural rules for this project. All AI agents and collaborators must strictly adhere to these guidelines.
+## Purpose
 
-Tech Stack
-Framework: React (Functional Components only)
+This document defines the essential coding standards and architectural principles for the reading journal app **Ppaegok**.
 
-Language: TypeScript (Strict mode)
+The current codebase consists of legacy code from an older version of Ppaegok that carries significant technical debt, severely hindering scalability and maintainability. A complete refactor to a new design is planned.
 
-Server State: Tanstack Query (React Query)
+## Tech Stack
 
-Global State: Zustand (Minimal usage)
+- React (Functional Components only)
+- TypeScript (strict mode)
+- Tanstack Query (server state)
+- Zustand (client global state, minimize usage)
+- Tailwind
+- React Hook Form
+- Zod
 
-Styling: Tailwind CSS
+## Directory Structure (Page based)
 
-Forms & Validation: React Hook Form, Zod
+### 1. Page is the default unit
 
-Directory Structure (Page-based)
+- The base structure is **page-based**.
+- Every page must be created as a folder.
+- Sub-routes are created as folders with the same structure inside the parent page folder.
+- The routing structure and folder structure must always match.
+- Even for non-page units, a folder can be created if the UI/feature boundary is clear (e.g., sections, flows, steps, tabs, etc.)
 
-1. Page as the Default Unit
-   The basic structure is page-based.
+### 2. Folder naming & entry file
 
-Every page must be created as a folder.
+- Folder names follow the **component (page) name** and use PascalCase.
+- The entry component file for a folder must always be **`index.tsx`**.
+  - Example: `src/pages/OrderDetail/index.tsx`
 
-Sub-routes must be created as folders within the parent page folder, maintaining a nested structure.
+### 3. Page-local reuse (shared within the folder)
 
-The routing hierarchy and folder structure must always match.
+- Components/logic reused only within a specific page (folder) should not be moved to the global scope.
+- Create a **`shared/` directory** inside that folder and manage them there.
+  - Example: `src/pages/OrderDetail/shared/*`
+- `shared/` only allows things that are "shared within that folder's scope."
 
-Non-page units (Sections, Flows, Steps, Tabs) can also be folders if the UI/functional unit is distinct.
+### 4. Global modules placement
 
-2. Folder Naming & Entry File
-   Folder names use PascalCase (based on the component/page name).
+- Global state: `src/stores`
+- Utils: `src/utils`
+- Global hooks: `src/hooks`
+- Global components: `src/components`
 
-The entry file for any folder must be index.tsx.
+### 5. Example (recommended)
 
-Example: src/pages/OrderDetail/index.tsx
+```tsx
+src/
+- pages/
+    - OrderDetail/
+        - index.tsx
+        - useOrderDetailState.ts
+        - shared/
+            - Title.tsx
+            - Content.tsx
+- components/
+- hooks/
+- stores/
+- utils/
+```
 
-3. Page-local Reuse (Scoped Sharing)
-   Components or logic used only within a specific page/folder should not be moved to the global scope.
+## Component Rules
 
-Manage these within a shared/ directory inside that specific folder.
+### 1. Component Declaration
 
-Example: src/pages/OrderDetail/shared/\*
+- All components must be declared as arrow functions.
+- Allowed:
 
-4. Global Modules Placement
-   Global State: src/stores
-
-Utilities: src/utils
-
-Global Hooks: src/hooks
-
-Global Components: src/components
-
-Component Rules
-
-1. Component Declaration
-   All components must be declared using arrow functions.
-
-Allowed:
-
-TypeScript
+```tsx
 export const BookCard = () => {
-return <div />;
-}; 2. File & Folder Naming
-Use PascalCase for component names.
+  return <div />;
+};
+```
 
-Components are managed as folders. The folder name is the component name, containing an index.tsx.
+### 2. Component File & Folder Naming
 
-3. Props Type Declaration
-   Use type for prop definitions (not interface).
+- Component names use PascalCase.
+- Components are organized at the folder level (not file level). The folder name is the component name, with `index.tsx` inside.
+- Allowed:
 
-Naming convention: [ComponentName]Props.
+```tsx
+BookCard / index.tsx;
 
-Destructure props at the top level of the component body.
+BookList / index.tsx;
+```
 
-Allowed:
+### 3. Props Type Declaration
 
-TypeScript
+- Props types must be declared with `type`.
+- The type name must follow the format **"ComponentName + Props"**.
+- Component parameters must be received as `props` and destructured at the very top inside the component.
+- Allowed:
+
+```tsx
 type BookCardProps = {
-title: string;
-author: string;
+  title: string;
+  author: string;
 };
 
 export const BookCard = (props: BookCardProps) => {
-const { title, author } = props;
-return <div>{title}</div>;
-}; 4. Conditional Rendering
-Return null explicitly for conditional rendering when nothing should be shown.
+  const { title, author } = props;
 
-5. Handler Declaration
-   All event handlers must be declared separately from the JSX.
+  return <div>{title}</div>;
+};
+```
 
-For single-line logic, use direct references.
+### 4. Conditional Rendering
 
-6. Named Export Only
-   Use named exports for all components. Default exports are prohibited.
+- Conditional rendering must always return `null`.
+- Allowed:
 
-7. Component Responsibility
-   Components handle UI only.
+```tsx
+export const BookCard = (props: BookCardProps) => {
+  const { book } = props;
 
-Data processing and business logic must be abstracted into custom hooks.
+  if (!book) return null;
 
-Forbidden: Fetching or processing raw data directly inside the component body.
+  return <div>{book.title}</div>;
+};
+```
 
-State Management Rules
+### 5. Handler Declaration
 
-1. Server State Fetching
-   Use TanStack Query for all server data fetching. useEffect + fetch is prohibited.
+- All event handlers must be declared separately.
+- For single-line logic, use a direct reference instead of declaring a function.
+- Allowed:
 
-Define queries in a custom hook in the same directory level (or shared/).
+```tsx
+const handleClick = doSomething;
 
-2. Query Key Rules
-   queryKey must be an Array.
+return <button onClick={handleClick} />;
 
-Structure: [Resource Name, Identifier/Parameter].
+or;
 
-Order: Static String → Dynamic Value.
+const handleClick = () => {
+  doSomething();
+  logEvent();
+};
 
-3. Server State Update (Mutation)
-   Use useMutation for updates.
+return <button onClick={handleClick} />;
+```
 
-Invalidate relevant queries in the onSuccess callback to sync the cache.
+### 6. Named Export Only
 
-4. Zustand Usage
-   Minimize Zustand usage.
+- All components must use named exports.
+- Allowed:
 
-Always ask the user for permission before implementing a new Zustand store.
+```tsx
+export const BookCard = () => {
+  return <div />;
+};
 
-Use Zustand only for global UI states.
+import { BookCard } from '@/components/BookCard';
+```
 
-5. Local State Typing
-   Always provide Generics when using useState.
+### 7. Component Responsibility
 
-Example: const [count, setCount] = useState<number>(0);
+- Components are responsible for UI only.
+- Data processing and business logic must be separated into hooks.
+- Allowed:
 
-6. Memoization
-   Always ask the user for permission before using useMemo or useCallback. Do not over-optimize prematurely.
+```tsx
+const useBookCard = () => {
+  return { title: 'React' };
+};
 
-7. Form Management
-   Always ask the user for permission before implementing React Hook Form + Zod.
+export const BookCard = (props: BookCardProps) => {
+  const { title } = useBookCard();
 
-Code Ordering
-Inside a Component:
-State & Refs: useState, useRef, useContext, etc.
+  return <div>{title}</div>;
+};
+```
 
-Data & Effects: useQuery, useMutation, useEffect.
+- Forbidden:
 
-Memoization: useMemo, useCallback.
+```tsx
+export const BookCard = () => {
+  const data = fetch('/api/book');
+  const parsed = process(data);
 
-Logic: Event handlers, internal helper functions.
+  return <div>{parsed.title}</div>;
+};
+```
 
-Render: JSX return statement.
+## State Rules
 
-Inside a File:
-Imports
+### 1. Server State Fetching
 
-Interfaces/Types
+- Server data fetching must use TanStack Query (React Query) — never `useEffect + fetch` directly.
+- Query declarations must be separated into a custom hook at the same level, not defined inside the component.
+- Allowed:
 
-Constants (Consider i18n support)
+```tsx
+export const useBooksQuery = (page: number) => {
+  return useQuery({
+    queryKey: bookKeys.list({ page }),
+    queryFn: () => getBooks({ page }),
+  });
+};
 
-Main Component (Named Export)
+export const Books = () => {
+  const { data, isLoading, error } = useBooksQuery(1);
 
-Sub-components (Internal use only)
+  if (isLoading) return null;
+  if (error) return null;
 
-External Utility Functions
+  return <div>{data?.items?.length ?? 0}</div>;
+};
+```
+
+### 2. Query Key Rules
+
+- `queryKey` must always be written as an array.
+- `queryKey` must follow the structure of **resource name + identifier or parameters**.
+- `queryKey` must always be ordered as **static string → dynamic value**.
+- A single string value form is not allowed.
+- Allowed:
+
+```tsx
+export const useBookDetailQuery = (bookId: string) => {
+  return useQuery({
+    queryKey: ['books', 'detail', bookId],
+    queryFn: () => getBook(bookId),
+    enabled: Boolean(bookId),
+  });
+};
+```
+
+### 3. Server State Update (Mutation)
+
+- Server state changes must use `useMutation`.
+- Mutation declarations must be separated into a custom hook at the same level, not defined inside the component.
+- On success, synchronize the cache with `invalidateQueries`.
+- Allowed:
+
+```tsx
+export const useUpdateBookMutation = () => {
+  return useMutation({
+    mutationFn: (payload: UpdateBookPayload) => updateBook(payload),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: bookKeys.all,
+      });
+    },
+  });
+};
+
+export const BookEdit = () => {
+  const mutation = useUpdateBookMutation();
+
+  const handleSave = () => {
+    mutation.mutate({
+      id: bookId,
+      title,
+    });
+  };
+
+  return <button onClick={handleSave} />;
+};
+```
+
+### 4. Zustand Usage
+
+- Minimize the use of Zustand.
+- If Zustand usage seems necessary, always confirm with the user before using it.
+- Zustand is only used for global UI state.
+
+### 5. Local State Typing
+
+- Component-internal state is managed as local state.
+- When declaring local state, always specify the type using generics.
+- Allowed:
+
+```tsx
+const [count, setCount] = useState<number>(0);
+
+const [title, setTitle] = useState<string>('');
+
+type Book = {
+  id: string;
+  title: string;
+};
+
+const [books, setBooks] = useState<Book[]>([]);
+```
+
+### 6. Memoization Usage
+
+- If `useMemo` or `useCallback` usage seems necessary, always confirm with the user before using it.
+- Do not add unnecessary memoization by default.
+
+### 7. Form State Management
+
+- If form state management (React Hook Form + Zod) seems necessary, always confirm with the user before using it.
+- Allowed:
+
+```tsx
+const schema = z.object({
+  title: z.string(),
+  author: z.string(),
+});
+
+type FormValues = z.infer<typeof schema>;
+
+const form = useForm<FormValues>({
+  resolver: zodResolver(schema),
+});
+
+const onSubmit = (values: FormValues) => {
+  console.log(values);
+};
+
+return (
+  <form onSubmit={form.handleSubmit(onSubmit)}>
+    <input {...form.register('title')} />
+  </form>
+);
+```
+
+## Code Ordering
+
+**Code inside a component should be ordered as follows:**
+
+1. State & Ref: `useState`, `useReducer`, `useRef`, `useContext`
+2. Data fetching & side effect hooks: `useQuery`, `useMutation`, `useEffect`, `useLayoutEffect`
+3. `useMemo`, `useCallback`
+4. Event handlers and internal helper functions
+5. Render return
+
+**Code inside a file containing components should be ordered as follows:**
+
+1. Imports
+2. Interface and type definitions
+3. Component-specific constants (consider future i18n support)
+4. Component
+5. Sub-components
+6. Utility functions outside the component
