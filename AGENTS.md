@@ -1,8 +1,13 @@
 ## Purpose
 
-This document defines the essential coding standards and architectural principles for the reading journal app **Ppaegok**.
+This document defines the essential coding standards and architectural principles for the reading journal app **bbaegok**.
 
-The current codebase consists of legacy code from an older version of Ppaegok that carries significant technical debt, severely hindering scalability and maintainability. A complete refactor to a new design is planned.
+The current codebase consists of legacy code from an older version of bbaegok that carries significant technical debt, severely hindering scalability and maintainability. A complete refactor to a new design is planned.
+
+## Global Agent Rules
+
+- All responses must be written in Korean.
+- All plans must be written in Korean.
 
 ## Tech Stack
 
