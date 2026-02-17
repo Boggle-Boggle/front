@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react-vite';
 
-import { ComponentProps } from 'react';
+import { ChangeEvent, ComponentProps, useEffect, useState } from 'react';
 
 import { Switch } from 'components/Switch';
 
@@ -28,6 +28,20 @@ export const Default: Story = {
   args: {
     ...switchArgs,
   },
+  render: (args) => {
+    const [checked, setChecked] = useState<boolean>(args.checked ?? false);
+
+    useEffect(() => {
+      setChecked(args.checked ?? false);
+    }, [args.checked]);
+
+    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+      setChecked(e.target.checked);
+      args.onChange(e);
+    };
+
+    return <Switch {...args} checked={checked} onChange={handleChange} />;
+  },
 };
 
 export const Checked: Story = {
@@ -35,11 +49,39 @@ export const Checked: Story = {
     ...switchArgs,
     checked: true,
   },
+  render: (args) => {
+    const [checked, setChecked] = useState<boolean>(args.checked ?? false);
+
+    useEffect(() => {
+      setChecked(args.checked ?? false);
+    }, [args.checked]);
+
+    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+      setChecked(e.target.checked);
+      args.onChange(e);
+    };
+
+    return <Switch {...args} checked={checked} onChange={handleChange} />;
+  },
 };
 
 export const Disabled: Story = {
   args: {
     ...switchArgs,
     disabled: true,
+  },
+  render: (args) => {
+    const [checked, setChecked] = useState<boolean>(args.checked ?? false);
+
+    useEffect(() => {
+      setChecked(args.checked ?? false);
+    }, [args.checked]);
+
+    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+      setChecked(e.target.checked);
+      args.onChange(e);
+    };
+
+    return <Switch {...args} checked={checked} onChange={handleChange} />;
   },
 };

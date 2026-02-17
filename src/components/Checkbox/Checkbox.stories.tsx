@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react-vite';
 
-import { ComponentProps } from 'react';
+import { ChangeEvent, ComponentProps, useEffect, useState } from 'react';
 
 import { Checkbox } from 'components/Checkbox';
 
@@ -10,6 +10,7 @@ const meta = {
   tags: ['autodocs'],
   argTypes: {
     onChange: { action: 'changed' },
+    checked: { control: 'boolean' },
     size: {
       control: { type: 'select' },
       options: ['mini', 'regular'],
@@ -38,12 +39,40 @@ export const Default: Story = {
   args: {
     ...checkboxArgs,
   },
+  render: (args) => {
+    const [checked, setChecked] = useState<boolean>(args.checked);
+
+    useEffect(() => {
+      setChecked(args.checked);
+    }, [args.checked]);
+
+    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+      setChecked(e.target.checked);
+      args.onChange(e);
+    };
+
+    return <Checkbox {...args} checked={checked} onChange={handleChange} />;
+  },
 };
 
 export const Checked: Story = {
   args: {
     ...checkboxArgs,
     checked: true,
+  },
+  render: (args) => {
+    const [checked, setChecked] = useState<boolean>(args.checked);
+
+    useEffect(() => {
+      setChecked(args.checked);
+    }, [args.checked]);
+
+    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+      setChecked(e.target.checked);
+      args.onChange(e);
+    };
+
+    return <Checkbox {...args} checked={checked} onChange={handleChange} />;
   },
 };
 
@@ -52,6 +81,20 @@ export const Disabled: Story = {
     ...checkboxArgs,
     disabled: true,
   },
+  render: (args) => {
+    const [checked, setChecked] = useState<boolean>(args.checked);
+
+    useEffect(() => {
+      setChecked(args.checked);
+    }, [args.checked]);
+
+    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+      setChecked(e.target.checked);
+      args.onChange(e);
+    };
+
+    return <Checkbox {...args} checked={checked} onChange={handleChange} />;
+  },
 };
 
 export const MiniBlack: Story = {
@@ -59,5 +102,19 @@ export const MiniBlack: Story = {
     ...checkboxArgs,
     size: 'mini',
     variant: 'black',
+  },
+  render: (args) => {
+    const [checked, setChecked] = useState<boolean>(args.checked);
+
+    useEffect(() => {
+      setChecked(args.checked);
+    }, [args.checked]);
+
+    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+      setChecked(e.target.checked);
+      args.onChange(e);
+    };
+
+    return <Checkbox {...args} checked={checked} onChange={handleChange} />;
   },
 };

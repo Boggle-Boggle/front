@@ -1,6 +1,6 @@
 import { Meta, StoryObj } from '@storybook/react-vite';
 
-import { ComponentProps } from 'react';
+import { ChangeEvent, ComponentProps, useEffect, useState } from 'react';
 
 import { Radio } from 'components/Radio';
 
@@ -10,6 +10,7 @@ const meta = {
   tags: ['autodocs'],
   argTypes: {
     onChange: { action: 'changed' },
+    checked: { control: 'boolean' },
     size: {
       control: { type: 'select' },
       options: ['small', 'medium'],
@@ -39,12 +40,60 @@ export const Default: Story = {
   args: {
     ...radioArgs,
   },
+  render: (args) => {
+    const [value, setValue] = useState<'a' | 'b'>(args.checked ? 'a' : 'b');
+
+    useEffect(() => {
+      setValue(args.checked ? 'a' : 'b');
+    }, [args.checked]);
+
+    const handleChangeA = (e: ChangeEvent<HTMLInputElement>) => {
+      setValue('a');
+      args.onChange(e);
+    };
+
+    const handleChangeB = (e: ChangeEvent<HTMLInputElement>) => {
+      setValue('b');
+      args.onChange(e);
+    };
+
+    return (
+      <div className="flex gap-3">
+        <Radio {...args} id="radio-a" checked={value === 'a'} onChange={handleChangeA} />
+        <Radio {...args} id="radio-b" checked={value === 'b'} onChange={handleChangeB} />
+      </div>
+    );
+  },
 };
 
 export const Unchecked: Story = {
   args: {
     ...radioArgs,
     checked: false,
+  },
+  render: (args) => {
+    const [value, setValue] = useState<'a' | 'b'>(args.checked ? 'a' : 'b');
+
+    useEffect(() => {
+      setValue(args.checked ? 'a' : 'b');
+    }, [args.checked]);
+
+    const handleChangeA = (e: ChangeEvent<HTMLInputElement>) => {
+      setValue('a');
+      args.onChange(e);
+    };
+
+    const handleChangeB = (e: ChangeEvent<HTMLInputElement>) => {
+      setValue('b');
+      args.onChange(e);
+    };
+
+    return (
+      <div className="flex gap-3">
+        <Radio {...args} id="radio-a" checked={value === 'a'} onChange={handleChangeA} />
+        <Radio {...args} id="radio-b" checked={value === 'b'} onChange={handleChangeB} />
+      </div>
+    );
   },
 };
 
@@ -53,6 +102,30 @@ export const Disabled: Story = {
     ...radioArgs,
     disabled: true,
   },
+  render: (args) => {
+    const [value, setValue] = useState<'a' | 'b'>(args.checked ? 'a' : 'b');
+
+    useEffect(() => {
+      setValue(args.checked ? 'a' : 'b');
+    }, [args.checked]);
+
+    const handleChangeA = (e: ChangeEvent<HTMLInputElement>) => {
+      setValue('a');
+      args.onChange(e);
+    };
+
+    const handleChangeB = (e: ChangeEvent<HTMLInputElement>) => {
+      setValue('b');
+      args.onChange(e);
+    };
+
+    return (
+      <div className="flex gap-3">
+        <Radio {...args} id="radio-a" checked={value === 'a'} onChange={handleChangeA} />
+        <Radio {...args} id="radio-b" checked={value === 'b'} onChange={handleChangeB} />
+      </div>
+    );
+  },
 };
 
 export const SmallGrey: Story = {
@@ -60,5 +133,29 @@ export const SmallGrey: Story = {
     ...radioArgs,
     size: 'small',
     variant: 'grey',
+  },
+  render: (args) => {
+    const [value, setValue] = useState<'a' | 'b'>(args.checked ? 'a' : 'b');
+
+    useEffect(() => {
+      setValue(args.checked ? 'a' : 'b');
+    }, [args.checked]);
+
+    const handleChangeA = (e: ChangeEvent<HTMLInputElement>) => {
+      setValue('a');
+      args.onChange(e);
+    };
+
+    const handleChangeB = (e: ChangeEvent<HTMLInputElement>) => {
+      setValue('b');
+      args.onChange(e);
+    };
+
+    return (
+      <div className="flex gap-3">
+        <Radio {...args} id="radio-a" checked={value === 'a'} onChange={handleChangeA} />
+        <Radio {...args} id="radio-b" checked={value === 'b'} onChange={handleChangeB} />
+      </div>
+    );
   },
 };
