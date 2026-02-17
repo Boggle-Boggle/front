@@ -49,18 +49,32 @@ The current codebase consists of legacy code from an older version of bbaegok th
 - Global hooks: `src/hooks`
 - Global components: `src/components`
 
-### 5. Example (recommended)
+### 5. Global Components Rules
+
+- All global reusable components created under `src/components` must include a Storybook file.
+- The Storybook file must be created in the same folder as the component.
+- The Storybook file name must follow the component name
+- Always work in the smallest possible unit of change.
+- Do not modify many files at once.
+- If multiple files need modification, split the work into multiple steps.
+- After each step, request user review before proceeding.
+- Do not proceed to the next step without explicit user approval.
+
+### 6. Example (recommended)
 
 ```tsx
 src/
 - pages/
-    - OrderDetail/
-        - index.tsx
-        - useOrderDetailState.ts
-        - shared/
-            - Title.tsx
-            - Content.tsx
+  - OrderDetail/
+      - index.tsx
+      - useOrderDetailState.ts
+      - shared/
+        - Title.tsx
+        - Content.tsx
 - components/
+  - Button/
+    - Button.tsx
+    - Button.stories.tsx
 - hooks/
 - stores/
 - utils/
@@ -342,3 +356,62 @@ return (
 4. Component
 5. Sub-components
 6. Utility functions outside the component
+
+## Legacy Code Protection Rules
+
+The `legacy` directory is a protected area. The agent must not modify any code inside it.
+
+### Purpose
+
+Legacy code exists for compatibility with the existing system and is not part of the current refactor scope.
+Modifying legacy code may introduce unintended side effects and stability issues.
+
+### Protected Scope
+
+The following paths are considered protected:
+
+- src/legacy/\*\*
+- legacy/\*\*
+
+All files under these paths are considered legacy code.
+
+### Absolute Rules
+
+The agent must NOT modify legacy code even if:
+
+- Component changes cause import errors
+- Props types have changed
+- Type errors occur
+- Legacy code imports the modified component
+- Automated refactoring suggests changes
+
+Legacy code must be treated as read-only.
+
+### Allowed Actions
+
+The agent may only:
+
+- Read legacy code for analysis
+- Reference legacy code
+
+### Forbidden Actions
+
+The agent must NOT:
+
+- Modify legacy files
+- Reformat legacy files
+- Change legacy imports
+- Change legacy props usage
+- Perform automated refactors in legacy
+
+### Conflict Resolution
+
+If conflicts arise involving legacy code:
+
+- Do NOT modify legacy code
+- Instead, implement compatibility in the new code (wrapper, adapter, etc.)
+- Or explicitly request user approval before modifying legacy
+
+### Core Principle
+
+Legacy code is strictly read-only unless explicitly instructed by the user.
