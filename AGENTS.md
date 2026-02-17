@@ -110,6 +110,7 @@ BookList / index.tsx;
 - Props types must be declared with `type`.
 - The type name must follow the format **"ComponentName + Props"**.
 - Component parameters must be received as `props` and destructured at the very top inside the component.
+- Default values for optional props must be assigned during destructuring.
 - Allowed:
 
 ```tsx
@@ -356,6 +357,19 @@ return (
 4. Component
 5. Sub-components
 6. Utility functions outside the component
+
+## Style Class
+
+- Conditional style classes for a component must not be written inline inside JSX. Instead, they must be extracted and declared as separate constants.
+- Style-related variables must use semantically meaningful names.
+- Allowed
+
+```tsx
+const baseClass = 'inline-flex items-center justify-center';
+const sizeClass = size === 'small' ? 'h-8 px-3 text-sm' : 'h-12 px-5 text-base';
+
+return <button className={`${baseClass} ${sizeClass}`}>Click</button>;
+```
 
 ## Legacy Code Protection Rules
 
