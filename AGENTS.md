@@ -128,16 +128,23 @@ export const BookCard = (props: BookCardProps) => {
 
 ### 4. Conditional Rendering
 
-- Conditional rendering must always return `null`.
+- If the entire component should not be rendered, always use an early return to return null.
+- For conditional rendering inside JSX, always use the logical AND (&&) operator.
+- Use the ternary operator only when there are two clear, distinct branches.
 - Allowed:
 
 ```tsx
 export const BookCard = (props: BookCardProps) => {
-  const { book } = props;
+  const { book, isLoading, isSelected, isVisibleTitle } = props;
 
   if (!book) return null;
 
-  return <div>{book.title}</div>;
+  return (
+    <div className="book-card">
+      {isVisibleTitle && <div className="book-title">{title}</div>}
+      <span className="book-status">{isSelected ? 'Selected' : 'Not Selected'}</span>
+    </div>
+  );
 };
 ```
 
@@ -365,10 +372,9 @@ return (
 - Allowed
 
 ```tsx
-const baseClass = 'inline-flex items-center justify-center';
 const sizeClass = size === 'small' ? 'h-8 px-3 text-sm' : 'h-12 px-5 text-base';
 
-return <button className={`${baseClass} ${sizeClass}`}>Click</button>;
+return <button className={`${sizeClass} inline-flex items-center justify-center`}>Click</button>;
 ```
 
 ## Legacy Code Protection Rules
