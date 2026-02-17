@@ -34,6 +34,7 @@ module.exports = {
         namedComponents: 'arrow-function',
       },
     ],
+    'import/prefer-default-export': ['off' | 'warn' | 'error'],
     'import/order': [
       'error',
       {
