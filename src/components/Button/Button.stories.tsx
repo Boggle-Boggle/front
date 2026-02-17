@@ -1,6 +1,8 @@
-import type { Meta, StoryObj } from '@storybook/react-vite';
+import { ComponentProps } from 'react';
+import { Meta, StoryObj } from '@storybook/react-vite';
 
 import { Button } from 'components/Button';
+import { IconArrowLeft } from 'components/icons';
 
 const meta = {
   title: 'Components/Button',
@@ -25,13 +27,18 @@ const meta = {
       control: { type: 'select' },
       options: ['primary', 'grey', 'primaryLine', 'warning'],
     },
+    iconPosition: {
+      control: { type: 'select' },
+      options: ['left', 'right'],
+    },
+    icon: { control: false },
   },
 } satisfies Meta<typeof Button>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-const buttonArgs: React.ComponentProps<typeof Button> = {
+const buttonArgs: ComponentProps<typeof Button> = {
   onClick: () => {},
   children: 'Button',
   variant: 'primary',
@@ -47,16 +54,11 @@ export const Default: Story = {
   },
 };
 
-// export const SmallButtons: StoryFn<typeof Button> = (args) => (
-//   <div style={{ display: 'flex', gap: '8px' }}>
-//     <Button {...args} variant="primary" size="small">
-//       Primary Small
-//     </Button>
-//     <Button {...args} variant="grey" size="small">
-//       Grey Small
-//     </Button>
-//     <Button {...args} variant="warning" size="small">
-//       Warning Small
-//     </Button>
-//   </div>
-// );
+export const WithLeftIcon: Story = {
+  args: {
+    ...buttonArgs,
+    icon: IconArrowLeft,
+    iconPosition: 'left',
+    children: 'Back',
+  },
+};
