@@ -1,6 +1,15 @@
-import Book from './Book';
+type BookCaseBook = {
+  id: number;
+  page: number;
+  title: string;
+};
 
-const books = [
+type BookProps = {
+  page: number;
+  title: string;
+};
+
+const books: BookCaseBook[] = [
   {
     title: '턴! 턴! 턴! Turn! Turn! Turn!',
     page: 85,
@@ -213,9 +222,11 @@ const books = [
   },
 ];
 
-const BookCase = () => {
-  const allBooks = [];
-  let chunkedBooks = [];
+const bookColors = ['bg-primary-light', 'bg-secondary', 'bg-secondary-light'];
+
+export const BookCase = () => {
+  const allBooks: BookCaseBook[][] = [];
+  let chunkedBooks: BookCaseBook[] = [];
   let chunkedWidth = 0;
 
   for (let i = 0; i < books.length; i += 1) {
@@ -228,7 +239,6 @@ const BookCase = () => {
     else if (page > 100) chunkedWidth += 24;
     else chunkedWidth += 16;
 
-    // inner 너비 - 양옆 패딩
     if (chunkedWidth >= 300 - 16) {
       allBooks.push(chunkedBooks);
 
@@ -244,25 +254,25 @@ const BookCase = () => {
     allBooks.push([]);
   }
 
-  const outerHeight = 524 + 126 * (allBooks.length - 4);
+  const outerHeight = 568 + 126 * (allBooks.length - 4);
   const outerBoxShadow = 'inset 2px 2px 2px rgba(255, 255, 255, 0.6), inset -2px -3px 3px rgba(53, 27, 20, 0.25)';
-  const innerHeight = 484 + 126 * (allBooks.length - 4);
+  const innerHeight = 528 + 126 * (allBooks.length - 4);
   const innerBoxShadow = '2px 2px 2px rgba(255, 255, 255, 0.6), -2px -2px 2px rgba(53, 27, 20, 0.25)';
-  const dividerHeight = 20 + 126 * (allBooks.length - 4);
+  const innerBackground = 'linear-gradient(180deg, rgba(224, 224, 224, 1) 0%, rgba(242, 242, 242, 1) 100%)';
 
   return (
     <div
       style={{ boxShadow: outerBoxShadow, height: outerHeight }}
-      className="w-[21.438rem] rounded-[32px] border border-neutral-20 p-5"
+      className="w-[21.438rem] rounded-[32px] border border-neutral-20 bg-neutral-0 p-5"
     >
       <div
-        style={{ boxShadow: innerBoxShadow, height: innerHeight }}
-        className="w-[18.938rem] rounded-xl bg-neutral-20"
+        style={{ boxShadow: innerBoxShadow, height: innerHeight, background: innerBackground }}
+        className="flex w-[18.938rem] flex-col justify-end rounded-xl pt-[10px]"
       >
-        {allBooks.map((books, idx) => (
-          <div className="pt-4" key={books.toString()}>
+        {allBooks.map((shelfBooks, idx) => (
+          <div key={shelfBooks.toString()}>
             <div className="h-[5.625rem] px-[0.625rem]">
-              {books.map(({ id, page, title }) => (
+              {shelfBooks.map(({ id, page, title }) => (
                 <Book page={page} title={title} key={id} />
               ))}
             </div>
@@ -277,4 +287,33 @@ const BookCase = () => {
   );
 };
 
-export default BookCase;
+const Book = (props: BookProps) => {
+  const { page, title } = props;
+  const bgColorClass = bookColors[page % bookColors.length];
+
+  const widthClass =
+    page >= 500
+      ? 'w-14'
+      : page >= 400
+        ? 'w-12'
+        : page >= 300
+          ? 'w-10'
+          : page >= 200
+            ? 'w-8'
+            : page >= 100
+              ? 'w-6'
+              : 'w-4';
+
+  const filteredTitle = title.replace(/[^a-zA-Z0-9가-힣]+/g, '').slice(0, page >= 400 ? 21 : page >= 200 ? 14 : 7);
+
+  return (
+    <div
+      style={{ boxShadow: 'inset 0px -1.11px 3.33px rgba(0, 0, 0, 0.25)', writingMode: 'vertical-lr' }}
+      className={`inline-flex h-full justify-center rounded-sm py-2 ${widthClass} ${bgColorClass}`}
+    >
+      <span className="flex w-full items-center justify-center text-center font-book text-[10px] opacity-40">
+        {filteredTitle}
+      </span>
+    </div>
+  );
+};

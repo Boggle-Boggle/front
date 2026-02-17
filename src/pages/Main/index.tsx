@@ -1,6 +1,5 @@
+import { BookCase } from 'components/BookCase';
 import Header from 'components/Header';
-
-import BookCase from './BookCase';
 
 const Main = () => {
   return (
