@@ -21,6 +21,7 @@ export { default as IconCircleCancel } from './CircleCancel';
 export { default as IconCircleCancelFilled } from './CircleCancelFilled';
 export { default as IconCircleCheck } from './CircleCheck';
 export { default as IconCircleDelete } from './CircleDelete';
+export { default as IconCheckMark } from './CheckMark';
 export { default as IconCircleInfo } from './CircleInfo';
 export { default as IconCirclePlus } from './CirclePlus';
 export { default as IconComment } from './Comment';
