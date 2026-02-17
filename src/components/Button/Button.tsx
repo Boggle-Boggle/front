@@ -33,6 +33,7 @@ const Button = ({
         : variant === 'primaryLine'
           ? 'bg-neutral-0 text-primary border-primary'
           : 'bg-danger text-neutral-0 border-danger';
+  const iconSizeClass = size === 'small' ? 'size-icon-sm' : 'size-icon-md';
 
   const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
     if (type === 'submit') e.preventDefault();
@@ -50,9 +51,9 @@ const Button = ({
       className={`${base} ${sizeClass} ${widthClass} ${borderClass} ${disabled ? disabledClass : variantClass} ${className}`}
       form={form}
     >
-      {Icon && iconPosition === 'left' ? <Icon className="size-icon-md" /> : null}
+      {Icon && iconPosition === 'left' && <Icon className={iconSizeClass} />}
       {children}
-      {Icon && iconPosition === 'right' ? <Icon className="size-icon-md" /> : null}
+      {Icon && iconPosition === 'right' && <Icon className={iconSizeClass} />}
     </button>
   );
 };
