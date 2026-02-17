@@ -26,8 +26,12 @@ export const Book = (props: BookProps) => {
 
   return (
     <div
-      style={{ boxShadow: 'inset 0px -1.11px 3.33px rgba(0, 0, 0, 0.25)', writingMode: 'vertical-lr' }}
-      className={`inline-flex h-[5.625rem] justify-center rounded-sm py-1 ${widthClass} ${bgColorClass}`}
+      style={{
+        boxShadow: 'inset 0px -1.11px 3.33px rgba(0, 0, 0, 0.25)',
+        writingMode: 'vertical-lr',
+        textOrientation: 'upright',
+      }}
+      className={`inline-flex h-[5.625rem] items-center justify-center rounded-sm py-1 ${widthClass} ${bgColorClass}`}
     >
       <span className="flex w-3 items-center justify-center text-center font-book text-[10px] leading-none text-neutral-100 opacity-40">
         {filteredTitle}

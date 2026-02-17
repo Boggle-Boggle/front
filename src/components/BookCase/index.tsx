@@ -249,9 +249,9 @@ export const BookCase = () => {
     allBooks.push([]);
   }
 
-  const outerHeight = 568 + 126 * (allBooks.length - 4);
+  const outerHeight = 524 + 126 * (allBooks.length - 4);
   const outerBoxShadow = 'inset 2px 2px 2px rgba(255, 255, 255, 0.6), inset -2px -3px 3px rgba(53, 27, 20, 0.25)';
-  const innerHeight = 528 + 126 * (allBooks.length - 4);
+  const innerHeight = 484 + 126 * (allBooks.length - 4);
   const innerBoxShadow = '2px 2px 2px rgba(255, 255, 255, 0.6), -2px -2px 2px rgba(53, 27, 20, 0.25)';
   const innerBackground = 'linear-gradient(180deg, rgba(224, 224, 224, 1) 0%, rgba(242, 242, 242, 1) 100%)';
 
@@ -262,21 +262,25 @@ export const BookCase = () => {
     >
       <div
         style={{ boxShadow: innerBoxShadow, height: innerHeight, background: innerBackground }}
-        className="flex w-[18.938rem] flex-col justify-end rounded-xl pt-[10px]"
+        className="flex w-[18.938rem] flex-col justify-start rounded-xl py-4"
       >
-        {allBooks.map((shelfBooks, idx) => (
-          <div key={shelfBooks.toString()}>
-            <div className="h-[5.625rem] px-[0.625rem]">
-              {shelfBooks.map(({ id, page, title }) => (
-                <Book page={page} title={title} key={id} />
-              ))}
-            </div>
+        {allBooks.map((shelfBooks, idx) => {
+          const shelfSpacingClass = idx === allBooks.length - 1 ? '' : 'pb-4';
 
-            {idx !== allBooks.length - 1 && (
-              <div style={{ boxShadow: 'inset 0px -4px 4px rgba(53, 27, 20, 0.25)' }} className="h-5 bg-neutral-0" />
-            )}
-          </div>
-        ))}
+          return (
+            <div className={shelfSpacingClass} key={shelfBooks.toString()}>
+              <div className="h-[5.625rem] px-[0.625rem]">
+                {shelfBooks.map(({ id, page, title }) => (
+                  <Book page={page} title={title} key={id} />
+                ))}
+              </div>
+
+              {idx !== allBooks.length - 1 && (
+                <div style={{ boxShadow: 'inset 0px -4px 4px rgba(53, 27, 20, 0.25)' }} className="h-5 bg-neutral-0" />
+              )}
+            </div>
+          );
+        })}
       </div>
     </div>
   );
