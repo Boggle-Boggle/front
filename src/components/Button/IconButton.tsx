@@ -1,18 +1,28 @@
-import React from 'react';
+import { ElementType, MouseEventHandler } from 'react';
 
 type IconButtonProps = {
   label: string;
   align?: 'left' | 'right' | 'center';
-  icon?: React.ElementType;
-  onClick: React.MouseEventHandler<HTMLButtonElement>;
+  icon?: ElementType;
+  onClick: MouseEventHandler<HTMLButtonElement>;
+  size?: 'sm' | 'md';
 };
 
-const IconButton = ({ label, align = 'center', icon: Icon, onClick }: IconButtonProps) => {
+const IconButton = (props: IconButtonProps) => {
+  const { label, align = 'center', icon: Icon, onClick, size = 'md' } = props;
+
   const alignClass = `${align === 'left' ? 'justify-start' : align === 'right' ? 'justify-end' : 'justify-center'}`;
+  const sizeClass = size === 'sm' ? 'size-9' : 'size-12';
+  const iconSizeClass = size === 'sm' ? 'size-icon-sm' : 'size-icon-md';
 
   return (
-    <button className={`flex size-12 items-center ${alignClass}`} type="button" aria-label={label} onClick={onClick}>
-      {Icon && <Icon className="size-icon-md" />}
+    <button
+      className={`flex items-center ${alignClass} ${sizeClass}`}
+      type="button"
+      aria-label={label}
+      onClick={onClick}
+    >
+      {Icon && <Icon className={iconSizeClass} />}
     </button>
   );
 };
