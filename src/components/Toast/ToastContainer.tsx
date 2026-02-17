@@ -1,8 +1,8 @@
 import useToastStore from 'stores/useToastStore';
 
-import Toast from '.';
+import { Toast } from '.';
 
-const ToastContainer = () => {
+export const ToastContainer = () => {
   const { toasts } = useToastStore();
 
   return (
@@ -17,5 +17,3 @@ const ToastContainer = () => {
     </section>
   );
 };
-
-export default ToastContainer;

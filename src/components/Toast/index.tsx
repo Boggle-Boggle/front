@@ -9,7 +9,8 @@ export type ToastProps = {
   // dismissible?: boolean;
 };
 
-const Toast = ({ type, description, title }: ToastProps) => {
+export const Toast = (props: ToastProps) => {
+  const { type, description, title } = props;
   const [isLeaving, setIsLeaving] = useState(false);
 
   useEffect(() => {
@@ -32,6 +33,8 @@ const Toast = ({ type, description, title }: ToastProps) => {
 
   return (
     <div
+      role={type === 'error' ? 'alert' : 'status'}
+      aria-live={type === 'error' ? 'assertive' : 'polite'}
       className={`${borderClass} ${isLeaving ? 'animate-fadeOutSlow' : 'animate-fadeInSlow'} rounded-xl border bg-neutral-0 px-4 py-2`}
     >
       {title && (
@@ -47,5 +50,3 @@ const Toast = ({ type, description, title }: ToastProps) => {
     </div>
   );
 };
-
-export default Toast;

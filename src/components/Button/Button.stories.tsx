@@ -1,5 +1,6 @@
-import { ComponentProps } from 'react';
 import { Meta, StoryObj } from '@storybook/react-vite';
+
+import { ComponentProps } from 'react';
 
 import { Button } from 'components/Button';
 import { IconArrowLeft } from 'components/icons';
