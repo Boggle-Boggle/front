@@ -3,7 +3,7 @@ name: 'Chromatic Deployment'
 on:
   push:
     branches:
-      - dev
+      - develop
     paths:
       - 'src/stories/**'
       - '.storybook/**'      
