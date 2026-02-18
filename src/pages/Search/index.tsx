@@ -1,4 +1,5 @@
-import Searchbar from './Searchbar';
+import { Searchbar } from 'components/Searchbar';
+
 import AuthorOtherWorksSection from './sections/AuthorOtherWorksSection';
 import MostReadSection from './sections/MostReadSection';
 import RealTimePopularSection from './sections/RealTimePopularSection';
