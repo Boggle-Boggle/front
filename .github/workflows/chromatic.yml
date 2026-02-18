@@ -5,8 +5,7 @@ on:
     branches:
       - develop
     paths:
-      - 'src/stories/**'
-      - '.storybook/**'
+      - '**/*.storybook.**'
 
 jobs:
   chromatic:
