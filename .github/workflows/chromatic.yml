@@ -3,9 +3,9 @@ name: 'Chromatic Deployment'
 on:
   push:
     branches:
-      - develop
+      - staging
     paths:
-      - '**/*.storybook.**'
+      - '**/*.stories.*'
 
 jobs:
   chromatic:

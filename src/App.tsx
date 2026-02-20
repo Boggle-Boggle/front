@@ -1,7 +1,7 @@
 import { Outlet } from 'react-router-dom';
 
 import LayerContainer from 'components/Layer/LayerContainer';
-import ToastContainer from 'components/Toast/ToastContainer';
+import { ToastContainer } from 'components/Toast/ToastContainer';
 
 const App = () => {
   return (
