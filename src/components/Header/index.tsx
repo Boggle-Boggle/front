@@ -9,7 +9,7 @@ type HeaderProps = {
   transparent?: boolean;
 };
 
-const Header = ({
+export const Header = ({
   title,
   leftBtn,
   rightBtn,
@@ -20,20 +20,18 @@ const Header = ({
   const transparentClass = transparent ? 'bg-transparent' : 'bg-neutral-0';
   return (
     <>
-      <div
-        className={`fixed z-header grid h-header w-full max-w-mobile grid-cols-[1fr_auto_1fr] items-center pt-safe-top ${transparentClass}`}
-      >
-        <div className="flex justify-start">
-          {withBack && <BackButton />}
-          {leftBtn}
+      <div className={`fixed z-header w-full max-w-mobile pt-safe-top ${transparentClass}`}>
+        <div className="grid h-header grid-cols-[1fr_auto_1fr] items-center">
+          <div className="flex justify-start">
+            {withBack && <BackButton />}
+            {leftBtn}
+          </div>
+          <h1 className="truncate px-2 text-center text-body1">{title}</h1>
+          <div className="flex justify-end">{rightBtn}</div>
         </div>
-        <h1 className="truncate px-2 text-center text-body1">{title}</h1>
-        <div className="flex justify-end">{rightBtn}</div>
       </div>
 
       {withSpacer && <div className="mt-safe-top h-header" />}
     </>
   );
 };
-
-export default Header;
