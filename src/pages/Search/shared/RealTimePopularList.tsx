@@ -16,8 +16,8 @@ export function RealTimePopularList({ itemCount = 6 }: RealTimePopularListProps)
           const rank = index + 1;
           return (
             <li key={`popular-${rank}`} className="flex min-w-[16.5rem] items-center gap-3">
-              <span className="w-8 text-title2 text-neutral-70">{rank}위</span>
-              <BookCover size="small" />
+              <span className="text-neutral-70 w-8 text-title2">{rank}위</span>
+              <BookCover size="small" url="" />
               <div className="flex min-w-0 flex-col gap-1">
                 <p className="text-title3">책 제목을 입력해주세요</p>
                 <p className="text-caption1 text-neutral-40">지은이를 입력하세요</p>

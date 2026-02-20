@@ -2,14 +2,8 @@
   "compilerOptions": {
     "target": "ESNext",
     "module": "ESNext",
-    "lib": [
-      "ES2020",
-      "DOM",
-      "DOM.Iterable"
-    ],
-    "types": [
-      "vite/client"
-    ],
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "types": ["vite/client"],
     /* Bundler mode */
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
@@ -20,44 +14,21 @@
     /* Path config */
     "baseUrl": ".",
     "paths": {
-      "assets/*": [
-        "src/assets/*"
-      ],
-      "components/*": [
-        "src/components/*"
-      ],
-      "icons/*": [
-        "src/components/icons/*"
-      ],
-      "hooks/*": [
-        "src/hooks/*"
-      ],
-      "pages/*": [
-        "src/pages/*"
-      ],
-      "services/*": [
-        "src/services/*"
-      ],
-      "types/*": [
-        "src/types/*"
-      ],
-      "utils/*": [
-        "src/utils/*"
-      ],
-      "stores/*": [
-        "src/stores/*"
-      ],
-      "constants/*": [
-        "src/constants/*"
-      ],
-      "routes/*": [
-        "src/routes/*"
-      ]
+      "assets/*": ["src/assets/*"],
+      "components/*": ["src/components/*"],
+      "icons/*": ["src/components/icons/*"],
+      "hooks/*": ["src/hooks/*"],
+      "pages/*": ["src/pages/*"],
+      "services/*": ["src/services/*"],
+      "types/*": ["src/types/*"],
+      "utils/*": ["src/utils/*"],
+      "stores/*": ["src/stores/*"],
+      "constants/*": ["src/constants/*"],
+      "routes/*": ["src/routes/*"]
     },
     /* Linting */
     "strict": true
   },
-  "include": [
-    "src"
-  ]
+  "include": ["src"],
+  "exclude": ["node_modules", "src/pages/legacy/**/*", "src/stories/**/*"]
 }
