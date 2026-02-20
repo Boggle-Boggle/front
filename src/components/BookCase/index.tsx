@@ -258,11 +258,11 @@ export const BookCase = () => {
   return (
     <div
       style={{ boxShadow: outerBoxShadow, height: outerHeight }}
-      className="w-[21.438rem] rounded-[32px] border border-neutral-20 bg-neutral-0 p-5"
+      className="w-full rounded-[32px] border border-neutral-20 bg-neutral-0 p-5"
     >
       <div
         style={{ boxShadow: innerBoxShadow, height: innerHeight, background: innerBackground }}
-        className="flex w-[18.938rem] flex-col justify-start rounded-xl py-4"
+        className="flex w-full flex-col justify-start rounded-xl py-4"
       >
         {allBooks.map((shelfBooks, idx) => {
           const shelfSpacingClass = idx === allBooks.length - 1 ? '' : 'pb-4';
