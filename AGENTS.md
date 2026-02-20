@@ -8,6 +8,16 @@ The current codebase consists of legacy code from an older version of bbaegok th
 
 - All responses must be written in Korean.
 - All plans must be written in Korean.
+- Always perform work in the smallest possible unit.
+- Do not modify many files at once.
+- If multiple files need to be modified, split the work into multiple steps.
+- After each step is completed, request user confirmation before proceeding to the next step.
+- Do not proceed to the next step without explicit user approval.
+
+## Figma API Usage Rules
+
+- The Figma API has rate limits, so repeated requests for the same resource must be cached and reused.
+- Figma API requests must always be minimized.
 
 ## Tech Stack
 
@@ -359,7 +369,7 @@ return (
 **Code inside a file containing components should be ordered as follows:**
 
 1. Imports
-2. Interface and type definitions
+2. type definitions
 3. Component-specific constants (consider future i18n support)
 4. Component
 5. Sub-components

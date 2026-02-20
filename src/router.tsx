@@ -20,7 +20,7 @@ const WithoutBottomNavLayout = lazy(() => import('pages/Layout/WithoutBottomNavL
 // const Note = lazy(() => import('pages/Note'));
 const PrivateRoute = lazy(() => import('pages/PrivateRoute'));
 // const Record = lazy(() => import('pages/Record'));
-const Search = lazy(() => import('pages/Search'));
+// const Search = lazy(() => import('pages/Search'));
 // const SignUp = lazy(() => import('pages/SignUp'));
 
 const router = createBrowserRouter([
@@ -35,8 +35,8 @@ const router = createBrowserRouter([
           {
             element: <WithBottomNavLayout />,
             children: [
-              // { path: '/', element: <Main /> },
-              { path: '/', element: <Search /> },
+              { path: '/', element: <Main /> },
+              // { path: '/', element: <Search /> },
               // { path: 'library', element: <Library /> },
               // { path: 'myPage', element: <MyPage /> },
               // { path: 'detail/:detailId', element: <BookDetail /> },
