@@ -77,146 +77,296 @@ const books: BookCaseBook[] = [
     page: 359,
     id: 14,
   },
-  // {
-  //   title: '턴! 턴! 턴! Turn! Turn! Turn!',
-  //   page: 85,
-  //   id: 1,
-  // },
-  // {
-  //   title: '여름을 한입 베어물었더니',
-  //   page: 192,
-  //   id: 2,
-  // },
-  // {
-  //   title: '코스모스',
-  //   page: 706,
-  //   id: 3,
-  // },
-  // {
-  //   title: '날씨가 좋으면 찾아가다가 돌아오겠어요',
-  //   page: 456,
-  //   id: 4,
-  // },
-  // {
-  //   title: '사과 APPLE',
-  //   page: 317,
-  //   id: 5,
-  // },
-  // {
-  //   title: '기억을 파는 가게',
-  //   page: 221,
-  //   id: 6,
-  // },
-  // {
-  //   title: '시간을 건너는 소녀',
-  //   page: 398,
-  //   id: 7,
-  // },
-  // {
-  //   title: '눈 감으면 들리는 노래',
-  //   page: 154,
-  //   id: 8,
-  // },
-  // {
-  //   title: '오늘도 무사히 지나가기를 간절히 바라고 바라고 티기고 티기고',
-  //   page: 288,
-  //   id: 9,
-  // },
-  // {
-  //   title: '바다를 닮은 너에게',
-  //   page: 522,
-  //   id: 10,
-  // },
-  // {
-  //   title: '별빛이 내린 거리에서 돌아다니기 권법',
-  //   page: 611,
-  //   id: 11,
-  // },
-  // {
-  //   title: '소리를 삼킨 이름들',
-  //   page: 203,
-  //   id: 12,
-  // },
-  // {
-  //   title: '구름 사이로 걸어간 날들',
-  //   page: 467,
-  //   id: 13,
-  // },
-  // {
-  //   title: '빛이 머무는 순간',
-  //   page: 359,
-  //   id: 14,
-  // },
-  // {
-  //   title: '턴! 턴! 턴! Turn! Turn! Turn!',
-  //   page: 85,
-  //   id: 1,
-  // },
-  // {
-  //   title: '여름을 한입 베어물었더니',
-  //   page: 192,
-  //   id: 2,
-  // },
-  // {
-  //   title: '코스모스',
-  //   page: 706,
-  //   id: 3,
-  // },
-  // {
-  //   title: '날씨가 좋으면 찾아가다가 돌아오겠어요',
-  //   page: 456,
-  //   id: 4,
-  // },
-  // {
-  //   title: '사과 APPLE',
-  //   page: 317,
-  //   id: 5,
-  // },
-  // {
-  //   title: '기억을 파는 가게',
-  //   page: 221,
-  //   id: 6,
-  // },
-  // {
-  //   title: '시간을 건너는 소녀',
-  //   page: 398,
-  //   id: 7,
-  // },
-  // {
-  //   title: '눈 감으면 들리는 노래',
-  //   page: 154,
-  //   id: 8,
-  // },
-  // {
-  //   title: '오늘도 무사히 지나가기를 간절히 바라고 바라고 티기고 티기고',
-  //   page: 288,
-  //   id: 9,
-  // },
-  // {
-  //   title: '바다를 닮은 너에게',
-  //   page: 522,
-  //   id: 10,
-  // },
-  // {
-  //   title: '별빛이 내린 거리에서 돌아다니기 권법',
-  //   page: 611,
-  //   id: 11,
-  // },
-  // {
-  //   title: '소리를 삼킨 이름들',
-  //   page: 203,
-  //   id: 12,
-  // },
-  // {
-  //   title: '구름 사이로 걸어간 날들',
-  //   page: 467,
-  //   id: 13,
-  // },
-  // {
-  //   title: '빛이 머무는 순간',
-  //   page: 359,
-  //   id: 14,
-  // },
+  {
+    title: '턴! 턴! 턴! Turn! Turn! Turn!',
+    page: 85,
+    id: 1,
+  },
+  {
+    title: '여름을 한입 베어물었더니',
+    page: 192,
+    id: 2,
+  },
+  {
+    title: '코스모스',
+    page: 706,
+    id: 3,
+  },
+  {
+    title: '날씨가 좋으면 찾아가다가 돌아오겠어요',
+    page: 456,
+    id: 4,
+  },
+  {
+    title: '사과 APPLE',
+    page: 317,
+    id: 5,
+  },
+  {
+    title: '기억을 파는 가게',
+    page: 221,
+    id: 6,
+  },
+  {
+    title: '시간을 건너는 소녀',
+    page: 398,
+    id: 7,
+  },
+  {
+    title: '눈 감으면 들리는 노래',
+    page: 154,
+    id: 8,
+  },
+  {
+    title: '오늘도 무사히 지나가기를 간절히 바라고 바라고 티기고 티기고',
+    page: 288,
+    id: 9,
+  },
+  {
+    title: '바다를 닮은 너에게',
+    page: 522,
+    id: 10,
+  },
+  {
+    title: '별빛이 내린 거리에서 돌아다니기 권법',
+    page: 611,
+    id: 11,
+  },
+  {
+    title: '소리를 삼킨 이름들',
+    page: 203,
+    id: 12,
+  },
+  {
+    title: '구름 사이로 걸어간 날들',
+    page: 467,
+    id: 13,
+  },
+  {
+    title: '빛이 머무는 순간',
+    page: 359,
+    id: 14,
+  },
+  {
+    title: '턴! 턴! 턴! Turn! Turn! Turn!',
+    page: 85,
+    id: 1,
+  },
+  {
+    title: '여름을 한입 베어물었더니',
+    page: 192,
+    id: 2,
+  },
+  {
+    title: '코스모스',
+    page: 706,
+    id: 3,
+  },
+  {
+    title: '날씨가 좋으면 찾아가다가 돌아오겠어요',
+    page: 456,
+    id: 4,
+  },
+  {
+    title: '사과 APPLE',
+    page: 317,
+    id: 5,
+  },
+  {
+    title: '기억을 파는 가게',
+    page: 221,
+    id: 6,
+  },
+  {
+    title: '시간을 건너는 소녀',
+    page: 398,
+    id: 7,
+  },
+  {
+    title: '눈 감으면 들리는 노래',
+    page: 154,
+    id: 8,
+  },
+  {
+    title: '오늘도 무사히 지나가기를 간절히 바라고 바라고 티기고 티기고',
+    page: 288,
+    id: 9,
+  },
+  {
+    title: '바다를 닮은 너에게',
+    page: 522,
+    id: 10,
+  },
+  {
+    title: '별빛이 내린 거리에서 돌아다니기 권법',
+    page: 611,
+    id: 11,
+  },
+  {
+    title: '소리를 삼킨 이름들',
+    page: 203,
+    id: 12,
+  },
+  {
+    title: '구름 사이로 걸어간 날들',
+    page: 467,
+    id: 13,
+  },
+  {
+    title: '빛이 머무는 순간',
+    page: 359,
+    id: 14,
+  },
+  {
+    title: '사과 APPLE',
+    page: 317,
+    id: 5,
+  },
+  {
+    title: '기억을 파는 가게',
+    page: 221,
+    id: 6,
+  },
+  {
+    title: '시간을 건너는 소녀',
+    page: 398,
+    id: 7,
+  },
+  {
+    title: '눈 감으면 들리는 노래',
+    page: 154,
+    id: 8,
+  },
+  {
+    title: '오늘도 무사히 지나가기를 간절히 바라고 바라고 티기고 티기고',
+    page: 288,
+    id: 9,
+  },
+  {
+    title: '바다를 닮은 너에게',
+    page: 522,
+    id: 10,
+  },
+  {
+    title: '별빛이 내린 거리에서 돌아다니기 권법',
+    page: 611,
+    id: 11,
+  },
+  {
+    title: '소리를 삼킨 이름들',
+    page: 203,
+    id: 12,
+  },
+  {
+    title: '구름 사이로 걸어간 날들',
+    page: 467,
+    id: 13,
+  },
+  {
+    title: '빛이 머무는 순간',
+    page: 359,
+    id: 14,
+  },
+  {
+    title: '사과 APPLE',
+    page: 317,
+    id: 5,
+  },
+  {
+    title: '기억을 파는 가게',
+    page: 221,
+    id: 6,
+  },
+  {
+    title: '시간을 건너는 소녀',
+    page: 398,
+    id: 7,
+  },
+  {
+    title: '눈 감으면 들리는 노래',
+    page: 154,
+    id: 8,
+  },
+  {
+    title: '오늘도 무사히 지나가기를 간절히 바라고 바라고 티기고 티기고',
+    page: 288,
+    id: 9,
+  },
+  {
+    title: '바다를 닮은 너에게',
+    page: 522,
+    id: 10,
+  },
+  {
+    title: '별빛이 내린 거리에서 돌아다니기 권법',
+    page: 611,
+    id: 11,
+  },
+  {
+    title: '소리를 삼킨 이름들',
+    page: 203,
+    id: 12,
+  },
+  {
+    title: '구름 사이로 걸어간 날들',
+    page: 467,
+    id: 13,
+  },
+  {
+    title: '빛이 머무는 순간',
+    page: 359,
+    id: 14,
+  },
+  {
+    title: '사과 APPLE',
+    page: 317,
+    id: 5,
+  },
+  {
+    title: '기억을 파는 가게',
+    page: 221,
+    id: 6,
+  },
+  {
+    title: '시간을 건너는 소녀',
+    page: 398,
+    id: 7,
+  },
+  {
+    title: '눈 감으면 들리는 노래',
+    page: 154,
+    id: 8,
+  },
+  {
+    title: '오늘도 무사히 지나가기를 간절히 바라고 바라고 티기고 티기고',
+    page: 288,
+    id: 9,
+  },
+  {
+    title: '바다를 닮은 너에게',
+    page: 522,
+    id: 10,
+  },
+  {
+    title: '별빛이 내린 거리에서 돌아다니기 권법',
+    page: 611,
+    id: 11,
+  },
+  {
+    title: '소리를 삼킨 이름들',
+    page: 203,
+    id: 12,
+  },
+  {
+    title: '구름 사이로 걸어간 날들',
+    page: 467,
+    id: 13,
+  },
+  {
+    title: '빛이 머무는 순간',
+    page: 359,
+    id: 14,
+  },
 ];
 
 export const BookCase = () => {
@@ -224,23 +374,33 @@ export const BookCase = () => {
   let chunkedBooks: BookCaseBook[] = [];
   let chunkedWidth = 0;
 
+  const remToPx = (rem: number) => rem * parseFloat(getComputedStyle(document.documentElement).fontSize);
+
+  const getThicknessPx = (page: number) => {
+    if (page >= 500) return 54;
+    if (page > 400) return 48;
+    if (page > 300) return 40;
+    if (page > 200) return 32;
+    if (page > 100) return 24;
+    return 16;
+  };
+
+  // bookcaseWidth = 전체 화면너비 - 양쪽 패딩(1rem * 2) - 책장 사이 간격(1.25rem * 2) - border(2px * 2)
+  const bookcaseWidth = window.innerWidth - remToPx(1 * 2) - remToPx(1.25 * 2) - 4;
+
   for (let i = 0; i < books.length; i += 1) {
-    const { page } = books[i];
+    const book = books[i];
+    const thickness = getThicknessPx(book.page);
 
-    if (page >= 500) chunkedWidth += 54;
-    else if (page > 400) chunkedWidth += 48;
-    else if (page > 300) chunkedWidth += 40;
-    else if (page > 200) chunkedWidth += 32;
-    else if (page > 100) chunkedWidth += 24;
-    else chunkedWidth += 16;
-
-    if (chunkedWidth >= 300 - 16) {
+    // "넣으면" 초과할 때: 현재 줄 확정하고 새 줄 시작
+    if (chunkedBooks.length > 0 && chunkedWidth + thickness >= bookcaseWidth) {
       allBooks.push(chunkedBooks);
-
       chunkedBooks = [];
       chunkedWidth = 0;
-      i -= 1;
-    } else chunkedBooks.push(books[i]);
+    }
+
+    chunkedBooks.push(book);
+    chunkedWidth += thickness;
   }
 
   if (chunkedBooks.length > 0) allBooks.push(chunkedBooks);

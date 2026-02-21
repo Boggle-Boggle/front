@@ -5,7 +5,7 @@ const MSG_TITLE_SEARCH_PLACEHOLDER = '책 제목을 입력해주세요';
 const Main = () => {
   return (
     <div className="relative h-dvh overflow-scroll bg-secondary pt-safe-top">
-      <div className="relative z-10 h-full px-mobile">
+      <div className="z-background relative h-full overflow-scroll px-mobile">
         <Searchbar value="" onChange={() => {}} onSubmit={() => {}} placeholder={MSG_TITLE_SEARCH_PLACEHOLDER} />
         <p className="mt-4 text-title1">2025년 전체 책장</p>
         <p className="mb-[1.375rem] text-body1 text-neutral-60">45권 채웠습니다</p>
