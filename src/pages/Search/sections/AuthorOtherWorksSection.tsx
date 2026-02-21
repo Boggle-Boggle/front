@@ -2,7 +2,7 @@ import BookCover from 'components/BookCover';
 
 import Title from '../shared/Title';
 
-const AuthorOtherWorksSection = () => {
+export const AuthorOtherWorksSection = () => {
   return (
     <>
       <Title text="[작가]의 다른 작품" />
@@ -25,5 +25,3 @@ const AuthorOtherWorksSection = () => {
     </>
   );
 };
-
-export default AuthorOtherWorksSection;

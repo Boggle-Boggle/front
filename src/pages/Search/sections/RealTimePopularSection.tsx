@@ -28,7 +28,7 @@ const splitByColumns = (items: PopularBook[], columnSize: number) => {
   }, []);
 };
 
-const RealTimePopularSection = () => {
+export const RealTimePopularSection = () => {
   const columns = splitByColumns(popularBooks, 3);
 
   return (
@@ -58,5 +58,3 @@ const RealTimePopularSection = () => {
     </section>
   );
 };
-
-export default RealTimePopularSection;
