@@ -1,6 +1,8 @@
 import BookCover from 'components/BookCover';
 
-import Title from '../shared/Title';
+import { Title } from '../shared/Title';
+
+const MSG_REALTIME_POPULAR = '실시간 인기도서';
 
 type PopularBook = {
   id: number;
@@ -33,7 +35,7 @@ export const RealTimePopularSection = () => {
 
   return (
     <section className="w-full">
-      <Title text="실시간 인기도서" onLoadMore={() => {}} />
+      <Title text={MSG_REALTIME_POPULAR} onLoadMore={() => {}} />
       <div className="relative w-full overflow-hidden pb-6">
         <ol className="scrollbar-hide flex w-full gap-6 overflow-x-auto px-mobile">
           {columns.map((column) => (

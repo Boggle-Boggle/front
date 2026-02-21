@@ -13,6 +13,7 @@ type SearchbarProps = {
   className?: string;
   isSearched?: boolean;
   ariaLabel?: string;
+  onFocus?: () => void;
 };
 
 export const Searchbar = (props: SearchbarProps) => {
@@ -24,6 +25,7 @@ export const Searchbar = (props: SearchbarProps) => {
     className = '',
     isSearched = false,
     ariaLabel = 'search',
+    onFocus,
   } = props;
 
   const isEmpty = value.length === 0;
@@ -53,6 +55,7 @@ export const Searchbar = (props: SearchbarProps) => {
           type="text"
           value={value}
           onChange={handleInputChange}
+          onFocus={onFocus}
           placeholder={placeholder}
           className="flex-1 bg-transparent text-body1 text-neutral-100 outline-none placeholder:text-neutral-60"
           aria-label={ariaLabel}

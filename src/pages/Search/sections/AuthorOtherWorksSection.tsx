@@ -1,11 +1,13 @@
 import BookCover from 'components/BookCover';
 
-import Title from '../shared/Title';
+import { Title } from '../shared/Title';
+
+const MSG_AUTHOR_OTHER_WORKS = '[작가]의 다른 작품';
 
 export const AuthorOtherWorksSection = () => {
   return (
     <>
-      <Title text="[작가]의 다른 작품" />
+      <Title text={MSG_AUTHOR_OTHER_WORKS} />
 
       <ul className="flex justify-center px-mobile">
         <li className="flex h-[11.625rem] w-full gap-5 rounded-[16px] border-[1px] border-[#EEEEEE] p-6 shadow-[0_0.375rem_0.9375rem_0_#A0B1C040]">

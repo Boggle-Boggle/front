@@ -6,7 +6,11 @@ type TitleProps = {
   onLoadMore?: () => void;
 };
 
-const Title = ({ text, onLoadMore }: TitleProps) => {
+const MSG_SEARCH_MORE = '더보기';
+
+export const Title = (props: TitleProps) => {
+  const { text, onLoadMore } = props;
+
   return (
     <div className="flex w-full items-center justify-between px-mobile py-5">
       <Highlight text={text} className="text-title2" />
@@ -16,12 +20,10 @@ const Title = ({ text, onLoadMore }: TitleProps) => {
           className="flex items-center gap-[3px] text-caption1 text-neutral-40"
           onClick={onLoadMore}
         >
-          <span>더보기</span>
+          <span>{MSG_SEARCH_MORE}</span>
           <ArrowRight />
         </button>
       )}
     </div>
   );
 };
-
-export default Title;
