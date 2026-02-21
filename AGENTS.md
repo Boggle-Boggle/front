@@ -8,8 +8,8 @@ The current codebase consists of legacy code from an older version of Bbaegok, w
 
 ## Global Agent Rules
 
-- All responses must be written in English.
-- All Plans must be written in English.
+- All responses must be written in korean.
+- All Plans must be written in korean.
 - Always perform tasks in the smallest possible units.
 - Do not modify many files at once.
 - When multiple file changes are required, proceed one step at a time.
