@@ -385,8 +385,8 @@ export const BookCase = () => {
     return 16;
   };
 
-  // bookcaseWidth = 전체 화면너비 - 양쪽 패딩(1rem * 2) - 책장 사이 간격(1.25rem * 2) - border(2px * 2)
-  const bookcaseWidth = window.innerWidth - remToPx(1 * 2) - remToPx(1.25 * 2) - 4;
+  // bookcaseWidth = 전체 화면너비 - 양쪽 패딩(1rem * 2) - 책장 사이 간격(1.25rem * 2) - 책장과 양끝 책사이간격-  border(2px * 2)
+  const bookcaseWidth = window.innerWidth - remToPx(1 * 2) - remToPx(1.25 * 2) - remToPx(0.625 * 2) - 4;
 
   for (let i = 0; i < books.length; i += 1) {
     const book = books[i];
