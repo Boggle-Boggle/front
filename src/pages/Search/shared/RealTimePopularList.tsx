@@ -6,7 +6,7 @@ type RealTimePopularListProps = {
 
 const DEFAULT_ITEMS = Array.from({ length: 6 });
 
-export function RealTimePopularList({ itemCount = 6 }: RealTimePopularListProps) {
+export const RealTimePopularList = ({ itemCount = 6 }: RealTimePopularListProps) => {
   const items = itemCount === 6 ? DEFAULT_ITEMS : Array.from({ length: itemCount });
 
   return (
@@ -30,6 +30,6 @@ export function RealTimePopularList({ itemCount = 6 }: RealTimePopularListProps)
       <div className="pointer-events-none absolute right-0 top-0 h-full w-6 bg-gradient-to-l from-white to-transparent" />
     </div>
   );
-}
+};
 
 export default RealTimePopularList;

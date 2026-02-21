@@ -9,7 +9,7 @@ type TitleProps = {
 const Title = ({ text, onLoadMore }: TitleProps) => {
   return (
     <div className="flex w-full items-center justify-between px-mobile py-5">
-      <Highlight text={text} className="text-title3" />
+      <Highlight text={text} className="text-title2" />
       {onLoadMore && (
         <button
           type="button"
