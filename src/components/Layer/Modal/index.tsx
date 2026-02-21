@@ -1,12 +1,12 @@
 import useLayer from 'hooks/useLayer';
 
-import LayerBackground from './LayerBackground';
+import LayerBackground from '../LayerBackground';
 
 type ModalProps = {
   children: React.ReactNode;
 };
 
-const Modal = ({ children }: ModalProps) => {
+export const Modal = ({ children }: ModalProps) => {
   const { mounted, visible, handleAnimationEnd, handleClose } = useLayer();
 
   return (
@@ -26,5 +26,3 @@ const Modal = ({ children }: ModalProps) => {
     )
   );
 };
-
-export default Modal;

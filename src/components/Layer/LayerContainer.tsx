@@ -1,10 +1,10 @@
 import { createPortal } from 'react-dom';
 import useLayerStore from 'stores/useLayerStore';
 
-import BottomSheet from './BottomSheet';
-import FullScreen from './FullScreen';
-import Modal from './Modal';
-import SideBar from './SideBar';
+import { BottomSheet } from './BottomSheet';
+import { FullScreen } from './FullScreen';
+import { Modal } from './Modal';
+import { SideBar } from './SideBar';
 
 const LayerContainer = () => {
   const { layers } = useLayerStore();

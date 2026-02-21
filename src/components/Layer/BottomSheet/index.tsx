@@ -1,12 +1,12 @@
 import useLayer from 'hooks/useLayer';
 
-import LayerBackground from './LayerBackground';
+import LayerBackground from '../LayerBackground';
 
 type BottomSheetProps = {
   children: React.ReactNode;
 };
 
-const BottomSheet = ({ children }: BottomSheetProps) => {
+export const BottomSheet = ({ children }: BottomSheetProps) => {
   const { mounted, visible, handleAnimationEnd, handleClose } = useLayer();
 
   return (
@@ -33,5 +33,3 @@ const BottomSheet = ({ children }: BottomSheetProps) => {
     )
   );
 };
-
-export default BottomSheet;
