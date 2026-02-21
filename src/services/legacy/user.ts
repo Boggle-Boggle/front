@@ -3,18 +3,18 @@ import useAuthStore from 'stores/useAuthStore';
 import { Response } from 'types/api';
 import { AgreementStatus, Authorization, MyPage, Terms, DrawType } from 'types/user';
 
-import api from '.';
+import api from 'services/index';
 
 export const getAuthorization = async () => {
-  const response = await api.get('/user/authorization');
+  const response = await api.get<Response<Authorization>>('/user/authorization');
 
-  return response.data.data as Authorization;
+  return response.data;
 };
 
 export const isDuplicateNickname = async (nickname: string) => {
-  const response = await api.get(`/user/nickname?nickname=${nickname}`);
+  const response = await api.get<Response<boolean>>(`/user/nickname?nickname=${nickname}`);
 
-  return !response.data.data as boolean;
+  return !response.data;
 };
 
 export const updateNickname = async (nickname: string) => {
@@ -22,9 +22,9 @@ export const updateNickname = async (nickname: string) => {
 };
 
 export const getTermsAgreement = async () => {
-  const response = await api.get('/user/terms');
+  const response = await api.get<Response<Terms>>('/user/terms');
 
-  return response.data.data as Terms;
+  return response.data;
 };
 
 export const agreeTerms = async (terms: AgreementStatus[]) => {
@@ -32,9 +32,9 @@ export const agreeTerms = async (terms: AgreementStatus[]) => {
 };
 
 export const getMyPageInfo = async () => {
-  const response = await api.get('/mypage');
+  const response = await api.get<Response<MyPage>>('/mypage');
 
-  return response.data.data as MyPage;
+  return response.data;
 };
 
 export const deleteAccount = async (type: DrawType, withdrawText: string | null) => {
@@ -80,7 +80,7 @@ export const refreshToken = async () => {
   const { login, logout } = useAuthStore.getState();
 
   try {
-    const refreshResponse: Response<RefreshType> = await api.get('/auth/refresh');
+    const refreshResponse = await api.get<Response<RefreshType>>('/auth/refresh');
     if (!refreshResponse.data) return;
 
     const { accessToken } = refreshResponse.data;
@@ -93,7 +93,7 @@ export const refreshToken = async () => {
 };
 
 export const getTerms = async () => {
-  const response: Response<Terms> = await api.get('/terms');
+  const response = await api.get<Response<Terms>>('/terms');
 
   return response.data?.terms;
 };

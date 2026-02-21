@@ -1,7 +1,7 @@
-import { PaginationResponse } from 'types/api';
+import { PaginationResponse, Response } from 'types/api';
 import { LibraryBook, GetLibraryBooksParams, SortingType, Libraries } from 'types/library';
 
-import api from '.';
+import api from 'services/index';
 
 export const getLibraryBooks = async (params: GetLibraryBooksParams, pageNum: number) => {
   const queryString = new URLSearchParams();
@@ -12,15 +12,15 @@ export const getLibraryBooks = async (params: GetLibraryBooksParams, pageNum: nu
   if (params.status && params.status !== 'all') queryString.append('status', params.status);
   if (params.keyword) queryString.append('keyword', params.keyword);
 
-  const response = await api.get(`/library?${queryString.toString()}`);
+  const response = await api.get<Response<PaginationResponse<LibraryBook[]>>>(`/library?${queryString.toString()}`);
 
-  return response.data.data as PaginationResponse<LibraryBook[]>;
+  return response.data;
 };
 
 export const getLibrarySorting = async () => {
-  const response = await api.get('/user/settings/sorting');
+  const response = await api.get<Response<SortingType>>('/user/settings/sorting');
 
-  return response.data.data as SortingType;
+  return response.data;
 };
 
 export const changeLibrarySorting = async (sortingType: SortingType) => {
@@ -28,9 +28,9 @@ export const changeLibrarySorting = async (sortingType: SortingType) => {
 };
 
 export const getLibraries = async () => {
-  const response = await api.get(`/libraries`);
+  const response = await api.get<Response<Libraries>>(`/libraries`);
 
-  return response.data.data as Libraries;
+  return response.data;
 };
 
 export const removeLibrary = async (removeId: number) => {
