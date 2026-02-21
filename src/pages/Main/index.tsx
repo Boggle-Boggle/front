@@ -4,7 +4,7 @@ import { Searchbar } from 'components/Searchbar';
 const MSG_TITLE_SEARCH_PLACEHOLDER = '책 제목을 입력해주세요';
 const Main = () => {
   return (
-    <div className="relative h-dvh overflow-scroll bg-secondary pt-safe-top">
+    <div className="relative h-dvh overflow-scroll bg-secondary pb-safe-bottom pt-safe-top">
       <div className="z-background relative h-full overflow-scroll px-mobile">
         <Searchbar value="" onChange={() => {}} onSubmit={() => {}} placeholder={MSG_TITLE_SEARCH_PLACEHOLDER} />
         <p className="mt-4 text-title1">2025년 전체 책장</p>
@@ -13,7 +13,7 @@ const Main = () => {
       </div>
 
       <div className="absolute inset-0 bg-neutral-0 mix-blend-soft-light" />
-      <div className="absolute bottom-0 h-48 w-full bg-[linear-gradient(180deg,_#A6D68E_0%,_rgba(255,255,255,0)_100%)]" />
+      <div className="absolute bottom-0 h-48 w-full bg-[linear-gradient(180deg,_var(--color-primary-light)_0%,_rgba(255,255,255,0)_100%)]" />
     </div>
   );
 };
