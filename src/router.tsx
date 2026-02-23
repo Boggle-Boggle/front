@@ -11,6 +11,7 @@ const PrivateRoute = lazy(() => import('pages/PrivateRoute'));
 
 const Main = lazy(() => import('pages/Main'));
 const Search = lazy(() => import('pages/Search'));
+const SearchResult = lazy(() => import('pages/SearchResult'));
 // const Library = lazy(() => import('pages/Library'));
 // const Login = lazy(() => import('pages/Login'));
 // const MyPage = lazy(() => import('pages/MyPage'));
@@ -48,6 +49,7 @@ const router = createBrowserRouter([
           {
             element: <WithoutBottomNavLayout />,
             children: [
+              { path: '/search/result', element: <SearchResult /> },
               // 아래 레거시
               // { path: 'note/write', element: <Note /> },
               // { path: 'myPage/nickname', element: <EditNickname /> },
