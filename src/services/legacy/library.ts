@@ -1,7 +1,7 @@
 import { PaginationResponse, Response } from 'types/api';
 import { LibraryBook, GetLibraryBooksParams, SortingType, Libraries } from 'types/library';
 
-import api from 'services/index';
+import { api } from 'services/index';
 
 export const getLibraryBooks = async (params: GetLibraryBooksParams, pageNum: number) => {
   const queryString = new URLSearchParams();

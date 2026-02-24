@@ -3,7 +3,7 @@ import useAuthStore from 'stores/useAuthStore';
 import { Response } from 'types/api';
 import { AgreementStatus, Authorization, MyPage, Terms, DrawType } from 'types/user';
 
-import api from 'services/index';
+import { api } from 'services/index';
 
 export const getAuthorization = async () => {
   const response = await api.get<Response<Authorization>>('/user/authorization');

@@ -2,7 +2,7 @@ import { BookCase } from 'types/book';
 import { AddNoteParams, RecordType, Record, Notes, RecordDate, EditRecord, UpdateRecordParams } from 'types/record';
 import { Response } from 'types/api';
 
-import api from 'services/index';
+import { api } from 'services/index';
 
 export const addRecord = async (record: RecordType) => {
   const response = await api.post<Response<number>>(`/reading-record`, record);

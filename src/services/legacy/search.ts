@@ -1,7 +1,7 @@
 import { PaginationResponse, Response } from 'types/api';
 import { Book, BookDetail } from 'types/book';
 
-import api from 'services/index';
+import { api } from 'services/index';
 
 export const getSearchBooks = async (query: string, page: number) => {
   const response = await api.get<Response<PaginationResponse<Book[]>>>(`/books?query=${query}&pageNum=${page}`);

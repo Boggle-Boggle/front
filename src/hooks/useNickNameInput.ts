@@ -2,7 +2,7 @@ import { useQueryClient } from '@tanstack/react-query';
 
 import { useState } from 'react';
 
-import { isDuplicateNickname, updateNickname } from 'services/user';
+import { isDuplicateNickname, updateNickname } from 'services/legacy/user';
 
 const useNickNameInput = (
   // initNickName: string,
