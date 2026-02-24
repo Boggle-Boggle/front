@@ -1,3 +1,4 @@
+import { TextButton } from 'components/Button';
 import Cancel from 'components/icons/Cancel';
 
 import { Title } from '../shared/Title';
@@ -14,13 +15,9 @@ export const RecentSearchSection = () => {
         <ul className="scrollbar-hide flex w-full gap-2 overflow-x-auto px-mobile pb-4">
           {RECOMMEND_TAGS.map((tag) => (
             <li key={tag} className="shrink-0">
-              <button
-                type="button"
-                className="bg-neutral-10 flex items-center justify-center gap-1 rounded-[100px] px-3 py-1.5"
-              >
-                <span className="text-title3 text-neutral-60">{tag}</span>
-                <Cancel className="h-4 w-4 text-neutral-60" />
-              </button>
+              <TextButton onClick={() => {}} icon={Cancel} iconPosition="right">
+                {tag}
+              </TextButton>
             </li>
           ))}
         </ul>
