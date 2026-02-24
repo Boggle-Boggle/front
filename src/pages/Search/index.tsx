@@ -3,12 +3,12 @@ import { useNavigate } from 'react-router-dom';
 
 import { Searchbar } from 'components/Searchbar';
 
-import { AuthorOtherWorksSection } from './sections/AuthorOtherWorksSection';
-import { MostReadSection } from './sections/MostReadSection';
-import { PopularSearchSection } from './sections/PopularSearchSection';
-import { RealTimePopularSection } from './sections/RealTimePopularSection';
-import { RecentSearchSection } from './sections/RecentSearchSection';
-import { TrendingSection } from './sections/TrendingSection';
+import { AuthorOtherWorksSection } from './AuthorOtherWorksSection';
+import { MostReadSection } from './MostReadSection';
+import { PopularSearchSection } from './PopularSearchSection';
+import { RealTimePopularSection } from './RealTimePopularSection';
+import { RecentSearchSection } from './RecentSearchSection';
+import { TrendingSection } from './TrendingSection';
 
 const Search = () => {
   const [query, setQuery] = useState<string>('');
