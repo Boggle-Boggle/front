@@ -26,7 +26,7 @@ export const getBookCase = async (year?: number | null, month?: number | null) =
   if (year) queryString.append('year', `20${year.toString().padStart(2, '0')}`);
   if (month && month !== 13) queryString.append('month', month.toString());
 
-  const response = await api.get<Response<{ books: BookCase[] }>>(`/bookshelf?${queryString.toString()}`);
+  const response = await api.get<{ books: BookCase[] }>(`/bookshelf?${queryString.toString()}`);
 
   return response.data.books;
 };

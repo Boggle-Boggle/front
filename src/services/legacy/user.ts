@@ -80,7 +80,7 @@ export const refreshToken = async () => {
   const { login, logout } = useAuthStore.getState();
 
   try {
-    const refreshResponse = await api.get<Response<RefreshType>>('/auth/refresh');
+    const refreshResponse = await api.get<RefreshType>('/auth/refresh');
     if (!refreshResponse.data) return;
 
     const { accessToken } = refreshResponse.data;
@@ -93,7 +93,7 @@ export const refreshToken = async () => {
 };
 
 export const getTerms = async () => {
-  const response = await api.get<Response<Terms>>('/terms');
+  const response = await api.get<Terms>('/terms');
 
   return response.data?.terms;
 };
