@@ -13,3 +13,14 @@ export type ButtonProps = {
   icon?: ElementType;
   iconPosition?: 'left' | 'right';
 };
+
+export type TextButtonProps = {
+  onClick: MouseEventHandler<HTMLButtonElement>;
+  children: ReactNode;
+  disabled?: boolean;
+  size?: 'lg' | 'md' | 'sm';
+  variant?: 'default' | 'bg' | 'primaryLine';
+  className?: string;
+  icon?: ElementType;
+  iconPosition?: 'left' | 'right';
+};

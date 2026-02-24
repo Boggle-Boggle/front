@@ -1,12 +1,12 @@
 import useLayer from 'hooks/useLayer';
 
-import LayerBackground from './LayerBackground';
+import LayerBackground from '../LayerBackground';
 
 type SideBarProps = {
   children: React.ReactNode;
 };
 
-const SideBar = ({ children }: SideBarProps) => {
+export const SideBar = ({ children }: SideBarProps) => {
   const { mounted, visible, handleAnimationEnd, handleClose } = useLayer();
 
   return (
@@ -24,5 +24,3 @@ const SideBar = ({ children }: SideBarProps) => {
     )
   );
 };
-
-export default SideBar;

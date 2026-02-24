@@ -71,6 +71,7 @@ module.exports = {
         navigator: '500',
         fixedBtn: '500',
         highlight: '100',
+        background: '10',
       },
 
       keyframes: {

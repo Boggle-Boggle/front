@@ -1,21 +1,52 @@
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 import { Searchbar } from 'components/Searchbar';
 
-import AuthorOtherWorksSection from './sections/AuthorOtherWorksSection';
-import MostReadSection from './sections/MostReadSection';
-import RealTimePopularSection from './sections/RealTimePopularSection';
-import TrendingSection from './sections/TrendingSection';
+import { AuthorOtherWorksSection } from './AuthorOtherWorksSection';
+import { MostReadSection } from './MostReadSection';
+import { PopularSearchSection } from './PopularSearchSection';
+import { RealTimePopularSection } from './RealTimePopularSection';
+import { RecentSearchSection } from './RecentSearchSection';
+import { TrendingSection } from './TrendingSection';
 
 const Search = () => {
+  const [query, setQuery] = useState<string>('');
+  const [isSearched, setIsSearched] = useState<boolean>(false);
+  const navigate = useNavigate();
+
+  const handleSearchChange = (value: string) => setQuery(value);
+
+  const handleFocus = () => setIsSearched(true);
+
+  const handleSearchSubmit = () => {
+    if (!query.trim()) return;
+
+    navigate(`/search/result?q=${encodeURIComponent(query.trim())}`);
+  };
+
   return (
-    <div
-      className="h-full w-full flex-col items-center justify-start overflow-y-auto pt-safe-top"
-      style={{ paddingBottom: '200px' }}
-    >
-      <Searchbar className="w-full px-mobile" value="" onChange={() => {}} placeholder="책 제목을 입력해주세요" />
-      <MostReadSection />
-      <TrendingSection />
-      <RealTimePopularSection />
-      <AuthorOtherWorksSection />
+    <div className="h-full w-full flex-col items-center justify-start overflow-y-auto pb-safe-bottom pt-safe-top">
+      <Searchbar
+        className="w-full px-mobile"
+        value={query}
+        onChange={handleSearchChange}
+        onFocus={handleFocus}
+        onSubmit={handleSearchSubmit}
+      />
+      {isSearched ? (
+        <>
+          <RecentSearchSection />
+          <PopularSearchSection />
+        </>
+      ) : (
+        <>
+          <MostReadSection />
+          <TrendingSection />
+          <RealTimePopularSection />
+          <AuthorOtherWorksSection />
+        </>
+      )}
     </div>
   );
 };

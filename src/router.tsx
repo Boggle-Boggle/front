@@ -5,10 +5,14 @@ import App from './App';
 
 // const Auth = lazy(() => import('pages/Auth'));
 // const BookDetail = lazy(() => import('pages/BookDetail'));
-const Main = lazy(() => import('pages/Main'));
 const WithBottomNavLayout = lazy(() => import('pages/Layout/WithBottomNavLayout'));
 const WithoutBottomNavLayout = lazy(() => import('pages/Layout/WithoutBottomNavLayout'));
-// const Library = lazy(() => import('pages/Library'));
+const PrivateRoute = lazy(() => import('pages/PrivateRoute'));
+
+const Main = lazy(() => import('pages/Main'));
+const Search = lazy(() => import('pages/Search'));
+const SearchResult = lazy(() => import('pages/SearchResult'));
+const MyBooks = lazy(() => import('pages/MyBooks'));
 // const Login = lazy(() => import('pages/Login'));
 // const MyPage = lazy(() => import('pages/MyPage'));
 // const Edit = lazy(() => import('pages/Edit'));
@@ -18,9 +22,7 @@ const WithoutBottomNavLayout = lazy(() => import('pages/Layout/WithoutBottomNavL
 // const Term = lazy(() => import('pages/MyPage/Term'));
 // const VersionInfo = lazy(() => import('pages/MyPage/VersionInfo'));
 // const Note = lazy(() => import('pages/Note'));
-const PrivateRoute = lazy(() => import('pages/PrivateRoute'));
 // const Record = lazy(() => import('pages/Record'));
-// const Search = lazy(() => import('pages/Search'));
 // const SignUp = lazy(() => import('pages/SignUp'));
 
 const router = createBrowserRouter([
@@ -36,8 +38,8 @@ const router = createBrowserRouter([
             element: <WithBottomNavLayout />,
             children: [
               { path: '/', element: <Main /> },
-              // { path: '/', element: <Search /> },
-              // { path: 'library', element: <Library /> },
+              { path: '/search', element: <Search /> },
+              { path: '/library', element: <MyBooks /> },
               // { path: 'myPage', element: <MyPage /> },
               // { path: 'detail/:detailId', element: <BookDetail /> },
               // { path: 'record/:recordId', element: <Record /> },
@@ -47,6 +49,7 @@ const router = createBrowserRouter([
           {
             element: <WithoutBottomNavLayout />,
             children: [
+              { path: '/search/result', element: <SearchResult /> },
               // 아래 레거시
               // { path: 'note/write', element: <Note /> },
               // { path: 'myPage/nickname', element: <EditNickname /> },

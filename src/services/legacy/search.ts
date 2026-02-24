@@ -1,30 +1,30 @@
-import { PaginationResponse } from 'types/api';
+import { PaginationResponse, Response } from 'types/api';
 import { Book, BookDetail } from 'types/book';
 
-import api from '.';
+import api from 'services/index';
 
 export const getSearchBooks = async (query: string, page: number) => {
-  const response = await api.get(`/books?query=${query}&pageNum=${page}`);
+  const response = await api.get<Response<PaginationResponse<Book[]>>>(`/books?query=${query}&pageNum=${page}`);
 
-  return response.data.data as PaginationResponse<Book[]>;
+  return response.data;
 };
 
 export const getBookDetail = async (isbn: string) => {
-  const response = await api.get(`/books/${isbn}`);
+  const response = await api.get<Response<BookDetail>>(`/books/${isbn}`);
 
-  return response.data.data as BookDetail;
+  return response.data;
 };
 
 export const hasReadingRecord = async (isbn: string) => {
-  const response = await api.get(`/reading-record/isbn/${isbn}`);
+  const response = await api.get<Response<null | number>>(`/reading-record/isbn/${isbn}`);
 
-  return response.data.data as null | number;
+  return response.data;
 };
 
 export const getSearchHistories = async () => {
-  const response = await api.get('/recent-searches');
+  const response = await api.get<Response<string[]>>('/recent-searches');
 
-  return response.data.data as string[];
+  return response.data;
 };
 
 export const addSearchHistory = async (title: string) => {

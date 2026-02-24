@@ -1,18 +1,19 @@
 import { BookCase } from 'types/book';
 import { AddNoteParams, RecordType, Record, Notes, RecordDate, EditRecord, UpdateRecordParams } from 'types/record';
+import { Response } from 'types/api';
 
-import api from '.';
+import api from 'services/index';
 
 export const addRecord = async (record: RecordType) => {
-  const response = await api.post(`/reading-record`, record);
+  const response = await api.post<Response<number>>(`/reading-record`, record);
 
-  return response.data.data as number;
+  return response.data;
 };
 
 export const getRecord = async (recordId: string) => {
-  const response = await api.get(`/reading-record/${recordId}`);
+  const response = await api.get<Response<Record>>(`/reading-record/${recordId}`);
 
-  return response.data.data as Record;
+  return response.data;
 };
 
 export const deleteRecord = async (recordId: number) => {
@@ -25,9 +26,9 @@ export const getBookCase = async (year?: number | null, month?: number | null) =
   if (year) queryString.append('year', `20${year.toString().padStart(2, '0')}`);
   if (month && month !== 13) queryString.append('month', month.toString());
 
-  const response = await api.get(`/bookshelf?${queryString.toString()}`);
+  const response = await api.get<Response<{ books: BookCase[] }>>(`/bookshelf?${queryString.toString()}`);
 
-  return response.data.data.books as BookCase[];
+  return response.data.books;
 };
 
 export const addNote = async (recordId: number, note: AddNoteParams) => {
@@ -39,9 +40,9 @@ export const updateNote = async (recordId: number, noteId: number, note: Partial
 };
 
 export const getNote = async (recordId: string) => {
-  const response = await api.get(`/reading-record/${recordId}/note`);
+  const response = await api.get<Response<Notes[]>>(`/reading-record/${recordId}/note`);
 
-  return response.data.data as Notes[];
+  return response.data;
 };
 
 export const deleteNote = async (recordId: number, noteId: number) => {
@@ -49,15 +50,17 @@ export const deleteNote = async (recordId: number, noteId: number) => {
 };
 
 export const getReadDates = async (recordId: string) => {
-  const response = await api.get(`/reading-record/${recordId}/read-dates`);
+  const response = await api.get<Response<(RecordDate & { readDateIndex: number })[]>>(
+    `/reading-record/${recordId}/read-dates`,
+  );
 
-  return response.data.data as (RecordDate & { readDateIndex: number })[];
+  return response.data;
 };
 
 export const getEditRecord = async (recordId: string) => {
-  const response = await api.get(`/reading-record/${recordId}/edit`);
+  const response = await api.get<Response<EditRecord>>(`/reading-record/${recordId}/edit`);
 
-  return response.data.data as EditRecord;
+  return response.data;
 };
 
 export const updateEditRecord = async (recordId: number, record: UpdateRecordParams) => {

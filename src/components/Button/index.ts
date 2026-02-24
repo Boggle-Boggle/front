@@ -3,3 +3,4 @@ import Button from './Button';
 import IconButton from './IconButton';
 
 export { Button, BottomButton, IconButton };
+export { TextButton } from './TextButton';
