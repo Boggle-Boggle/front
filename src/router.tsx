@@ -12,7 +12,7 @@ const PrivateRoute = lazy(() => import('pages/PrivateRoute'));
 const Main = lazy(() => import('pages/Main'));
 const Search = lazy(() => import('pages/Search'));
 const SearchResult = lazy(() => import('pages/SearchResult'));
-// const Library = lazy(() => import('pages/Library'));
+const MyBooks = lazy(() => import('pages/MyBooks'));
 // const Login = lazy(() => import('pages/Login'));
 // const MyPage = lazy(() => import('pages/MyPage'));
 // const Edit = lazy(() => import('pages/Edit'));
@@ -39,7 +39,7 @@ const router = createBrowserRouter([
             children: [
               { path: '/', element: <Main /> },
               { path: '/search', element: <Search /> },
-              // { path: 'library', element: <Library /> },
+              { path: '/library', element: <MyBooks /> },
               // { path: 'myPage', element: <MyPage /> },
               // { path: 'detail/:detailId', element: <BookDetail /> },
               // { path: 'record/:recordId', element: <Record /> },
