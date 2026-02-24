@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-const useKeyboardStatus = () => {
+export const useKeyboardStatus = () => {
   const [initialHeight, setInitialHeight] = useState<number | null>(null);
   const [isKeyboardActive, setIsKeyboardActive] = useState(false);
 
@@ -28,5 +28,3 @@ const useKeyboardStatus = () => {
 
   return isKeyboardActive;
 };
-
-export default useKeyboardStatus;

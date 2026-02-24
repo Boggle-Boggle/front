@@ -1,6 +1,5 @@
 import { NavLink } from 'react-router-dom';
 
-// import useKeyboardStatus from 'hooks/useKeyboardStatus';
 import {
   IconBookSearch,
   IconBookSearchFilled,
@@ -10,6 +9,8 @@ import {
   IconLibrary,
   IconLibraryFilled,
 } from 'components/icons';
+
+import { useKeyboardStatus } from 'hooks/useKeyboardStatus';
 
 const Navigator = [
   {
@@ -39,9 +40,9 @@ const Navigator = [
 ];
 
 const BottomNavigator = () => {
-  // const isKeyboardActive = useKeyboardStatus();
+  const isKeyboardActive = useKeyboardStatus();
 
-  // if (isKeyboardActive) return;
+  if (isKeyboardActive) return;
 
   return (
     <div className="fixed bottom-0 z-navigator w-full max-w-mobile rounded-t-2xl border-t border-neutral-20 bg-neutral-0">
