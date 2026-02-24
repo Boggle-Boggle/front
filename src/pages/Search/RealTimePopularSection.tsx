@@ -1,6 +1,6 @@
 import BookCover from 'components/BookCover';
 
-import { Title } from '../shared/Title';
+import { Title } from './shared/Title';
 
 const MSG_REALTIME_POPULAR = '실시간 인기도서';
 

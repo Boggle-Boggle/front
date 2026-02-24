@@ -1,7 +1,7 @@
 import { TextButton } from 'components/Button';
 import Cancel from 'components/icons/Cancel';
 
-import { Title } from '../shared/Title';
+import { Title } from './shared/Title';
 
 const MSG_SEARCH_RECENT = '최근 검색어';
 const RECOMMEND_TAGS = ['IT와 기술', '언어 학습', '요리 및 식음료', '비즈니스 및 경영', '라이프 스타일'];
