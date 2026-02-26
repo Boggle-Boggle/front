@@ -68,7 +68,7 @@ const MyBooks = () => {
         </div>
       </div>
 
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between pb-6">
         <div className="flex items-center gap-1">
           <button type="button" className="flex items-center gap-2" onClick={handleOpenSidebar}>
             <IconMenu className="size-icon-md" />
@@ -83,7 +83,7 @@ const MyBooks = () => {
 
       {activeTab === 'reading' ? (
         <div className="flex flex-1 flex-col overflow-y-auto">
-          <div className="mt-5 grid grid-cols-3 gap-x-4 gap-y-7 pb-6">
+          <div className="grid grid-cols-3 gap-x-4 gap-y-7 pb-6">
             {books.map((book) => (
               <BookCard key={book.id} book={book} />
             ))}
