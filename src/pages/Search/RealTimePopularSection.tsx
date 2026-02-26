@@ -2,7 +2,8 @@ import BookCover from 'components/BookCover';
 
 import { Title } from './shared/Title';
 
-const MSG_REALTIME_POPULAR = '실시간 인기도서';
+const MSG_SEARCH_REALTIME_POPULAR_TITLE = '실시간 인기 도서';
+const MSG_SEARCH_REALTIME_POPULAR_RANK_LABEL = '{rank}위';
 
 type PopularBook = {
   id: number;
@@ -20,42 +21,31 @@ const popularBooks: PopularBook[] = Array.from({ length: 9 }, (_, index) => ({
   url: 'https://image.aladin.co.kr/product/38515/3/cover500/e202637227_1.jpg',
 }));
 
-const splitByColumns = (items: PopularBook[], columnSize: number) => {
-  return items.reduce<PopularBook[][]>((acc, item, index) => {
-    if (index % columnSize === 0) {
-      acc.push([]);
-    }
-    acc[acc.length - 1].push(item);
-    return acc;
-  }, []);
-};
-
 export const RealTimePopularSection = () => {
-  const columns = splitByColumns(popularBooks, 3);
+  const getRankLabel = (rank: number) => MSG_SEARCH_REALTIME_POPULAR_RANK_LABEL.replace('{rank}', String(rank));
 
   return (
     <section className="w-full">
-      <Title text={MSG_REALTIME_POPULAR} onLoadMore={() => {}} />
+      <Title text={MSG_SEARCH_REALTIME_POPULAR_TITLE} onLoadMore={() => {}} />
       <div className="relative w-full overflow-hidden pb-6">
-        <ol className="scrollbar-hide flex w-full gap-6 overflow-x-auto px-mobile">
-          {columns.map((column) => (
-            <li className="shrink-0">
-              <ol className="flex w-[18.5rem] flex-col gap-6">
-                {column.map(({ id, rank, title, author, url }) => (
-                  <li key={id} className="flex w-full items-start gap-4">
-                    <span className="text-neutral-70 pt-2 text-title3">{rank}위</span>
-                    <BookCover size="medium" url={url} />
-                    <div className="flex flex-1 flex-col justify-center gap-1 pt-3">
-                      <p className="text-title3 text-neutral-80">{title}</p>
-                      <p className="text-body2 text-neutral-50">{author}</p>
-                    </div>
-                  </li>
-                ))}
-              </ol>
+        <ol className="scrollbar-hide grid grid-flow-col grid-rows-3 gap-x-10 gap-y-3 overflow-x-auto pl-mobile pr-0">
+          {popularBooks.map(({ id, rank, title, author, url }) => (
+            <li
+              key={id}
+              className="grid h-[6.9375rem] w-[19rem] grid-cols-[2rem_5rem_minmax(0,1fr)] items-center gap-[0.625rem]"
+            >
+              <span className="text-neutral-70 flex h-full items-center justify-center text-title3">
+                {getRankLabel(rank)}
+              </span>
+              <BookCover size="small" url={url} />
+              <div className="flex min-w-0 flex-col justify-center gap-1">
+                <p className="line-clamp-1 text-title3 text-neutral-80">{title}</p>
+                <p className="line-clamp-1 text-caption1 text-neutral-50">{author}</p>
+              </div>
             </li>
           ))}
         </ol>
-        <div className="pointer-events-none absolute right-0 top-0 h-full w-4 bg-gradient-to-l from-white to-transparent" />
+        <div className="pointer-events-none absolute right-0 top-0 h-full w-[2.1875rem] bg-gradient-to-l from-white/70 to-white/0" />
       </div>
     </section>
   );
