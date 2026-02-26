@@ -1,6 +1,6 @@
 import BookCover from 'components/BookCover';
 
-import { Title } from './shared/Title';
+import { Title } from '../shared/Title';
 
 const MSG_SEARCH_AUTHOR_OTHER_WORKS_TITLE = '[작가]의 다른 작품';
 const MSG_SEARCH_AUTHOR_OTHER_WORKS_BOOK_TITLE_PLACEHOLDER = '책 제목을 입력해주세요';

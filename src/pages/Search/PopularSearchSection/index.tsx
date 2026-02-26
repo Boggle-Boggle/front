@@ -1,4 +1,4 @@
-import { Title } from './shared/Title';
+import { Title } from '../shared/Title';
 
 const MSG_SEARCH_POPULAR = '인기 검색어';
 
