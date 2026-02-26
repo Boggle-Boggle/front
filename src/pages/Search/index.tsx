@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { Searchbar } from 'components/Searchbar';
 
 import { AuthorOtherWorksSection } from './AuthorOtherWorksSection';
-import { MostReadSection } from './MostReadSection';
+import { MostReadSection } from './MostRead/Section';
 import { PopularSearchSection } from './PopularSearchSection';
 import { RealTimePopularSection } from './RealTimePopularSection';
 import { RecentSearchSection } from './RecentSearchSection';
