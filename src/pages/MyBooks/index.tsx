@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import useLayerStore from 'stores/useLayerStore';
 
-import { IconButton, TextButton } from 'components/Button';
+import { IconButton } from 'components/Button';
 import Highlight from 'components/Highlight';
-import { IconArrowDown, IconLayoutGrid, IconLayoutList, IconMenu, IconSearch } from 'components/icons';
+import { IconLayoutGrid, IconLayoutList, IconSearch } from 'components/icons';
 
-import { ReadingBooksGrid } from './shared/ReadingBooksGrid';
-import { ReadingBooksList } from './shared/ReadingBooksList';
+import { ReadingSection } from './ReadingSection';
+import { WishlistSection } from './WishlistSection';
 import { useMyBooksQuery } from './useMyBooksQuery';
 
 type TabType = 'reading' | 'wishlist';
@@ -14,15 +14,12 @@ type ViewType = 'grid' | 'list';
 
 const MSG_MYBOOKS_TAB_READING = '독서 기록';
 const MSG_MYBOOKS_TAB_WISHLIST = '관심 도서';
-const MSG_MYBOOKS_ALL_BOOKS = '모든 책';
-const MSG_MYBOOKS_SORT_LATEST = '최신순';
 const MSG_MYBOOKS_FILTER_SIDEBAR = '전체 도서 필터';
 const MSG_MYBOOKS_SORT_LAYER = '정렬 옵션';
 // const MSG_MYBOOKS_EMPTY_WISHLIST = '관심 도서가 없습니다';
 const MSG_MYBOOKS_ICON_SEARCH = '검색';
 const MSG_MYBOOKS_ICON_VIEW_TO_GRID = '그리드형으로 보기';
 const MSG_MYBOOKS_ICON_VIEW_TO_LIST = '리스트형으로 보기';
-const MSG_MYBOOKS_LOADING = '불러오는 중...';
 
 const STORAGE_KEY_MYBOOKS_VIEW_TYPE = 'mybooks-view-type';
 const LAYER_ID_MYBOOKS_FILTER = 'mybooks-filter-sidebar';
@@ -96,53 +93,27 @@ const MyBooks = () => {
           </button>
         </div>
         <div className="flex items-center">
-          <IconButton icon={viewToggleIcon} label={viewToggleLabel} onClick={handleToggleViewType} />
+          {activeTab === 'reading' && (
+            <IconButton icon={viewToggleIcon} label={viewToggleLabel} onClick={handleToggleViewType} />
+          )}
           <IconButton icon={IconSearch} label={MSG_MYBOOKS_ICON_SEARCH} onClick={() => {}} />
         </div>
       </div>
 
-      {/* 정렬 */}
-      <div className="flex items-center justify-between pb-6">
-        <button type="button" className="flex items-center gap-1" onClick={handleOpenFilterLayer}>
-          <IconMenu className="size-icon-md" />
-          <span className="text-body1">{MSG_MYBOOKS_ALL_BOOKS}</span>
-          <span className="text-caption1 text-neutral-60">({totalCount})</span>
-        </button>
-        <TextButton
-          variant="filled"
-          size="sm"
-          rightIcon={IconArrowDown}
-          onClick={handleOpenSortLayer}
-          text={MSG_MYBOOKS_SORT_LATEST}
-        />
-      </div>
-
       {activeTab === 'reading' && (
-        <div className="flex flex-1 flex-col overflow-y-auto">
-          {isGridView && <ReadingBooksGrid books={books} />}
-          {!isGridView && <ReadingBooksList books={books} />}
-
-          {isLoading && (
-            <div className="flex justify-center py-4">
-              <span className="text-caption1 text-neutral-60">{MSG_MYBOOKS_LOADING}</span>
-            </div>
-          )}
-          <div ref={observerTarget} className="h-4 w-full" />
-        </div>
+        <ReadingSection
+          books={books}
+          totalCount={totalCount}
+          isGridView={isGridView}
+          isLoading={isLoading}
+          observerTarget={observerTarget}
+          onOpenFilterLayer={handleOpenFilterLayer}
+          onOpenSortLayer={handleOpenSortLayer}
+        />
       )}
 
       {activeTab === 'wishlist' && (
-        <div className="flex flex-1 flex-col overflow-y-auto">
-          {isGridView && <ReadingBooksGrid books={books} />}
-          {!isGridView && <ReadingBooksList books={books} />}
-
-          {isLoading && (
-            <div className="flex justify-center py-4">
-              <span className="text-caption1 text-neutral-60">{MSG_MYBOOKS_LOADING}</span>
-            </div>
-          )}
-          <div ref={observerTarget} className="h-4 w-full" />
-        </div>
+        <WishlistSection books={books} isLoading={isLoading} observerTarget={observerTarget} />
       )}
     </div>
   );
