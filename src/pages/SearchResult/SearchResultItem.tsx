@@ -22,7 +22,7 @@ export const SearchResultItem = (props: SearchResultItemProps) => {
   return (
     <Link to={`/detail/${isbn}`} className="flex w-full gap-5 py-4 first:pt-0">
       <div className="shrink-0">
-        <BookCover size="small" url={cover} label={title} shadowLeftBar />
+        <BookCover className="w-20" url={cover} label={title} shadowLeftBar />
       </div>
       <div className="flex flex-1 flex-col justify-between py-2">
         <div className="flex flex-col gap-1">

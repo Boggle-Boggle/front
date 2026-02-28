@@ -40,7 +40,7 @@ export const RealTimePopularSection = () => {
             {popularBooks.map(({ id, rank, title, author, url }) => (
               <li key={id} className="flex h-28 w-80 items-center">
                 <span className="flex h-full items-center justify-center text-title3">{getRankLabel(rank)}</span>
-                <BookCover className="mx-4 mr-[0.625rem] w-20 rounded-[4px]" url={url} />
+                <BookCover className="mx-4 mr-[0.625rem] w-20" url={url} rounded="sm" />
                 <div>
                   <p className="line-clamp-1 text-title3">{title}</p>
                   <p className="line-clamp-1 text-caption1 text-neutral-60">{author}</p>

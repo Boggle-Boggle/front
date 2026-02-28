@@ -2,19 +2,19 @@ type BookCoverProps = {
   url: string;
   label?: string;
   ratio?: number;
-  rounded?: number | string;
+  rounded?: 'sm' | 'lg';
   shadowLeftBar?: boolean;
   className?: string;
 };
 
 export const BookCover = (props: BookCoverProps) => {
-  const { url, label = '', shadowLeftBar, ratio = 3 / 4, className = '', rounded = 6 } = props;
-  const borderRadius = typeof rounded === 'number' ? `${rounded}px` : rounded;
+  const { url, label = '', shadowLeftBar, ratio = 3 / 4, className = '', rounded = 'lg' } = props;
+  const roundedClass = rounded === 'sm' ? 'rounded' : 'rounded-md';
 
   return (
     <div
-      className={`relative inline-block w-full overflow-hidden ${className}`}
-      style={{ aspectRatio: ratio, borderRadius }}
+      className={`relative inline-block overflow-hidden border border-neutral-20 ${roundedClass} ${className}`}
+      style={{ aspectRatio: ratio }}
     >
       <img className="relative z-20 size-full object-cover" src={url} alt={label} />
       {shadowLeftBar && (
