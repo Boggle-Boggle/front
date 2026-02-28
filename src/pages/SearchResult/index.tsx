@@ -43,7 +43,7 @@ const SearchResult = () => {
         <Searchbar value={localQuery} onChange={handleSearchChange} onSubmit={handleSearchSubmit} className="grow" />
       </div>
 
-      <div className="flex w-full items-center justify-between px-mobile pb-7">
+      <div className="flex w-full items-center justify-between px-mobile pb-5">
         <span className="text-caption1 font-medium text-neutral-60">{MSG_SEARCH_RESULT_COUNT(totalCount)}</span>
         <TextButton
           rightIcon={IconArrowDown}

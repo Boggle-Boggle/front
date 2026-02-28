@@ -20,9 +20,9 @@ export const SearchResultItem = (props: SearchResultItemProps) => {
   const isRegistered = !!readingRecordId;
 
   return (
-    <Link to={`/detail/${isbn}`} className="flex w-full gap-5 py-4 first:pt-0">
+    <Link to={`/detail/${isbn}`} className="flex w-full gap-5 py-4">
       <BookCover className="w-20" url={cover} label={title} shadowLeftBar rounded="sm" />
-      <div className="flex flex-1 flex-col justify-between py-2">
+      <div className="flex flex-1 flex-col justify-start">
         <p className="line-clamp-2 pb-1 text-title3">{title}</p>
         <p className="line-clamp-1 text-caption1 text-neutral-60">{author}</p>
         <p className="line-clamp-1 text-caption2 text-neutral-60">{publisher}</p>
