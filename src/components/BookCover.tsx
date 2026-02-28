@@ -1,22 +1,22 @@
 type BookCoverProps = {
-  size: 'mini' | 'small' | 'medium' | 'large';
   url: string;
   label?: string;
+  ratio?: number;
+  rounded?: number | string;
   shadowLeftBar?: boolean;
-  // shadowBackTriangle?: boolean;
+  className?: string;
 };
 
-export const BookCover = ({ size, url, label = '', shadowLeftBar }: BookCoverProps) => {
-  const sizeClasses = {
-    mini: 'w-[2.5rem] h-[3.5rem] rounded-[4px]',
-    small: 'w-[5rem] h-[6.9375rem] rounded-[4px]',
-    medium: 'w-[6.25rem] h-[8.75rem] rounded-[6px]',
-    large: 'w-[6.8125rem] h-[9.5rem] rounded-[6px]',
-  };
+export const BookCover = (props: BookCoverProps) => {
+  const { url, label = '', shadowLeftBar, ratio = 3 / 4, className = '', rounded = 6 } = props;
+  const borderRadius = typeof rounded === 'number' ? `${rounded}px` : rounded;
 
   return (
-    <div className="relative inline-block">
-      <img className={`relative z-20 ${sizeClasses[size]}`} src={url} alt={label} />
+    <div
+      className={`relative inline-block w-full overflow-hidden ${className}`}
+      style={{ aspectRatio: ratio, borderRadius }}
+    >
+      <img className="relative z-20 size-full object-cover" src={url} alt={label} />
       {shadowLeftBar && (
         <span
           className="pointer-events-none absolute left-0 top-0 z-30 h-full w-[9px] mix-blend-multiply"
