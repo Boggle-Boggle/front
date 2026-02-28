@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 
 import BookCover from 'components/BookCover';
+import { ScrollFadeOverlay } from 'components/ScrollFadeOverlay';
 
 import { Title } from '../shared/Title';
 
@@ -47,7 +48,7 @@ export const RealTimePopularSection = () => {
               </li>
             ))}
           </ol>
-          <div className="pointer-events-none absolute right-0 top-0 h-full w-[2.1875rem] bg-gradient-to-l from-white/70 to-white/0" />
+          <ScrollFadeOverlay intensity="hard" className="w-[3.5rem]" />
         </div>
       </section>
     </>

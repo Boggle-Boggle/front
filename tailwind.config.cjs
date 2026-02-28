@@ -65,6 +65,8 @@ module.exports = {
       },
 
       zIndex: {
+        fade: '1',
+        glow: '2',
         toast: '700',
         layer: '600',
         header: '500',

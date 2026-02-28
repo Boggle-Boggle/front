@@ -1,4 +1,5 @@
 import BookCover from 'components/BookCover';
+import { ScrollFadeOverlay } from 'components/ScrollFadeOverlay';
 
 const items = Array.from({ length: 20 }, (_, index) => ({
   id: index + 1,
@@ -9,8 +10,8 @@ const items = Array.from({ length: 20 }, (_, index) => ({
 
 export const HorizontalBookList = () => {
   return (
-    <div className="relative w-full overflow-hidden pb-5 pl-mobile">
-      <ul className="scrollbar-hide flex w-full gap-[0.625rem] overflow-x-auto">
+    <div className="relative w-full overflow-hidden pb-5">
+      <ul className="scrollbar-hide flex w-full gap-[0.625rem] overflow-x-auto px-mobile">
         {items.map(({ id, title, author, url }) => (
           <li key={id} className="w-[6.25rem] shrink-0">
             <BookCover className="w-full" url={url} />
@@ -20,7 +21,7 @@ export const HorizontalBookList = () => {
         ))}
       </ul>
 
-      <div className="pointer-events-none absolute right-0 top-0 h-full w-4 bg-gradient-to-l from-white to-transparent" />
+      <ScrollFadeOverlay intensity="hard" className="w-10" />
     </div>
   );
 };
