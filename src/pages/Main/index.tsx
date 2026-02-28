@@ -4,12 +4,14 @@ import { Searchbar } from 'components/Searchbar';
 const MSG_TITLE_SEARCH_PLACEHOLDER = '책 제목을 입력해주세요';
 const Main = () => {
   return (
-    <div className="relative h-dvh overflow-scroll bg-secondary pb-safe-bottom pt-safe-top">
-      <div className="z-background relative h-full overflow-scroll px-mobile">
+    <div className="relative h-dvh overflow-hidden bg-secondary pb-safe-bottom pt-safe-top">
+      <div className="relative z-background flex h-full flex-col px-mobile">
         <Searchbar value="" onChange={() => {}} onSubmit={() => {}} placeholder={MSG_TITLE_SEARCH_PLACEHOLDER} />
         <p className="mt-4 text-title1">2025년 전체 책장</p>
         <p className="mb-[1.375rem] text-body1 text-neutral-60">45권 채웠습니다</p>
-        <BookCase />
+        <div className="min-h-0 flex-1 overflow-y-auto pb-safe-bottom">
+          <BookCase />
+        </div>
       </div>
 
       <div className="absolute inset-0 bg-neutral-0 mix-blend-soft-light" />
