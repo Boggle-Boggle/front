@@ -6,7 +6,7 @@ import { Searchbar } from 'components/Searchbar';
 import { AuthorOtherWorksSection } from './AuthorOtherWorksSection';
 import { MostReadSection } from './MostRead/Section';
 import { PopularSearchSection } from './PopularSearchSection';
-import { RealTimePopularSection } from './RealTimePopularSection';
+import { RealTimePopularSection } from './RealTimePopular/Section';
 import { RecentSearchSection } from './RecentSearchSection';
 import { TrendingSection } from './Trending/Section';
 
