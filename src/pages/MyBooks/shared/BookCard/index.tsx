@@ -1,4 +1,4 @@
-import { MyBook } from '../types';
+import { MyBook } from '../../useMyBooksQuery';
 
 type BookCardProps = {
   book: MyBook;
