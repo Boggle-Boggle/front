@@ -15,7 +15,10 @@ export const AuthorOtherWorksSection = () => {
       <ul className="flex justify-center px-mobile">
         <li className="flex h-[11.625rem] w-full gap-5 rounded-[16px] border-[1px] border-[#EEEEEE] p-6 shadow-[0_0.375rem_0.9375rem_0_#A0B1C040]">
           <div className="shrink-0">
-            <BookCover size="medium" url="https://contents.kyobobook.co.kr/sih/pdt/fit-in/198x396/9788901299402.jpg" />
+            <BookCover
+              className="w-[6.25rem]"
+              url="https://contents.kyobobook.co.kr/sih/pdt/fit-in/198x396/9788901299402.jpg"
+            />
           </div>
           <div className="min-w-0">
             <p className="pb-2 text-title3">{MSG_SEARCH_AUTHOR_OTHER_WORKS_BOOK_TITLE_PLACEHOLDER}</p>

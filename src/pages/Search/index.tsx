@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { Searchbar } from 'components/Searchbar';
 
-import { AuthorOtherWorksSection } from './AuthorOtherWorksSection';
+import { AuthorOtherWorksSection } from './AuthorOtherWorks/Section';
 import { MostReadSection } from './MostRead/Section';
 import { PopularSearchSection } from './PopularSearchSection';
 import { RealTimePopularSection } from './RealTimePopular/Section';
