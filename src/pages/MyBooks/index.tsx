@@ -104,7 +104,7 @@ const MyBooks = () => {
         <ReadingSection
           books={books}
           totalCount={totalCount}
-          isGridView={isGridView}
+          viewMode={viewType}
           isLoading={isLoading}
           observerTarget={observerTarget}
           onOpenFilterLayer={handleOpenFilterLayer}

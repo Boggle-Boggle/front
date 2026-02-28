@@ -3,14 +3,14 @@ import { RefObject } from 'react';
 import { TextButton } from 'components/Button';
 import { IconArrowDown, IconMenu } from 'components/icons';
 
-import { ReadingBooksGrid } from '../shared/ReadingBooksGrid';
-import { ReadingBooksList } from '../shared/ReadingBooksList';
+import { ReadingBooksGrid } from './ReadingBooksGrid';
+import { ReadingBooksList } from './ReadingBooksList';
 import { MyBook } from '../useMyBooksQuery';
 
 type ReadingSectionProps = {
   books: MyBook[];
   totalCount: number;
-  isGridView: boolean;
+  viewMode: 'grid' | 'list';
   isLoading: boolean;
   observerTarget: RefObject<HTMLDivElement>;
   onOpenFilterLayer: () => void;
@@ -19,10 +19,10 @@ type ReadingSectionProps = {
 
 const MSG_MYBOOKS_ALL_BOOKS = '모든 책';
 const MSG_MYBOOKS_SORT_LATEST = '최신순';
-const MSG_MYBOOKS_LOADING = '불러오는 중...';
 
 export const ReadingSection = (props: ReadingSectionProps) => {
-  const { books, totalCount, isGridView, isLoading, observerTarget, onOpenFilterLayer, onOpenSortLayer } = props;
+  const { books, totalCount, viewMode, isLoading, observerTarget, onOpenFilterLayer, onOpenSortLayer } = props;
+  const isGridView = viewMode === 'grid';
 
   return (
     <>
