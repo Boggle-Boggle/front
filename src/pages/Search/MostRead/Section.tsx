@@ -8,9 +8,7 @@ const MSG_MOST_READ = '가장 많이 읽힌 책';
 export const MostReadSection = () => {
   const navigate = useNavigate();
 
-  const handleLoadMore = () => {
-    navigate('/search/most-read');
-  };
+  const handleLoadMore = () => navigate('/search/most-read');
 
   return (
     <>
