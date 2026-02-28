@@ -11,6 +11,7 @@ const PrivateRoute = lazy(() => import('pages/PrivateRoute'));
 
 const Main = lazy(() => import('pages/Main'));
 const Search = lazy(() => import('pages/Search'));
+const MostRead = lazy(() => import('pages/Search/MostRead'));
 const SearchResult = lazy(() => import('pages/SearchResult'));
 const MyBooks = lazy(() => import('pages/MyBooks'));
 // const Login = lazy(() => import('pages/Login'));
@@ -39,6 +40,7 @@ const router = createBrowserRouter([
             children: [
               { path: '/', element: <Main /> },
               { path: '/search', element: <Search /> },
+              { path: '/search/most-read', element: <MostRead /> },
               { path: '/library', element: <MyBooks /> },
               // { path: 'myPage', element: <MyPage /> },
               // { path: 'detail/:detailId', element: <BookDetail /> },
