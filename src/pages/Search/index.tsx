@@ -8,7 +8,7 @@ import { MostReadSection } from './MostRead/Section';
 import { PopularSearchSection } from './PopularSearchSection';
 import { RealTimePopularSection } from './RealTimePopularSection';
 import { RecentSearchSection } from './RecentSearchSection';
-import { TrendingSection } from './TrendingSection';
+import { TrendingSection } from './Trending/Section';
 
 const Search = () => {
   const [query, setQuery] = useState<string>('');
