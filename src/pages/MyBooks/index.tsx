@@ -16,6 +16,8 @@ const MSG_MYBOOKS_TAB_READING = '독서 기록';
 const MSG_MYBOOKS_TAB_WISHLIST = '관심 도서';
 const MSG_MYBOOKS_ALL_BOOKS = '모든 책';
 const MSG_MYBOOKS_SORT_LATEST = '최신순';
+const MSG_MYBOOKS_FILTER_SIDEBAR = '전체 도서 필터';
+const MSG_MYBOOKS_SORT_LAYER = '정렬 옵션';
 // const MSG_MYBOOKS_EMPTY_WISHLIST = '관심 도서가 없습니다';
 const MSG_MYBOOKS_ICON_SEARCH = '검색';
 const MSG_MYBOOKS_ICON_VIEW_TO_GRID = '그리드형으로 보기';
@@ -23,6 +25,8 @@ const MSG_MYBOOKS_ICON_VIEW_TO_LIST = '리스트형으로 보기';
 const MSG_MYBOOKS_LOADING = '불러오는 중...';
 
 const STORAGE_KEY_MYBOOKS_VIEW_TYPE = 'mybooks-view-type';
+const LAYER_ID_MYBOOKS_FILTER = 'mybooks-filter-sidebar';
+const LAYER_ID_MYBOOKS_SORT = 'mybooks-sort-bottom-sheet';
 
 const getInitialViewType = (): ViewType => {
   if (typeof window === 'undefined') return 'grid';
@@ -55,11 +59,19 @@ const MyBooks = () => {
     });
   };
 
-  const handleOpenSidebar = () => {
+  const handleOpenFilterLayer = () => {
     push({
-      id: 'mybooks-sidebar',
+      id: LAYER_ID_MYBOOKS_FILTER,
       type: 'SIDEBAR',
-      component: <div>사이드바</div>,
+      component: <div>{MSG_MYBOOKS_FILTER_SIDEBAR}</div>,
+    });
+  };
+
+  const handleOpenSortLayer = () => {
+    push({
+      id: LAYER_ID_MYBOOKS_SORT,
+      type: 'BOTTOM_SHEET',
+      component: <div>{MSG_MYBOOKS_SORT_LAYER}</div>,
     });
   };
 
@@ -91,12 +103,12 @@ const MyBooks = () => {
 
       {/* 정렬 */}
       <div className="flex items-center justify-between pb-6">
-        <button type="button" className="flex items-center gap-1" onClick={handleOpenSidebar}>
+        <button type="button" className="flex items-center gap-1" onClick={handleOpenFilterLayer}>
           <IconMenu className="size-icon-md" />
           <span className="text-body1">{MSG_MYBOOKS_ALL_BOOKS}</span>
           <span className="text-caption1 text-neutral-60">({totalCount})</span>
         </button>
-        <TextButton variant="bg" size="sm" icon={IconArrowDown} iconPosition="right" onClick={() => {}}>
+        <TextButton variant="bg" size="sm" icon={IconArrowDown} iconPosition="right" onClick={handleOpenSortLayer}>
           {MSG_MYBOOKS_SORT_LATEST}
         </TextButton>
       </div>
