@@ -21,18 +21,12 @@ export const SearchResultItem = (props: SearchResultItemProps) => {
 
   return (
     <Link to={`/detail/${isbn}`} className="flex w-full gap-5 py-4 first:pt-0">
-      <div className="shrink-0">
-        <BookCover className="w-20" url={cover} label={title} shadowLeftBar />
-      </div>
+      <BookCover className="w-20" url={cover} label={title} shadowLeftBar rounded="sm" />
       <div className="flex flex-1 flex-col justify-between py-2">
-        <div className="flex flex-col gap-1">
-          <h3 className="line-clamp-2 text-title3 text-neutral-100">{title}</h3>
-          <div className="flex flex-col text-caption1 text-neutral-60">
-            <span className="line-clamp-1">{author}</span>
-            <span className="line-clamp-1 text-caption2">{publisher}</span>
-          </div>
-        </div>
-        {isRegistered && <span className="text-primary-default text-caption1">{MSG_SEARCH_RESULT_BADGE}</span>}
+        <p className="line-clamp-2 pb-1 text-title3">{title}</p>
+        <p className="line-clamp-1 text-caption1 text-neutral-60">{author}</p>
+        <p className="line-clamp-1 text-caption2 text-neutral-60">{publisher}</p>
+        {isRegistered && <p className="pt-[0.5625rem] text-caption1 text-information">{MSG_SEARCH_RESULT_BADGE}</p>}
       </div>
     </Link>
   );
