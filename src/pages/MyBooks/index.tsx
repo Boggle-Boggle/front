@@ -108,9 +108,13 @@ const MyBooks = () => {
           <span className="text-body1">{MSG_MYBOOKS_ALL_BOOKS}</span>
           <span className="text-caption1 text-neutral-60">({totalCount})</span>
         </button>
-        <TextButton variant="bg" size="sm" icon={IconArrowDown} iconPosition="right" onClick={handleOpenSortLayer}>
-          {MSG_MYBOOKS_SORT_LATEST}
-        </TextButton>
+        <TextButton
+          variant="filled"
+          size="sm"
+          rightIcon={IconArrowDown}
+          onClick={handleOpenSortLayer}
+          text={MSG_MYBOOKS_SORT_LATEST}
+        />
       </div>
 
       {activeTab === 'reading' && (

@@ -1,3 +1,5 @@
+import { useNavigate } from 'react-router-dom';
+
 import { TextButton } from 'components/Button';
 import Cancel from 'components/icons/Cancel';
 
@@ -7,6 +9,10 @@ const MSG_SEARCH_RECENT = '최근 검색어';
 const RECOMMEND_TAGS = ['IT와 기술', '언어 학습', '요리 및 식음료', '비즈니스 및 경영', '라이프 스타일'];
 
 export const RecentSearchSection = () => {
+  const navigate = useNavigate();
+
+  const handleTagClick = (tag: string) => navigate(`/search/result?q=${encodeURIComponent(tag)}`);
+
   return (
     <section className="w-full">
       <Title text={MSG_SEARCH_RECENT} />
@@ -15,9 +21,7 @@ export const RecentSearchSection = () => {
         <ul className="scrollbar-hide flex w-full gap-2 overflow-x-auto px-mobile pb-4">
           {RECOMMEND_TAGS.map((tag) => (
             <li key={tag} className="shrink-0">
-              <TextButton onClick={() => {}} icon={Cancel} iconPosition="right">
-                {tag}
-              </TextButton>
+              <TextButton onClick={() => handleTagClick(tag)} variant="filled" rightIcon={Cancel} text={tag} />
             </li>
           ))}
         </ul>

@@ -18,13 +18,10 @@ const meta = {
     },
     variant: {
       control: { type: 'select' },
-      options: ['default', 'bg', 'primaryLine'],
+      options: ['default', 'line', 'filled'],
     },
-    iconPosition: {
-      control: { type: 'select' },
-      options: ['left', 'right'],
-    },
-    icon: { control: false },
+    leftIcon: { control: false },
+    rightIcon: { control: false },
   },
 } satisfies Meta<typeof TextButton>;
 
@@ -33,7 +30,7 @@ type Story = StoryObj<typeof meta>;
 
 const defaultArgs: ComponentProps<typeof TextButton> = {
   onClick: () => {},
-  children: '입력',
+  text: '입력',
   size: 'lg',
   variant: 'default',
   disabled: false,
@@ -52,32 +49,32 @@ export const DefaultDisabled: Story = {
   },
 };
 
-export const BG: Story = {
+export const Filled: Story = {
   args: {
     ...defaultArgs,
-    variant: 'bg',
+    variant: 'filled',
   },
 };
 
-export const BGDisabled: Story = {
+export const FilledDisabled: Story = {
   args: {
     ...defaultArgs,
-    variant: 'bg',
+    variant: 'filled',
     disabled: true,
   },
 };
 
-export const PrimaryLine: Story = {
+export const Line: Story = {
   args: {
     ...defaultArgs,
-    variant: 'primaryLine',
+    variant: 'line',
   },
 };
 
-export const PrimaryLineDisabled: Story = {
+export const LineDisabled: Story = {
   args: {
     ...defaultArgs,
-    variant: 'primaryLine',
+    variant: 'line',
     disabled: true,
   },
 };
@@ -85,34 +82,30 @@ export const PrimaryLineDisabled: Story = {
 export const WithLeftIcon: Story = {
   args: {
     ...defaultArgs,
-    icon: IconCircleCancel,
-    iconPosition: 'left',
+    leftIcon: IconCircleCancel,
   },
 };
 
 export const WithRightIcon: Story = {
   args: {
     ...defaultArgs,
-    icon: IconCircleCancel,
-    iconPosition: 'right',
+    rightIcon: IconCircleCancel,
   },
 };
 
-export const WithLeftIconBG: Story = {
+export const WithLeftIconFilled: Story = {
   args: {
     ...defaultArgs,
-    variant: 'bg',
-    icon: IconCircleCancel,
-    iconPosition: 'left',
+    variant: 'filled',
+    leftIcon: IconCircleCancel,
   },
 };
 
-export const WithRightIconBG: Story = {
+export const WithRightIconFilled: Story = {
   args: {
     ...defaultArgs,
-    variant: 'bg',
-    icon: IconCircleCancel,
-    iconPosition: 'right',
+    variant: 'filled',
+    rightIcon: IconCircleCancel,
   },
 };
 
@@ -123,19 +116,19 @@ export const MediumDefault: Story = {
   },
 };
 
-export const MediumBG: Story = {
+export const MediumFilled: Story = {
   args: {
     ...defaultArgs,
     size: 'md',
-    variant: 'bg',
+    variant: 'filled',
   },
 };
 
-export const MediumPrimaryLine: Story = {
+export const MediumLine: Story = {
   args: {
     ...defaultArgs,
     size: 'md',
-    variant: 'primaryLine',
+    variant: 'line',
   },
 };
 
@@ -143,18 +136,16 @@ export const MediumWithLeftIcon: Story = {
   args: {
     ...defaultArgs,
     size: 'md',
-    icon: IconCircleCancel,
-    iconPosition: 'left',
+    leftIcon: IconCircleCancel,
   },
 };
 
-export const MediumWithRightIconBG: Story = {
+export const MediumWithRightIconFilled: Story = {
   args: {
     ...defaultArgs,
     size: 'md',
-    variant: 'bg',
-    icon: IconCircleCancel,
-    iconPosition: 'right',
+    variant: 'filled',
+    rightIcon: IconCircleCancel,
   },
 };
 
@@ -165,19 +156,19 @@ export const SmallDefault: Story = {
   },
 };
 
-export const SmallBG: Story = {
+export const SmallFilled: Story = {
   args: {
     ...defaultArgs,
     size: 'sm',
-    variant: 'bg',
+    variant: 'filled',
   },
 };
 
-export const SmallPrimaryLine: Story = {
+export const SmallLine: Story = {
   args: {
     ...defaultArgs,
     size: 'sm',
-    variant: 'primaryLine',
+    variant: 'line',
   },
 };
 
@@ -185,17 +176,15 @@ export const SmallWithLeftIcon: Story = {
   args: {
     ...defaultArgs,
     size: 'sm',
-    icon: IconCircleCancel,
-    iconPosition: 'left',
+    leftIcon: IconCircleCancel,
   },
 };
 
-export const SmallWithRightIconBG: Story = {
+export const SmallWithRightIconFilled: Story = {
   args: {
     ...defaultArgs,
     size: 'sm',
-    variant: 'bg',
-    icon: IconCircleCancel,
-    iconPosition: 'right',
+    variant: 'filled',
+    rightIcon: IconCircleCancel,
   },
 };

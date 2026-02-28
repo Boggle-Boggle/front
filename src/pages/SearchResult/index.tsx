@@ -34,6 +34,8 @@ const SearchResult = () => {
 
   const handleSearchChange = (value: string) => setLocalQuery(value);
 
+  const handleOpenFilter = () => {};
+
   return (
     <div className="flex h-full w-full flex-col pb-safe-bottom pt-safe-top">
       <div className="flex w-full items-center justify-start gap-2 pb-4 pr-mobile">
@@ -43,9 +45,14 @@ const SearchResult = () => {
 
       <div className="flex w-full items-center justify-between px-mobile pb-7">
         <span className="text-caption1 font-medium text-neutral-60">{MSG_SEARCH_RESULT_COUNT(totalCount)}</span>
-        <TextButton icon={IconArrowDown} iconPosition="right" onClick={() => {}}>
-          {MSG_SEARCH_FILTER_PAPER}
-        </TextButton>
+        <TextButton
+          rightIcon={IconArrowDown}
+          onClick={handleOpenFilter}
+          text={MSG_SEARCH_FILTER_PAPER}
+          size="md"
+          variant="filled"
+          className="text-neutral-80"
+        />
       </div>
 
       <div className="flex-1 overflow-y-auto px-mobile">

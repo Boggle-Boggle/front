@@ -3,75 +3,57 @@ import { TextButtonProps } from './type';
 export const TextButton = (props: TextButtonProps) => {
   const {
     onClick,
-    children,
+    text,
     disabled = false,
     size = 'lg',
     variant = 'default',
     className = '',
-    icon: Icon,
-    iconPosition = 'left',
+    leftIcon: LeftIcon,
+    rightIcon: RightIcon,
   } = props;
 
-  const hasIcon = Boolean(Icon);
-  const hasBgVariant = variant === 'bg' || variant === 'primaryLine';
+  const hasIcon = Boolean(LeftIcon || RightIcon);
 
-  const baseClass = 'inline-flex items-center justify-center';
-
-  const fontClass = size === 'lg' ? 'text-title4' : size === 'md' ? 'text-body2' : 'text-caption1';
-
-  const gapClass = hasIcon ? (size === 'lg' ? 'gap-1' : 'gap-[3px]') : size === 'sm' ? 'gap-0.5' : 'gap-2.5';
-
-  const paddingClass =
+  const sizeClass =
     size === 'lg'
       ? hasIcon
-        ? hasBgVariant
-          ? 'py-1 px-2'
-          : 'py-1'
-        : 'py-1 px-3'
+        ? 'text-title4 py-1'
+        : 'text-title4 py-1 px-3'
       : size === 'md'
         ? hasIcon
-          ? hasBgVariant
-            ? 'py-[3px] px-1.5'
-            : 'py-0.5'
-          : variant === 'default'
-            ? 'py-0.5 px-1'
-            : 'py-0.5 px-2.5'
+          ? 'text-body2 py-0.5'
+          : 'text-body2 py-0.5 px-1'
         : hasIcon
-          ? hasBgVariant
-            ? 'py-0.5 px-1.5'
-            : 'py-0.5'
-          : variant === 'default'
-            ? 'py-0.5 px-1'
-            : 'py-0.5 px-2.5';
+          ? 'text-caption1 py-0.5'
+          : 'text-caption1 py-0.5 px-1';
 
-  const shapeClass = variant !== 'default' || size === 'sm' ? 'rounded-full' : '';
+  const gapClass = hasIcon ? (size === 'lg' ? 'gap-1' : 'gap-[3px]') : '';
+
+  const paddingByVariantClass =
+    variant === 'default' ? '' : size === 'lg' ? (hasIcon ? 'px-2' : 'px-3') : hasIcon ? 'px-1.5' : 'px-2.5';
 
   const variantClass = disabled
-    ? variant === 'primaryLine'
-      ? 'bg-neutral-0 border border-neutral-20 text-neutral-40'
-      : variant === 'bg'
-        ? 'bg-neutral-20 text-neutral-40'
-        : size === 'sm'
-          ? 'bg-neutral-20 text-neutral-40'
-          : 'text-neutral-40'
-    : variant === 'primaryLine'
-      ? 'bg-neutral-0 border-[1.5px] border-primary text-primary'
-      : variant === 'bg'
-        ? 'bg-neutral-0 border border-neutral-20 text-neutral-100'
-        : size === 'sm'
-          ? 'bg-neutral-20 text-neutral-100'
-          : 'text-neutral-100';
+    ? variant === 'default'
+      ? 'text-neutral-40'
+      : variant === 'line'
+        ? 'bg-neutral-0 border border-neutral-20 text-neutral-40 rounded-full'
+        : 'bg-neutral-20 text-neutral-40 rounded-full'
+    : variant === 'default'
+      ? 'text-neutral-100'
+      : variant === 'line'
+        ? 'bg-neutral-0 border-[1.5px] border-primary text-primary rounded-full'
+        : 'bg-neutral-0 border border-neutral-20 text-neutral-100 rounded-full';
 
   return (
     <button
       type="button"
       onClick={onClick}
       disabled={disabled}
-      className={`${baseClass} ${fontClass} ${gapClass} ${paddingClass} ${shapeClass} ${variantClass} ${className}`}
+      className={`inline-flex items-center justify-center ${sizeClass} ${gapClass} ${paddingByVariantClass} ${variantClass} ${className}`}
     >
-      {Icon && iconPosition === 'left' && <Icon className="size-icon-sm" />}
-      {children}
-      {Icon && iconPosition === 'right' && <Icon className="size-icon-sm" />}
+      {LeftIcon && <LeftIcon className="size-icon-sm" />}
+      <span>{text}</span>
+      {RightIcon && <RightIcon className="size-icon-sm" />}
     </button>
   );
 };
