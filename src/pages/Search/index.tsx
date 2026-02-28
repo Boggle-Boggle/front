@@ -5,9 +5,9 @@ import { Searchbar } from 'components/Searchbar';
 
 import { AuthorOtherWorksSection } from './AuthorOtherWorks/Section';
 import { MostReadSection } from './MostRead/Section';
-import { PopularSearchSection } from './PopularSearchSection';
+import { PopularSearchSection } from './PopularSearch/Section';
 import { RealTimePopularSection } from './RealTimePopular/Section';
-import { RecentSearchSection } from './RecentSearchSection';
+import { RecentSearchSection } from './RecentSearch/Section';
 import { TrendingSection } from './Trending/Section';
 
 const Search = () => {
