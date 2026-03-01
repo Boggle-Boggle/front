@@ -19,7 +19,7 @@ const Button = ({
 }: ButtonProps) => {
   const base = 'inline-flex items-center justify-center gap-1';
   const disabledClass = 'bg-neutral-0 text-neutral-40 border-neutral-20';
-  const widthClass = width === 'long' ? 'w-full max-w-[21.1875rem]' : 'w-fit';
+  const widthClass = width === 'long' ? 'w-full ' : 'w-fit';
   const borderClass = size === 'small' ? 'border-[1.5px]' : 'border';
   const sizeClass =
     size === 'small'
