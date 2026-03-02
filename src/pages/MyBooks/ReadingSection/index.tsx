@@ -41,9 +41,10 @@ export const ReadingSection = (props: ReadingSectionProps) => {
         />
       </div>
 
-      {isGridView && <ReadingBooksGrid books={books} />}
-      {!isGridView && <ReadingBooksList books={books} />}
-
+      <div className="overflow-y-auto">
+        {isGridView && <ReadingBooksGrid books={books} />}
+        {!isGridView && <ReadingBooksList books={books} />}
+      </div>
       {isLoading && <div> 로딩중</div>}
       <div ref={observerTarget} className="h-4 w-full" />
     </>
