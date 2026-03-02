@@ -1,5 +1,6 @@
 import { ReactNode, useEffect, useRef, useState } from 'react';
 
+import { IconButton } from 'components/Button';
 import { IconCircleInfo } from 'components/icons';
 
 type PopoverProps = {
@@ -7,6 +8,8 @@ type PopoverProps = {
   placement?: 'left' | 'center' | 'right';
   defaultOpen?: boolean;
 };
+
+const MSG_POPOVER_INFO_BUTTON_LABEL = '정보 팝오버 열기';
 
 export const Popover = (props: PopoverProps) => {
   const { content, placement = 'center', defaultOpen = false } = props;
@@ -38,19 +41,18 @@ export const Popover = (props: PopoverProps) => {
     return () => {
       document.removeEventListener('mousedown', handleOutsideClick);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [internalOpen]);
 
   return (
     <div className="bg-slate-0 relative flex" ref={containerRef}>
-      <IconCircleInfo onClick={handleToggle} />
+      <IconButton icon={IconCircleInfo} label={MSG_POPOVER_INFO_BUTTON_LABEL} onClick={handleToggle} size="sm" />
       {internalOpen && (
         <div
           className={`absolute top-full ${placementClass} ${popoverPaddingClass}`}
           style={{ filter: 'drop-shadow(0px 2px 8px #0000001F)' }}
         >
           {/* Arrow */}
-          <div className={`pt-1" flex ${arrowAlignClass} ${arrowPaddingClass}`}>
+          <div className={`flex pt-1 ${arrowAlignClass} ${arrowPaddingClass}`}>
             <svg
               className="h-[9px] w-fit text-neutral-0"
               viewBox="0 0 12 9"

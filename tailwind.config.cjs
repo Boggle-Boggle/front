@@ -67,13 +67,16 @@ module.exports = {
       zIndex: {
         fade: '1',
         glow: '2',
-        toast: '700',
-        layer: '600',
+        background: '10',
+        shelf: '10',
+        book: '20',
+        bookShadow: '20',
+        highlight: '100',
         header: '500',
         navigator: '500',
         fixedBtn: '500',
-        highlight: '100',
-        background: '10',
+        layer: '600',
+        toast: '700',
       },
 
       keyframes: {

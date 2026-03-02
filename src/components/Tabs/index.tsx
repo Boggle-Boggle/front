@@ -1,102 +1,48 @@
-type TabItem = {
-  id: string;
+export type TabItem<T extends string> = {
+  id: T;
   label: string;
-  step?: string;
   disabled?: boolean;
 };
 
-type TabsProps = {
-  tabs: TabItem[];
-  value: string;
-  onChange: (id: string) => void;
-  variant?: 'default' | 'step';
-  layout?: 'equal' | 'scroll';
-  size?: 'sm' | 'md';
+type TabsProps<T extends string> = {
+  tabs: TabItem<T>[];
+  value: T;
+  onChange: (id: T) => void;
   className?: string;
   ariaLabel?: string;
 };
 
-export const Tabs = (props: TabsProps) => {
-  const {
-    tabs,
-    value,
-    onChange,
-    variant = 'default',
-    layout = 'equal',
-    size = 'md',
-    className = '',
-    ariaLabel = 'tabs',
-  } = props;
+export const Tabs = <T extends string>(props: TabsProps<T>) => {
+  const { tabs, value, onChange, className = '', ariaLabel = 'tabs' } = props;
 
-  if (tabs.length === 0) return null;
+  if (tabs.length !== 2 && tabs.length !== 3) {
+    return null;
+  }
 
-  const isStepVariant = variant === 'step';
-  const isScrollLayout = layout === 'scroll' && !isStepVariant;
-
-  const containerBaseClassName = isStepVariant ? 'w-full' : 'w-full border-b border-neutral-20';
-  const listBaseClassName = isStepVariant ? 'relative flex w-full items-start' : 'flex w-full items-stretch';
-  const listLayoutClassName = isScrollLayout ? 'overflow-x-auto' : 'overflow-hidden';
-  const listScrollbarClassName = isScrollLayout
-    ? '[-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden'
-    : '';
-
-  const tabBaseClassName = 'relative inline-flex items-center justify-center transition-colors';
-  const tabEqualLayoutClassName = layout === 'equal' ? 'flex-1' : 'shrink-0';
-  const tabPaddingClassName =
-    layout === 'equal' ? (size === 'sm' ? 'py-2' : 'py-3') : size === 'sm' ? 'px-3 py-2' : 'px-4 py-3';
-  const tabTextClassName = size === 'sm' ? 'text-caption1' : 'text-body1';
+  const containerClassName = `w-full border-b border-neutral-20 ${className}`;
+  const listClassName = 'flex w-full items-stretch overflow-hidden';
+  const tabBaseClassName =
+    'relative inline-flex flex-1 items-center justify-center border-b-2  py-[0.375rem] text-body1 transition-colors';
   const tabDisabledClassName = 'disabled:cursor-not-allowed disabled:opacity-40';
 
-  const tabBorderBaseClassName = isStepVariant ? '' : 'border-b-2';
+  const getTabTextClassName = (isSelected: boolean) => (isSelected ? 'text-neutral-100' : 'text-neutral-60');
+  const getTabBorderClassName = (isSelected: boolean) => (isSelected ? 'border-neutral-100' : 'border-transparent');
 
-  const stepButtonBaseClassName = 'relative z-10 flex w-full flex-col items-center';
-  const stepGapClassName = size === 'sm' ? 'gap-1.5' : 'gap-2';
-  const stepNumberClassName = size === 'sm' ? 'text-caption1' : 'text-body1';
-  const stepLabelClassName = size === 'sm' ? 'text-caption1' : 'text-body1';
-  const stepTrackBaseClassName = 'absolute left-0 right-0 h-[2px] rounded-full bg-neutral-20';
-  const stepTrackTopClassName = size === 'sm' ? 'top-7' : 'top-8';
-  const stepTrackActiveClassName = 'absolute left-0 top-0 h-full rounded-full bg-neutral-100';
-
-  const getTabTextClassName = (isSelected: boolean) => {
-    if (isSelected) return 'text-neutral-100';
-
-    return 'text-neutral-60';
-  };
-
-  const getTabBorderClassName = (isSelected: boolean) => {
-    if (isSelected) return 'border-neutral-100';
-
-    return 'border-transparent';
-  };
-
-  const handleTabClick = (tabId: string) => {
+  const handleTabClick = (tabId: T) => {
     onChange(tabId);
   };
 
-  const selectedIndex = tabs.findIndex((tab) => tab.id === value);
-  const safeSelectedIndex = selectedIndex < 0 ? 0 : selectedIndex;
-  const stepProgressPercent = tabs.length <= 1 ? 0 : Math.min(100, (safeSelectedIndex / (tabs.length - 1)) * 100);
-
   return (
-    <div className={`${containerBaseClassName} ${className}`}>
-      <div
-        role="tablist"
-        aria-label={ariaLabel}
-        className={`${listBaseClassName} ${listLayoutClassName} ${listScrollbarClassName}`}
-      >
-        {isStepVariant && (
-          <div className={`${stepTrackBaseClassName} ${stepTrackTopClassName}`}>
-            <div className={stepTrackActiveClassName} style={{ width: `${stepProgressPercent}%` }} />
-          </div>
-        )}
+    <div className={containerClassName}>
+      <div role="tablist" aria-label={ariaLabel} className={listClassName}>
         {tabs.map((tab) => {
           const isSelected = tab.id === value;
-          const tabTextStateClassName = getTabTextClassName(isSelected);
-          const tabBorderStateClassName = getTabBorderClassName(isSelected);
-          const tabClassName = `${tabBaseClassName} ${tabBorderBaseClassName} ${tabEqualLayoutClassName} ${tabPaddingClassName} ${tabTextClassName} ${tabBorderStateClassName} ${tabTextStateClassName} ${tabDisabledClassName}`;
-          const stepButtonClassName = `${stepButtonBaseClassName} ${stepGapClassName} ${tabDisabledClassName}`;
-          const stepNumberTextClassName = `${stepNumberClassName} ${tabTextStateClassName}`;
-          const stepLabelTextClassName = `${stepLabelClassName} ${tabTextStateClassName}`;
+          const tabClassName = [
+            tabBaseClassName,
+            getTabBorderClassName(isSelected),
+            getTabTextClassName(isSelected),
+            tabDisabledClassName,
+          ].join(' ');
 
           const handleClick = () => {
             handleTabClick(tab.id);
@@ -110,17 +56,10 @@ export const Tabs = (props: TabsProps) => {
               aria-selected={isSelected}
               tabIndex={isSelected ? 0 : -1}
               disabled={tab.disabled}
-              className={isStepVariant ? stepButtonClassName : tabClassName}
+              className={tabClassName}
               onClick={handleClick}
             >
-              {isStepVariant ? (
-                <>
-                  <span className={stepNumberTextClassName}>{tab.step ?? tab.label}</span>
-                  {tab.step && <span className={stepLabelTextClassName}>{tab.label}</span>}
-                </>
-              ) : (
-                tab.label
-              )}
+              {tab.label}
             </button>
           );
         })}
