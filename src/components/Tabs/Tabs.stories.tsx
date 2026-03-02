@@ -9,18 +9,6 @@ const meta = {
   component: Tabs,
   tags: ['autodocs'],
   argTypes: {
-    layout: {
-      control: { type: 'select' },
-      options: ['equal', 'scroll'],
-    },
-    size: {
-      control: { type: 'select' },
-      options: ['sm', 'md'],
-    },
-    variant: {
-      control: { type: 'select' },
-      options: ['default', 'step'],
-    },
     onChange: { action: 'changed' },
   },
 } satisfies Meta<typeof Tabs>;
@@ -28,7 +16,7 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const InfoReview: Story = {
+export const TwoTabs: Story = {
   args: {
     tabs: [
       { id: 'info', label: '정보' },
@@ -36,9 +24,6 @@ export const InfoReview: Story = {
     ],
     value: 'info',
     onChange: () => {},
-    layout: 'equal',
-    size: 'md',
-    variant: 'default',
   },
   render: (args) => {
     const [value, setValue] = useState<string>(args.value);
@@ -55,64 +40,12 @@ export const InfoReview: Story = {
 export const ThreeTabs: Story = {
   args: {
     tabs: [
-      { id: '1', label: '1' },
-      { id: '2', label: '2' },
-      { id: '3', label: '3' },
+      { id: 'book', label: '책 정보' },
+      { id: 'record', label: '기록' },
+      { id: 'review', label: '리뷰' },
     ],
-    value: '1',
+    value: 'book',
     onChange: () => {},
-    layout: 'equal',
-    size: 'sm',
-    variant: 'default',
-  },
-  render: (args) => {
-    const [value, setValue] = useState<string>(args.value);
-
-    const handleChange = (id: string) => {
-      setValue(id);
-      args.onChange(id);
-    };
-
-    return <Tabs {...args} value={value} onChange={handleChange} />;
-  },
-};
-
-export const Scrollable: Story = {
-  args: {
-    tabs: Array.from({ length: 10 }).map((_, index) => ({
-      id: String(index + 1),
-      label: String(index + 1),
-    })),
-    value: '1',
-    onChange: () => {},
-    layout: 'scroll',
-    size: 'md',
-    variant: 'default',
-  },
-  render: (args) => {
-    const [value, setValue] = useState<string>(args.value);
-
-    const handleChange = (id: string) => {
-      setValue(id);
-      args.onChange(id);
-    };
-
-    return <Tabs {...args} value={value} onChange={handleChange} />;
-  },
-};
-
-export const StepTabs: Story = {
-  args: {
-    tabs: [
-      { id: '1', step: '1', label: '기본정보' },
-      { id: '2', step: '2', label: '독서기록' },
-      { id: '3', step: '3', label: '완료' },
-    ],
-    value: '1',
-    onChange: () => {},
-    layout: 'equal',
-    size: 'md',
-    variant: 'step',
   },
   render: (args) => {
     const [value, setValue] = useState<string>(args.value);
