@@ -27,7 +27,7 @@ export const ReadingSection = (props: ReadingSectionProps) => {
 
   return (
     <>
-      <div className="flex items-center justify-between pb-6">
+      <div className="flex items-center justify-between px-mobile pb-6">
         <button type="button" className="flex items-center gap-1" onClick={onOpenFilterLayer}>
           <IconMenu className="size-icon-md" />
           <span className="text-body1">{filterLabel}</span>

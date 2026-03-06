@@ -115,9 +115,9 @@ const MyBooks = () => {
   };
 
   return (
-    <div className="flex h-full w-full flex-col px-mobile pb-safe-bottom pt-safe-top">
+    <div className="flex h-full w-full flex-col pb-safe-bottom pt-safe-top">
       {/* 독서기록/관심도서/보기방식 */}
-      <div className="flex items-center justify-between py-3">
+      <div className="flex items-center justify-between px-mobile py-3">
         <div className="flex items-center gap-2.5">
           <button type="button" onClick={handleReadingTab}>
             {activeTab === 'reading' ? (
