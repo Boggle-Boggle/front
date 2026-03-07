@@ -30,7 +30,7 @@ export const ReadingBooksGrid = ({ books }: ReadingBooksGridProps) => {
             ))}
           </ul>
 
-          <div className="z-shelf pointer-events-none absolute left-0 right-0 top-20">
+          <div className="absolute left-0 right-0 top-20">
             <ShelfBase />
             <ShelfBase />
           </div>
