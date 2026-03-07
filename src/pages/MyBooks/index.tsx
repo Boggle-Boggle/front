@@ -7,6 +7,7 @@ import { IconLayoutGrid, IconLayoutList, IconSearch } from 'components/icons';
 
 import { FilterSidebar } from './FilterSidebar';
 import { ReadingSection } from './ReadingSection';
+import { SortActionSheet, type SortType } from './SortActionSheet';
 import { WishlistSection } from './WishlistSection';
 import { useMyBooksQuery } from './useMyBooksQuery';
 
@@ -16,7 +17,9 @@ type ReadingFilterType = 'all' | 'done' | 'reading' | 'stopped';
 
 const MSG_MYBOOKS_TAB_READING = '독서 기록';
 const MSG_MYBOOKS_TAB_WISHLIST = '관심 도서';
-const MSG_MYBOOKS_SORT_LAYER = '정렬 옵션';
+const MSG_MYBOOKS_SORT_LATEST = '최신순';
+const MSG_MYBOOKS_SORT_OLDEST = '과거순';
+const MSG_MYBOOKS_SORT_POPULAR = '인기순';
 // const MSG_MYBOOKS_EMPTY_WISHLIST = '관심 도서가 없습니다';
 const MSG_MYBOOKS_ICON_SEARCH = '검색';
 const MSG_MYBOOKS_ICON_VIEW_TO_GRID = '그리드형으로 보기';
@@ -41,6 +44,7 @@ const MyBooks = () => {
   const [activeTab, setActiveTab] = useState<TabType>('reading');
   const [viewType, setViewType] = useState<ViewType>(getInitialViewType);
   const [readingFilter, setReadingFilter] = useState<ReadingFilterType>('all');
+  const [sortType, setSortType] = useState<SortType>('latest');
 
   const { push, pop } = useLayerStore();
   const { data, observerTarget, isLoading } = useMyBooksQuery();
@@ -73,9 +77,28 @@ const MyBooks = () => {
         : readingFilter === 'reading'
           ? activeReadingBooks
           : stoppedBooks;
+  const sortedReadingBooks = [...filteredReadingBooks].sort((a, b) => {
+    if (sortType === 'oldest') {
+      return a.id - b.id;
+    }
 
+    if (sortType === 'popular') {
+      if (b.rating !== a.rating) {
+        return b.rating - a.rating;
+      }
+
+      return b.readCount - a.readCount;
+    }
+
+    return b.id - a.id;
+  });
+  const sortLabelByType = {
+    latest: MSG_MYBOOKS_SORT_LATEST,
+    oldest: MSG_MYBOOKS_SORT_OLDEST,
+    popular: MSG_MYBOOKS_SORT_POPULAR,
+  } as const;
   const selectedFilterOption = filterOptionByType[readingFilter];
-  const totalCount = filteredReadingBooks.length;
+  const totalCount = sortedReadingBooks.length;
   const isGridView = viewType === 'grid';
   const viewToggleLabel = isGridView ? MSG_MYBOOKS_ICON_VIEW_TO_LIST : MSG_MYBOOKS_ICON_VIEW_TO_GRID;
   const viewToggleIcon = isGridView ? IconLayoutList : IconLayoutGrid;
@@ -110,7 +133,7 @@ const MyBooks = () => {
     push({
       id: LAYER_ID_MYBOOKS_SORT,
       type: 'BOTTOM_SHEET',
-      component: <div>{MSG_MYBOOKS_SORT_LAYER}</div>,
+      component: <SortActionSheet selectedSort={sortType} onSelectSort={setSortType} />,
     });
   };
 
@@ -144,9 +167,10 @@ const MyBooks = () => {
 
       {activeTab === 'reading' && (
         <ReadingSection
-          books={filteredReadingBooks}
+          books={sortedReadingBooks}
           totalCount={totalCount}
           filterLabel={selectedFilterOption.label}
+          sortLabel={sortLabelByType[sortType]}
           viewMode={viewType}
           isLoading={isLoading}
           observerTarget={observerTarget}
