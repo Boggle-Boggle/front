@@ -13,9 +13,9 @@ export const Title = (props: TitleProps) => {
 
   return (
     <h1 className={`mt-10 whitespace-pre-line text-h1 ${alignClass}`}>
-      {lines.map((line, index) => {
+      {lines.map((line) => {
         return (
-          <span key={`${line}-${index}`} className="block">
+          <span key={line} className="block">
             <Highlight text={line} />
           </span>
         );
