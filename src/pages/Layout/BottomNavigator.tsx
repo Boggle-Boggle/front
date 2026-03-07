@@ -60,7 +60,6 @@ const BottomNavigator = () => {
           </li>
         ))}
       </ul>
-      <div className="h-safe-bottom" />
     </div>
   );
 };
