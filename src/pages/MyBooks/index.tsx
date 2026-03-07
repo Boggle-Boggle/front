@@ -5,21 +5,26 @@ import { IconButton } from 'components/Button';
 import Highlight from 'components/Highlight';
 import { IconLayoutGrid, IconLayoutList, IconSearch } from 'components/icons';
 
+import { FilterSidebar } from './FilterSidebar';
 import { ReadingSection } from './ReadingSection';
 import { WishlistSection } from './WishlistSection';
 import { useMyBooksQuery } from './useMyBooksQuery';
 
 type TabType = 'reading' | 'wishlist';
 type ViewType = 'grid' | 'list';
+type ReadingFilterType = 'all' | 'done' | 'reading' | 'stopped';
 
 const MSG_MYBOOKS_TAB_READING = '독서 기록';
 const MSG_MYBOOKS_TAB_WISHLIST = '관심 도서';
-const MSG_MYBOOKS_FILTER_SIDEBAR = '전체 도서 필터';
 const MSG_MYBOOKS_SORT_LAYER = '정렬 옵션';
 // const MSG_MYBOOKS_EMPTY_WISHLIST = '관심 도서가 없습니다';
 const MSG_MYBOOKS_ICON_SEARCH = '검색';
 const MSG_MYBOOKS_ICON_VIEW_TO_GRID = '그리드형으로 보기';
 const MSG_MYBOOKS_ICON_VIEW_TO_LIST = '리스트형으로 보기';
+const MSG_MYBOOKS_FILTER_ALL = '모든 책모든 책모든 책모든 책모든 책';
+const MSG_MYBOOKS_FILTER_DONE = '모두 읽은 책';
+const MSG_MYBOOKS_FILTER_READING = '읽고 있는 책';
+const MSG_MYBOOKS_FILTER_STOPPED = '중단한 책';
 
 const STORAGE_KEY_MYBOOKS_VIEW_TYPE = 'mybooks-view-type';
 const LAYER_ID_MYBOOKS_FILTER = 'mybooks-filter-sidebar';
@@ -35,12 +40,42 @@ const getInitialViewType = (): ViewType => {
 const MyBooks = () => {
   const [activeTab, setActiveTab] = useState<TabType>('reading');
   const [viewType, setViewType] = useState<ViewType>(getInitialViewType);
+  const [readingFilter, setReadingFilter] = useState<ReadingFilterType>('all');
 
-  const { push } = useLayerStore();
+  const { push, pop } = useLayerStore();
   const { data, observerTarget, isLoading } = useMyBooksQuery();
 
   const books = data ? data.pages.flatMap((page) => page.items) : [];
-  const totalCount = data?.pages[0]?.totalResultCnt || 0;
+  const readingBooks = books;
+  const doneBooks = readingBooks.filter((book) => book.readingStatus === '완독');
+  const activeReadingBooks = readingBooks.filter((book) => book.readingStatus === '읽는중');
+  const stoppedBooks = readingBooks.filter((book) => book.readingStatus === '중단');
+
+  const filterOptionByType = {
+    all: { value: 'all', label: MSG_MYBOOKS_FILTER_ALL, count: readingBooks.length },
+    done: { value: 'done', label: MSG_MYBOOKS_FILTER_DONE, count: doneBooks.length },
+    reading: { value: 'reading', label: MSG_MYBOOKS_FILTER_READING, count: activeReadingBooks.length },
+    stopped: { value: 'stopped', label: MSG_MYBOOKS_FILTER_STOPPED, count: stoppedBooks.length },
+  } as const;
+
+  const filterOptions = [
+    filterOptionByType.all,
+    filterOptionByType.done,
+    filterOptionByType.reading,
+    filterOptionByType.stopped,
+  ];
+
+  const filteredReadingBooks =
+    readingFilter === 'all'
+      ? readingBooks
+      : readingFilter === 'done'
+        ? doneBooks
+        : readingFilter === 'reading'
+          ? activeReadingBooks
+          : stoppedBooks;
+
+  const selectedFilterOption = filterOptionByType[readingFilter];
+  const totalCount = filteredReadingBooks.length;
   const isGridView = viewType === 'grid';
   const viewToggleLabel = isGridView ? MSG_MYBOOKS_ICON_VIEW_TO_LIST : MSG_MYBOOKS_ICON_VIEW_TO_GRID;
   const viewToggleIcon = isGridView ? IconLayoutList : IconLayoutGrid;
@@ -57,10 +92,17 @@ const MyBooks = () => {
   };
 
   const handleOpenFilterLayer = () => {
+    const handleApplyFilter = (nextFilter: ReadingFilterType) => {
+      setReadingFilter(nextFilter);
+      pop();
+    };
+
     push({
       id: LAYER_ID_MYBOOKS_FILTER,
       type: 'SIDEBAR',
-      component: <div>{MSG_MYBOOKS_FILTER_SIDEBAR}</div>,
+      component: (
+        <FilterSidebar selectedFilter={readingFilter} filterOptions={filterOptions} onApplyFilter={handleApplyFilter} />
+      ),
     });
   };
 
@@ -73,9 +115,9 @@ const MyBooks = () => {
   };
 
   return (
-    <div className="flex h-full w-full flex-col px-mobile pb-safe-bottom pt-safe-top">
+    <div className="flex h-full w-full flex-col pb-safe-bottom pt-safe-top">
       {/* 독서기록/관심도서/보기방식 */}
-      <div className="flex items-center justify-between py-3">
+      <div className="flex items-center justify-between px-mobile py-3">
         <div className="flex items-center gap-2.5">
           <button type="button" onClick={handleReadingTab}>
             {activeTab === 'reading' ? (
@@ -102,8 +144,9 @@ const MyBooks = () => {
 
       {activeTab === 'reading' && (
         <ReadingSection
-          books={books}
+          books={filteredReadingBooks}
           totalCount={totalCount}
+          filterLabel={selectedFilterOption.label}
           viewMode={viewType}
           isLoading={isLoading}
           observerTarget={observerTarget}

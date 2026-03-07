@@ -50,7 +50,7 @@ const Badge = (props: { badge: BookCoverBadge }) => {
 
 const ShadowLeftBar = () => (
   <span
-    className="pointer-events-none absolute left-0 top-0 z-bookShadow h-full w-[9px] mix-blend-multiply"
+    className="z-bookShadow pointer-events-none absolute left-0 top-0 h-full w-[9px] mix-blend-multiply"
     style={{ background: 'linear-gradient(90deg, #FFFFFF 65%, #E0E0E0 100%)' }}
   />
 );
@@ -63,7 +63,7 @@ const ShadowRightTriangleSvg = () => {
       viewBox="0 0 16 21"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      className="pointer-events-none absolute -right-[11px] bottom-0 z-bookShadow w-4"
+      className="z-bookShadow pointer-events-none absolute -right-[11px] bottom-0 w-4"
       aria-hidden="true"
       preserveAspectRatio="none"
     >
@@ -95,7 +95,7 @@ export const BookCover = (props: BookCoverProps) => {
     url,
     label = '',
     shadowLeftBar = false,
-    shadowRightTriangle = true,
+    shadowRightTriangle = false,
     topRightBadge,
     bottomRightBadge,
     ratio = 3 / 4,
@@ -105,12 +105,12 @@ export const BookCover = (props: BookCoverProps) => {
   const roundedClass = rounded === 'sm' ? 'rounded' : 'rounded-md';
 
   return (
-    <div className={`relative w-full ${className}`}>
+    <div className={`relative ${className}`}>
       <div
         className={`relative w-full overflow-hidden border border-neutral-20 ${roundedClass}`}
         style={{ aspectRatio: ratio }}
       >
-        <img className="absolute inset-0 z-bookShadow h-full w-full object-cover" src={url} alt={label} />
+        <img className="z-bookShadow absolute inset-0 h-full w-full object-cover" src={url} alt={label} />
         {shadowLeftBar && <ShadowLeftBar />}
         {topRightBadge && (
           <div className="z-bookText absolute right-1 top-1">
