@@ -17,7 +17,7 @@ const Trending = lazy(() => import('pages/Search/Trending'));
 const SearchResult = lazy(() => import('pages/SearchResult'));
 const MyBooks = lazy(() => import('pages/MyBooks'));
 const Login = lazy(() => import('pages/Login'));
-const SignUp = lazy(() => import('./page/signup'));
+const SignUp = lazy(() => import('pages/SignUp'));
 // const MyPage = lazy(() => import('pages/MyPage'));
 // const Edit = lazy(() => import('pages/Edit'));
 // const DeleteAccount = lazy(() => import('pages/MyPage/DeleteAccount'));
