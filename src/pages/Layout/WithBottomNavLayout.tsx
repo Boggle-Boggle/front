@@ -6,6 +6,7 @@ const WithBottomNavLayout = () => {
   return (
     <section className="h-dvh w-full">
       <Outlet />
+      <div className="h-safe-bottom" />
       <BottomNavigator />
     </section>
   );
