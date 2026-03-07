@@ -48,6 +48,7 @@ const Login = () => {
   const navigate = useNavigate();
 
   const handleLogin = () => navigate(`/`);
+  const handleClickHelp = () => navigate(`/signup`);
 
   return (
     <section className="relative flex h-dvh w-full flex-col justify-center gap-[35rem]">
@@ -87,6 +88,7 @@ const Login = () => {
       <button
         type="button"
         className="absolute bottom-[calc(env(safe-area-inset-bottom)+0.625rem)] left-1/2 flex -translate-x-1/2 items-center gap-0.5 text-caption2 text-neutral-60"
+        onClick={handleClickHelp}
       >
         <IconHeadphone className="size-[1.125rem]" />
         {MSG_LOGIN_HELP}
