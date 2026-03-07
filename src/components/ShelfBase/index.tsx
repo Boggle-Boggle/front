@@ -21,7 +21,7 @@ export const ShelfBase = (props: ShelfBaseProps) => {
   return (
     <div
       aria-hidden
-      className={`w-full ${containerClassName}`}
+      className={`w-full ${containerClassName} z-shelf`}
       style={{ height, background: gradient, opacity: layerOpacity }}
     />
   );
