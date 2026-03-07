@@ -1,3 +1,5 @@
+import { useNavigate } from 'react-router-dom';
+
 import Highlight from 'components/Highlight';
 import { IconHeadphone } from 'components/icons';
 
@@ -43,6 +45,10 @@ const LOGIN_BUTTON_ITEMS: LoginButtonItem[] = [
 ];
 
 const Login = () => {
+  const navigate = useNavigate();
+
+  const handleLogin = () => navigate(`/`);
+
   return (
     <section className="relative flex h-dvh w-full flex-col justify-center gap-[35rem]">
       <header className="relative flex flex-col items-center text-neutral-80">
@@ -67,6 +73,7 @@ const Login = () => {
                 <button
                   type="button"
                   className="size-[3.375rem] rounded-full shadow-[0px_2px_10px_0px_rgba(0,0,0,0.14)]"
+                  onClick={handleLogin}
                 >
                   <img src={logoSrc} alt={alt} className="h-full w-full rounded-full object-cover" />
                 </button>
