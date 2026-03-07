@@ -9,11 +9,10 @@ import { FilterSidebar } from './FilterSidebar';
 import { ReadingSection } from './ReadingSection';
 import { SortActionSheet, type SortType } from './SortActionSheet';
 import { WishlistSection } from './WishlistSection';
-import { useMyBooksQuery } from './useMyBooksQuery';
+import { type ReadingFilterType, useMyBooksQuery } from './useMyBooksQuery';
 
 type TabType = 'reading' | 'wishlist';
 type ViewType = 'grid' | 'list';
-type ReadingFilterType = 'all' | 'done' | 'reading' | 'stopped';
 
 const MSG_MYBOOKS_TAB_READING = '독서 기록';
 const MSG_MYBOOKS_TAB_WISHLIST = '관심 도서';
@@ -47,19 +46,15 @@ const MyBooks = () => {
   const [sortType, setSortType] = useState<SortType>('latest');
 
   const { push, pop } = useLayerStore();
-  const { data, observerTarget, isLoading } = useMyBooksQuery();
+  const { data, observerTarget, isLoading } = useMyBooksQuery(sortType, readingFilter);
 
   const books = data ? data.pages.flatMap((page) => page.items) : [];
-  const readingBooks = books;
-  const doneBooks = readingBooks.filter((book) => book.readingStatus === '완독');
-  const activeReadingBooks = readingBooks.filter((book) => book.readingStatus === '읽는중');
-  const stoppedBooks = readingBooks.filter((book) => book.readingStatus === '중단');
 
   const filterOptionByType = {
-    all: { value: 'all', label: MSG_MYBOOKS_FILTER_ALL, count: readingBooks.length },
-    done: { value: 'done', label: MSG_MYBOOKS_FILTER_DONE, count: doneBooks.length },
-    reading: { value: 'reading', label: MSG_MYBOOKS_FILTER_READING, count: activeReadingBooks.length },
-    stopped: { value: 'stopped', label: MSG_MYBOOKS_FILTER_STOPPED, count: stoppedBooks.length },
+    all: { value: 'all', label: MSG_MYBOOKS_FILTER_ALL },
+    done: { value: 'done', label: MSG_MYBOOKS_FILTER_DONE },
+    reading: { value: 'reading', label: MSG_MYBOOKS_FILTER_READING },
+    stopped: { value: 'stopped', label: MSG_MYBOOKS_FILTER_STOPPED },
   } as const;
 
   const filterOptions = [
@@ -69,36 +64,13 @@ const MyBooks = () => {
     filterOptionByType.stopped,
   ];
 
-  const filteredReadingBooks =
-    readingFilter === 'all'
-      ? readingBooks
-      : readingFilter === 'done'
-        ? doneBooks
-        : readingFilter === 'reading'
-          ? activeReadingBooks
-          : stoppedBooks;
-  const sortedReadingBooks = [...filteredReadingBooks].sort((a, b) => {
-    if (sortType === 'oldest') {
-      return a.id - b.id;
-    }
-
-    if (sortType === 'popular') {
-      if (b.rating !== a.rating) {
-        return b.rating - a.rating;
-      }
-
-      return b.readCount - a.readCount;
-    }
-
-    return b.id - a.id;
-  });
   const sortLabelByType = {
     latest: MSG_MYBOOKS_SORT_LATEST,
     oldest: MSG_MYBOOKS_SORT_OLDEST,
     popular: MSG_MYBOOKS_SORT_POPULAR,
   } as const;
   const selectedFilterOption = filterOptionByType[readingFilter];
-  const totalCount = sortedReadingBooks.length;
+  const totalCount = data?.pages[0]?.totalResultCnt ?? books.length;
   const isGridView = viewType === 'grid';
   const viewToggleLabel = isGridView ? MSG_MYBOOKS_ICON_VIEW_TO_LIST : MSG_MYBOOKS_ICON_VIEW_TO_GRID;
   const viewToggleIcon = isGridView ? IconLayoutList : IconLayoutGrid;
@@ -167,7 +139,7 @@ const MyBooks = () => {
 
       {activeTab === 'reading' && (
         <ReadingSection
-          books={sortedReadingBooks}
+          books={books}
           totalCount={totalCount}
           filterLabel={selectedFilterOption.label}
           sortLabel={sortLabelByType[sortType]}

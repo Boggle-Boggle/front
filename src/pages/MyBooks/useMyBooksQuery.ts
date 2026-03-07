@@ -3,6 +3,8 @@ import useInfiniteScroll from 'hooks/useInfiniteScroll';
 import { PaginationResponse } from 'types/api';
 
 export type ReadingStatus = '읽는중' | '완독' | '중단';
+export type SortType = 'latest' | 'oldest' | 'popular';
+export type ReadingFilterType = 'all' | 'done' | 'reading' | 'stopped';
 
 export type MyBook = {
   id: number;
@@ -57,6 +59,12 @@ const COVER_IMAGE = 'https://image.yes24.com/goods/179603642/L';
 
 const STATUSES: ReadingStatus[] = ['읽는중', '완독', '중단'];
 
+const READING_STATUS_BY_FILTER: Record<Exclude<ReadingFilterType, 'all'>, ReadingStatus> = {
+  done: '완독',
+  reading: '읽는중',
+  stopped: '중단',
+};
+
 const generateRating = (): number => {
   const ratings = [0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5];
   return ratings[Math.floor(Math.random() * ratings.length)];
@@ -100,17 +108,40 @@ const MOCK_MY_BOOKS: MyBook[] = Array.from({ length: 36 }, (_, i) => {
   };
 });
 
-const getMyBooksMock = async (page: number): Promise<PaginationResponse<MyBook[]>> => {
+const getMyBooksMock = async (
+  page: number,
+  sortType: SortType,
+  readingFilter: ReadingFilterType,
+): Promise<PaginationResponse<MyBook[]>> => {
   return new Promise((resolve) => {
     setTimeout(() => {
       const itemsPerPage = 12;
+      const filteredBooks =
+        readingFilter === 'all'
+          ? MOCK_MY_BOOKS
+          : MOCK_MY_BOOKS.filter((book) => book.readingStatus === READING_STATUS_BY_FILTER[readingFilter]);
+      const sortedBooks = [...filteredBooks].sort((a, b) => {
+        if (sortType === 'oldest') {
+          return a.id - b.id;
+        }
+
+        if (sortType === 'popular') {
+          if (b.rating !== a.rating) {
+            return b.rating - a.rating;
+          }
+
+          return b.readCount - a.readCount;
+        }
+
+        return b.id - a.id;
+      });
       const start = (page - 1) * itemsPerPage;
       const end = start + itemsPerPage;
-      const paginatedBooks = MOCK_MY_BOOKS.slice(start, end);
+      const paginatedBooks = sortedBooks.slice(start, end);
 
       resolve({
         pageNum: page,
-        totalResultCnt: MOCK_MY_BOOKS.length,
+        totalResultCnt: sortedBooks.length,
         itemsPerPage,
         items: paginatedBooks,
       });
@@ -118,6 +149,10 @@ const getMyBooksMock = async (page: number): Promise<PaginationResponse<MyBook[]
   });
 };
 
-export const useMyBooksQuery = () => {
-  return useInfiniteScroll<MyBook[]>(['myBooks', 'list'], ({ pageParam = 1 }) => getMyBooksMock(pageParam), true);
+export const useMyBooksQuery = (sortType: SortType, readingFilter: ReadingFilterType) => {
+  return useInfiniteScroll<MyBook[]>(
+    ['myBooks', 'list', sortType, readingFilter],
+    ({ pageParam = 1 }) => getMyBooksMock(pageParam, sortType, readingFilter),
+    true,
+  );
 };

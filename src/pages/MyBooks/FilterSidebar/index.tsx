@@ -5,12 +5,12 @@ import { Divider } from 'components/Divider';
 import { Radio } from 'components/Radio';
 import { IconArrowRight, IconCirclePlus } from 'components/icons';
 
-type ReadingFilterType = 'all' | 'done' | 'reading' | 'stopped';
+import { type ReadingFilterType } from '../useMyBooksQuery';
 
 type FilterOption = {
   value: ReadingFilterType;
   label: string;
-  count: number;
+  count?: number;
 };
 
 type FilterSidebarProps = {
@@ -68,7 +68,7 @@ export const FilterSidebar = (props: FilterSidebarProps) => {
       <div className="flex-1 overflow-y-auto">
         {filterOptions.map((option) => {
           const isChecked = draftFilter === option.value;
-          const statusLabel = `${option.label} (${option.count})`;
+          const statusLabel = typeof option.count === 'number' ? `${option.label} (${option.count})` : option.label;
 
           return (
             <button

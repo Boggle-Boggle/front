@@ -11,6 +11,7 @@ type ReadingSectionProps = {
   books: MyBook[];
   totalCount: number;
   filterLabel: string;
+  sortLabel: string;
   viewMode: 'grid' | 'list';
   isLoading: boolean;
   observerTarget: RefObject<HTMLDivElement>;
@@ -18,11 +19,18 @@ type ReadingSectionProps = {
   onOpenSortLayer: () => void;
 };
 
-const MSG_MYBOOKS_SORT_LATEST = '최신순';
-
 export const ReadingSection = (props: ReadingSectionProps) => {
-  const { books, totalCount, filterLabel, viewMode, isLoading, observerTarget, onOpenFilterLayer, onOpenSortLayer } =
-    props;
+  const {
+    books,
+    totalCount,
+    filterLabel,
+    sortLabel,
+    viewMode,
+    isLoading,
+    observerTarget,
+    onOpenFilterLayer,
+    onOpenSortLayer,
+  } = props;
   const isGridView = viewMode === 'grid';
 
   return (
@@ -33,13 +41,7 @@ export const ReadingSection = (props: ReadingSectionProps) => {
           <span className="text-body1">{filterLabel}</span>
           <span className="text-caption1 text-neutral-60">({totalCount})</span>
         </button>
-        <TextButton
-          variant="filled"
-          size="sm"
-          rightIcon={IconArrowDown}
-          onClick={onOpenSortLayer}
-          text={MSG_MYBOOKS_SORT_LATEST}
-        />
+        <TextButton variant="filled" size="sm" rightIcon={IconArrowDown} onClick={onOpenSortLayer} text={sortLabel} />
       </div>
 
       <div className="overflow-y-auto">
