@@ -20,7 +20,7 @@ export const BottomSheet = ({ children }: BottomSheetProps) => {
           }`}
         >
           <button
-            className="mb-5 grid h-[1.625rem] w-full place-items-center"
+            className="grid h-[1.625rem] w-full place-items-center"
             onClick={handleClose}
             type="button"
             aria-label="닫기"
