@@ -1,3 +1,6 @@
+import useLayerStore from 'stores/useLayerStore';
+
+import { ActionSheet } from 'components/Layer/ActionSheet';
 import { IconHeart } from 'components/icons';
 
 type ReviewItem = {
@@ -16,14 +19,39 @@ type ReviewCardProps = {
 const MSG_REVIEW_REPORT = '신고';
 const MSG_REVIEW_BLOCK = '차단';
 const MSG_REVIEW_ID_PREFIX = '님';
+const MSG_REVIEW_ACTION_TRIGGER = '신고/차단';
 
 export const ReviewCard = (props: ReviewCardProps) => {
   const { review } = props;
-  const { nickname, readerLevel, content, createdAt, likeCount } = review;
+  const { id, nickname, readerLevel, content, createdAt, likeCount } = review;
+  const { push } = useLayerStore();
 
   const handleReportClick = () => {};
 
   const handleBlockClick = () => {};
+
+  const handleReviewActionClick = () => {
+    push({
+      id: `review-action-sheet-${id}`,
+      type: 'BOTTOM_SHEET',
+      component: (
+        <ActionSheet
+          items={[
+            {
+              key: 'report',
+              label: MSG_REVIEW_REPORT,
+              onSelect: handleReportClick,
+            },
+            {
+              key: 'block',
+              label: MSG_REVIEW_BLOCK,
+              onSelect: handleBlockClick,
+            },
+          ]}
+        />
+      ),
+    });
+  };
 
   const handleLikeClick = () => {};
 
@@ -40,12 +68,8 @@ export const ReviewCard = (props: ReviewCardProps) => {
       <div className="flex items-center justify-between pt-3">
         <div className="flex items-center gap-1 text-neutral-60">
           <p className="text-caption1 text-neutral-40">{createdAt}</p>
-          <button type="button" onClick={handleReportClick} className="text-caption1">
-            {MSG_REVIEW_REPORT}
-          </button>
-          <p className="text-caption1">/</p>
-          <button type="button" onClick={handleBlockClick} className="text-caption1">
-            {MSG_REVIEW_BLOCK}
+          <button type="button" onClick={handleReviewActionClick} className="text-caption1 text-neutral-60">
+            {MSG_REVIEW_ACTION_TRIGGER}
           </button>
         </div>
 
