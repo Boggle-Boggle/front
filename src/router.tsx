@@ -17,6 +17,7 @@ const Trending = lazy(() => import('pages/Search/Trending'));
 const SearchResult = lazy(() => import('pages/SearchResult'));
 const MyBooks = lazy(() => import('pages/MyBooks'));
 const Login = lazy(() => import('pages/Login'));
+const SignUp = lazy(() => import('./page/signup'));
 // const MyPage = lazy(() => import('pages/MyPage'));
 // const Edit = lazy(() => import('pages/Edit'));
 // const DeleteAccount = lazy(() => import('pages/MyPage/DeleteAccount'));
@@ -70,7 +71,7 @@ const router = createBrowserRouter([
       },
       // 아래 레거시
       { path: '/login', element: <Login /> },
-      // { path: 'signUp', element: <SignUp /> },
+      { path: '/signup', element: <SignUp /> },
       // { path: 'oauth', element: <Auth /> },
     ],
   },
