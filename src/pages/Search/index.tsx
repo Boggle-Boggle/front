@@ -26,7 +26,7 @@ const Search = () => {
   };
 
   return (
-    <div className="h-full w-full flex-col items-center justify-start overflow-y-auto pb-safe-bottom pt-safe-top">
+    <div className="flex h-full w-full flex-col items-center justify-start overflow-hidden pb-safe-bottom pt-safe-top">
       <Searchbar
         className="w-full px-mobile"
         value={query}
@@ -34,19 +34,21 @@ const Search = () => {
         onFocus={handleFocus}
         onSubmit={handleSearchSubmit}
       />
-      {isSearched ? (
-        <>
-          <RecentSearchSection />
-          <PopularSearchSection />
-        </>
-      ) : (
-        <>
-          <MostReadSection />
-          <TrendingSection />
-          <RealTimePopularSection />
-          <AuthorOtherWorksSection />
-        </>
-      )}
+      <div className="mt-5 min-h-0 w-full flex-1 overflow-y-auto">
+        {isSearched ? (
+          <>
+            <RecentSearchSection />
+            <PopularSearchSection />
+          </>
+        ) : (
+          <>
+            <MostReadSection />
+            <TrendingSection />
+            <RealTimePopularSection />
+            <AuthorOtherWorksSection />
+          </>
+        )}
+      </div>
     </div>
   );
 };

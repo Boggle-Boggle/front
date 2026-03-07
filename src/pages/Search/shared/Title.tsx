@@ -12,7 +12,7 @@ export const Title = (props: TitleProps) => {
   const { text, onLoadMore } = props;
 
   return (
-    <div className="flex w-full items-center justify-between px-mobile py-5">
+    <div className="flex w-full items-center justify-between px-mobile pb-5">
       <Highlight text={text} className="text-title2" />
       {onLoadMore && (
         <button
