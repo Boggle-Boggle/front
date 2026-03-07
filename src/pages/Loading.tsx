@@ -1,7 +1,9 @@
+import { Loading as CommonLoading } from 'components/Loading';
+
 const Loading = () => {
   return (
-    <section className="absolute left-0 top-0 flex h-full w-full items-center justify-center">
-      <img alt="로딩중" className="w-14" />
+    <section className="flex h-dvh w-full items-center justify-center bg-primary">
+      <CommonLoading className="h-40 w-40" color="#8bcfa7" />
     </section>
   );
 };
