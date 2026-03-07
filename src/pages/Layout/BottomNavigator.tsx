@@ -45,7 +45,7 @@ const BottomNavigator = () => {
   if (isKeyboardActive) return;
 
   return (
-    <div className="fixed bottom-0 z-navigator w-full max-w-mobile rounded-t-2xl border-t border-neutral-20 bg-neutral-0">
+    <div className="fixed bottom-0 z-navigator w-full max-w-mobile rounded-t-2xl border-t border-neutral-20 bg-neutral-0 pb-safe-bottom">
       <ul className="grid h-[4.125rem] w-full grid-cols-4 items-center text-xs">
         {Navigator.map(({ caption, url, icon, activeIcon }) => (
           <li className="size-full" key={caption}>
