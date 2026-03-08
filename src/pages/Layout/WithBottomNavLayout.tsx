@@ -6,7 +6,7 @@ const WithBottomNavLayout = () => {
   return (
     <section className="h-dvh w-full">
       <Outlet />
-      <div className="h-[calc(env(safe-area-inset-bottom)+20px)]" />
+      <div className="h-[calc(env(safe-area-inset-bottom)+40px)]" />
       <BottomNavigator />
     </section>
   );
