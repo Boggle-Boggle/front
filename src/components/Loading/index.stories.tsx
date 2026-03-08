@@ -7,19 +7,20 @@ const meta = {
   component: Loading,
   tags: ['autodocs'],
   args: {
-    loop: true,
-    className: 'h-40 w-40',
     color: '#ffffff',
+    size: 'md',
+    fullscreen: false,
   },
   argTypes: {
-    loop: {
-      control: { type: 'boolean' },
-    },
-    className: {
+    color: {
       control: { type: 'text' },
     },
-    color: {
-      control: { type: 'color' },
+    size: {
+      control: { type: 'inline-radio' },
+      options: ['sm', 'md', 'lg'],
+    },
+    fullscreen: {
+      control: { type: 'boolean' },
     },
   },
   decorators: [
@@ -39,12 +40,31 @@ export const Default: Story = {};
 
 export const Small: Story = {
   args: {
-    className: 'h-24 w-24',
+    size: 'sm',
+  },
+};
+
+export const Large: Story = {
+  args: {
+    size: 'lg',
   },
 };
 
 export const Red: Story = {
   args: {
     color: '#ff0000',
+  },
+};
+
+export const Primary: Story = {
+  args: {
+    color: 'primary',
+  },
+};
+
+export const Fullscreen: Story = {
+  args: {
+    fullscreen: true,
+    color: 'primary',
   },
 };
