@@ -21,7 +21,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <DeviceProvider>
       <QueryClientProvider client={queryClient}>
-        <Suspense fallback={<Loading fullscreen size="md" color="primary" />}>
+        <Suspense fallback={<Loading fullscreen size="md" />}>
           <AppRouter />
         </Suspense>
       </QueryClientProvider>

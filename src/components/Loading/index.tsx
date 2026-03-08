@@ -4,9 +4,25 @@ import { useMemo } from 'react';
 import loadingAnimationData from 'assets/loading.json';
 
 type LoadingProps = {
-  loop?: boolean;
-  className?: string;
-  color?: string;
+  size?: 'sm' | 'md' | 'lg';
+  fullscreen?: boolean;
+};
+
+const LOADING_SIZE_CLASS = {
+  sm: 'h-24 w-24',
+  md: 'h-32 w-32',
+  lg: 'h-40 w-40',
+} as const;
+
+const PRIMARY_COLOR_FALLBACK = '#8bcfa7';
+
+const getPrimaryColorHex = () => {
+  if (typeof window === 'undefined') {
+    return PRIMARY_COLOR_FALLBACK;
+  }
+
+  const primaryColor = getComputedStyle(document.documentElement).getPropertyValue('--color-primary').trim();
+  return primaryColor || PRIMARY_COLOR_FALLBACK;
 };
 
 const convertHexToNormalizedRgba = (hex: string) => {
@@ -63,19 +79,27 @@ const replaceAnimationColor = (source: unknown, nextColor: readonly [number, num
 };
 
 export const Loading = (props: LoadingProps) => {
-  const { loop = true, className = 'h-32 w-32', color = '#ffffff' } = props;
+  const { size = 'md', fullscreen = false } = props;
 
+  const sizeClassName = LOADING_SIZE_CLASS[size];
+  const containerClassName = fullscreen
+    ? 'pointer-events-none fixed inset-0 z-layer flex items-center justify-center'
+    : 'flex items-center justify-center';
+
+  const primaryColorHex = getPrimaryColorHex();
   const animationData = useMemo(() => {
-    const rgbaColor = convertHexToNormalizedRgba(color);
+    const primaryColorRgba = convertHexToNormalizedRgba(primaryColorHex);
 
-    if (!rgbaColor) return loadingAnimationData;
+    if (!primaryColorRgba) {
+      return loadingAnimationData;
+    }
 
-    return replaceAnimationColor(loadingAnimationData, rgbaColor);
-  }, [color]);
+    return replaceAnimationColor(loadingAnimationData, primaryColorRgba);
+  }, [primaryColorHex]);
 
   return (
-    <section className="flex items-center justify-center" role="status" aria-live="polite" aria-label="loading">
-      <Lottie animationData={animationData} loop={loop} className={className} />
+    <section className={containerClassName} role="status" aria-live="polite" aria-label="loading">
+      <Lottie animationData={animationData} loop className={sizeClassName} />
     </section>
   );
 };

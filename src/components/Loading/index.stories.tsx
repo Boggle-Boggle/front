@@ -7,14 +7,10 @@ const meta = {
   component: Loading,
   tags: ['autodocs'],
   args: {
-    color: '#ffffff',
     size: 'md',
     fullscreen: false,
   },
   argTypes: {
-    color: {
-      control: { type: 'text' },
-    },
     size: {
       control: { type: 'inline-radio' },
       options: ['sm', 'md', 'lg'],
@@ -50,21 +46,8 @@ export const Large: Story = {
   },
 };
 
-export const Red: Story = {
-  args: {
-    color: '#ff0000',
-  },
-};
-
-export const Primary: Story = {
-  args: {
-    color: 'primary',
-  },
-};
-
 export const Fullscreen: Story = {
   args: {
     fullscreen: true,
-    color: 'primary',
   },
 };
