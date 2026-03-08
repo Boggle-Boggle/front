@@ -6,14 +6,10 @@ import { Header } from 'components/Header';
 import { BackButton } from 'components/Header/BackButton';
 import { IconArrowRight } from 'components/icons';
 
+import { SIGNUP_TERMS } from 'constants/terms';
+
 import { Description } from '../shared/Description';
 import { Title } from '../shared/Title';
-
-type TermItem = {
-  id: number;
-  title: string;
-  required: boolean;
-};
 
 type TermsStepProps = {
   agreedTermIds: number[];
@@ -21,11 +17,6 @@ type TermsStepProps = {
   onPrev: () => void;
   onNext: () => void;
 };
-
-const TERMS: TermItem[] = [
-  { id: 1, title: '개인정보처리방침', required: true },
-  { id: 2, title: '이용약관', required: true },
-];
 
 const MSG_SIGNUP_HEADER_TITLE = '회원가입';
 const MSG_SIGNUP_TERMS_TITLE = '빼곡에 가입하시려면\n이용약관에 동의해주세요!';
@@ -38,16 +29,16 @@ export const TermsStep = (props: TermsStepProps) => {
   const { agreedTermIds, onChangeAgreedTermIds, onPrev, onNext } = props;
   const navigate = useNavigate();
 
-  const requiredTermIds = TERMS.filter((term) => term.required).map((term) => term.id);
+  const requiredTermIds = SIGNUP_TERMS.filter((term) => term.required).map((term) => term.id);
   const isCompleteEnabled = requiredTermIds.every((id) => agreedTermIds.includes(id));
 
   const handleToggleAll = () => {
-    if (agreedTermIds.length === TERMS.length) {
+    if (agreedTermIds.length === SIGNUP_TERMS.length) {
       onChangeAgreedTermIds([]);
       return;
     }
 
-    onChangeAgreedTermIds(TERMS.map((term) => term.id));
+    onChangeAgreedTermIds(SIGNUP_TERMS.map((term) => term.id));
   };
 
   const handleClickTermDetail = (termId: number) => {
@@ -84,10 +75,10 @@ export const TermsStep = (props: TermsStepProps) => {
           </Button>
 
           <ul className="mb-3 ml-1.5 mt-4">
-            {TERMS.map((term, index) => {
+            {SIGNUP_TERMS.map((term, index) => {
               const isChecked = agreedTermIds.includes(term.id);
               const detailButtonClass = 'flex items-center gap-1 text-title3 text-neutral-100';
-              const itemBorderClass = index === TERMS.length - 1 ? '' : 'border-b border-neutral-10';
+              const itemBorderClass = index === SIGNUP_TERMS.length - 1 ? '' : 'border-b border-neutral-10';
 
               return (
                 <li key={term.id} className={`flex h-12 items-center justify-between ${itemBorderClass}`}>
