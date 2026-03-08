@@ -13,7 +13,7 @@ module.exports = {
 
         // 시스템 컬러
         information: '#2c80ff',
-        warning: '#FFE23C',
+        warning: '#E3B92E',
         danger: '#fc6533',
 
         // 블랙
