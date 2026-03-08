@@ -4,7 +4,7 @@ import { StrictMode, Suspense } from 'react';
 import ReactDOM from 'react-dom/client';
 import { DeviceProvider } from 'stores/useDeviceStore';
 
-import Loading from 'pages/Loading';
+import { Loading } from 'components/Loading';
 
 import AppRouter from './router';
 import './main.css';
@@ -21,7 +21,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <DeviceProvider>
       <QueryClientProvider client={queryClient}>
-        <Suspense fallback={<Loading />}>
+        <Suspense fallback={<Loading fullscreen size="md" color="primary" />}>
           <AppRouter />
         </Suspense>
       </QueryClientProvider>
