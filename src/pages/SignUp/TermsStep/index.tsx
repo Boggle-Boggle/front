@@ -1,3 +1,5 @@
+import { useNavigate } from 'react-router-dom';
+
 import { Button } from 'components/Button';
 import { Checkbox } from 'components/Checkbox';
 import { Header } from 'components/Header';
@@ -34,11 +36,31 @@ const MSG_SIGNUP_TERMS_SUBMIT = '회원가입 완료하기';
 
 export const TermsStep = (props: TermsStepProps) => {
   const { agreedTermIds, onChangeAgreedTermIds, onPrev, onNext } = props;
+  const navigate = useNavigate();
 
   const requiredTermIds = TERMS.filter((term) => term.required).map((term) => term.id);
   const isCompleteEnabled = requiredTermIds.every((id) => agreedTermIds.includes(id));
 
-  const handleToggleAll = () => onChangeAgreedTermIds(TERMS.map((term) => term.id));
+  const handleToggleAll = () => {
+    if (agreedTermIds.length === TERMS.length) {
+      onChangeAgreedTermIds([]);
+      return;
+    }
+
+    onChangeAgreedTermIds(TERMS.map((term) => term.id));
+  };
+
+  const handleClickTermDetail = (termId: number) => {
+    navigate(`/signup/terms/${termId}`);
+  };
+
+  const handleToggleTerm = (termId: number) => {
+    const nextAgreedTermIds = agreedTermIds.includes(termId)
+      ? agreedTermIds.filter((id) => id !== termId)
+      : [...agreedTermIds, termId];
+
+    onChangeAgreedTermIds(nextAgreedTermIds);
+  };
 
   const handleClickSubmit = () => {
     if (!isCompleteEnabled) return;
@@ -74,7 +96,7 @@ export const TermsStep = (props: TermsStepProps) => {
                       <span className="text-body2 font-bold text-danger">{MSG_SIGNUP_TERMS_REQUIRED}</span>
                     )}
 
-                    <button type="button" className={detailButtonClass} onClick={() => term.id}>
+                    <button type="button" className={detailButtonClass} onClick={() => handleClickTermDetail(term.id)}>
                       {term.title}
                       <IconArrowRight className="size-4" />
                     </button>
@@ -83,7 +105,7 @@ export const TermsStep = (props: TermsStepProps) => {
                   <Checkbox
                     id={`signup-term-${term.id}`}
                     checked={isChecked}
-                    onChange={() => term.id}
+                    onChange={() => handleToggleTerm(term.id)}
                     size="regular"
                     variant="color"
                   />
