@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import IconButton from 'components/Button/IconButton';
 import { Searchbar } from 'components/Searchbar';
+import BookPlus from 'components/icons/BookPlus';
 
 import { AuthorOtherWorksSection } from './AuthorOtherWorks/Section';
 import { MostReadSection } from './MostRead/Section';
@@ -9,6 +11,8 @@ import { PopularSearchSection } from './PopularSearch/Section';
 import { RealTimePopularSection } from './RealTimePopular/Section';
 import { RecentSearchSection } from './RecentSearch/Section';
 import { TrendingSection } from './Trending/Section';
+
+const MSG_SEARCH_ADD_BOOK_LABEL = '도서 추가';
 
 const Search = () => {
   const [query, setQuery] = useState<string>('');
@@ -25,15 +29,20 @@ const Search = () => {
     navigate(`/search/result?q=${encodeURIComponent(query.trim())}`);
   };
 
+  const handleAddCustomBook = () => {};
+
   return (
     <div className="flex h-full w-full flex-col items-center justify-start overflow-hidden pb-safe-bottom pt-safe-top">
-      <Searchbar
-        className="w-full px-mobile"
-        value={query}
-        onChange={handleSearchChange}
-        onFocus={handleFocus}
-        onSubmit={handleSearchSubmit}
-      />
+      <div className="flex w-full items-center pl-mobile">
+        <Searchbar
+          className="flex-1"
+          value={query}
+          onChange={handleSearchChange}
+          onFocus={handleFocus}
+          onSubmit={handleSearchSubmit}
+        />
+        <IconButton label={MSG_SEARCH_ADD_BOOK_LABEL} icon={BookPlus} onClick={handleAddCustomBook} />
+      </div>
       <div className="mt-5 min-h-0 w-full flex-1 overflow-y-auto">
         {isSearched ? (
           <>
