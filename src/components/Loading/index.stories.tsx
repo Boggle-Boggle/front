@@ -7,14 +7,9 @@ const meta = {
   component: Loading,
   tags: ['autodocs'],
   args: {
-    size: 'md',
     fullscreen: false,
   },
   argTypes: {
-    size: {
-      control: { type: 'inline-radio' },
-      options: ['sm', 'md', 'lg'],
-    },
     fullscreen: {
       control: { type: 'boolean' },
     },
@@ -33,18 +28,6 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {};
-
-export const Small: Story = {
-  args: {
-    size: 'sm',
-  },
-};
-
-export const Large: Story = {
-  args: {
-    size: 'lg',
-  },
-};
 
 export const Fullscreen: Story = {
   args: {

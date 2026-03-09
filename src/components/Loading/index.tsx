@@ -4,15 +4,8 @@ import { useMemo } from 'react';
 import loadingAnimationData from 'assets/loading.json';
 
 type LoadingProps = {
-  size?: 'sm' | 'md' | 'lg';
   fullscreen?: boolean;
 };
-
-const LOADING_SIZE_CLASS = {
-  sm: 'h-24 w-24',
-  md: 'h-32 w-32',
-  lg: 'h-40 w-40',
-} as const;
 
 const PRIMARY_COLOR_FALLBACK = '#8bcfa7';
 
@@ -25,7 +18,7 @@ const getPrimaryColorHex = () => {
   return primaryColor || PRIMARY_COLOR_FALLBACK;
 };
 
-const convertHexToNormalizedRgba = (hex: string) => {
+const toNormalizedRgba = (hex: string) => {
   const normalizedHex = hex.replace('#', '');
   const expandedHex =
     normalizedHex.length === 3
@@ -79,16 +72,14 @@ const replaceAnimationColor = (source: unknown, nextColor: readonly [number, num
 };
 
 export const Loading = (props: LoadingProps) => {
-  const { size = 'md', fullscreen = false } = props;
+  const { fullscreen = false } = props;
 
-  const sizeClassName = LOADING_SIZE_CLASS[size];
   const containerClassName = fullscreen
     ? 'pointer-events-none fixed inset-0 z-layer flex items-center justify-center'
     : 'flex items-center justify-center';
-
   const primaryColorHex = getPrimaryColorHex();
   const animationData = useMemo(() => {
-    const primaryColorRgba = convertHexToNormalizedRgba(primaryColorHex);
+    const primaryColorRgba = toNormalizedRgba(primaryColorHex);
 
     if (!primaryColorRgba) {
       return loadingAnimationData;
@@ -98,8 +89,8 @@ export const Loading = (props: LoadingProps) => {
   }, [primaryColorHex]);
 
   return (
-    <section className={containerClassName} role="status" aria-live="polite" aria-label="loading">
-      <Lottie animationData={animationData} loop className={sizeClassName} />
+    <section className={containerClassName}>
+      <Lottie animationData={animationData} loop className="w-24" />
     </section>
   );
 };
