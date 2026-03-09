@@ -15,6 +15,7 @@ const MostRead = lazy(() => import('pages/Search/MostRead'));
 const RealTimePopular = lazy(() => import('pages/Search/RealTimePopular'));
 const Trending = lazy(() => import('pages/Search/Trending'));
 const SearchResult = lazy(() => import('pages/SearchResult'));
+const AddCustomBook = lazy(() => import('pages/AddCustomBook'));
 const MyBooks = lazy(() => import('pages/MyBooks'));
 const Login = lazy(() => import('pages/Login'));
 const SignUp = lazy(() => import('pages/SignUp'));
@@ -58,6 +59,7 @@ const router = createBrowserRouter([
             element: <WithoutBottomNavLayout />,
             children: [
               { path: '/search/result', element: <SearchResult /> },
+              { path: '/search/add', element: <AddCustomBook /> },
               { path: '/detail/:detailId', element: <BookDetail /> },
               // 아래 레거시
               // { path: 'note/write', element: <Note /> },
