@@ -29,7 +29,7 @@ const Search = () => {
     navigate(`/search/result?q=${encodeURIComponent(query.trim())}`);
   };
 
-  const handleAddCustomBook = () => {};
+  const handleAddCustomBook = () => navigate('/search/add');
 
   return (
     <div className="flex h-full w-full flex-col items-center justify-start overflow-hidden pb-safe-bottom pt-safe-top">
