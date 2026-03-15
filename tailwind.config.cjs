@@ -71,6 +71,7 @@ module.exports = {
         shelf: '10',
         book: '20',
         bookShadow: '20',
+        badge: '30',
         highlight: '100',
         header: '500',
         navigator: '500',
