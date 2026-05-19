@@ -378,6 +378,9 @@ src/
 - 컴포넌트의 **조건부 스타일 클래스**는 JSX 내부에서 직접 작성하지 않고, 반드시 상수로 분리하여 선언한다.
 - 스타일 관련 변수는 의미 기반 이름을 사용한다.
 - 조건부 스타일이 아닌경우, inline으로 작성한다.
+- 선 굵기(border width, divider height/width 등)를 제외한 모든 spacing 값은 반드시 `rem` 기반으로 작성한다.
+- spacing 값은 `px`, `top-[10px]`, `px-[2px]` 같은 픽셀 단위를 직접 사용하지 않는다.
+- Tailwind spacing scale로 표현 가능한 값은 scale을 우선 사용하고, 불가능한 경우에만 `rem` arbitrary value를 사용한다.
 - 허용
 
   ```tsx
