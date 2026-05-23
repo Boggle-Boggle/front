@@ -47,8 +47,7 @@ const LOGIN_BUTTON_ITEMS: LoginButtonItem[] = [
 const Login = () => {
   const navigate = useNavigate();
 
-  const handleLogin = () => navigate(`/`);
-  const handleClickHelp = () => navigate(`/signup`);
+  const handleLogin = () => navigate(`/signup`);
 
   return (
     <section className="relative flex h-dvh w-full flex-col justify-center gap-[35rem]">
@@ -85,14 +84,13 @@ const Login = () => {
       </div>
 
       {/* 가입/로그인 오류 문의 */}
-      <button
-        type="button"
+      <a
+        href={import.meta.env.VITE_INQUIRY_GOOGLE_FORM_URL}
         className="absolute bottom-[calc(env(safe-area-inset-bottom)+0.625rem)] left-1/2 flex -translate-x-1/2 items-center gap-0.5 text-caption2 text-neutral-60"
-        onClick={handleClickHelp}
       >
         <IconHeadphone className="size-[1.125rem]" />
         {MSG_LOGIN_HELP}
-      </button>
+      </a>
     </section>
   );
 };
