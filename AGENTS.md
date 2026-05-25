@@ -27,6 +27,9 @@
 
 ## 프로젝트 특이사항
 
+- 이 프로젝트는 네이티브 앱의 웹뷰 안에서 URL 형태로 구동되는 하이브리드 웹앱이다.
+- 네이티브 기능이 필요한 작업은 브리지 연동을 전제로 검토하고, 브리지 미연결 시 동작 방식이나 폴백 여부를 함께 고려한다.
+- 실행 환경 관련 상세 기준은 `docs/convention/project-structure.md`의 `플랫폼 실행 환경` 섹션을 따른다.
 - `legacy` 디렉터리는 보호된 영역이다.
 - `src/legacy/**`, `legacy/**` 아래 파일은 수정하지 않는다.
 - legacy 보호의 상세 규칙은 `docs/convention/project-structure.md`의 `Legacy Protection` 섹션을 따른다.

@@ -10,7 +10,7 @@
 
 규칙을 찾을 때는 주제에 맞는 문서를 먼저 확인한다.
 
-- 프로젝트 구조, 페이지 배치, `shared/`, `legacy` 보호 규칙: `project-structure.md`
+- 프로젝트 구조, 페이지 배치, 웹뷰 기반 하이브리드 웹앱 실행 환경, `shared/`, `legacy` 보호 규칙: `project-structure.md`
 - 컴포넌트 선언, props, 렌더링, 핸들러, export 규칙: `components.md`
 - 서버 상태, 클라이언트 상태, Query, Mutation, 폼 상태 관리 규칙: `state-management.md`
 - 네이밍, 코드 배치 순서, 상수 관리, 스타일 클래스 규칙: `code-style.md`
