@@ -1,20 +1,24 @@
+import { ReactNode } from 'react';
+
 import Highlight from 'components/Highlight';
 import ArrowRight from 'components/icons/ArrowRight';
 
 type TitleProps = {
   text: string;
   onLoadMore?: () => void;
+  rightAction?: ReactNode;
 };
 
 const MSG_SEARCH_MORE = '더보기';
 
 export const Title = (props: TitleProps) => {
-  const { text, onLoadMore } = props;
+  const { text, onLoadMore, rightAction } = props;
 
   return (
     <div className="flex w-full items-center justify-between px-mobile pb-5">
       <Highlight text={text} className="text-title2" />
-      {onLoadMore && (
+      {rightAction}
+      {!rightAction && onLoadMore && (
         <button
           type="button"
           className="flex items-center gap-[3px] text-caption1 text-neutral-40"
