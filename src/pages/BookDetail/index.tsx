@@ -1,10 +1,12 @@
 import { useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { useLayerStore } from 'stores/useLayerStore';
 
 import { BottomButton } from 'components/Button';
 import IconButton from 'components/Button/IconButton';
 import { TextButton } from 'components/Button/TextButton';
 import { Header } from 'components/Header';
+import { ActionSheet } from 'components/Layer/ActionSheet';
 import { Tabs, TabItem } from 'components/Tabs';
 import { IconEllipsisVertical, IconHeart } from 'components/icons';
 
@@ -18,6 +20,9 @@ import { useBookDetailQuery } from './useBookDetailQuery';
 const MSG_BOOK_DETAIL_ADD_RECORD = '독서 기록 추가하기';
 const MSG_BOOK_DETAIL_TAB_INFO = '정보';
 const MSG_BOOK_DETAIL_TAB_REVIEW = '리뷰';
+const MSG_BOOK_DETAIL_ACTION_MORE_AT_STORE = '서점 사이트에서 더보기';
+const MSG_BOOK_DETAIL_ACTION_SHARE = '공유하기';
+const LAYER_ID_BOOK_DETAIL_MENU = 'book-detail-menu-bottom-sheet';
 
 type DetailTabType = 'info' | 'review';
 
@@ -37,6 +42,7 @@ export const BookDetail = () => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const tabSentinelRef = useRef<HTMLDivElement>(null);
   const [activeTab, setActiveTab] = useState<DetailTabType>('info');
+  const { push } = useLayerStore();
 
   const { data, isLoading, isError } = useBookDetailQuery(detailId);
   const { isVisible } = useHeaderTitleByScroll({
@@ -47,7 +53,32 @@ export const BookDetail = () => {
 
   const handleWishlistClick = () => {};
 
-  const handleMenuClick = () => {};
+  const handleOpenStoreClick = () => {};
+
+  const handleShareClick = () => {};
+
+  const handleMenuClick = () => {
+    push({
+      id: LAYER_ID_BOOK_DETAIL_MENU,
+      type: 'BOTTOM_SHEET',
+      component: (
+        <ActionSheet
+          items={[
+            {
+              key: 'store',
+              label: MSG_BOOK_DETAIL_ACTION_MORE_AT_STORE,
+              onSelect: handleOpenStoreClick,
+            },
+            {
+              key: 'share',
+              label: MSG_BOOK_DETAIL_ACTION_SHARE,
+              onSelect: handleShareClick,
+            },
+          ]}
+        />
+      ),
+    });
+  };
 
   const handleChangeDetailTab = setActiveTab;
 
