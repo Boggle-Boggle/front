@@ -1,21 +1,33 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useLayerStore } from 'stores/useLayerStore';
 
 import { TextButton } from 'components/Button';
 import Cancel from 'components/icons/Cancel';
 
+import { ClearAllConfirmModal } from './ClearAllConfirmModal';
 import { Title } from '../shared/Title';
 
 const MSG_SEARCH_RECENT = '최근 검색어';
 const MSG_SEARCH_RECENT_CLEAR_ALL = '전체 삭제';
+const LAYER_ID_RECENT_SEARCH_CLEAR_ALL = 'recent-search-clear-all-modal';
 const RECOMMEND_TAGS = ['IT와 기술', '언어 학습', '요리 및 식음료', '비즈니스 및 경영', '라이프 스타일'];
 
 export const RecentSearchSection = () => {
   const navigate = useNavigate();
   const [recentTags, setRecentTags] = useState(RECOMMEND_TAGS);
+  const { push } = useLayerStore();
 
   const handleTagClick = (tag: string) => navigate(`/search/result?q=${encodeURIComponent(tag)}`);
-  const handleClearAll = () => setRecentTags([]);
+  const handleClearAll = () => {
+    if (recentTags.length === 0) return;
+
+    push({
+      id: LAYER_ID_RECENT_SEARCH_CLEAR_ALL,
+      type: 'MODAL',
+      component: <ClearAllConfirmModal onConfirm={() => setRecentTags([])} />,
+    });
+  };
 
   return (
     <section className="w-full">
