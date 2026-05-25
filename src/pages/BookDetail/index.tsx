@@ -12,8 +12,6 @@ import { IconEllipsisVertical, IconHeart } from 'components/icons';
 
 import { useHeaderTitleByScroll } from 'hooks/useHeaderTitleByScroll';
 
-import { getAladinSearchUrl } from 'constants/url';
-
 import { BookSummary } from './BookSummary';
 import { InfoSection } from './InfoSection';
 import { ReviewSection } from './ReviewSection';
@@ -58,7 +56,7 @@ export const BookDetail = () => {
   const handleOpenStoreClick = () => {
     if (!data) return;
 
-    window.location.href = getAladinSearchUrl(data.title);
+    window.location.href = data.link;
   };
 
   const handleShareClick = () => {};
@@ -113,6 +111,7 @@ export const BookDetail = () => {
                 pubDate={data.pubDate}
                 isbn={data.isbn}
                 plot={data.plot}
+                sourceLink={data.link}
               />
             )}
             {activeTab === 'review' && <ReviewSection />}
