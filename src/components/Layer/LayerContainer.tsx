@@ -1,5 +1,5 @@
 import { createPortal } from 'react-dom';
-import useLayerStore from 'stores/useLayerStore';
+import { useLayerStore } from 'stores/useLayerStore';
 
 import { BottomSheet } from './BottomSheet';
 import { FullScreen } from './FullScreen';

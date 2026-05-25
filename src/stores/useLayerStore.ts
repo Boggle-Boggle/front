@@ -14,7 +14,7 @@ type LayerStoreType = {
   pop: () => void;
 };
 
-const useLayerStore = create<LayerStoreType>((set, get) => ({
+export const useLayerStore = create<LayerStoreType>((set, get) => ({
   layers: [],
   push: (layer) => {
     set((state) => ({ layers: [...state.layers, layer] }));

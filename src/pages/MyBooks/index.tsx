@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import useLayerStore from 'stores/useLayerStore';
+import { useLayerStore } from 'stores/useLayerStore';
 
 import { IconButton } from 'components/Button';
 import Highlight from 'components/Highlight';

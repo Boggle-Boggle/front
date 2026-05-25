@@ -1,4 +1,4 @@
-import useLayerStore from 'stores/useLayerStore';
+import { useLayerStore } from 'stores/useLayerStore';
 
 import { BottomSheet } from '../BottomSheet';
 

@@ -1,22 +1,28 @@
 import { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import { useLayerStore } from 'stores/useLayerStore';
 
 import { TextButton } from 'components/Button';
 import { BackButton } from 'components/Header/BackButton';
 import { Searchbar } from 'components/Searchbar';
 import { IconArrowDown } from 'components/icons';
 
+import { SearchFilterActionSheet, type SearchFilterType } from './SearchFilterActionSheet';
 import { SearchResultItem } from './SearchResultItem';
 import { useSearchBooksQuery } from './useSearchBooksQuery';
 
 const MSG_SEARCH_RESULT_COUNT = (count: number) => `${count}개의 검색 결과가 있습니다`;
 const MSG_SEARCH_FILTER_PAPER = '종이책 검색';
+const MSG_SEARCH_FILTER_EBOOK = '전자책 검색';
+const LAYER_ID_SEARCH_FILTER = 'search-filter-bottom-sheet';
 
 const SearchResult = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const query = searchParams.get('q') || '';
 
   const [localQuery, setLocalQuery] = useState<string>(query);
+  const [searchFilter, setSearchFilter] = useState<SearchFilterType>('paper');
+  const { push } = useLayerStore();
 
   const { data, isLoading, isFetchingNextPage, observerTarget } = useSearchBooksQuery(query);
   const searchResults = data ? data.pages.flatMap((page) => page.items) : [];
@@ -34,7 +40,18 @@ const SearchResult = () => {
 
   const handleSearchChange = (value: string) => setLocalQuery(value);
 
-  const handleOpenFilter = () => {};
+  const handleOpenFilter = () => {
+    push({
+      id: LAYER_ID_SEARCH_FILTER,
+      type: 'BOTTOM_SHEET',
+      component: <SearchFilterActionSheet selectedFilter={searchFilter} onSelectFilter={setSearchFilter} />,
+    });
+  };
+
+  const searchFilterLabelByType = {
+    paper: MSG_SEARCH_FILTER_PAPER,
+    ebook: MSG_SEARCH_FILTER_EBOOK,
+  } as const;
 
   return (
     <div className="flex h-full w-full flex-col pb-safe-bottom pt-safe-top">
@@ -48,7 +65,7 @@ const SearchResult = () => {
         <TextButton
           rightIcon={IconArrowDown}
           onClick={handleOpenFilter}
-          text={MSG_SEARCH_FILTER_PAPER}
+          text={searchFilterLabelByType[searchFilter]}
           size="md"
           variant="filled"
           className="text-neutral-80"

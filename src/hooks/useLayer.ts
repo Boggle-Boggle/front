@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import useLayerStore from 'stores/useLayerStore';
+import { useLayerStore } from 'stores/useLayerStore';
 
 const useLayer = () => {
   const [mounted, setMounted] = useState(false);

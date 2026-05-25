@@ -1,4 +1,4 @@
-import useLayerStore from 'stores/useLayerStore';
+import { useLayerStore } from 'stores/useLayerStore';
 
 import { ActionSheet } from 'components/Layer/ActionSheet';
 import { IconHeart } from 'components/icons';
