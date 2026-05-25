@@ -19,6 +19,12 @@
 - `docs/convention/state-management.md`
 - `docs/convention/code-style.md`
 
+## API 명세
+
+이 디렉터리에서 사용하는 API 명세서는 아래 staging OpenAPI spec을 기준으로 참조한다.
+
+- `https://staging.api.bbaegok.store/v3/api-docs`
+
 ## 프로젝트 특이사항
 
 - `legacy` 디렉터리는 보호된 영역이다.
