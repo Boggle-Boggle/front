@@ -1,174 +1,324 @@
-# 로그인 플로우 FE 작업 플랜
+# Auth 연동 FE 구현 플랜
 
 ## 문서 목적
 
-이 문서는 OAuth 기반 로그인 플로우의 프론트엔드 작업 착수를 위해, 백엔드 LLD 분석 결과와 현재 프론트 코드베이스 구조를 연결해 초기 작업 범위와 설계 방향을 정리한다.
+이 문서는 빼곡 v2 프론트엔드에서 OAuth 로그인, 신규 가입, 세션 복구, 로그아웃을 실제로 붙이기 위한 구현 계획을 정리한다.
 
-현 단계에서는 구현을 확정하지 않고 다음 두 가지를 기록한다.
-
-- 백엔드 로그인 라이프사이클 LLD 기준 FE 계약
-- 현재 프론트 코드베이스에서 실제 작업이 붙을 지점과 구조적 제약
+프론트엔드의 인증 플로우는 백엔드 LLD를 SSOT로 삼고, 현재 코드베이스 구조에 맞게 책임과 작업 순서를 구체화하는 데 목적이 있다.
 
 ## 참고 문서
 
 - BE LLD: `back2/docs/lld/user-lifecycle.md`
+- 프로젝트 구조 컨벤션: `docs/convention/project-structure.md`
+- 상태 관리 컨벤션: `docs/convention/state-management.md`
 
-## 1. 요구사항 분석
+## 1. SSOT 기준
 
 ### 1.1 인증 방식
 
 - 인증은 OAuth 전용이다.
-- 지원 Provider는 `google`, `kakao`, `apple` 3종이다.
-- 이메일/비밀번호 기반 회원가입 및 로그인은 제공하지 않는다.
+- 지원 provider 는 `google`, `kakao`, `apple` 3종이다.
+- 인증 정보는 HttpOnly 쿠키로만 전달된다.
+- FE는 access token, refresh token, signup ticket 값을 직접 읽거나 저장하지 않는다.
 
-### 1.2 로그인 진입
+### 1.2 로그인 시작
 
 - FE는 `GET /v2/auth/oauth/{provider}/start?returnUrl=...` 로 사용자를 진입시킨다.
-- provider 선택 이후 OAuth authorize URL 조립, state/nonce/PKCE 처리, provider redirect는 BE가 담당한다.
+- OAuth authorize URL 조립, state/PKCE, provider redirect 는 BE가 담당한다.
+- `returnUrl` 은 OAuth 완료 후 FE가 다시 돌아올 앱 URL이며, 1차 구현에서는 `/auth` 를 사용한다.
 
-### 1.3 콜백 처리와 FE 분기
+### 1.3 콜백 처리
 
-- Google, Kakao 콜백은 `GET /v2/auth/oauth/{provider}/callback` 이다.
-- Apple 콜백은 `POST /v2/auth/oauth/apple/callback` 이다.
-- FE는 provider 콜백을 직접 처리하지 않는다.
-- BE는 FE 복귀 URL에 `status` 쿼리를 붙여 최종 분기한다.
+- FE는 provider callback API를 직접 호출하지 않는다.
+- Google, Kakao 는 `GET /v2/auth/oauth/{provider}/callback`
+- Apple 은 `POST /v2/auth/oauth/apple/callback`
+- provider 가 BE callback 으로 들어오면, BE가 최종적으로 `returnUrl?status=...` 로 FE를 redirect 한다.
 
-분기 값:
+### 1.4 콜백 결과 분기
 
 - `EXISTING_USER`: 기존 사용자 로그인 완료
 - `SIGNUP_REQUIRED`: 신규 사용자, 가입 미완료
+- `ERROR`: 인증 실패
 
-### 1.4 쿠키 기반 인증
+FE는 복귀 URL의 `status` query param 을 기준으로 다음처럼 분기한다.
 
-- 인증은 HttpOnly 쿠키 기반이다.
-- 주요 쿠키는 다음과 같다.
-  - `bbgk_at`: Access Token
-  - `bbgk_rt`: Refresh Token
-  - `bbgk_signup_ticket`: 가입 임시 상태
-- FE는 토큰 값을 직접 저장하거나 읽는 구조를 전제로 하면 안 된다.
-- 로그인 여부는 쿠키 존재 추정이 아니라 사용자 정보 조회 성공/실패로 판단하는 쪽이 맞다.
+- `EXISTING_USER`: `/auth` 에서 서비스 화면으로 이동
+- `SIGNUP_REQUIRED`: `/auth` 에서 `/signup` 으로 이동
+- `ERROR`: 에러 코드 기반 안내 후 `/login` 유지
 
-### 1.5 신규 가입 플로우
+### 1.5 가입 플로우
 
-- OAuth 콜백 결과가 `SIGNUP_REQUIRED` 이면 `bbgk_signup_ticket` 쿠키가 설정된다.
-- FE는 가입 화면으로 이동해 약관 조회, 닉네임 검증, 가입 완료 제출을 진행해야 한다.
-- 가입 완료 API는 `POST /v2/auth/signup/complete` 이다.
-- 성공 시 `bbgk_signup_ticket` 쿠키는 제거되고 로그인 쿠키가 발급된다.
+- 신규 사용자는 callback 시점에 `bbgk_signup_ticket` 쿠키가 발급된다.
+- FE는 `/signup` 화면에서 다음 API를 사용한다.
+  - `GET /v2/terms/latest`
+  - `GET /v2/users/nickname/availability`
+  - `POST /v2/auth/signup/complete`
+- 가입 완료 성공 시 signup ticket 은 제거되고 로그인 쿠키가 발급된다.
 
-가입 화면에서 필요한 보조 API:
+### 1.6 세션 복구와 만료 처리
 
-- `GET /v2/terms/latest`
-- `GET /v2/users/nickname/availability`
+- 앱 초기 진입 시 `GET /v2/users/me` 로 로그인 여부를 확인한다.
+- `AT 쿠키가 필요한 인증 대상 API` 가 `401 AUTH_TOKEN_EXPIRED` 를 반환하면 `POST /v2/auth/refresh` 후 원 요청을 1회 재시도한다.
+- refresh 실패 시 인증 상태를 비로그인으로 전환하고 `/login` 으로 보낸다.
 
-### 1.6 로그인 이후 및 예외 처리
+## 2. FE 책임 범위
 
-- 기존 사용자 로그인 완료 시 FE는 앱 진입 후 `/users/me` 계열 사용자 조회로 세션 유효성을 확정해야 한다.
-- 재발급 실패 `401 AUTH_REFRESH_INVALID` 시 로그인 화면 복귀가 필요하다.
-- `AUTH_TOKEN_MISSING`, `AUTH_TOKEN_INVALID` 는 재시도 없이 로그인 화면 복귀 정책이 필요하다.
+프론트엔드는 다음 책임만 가진다.
 
-## 2. 현재 프론트 구조 파악
+- OAuth 시작 URL로 진입시키기
+- callback 복귀 후 `status` 분기 처리
+- signup 화면에서 약관 조회, 닉네임 검증, 가입 완료 제출
+- 앱 부팅 시 세션 확인
+- 인증 필요한 라우트 보호
+- 토큰 만료 시 refresh 후 재시도
+- 로그아웃 시 로컬 인증 상태 초기화
 
-### 2.1 라우트 구조
+프론트엔드가 하지 않는 일은 다음과 같다.
 
-현재 라우트는 `src/router.tsx` 에 정의되어 있다.
+- token 쿠키 값 읽기
+- provider callback 직접 호출
+- provider state/PKCE 관리
+- device id 생성 및 저장
 
-공개 라우트:
+## 3. 현재 코드베이스 적용 원칙
 
-- `/login`
-- `/signup`
-- `/signup/terms/:termId`
+### 3.1 레거시 분리
 
-보호 라우트:
+- `src/legacy/**`, `legacy/**` 는 수정하지 않는다.
+- 구 인증 흐름은 참고만 하고, 신규 구조에서 별도로 구현한다.
 
-- `/`
-- `/search`
-- `/library`
-- 기타 서비스 화면
+### 3.2 인증 상태 기준
 
-다만 현재 `PrivateRoute` 는 보호 기능이 사실상 비활성화된 상태다.
+- 기존 `useAuthStore` 의 `accessToken` 저장 방식은 신규 auth 기준으로 사용하지 않는다.
+- 새 인증 상태는 "토큰 보관 여부"가 아니라 "세션 확인 결과"를 기준으로 관리한다.
+- 1차 구현에서는 별도 auth store 를 두기보다 `GET /v2/users/me` 결과를 auth 상태의 기준으로 사용한다.
 
-### 2.2 현재 로그인 페이지 상태
+권장 기준:
 
-`src/pages/Login/index.tsx`
+- 사용자 정보의 SSOT 는 `useMeQuery` 다.
+- 로그인 여부는 `useMeQuery` 의 `data`, `error`, `isLoading` 으로 판단한다.
+- 전역 auth store 는 필수가 아니다.
+- 토큰, 사용자 정보, 인증 플래그를 Query cache 와 별도로 중복 저장하지 않는다.
 
-- provider 버튼 UI는 존재한다.
-- 실제 OAuth 시작 API 호출은 없다.
-- 클릭 시 임시로 `/` 로 이동한다.
-- 즉 현재 구현은 시각 목업 단계에 가깝다.
+### 3.3 서버 상태 관리
 
-### 2.3 현재 회원가입 페이지 상태
+- `users/me`, `terms/latest`, `nickname/availability` 는 TanStack Query 기반으로 관리한다.
+- `signup/complete`, `refresh`, `logout` 은 mutation 또는 API 유틸로 분리한다.
 
-`src/pages/SignUp/index.tsx`
+## 4. 목표 사용자 흐름
 
-- 닉네임 입력
-- 약관 동의
-- 완료 스텝
+### 4.1 기존 사용자 로그인
 
-위 3단계 UI는 있으나 실제 API 연동은 없다.
+1. `/login` 에서 provider 버튼 클릭
+2. FE가 브라우저를 `GET /v2/auth/oauth/{provider}/start?returnUrl={FE_BASE_URL}/auth` 로 이동시킨다
+3. OAuth 완료 후 BE가 `/auth?status=EXISTING_USER` 로 redirect
+4. FE `/auth` 라우트가 앱에 진입한다
+5. `GET /v2/users/me` 성공
+6. `useMeQuery` 성공 결과를 로그인 상태로 해석하고 서비스 화면으로 이동한다
 
-또한 현재 구조는 `signup_ticket` 존재를 전제로 한 가입 완료 플로우와 직접 연결되어 있지 않다.
+### 4.2 신규 사용자 가입
 
-### 2.4 현재 인증 상태 관리
+1. `/login` 에서 provider 버튼 클릭
+2. FE가 브라우저를 `GET /v2/auth/oauth/{provider}/start?returnUrl={FE_BASE_URL}/auth` 로 이동시킨다
+3. OAuth 완료 후 BE가 `/auth?status=SIGNUP_REQUIRED` 로 redirect
+4. FE `/auth` 라우트가 `status` 를 읽고 `/signup` 으로 이동시킨다
+5. `GET /v2/terms/latest` 조회
+6. 닉네임 입력 후 `GET /v2/users/nickname/availability`
+7. `POST /v2/auth/signup/complete`
+8. `GET /v2/users/me` 성공
+9. `useMeQuery` 성공 결과를 기준으로 서비스 화면에 진입한다
 
-`src/stores/useAuthStore.ts`
+### 4.3 앱 재진입
 
-- Zustand persist 기반
-- `accessToken` 문자열 저장
-- `isAuthenticated` 플래그 저장
+1. 앱 부팅
+2. `GET /v2/users/me`
+3. 성공 시 서비스 유지
+4. 실패 시 `/login`
 
-이 구조는 백엔드 LLD의 HttpOnly 쿠키 기반 인증 모델과 맞지 않는다.
+### 4.4 토큰 만료
 
-### 2.5 PrivateRoute 상태
+1. 인증 대상 API 호출
+2. `401 AUTH_TOKEN_EXPIRED`
+3. `POST /v2/auth/refresh`
+4. 성공 시 원 요청 1회 재시도
+5. 실패 시 `/login`
 
-`src/pages/PrivateRoute.tsx`
+## 5. 구현 항목
 
-- 현재 구현은 `return <Outlet />;` 으로 고정되어 있다.
-- 인증 여부에 따른 접근 제어가 실제로 동작하지 않는다.
+### 5.1 라우트
 
-### 2.6 API 클라이언트 상태
+필수 라우트 작업:
 
-`src/services/index.ts`
+- `/login`: 실제 OAuth 시작 페이지로 연결
+- `/auth`: OAuth 완료 후 BE가 redirect 해주는 FE 복귀 라우트
+- `/signup`: signup ticket 전제의 가입 완료 페이지로 유지
 
-- `axios` 인스턴스에 `withCredentials: true` 가 이미 적용되어 있다.
-- 쿠키 기반 인증 연동에는 유리하다.
-- 다만 request interceptor 가 Zustand 의 `accessToken` 을 `Authorization` 헤더로 주입하고 있다.
-- 새 로그인 플로우에서는 이 부분이 충돌 가능성이 있다.
+이 라우트의 역할:
 
-### 2.7 기존 서비스 레이어 상태
+- `status` query param 읽기
+- `EXISTING_USER` 면 홈 또는 원래 경로로 이동
+- `SIGNUP_REQUIRED` 면 `/signup` 이동
+- `ERROR` 면 `/login` 이동
 
-`src/services/legacy/user.ts`
+주의:
 
-- `/auth/refresh`
-- `/auth/signup`
-- `/user/nickname`
-- `/terms`
+- `/v2/auth/oauth/{provider}/start` 는 FE 라우트가 아니라 BE 엔드포인트다.
+- 실제 provider callback 엔드포인트와 FE callback 라우트는 다르다.
+- FE `/auth` 라우트는 BE가 redirect 해주는 최종 landing page 다.
 
-등의 구버전 계약을 기준으로 작성되어 있다.
+### 5.2 API 계층
 
-참고는 가능하지만, 새 OAuth 플로우 API 계약에 그대로 재사용하기는 어렵다.
+권장 구조:
 
-### 2.8 작업 시 제약
+- `src/services/auth`
+- `src/services/users`
+- `src/services/terms`
 
-- `src/pages/legacy/**`, `legacy/**` 는 수정 금지 영역이다.
-- 새 로그인 플로우는 레거시를 건드리지 않고 새 페이지/훅/API 레이어에서 붙여야 한다.
+예상 함수:
 
-## 3. 현재 시점의 FE 작업 방향
+- `startOAuthLogin(provider, returnUrl)` 또는 URL builder
+- `refreshSession()`
+- `logout()`
+- `completeSignup(payload)`
+- `getMe()`
+- `getNicknameAvailability(nickname)`
+- `getLatestTerms()`
 
-현재 분석 기준으로 필요한 작업 축은 다음과 같다.
+현재 `src/services/index.ts` 의 `withCredentials: true` 는 유지 가능하다.
 
-- `/login` 을 실제 OAuth 시작 진입 화면으로 전환
-- 인증 복귀 처리용 라우트 추가
-- `/signup` 을 `signup_ticket` 전제의 실제 가입 완료 플로우로 재구성
-- 약관 조회, 닉네임 가용성 검사, 가입 완료 제출용 API 훅 추가
-- 인증 상태 판단 기준을 토큰 저장이 아니라 사용자 조회 성공 여부로 전환
-- `PrivateRoute` 와 공통 인증 실패 처리 정책 재설계
+다만 다음은 정리 대상이다.
 
-## 4. 다음 단계 후보
+- request interceptor 의 `Authorization` 헤더 주입 제거
+- 기존 accessToken 의존 응답 처리 제거
 
-다음 단계에서는 아래를 구체화해야 한다.
+### 5.3 Query / Mutation Hook
 
-- 라우트 설계
-- 화면 흐름 설계
-- API hook 설계
-- 인증 상태 동기화 전략
-- 작업 단위 세분화
+권장 hook:
+
+- `useMeQuery`
+- `useLatestTermsQuery`
+- `useNicknameAvailabilityQuery` 또는 debounce 포함 custom hook
+- `useCompleteSignupMutation`
+- `useLogoutMutation`
+
+refresh 는 전역 interceptor 또는 공통 API wrapper 에 두는 편이 적합하다.
+
+### 5.4 Auth 상태 관리
+
+1차 구현 권장안:
+
+- 별도 auth store 없이 `useMeQuery` 를 기준으로 인증 상태를 해석한다.
+- `me` 데이터는 Query cache 를 SSOT 로 사용한다.
+- 로그아웃 후에는 관련 query 를 invalidate 또는 remove 한다.
+
+인증 상태 해석 예시:
+
+- `isLoading`: 세션 확인 중
+- `data` 존재: 로그인 상태
+- 인증 실패 error: 비로그인 상태
+
+보조 store 검토는 다음 경우에만 한다.
+
+- refresh 실패 후 1회성 에러 상태를 전역으로 공유해야 하는 경우
+- 인증 만료 모달이나 토스트를 화면 간 공통으로 제어해야 하는 경우
+
+비권장:
+
+- access token 문자열 저장
+- localStorage 에 토큰 persist
+- `me` 데이터를 Query 와 store 양쪽에 중복 저장
+
+### 5.5 Route Guard
+
+`PrivateRoute` 는 다음 조건으로 동작해야 한다.
+
+- `useMeQuery` 로 세션 상태를 확인한다.
+- `isLoading`: 로딩 화면
+- `data` 존재: 자식 라우트 렌더
+- 인증 실패 error: `/login` 이동
+
+초기 렌더에서 세션 확인이 끝나기 전까지는 바로 redirect 하지 않도록 설계해야 한다.
+
+### 5.6 Signup 화면
+
+`/signup` 에서 필요한 변경:
+
+- 진입 조건을 `status=SIGNUP_REQUIRED` 기반 흐름에 맞추기
+- 약관 데이터를 상수 대신 `GET /v2/terms/latest` 결과로 렌더링
+- 닉네임 검증을 서버 계약과 연결
+- 제출 시 `POST /v2/auth/signup/complete`
+
+닉네임 검증 원칙:
+
+- FE는 기본 길이/빈값/허용 문자 정도만 즉시 검증
+- 최종 판정은 서버 응답 코드 기준으로 처리
+- `USER_NICKNAME_INVALID`, `USER_NICKNAME_DUPLICATED` 대응 메시지 필요
+
+### 5.7 로그인 페이지
+
+`/login` 에서 필요한 변경:
+
+- provider 버튼 클릭 시 `/signup` 이동 제거
+- provider 별 start URL 생성
+- 에러 복귀 시 query 기반 안내 처리
+
+### 5.8 로그아웃
+
+로그아웃 시나리오:
+
+1. `POST /v2/auth/logout`
+2. 성공/실패와 무관하게 관련 auth query cache 정리
+3. `/login` 이동
+
+## 6. 구현 순서
+
+### 1단계. 공통 인증 골격
+
+- `getMe`, `refresh`, `logout` API 추가
+- `useMeQuery` 추가
+- 앱 부팅 시 세션 확인 로직 추가
+- `PrivateRoute` 정상화
+
+### 2단계. 로그인 시작과 복귀 처리
+
+- `/login` 에서 provider start 연동
+- `/auth` 라우트 추가
+- `status` 분기 처리
+
+### 3단계. signup API 연동
+
+- `/v2/terms/latest` 연결
+- 닉네임 availability 연결
+- `/v2/auth/signup/complete` 연결
+- 성공 후 `me` 재조회 및 서비스 진입
+
+### 4단계. 인증 실패 공통 처리
+
+- `AUTH_TOKEN_EXPIRED` refresh 재시도
+- refresh 실패 시 `/login`
+- `AUTH_TOKEN_MISSING`, `AUTH_TOKEN_INVALID` 공통 처리
+
+### 5단계. 예외 UX 정리
+
+- `ERROR` 복귀 시 메시지 처리
+- 가입 중 ticket 만료 시 재로그인 유도
+- nickname/terms API 실패 UX 정리
+
+## 7. 작업 전 확인 항목
+
+다음 값은 구현 전에 FE 환경변수 또는 앱 합의가 필요하다.
+
+- OAuth 완료 후 돌아올 `returnUrl`
+- 로그인 성공 후 기본 진입 경로
+- `status=ERROR` 시 노출할 사용자 메시지 매핑
+- 웹뷰 내 뒤로가기 처리 정책
+
+## 8. 문서 기준 결론
+
+이 작업의 핵심은 "토큰 저장형 로그인"을 붙이는 것이 아니라, "BE redirect + HttpOnly 쿠키 + `/users/me` 기반 세션 확인" 구조를 FE에 심는 것이다.
+
+따라서 구현의 시작점은 로그인 버튼이 아니라 다음 세 가지다.
+
+- 인증 상태 모델 재정의
+- 앱 부팅 시 세션 bootstrap
+- callback 복귀 후 status 분기 라우팅
