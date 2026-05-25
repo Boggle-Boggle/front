@@ -74,8 +74,11 @@ const router = createBrowserRouter([
       },
       // 아래 레거시
       { path: '/login', element: <Login /> },
-      { path: '/signup', element: <SignUp /> },
-      { path: '/signup/terms/:termId', element: <SignUpTermsDetail /> },
+      {
+        path: '/signup',
+        element: <SignUp />,
+        children: [{ path: 'terms/:termId', element: <SignUpTermsDetail /> }],
+      },
       // { path: 'oauth', element: <Auth /> },
     ],
   },
