@@ -4,11 +4,11 @@ import { useLayerStore } from 'stores/useLayerStore';
 
 import { BottomButton } from 'components/Button';
 import IconButton from 'components/Button/IconButton';
-import { TextButton } from 'components/Button/TextButton';
 import { Header } from 'components/Header';
 import { ActionSheet } from 'components/Layer/ActionSheet';
 import { Tabs, TabItem } from 'components/Tabs';
-import { IconEllipsisVertical, IconHeart } from 'components/icons';
+import { ToggleButton } from 'components/ToggleButton';
+import { IconEllipsisVertical, IconHeart, IconHeartFilled } from 'components/icons';
 
 import { useHeaderTitleByScroll } from 'hooks/useHeaderTitleByScroll';
 
@@ -42,6 +42,7 @@ export const BookDetail = () => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const tabSentinelRef = useRef<HTMLDivElement>(null);
   const [activeTab, setActiveTab] = useState<DetailTabType>('info');
+  const [isWishlistSelected, setIsWishlistSelected] = useState<boolean>(false);
   const { push } = useLayerStore();
 
   const { data, isLoading, isError } = useBookDetailQuery(detailId);
@@ -51,7 +52,9 @@ export const BookDetail = () => {
   });
   const title = isVisible ? data?.title : undefined;
 
-  const handleWishlistClick = () => {};
+  const handleWishlistClick = () => {
+    setIsWishlistSelected((prev) => !prev);
+  };
 
   const handleOpenStoreClick = () => {
     if (!data) return;
@@ -93,7 +96,14 @@ export const BookDetail = () => {
         title={title}
         rightBtn={
           <div className="flex items-center gap-2 pr-mobile">
-            <TextButton onClick={handleWishlistClick} text="관심 도서" leftIcon={IconHeart} size="sm" variant="line" />
+            <ToggleButton
+              variant="iconText"
+              selected={isWishlistSelected}
+              onClick={handleWishlistClick}
+              icon={IconHeart}
+              selectedIcon={IconHeartFilled}
+              label="관심 도서"
+            />
             <IconButton onClick={handleMenuClick} label="더보기" icon={IconEllipsisVertical} size="sm" />
           </div>
         }
