@@ -10,7 +10,7 @@ type ToastStoreType = {
   removeToast: (id: string) => void;
 };
 
-const useToastStore = create<ToastStoreType>((set, get) => ({
+export const useToastStore = create<ToastStoreType>((set, get) => ({
   toasts: [],
   removeToast: (id) => {
     set((state) => ({

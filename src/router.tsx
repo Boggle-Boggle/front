@@ -3,7 +3,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 import App from './App';
 
-// const Auth = lazy(() => import('pages/Auth'));
+const Auth = lazy(() => import('pages/Auth'));
 const BookDetail = lazy(() => import('pages/BookDetail'));
 const WithBottomNavLayout = lazy(() => import('pages/Layout/WithBottomNavLayout'));
 const WithoutBottomNavLayout = lazy(() => import('pages/Layout/WithoutBottomNavLayout'));
@@ -74,12 +74,12 @@ const router = createBrowserRouter([
       },
       // 아래 레거시
       { path: '/login', element: <Login /> },
+      { path: '/auth', element: <Auth /> },
       {
         path: '/signup',
         element: <SignUp />,
         children: [{ path: 'terms/:termId', element: <SignUpTermsDetail /> }],
       },
-      // { path: 'oauth', element: <Auth /> },
     ],
   },
 ]);

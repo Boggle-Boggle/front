@@ -1,10 +1,23 @@
+import { useQuery } from '@tanstack/react-query';
+
 import { Navigate, Outlet } from 'react-router-dom';
-import useAuthStore from 'stores/useAuthStore';
+
+import Loading from 'pages/Loading';
+
+import { getMe } from 'services/users';
 
 const PrivateRoute = () => {
-  const { isAuthenticated } = useAuthStore();
+  const { data, error, isLoading } = useQuery({
+    queryKey: ['users', 'me'],
+    queryFn: getMe,
+    retry: false,
+  });
+
+  if (isLoading) return <Loading />;
+
+  if (error || !data) return <Navigate to="/login" replace />;
+
   return <Outlet />;
-  return isAuthenticated ? <Outlet /> : <Navigate to="/login" />;
 };
 
 export default PrivateRoute;

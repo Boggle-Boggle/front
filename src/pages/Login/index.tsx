@@ -1,7 +1,7 @@
-import { useNavigate } from 'react-router-dom';
-
 import Highlight from 'components/Highlight';
 import { IconHeadphone } from 'components/icons';
+
+import { startOAuthLogin } from 'services/auth';
 
 import loginImg from 'assets/img/login.png';
 import appleLogoImg from 'assets/logo/apple.png';
@@ -45,9 +45,9 @@ const LOGIN_BUTTON_ITEMS: LoginButtonItem[] = [
 ];
 
 const Login = () => {
-  const navigate = useNavigate();
-
-  const handleLogin = () => navigate(`/signup`);
+  const handleLogin = (provider: LoginProvider) => {
+    startOAuthLogin(provider);
+  };
 
   return (
     <section className="relative flex h-dvh w-full flex-col justify-center gap-[35rem]">
@@ -73,7 +73,7 @@ const Login = () => {
                 <button
                   type="button"
                   className="size-[3.375rem] rounded-full shadow-[0px_2px_10px_0px_rgba(0,0,0,0.14)]"
-                  onClick={handleLogin}
+                  onClick={() => handleLogin(provider)}
                 >
                   <img src={logoSrc} alt={alt} className="h-full w-full rounded-full object-cover" />
                 </button>
