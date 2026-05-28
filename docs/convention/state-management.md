@@ -14,19 +14,17 @@
 
 이 기준은 로딩, 에러, 캐시, 재요청, 동기화 처리를 일관되게 유지하기 위한 것이다.
 
-### Query는 custom hook으로 분리한다
+### Query는 TanStack Query로 직접 관리한다
 
-query 선언은 컴포넌트 내부에 직접 작성하지 않고, 같은 레벨의 custom hook으로 분리한다. 컴포넌트는 query 구현보다 결과 사용에 집중해야 한다.
+query는 TanStack Query를 기준으로 관리하되, custom hook으로 한 번 더 감싸는 것을 기본 규칙으로 두지 않는다. 페이지나 컴포넌트에서 `useQuery`를 직접 선언해도 된다.
 
 허용 예시:
 
 ```tsx
-export const useBooksQuery = (page: number) => {
-  return useQuery({
-    queryKey: ['books', 'list', page],
-    queryFn: () => getBooks({ page }),
-  });
-};
+const booksQuery = useQuery({
+  queryKey: ['books', 'list', page],
+  queryFn: () => getBooks({ page }),
+});
 ```
 
 ## Query Key 규칙
@@ -54,9 +52,9 @@ queryKey는 리소스를 설명하는 정적 값이 먼저 오고, 식별자나 
 
 생성, 수정, 삭제처럼 서버 데이터를 변경하는 작업은 `useMutation`을 기준으로 구현한다.
 
-### Mutation도 custom hook으로 분리한다
+### Mutation은 useMutation으로 직접 관리한다
 
-mutation 선언 역시 컴포넌트 내부가 아니라 custom hook으로 분리한다.
+mutation 역시 custom hook으로 한 번 더 감싸는 것을 기본 규칙으로 두지 않는다. 페이지나 컴포넌트에서 `useMutation`을 직접 선언해도 된다.
 
 ### 성공 후에는 관련 Query를 동기화한다
 
@@ -65,16 +63,14 @@ mutation 성공 이후에는 `invalidateQueries` 등으로 관련 캐시를 동�
 허용 예시:
 
 ```tsx
-export const useUpdateBookMutation = () => {
-  return useMutation({
-    mutationFn: (payload: UpdateBookPayload) => updateBook(payload),
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: ['books'],
-      });
-    },
-  });
-};
+const updateBookMutation = useMutation({
+  mutationFn: (payload: UpdateBookPayload) => updateBook(payload),
+  onSuccess: () => {
+    queryClient.invalidateQueries({
+      queryKey: ['books'],
+    });
+  },
+});
 ```
 
 ## 클라이언트 상태 관리 원칙

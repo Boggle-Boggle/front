@@ -95,8 +95,8 @@ FE는 복귀 URL의 `status` query param 을 기준으로 다음처럼 분기한
 
 권장 기준:
 
-- 사용자 정보의 SSOT 는 `useMeQuery` 다.
-- 로그인 여부는 `useMeQuery` 의 `data`, `error`, `isLoading` 으로 판단한다.
+- 사용자 정보의 SSOT 는 `['users', 'me']` query cache 다.
+- 로그인 여부는 `useQuery({ queryKey: ['users', 'me'] })` 의 `data`, `error`, `isLoading` 으로 판단한다.
 - 전역 auth store 는 필수가 아니다.
 - 토큰, 사용자 정보, 인증 플래그를 Query cache 와 별도로 중복 저장하지 않는다.
 
@@ -114,7 +114,7 @@ FE는 복귀 URL의 `status` query param 을 기준으로 다음처럼 분기한
 3. OAuth 완료 후 BE가 `/auth?status=EXISTING_USER` 로 redirect
 4. FE `/auth` 라우트가 앱에 진입한다
 5. `GET /v2/users/me` 성공
-6. `useMeQuery` 성공 결과를 로그인 상태로 해석하고 서비스 화면으로 이동한다
+6. `['users', 'me']` query 성공 결과를 로그인 상태로 해석하고 서비스 화면으로 이동한다
 
 ### 4.2 신규 사용자 가입
 
@@ -126,7 +126,7 @@ FE는 복귀 URL의 `status` query param 을 기준으로 다음처럼 분기한
 6. 닉네임 입력 후 `GET /v2/users/nickname/availability`
 7. `POST /v2/auth/signup/complete`
 8. `GET /v2/users/me` 성공
-9. `useMeQuery` 성공 결과를 기준으로 서비스 화면에 진입한다
+9. `['users', 'me']` query 성공 결과를 기준으로 서비스 화면에 진입한다
 
 ### 4.3 앱 재진입
 
@@ -191,15 +191,13 @@ FE는 복귀 URL의 `status` query param 을 기준으로 다음처럼 분기한
 - request interceptor 의 `Authorization` 헤더 주입 제거
 - 기존 accessToken 의존 응답 처리 제거
 
-### 5.3 Query / Mutation Hook
+### 5.3 Query / Mutation 사용 방식
 
-권장 hook:
+권장 방식:
 
-- `useMeQuery`
-- `useLatestTermsQuery`
-- `useNicknameAvailabilityQuery` 또는 debounce 포함 custom hook
-- `useCompleteSignupMutation`
-- `useLogoutMutation`
+- `useQuery({ queryKey: ['users', 'me'] })`
+- `useQuery({ queryKey: ['terms', 'latest'] })`
+- 닉네임 확인, 회원가입 완료, 로그아웃은 페이지나 컴포넌트에서 `useMutation(...)` 직접 선언
 
 refresh 는 전역 interceptor 또는 공통 API wrapper 에 두는 편이 적합하다.
 
@@ -207,7 +205,7 @@ refresh 는 전역 interceptor 또는 공통 API wrapper 에 두는 편이 적�
 
 1차 구현 권장안:
 
-- 별도 auth store 없이 `useMeQuery` 를 기준으로 인증 상태를 해석한다.
+- 별도 auth store 없이 `['users', 'me']` query 를 기준으로 인증 상태를 해석한다.
 - `me` 데이터는 Query cache 를 SSOT 로 사용한다.
 - 로그아웃 후에는 관련 query 를 invalidate 또는 remove 한다.
 
@@ -232,7 +230,7 @@ refresh 는 전역 interceptor 또는 공통 API wrapper 에 두는 편이 적�
 
 `PrivateRoute` 는 다음 조건으로 동작해야 한다.
 
-- `useMeQuery` 로 세션 상태를 확인한다.
+- `useQuery({ queryKey: ['users', 'me'] })` 로 세션 상태를 확인한다.
 - `isLoading`: 로딩 화면
 - `data` 존재: 자식 라우트 렌더
 - 인증 실패 error: `/login` 이동
@@ -275,7 +273,7 @@ refresh 는 전역 interceptor 또는 공통 API wrapper 에 두는 편이 적�
 ### 1단계. 공통 인증 골격
 
 - `getMe`, `refresh`, `logout` API 추가
-- `useMeQuery` 추가
+- `['users', 'me']` query 추가
 - 앱 부팅 시 세션 확인 로직 추가
 - `PrivateRoute` 정상화
 
