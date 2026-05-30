@@ -6,8 +6,8 @@ export type ApiError = {
 };
 
 export type PageMeta = {
-  offset: number;
-  limit: number;
+  page: number;
+  size: number;
   total: number;
 };
 

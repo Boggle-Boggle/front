@@ -1,413 +1,72 @@
 import { Book } from './Book';
 
-type BookCaseBook = {
+export type BookCaseBook = {
   id: number;
   page: number;
   title: string;
 };
 
-const books: BookCaseBook[] = [
-  {
-    title: '턴! 턴! 턴! Turn! Turn! Turn!',
-    page: 85,
-    id: 1,
-  },
-  {
-    title: '여름을 한입 베어물었더니',
-    page: 192,
-    id: 2,
-  },
-  {
-    title: '코스모스',
-    page: 706,
-    id: 3,
-  },
-  {
-    title: '날씨가 좋으면 찾아가다가 돌아오겠어요',
-    page: 456,
-    id: 4,
-  },
-  {
-    title: '사과 APPLE',
-    page: 317,
-    id: 5,
-  },
-  {
-    title: '기억을 파는 가게',
-    page: 221,
-    id: 6,
-  },
-  {
-    title: '시간을 건너는 소녀',
-    page: 398,
-    id: 7,
-  },
-  {
-    title: '눈 감으면 들리는 노래',
-    page: 154,
-    id: 8,
-  },
-  {
-    title: '오늘도 무사히 지나가기를 간절히 바라고 바라고 티기고 티기고',
-    page: 288,
-    id: 9,
-  },
-  {
-    title: '바다를 닮은 너에게',
-    page: 522,
-    id: 10,
-  },
-  {
-    title: '별빛이 내린 거리에서 돌아다니기 권법',
-    page: 611,
-    id: 11,
-  },
-  {
-    title: '소리를 삼킨 이름들',
-    page: 203,
-    id: 12,
-  },
-  {
-    title: '구름 사이로 걸어간 날들',
-    page: 467,
-    id: 13,
-  },
-  {
-    title: '빛이 머무는 순간',
-    page: 359,
-    id: 14,
-  },
-  {
-    title: '턴! 턴! 턴! Turn! Turn! Turn!',
-    page: 85,
-    id: 1,
-  },
-  {
-    title: '여름을 한입 베어물었더니',
-    page: 192,
-    id: 2,
-  },
-  {
-    title: '코스모스',
-    page: 706,
-    id: 3,
-  },
-  {
-    title: '날씨가 좋으면 찾아가다가 돌아오겠어요',
-    page: 456,
-    id: 4,
-  },
-  {
-    title: '사과 APPLE',
-    page: 317,
-    id: 5,
-  },
-  {
-    title: '기억을 파는 가게',
-    page: 221,
-    id: 6,
-  },
-  {
-    title: '시간을 건너는 소녀',
-    page: 398,
-    id: 7,
-  },
-  {
-    title: '눈 감으면 들리는 노래',
-    page: 154,
-    id: 8,
-  },
-  {
-    title: '오늘도 무사히 지나가기를 간절히 바라고 바라고 티기고 티기고',
-    page: 288,
-    id: 9,
-  },
-  {
-    title: '바다를 닮은 너에게',
-    page: 522,
-    id: 10,
-  },
-  {
-    title: '별빛이 내린 거리에서 돌아다니기 권법',
-    page: 611,
-    id: 11,
-  },
-  {
-    title: '소리를 삼킨 이름들',
-    page: 203,
-    id: 12,
-  },
-  {
-    title: '구름 사이로 걸어간 날들',
-    page: 467,
-    id: 13,
-  },
-  {
-    title: '빛이 머무는 순간',
-    page: 359,
-    id: 14,
-  },
-  {
-    title: '턴! 턴! 턴! Turn! Turn! Turn!',
-    page: 85,
-    id: 1,
-  },
-  {
-    title: '여름을 한입 베어물었더니',
-    page: 192,
-    id: 2,
-  },
-  {
-    title: '코스모스',
-    page: 706,
-    id: 3,
-  },
-  {
-    title: '날씨가 좋으면 찾아가다가 돌아오겠어요',
-    page: 456,
-    id: 4,
-  },
-  {
-    title: '사과 APPLE',
-    page: 317,
-    id: 5,
-  },
-  {
-    title: '기억을 파는 가게',
-    page: 221,
-    id: 6,
-  },
-  {
-    title: '시간을 건너는 소녀',
-    page: 398,
-    id: 7,
-  },
-  {
-    title: '눈 감으면 들리는 노래',
-    page: 154,
-    id: 8,
-  },
-  {
-    title: '오늘도 무사히 지나가기를 간절히 바라고 바라고 티기고 티기고',
-    page: 288,
-    id: 9,
-  },
-  {
-    title: '바다를 닮은 너에게',
-    page: 522,
-    id: 10,
-  },
-  {
-    title: '별빛이 내린 거리에서 돌아다니기 권법',
-    page: 611,
-    id: 11,
-  },
-  {
-    title: '소리를 삼킨 이름들',
-    page: 203,
-    id: 12,
-  },
-  {
-    title: '구름 사이로 걸어간 날들',
-    page: 467,
-    id: 13,
-  },
-  {
-    title: '빛이 머무는 순간',
-    page: 359,
-    id: 14,
-  },
-  {
-    title: '사과 APPLE',
-    page: 317,
-    id: 5,
-  },
-  {
-    title: '기억을 파는 가게',
-    page: 221,
-    id: 6,
-  },
-  {
-    title: '시간을 건너는 소녀',
-    page: 398,
-    id: 7,
-  },
-  {
-    title: '눈 감으면 들리는 노래',
-    page: 154,
-    id: 8,
-  },
-  {
-    title: '오늘도 무사히 지나가기를 간절히 바라고 바라고 티기고 티기고',
-    page: 288,
-    id: 9,
-  },
-  {
-    title: '바다를 닮은 너에게',
-    page: 522,
-    id: 10,
-  },
-  {
-    title: '별빛이 내린 거리에서 돌아다니기 권법',
-    page: 611,
-    id: 11,
-  },
-  {
-    title: '소리를 삼킨 이름들',
-    page: 203,
-    id: 12,
-  },
-  {
-    title: '구름 사이로 걸어간 날들',
-    page: 467,
-    id: 13,
-  },
-  {
-    title: '빛이 머무는 순간',
-    page: 359,
-    id: 14,
-  },
-  {
-    title: '사과 APPLE',
-    page: 317,
-    id: 5,
-  },
-  {
-    title: '기억을 파는 가게',
-    page: 221,
-    id: 6,
-  },
-  {
-    title: '시간을 건너는 소녀',
-    page: 398,
-    id: 7,
-  },
-  {
-    title: '눈 감으면 들리는 노래',
-    page: 154,
-    id: 8,
-  },
-  {
-    title: '오늘도 무사히 지나가기를 간절히 바라고 바라고 티기고 티기고',
-    page: 288,
-    id: 9,
-  },
-  {
-    title: '바다를 닮은 너에게',
-    page: 522,
-    id: 10,
-  },
-  {
-    title: '별빛이 내린 거리에서 돌아다니기 권법',
-    page: 611,
-    id: 11,
-  },
-  {
-    title: '소리를 삼킨 이름들',
-    page: 203,
-    id: 12,
-  },
-  {
-    title: '구름 사이로 걸어간 날들',
-    page: 467,
-    id: 13,
-  },
-  {
-    title: '빛이 머무는 순간',
-    page: 359,
-    id: 14,
-  },
-  {
-    title: '사과 APPLE',
-    page: 317,
-    id: 5,
-  },
-  {
-    title: '기억을 파는 가게',
-    page: 221,
-    id: 6,
-  },
-  {
-    title: '시간을 건너는 소녀',
-    page: 398,
-    id: 7,
-  },
-  {
-    title: '눈 감으면 들리는 노래',
-    page: 154,
-    id: 8,
-  },
-  {
-    title: '오늘도 무사히 지나가기를 간절히 바라고 바라고 티기고 티기고',
-    page: 288,
-    id: 9,
-  },
-  {
-    title: '바다를 닮은 너에게',
-    page: 522,
-    id: 10,
-  },
-  {
-    title: '별빛이 내린 거리에서 돌아다니기 권법',
-    page: 611,
-    id: 11,
-  },
-  {
-    title: '소리를 삼킨 이름들',
-    page: 203,
-    id: 12,
-  },
-  {
-    title: '구름 사이로 걸어간 날들',
-    page: 467,
-    id: 13,
-  },
-  {
-    title: '빛이 머무는 순간',
-    page: 359,
-    id: 14,
-  },
-];
+type BookCaseProps = {
+  books: BookCaseBook[];
+};
 
-export const BookCase = () => {
-  const allBooks: BookCaseBook[][] = [];
-  let chunkedBooks: BookCaseBook[] = [];
-  let chunkedWidth = 0;
+const getThicknessPx = (page: number) => {
+  if (page >= 500) return 54;
+  if (page > 400) return 48;
+  if (page > 300) return 40;
+  if (page > 200) return 32;
+  if (page > 100) return 24;
+  return 16;
+};
 
+const getShelfBooks = (books: BookCaseBook[], bookcaseWidth: number) => {
+  const { currentShelfBooks, shelves: reducedShelves } = books.reduce<{
+    currentShelfBooks: BookCaseBook[];
+    currentShelfWidth: number;
+    shelves: BookCaseBook[][];
+  }>(
+    (acc, book) => {
+      const thickness = getThicknessPx(book.page);
+      const shouldStartNextShelf =
+        acc.currentShelfBooks.length > 0 && acc.currentShelfWidth + thickness >= bookcaseWidth;
+
+      if (shouldStartNextShelf) {
+        return {
+          currentShelfBooks: [book],
+          currentShelfWidth: thickness,
+          shelves: [...acc.shelves, acc.currentShelfBooks],
+        };
+      }
+
+      return {
+        currentShelfBooks: [...acc.currentShelfBooks, book],
+        currentShelfWidth: acc.currentShelfWidth + thickness,
+        shelves: acc.shelves,
+      };
+    },
+    {
+      currentShelfBooks: [],
+      currentShelfWidth: 0,
+      shelves: [],
+    },
+  );
+
+  const shelves = currentShelfBooks.length > 0 ? [...reducedShelves, currentShelfBooks] : reducedShelves;
+
+  if (shelves.length >= 4) {
+    return shelves;
+  }
+
+  return [...shelves, ...Array.from({ length: 4 - shelves.length }, () => [])];
+};
+
+export const BookCase = (props: BookCaseProps) => {
+  const { books } = props;
   const remToPx = (rem: number) => rem * parseFloat(getComputedStyle(document.documentElement).fontSize);
-
-  const getThicknessPx = (page: number) => {
-    if (page >= 500) return 54;
-    if (page > 400) return 48;
-    if (page > 300) return 40;
-    if (page > 200) return 32;
-    if (page > 100) return 24;
-    return 16;
-  };
 
   // bookcaseWidth = 전체 화면너비 - 양쪽 패딩(1rem * 2) - 책장 사이 간격(1.25rem * 2) - 책장과 양끝 책사이간격-  border(2px * 2)
   const bookcaseWidth = window.innerWidth - remToPx(1 * 2) - remToPx(1.25 * 2) - remToPx(0.625 * 2) - 4;
-
-  for (let i = 0; i < books.length; i += 1) {
-    const book = books[i];
-    const thickness = getThicknessPx(book.page);
-
-    // "넣으면" 초과할 때: 현재 줄 확정하고 새 줄 시작
-    if (chunkedBooks.length > 0 && chunkedWidth + thickness >= bookcaseWidth) {
-      allBooks.push(chunkedBooks);
-      chunkedBooks = [];
-      chunkedWidth = 0;
-    }
-
-    chunkedBooks.push(book);
-    chunkedWidth += thickness;
-  }
-
-  if (chunkedBooks.length > 0) allBooks.push(chunkedBooks);
-
-  while (allBooks.length < 4) {
-    allBooks.push([]);
-  }
+  const allBooks = getShelfBooks(books, bookcaseWidth);
 
   const outerHeight = 524 + 126 * (allBooks.length - 4);
   const outerBoxShadow = 'inset 2px 2px 2px rgba(255, 255, 255, 0.6), inset -2px -3px 3px rgba(53, 27, 20, 0.25)';
@@ -428,7 +87,8 @@ export const BookCase = () => {
           const shelfSpacingClass = idx === allBooks.length - 1 ? '' : 'pb-4';
 
           return (
-            <div className={shelfSpacingClass} key={shelfBooks.toString()}>
+            // eslint-disable-next-line react/no-array-index-key
+            <div className={shelfSpacingClass} key={`shelf-${idx}`}>
               <div className="h-[5.625rem] px-[0.625rem]">
                 {shelfBooks.map(({ id, page, title }) => (
                   <Book page={page} title={title} key={id} />
