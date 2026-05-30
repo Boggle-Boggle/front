@@ -6,6 +6,7 @@ import { TextButton } from 'components/Button';
 import { BackButton } from 'components/Header/BackButton';
 import { Searchbar } from 'components/Searchbar';
 import { IconArrowDown } from 'components/icons';
+import { SearchMediaType } from 'types/search';
 
 import { SearchFilterActionSheet, type SearchFilterType } from './SearchFilterActionSheet';
 import { SearchResultItem } from './SearchResultItem';
@@ -16,6 +17,11 @@ const MSG_SEARCH_FILTER_PAPER = '종이책 검색';
 const MSG_SEARCH_FILTER_EBOOK = '전자책 검색';
 const LAYER_ID_SEARCH_FILTER = 'search-filter-bottom-sheet';
 
+const SEARCH_MEDIA_TYPE_BY_FILTER: Record<SearchFilterType, SearchMediaType> = {
+  ebook: 'EBOOK',
+  paper: 'BOOK',
+};
+
 const SearchResult = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const query = searchParams.get('q') || '';
@@ -24,9 +30,12 @@ const SearchResult = () => {
   const [searchFilter, setSearchFilter] = useState<SearchFilterType>('paper');
   const { push } = useLayerStore();
 
-  const { data, isLoading, isFetchingNextPage, observerTarget } = useSearchBooksQuery(query);
+  const { data, isLoading, isFetchingNextPage, observerTarget } = useSearchBooksQuery(
+    query,
+    SEARCH_MEDIA_TYPE_BY_FILTER[searchFilter],
+  );
   const searchResults = data ? data.pages.flatMap((page) => page.items) : [];
-  const totalCount = data?.pages[0]?.totalResultCnt || 0;
+  const totalCount = data?.pages[0]?.total || 0;
 
   useEffect(() => {
     setLocalQuery(query);
