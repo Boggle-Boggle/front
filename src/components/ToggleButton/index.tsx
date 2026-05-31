@@ -30,14 +30,18 @@ export const ToggleButton = (props: ToggleButtonProps) => {
   const { variant } = props;
   const transitionClass = 'transition-all duration-300 ease-out';
 
+  const getBaseStateClass = (selected: boolean) => {
+    return selected
+      ? 'border border-neutral-20 bg-neutral-0'
+      : 'border border-transparent bg-neutral-20';
+  };
+
   if (variant === 'icon') {
     const { selected, onClick, icon: Icon, selectedIcon, disabled = false, className = '', ariaLabel } = props;
     const CurrentIcon = selected && selectedIcon ? selectedIcon : Icon;
     const disabledClass = disabled ? 'cursor-not-allowed opacity-20' : 'cursor-pointer';
     const iconColorClass = selected ? 'text-primary' : 'text-neutral-60';
-    const containerClass = selected
-      ? 'inline-flex size-8 items-center justify-center rounded-full border border-neutral-20 bg-transparent p-1'
-      : 'inline-flex size-8 items-center justify-center rounded-full border border-neutral-20 bg-neutral-20 p-1';
+    const containerClass = `inline-flex h-8 w-8 items-center justify-center rounded-full ${getBaseStateClass(selected)}`;
 
     return (
       <button
@@ -59,11 +63,11 @@ export const ToggleButton = (props: ToggleButtonProps) => {
     const disabledClass = disabled ? 'cursor-not-allowed opacity-20' : 'cursor-pointer';
     const iconColorClass = selected ? 'text-primary' : 'text-neutral-60';
     const containerClass = selected
-      ? 'inline-flex h-8 w-8 items-center justify-start gap-1 overflow-hidden rounded-full border border-neutral-20 bg-transparent px-1 py-1'
-      : 'inline-flex h-8 w-24 items-center justify-start gap-1 overflow-hidden rounded-full border border-neutral-20 bg-neutral-20 px-2 py-1';
+      ? `inline-flex h-8 w-8 items-center justify-center overflow-hidden rounded-full ${getBaseStateClass(selected)}`
+      : `inline-flex h-8 w-24 items-center justify-start gap-0.5 overflow-hidden rounded-full px-2 ${getBaseStateClass(selected)}`;
     const labelClass = selected
-      ? 'w-0 -translate-x-1 opacity-0'
-      : 'w-[3.25rem] translate-x-0 opacity-100';
+      ? 'w-0 opacity-0'
+      : 'w-[3.5rem] translate-x-0 opacity-100 text-neutral-60';
 
     return (
       <button
@@ -76,7 +80,7 @@ export const ToggleButton = (props: ToggleButtonProps) => {
       >
         <CurrentIcon className={`size-icon-md shrink-0 ${transitionClass} ${iconColorClass}`} />
         <span
-          className={`overflow-hidden whitespace-nowrap text-body2 font-bold text-neutral-60 ${transitionClass} ${labelClass}`}
+          className={`overflow-hidden whitespace-nowrap text-body2 font-bold ${transitionClass} ${labelClass}`}
         >
           {label}
         </span>
@@ -88,9 +92,8 @@ export const ToggleButton = (props: ToggleButtonProps) => {
   const CurrentIcon = selected && selectedIcon ? selectedIcon : Icon;
   const disabledClass = disabled ? 'cursor-not-allowed opacity-20' : 'cursor-pointer';
   const iconColorClass = selected ? 'text-primary' : 'text-neutral-60';
-  const containerClass = selected
-    ? 'inline-flex h-8 items-center justify-center gap-1 rounded-full border border-neutral-20 bg-transparent px-2 py-1 text-body2'
-    : 'inline-flex h-8 items-center justify-center gap-1 rounded-full border border-neutral-20 bg-neutral-20 px-2 py-1 text-body2';
+  const containerClass = `inline-flex h-8 items-center justify-center gap-0.5 rounded-full px-2 ${getBaseStateClass(selected)}`;
+  const countColorClass = selected ? 'text-neutral-100' : 'text-neutral-60';
 
   return (
     <button
@@ -102,7 +105,7 @@ export const ToggleButton = (props: ToggleButtonProps) => {
       className={`${containerClass} ${transitionClass} ${disabledClass} ${className}`}
     >
       <CurrentIcon className={`size-icon-md ${transitionClass} ${iconColorClass}`} />
-      <span className={`${transitionClass} ${selected ? 'text-primary' : 'text-neutral-60'}`}>{count}</span>
+      <span className={`text-body2 font-bold ${transitionClass} ${countColorClass}`}>{count}</span>
     </button>
   );
 };

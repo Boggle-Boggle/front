@@ -26,6 +26,22 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
+const StatefulToggleButton = (args: ComponentProps<typeof ToggleButton>) => {
+  const { selected: initialSelected, onClick, ...restArgs } = args;
+  const [selected, setSelected] = useState<boolean>(initialSelected);
+
+  useEffect(() => {
+    setSelected(initialSelected);
+  }, [initialSelected]);
+
+  const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
+    setSelected((prev) => !prev);
+    onClick(e);
+  };
+
+  return <ToggleButton {...restArgs} selected={selected} onClick={handleClick} />;
+};
+
 const iconTextArgs: ComponentProps<typeof ToggleButton> = {
   variant: 'iconText',
   selected: false,
@@ -40,20 +56,7 @@ export const IconText: Story = {
   args: {
     ...iconTextArgs,
   },
-  render: (args) => {
-    const [selected, setSelected] = useState<boolean>(args.selected);
-
-    useEffect(() => {
-      setSelected(args.selected);
-    }, [args.selected]);
-
-    const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
-      setSelected((prev) => !prev);
-      args.onClick(e);
-    };
-
-    return <ToggleButton {...args} selected={selected} onClick={handleClick} />;
-  },
+  render: StatefulToggleButton,
 };
 
 export const IconCount: Story = {
@@ -66,20 +69,7 @@ export const IconCount: Story = {
     count: 13,
     disabled: false,
   },
-  render: (args) => {
-    const [selected, setSelected] = useState<boolean>(args.selected);
-
-    useEffect(() => {
-      setSelected(args.selected);
-    }, [args.selected]);
-
-    const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
-      setSelected((prev) => !prev);
-      args.onClick(e);
-    };
-
-    return <ToggleButton {...args} selected={selected} onClick={handleClick} />;
-  },
+  render: StatefulToggleButton,
 };
 
 export const IconOnly: Story = {
@@ -91,18 +81,62 @@ export const IconOnly: Story = {
     selectedIcon: IconHeartFilled,
     disabled: false,
   },
-  render: (args) => {
-    const [selected, setSelected] = useState<boolean>(args.selected);
+  render: StatefulToggleButton,
+};
 
-    useEffect(() => {
-      setSelected(args.selected);
-    }, [args.selected]);
+export const VariantMatrix: Story = {
+  args: {
+    variant: 'icon',
+    selected: false,
+    onClick: () => {},
+    icon: IconHeart,
+    selectedIcon: IconHeartFilled,
+    disabled: false,
+  },
+  render: () => {
+    return (
+      <div className="flex flex-col gap-4 bg-neutral-0 p-6">
+        <div className="flex items-center gap-3">
+          <StatefulToggleButton
+            variant="iconText"
+            selected={false}
+            onClick={() => {}}
+            icon={IconHeart}
+            label="관심 도서"
+          />
+          <StatefulToggleButton
+            variant="iconText"
+            selected
+            onClick={() => {}}
+            icon={IconHeart}
+            selectedIcon={IconHeartFilled}
+            label="관심 도서"
+          />
+        </div>
 
-    const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
-      setSelected((prev) => !prev);
-      args.onClick(e);
-    };
+        <div className="flex items-center gap-3">
+          <StatefulToggleButton variant="iconCount" selected={false} onClick={() => {}} icon={IconHeart} count={99} />
+          <StatefulToggleButton
+            variant="iconCount"
+            selected
+            onClick={() => {}}
+            icon={IconHeart}
+            selectedIcon={IconHeartFilled}
+            count={100}
+          />
+        </div>
 
-    return <ToggleButton {...args} selected={selected} onClick={handleClick} />;
+        <div className="flex items-center gap-3">
+          <StatefulToggleButton variant="icon" selected={false} onClick={() => {}} icon={IconHeart} />
+          <StatefulToggleButton
+            variant="icon"
+            selected
+            onClick={() => {}}
+            icon={IconHeart}
+            selectedIcon={IconHeartFilled}
+          />
+        </div>
+      </div>
+    );
   },
 };
