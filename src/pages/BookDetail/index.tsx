@@ -2,6 +2,7 @@ import { useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useLayerStore } from 'stores/useLayerStore';
 
+import BookCover from 'components/BookCover';
 import { BottomButton } from 'components/Button';
 import IconButton from 'components/Button/IconButton';
 import { Header } from 'components/Header';
@@ -12,7 +13,6 @@ import { IconEllipsisVertical, IconHeart, IconHeartFilled } from 'components/ico
 
 import { useHeaderTitleByScroll } from 'hooks/useHeaderTitleByScroll';
 
-import { BookSummary } from './BookSummary';
 import { InfoSection } from './InfoSection';
 import { ReviewSection } from './ReviewSection';
 import { useBookDetailQuery } from './useBookDetailQuery';
@@ -112,7 +112,12 @@ export const BookDetail = () => {
       <div className="flex h-full w-full flex-col overflow-y-auto px-mobile pb-safe-bottom">
         {!isLoading && !isError && data && (
           <>
-            <BookSummary title={data.title} author={data.author} cover={data.cover} />
+            <section className="flex flex-col items-center py-5 text-center">
+              <BookCover className="w-28" url={data.cover} />
+              <p className="pt-4 text-title1">{data.title}</p>
+              <p className="text-body2 text-neutral-60">{data.author}</p>
+            </section>
+
             <Tabs tabs={BOOK_DETAIL_TABS} value={activeTab} onChange={handleChangeDetailTab} />
             {activeTab === 'info' && (
               <InfoSection
