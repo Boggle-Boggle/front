@@ -19,7 +19,8 @@ const REVIEW_SPOILER_CHECKBOX_ID = 'review-spoiler-checkbox';
 
 const sortLabelByType: Record<ReviewSortType, string> = {
   latest: '최신순',
-  popular: '좋아요순',
+  oldest: '과거순',
+  popular: '인기순',
 };
 
 const createDraftReview = (content: string, isSpoiler: boolean): BookReview => {
@@ -49,13 +50,8 @@ export const Reviews = () => {
   const { push } = useLayerStore();
 
   const sortedReviews = [...reviews].sort((left, right) => {
-    if (sortType === 'popular') {
-      if (right.likeCount === left.likeCount) {
-        return right.createdAtTimestamp - left.createdAtTimestamp;
-      }
-
-      return right.likeCount - left.likeCount;
-    }
+    if (sortType === 'popular') return right.likeCount - left.likeCount;
+    if (sortType === 'oldest') return left.createdAtTimestamp - right.createdAtTimestamp;
 
     return right.createdAtTimestamp - left.createdAtTimestamp;
   });

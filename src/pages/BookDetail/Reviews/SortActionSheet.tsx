@@ -1,6 +1,6 @@
 import { ActionSheet } from 'components/Layer/ActionSheet';
 
-export type ReviewSortType = 'latest' | 'popular';
+export type ReviewSortType = 'latest' | 'oldest' | 'popular';
 
 type ReviewSortActionSheetProps = {
   selectedSort: ReviewSortType;
@@ -11,6 +11,7 @@ export const ReviewSortActionSheet = (props: ReviewSortActionSheetProps) => {
   const { selectedSort, onSelectSort } = props;
 
   const handleSelectLatest = () => onSelectSort('latest');
+  const handleSelectOldest = () => onSelectSort('oldest');
   const handleSelectPopular = () => onSelectSort('popular');
 
   return (
@@ -23,8 +24,14 @@ export const ReviewSortActionSheet = (props: ReviewSortActionSheetProps) => {
           onSelect: handleSelectLatest,
         },
         {
+          key: 'oldest',
+          label: '과거순',
+          selected: selectedSort === 'oldest',
+          onSelect: handleSelectOldest,
+        },
+        {
           key: 'popular',
-          label: '좋아요순',
+          label: '인기순',
           selected: selectedSort === 'popular',
           onSelect: handleSelectPopular,
         },
