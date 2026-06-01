@@ -149,6 +149,15 @@ export const MediumWithRightIconFilled: Story = {
   },
 };
 
+export const MediumWithRightIconLine: Story = {
+  args: {
+    ...defaultArgs,
+    size: 'md',
+    variant: 'line',
+    rightIcon: IconCircleCancel,
+  },
+};
+
 export const SmallDefault: Story = {
   args: {
     ...defaultArgs,
