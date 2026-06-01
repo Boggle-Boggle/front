@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { TextButton } from 'components/Button/TextButton';
 import { IconArrowRight } from 'components/icons';
 
-import { ReviewCard } from './ReviewCard';
+import { ReviewCard } from '../shared/ReviewCard';
 import { REVIEW_PREVIEW_COUNT, createMockReviews } from '../shared/review.mock';
 
 const MSG_REVIEW_SUMMARY_PREFIX = '총 ';

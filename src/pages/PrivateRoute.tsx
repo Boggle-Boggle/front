@@ -6,7 +6,9 @@ import Loading from 'pages/Loading';
 
 import { getMe } from 'services/users';
 
+// 화면깎는 중
 const PrivateRoute = () => {
+  return <Outlet />;
   const { data, error, isLoading } = useQuery({
     queryKey: ['users', 'me'],
     queryFn: getMe,
