@@ -6,6 +6,7 @@ import App from './App';
 const Auth = lazy(() => import('pages/Auth'));
 const BookDetail = lazy(() => import('pages/BookDetail'));
 const BookDetailReviews = lazy(() => import('pages/BookDetail/Reviews'));
+const Report = lazy(() => import('pages/Report'));
 const WithBottomNavLayout = lazy(() => import('pages/Layout/WithBottomNavLayout'));
 const WithoutBottomNavLayout = lazy(() => import('pages/Layout/WithoutBottomNavLayout'));
 const PrivateRoute = lazy(() => import('pages/PrivateRoute'));
@@ -63,6 +64,7 @@ const router = createBrowserRouter([
               { path: '/search/add', element: <AddCustomBook /> },
               { path: '/detail/:detailId', element: <BookDetail /> },
               { path: '/detail/:detailId/reviews', element: <BookDetailReviews /> },
+              { path: '/report', element: <Report /> },
               // 아래 레거시
               // { path: 'note/write', element: <Note /> },
               // { path: 'myPage/nickname', element: <EditNickname /> },
