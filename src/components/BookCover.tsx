@@ -1,3 +1,5 @@
+import { ReactNode } from 'react';
+
 type BookCoverBadgeType = 'adult' | 'reading' | 'stopped' | 'readCount';
 
 type BookCoverBadge = {
@@ -14,6 +16,7 @@ type BookCoverProps = {
   shadowRightTriangle?: boolean;
   topRightBadge?: BookCoverBadge;
   bottomRightBadge?: BookCoverBadge;
+  overlayBottomRight?: ReactNode;
   className?: string;
 };
 
@@ -98,6 +101,7 @@ export const BookCover = (props: BookCoverProps) => {
     shadowRightTriangle = false,
     topRightBadge,
     bottomRightBadge,
+    overlayBottomRight,
     ratio = 3 / 4,
     className = '',
     rounded = 'lg',
@@ -122,6 +126,7 @@ export const BookCover = (props: BookCoverProps) => {
             <Badge badge={bottomRightBadge} />
           </div>
         )}
+        {overlayBottomRight && <div className="absolute bottom-0 right-0 z-bookText">{overlayBottomRight}</div>}
       </div>
       {shadowRightTriangle && <ShadowRightTriangleSvg />}
     </div>
