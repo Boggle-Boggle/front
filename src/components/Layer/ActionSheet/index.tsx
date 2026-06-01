@@ -24,8 +24,8 @@ export const ActionSheet = (props: ActionSheetProps) => {
   const handleSelectItem = (item: ActionSheetItem) => () => {
     if (item.disabled) return;
 
-    item.onSelect?.();
     pop();
+    item.onSelect?.();
   };
 
   const handleCancel = () => {

@@ -1,9 +1,11 @@
+import { useNavigate } from 'react-router-dom';
 import { useLayerStore } from 'stores/useLayerStore';
 
 import { ActionSheet } from 'components/Layer/ActionSheet';
 import { ToggleButton } from 'components/ToggleButton';
 import { IconHeart, IconHeartFilled } from 'components/icons';
 
+import { BlockUserConfirmModal } from '../BlockUserConfirmModal';
 import { BookReview, CURRENT_REVIEW_USER_ID } from '../review.mock';
 
 type ReviewCardProps = {
@@ -22,6 +24,17 @@ export const ReviewCard = (props: ReviewCardProps) => {
   const { id, userId, nickname, readerLevel, content, createdAt, likeCount, isSpoiler, isLiked } = review;
   const isMyReview = userId === CURRENT_REVIEW_USER_ID;
   const { push } = useLayerStore();
+  const navigate = useNavigate();
+
+  const handleReportClick = () => navigate('/report');
+
+  const handleBlockClick = () => {
+    push({
+      id: `book-detail-review-block-user-modal-${id}`,
+      type: 'MODAL',
+      component: <BlockUserConfirmModal />,
+    });
+  };
 
   const handleOpenActionSheet = () => {
     push({
@@ -33,10 +46,12 @@ export const ReviewCard = (props: ReviewCardProps) => {
             {
               key: 'report',
               label: MSG_REVIEW_REPORT,
+              onSelect: handleReportClick,
             },
             {
               key: 'block',
               label: MSG_REVIEW_BLOCK,
+              onSelect: handleBlockClick,
             },
           ]}
         />
@@ -72,7 +87,11 @@ export const ReviewCard = (props: ReviewCardProps) => {
         <div className="flex items-center gap-1 text-neutral-60">
           <p className="text-body2 font-medium text-neutral-40">{createdAt}</p>
           {!isMyReview && (
-            <button type="button" onClick={handleOpenActionSheet} className="pl-2 text-body2 font-medium text-neutral-60">
+            <button
+              type="button"
+              onClick={handleOpenActionSheet}
+              className="pl-2 text-body2 font-medium text-neutral-60"
+            >
               {MSG_REVIEW_REPORT}/{MSG_REVIEW_BLOCK}
             </button>
           )}
