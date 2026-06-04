@@ -49,7 +49,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
 
   return (
     <div
-      className={`flex h-12 w-full items-center justify-between gap-[10px] rounded border bg-neutral-0 px-3 ${borderColorClass} ${disabledClass} ${margin}`}
+      className={`flex h-12 w-full min-w-0 items-center justify-between gap-[10px] rounded border bg-neutral-0 px-3 ${borderColorClass} ${disabledClass} ${margin}`}
     >
       <input
         ref={ref}
@@ -62,7 +62,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
         name={name}
         placeholder={placeholder}
         maxLength={maxLength}
-        className={`body1 flex-1 bg-transparent outline-none placeholder:text-neutral-40 disabled:text-neutral-40 ${textColorClass}`}
+        className={`body1 min-w-0 flex-1 bg-transparent outline-none placeholder:text-neutral-40 disabled:text-neutral-40 ${textColorClass}`}
       />
       {showCancelBtn && (
         <button type="button" onClick={onClear} className="flex items-center justify-center p-0.5" aria-label="clear">
