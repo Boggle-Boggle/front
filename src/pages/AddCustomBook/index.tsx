@@ -1,10 +1,12 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
+import { useLayerStore } from 'stores/useLayerStore';
 
 import BookCover from 'components/BookCover';
 import { BottomButton } from 'components/Button';
 import { Header } from 'components/Header';
 import { IconCirclePlus } from 'components/icons';
 
+import { CoverImageUrlModal } from './shared/CoverImageUrlModal';
 import { FormField } from './shared/FormField';
 
 const MSG_ADD_CUSTOM_BOOK_PAGE_TITLE = '직접 등록하기';
@@ -23,8 +25,10 @@ const MSG_ADD_CUSTOM_BOOK_PLOT = '작품 소개/줄거리';
 const MSG_ADD_CUSTOM_BOOK_PLOT_PLACEHOLDER = '작품 소개/줄거리 입력해주세요';
 const MIN_TOTAL_PAGE_COUNT = 1;
 const MAX_TOTAL_PAGE_COUNT = 99999;
+const LAYER_ID_ADD_CUSTOM_BOOK_COVER_IMAGE_URL_MODAL = 'add-custom-book-cover-image-url-modal';
 
 type BookForm = {
+  coverImageUrl: string;
   title: string;
   author: string;
   publisher: string;
@@ -36,13 +40,15 @@ type BookForm = {
 export const AddCustomBook = () => {
   const {
     control,
-    register,
     handleSubmit,
     formState: { isValid },
     resetField,
+    setValue,
+    watch,
   } = useForm<BookForm>({
     mode: 'onChange',
     defaultValues: {
+      coverImageUrl: '',
       title: '',
       author: '',
       publisher: '',
@@ -51,8 +57,22 @@ export const AddCustomBook = () => {
       plot: '',
     },
   });
+  const { push } = useLayerStore();
+  const coverImageUrl = watch('coverImageUrl');
 
   const onSubmit: SubmitHandler<BookForm> = () => {};
+
+  const handleSubmitCoverImageUrl = (imageUrl: string) => {
+    setValue('coverImageUrl', imageUrl, { shouldDirty: true });
+  };
+
+  const handleOpenCoverImageUrlModal = () => {
+    push({
+      id: LAYER_ID_ADD_CUSTOM_BOOK_COVER_IMAGE_URL_MODAL,
+      type: 'MODAL',
+      component: <CoverImageUrlModal initialValue={coverImageUrl} onSubmit={handleSubmitCoverImageUrl} />,
+    });
+  };
 
   return (
     <>
@@ -66,14 +86,15 @@ export const AddCustomBook = () => {
         <div className="mx-auto mt-4 w-[6.25rem]">
           <BookCover
             className="w-full"
-            url=""
+            url={coverImageUrl}
             shadowLeftBar
             rounded="sm"
             overlayBottomRight={
               <button
                 type="button"
+                onClick={handleOpenCoverImageUrlModal}
                 aria-label="표지 추가"
-                className="grid size-[2.25rem] place-items-center rounded-br-[0.25rem] rounded-tl-lg bg-primary text-neutral-0"
+                className="relative z-badge grid size-[2.25rem] place-items-center rounded-br-[0.25rem] rounded-tl-lg bg-primary text-neutral-0"
               >
                 <IconCirclePlus className="size-6" />
               </button>
@@ -131,9 +152,9 @@ export const AddCustomBook = () => {
 
           <FormField
             name="plot"
+            control={control}
             label={MSG_ADD_CUSTOM_BOOK_PLOT}
             placeholder={MSG_ADD_CUSTOM_BOOK_PLOT_PLACEHOLDER}
-            register={register}
             variant="textarea"
           />
         </div>
