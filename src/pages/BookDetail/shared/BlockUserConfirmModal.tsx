@@ -18,7 +18,7 @@ export const BlockUserConfirmModal = () => {
   const handleConfirm = () => {
     addToast({
       description: MSG_BLOCK_USER_SUCCESS_TOAST,
-      type: 'success',
+      type: 'error',
     });
     pop();
   };
