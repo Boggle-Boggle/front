@@ -21,6 +21,8 @@ const MSG_ADD_CUSTOM_BOOK_TOTAL_PAGE = '총 페이지 수';
 const MSG_ADD_CUSTOM_BOOK_TOTAL_PAGE_PLACEHOLDER = '총 페이지 수';
 const MSG_ADD_CUSTOM_BOOK_PLOT = '작품 소개/줄거리';
 const MSG_ADD_CUSTOM_BOOK_PLOT_PLACEHOLDER = '작품 소개/줄거리 입력해주세요';
+const MIN_TOTAL_PAGE_COUNT = 1;
+const MAX_TOTAL_PAGE_COUNT = 99999;
 
 type BookForm = {
   title: string;
@@ -121,6 +123,9 @@ export const AddCustomBook = () => {
               resetField={resetField}
               label={MSG_ADD_CUSTOM_BOOK_TOTAL_PAGE}
               placeholder={MSG_ADD_CUSTOM_BOOK_TOTAL_PAGE_PLACEHOLDER}
+              type="number"
+              min={MIN_TOTAL_PAGE_COUNT}
+              max={MAX_TOTAL_PAGE_COUNT}
             />
           </div>
 

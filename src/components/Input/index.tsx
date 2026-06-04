@@ -19,6 +19,8 @@ type InputProps = {
   placeholder?: string;
   type?: string;
   name?: string;
+  min?: number;
+  max?: number;
   maxLength?: number;
 };
 
@@ -50,6 +52,8 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
     type = 'text',
     name,
     placeholder,
+    min,
+    max,
     maxLength,
   } = props;
   const [isFocused, setIsFocused] = useState<boolean>(false);
@@ -123,6 +127,8 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
         type={type}
         name={name}
         placeholder={placeholder}
+        min={min}
+        max={max}
         maxLength={maxLength}
         className={`body1 min-w-0 flex-1 bg-transparent outline-none disabled:text-neutral-40 ${inputTextColorClass} ${inputPlaceholderColorClass}`}
       />
