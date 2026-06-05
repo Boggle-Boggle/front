@@ -8,14 +8,16 @@ type BookCardProps = {
 };
 
 const MSG_MYBOOKS_BOOK_STATUS_READING = '읽는중';
+const MSG_MYBOOKS_BOOK_STATUS_READ = '읽음';
 const MSG_MYBOOKS_BOOK_STATUS_STOPPED = '중단';
 
 export const BookCard = (props: BookCardProps) => {
   const { book } = props;
 
   const isReading = book.readingStatus === MSG_MYBOOKS_BOOK_STATUS_READING;
+  const isRead = book.readingStatus === MSG_MYBOOKS_BOOK_STATUS_READ;
   const isStopped = book.readingStatus === MSG_MYBOOKS_BOOK_STATUS_STOPPED;
-  const bottomRightBadgeType = isReading || isStopped ? (isReading ? 'reading' : 'stopped') : 'readCount';
+  const readingStatusBadge = isReading ? 'reading' : isRead ? 'read' : isStopped ? 'stopped' : undefined;
 
   return (
     <div className="flex flex-col gap-4">
@@ -23,10 +25,10 @@ export const BookCard = (props: BookCardProps) => {
         url={book.cover}
         label={book.title}
         rounded="sm"
-        bottomRightBadge={{
-          type: bottomRightBadgeType,
-          readCount: book.readCount,
-        }}
+        isAdult={book.isAdult}
+        shadowLeftBar
+        shadowRightTriangle
+        readingStatusBadge={readingStatusBadge}
       />
 
       <div className="flex flex-col gap-0.5">
