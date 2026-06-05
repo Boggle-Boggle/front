@@ -1,7 +1,8 @@
 import { RefObject } from 'react';
 
 import BookCover from 'components/BookCover';
-import { IconHeartFilled } from 'components/icons';
+import { ToggleButton } from 'components/ToggleButton';
+import { IconHeart, IconHeartFilled } from 'components/icons';
 
 import { MyBook } from '../useMyBooksQuery';
 
@@ -29,6 +30,8 @@ const getWishlistAriaLabel = (title: string) => {
 export const WishlistSection = (props: WishlistSectionProps) => {
   const { books, isLoading, observerTarget } = props;
 
+  const handleToggleWishlist = () => undefined;
+
   return (
     <>
       <ul className="flex flex-col overflow-y-auto px-mobile">
@@ -46,10 +49,15 @@ export const WishlistSection = (props: WishlistSectionProps) => {
               </div>
             </div>
 
-            {/* 버튼 컴포넌트 화 */}
-            <button type="button" className="shrink-0" aria-label={getWishlistAriaLabel(book.title)}>
-              <IconHeartFilled className="h-6 w-6 text-primary" />
-            </button>
+            <ToggleButton
+              variant="icon"
+              selected
+              onClick={handleToggleWishlist}
+              icon={IconHeart}
+              selectedIcon={IconHeartFilled}
+              className="shrink-0"
+              ariaLabel={getWishlistAriaLabel(book.title)}
+            />
           </li>
         ))}
       </ul>
