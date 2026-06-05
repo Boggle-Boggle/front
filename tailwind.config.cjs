@@ -43,7 +43,7 @@ module.exports = {
         body2: ['0.875rem', { fontWeight: '700', lineHeight: '140%' }],
         caption1: ['0.875rem', { fontWeight: '500', lineHeight: '140%' }],
         caption2: ['0.875rem', { fontWeight: '300', lineHeight: '140%' }],
-        caption2: ['0.75rem', { fontWeight: '300', lineHeight: '120%' }],
+        caption3: ['0.75rem', { fontWeight: '300', lineHeight: '120%' }],
       },
 
       spacing: {
