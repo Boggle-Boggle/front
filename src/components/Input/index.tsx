@@ -1,4 +1,4 @@
-import { forwardRef, ChangeEvent, FocusEvent, useState } from 'react';
+import { ChangeEvent, FocusEvent, useState } from 'react';
 
 import { IconCancel } from 'components/icons';
 
@@ -10,18 +10,42 @@ type InputProps = {
   variant?: InputVariant;
   style?: InputStyle;
   state?: InputState;
+  multiline?: boolean;
   margin?: string;
   value: string | number;
-  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  onChange: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
   onClear?: () => void;
-  onFocus?: (e: FocusEvent<HTMLInputElement>) => void;
-  onBlur?: (e: FocusEvent<HTMLInputElement>) => void;
+  onFocus?: (e: FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
+  onBlur?: (e: FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
   placeholder?: string;
   type?: string;
   name?: string;
   min?: number;
   max?: number;
   maxLength?: number;
+  rows?: number;
+};
+
+type InputFieldProps = Pick<
+  InputProps,
+  'value' | 'onChange' | 'onFocus' | 'onBlur' | 'type' | 'name' | 'placeholder' | 'min' | 'max' | 'maxLength'
+> & {
+  disabled: boolean;
+  className: string;
+};
+
+type TextareaFieldProps = Pick<
+  InputProps,
+  'value' | 'onChange' | 'onFocus' | 'onBlur' | 'name' | 'placeholder' | 'maxLength'
+> & {
+  disabled: boolean;
+  rows: number;
+  className: string;
+};
+
+type ClearButtonProps = {
+  onClear: () => void;
+  className: string;
 };
 
 const getInputStyle = (variant: InputVariant | undefined, style: InputStyle | undefined): InputStyle => {
@@ -38,11 +62,62 @@ const getInputState = (variant: InputVariant | undefined, state: InputState | un
   return 'default';
 };
 
-export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
+const InputField = (props: InputFieldProps) => {
+  const { disabled, value, onChange, onFocus, onBlur, type, name, placeholder, min, max, maxLength, className } = props;
+
+  return (
+    <input
+      disabled={disabled}
+      value={value}
+      onChange={onChange}
+      onFocus={onFocus}
+      onBlur={onBlur}
+      type={type}
+      name={name}
+      placeholder={placeholder}
+      min={min}
+      max={max}
+      maxLength={maxLength}
+      className={className}
+    />
+  );
+};
+
+const TextareaField = (props: TextareaFieldProps) => {
+  const { disabled, value, onChange, onFocus, onBlur, name, placeholder, maxLength, rows, className } = props;
+
+  return (
+    <textarea
+      disabled={disabled}
+      value={value}
+      onChange={onChange}
+      onFocus={onFocus}
+      onBlur={onBlur}
+      name={name}
+      placeholder={placeholder}
+      maxLength={maxLength}
+      rows={rows}
+      className={className}
+    />
+  );
+};
+
+const ClearButton = (props: ClearButtonProps) => {
+  const { onClear, className } = props;
+
+  return (
+    <button type="button" onClick={onClear} className={className} aria-label="clear">
+      <IconCancel className="size-4" />
+    </button>
+  );
+};
+
+export const Input = (props: InputProps) => {
   const {
     variant = 'default',
     style,
     state,
+    multiline = false,
     margin = '',
     value,
     onClear,
@@ -55,6 +130,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
     min,
     max,
     maxLength,
+    rows,
   } = props;
   const [isFocused, setIsFocused] = useState<boolean>(false);
 
@@ -65,22 +141,24 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
   const isPrimary = inputStyle === 'primary';
   const isActive = isFocused && !isError && !isDisabled;
 
-  const handleFocus = (e: FocusEvent<HTMLInputElement>) => {
+  const handleFocus = (e: FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     if (!isDisabled) setIsFocused(true);
     onFocus?.(e);
   };
 
-  const handleBlur = (e: FocusEvent<HTMLInputElement>) => {
+  const handleBlur = (e: FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setIsFocused(false);
     onBlur?.(e);
   };
 
   const wrapperClassName = [
-    'flex h-10 w-full min-w-0 items-center justify-between gap-2.5 rounded border px-3 py-2',
+    'w-full min-w-0 rounded border',
+    multiline ? 'min-h-[6.5rem]' : 'flex h-10 items-center justify-between gap-2.5 px-3 py-2',
     isDisabled ? 'border-transparent bg-neutral-20' : 'bg-neutral-0',
     !isDisabled && isError ? 'border-danger' : '',
-    !isDisabled && !isError && isPrimary ? 'border-primary' : '',
-    !isDisabled && !isError && !isPrimary ? 'border-neutral-20' : '',
+    !isDisabled && !isError && isActive ? 'border-primary' : '',
+    !isDisabled && !isError && !isActive && isPrimary ? 'border-primary' : '',
+    !isDisabled && !isError && !isActive && !isPrimary ? 'border-neutral-20' : '',
     margin,
   ]
     .filter(Boolean)
@@ -113,12 +191,41 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
     .filter(Boolean)
     .join(' ');
 
-  const showCancelBtn = !isDisabled && value && String(value).length > 0 && onClear;
+  const inputClassName = [
+    'body1 min-w-0 bg-transparent outline-none disabled:text-neutral-40',
+    multiline ? 'min-h-[6.5rem] w-full resize-none px-3 py-3' : 'flex-1',
+    inputTextColorClass,
+    inputPlaceholderColorClass,
+  ]
+    .filter(Boolean)
+    .join(' ');
+
+  const showCancelBtn = !multiline && !isDisabled && value && String(value).length > 0 && onClear;
+
+  if (multiline) {
+    const resolvedRows = rows ?? 3;
+
+    return (
+      <div className={wrapperClassName}>
+        <TextareaField
+          disabled={isDisabled}
+          value={value}
+          onChange={onChange}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
+          name={name}
+          placeholder={placeholder}
+          maxLength={maxLength}
+          rows={resolvedRows}
+          className={inputClassName}
+        />
+      </div>
+    );
+  }
 
   return (
     <div className={wrapperClassName}>
-      <input
-        ref={ref}
+      <InputField
         disabled={isDisabled}
         value={value}
         onChange={onChange}
@@ -130,18 +237,9 @@ export const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
         min={min}
         max={max}
         maxLength={maxLength}
-        className={`body1 min-w-0 flex-1 bg-transparent outline-none disabled:text-neutral-40 ${inputTextColorClass} ${inputPlaceholderColorClass}`}
+        className={inputClassName}
       />
-      {showCancelBtn && (
-        <button
-          type="button"
-          onClick={onClear}
-          className={`flex size-6 items-center justify-center ${clearButtonColorClass}`}
-          aria-label="clear"
-        >
-          <IconCancel className="size-4" />
-        </button>
-      )}
+      {showCancelBtn && <ClearButton onClear={onClear} className={`flex size-6 items-center justify-center ${clearButtonColorClass}`} />}
     </div>
   );
-});
+};

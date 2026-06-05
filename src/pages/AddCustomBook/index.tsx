@@ -155,7 +155,7 @@ export const AddCustomBook = () => {
             control={control}
             label={MSG_ADD_CUSTOM_BOOK_PLOT}
             placeholder={MSG_ADD_CUSTOM_BOOK_PLOT_PLACEHOLDER}
-            variant="textarea"
+            multiline
           />
         </div>
       </form>
