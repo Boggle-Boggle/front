@@ -2,7 +2,7 @@ import useInfiniteScroll from 'hooks/useInfiniteScroll';
 
 import { PaginationResponse } from 'types/api';
 
-export type ReadingStatus = '읽는중' | '완독' | '중단';
+export type ReadingStatus = '읽는중' | '읽음' | '중단';
 export type SortType = 'latest' | 'oldest' | 'popular';
 export type ReadingFilterType = 'all' | 'done' | 'reading' | 'stopped';
 
@@ -10,6 +10,7 @@ export type MyBook = {
   id: number;
   title: string;
   cover: string;
+  isAdult: boolean;
   readingStatus: ReadingStatus;
   rating: number;
   readCount: number;
@@ -57,10 +58,10 @@ const BOOK_TITLES = [
 
 const COVER_IMAGE = 'https://image.yes24.com/goods/179603642/L';
 
-const STATUSES: ReadingStatus[] = ['읽는중', '완독', '중단'];
+const STATUSES: ReadingStatus[] = ['읽는중', '읽음', '중단'];
 
 const READING_STATUS_BY_FILTER: Record<Exclude<ReadingFilterType, 'all'>, ReadingStatus> = {
-  done: '완독',
+  done: '읽음',
   reading: '읽는중',
   stopped: '중단',
 };
@@ -72,12 +73,14 @@ const generateRating = (): number => {
 
 const MOCK_MY_BOOKS: MyBook[] = Array.from({ length: 36 }, (_, i) => {
   const status = STATUSES[i % 3];
+  const isAdult = i % 5 === 0 || i % 7 === 0;
 
   if (status === '읽는중') {
     return {
       id: i + 1,
       title: BOOK_TITLES[i % BOOK_TITLES.length],
       cover: COVER_IMAGE,
+      isAdult,
       readingStatus: status,
       rating: 0,
       readCount: 0,
@@ -85,11 +88,12 @@ const MOCK_MY_BOOKS: MyBook[] = Array.from({ length: 36 }, (_, i) => {
     };
   }
 
-  if (status === '완독') {
+  if (status === '읽음') {
     return {
       id: i + 1,
       title: BOOK_TITLES[i % BOOK_TITLES.length],
       cover: COVER_IMAGE,
+      isAdult,
       readingStatus: status,
       rating: generateRating(),
       readCount: Math.floor(Math.random() * 4),
@@ -101,6 +105,7 @@ const MOCK_MY_BOOKS: MyBook[] = Array.from({ length: 36 }, (_, i) => {
     id: i + 1,
     title: BOOK_TITLES[i % BOOK_TITLES.length],
     cover: COVER_IMAGE,
+    isAdult,
     readingStatus: status,
     rating: generateRating(),
     readCount: Math.floor(Math.random() * 3),
