@@ -1,59 +1,36 @@
 import { ReactNode } from 'react';
 
-type BookCoverBadgeType = 'adult' | 'reading' | 'stopped' | 'readCount';
+import { Badge } from 'components/Badge';
 
-type BookCoverBadge = {
-  type: BookCoverBadgeType;
-  readCount?: number;
-};
+type ReadingStatusBadge = 'reading' | 'read' | 'stopped';
 
 type BookCoverProps = {
   url: string;
   label?: string;
   ratio?: number;
   rounded?: 'sm' | 'lg';
+  isAdult?: boolean;
+  readingStatusBadge?: ReadingStatusBadge;
   shadowLeftBar?: boolean;
   shadowRightTriangle?: boolean;
-  topRightBadge?: BookCoverBadge;
-  bottomRightBadge?: BookCoverBadge;
   overlayBottomRight?: ReactNode;
   className?: string;
 };
 
-const MSG_BOOK_COVER_BADGE_ADULT = '성인';
 const MSG_BOOK_COVER_BADGE_READING = '읽는중';
+const MSG_BOOK_COVER_BADGE_READ = '읽음';
 const MSG_BOOK_COVER_BADGE_STOPPED = '중단';
-const MSG_BOOK_COVER_BADGE_READ_COUNT = '회독';
 
-const getBadgeLabel = (badge: BookCoverBadge) => {
-  if (badge.type === 'adult') return MSG_BOOK_COVER_BADGE_ADULT;
-  if (badge.type === 'reading') return MSG_BOOK_COVER_BADGE_READING;
-  if (badge.type === 'stopped') return MSG_BOOK_COVER_BADGE_STOPPED;
+const getReadingStatusBadgeLabel = (badge: ReadingStatusBadge) => {
+  if (badge === 'reading') return MSG_BOOK_COVER_BADGE_READING;
+  if (badge === 'read') return MSG_BOOK_COVER_BADGE_READ;
 
-  return `${badge.readCount ?? 0}${MSG_BOOK_COVER_BADGE_READ_COUNT}`;
-};
-
-const getBadgeClassName = (type: BookCoverBadgeType) => {
-  if (type === 'adult') {
-    return 'bg-[#FF4D4F]/90 text-white';
-  }
-
-  return 'bg-[#888888]/80 text-white';
-};
-
-const Badge = (props: { badge: BookCoverBadge }) => {
-  const { badge } = props;
-  const label = getBadgeLabel(badge);
-  const badgeClassName = getBadgeClassName(badge.type);
-
-  return (
-    <span className={`text-caption3 inline-flex items-center rounded-full px-2 py-0.5 ${badgeClassName}`}>{label}</span>
-  );
+  return MSG_BOOK_COVER_BADGE_STOPPED;
 };
 
 const ShadowLeftBar = () => (
   <span
-    className="z-bookShadow pointer-events-none absolute left-0 top-0 h-full w-[9px] mix-blend-multiply"
+    className="pointer-events-none absolute left-0 top-0 z-bookShadow h-full w-[9px] mix-blend-multiply"
     style={{ background: 'linear-gradient(90deg, #FFFFFF 65%, #E0E0E0 100%)' }}
   />
 );
@@ -66,7 +43,7 @@ const ShadowRightTriangleSvg = () => {
       viewBox="0 0 16 21"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      className="z-bookShadow pointer-events-none absolute -right-[11px] bottom-0 w-4"
+      className="pointer-events-none absolute -right-[11px] bottom-0 z-bookShadow w-4"
       aria-hidden="true"
       preserveAspectRatio="none"
     >
@@ -97,10 +74,10 @@ export const BookCover = (props: BookCoverProps) => {
   const {
     url,
     label = '',
+    isAdult = false,
+    readingStatusBadge,
     shadowLeftBar = false,
     shadowRightTriangle = false,
-    topRightBadge,
-    bottomRightBadge,
     overlayBottomRight,
     ratio = 3 / 4,
     className = '',
@@ -114,19 +91,15 @@ export const BookCover = (props: BookCoverProps) => {
         className={`relative w-full overflow-hidden ring-1 ring-neutral-20 ${roundedClass}`}
         style={{ aspectRatio: ratio }}
       >
-        <img className="z-bookShadow absolute inset-0 h-full w-full object-cover" src={url} alt={label} />
+        <img className="absolute inset-0 z-bookShadow h-full w-full object-cover" src={url} alt={label} />
         {shadowLeftBar && <ShadowLeftBar />}
-        {topRightBadge && (
-          <div className="z-bookText absolute right-1 top-1">
-            <Badge badge={topRightBadge} />
+        {overlayBottomRight && <div className="absolute bottom-0 right-0 z-badge">{overlayBottomRight}</div>}
+        {isAdult && <div className="absolute right-1 top-1 z-badge">19</div>}
+        {readingStatusBadge && (
+          <div className="absolute bottom-1 right-1 z-badge">
+            <Badge text={getReadingStatusBadgeLabel(readingStatusBadge)} variant="gray" />
           </div>
         )}
-        {bottomRightBadge && (
-          <div className="z-bookText absolute bottom-1 right-1">
-            <Badge badge={bottomRightBadge} />
-          </div>
-        )}
-        {overlayBottomRight && <div className="absolute bottom-0 right-0 z-bookText">{overlayBottomRight}</div>}
       </div>
       {shadowRightTriangle && <ShadowRightTriangleSvg />}
     </div>
