@@ -9,8 +9,8 @@ export const Badge = (props: BadgeProps) => {
 
   const variantClass =
     variant === 'gray'
-      ? 'bg-[#888888] text-white mix-blend-multiply'
-      : 'border border-neutral-20 bg-white text-neutral-100';
+      ? 'bg-neutral-100/40 text-white'
+      : 'border border-neutral-20 bg-white text-neutral-80';
 
   return (
     <span className={`inline-flex items-center rounded-full px-2 py-0.5 text-caption3 ${variantClass} ${className}`}>
