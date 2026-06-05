@@ -111,7 +111,7 @@ export const BookCover = (props: BookCoverProps) => {
   return (
     <div className={`relative ${className}`}>
       <div
-        className={`relative w-full overflow-hidden border border-neutral-20 ${roundedClass}`}
+        className={`relative w-full overflow-hidden ring-1 ring-neutral-20 ${roundedClass}`}
         style={{ aspectRatio: ratio }}
       >
         <img className="z-bookShadow absolute inset-0 h-full w-full object-cover" src={url} alt={label} />
