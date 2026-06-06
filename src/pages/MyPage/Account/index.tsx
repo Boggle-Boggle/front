@@ -1,6 +1,10 @@
+import { useLayerStore } from 'stores/useLayerStore';
+
 import { Button } from 'components/Button';
 import { Header } from 'components/Header';
 
+import DownloadBackupModal from './DownloadBackupModal';
+import LogoutConfirmModal from './LogoutConfirmModal';
 import SettingsSection from '../shared/SettingsSection';
 import SettingsSectionBody from '../shared/SettingsSectionBody';
 
@@ -14,8 +18,32 @@ const MSG_ACCOUNT_RECORD_BACKUP_DOWNLOAD = '백업 기록 다운로드';
 const MSG_ACCOUNT_LOGIN_MANAGEMENT = '로그인 관리';
 const MSG_ACCOUNT_LOGOUT = '이 계정에서 로그아웃 하기';
 const MSG_ACCOUNT_DELETE = '이 계정을 삭제하기';
+const LAYER_ID_ACCOUNT_DOWNLOAD_BACKUP_MODAL = 'account-download-backup-modal';
+const LAYER_ID_ACCOUNT_LOGOUT_CONFIRM_MODAL = 'account-logout-confirm-modal';
 
 const Account = () => {
+  const { push, pop } = useLayerStore();
+
+  const handleCloseModal = () => {
+    pop();
+  };
+
+  const handleOpenDownloadBackupModal = () => {
+    push({
+      id: LAYER_ID_ACCOUNT_DOWNLOAD_BACKUP_MODAL,
+      type: 'MODAL',
+      component: <DownloadBackupModal onCancel={handleCloseModal} onConfirm={handleCloseModal} />,
+    });
+  };
+
+  const handleOpenLogoutConfirmModal = () => {
+    push({
+      id: LAYER_ID_ACCOUNT_LOGOUT_CONFIRM_MODAL,
+      type: 'MODAL',
+      component: <LogoutConfirmModal onCancel={handleCloseModal} onConfirm={handleCloseModal} />,
+    });
+  };
+
   return (
     <div className="min-h-full pb-safe-bottom">
       <Header title={MSG_ACCOUNT_TITLE} withBack />
@@ -33,14 +61,14 @@ const Account = () => {
 
       <SettingsSection title={MSG_ACCOUNT_RECORD_DOWNLOAD} />
       <SettingsSectionBody>
-        <Button variant="grey" onClick={() => {}}>
+        <Button variant="grey" onClick={handleOpenDownloadBackupModal}>
           {MSG_ACCOUNT_RECORD_BACKUP_DOWNLOAD}
         </Button>
       </SettingsSectionBody>
 
       <SettingsSection title={MSG_ACCOUNT_LOGIN_MANAGEMENT} />
       <SettingsSectionBody>
-        <Button variant="grey" onClick={() => {}}>
+        <Button variant="grey" onClick={handleOpenLogoutConfirmModal}>
           {MSG_ACCOUNT_LOGOUT}
         </Button>
         <Button variant="grey" onClick={() => {}}>
