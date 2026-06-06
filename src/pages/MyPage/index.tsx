@@ -1,3 +1,5 @@
+import { useNavigate } from 'react-router-dom';
+
 import { IconBook, IconGraduation, IconNote } from 'components/icons';
 
 import profileImage from 'assets/img/profile.png';
@@ -8,6 +10,12 @@ import StatItem from './shared/StatItem';
 const MSG_MY_PAGE_PROFILE_IMAGE_ALT = '프로필 일러스트';
 const MSG_MY_PAGE_NICKNAME = '닉네임 님';
 const MSG_MY_PAGE_LOGIN_STATUS = '* 카카오톡으로 로그인 중';
+
+type MyPageMenuItem = {
+  title: string;
+  description: string;
+  path: string;
+};
 
 const MY_PAGE_STATS = [
   {
@@ -27,31 +35,36 @@ const MY_PAGE_STATS = [
   },
 ] as const;
 
-const MY_PAGE_MENU_ITEMS = [
+const MY_PAGE_MENU_ITEMS: MyPageMenuItem[] = [
   {
     title: '계정 설정하기',
     description: '프로필 관리, 로그인 관리, 기록 다운로드',
+    path: '/mypage/account',
   },
   {
     title: '테마/폰트 변경하기',
     description: '모드 선택하기, 테마 색상 변경하기 | 폰트 변경하기',
+    path: '',
   },
   {
     title: '콘텐츠 설정하기',
     description: '차단 관리, 콘텐츠 환경 설정',
+    path: '',
   },
   {
     title: '고객센터',
     description: '자주 묻는 질문, 문의하기, 의견/오류 알려주기',
+    path: '',
   },
   {
     title: '앱 정보',
     description: '서비스 이용 약관, 개인정보 처리방침, 버전 정보',
+    path: '',
   },
-] as const;
+];
 
 const MyPage = () => {
-  const handleMenuItemClick = () => {};
+  const navigate = useNavigate();
 
   return (
     <div className="h-full overflow-y-auto bg-neutral-0 pb-safe-bottom">
@@ -90,7 +103,7 @@ const MyPage = () => {
           key={item.title}
           title={item.title}
           description={item.description}
-          onClick={handleMenuItemClick}
+          onClick={() => navigate(item.path)}
         />
       ))}
     </div>
