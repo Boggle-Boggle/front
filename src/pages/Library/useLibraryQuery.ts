@@ -113,7 +113,7 @@ const MOCK_MY_BOOKS: MyBook[] = Array.from({ length: 36 }, (_, i) => {
   };
 });
 
-const getMyBooksMock = async (
+const getLibraryBooksMock = async (
   page: number,
   sortType: SortType,
   readingFilter: ReadingFilterType,
@@ -154,10 +154,10 @@ const getMyBooksMock = async (
   });
 };
 
-export const useMyBooksQuery = (sortType: SortType, readingFilter: ReadingFilterType) => {
+export const useLibraryQuery = (sortType: SortType, readingFilter: ReadingFilterType) => {
   return useInfiniteScroll<MyBook[]>(
     ['myBooks', 'list', sortType, readingFilter],
-    ({ pageParam = 1 }) => getMyBooksMock(pageParam, sortType, readingFilter),
+    ({ pageParam = 1 }) => getLibraryBooksMock(pageParam, sortType, readingFilter),
     true,
   );
 };

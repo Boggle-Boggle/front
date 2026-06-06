@@ -1,5 +1,5 @@
 import { ShelfBase } from 'components/ShelfBase';
-import { MyBook } from 'pages/MyBooks/useMyBooksQuery';
+import { MyBook } from 'pages/Library/useLibraryQuery';
 
 import { BookCard } from '../../shared/BookCard';
 

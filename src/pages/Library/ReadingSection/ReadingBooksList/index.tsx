@@ -1,7 +1,7 @@
 import BookCover from 'components/BookCover';
 import { ShelfBase } from 'components/ShelfBase';
 import { StarRating } from 'components/StarRating';
-import { MyBook } from 'pages/MyBooks/useMyBooksQuery';
+import { MyBook } from 'pages/Library/useLibraryQuery';
 
 type ReadingBooksListProps = {
   books: MyBook[];

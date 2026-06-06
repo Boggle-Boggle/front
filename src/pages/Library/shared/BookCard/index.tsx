@@ -1,7 +1,7 @@
 import BookCover from 'components/BookCover';
 import { StarRating } from 'components/StarRating';
 
-import { MyBook } from '../../useMyBooksQuery';
+import { MyBook } from '../../useLibraryQuery';
 
 type BookCardProps = {
   book: MyBook;

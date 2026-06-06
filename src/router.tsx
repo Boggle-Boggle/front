@@ -19,7 +19,7 @@ const RealTimePopular = lazy(() => import('pages/Search/RealTimePopular'));
 const Trending = lazy(() => import('pages/Search/Trending'));
 const SearchResult = lazy(() => import('pages/SearchResult'));
 const AddCustomBook = lazy(() => import('pages/AddCustomBook'));
-const MyBooks = lazy(() => import('pages/MyBooks'));
+const Library = lazy(() => import('pages/Library'));
 const Login = lazy(() => import('pages/Login'));
 const SignUp = lazy(() => import('pages/SignUp'));
 const SignUpTermsDetail = lazy(() => import('pages/SignUp/TermsDetail'));
@@ -51,7 +51,7 @@ const router = createBrowserRouter([
               { path: '/search/most-read', element: <MostRead /> },
               { path: '/search/realtime-popular', element: <RealTimePopular /> },
               { path: '/search/trending', element: <Trending /> },
-              { path: '/library', element: <MyBooks /> },
+              { path: '/library', element: <Library /> },
               { path: '/mypage', element: <MyPage /> },
               // { path: 'detail/:detailId', element: <BookDetail /> },
               // { path: 'record/:recordId', element: <Record /> },

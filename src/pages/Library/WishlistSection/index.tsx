@@ -4,7 +4,7 @@ import BookCover from 'components/BookCover';
 import { ToggleButton } from 'components/ToggleButton';
 import { IconHeart, IconHeartFilled } from 'components/icons';
 
-import { MyBook } from '../useMyBooksQuery';
+import { MyBook } from '../useLibraryQuery';
 
 type WishlistSectionProps = {
   books: MyBook[];

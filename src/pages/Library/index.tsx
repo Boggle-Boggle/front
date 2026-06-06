@@ -8,8 +8,8 @@ import { IconLayoutGrid, IconLayoutList, IconSearch } from 'components/icons';
 import { FilterSidebar } from './FilterSidebar';
 import { ReadingSection } from './ReadingSection';
 import { SortActionSheet, type SortType } from './SortActionSheet';
+import { type ReadingFilterType, useLibraryQuery } from './useLibraryQuery';
 import { WishlistSection } from './WishlistSection';
-import { type ReadingFilterType, useMyBooksQuery } from './useMyBooksQuery';
 
 type TabType = 'reading' | 'wishlist';
 type ViewType = 'grid' | 'list';
@@ -39,14 +39,14 @@ const getInitialViewType = (): ViewType => {
   return storedViewType === 'list' ? 'list' : 'grid';
 };
 
-const MyBooks = () => {
+const Library = () => {
   const [activeTab, setActiveTab] = useState<TabType>('reading');
   const [viewType, setViewType] = useState<ViewType>(getInitialViewType);
   const [readingFilter, setReadingFilter] = useState<ReadingFilterType>('all');
   const [sortType, setSortType] = useState<SortType>('latest');
 
   const { push, pop } = useLayerStore();
-  const { data, observerTarget, isLoading } = useMyBooksQuery(sortType, readingFilter);
+  const { data, observerTarget, isLoading } = useLibraryQuery(sortType, readingFilter);
 
   const books = data ? data.pages.flatMap((page) => page.items) : [];
 
@@ -158,4 +158,4 @@ const MyBooks = () => {
   );
 };
 
-export default MyBooks;
+export default Library;

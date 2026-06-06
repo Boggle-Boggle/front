@@ -5,7 +5,7 @@ import { Divider } from 'components/Divider';
 import { Radio } from 'components/Radio';
 import { IconArrowRight, IconCirclePlus } from 'components/icons';
 
-import { type ReadingFilterType } from '../useMyBooksQuery';
+import { type ReadingFilterType } from '../useLibraryQuery';
 
 type FilterOption = {
   value: ReadingFilterType;
