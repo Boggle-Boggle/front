@@ -19,6 +19,7 @@ const MSG_WITHDRAW_FEEDBACK_PLACEHOLDER = 'Placeholder';
 const MSG_WITHDRAW_BACK = '뒤로가기';
 const MSG_WITHDRAW_CONFIRM = '계정을 삭제합니다';
 const LAYER_ID_ACCOUNT_WITHDRAW_CONFIRM_MODAL = 'account-withdraw-confirm-modal';
+const ROUTE_ACCOUNT_WITHDRAW_COMPLETE = '/mypage/account/withdraw-complete';
 
 const WITHDRAW_REASONS = [
   '기능이 직관적이지 않아 불편해요',
@@ -55,11 +56,16 @@ const Withdraw = () => {
     pop();
   };
 
+  const handleMoveToWithdrawComplete = () => {
+    pop();
+    navigate(ROUTE_ACCOUNT_WITHDRAW_COMPLETE);
+  };
+
   const handleOpenWithdrawConfirmModal = () => {
     push({
       id: LAYER_ID_ACCOUNT_WITHDRAW_CONFIRM_MODAL,
       type: 'MODAL',
-      component: <WithdrawConfirmModal onCancel={handleCloseModal} onConfirm={handleCloseModal} />,
+      component: <WithdrawConfirmModal onCancel={handleCloseModal} onConfirm={handleMoveToWithdrawComplete} />,
     });
   };
 
