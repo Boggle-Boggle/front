@@ -6,8 +6,8 @@ import { Header } from 'components/Header';
 
 import DownloadBackupModal from './DownloadBackupModal';
 import LogoutConfirmModal from './LogoutConfirmModal';
-import SettingsSection from '../shared/SettingsSection';
-import SettingsSectionBody from '../shared/SettingsSectionBody';
+import { SectionButton } from '../shared/SectionButton';
+import { SectionHeader } from '../shared/SectionHeader';
 
 const MSG_ACCOUNT_TITLE = '계정 설정하기';
 const MSG_ACCOUNT_NICKNAME = '닉네임';
@@ -65,22 +65,22 @@ const Account = () => {
         </Button>
       </section>
 
-      <SettingsSection title={MSG_ACCOUNT_RECORD_DOWNLOAD} />
-      <SettingsSectionBody>
-        <Button variant="grey" onClick={handleOpenDownloadBackupModal}>
+      <SectionHeader title={MSG_ACCOUNT_RECORD_DOWNLOAD} />
+      <div className="flex flex-col gap-2 px-mobile py-2">
+        <SectionButton onClick={handleOpenDownloadBackupModal}>
           {MSG_ACCOUNT_RECORD_BACKUP_DOWNLOAD}
-        </Button>
-      </SettingsSectionBody>
+        </SectionButton>
+      </div>
 
-      <SettingsSection title={MSG_ACCOUNT_LOGIN_MANAGEMENT} />
-      <SettingsSectionBody>
-        <Button variant="grey" onClick={handleOpenLogoutConfirmModal}>
+      <SectionHeader title={MSG_ACCOUNT_LOGIN_MANAGEMENT} />
+      <div className="flex flex-col gap-2 px-mobile py-2">
+        <SectionButton onClick={handleOpenLogoutConfirmModal}>
           {MSG_ACCOUNT_LOGOUT}
-        </Button>
-        <Button variant="grey" onClick={handleOpenWithdrawPage}>
+        </SectionButton>
+        <SectionButton onClick={handleOpenWithdrawPage}>
           {MSG_ACCOUNT_DELETE}
-        </Button>
-      </SettingsSectionBody>
+        </SectionButton>
+      </div>
     </div>
   );
 };
