@@ -49,7 +49,7 @@ const MY_PAGE_MENU_ITEMS: MyPageMenuItem[] = [
   {
     title: '콘텐츠 설정하기',
     description: '차단 관리, 콘텐츠 환경 설정',
-    path: '',
+    path: '/mypage/content',
   },
   {
     title: '고객센터',
