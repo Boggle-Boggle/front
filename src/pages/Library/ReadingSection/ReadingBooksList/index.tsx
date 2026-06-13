@@ -1,3 +1,5 @@
+import { useNavigate } from 'react-router-dom';
+
 import BookCover from 'components/BookCover';
 import { ShelfBase } from 'components/ShelfBase';
 import { StarRating } from 'components/StarRating';
@@ -15,6 +17,7 @@ const MSG_MYBOOKS_LIST_PERIOD_PLACEHOLDER = '00.00.00 ~ 00.00.00';
 
 export const ReadingBooksList = (props: ReadingBooksListProps) => {
   const { books } = props;
+  const navigate = useNavigate();
 
   return (
     <ul className="flex flex-col pb-6">
@@ -25,24 +28,30 @@ export const ReadingBooksList = (props: ReadingBooksListProps) => {
         const isStopped = readingStatus === MSG_MYBOOKS_BOOK_STATUS_STOPPED;
         const readingStatusBadge = isReading ? 'reading' : isRead ? 'read' : isStopped ? 'stopped' : undefined;
 
+        const handleBookClick = () => {
+          navigate(`/records/${id}`);
+        };
+
         return (
           <li key={id} className="relative flex items-center justify-start pb-11">
-            <BookCover
-              className="ml-mobile w-20 shrink-0"
-              url={cover}
-              label={title}
-              rounded="sm"
-              isAdult={isAdult}
-              shadowLeftBar
-              shadowRightTriangle
-              readingStatusBadge={readingStatusBadge}
-            />
-            <div className="z-book min-w-0 pl-5 pr-mobile">
-              <p className="line-clamp-2 text-title3">{title}</p>
-              <p className="line-clamp-1 pb-0.5 text-caption1 text-neutral-80">{MSG_MYBOOKS_LIST_AUTHOR_PLACEHOLDER}</p>
-              <StarRating value={rating} size={14} className="text-[#FFAA00]" />
-              <p className="text-caption1 text-neutral-40">{MSG_MYBOOKS_LIST_PERIOD_PLACEHOLDER}</p>
-            </div>
+            <button type="button" className="flex w-full items-center text-left" onClick={handleBookClick}>
+              <BookCover
+                className="ml-mobile w-20 shrink-0"
+                url={cover}
+                label={title}
+                rounded="sm"
+                isAdult={isAdult}
+                shadowLeftBar
+                shadowRightTriangle
+                readingStatusBadge={readingStatusBadge}
+              />
+              <div className="z-book min-w-0 pl-5 pr-mobile">
+                <p className="line-clamp-2 text-title3">{title}</p>
+                <p className="line-clamp-1 pb-0.5 text-caption1 text-neutral-80">{MSG_MYBOOKS_LIST_AUTHOR_PLACEHOLDER}</p>
+                <StarRating value={rating} size={14} className="text-[#FFAA00]" />
+                <p className="text-caption1 text-neutral-40">{MSG_MYBOOKS_LIST_PERIOD_PLACEHOLDER}</p>
+              </div>
+            </button>
             <div className="absolute left-0 right-0 top-20">
               <ShelfBase />
               <ShelfBase />

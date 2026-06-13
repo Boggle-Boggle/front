@@ -1,3 +1,5 @@
+import { useNavigate } from 'react-router-dom';
+
 import BookCover from 'components/BookCover';
 import { StarRating } from 'components/StarRating';
 
@@ -13,14 +15,19 @@ const MSG_MYBOOKS_BOOK_STATUS_STOPPED = '중단';
 
 export const BookCard = (props: BookCardProps) => {
   const { book } = props;
+  const navigate = useNavigate();
 
   const isReading = book.readingStatus === MSG_MYBOOKS_BOOK_STATUS_READING;
   const isRead = book.readingStatus === MSG_MYBOOKS_BOOK_STATUS_READ;
   const isStopped = book.readingStatus === MSG_MYBOOKS_BOOK_STATUS_STOPPED;
   const readingStatusBadge = isReading ? 'reading' : isRead ? 'read' : isStopped ? 'stopped' : undefined;
 
+  const handleBookClick = () => {
+    navigate(`/records/${book.id}`);
+  };
+
   return (
-    <div className="flex flex-col gap-4">
+    <button type="button" className="flex w-full flex-col gap-4 text-left" onClick={handleBookClick}>
       <BookCover
         url={book.cover}
         label={book.title}
@@ -47,6 +54,6 @@ export const BookCard = (props: BookCardProps) => {
         )}
         <p className="line-clamp-2 text-caption1">{book.title}</p>
       </div>
-    </div>
+    </button>
   );
 };

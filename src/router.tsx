@@ -6,6 +6,7 @@ import App from './App';
 const Auth = lazy(() => import('pages/Auth'));
 const BookDetail = lazy(() => import('pages/BookDetail'));
 const BookDetailReviews = lazy(() => import('pages/BookDetail/Reviews'));
+const RecordDetailPage = lazy(() => import('pages/RecordDetailPage'));
 const Report = lazy(() => import('pages/Report'));
 const WithBottomNavLayout = lazy(() => import('pages/Layout/WithBottomNavLayout'));
 const WithoutBottomNavLayout = lazy(() => import('pages/Layout/WithoutBottomNavLayout'));
@@ -69,6 +70,7 @@ const router = createBrowserRouter([
               { path: '/search/add', element: <AddCustomBook /> },
               { path: '/detail/:detailId', element: <BookDetail /> },
               { path: '/detail/:detailId/reviews', element: <BookDetailReviews /> },
+              { path: '/records/:recordId', element: <RecordDetailPage /> },
               { path: '/mypage/account', element: <MyPageAccount /> },
               { path: '/mypage/account/withdraw', element: <MyPageAccountWithdraw /> },
               { path: '/mypage/account/withdraw-complete', element: <MyPageAccountWithdrawComplete /> },
