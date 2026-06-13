@@ -24,13 +24,17 @@ const MODE_OPTIONS = [
 ] as const;
 
 const THEME_COLOR_OPTIONS = [
-  { key: 'red-grapefruit', label: '레드 자몽', colorClassName: 'bg-[#F28B82]' },
-  { key: 'lemon-ade', label: '레몬 에이드', colorClassName: 'bg-[#FFF3A1]' },
-  { key: 'green-flower-garden', label: '그린 플라워 가든 (기본)', colorClassName: 'bg-[#A6D68D]' },
-  { key: 'calm-pistachio', label: '캄 피스타치오', colorClassName: 'bg-[#8BC6CF]' },
-  { key: 'blue-kids', label: '블루 키즈', colorClassName: 'bg-[#8DB9FF]' },
-  { key: 'romantic-purple', label: '로맨틱 퍼플', colorClassName: 'bg-[#978CF3]' },
-  { key: 'peach-candy', label: '복숭아맛 캔디', colorClassName: 'bg-[#F19AD3]' },
+  { key: 'red-grapefruit', label: '레드 자몽', colorVariable: 'var(--theme-red-grapefruit-primary-light)' },
+  { key: 'lemon-ade', label: '레몬 에이드', colorVariable: 'var(--theme-lemonade-primary-light)' },
+  {
+    key: 'green-flower-garden',
+    label: '그린 플라워 가든 (기본)',
+    colorVariable: 'var(--theme-green-flower-garden-primary-light)',
+  },
+  { key: 'calm-pistachio', label: '캄 피스타치오', colorVariable: 'var(--theme-calm-pistachio-primary-light)' },
+  { key: 'blue-kids', label: '블루 키즈', colorVariable: 'var(--theme-blue-toy-primary-light)' },
+  { key: 'romantic-purple', label: '로맨틱 퍼플', colorVariable: 'var(--theme-romantic-purple-primary-light)' },
+  { key: 'peach-candy', label: '복숭아맛 캔디', colorVariable: 'var(--theme-peach-candy-primary-light)' },
 ] as const;
 
 const ThemeFont = () => {
@@ -68,7 +72,7 @@ const ThemeFont = () => {
               label={option.label}
               checked={selectedThemeColor === option.key}
               onChange={() => setSelectedThemeColor(option.key)}
-              leading={<div className={`size-6 rounded-lg ${option.colorClassName}`} />}
+              leading={<div className="size-6 rounded-lg" style={{ backgroundColor: option.colorVariable }} />}
             />
           ))}
         </div>

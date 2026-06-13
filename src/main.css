@@ -14,62 +14,103 @@
     --color-primary-light: #a6d68e;
     --color-secondary: #f4f5ce;
     --color-secondary-light: #aedef5;
+
+    /* 테마 팔레트 */
+    --theme-red-grapefruit-primary: #e9aca6;
+    --theme-red-grapefruit-primary-light: #ed8e85;
+    --theme-red-grapefruit-secondary: #fbbaba;
+    --theme-red-grapefruit-secondary-light: #fff4f4;
+
+    --theme-lemonade-primary: #c4d966;
+    --theme-lemonade-primary-light: #fff5a8;
+    --theme-lemonade-secondary: #fffbea;
+    --theme-lemonade-secondary-light: #ddffc8;
+
+    --theme-green-flower-garden-primary: #8bcfa7;
+    --theme-green-flower-garden-primary-light: #a6d68e;
+    --theme-green-flower-garden-secondary: #f4f5ce;
+    --theme-green-flower-garden-secondary-light: #aedef5;
+
+    --theme-calm-pistachio-primary: #4e9fac;
+    --theme-calm-pistachio-primary-light: #92c7cf;
+    --theme-calm-pistachio-secondary: #fbf9f1;
+    --theme-calm-pistachio-secondary-light: #c7e9ea;
+
+    --theme-blue-toy-primary: #acc1de;
+    --theme-blue-toy-primary-light: #98c3fd;
+    --theme-blue-toy-secondary: #fffdea;
+    --theme-blue-toy-secondary-light: #c7f5f1;
+
+    --theme-romantic-purple-primary: #b5b8f0;
+    --theme-romantic-purple-primary-light: #a294f9;
+    --theme-romantic-purple-secondary: #f5efff;
+    --theme-romantic-purple-secondary-light: #c1daff;
+
+    --theme-peach-candy-primary: #dda8c5;
+    --theme-peach-candy-primary-light: #f49dcd;
+    --theme-peach-candy-secondary: #ffcfde;
+    --theme-peach-candy-secondary-light: #ffd9ee;
+
+    --theme-grey-scale-primary: #0d0d0d;
+    --theme-grey-scale-primary-light: #555555;
+    --theme-grey-scale-secondary: #888888;
+    --theme-grey-scale-secondary-light: #ffffff;
   }
 }
 
 /* 테마색상 */
 @layer base {
   html[data-theme='RedGrapefruit'] {
-    --color-primary: #e9aca6;
-    --color-primary-light: #ed8e85;
-    --color-secondary: #fbbaba;
-    --color-secondary-light: #fff4f4;
+    --color-primary: var(--theme-red-grapefruit-primary);
+    --color-primary-light: var(--theme-red-grapefruit-primary-light);
+    --color-secondary: var(--theme-red-grapefruit-secondary);
+    --color-secondary-light: var(--theme-red-grapefruit-secondary-light);
   }
 
   html[data-theme='Lemonade'] {
-    --color-primary: #c4d966;
-    --color-primary-light: #fff5a8;
-    --color-secondary: #fffbea;
-    --color-secondary-light: #ddffc8;
+    --color-primary: var(--theme-lemonade-primary);
+    --color-primary-light: var(--theme-lemonade-primary-light);
+    --color-secondary: var(--theme-lemonade-secondary);
+    --color-secondary-light: var(--theme-lemonade-secondary-light);
   }
 
   html[data-theme='GreenFlowerGarden'] {
-    --color-primary: #8bcfa7;
-    --color-primary-light: #a6d68e;
-    --color-secondary: #f4f5ce;
-    --color-secondary-light: #aedef5;
+    --color-primary: var(--theme-green-flower-garden-primary);
+    --color-primary-light: var(--theme-green-flower-garden-primary-light);
+    --color-secondary: var(--theme-green-flower-garden-secondary);
+    --color-secondary-light: var(--theme-green-flower-garden-secondary-light);
   }
 
   html[data-theme='CalmPistachio'] {
-    --color-primary: #4e9fac;
-    --color-primary-light: #92c7cf;
-    --color-secondary: #fbf9f1;
-    --color-secondary-light: #c7e9ea;
+    --color-primary: var(--theme-calm-pistachio-primary);
+    --color-primary-light: var(--theme-calm-pistachio-primary-light);
+    --color-secondary: var(--theme-calm-pistachio-secondary);
+    --color-secondary-light: var(--theme-calm-pistachio-secondary-light);
   }
 
   html[data-theme='BlueToy'] {
-    --color-primary: #acc1de;
-    --color-primary-light: #98c3fd;
-    --color-secondary: #fffdea;
-    --color-secondary-light: #c7f5f1;
+    --color-primary: var(--theme-blue-toy-primary);
+    --color-primary-light: var(--theme-blue-toy-primary-light);
+    --color-secondary: var(--theme-blue-toy-secondary);
+    --color-secondary-light: var(--theme-blue-toy-secondary-light);
   }
   html[data-theme='RomanticPurple'] {
-    --color-primary: #b5b8f0;
-    --color-primary-light: #a294f9;
-    --color-secondary: #f5efff;
-    --color-secondary-light: #c1daff;
+    --color-primary: var(--theme-romantic-purple-primary);
+    --color-primary-light: var(--theme-romantic-purple-primary-light);
+    --color-secondary: var(--theme-romantic-purple-secondary);
+    --color-secondary-light: var(--theme-romantic-purple-secondary-light);
   }
   html[data-theme='PeachCandy'] {
-    --color-primary: #dda8c5;
-    --color-primary-light: #f49dcd;
-    --color-secondary: #ffcfde;
-    --color-secondary-light: #ffd9ee;
+    --color-primary: var(--theme-peach-candy-primary);
+    --color-primary-light: var(--theme-peach-candy-primary-light);
+    --color-secondary: var(--theme-peach-candy-secondary);
+    --color-secondary-light: var(--theme-peach-candy-secondary-light);
   }
   html[data-theme='GreyScale'] {
-    --color-primary: #0d0d0d;
-    --color-primary-light: #555555;
-    --color-secondary: #888888;
-    --color-secondary-light: #ffffff;
+    --color-primary: var(--theme-grey-scale-primary);
+    --color-primary-light: var(--theme-grey-scale-primary-light);
+    --color-secondary: var(--theme-grey-scale-secondary);
+    --color-secondary-light: var(--theme-grey-scale-secondary-light);
   }
 }
 
