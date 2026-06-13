@@ -21,6 +21,7 @@ const SearchResult = lazy(() => import('pages/SearchResult'));
 const AddCustomBook = lazy(() => import('pages/AddCustomBook'));
 const Library = lazy(() => import('pages/Library'));
 const MyPageAccount = lazy(() => import('pages/MyPage/Account'));
+const MyPageAccountWithdraw = lazy(() => import('pages/MyPage/Account/Withdraw'));
 const Login = lazy(() => import('pages/Login'));
 const SignUp = lazy(() => import('pages/SignUp'));
 const SignUpTermsDetail = lazy(() => import('pages/SignUp/TermsDetail'));
@@ -67,6 +68,7 @@ const router = createBrowserRouter([
               { path: '/detail/:detailId', element: <BookDetail /> },
               { path: '/detail/:detailId/reviews', element: <BookDetailReviews /> },
               { path: '/mypage/account', element: <MyPageAccount /> },
+              { path: '/mypage/account/withdraw', element: <MyPageAccountWithdraw /> },
               { path: '/report', element: <Report /> },
               // 아래 레거시
               // { path: 'note/write', element: <Note /> },

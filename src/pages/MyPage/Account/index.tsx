@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import { useLayerStore } from 'stores/useLayerStore';
 
 import { Button } from 'components/Button';
@@ -22,6 +23,7 @@ const LAYER_ID_ACCOUNT_DOWNLOAD_BACKUP_MODAL = 'account-download-backup-modal';
 const LAYER_ID_ACCOUNT_LOGOUT_CONFIRM_MODAL = 'account-logout-confirm-modal';
 
 const Account = () => {
+  const navigate = useNavigate();
   const { push, pop } = useLayerStore();
 
   const handleCloseModal = () => {
@@ -42,6 +44,10 @@ const Account = () => {
       type: 'MODAL',
       component: <LogoutConfirmModal onCancel={handleCloseModal} onConfirm={handleCloseModal} />,
     });
+  };
+
+  const handleOpenWithdrawPage = () => {
+    navigate('/mypage/account/withdraw');
   };
 
   return (
@@ -71,7 +77,7 @@ const Account = () => {
         <Button variant="grey" onClick={handleOpenLogoutConfirmModal}>
           {MSG_ACCOUNT_LOGOUT}
         </Button>
-        <Button variant="grey" onClick={() => {}}>
+        <Button variant="grey" onClick={handleOpenWithdrawPage}>
           {MSG_ACCOUNT_DELETE}
         </Button>
       </SettingsSectionBody>
