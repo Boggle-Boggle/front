@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { Header } from 'components/Header';
 
@@ -14,6 +15,7 @@ const MSG_CONTENT_RECOMMEND = '나를 위한 콘텐츠 추천받기';
 const MSG_CONTENT_BLOCKED_USERS = '차단한 유저 확인하기';
 
 const Content = () => {
+  const navigate = useNavigate();
   const [isAdultContentHidden, setIsAdultContentHidden] = useState<boolean>(true);
   const [isPersonalRecommendationEnabled, setIsPersonalRecommendationEnabled] = useState<boolean>(false);
 
@@ -38,7 +40,7 @@ const Content = () => {
 
         <SectionHeader title={MSG_CONTENT_BLOCK_SECTION} />
         <div className="pt-2">
-          <SectionLink label={MSG_CONTENT_BLOCKED_USERS} onClick={() => {}} />
+          <SectionLink label={MSG_CONTENT_BLOCKED_USERS} onClick={() => navigate('/mypage/content/blocked-users')} />
         </div>
       </div>
     </div>
