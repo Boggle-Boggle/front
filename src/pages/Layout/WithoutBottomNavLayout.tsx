@@ -2,7 +2,7 @@ import { Outlet } from 'react-router-dom';
 
 const WithoutBottomNavLayout = () => {
   return (
-    <section className="h-dvh w-full overflow-scroll">
+    <section className="flex h-dvh w-full flex-col overflow-hidden">
       <Outlet />
     </section>
   );
