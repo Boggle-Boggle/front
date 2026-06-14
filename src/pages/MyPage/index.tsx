@@ -59,7 +59,7 @@ const MY_PAGE_MENU_ITEMS: MyPageMenuItem[] = [
   {
     title: '앱 정보',
     description: '서비스 이용 약관, 개인정보 처리방침, 버전 정보',
-    path: '/mypage/app-info',
+    path: '/mypage/about',
   },
 ];
 
