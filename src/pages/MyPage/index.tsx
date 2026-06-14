@@ -54,7 +54,7 @@ const MY_PAGE_MENU_ITEMS: MyPageMenuItem[] = [
   {
     title: '고객센터',
     description: '자주 묻는 질문, 문의하기, 의견/오류 알려주기',
-    path: '',
+    path: '/mypage/support',
   },
   {
     title: '앱 정보',
