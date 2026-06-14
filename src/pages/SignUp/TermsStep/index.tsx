@@ -43,7 +43,7 @@ export const TermsStep = (props: TermsStepProps) => {
   };
 
   const handleClickTermDetail = (termId: number) => {
-    navigate(`/signup/terms/${termId}`);
+    navigate(`/terms/${termId}`);
   };
 
   const handleToggleTerm = (termId: number) => {

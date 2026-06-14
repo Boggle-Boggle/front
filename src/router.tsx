@@ -29,9 +29,9 @@ const MyPageContent = lazy(() => import('pages/MyPage/Content'));
 const MyPageContentBlockedUsers = lazy(() => import('pages/MyPage/Content/BlockedUsers'));
 const MyPageSupport = lazy(() => import('pages/MyPage/Support'));
 const MyPageAppearance = lazy(() => import('pages/MyPage/Appearance'));
+const Terms = lazy(() => import('pages/Terms'));
 const Login = lazy(() => import('pages/Login'));
 const SignUp = lazy(() => import('pages/SignUp'));
-const SignUpTermsDetail = lazy(() => import('pages/SignUp/TermsDetail'));
 // const MyPage = lazy(() => import('pages/MyPage'));
 // const Edit = lazy(() => import('pages/Edit'));
 // const DeleteAccount = lazy(() => import('pages/MyPage/DeleteAccount'));
@@ -112,10 +112,10 @@ const router = createBrowserRouter([
       // 아래 레거시
       { path: '/login', element: <Login /> },
       { path: '/auth', element: <Auth /> },
+      { path: '/terms/:termId', element: <Terms /> },
       {
         path: '/signup',
         element: <SignUp />,
-        children: [{ path: 'terms/:termId', element: <SignUpTermsDetail /> }],
       },
     ],
   },

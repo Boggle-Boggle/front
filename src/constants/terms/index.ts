@@ -1,6 +1,8 @@
 import { PRIVACY_POLICY_CONTENT, PRIVACY_POLICY_TITLE } from './privacyPolicy';
 import { TERMS_OF_SERVICE_CONTENT, TERMS_OF_SERVICE_TITLE } from './termsOfService';
 
+export { PRIVACY_POLICY_TITLE, TERMS_OF_SERVICE_TITLE };
+
 export const TERM_ID = {
   PRIVACY_POLICY: 1,
   TERMS_OF_SERVICE: 2,
