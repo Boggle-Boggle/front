@@ -28,7 +28,7 @@ const MyPageAccountWithdrawComplete = lazy(() => import('pages/MyPage/Account/Wi
 const MyPageContent = lazy(() => import('pages/MyPage/Content'));
 const MyPageContentBlockedUsers = lazy(() => import('pages/MyPage/Content/BlockedUsers'));
 const MyPageSupport = lazy(() => import('pages/MyPage/Support'));
-const MyPageThemeFont = lazy(() => import('pages/MyPage/ThemeFont'));
+const MyPageAppearance = lazy(() => import('pages/MyPage/Appearance'));
 const Login = lazy(() => import('pages/Login'));
 const SignUp = lazy(() => import('pages/SignUp'));
 const SignUpTermsDetail = lazy(() => import('pages/SignUp/TermsDetail'));
@@ -82,7 +82,7 @@ const router = createBrowserRouter([
               { path: '/mypage/content', element: <MyPageContent /> },
               { path: '/mypage/content/blocked-users', element: <MyPageContentBlockedUsers /> },
               { path: '/mypage/support', element: <MyPageSupport /> },
-              { path: '/mypage/theme-font', element: <MyPageThemeFont /> },
+              { path: '/mypage/appearance', element: <MyPageAppearance /> },
               { path: '/report', element: <Report /> },
               // 아래 레거시
               // { path: 'note/write', element: <Note /> },

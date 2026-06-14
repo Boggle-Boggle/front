@@ -37,7 +37,7 @@ const THEME_COLOR_OPTIONS = [
   { key: 'peach-candy', label: '복숭아맛 캔디', colorVariable: 'var(--theme-peach-candy-primary-light)' },
 ] as const;
 
-const ThemeFont = () => {
+const Appearance = () => {
   const [isDarkMode, setIsDarkMode] = useState<boolean>(false);
   const [isEbookMode, setIsEbookMode] = useState<boolean>(false);
   const [selectedThemeColor, setSelectedThemeColor] = useState<string>('green-flower-garden');
@@ -81,4 +81,4 @@ const ThemeFont = () => {
   );
 };
 
-export default ThemeFont;
+export default Appearance;
