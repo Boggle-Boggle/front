@@ -22,6 +22,7 @@ const SearchResult = lazy(() => import('pages/SearchResult'));
 const AddCustomBook = lazy(() => import('pages/AddCustomBook'));
 const Library = lazy(() => import('pages/Library'));
 const MyPageAccount = lazy(() => import('pages/MyPage/Account'));
+const MyPageAppInfo = lazy(() => import('pages/MyPage/AppInfo'));
 const MyPageAccountWithdraw = lazy(() => import('pages/MyPage/Account/Withdraw'));
 const MyPageAccountWithdrawComplete = lazy(() => import('pages/MyPage/Account/WithdrawComplete'));
 const MyPageContent = lazy(() => import('pages/MyPage/Content'));
@@ -74,6 +75,7 @@ const router = createBrowserRouter([
               { path: '/detail/:detailId/reviews', element: <BookDetailReviews /> },
               { path: '/records/:recordId', element: <RecordDetailPage /> },
               { path: '/mypage/account', element: <MyPageAccount /> },
+              { path: '/mypage/app-info', element: <MyPageAppInfo /> },
               { path: '/mypage/account/withdraw', element: <MyPageAccountWithdraw /> },
               { path: '/mypage/account/withdraw-complete', element: <MyPageAccountWithdrawComplete /> },
               { path: '/mypage/content', element: <MyPageContent /> },
