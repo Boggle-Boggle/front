@@ -20,7 +20,7 @@ export const SearchResultItem = (props: SearchResultItemProps) => {
   const isRegistered = !!readingRecordId;
 
   return (
-    <Link to={`/detail/${isbn}`} className="flex w-full gap-5 py-4">
+    <Link to={`/books/${isbn}`} className="flex w-full gap-5 py-4">
       <BookCover className="w-20" url={cover} label={title} shadowLeftBar rounded="sm" />
       <div className="flex flex-1 flex-col justify-start">
         <p className="line-clamp-2 pb-1 text-title3">{title}</p>

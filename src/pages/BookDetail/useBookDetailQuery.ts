@@ -22,10 +22,10 @@ const getBookDetailMock = async (): Promise<BookDetail> => {
   });
 };
 
-export const useBookDetailQuery = (detailId: string) => {
+export const useBookDetailQuery = (bookId: string) => {
   return useQuery({
-    queryKey: ['books', 'detail', detailId],
+    queryKey: ['books', 'detail', bookId],
     queryFn: getBookDetailMock,
-    enabled: Boolean(detailId),
+    enabled: Boolean(bookId),
   });
 };

@@ -1,5 +1,5 @@
 import { lazy } from 'react';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { createBrowserRouter, Navigate, RouterProvider, useParams } from 'react-router-dom';
 
 import App from './App';
 
@@ -43,6 +43,18 @@ const SignUpTermsDetail = lazy(() => import('pages/SignUp/TermsDetail'));
 // const Record = lazy(() => import('pages/Record'));
 // const SignUp = lazy(() => import('pages/SignUp'));
 
+const LegacyBookDetailRedirect = () => {
+  const { detailId = '' } = useParams();
+
+  return <Navigate to={`/books/${detailId}`} replace />;
+};
+
+const LegacyBookDetailReviewsRedirect = () => {
+  const { detailId = '' } = useParams();
+
+  return <Navigate to={`/books/${detailId}/reviews`} replace />;
+};
+
 const router = createBrowserRouter([
   {
     path: '/',
@@ -72,8 +84,10 @@ const router = createBrowserRouter([
             children: [
               { path: '/search/result', element: <SearchResult /> },
               { path: '/search/add', element: <AddCustomBook /> },
-              { path: '/detail/:detailId', element: <BookDetail /> },
-              { path: '/detail/:detailId/reviews', element: <BookDetailReviews /> },
+              { path: '/books/:bookId', element: <BookDetail /> },
+              { path: '/books/:bookId/reviews', element: <BookDetailReviews /> },
+              { path: '/detail/:detailId', element: <LegacyBookDetailRedirect /> },
+              { path: '/detail/:detailId/reviews', element: <LegacyBookDetailReviewsRedirect /> },
               { path: '/records/:recordId', element: <RecordDetailPage /> },
               { path: '/mypage/account', element: <MyPageAccount /> },
               { path: '/mypage/about', element: <MyPageAbout /> },

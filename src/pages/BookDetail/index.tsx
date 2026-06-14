@@ -38,14 +38,14 @@ const BOOK_DETAIL_TABS: TabItem<DetailTabType>[] = [
 ];
 
 export const BookDetail = () => {
-  const { detailId = '' } = useParams();
+  const { bookId = '' } = useParams();
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const tabSentinelRef = useRef<HTMLDivElement>(null);
   const [activeTab, setActiveTab] = useState<DetailTabType>('info');
   const [isWishlistSelected, setIsWishlistSelected] = useState<boolean>(false);
   const { push } = useLayerStore();
 
-  const { data, isLoading, isError } = useBookDetailQuery(detailId);
+  const { data, isLoading, isError } = useBookDetailQuery(bookId);
   const { isVisible } = useHeaderTitleByScroll({
     rootRef: scrollContainerRef,
     targetRef: tabSentinelRef,

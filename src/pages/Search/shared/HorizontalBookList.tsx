@@ -16,7 +16,7 @@ export const HorizontalBookList = () => {
       <ul className="scrollbar-hide flex w-full gap-[0.625rem] overflow-x-auto px-mobile">
         {items.map(({ id, title, author, url }) => (
           <li key={id} className="w-[6.25rem] shrink-0">
-            <Link to={`/detail/${id}`} className="w-full">
+            <Link to={`/books/${id}`} className="w-full">
               <BookCover className="w-full" url={url} />
               <p className="text-title3">{title}</p>
               <p className="text-caption1 text-neutral-40">{author}</p>

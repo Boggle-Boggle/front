@@ -12,7 +12,7 @@ const MSG_REVIEW_MORE = '리뷰 더보기';
 
 export const ReviewSection = () => {
   const navigate = useNavigate();
-  const { detailId = '' } = useParams();
+  const { bookId = '' } = useParams();
 
   const reviews = createMockReviews();
   const previewReviews = reviews.slice(0, REVIEW_PREVIEW_COUNT);
@@ -20,7 +20,7 @@ export const ReviewSection = () => {
 
   const handleToggleLike = () => {};
 
-  const handleReviewMoreClick = () => navigate(`/detail/${detailId}/reviews`);
+  const handleReviewMoreClick = () => navigate(`/books/${bookId}/reviews`);
 
   return (
     <section className="pb-safe-bottom pt-7">
