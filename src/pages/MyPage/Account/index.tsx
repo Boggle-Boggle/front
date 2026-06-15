@@ -51,35 +51,37 @@ const Account = () => {
   };
 
   return (
-    <div className="min-h-full pb-safe-bottom">
+    <div className="flex h-full w-full flex-col">
       <Header title={MSG_ACCOUNT_TITLE} withBack />
 
-      <section className="flex w-full flex-col items-center p-8">
-        <h2 className="text-title1">
-          {MSG_ACCOUNT_NICKNAME}
-          <span className="pl-[0.125rem] text-h3">{MSG_ACCOUNT_NICKNAME_SUFFIX}</span>
-        </h2>
-        <p className="pb-4 pt-0.5 text-body2 text-information">{MSG_ACCOUNT_LOGIN_STATUS}</p>
-        <Button width="short" size="small" variant="primaryLine" onClick={() => {}}>
-          {MSG_ACCOUNT_NICKNAME_CHANGE}
-        </Button>
-      </section>
+      <div className="min-h-0 flex-1 overflow-y-auto pb-safe-bottom">
+        <div className="flex w-full flex-col items-center p-8">
+          <h2 className="text-title1">
+            {MSG_ACCOUNT_NICKNAME}
+            <span className="pl-[0.125rem] text-h3">{MSG_ACCOUNT_NICKNAME_SUFFIX}</span>
+          </h2>
+          <p className="pb-4 pt-0.5 text-body2 text-information">{MSG_ACCOUNT_LOGIN_STATUS}</p>
+          <Button width="short" size="small" variant="primaryLine" onClick={() => {}}>
+            {MSG_ACCOUNT_NICKNAME_CHANGE}
+          </Button>
+        </div>
 
-      <SectionHeader title={MSG_ACCOUNT_RECORD_DOWNLOAD} />
-      <div className="flex flex-col gap-2 px-mobile py-2">
-        <SectionButton onClick={handleOpenDownloadBackupModal}>
-          {MSG_ACCOUNT_RECORD_BACKUP_DOWNLOAD}
-        </SectionButton>
-      </div>
+        <SectionHeader title={MSG_ACCOUNT_RECORD_DOWNLOAD} />
+        <div className="flex flex-col gap-2 px-mobile py-2">
+          <SectionButton onClick={handleOpenDownloadBackupModal}>
+            {MSG_ACCOUNT_RECORD_BACKUP_DOWNLOAD}
+          </SectionButton>
+        </div>
 
-      <SectionHeader title={MSG_ACCOUNT_LOGIN_MANAGEMENT} />
-      <div className="flex flex-col gap-2 px-mobile py-2">
-        <SectionButton onClick={handleOpenLogoutConfirmModal}>
-          {MSG_ACCOUNT_LOGOUT}
-        </SectionButton>
-        <SectionButton onClick={handleOpenWithdrawPage}>
-          {MSG_ACCOUNT_DELETE}
-        </SectionButton>
+        <SectionHeader title={MSG_ACCOUNT_LOGIN_MANAGEMENT} />
+        <div className="flex flex-col gap-2 px-mobile py-2">
+          <SectionButton onClick={handleOpenLogoutConfirmModal}>
+            {MSG_ACCOUNT_LOGOUT}
+          </SectionButton>
+          <SectionButton onClick={handleOpenWithdrawPage}>
+            {MSG_ACCOUNT_DELETE}
+          </SectionButton>
+        </div>
       </div>
     </div>
   );
