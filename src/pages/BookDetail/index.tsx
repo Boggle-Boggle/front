@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useLayerStore } from 'stores/useLayerStore';
 
 import BookCover from 'components/BookCover';
@@ -39,6 +39,7 @@ const BOOK_DETAIL_TABS: TabItem<DetailTabType>[] = [
 
 export const BookDetail = () => {
   const { bookId = '' } = useParams();
+  const navigate = useNavigate();
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const tabSentinelRef = useRef<HTMLDivElement>(null);
   const [activeTab, setActiveTab] = useState<DetailTabType>('info');
@@ -89,6 +90,10 @@ export const BookDetail = () => {
 
   const handleChangeDetailTab = setActiveTab;
 
+  const handleAddRecordClick = () => {
+    navigate(`/books/${bookId}/records/new`);
+  };
+
   return (
     <>
       <Header
@@ -133,7 +138,7 @@ export const BookDetail = () => {
           </>
         )}
 
-        <BottomButton onClick={() => {}}>{MSG_BOOK_DETAIL_ADD_RECORD}</BottomButton>
+        <BottomButton onClick={handleAddRecordClick}>{MSG_BOOK_DETAIL_ADD_RECORD}</BottomButton>
       </div>
     </>
   );
