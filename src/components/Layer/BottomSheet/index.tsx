@@ -19,12 +19,7 @@ export const BottomSheet = ({ children }: BottomSheetProps) => {
             visible ? 'animate-slideUp' : 'animate-slideDown'
           }`}
         >
-          <button
-            className="grid h-[1.625rem] w-full place-items-center"
-            onClick={handleClose}
-            type="button"
-            aria-label="닫기"
-          >
+          <button className="grid h-12 w-full place-items-center" onClick={handleClose} type="button" aria-label="닫기">
             <div className="h-1 w-[4.4375rem] bg-neutral-20" />
           </button>
           {children}

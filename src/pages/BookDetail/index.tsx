@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useLayerStore } from 'stores/useLayerStore';
 
 import BookCover from 'components/BookCover';
@@ -15,6 +15,7 @@ import { useHeaderTitleByScroll } from 'hooks/useHeaderTitleByScroll';
 
 import { InfoSection } from './InfoSection';
 import { ReviewSection } from './ReviewSection';
+import { AddRecordStatusBottomSheet } from './shared/AddRecordStatusBottomSheet';
 import { useBookDetailQuery } from './useBookDetailQuery';
 
 const MSG_BOOK_DETAIL_ADD_RECORD = '독서 기록 추가하기';
@@ -23,6 +24,7 @@ const MSG_BOOK_DETAIL_TAB_REVIEW = '리뷰';
 const MSG_BOOK_DETAIL_ACTION_MORE_AT_STORE = '서점 사이트에서 더보기';
 const MSG_BOOK_DETAIL_ACTION_SHARE = '공유하기';
 const LAYER_ID_BOOK_DETAIL_MENU = 'book-detail-menu-bottom-sheet';
+const LAYER_ID_BOOK_DETAIL_ADD_RECORD_STATUS = 'book-detail-add-record-status-bottom-sheet';
 
 type DetailTabType = 'info' | 'review';
 
@@ -39,7 +41,6 @@ const BOOK_DETAIL_TABS: TabItem<DetailTabType>[] = [
 
 export const BookDetail = () => {
   const { bookId = '' } = useParams();
-  const navigate = useNavigate();
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const tabSentinelRef = useRef<HTMLDivElement>(null);
   const [activeTab, setActiveTab] = useState<DetailTabType>('info');
@@ -91,7 +92,11 @@ export const BookDetail = () => {
   const handleChangeDetailTab = setActiveTab;
 
   const handleAddRecordClick = () => {
-    navigate(`/books/${bookId}/records/new`);
+    push({
+      id: LAYER_ID_BOOK_DETAIL_ADD_RECORD_STATUS,
+      type: 'BOTTOM_SHEET',
+      component: <AddRecordStatusBottomSheet bookId={bookId} />,
+    });
   };
 
   return (
