@@ -29,6 +29,8 @@ dist-ssr
 *storybook.log
 storybook-static
 
+docs/reference
+
 
 opencode.json
 .sisyphus/*
