@@ -38,19 +38,19 @@ export const AddRecordStatusBottomSheet = (props: AddRecordStatusBottomSheetProp
       <ul className="grid grid-cols-3 gap-1 pb-9 pt-5">
         {ADD_RECORD_STATUS_OPTIONS.map((option) => {
           const isSelected = option.id === selectedStatus;
-          const cardClassName = isSelected ? '!border-neutral-100' : '!border-neutral-40';
+          const cardClassName = isSelected ? 'border-primary opacity-100' : 'border-neutral-20 opacity-40';
           const labelClassName = isSelected ? 'text-title4' : 'text-body1';
 
           return (
             <li key={option.id}>
-              <Button
+              <button
+                type="button"
                 onClick={handleSelectStatus(option.id)}
-                variant="grey"
-                className={`relative !h-[8.875rem] !flex-col !justify-end !gap-2 overflow-hidden !rounded-xl !border !bg-neutral-0 !px-4 !pb-3 !pt-4 ${cardClassName}`}
+                className={`flex h-[8.875rem] w-full flex-col items-center justify-end gap-2 overflow-hidden rounded-xl border-[2px] bg-neutral-0 px-4 pb-3 pt-4 ${cardClassName}`}
               >
                 <img src={option.imageSrc} alt="" className="h-[5.125rem] w-[5.125rem]" />
                 <span className={labelClassName}>{option.label}</span>
-              </Button>
+              </button>
             </li>
           );
         })}
