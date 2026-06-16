@@ -8,8 +8,8 @@ import { IconLayoutGrid, IconLayoutList, IconSearch } from 'components/icons';
 import { FilterSidebar } from './FilterSidebar';
 import { ReadingSection } from './ReadingSection';
 import { SortActionSheet, type SortType } from './SortActionSheet';
-import { type ReadingFilterType, useLibraryQuery } from './useLibraryQuery';
 import { WishlistSection } from './WishlistSection';
+import { type ReadingFilterType, useLibraryQuery } from './useLibraryQuery';
 
 type TabType = 'reading' | 'wishlist';
 type ViewType = 'grid' | 'list';
