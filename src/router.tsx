@@ -1,13 +1,13 @@
 import { lazy } from 'react';
-import { createBrowserRouter, Navigate, RouterProvider, useParams } from 'react-router-dom';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 import App from './App';
 
 const Auth = lazy(() => import('pages/Auth'));
 const BookDetail = lazy(() => import('pages/BookDetail'));
-const BookDetailNewRecord = lazy(() => import('pages/BookDetail/Records/New'));
 const BookDetailReviews = lazy(() => import('pages/BookDetail/Reviews'));
 const RecordDetailPage = lazy(() => import('pages/RecordDetailPage'));
+const RecordNew = lazy(() => import('pages/Records/New'));
 const Report = lazy(() => import('pages/Report'));
 const WithBottomNavLayout = lazy(() => import('pages/Layout/WithBottomNavLayout'));
 const WithoutBottomNavLayout = lazy(() => import('pages/Layout/WithoutBottomNavLayout'));
@@ -44,18 +44,6 @@ const SignUp = lazy(() => import('pages/SignUp'));
 // const Record = lazy(() => import('pages/Record'));
 // const SignUp = lazy(() => import('pages/SignUp'));
 
-const LegacyBookDetailRedirect = () => {
-  const { detailId = '' } = useParams();
-
-  return <Navigate to={`/books/${detailId}`} replace />;
-};
-
-const LegacyBookDetailReviewsRedirect = () => {
-  const { detailId = '' } = useParams();
-
-  return <Navigate to={`/books/${detailId}/reviews`} replace />;
-};
-
 const router = createBrowserRouter([
   {
     path: '/',
@@ -86,10 +74,8 @@ const router = createBrowserRouter([
               { path: '/search/result', element: <SearchResult /> },
               { path: '/search/add', element: <AddCustomBook /> },
               { path: '/books/:bookId', element: <BookDetail /> },
-              { path: '/books/:bookId/records/new', element: <BookDetailNewRecord /> },
               { path: '/books/:bookId/reviews', element: <BookDetailReviews /> },
-              { path: '/detail/:detailId', element: <LegacyBookDetailRedirect /> },
-              { path: '/detail/:detailId/reviews', element: <LegacyBookDetailReviewsRedirect /> },
+              { path: '/records/new', element: <RecordNew /> },
               { path: '/records/:recordId', element: <RecordDetailPage /> },
               { path: '/mypage/account', element: <MyPageAccount /> },
               { path: '/mypage/about', element: <MyPageAbout /> },
