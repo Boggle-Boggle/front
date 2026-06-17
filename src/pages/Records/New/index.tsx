@@ -1,0 +1,126 @@
+import { useState } from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useLayerStore } from 'stores/useLayerStore';
+
+import { Header } from 'components/Header';
+
+import { getAddRecordStatus } from './recordStatus';
+import { CompletionPage } from './shared/CompletionPage';
+import { ConfirmModalContent } from './shared/ConfirmModalContent';
+import { DateSelectModalContent } from './shared/DateSelectModalContent';
+import { GroupEditModalContent } from './shared/GroupEditModalContent';
+import { GroupSection } from './shared/GroupSection';
+import { PageInfoModalContent } from './shared/PageInfoModalContent';
+import { RatingSection } from './shared/RatingSection';
+import { ReadingPeriodSection } from './shared/ReadingPeriodSection';
+import { ReadingProgressSection } from './shared/ReadingProgressSection';
+import { VisibilitySection } from './shared/VisibilitySection';
+import { GROUP_ITEMS } from './shared/mock';
+
+const MSG_ADD_RECORD_TITLE = '책 추가하기';
+const MSG_ADD_RECORD_SUBMIT = '입력을 끝내고 완료하기';
+const MSG_DATE_SELECT_START = '시작일 선택하기';
+const MSG_DATE_SELECT_END = '종료일 선택하기';
+const MSG_GROUP_DELETE_TITLE = '그룹 삭제하기';
+const MSG_GROUP_DELETE_DESCRIPTION = '정말 이 그룹을 삭제하시나요?';
+const MSG_MODAL_DELETE = '삭제하기';
+
+export const NewRecord = () => {
+  const [searchParams] = useSearchParams();
+  const status = getAddRecordStatus(searchParams.get('status'));
+
+  const [rating, setRating] = useState<number>(0);
+  const [selectedGroups, setSelectedGroups] = useState<string[]>([GROUP_ITEMS[0], GROUP_ITEMS[1]]);
+  const [isCompleted, setIsCompleted] = useState<boolean>(false);
+
+  const navigate = useNavigate();
+  const { push, pop } = useLayerStore();
+
+  const handleSubmit = () => setIsCompleted(true);
+  const handleWriteNote = () => {};
+  const handleContinue = () => navigate('/search');
+
+  const handleToggleGroup = (group: string) => () => {
+    setSelectedGroups((prev) => (prev.includes(group) ? prev.filter((item) => item !== group) : [...prev, group]));
+  };
+
+  const handleOpenStartDate = () => {
+    push({
+      id: 'book-record-start-date-modal',
+      type: 'MODAL',
+      component: <DateSelectModalContent title={MSG_DATE_SELECT_START} onClose={pop} />,
+    });
+  };
+
+  const handleOpenEndDate = () => {
+    push({
+      id: 'book-record-end-date-modal',
+      type: 'MODAL',
+      component: <DateSelectModalContent title={MSG_DATE_SELECT_END} onClose={pop} />,
+    });
+  };
+
+  const handleOpenDeleteGroupModal = () => {
+    push({
+      id: 'book-record-group-delete-modal',
+      type: 'MODAL',
+      component: (
+        <ConfirmModalContent
+          title={MSG_GROUP_DELETE_TITLE}
+          description={MSG_GROUP_DELETE_DESCRIPTION}
+          confirmLabel={MSG_MODAL_DELETE}
+          onClose={pop}
+        />
+      ),
+    });
+  };
+
+  const handleOpenGroupEdit = () => {
+    push({
+      id: 'book-record-group-edit-modal',
+      type: 'MODAL',
+      component: <GroupEditModalContent onClose={pop} onDeleteGroup={handleOpenDeleteGroupModal} />,
+    });
+  };
+
+  const handleOpenPageInfo = () => {
+    push({
+      id: 'book-record-page-info-modal',
+      type: 'MODAL',
+      component: <PageInfoModalContent onClose={pop} />,
+    });
+  };
+
+  if (isCompleted) return <CompletionPage onWriteNote={handleWriteNote} onContinue={handleContinue} />;
+
+  return (
+    <div className="flex h-full flex-col">
+      <Header withBack title={MSG_ADD_RECORD_TITLE} />
+
+      <div className="flex flex-1 flex-col gap-8 overflow-y-auto px-mobile pb-safe-bottom pt-safe-top">
+        <RatingSection rating={rating} onChange={setRating} />
+        <ReadingPeriodSection onOpenStartDate={handleOpenStartDate} onOpenEndDate={handleOpenEndDate} />
+        <ReadingProgressSection status={status} onOpenPageInfo={handleOpenPageInfo} />
+        <GroupSection
+          selectedGroups={selectedGroups}
+          onOpenGroupEdit={handleOpenGroupEdit}
+          onToggleGroup={handleToggleGroup}
+        />
+        <VisibilitySection onClick={() => {}} />
+      </div>
+
+      {/* TODO 바텀버튼 수정 필요 */}
+      <div className="fixed inset-x-0 bottom-0 z-fixedBtn mx-auto flex h-[4.375rem] w-full max-w-mobile justify-end bg-neutral-0 px-mobile pb-safe-bottom pt-2">
+        <button
+          type="button"
+          onClick={handleSubmit}
+          className="h-[3.375rem] w-[16.1875rem] rounded-xl border border-neutral-40 bg-primary text-body1 text-neutral-0"
+        >
+          {MSG_ADD_RECORD_SUBMIT}
+        </button>
+      </div>
+    </div>
+  );
+};
+
+export default NewRecord;
