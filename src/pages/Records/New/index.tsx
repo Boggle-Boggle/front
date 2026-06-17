@@ -4,17 +4,17 @@ import { useLayerStore } from 'stores/useLayerStore';
 
 import { Header } from 'components/Header';
 
+import { GroupSection } from './GroupSection';
+import { RatingSection } from './RatingSection';
+import { ReadingPeriodSection } from './ReadingPeriodSection';
+import { ReadingProgressSection } from './ReadingProgressSection';
+import { VisibilitySection } from './VisibilitySection';
 import { getAddRecordStatus } from './recordStatus';
 import { CompletionPage } from './shared/CompletionPage';
 import { ConfirmModalContent } from './shared/ConfirmModalContent';
 import { DateSelectModalContent } from './shared/DateSelectModalContent';
 import { GroupEditModalContent } from './shared/GroupEditModalContent';
-import { GroupSection } from './shared/GroupSection';
 import { PageInfoModalContent } from './shared/PageInfoModalContent';
-import { RatingSection } from './shared/RatingSection';
-import { ReadingPeriodSection } from './shared/ReadingPeriodSection';
-import { ReadingProgressSection } from './shared/ReadingProgressSection';
-import { VisibilitySection } from './shared/VisibilitySection';
 import { GROUP_ITEMS } from './shared/mock';
 
 const MSG_ADD_RECORD_TITLE = '책 추가하기';
