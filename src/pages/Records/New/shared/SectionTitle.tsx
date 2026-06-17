@@ -5,5 +5,5 @@ type SectionTitleProps = {
 export const SectionTitle = (props: SectionTitleProps) => {
   const { title } = props;
 
-  return <p className="text-body1">{title}</p>;
+  return <p className="h-[1.875rem] text-body1">{title}</p>;
 };

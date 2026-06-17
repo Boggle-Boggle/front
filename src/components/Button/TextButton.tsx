@@ -47,12 +47,12 @@ export const TextButton = (props: TextButtonProps) => {
   const variantClass = disabled
     ? variant === 'default'
       ? 'text-neutral-40'
-      : variant === 'line'
+      : variant === 'primaryLine'
         ? 'bg-neutral-0 border border-neutral-20 text-neutral-40 rounded-full'
         : 'bg-neutral-20 text-neutral-40 rounded-full'
     : variant === 'default'
       ? 'text-neutral-100'
-      : variant === 'line'
+      : variant === 'primaryLine'
         ? 'bg-neutral-0 border-[1.5px] border-primary text-primary rounded-full'
         : 'bg-neutral-0 border border-neutral-20 text-neutral-100 rounded-full';
 

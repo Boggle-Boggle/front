@@ -19,7 +19,7 @@ export type TextButtonProps = {
   text: string;
   disabled?: boolean;
   size?: 'lg' | 'md' | 'sm';
-  variant?: 'default' | 'line' | 'filled';
+  variant?: 'default' | 'primaryLine' | 'filled';
   className?: string;
   leftIcon?: ElementType;
   rightIcon?: ElementType;

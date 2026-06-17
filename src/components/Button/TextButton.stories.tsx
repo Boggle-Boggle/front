@@ -18,7 +18,7 @@ const meta = {
     },
     variant: {
       control: { type: 'select' },
-      options: ['default', 'line', 'filled'],
+      options: ['default', 'primaryLine', 'filled'],
     },
     leftIcon: { control: false },
     rightIcon: { control: false },
@@ -67,14 +67,14 @@ export const FilledDisabled: Story = {
 export const Line: Story = {
   args: {
     ...defaultArgs,
-    variant: 'line',
+    variant: 'primaryLine',
   },
 };
 
 export const LineDisabled: Story = {
   args: {
     ...defaultArgs,
-    variant: 'line',
+    variant: 'primaryLine',
     disabled: true,
   },
 };
@@ -128,7 +128,7 @@ export const MediumLine: Story = {
   args: {
     ...defaultArgs,
     size: 'md',
-    variant: 'line',
+    variant: 'primaryLine',
   },
 };
 
@@ -153,7 +153,7 @@ export const MediumWithRightIconLine: Story = {
   args: {
     ...defaultArgs,
     size: 'md',
-    variant: 'line',
+    variant: 'primaryLine',
     rightIcon: IconCircleCancel,
   },
 };
@@ -177,7 +177,7 @@ export const SmallLine: Story = {
   args: {
     ...defaultArgs,
     size: 'sm',
-    variant: 'line',
+    variant: 'primaryLine',
   },
 };
 
