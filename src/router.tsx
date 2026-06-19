@@ -8,6 +8,7 @@ const BookDetail = lazy(() => import('pages/BookDetail'));
 const BookDetailReviews = lazy(() => import('pages/BookDetail/Reviews'));
 const RecordDetailPage = lazy(() => import('pages/RecordDetailPage'));
 const RecordNew = lazy(() => import('pages/Records/New'));
+const RecordNewCompleted = lazy(() => import('pages/Records/New/Completed'));
 const Report = lazy(() => import('pages/Report'));
 const WithBottomNavLayout = lazy(() => import('pages/Layout/WithBottomNavLayout'));
 const WithoutBottomNavLayout = lazy(() => import('pages/Layout/WithoutBottomNavLayout'));
@@ -75,7 +76,13 @@ const router = createBrowserRouter([
               { path: '/search/add', element: <AddCustomBook /> },
               { path: '/books/:bookId', element: <BookDetail /> },
               { path: '/books/:bookId/reviews', element: <BookDetailReviews /> },
-              { path: '/records/new', element: <RecordNew /> },
+              {
+                path: '/records/new',
+                children: [
+                  { index: true, element: <RecordNew /> },
+                  { path: 'completed', element: <RecordNewCompleted /> },
+                ],
+              },
               { path: '/records/:recordId', element: <RecordDetailPage /> },
               { path: '/mypage/account', element: <MyPageAccount /> },
               { path: '/mypage/about', element: <MyPageAbout /> },
