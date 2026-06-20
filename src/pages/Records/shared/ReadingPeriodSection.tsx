@@ -1,5 +1,5 @@
-import { ReadingPeriodButton } from './shared/ReadingPeriodButton';
-import { SectionTitle } from './shared/SectionTitle';
+import { ReadingPeriodButton } from './ReadingPeriodButton';
+import { SectionTitle } from './SectionTitle';
 
 type ReadingPeriodSectionProps = {
   onOpenStartDate: () => void;

@@ -4,7 +4,7 @@ import { useLayerStore } from 'stores/useLayerStore';
 
 import { Button } from 'components/Button';
 import { BottomSheet } from 'components/Layer/BottomSheet';
-import { ADD_RECORD_STATUS_OPTIONS, AddRecordStatus } from 'pages/Records/New/recordStatus';
+import { ADD_RECORD_STATUS_OPTIONS, AddRecordStatus } from 'pages/Records/shared/recordStatus';
 
 const MSG_ADD_RECORD_STATUS_TITLE = '이 책을 내 책 목록에 추가하시겠어요?';
 const MSG_ADD_RECORD_STATUS_DESCRIPTION = '책을 얼마나 읽으셨나요?';

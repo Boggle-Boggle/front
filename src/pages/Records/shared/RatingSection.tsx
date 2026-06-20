@@ -1,7 +1,7 @@
 import { TextButton } from 'components/Button/TextButton';
 import { StarRating } from 'components/StarRating';
 
-import { SectionTitle } from './shared/SectionTitle';
+import { SectionTitle } from './SectionTitle';
 
 type RatingSectionProps = {
   rating: number;

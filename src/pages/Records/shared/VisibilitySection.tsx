@@ -1,4 +1,4 @@
-import { SectionTitle } from './shared/SectionTitle';
+import { SectionTitle } from './SectionTitle';
 
 type VisibilitySectionProps = {
   onClick: () => void;

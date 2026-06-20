@@ -4,17 +4,17 @@ import { useLayerStore } from 'stores/useLayerStore';
 
 import { Header } from 'components/Header';
 
-import { GroupSection } from './GroupSection';
-import { RatingSection } from './RatingSection';
-import { ReadingPeriodSection } from './ReadingPeriodSection';
-import { ReadingProgressSection } from './ReadingProgressSection';
-import { VisibilitySection } from './VisibilitySection';
-import { getAddRecordStatus } from './recordStatus';
 import { ConfirmModalContent } from './shared/ConfirmModalContent';
 import { DateSelectModalContent } from './shared/DateSelectModalContent';
 import { GroupEditModalContent } from './shared/GroupEditModalContent';
 import { PageInfoModalContent } from './shared/PageInfoModalContent';
-import { GROUP_ITEMS } from './shared/mock';
+import { GroupSection } from '../shared/GroupSection';
+import { RatingSection } from '../shared/RatingSection';
+import { ReadingPeriodSection } from '../shared/ReadingPeriodSection';
+import { ReadingProgressSection } from '../shared/ReadingProgressSection';
+import { VisibilitySection } from '../shared/VisibilitySection';
+import { GROUP_ITEMS } from '../shared/mock';
+import { getAddRecordStatus } from '../shared/recordStatus';
 
 const MSG_ADD_RECORD_SUBMIT = '입력을 끝내고 완료하기';
 const MSG_DATE_SELECT_START = '시작일 선택하기';
