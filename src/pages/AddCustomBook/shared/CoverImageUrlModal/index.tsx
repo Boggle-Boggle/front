@@ -3,8 +3,7 @@ import { useLayerStore } from 'stores/useLayerStore';
 
 import { Button } from 'components/Button';
 import { Input } from 'components/Input';
-import { Modal } from 'components/Layer/Modal';
-import { IconCancel } from 'components/icons';
+import { ContentModal } from 'components/Layer/ContentModal';
 
 const MSG_ADD_CUSTOM_BOOK_COVER_IMAGE_URL_MODAL_TITLE = '이미지 URL로 입력하기';
 const MSG_ADD_CUSTOM_BOOK_COVER_IMAGE_URL_MODAL_PLACEHOLDER = '내용을 입력해주세요';
@@ -45,29 +44,23 @@ export const CoverImageUrlModal = (props: CoverImageUrlModalProps) => {
   };
 
   return (
-    <Modal>
-      <div className="flex flex-col gap-6 px-4 pb-6 pt-4">
-        <div className="grid grid-cols-[1fr_auto_1fr] items-center">
-          <div />
-          <h2 className="text-center text-body1">{MSG_ADD_CUSTOM_BOOK_COVER_IMAGE_URL_MODAL_TITLE}</h2>
-          <div className="flex justify-end">
-            <button type="button" onClick={handleClose} aria-label="닫기" className="grid size-12 place-items-center">
-              <IconCancel className="size-6 text-neutral-100" />
-            </button>
-          </div>
-        </div>
-
+    <ContentModal
+      title={MSG_ADD_CUSTOM_BOOK_COVER_IMAGE_URL_MODAL_TITLE}
+      onClose={handleClose}
+      footer={
+        <Button onClick={handleSubmit} disabled={isSubmitDisabled}>
+          {MSG_ADD_CUSTOM_BOOK_COVER_IMAGE_URL_MODAL_SUBMIT}
+        </Button>
+      }
+    >
+      <div className="flex flex-col gap-6">
         <Input
           value={imageUrl}
           onChange={handleChangeImageUrl}
           onClear={handleClearImageUrl}
           placeholder={MSG_ADD_CUSTOM_BOOK_COVER_IMAGE_URL_MODAL_PLACEHOLDER}
         />
-
-        <Button onClick={handleSubmit} disabled={isSubmitDisabled}>
-          {MSG_ADD_CUSTOM_BOOK_COVER_IMAGE_URL_MODAL_SUBMIT}
-        </Button>
       </div>
-    </Modal>
+    </ContentModal>
   );
 };
