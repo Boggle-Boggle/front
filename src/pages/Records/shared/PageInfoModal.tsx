@@ -27,7 +27,7 @@ export const PageInfoModal = (props: PageInfoModalProps) => {
   };
 
   return (
-    <ContentModal title={MSG_PAGE_INFO_TITLE} onClose={onClose} modalClassName="w-[calc(100%-3rem)]">
+    <ContentModal title={MSG_PAGE_INFO_TITLE} onClose={onClose}>
       <div className="flex flex-col gap-5">
         <label htmlFor="total-page-count" className="text-body1">
           {MSG_PAGE_INFO_LABEL}
