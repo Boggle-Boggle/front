@@ -1,5 +1,6 @@
 import { ChangeEvent, FocusEvent, useState } from 'react';
 
+import { IconButton } from 'components/Button';
 import { IconCancel } from 'components/icons';
 
 type InputStyle = 'default' | 'primary';
@@ -40,11 +41,6 @@ type TextareaFieldProps = Pick<
 > & {
   disabled: boolean;
   rows: number;
-  className: string;
-};
-
-type ClearButtonProps = {
-  onClear: () => void;
   className: string;
 };
 
@@ -99,16 +95,6 @@ const TextareaField = (props: TextareaFieldProps) => {
       rows={rows}
       className={className}
     />
-  );
-};
-
-const ClearButton = (props: ClearButtonProps) => {
-  const { onClear, className } = props;
-
-  return (
-    <button type="button" onClick={onClear} className={className} aria-label="clear">
-      <IconCancel className="size-4" />
-    </button>
   );
 };
 
@@ -239,7 +225,16 @@ export const Input = (props: InputProps) => {
         maxLength={maxLength}
         className={inputClassName}
       />
-      {showCancelBtn && <ClearButton onClear={onClear} className={`flex size-6 items-center justify-center ${clearButtonColorClass}`} />}
+      {showCancelBtn && (
+        <IconButton
+          label="clear"
+          align="right"
+          icon={IconCancel}
+          onClick={onClear}
+          size="sm"
+          className={clearButtonColorClass}
+        />
+      )}
     </div>
   );
 };
