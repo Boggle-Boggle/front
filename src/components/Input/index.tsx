@@ -8,6 +8,7 @@ type InputState = 'default' | 'error' | 'disabled';
 type InputVariant = InputStyle | Exclude<InputState, 'default'>;
 
 type InputProps = {
+  id?: string;
   variant?: InputVariant;
   style?: InputStyle;
   state?: InputState;
@@ -29,7 +30,7 @@ type InputProps = {
 
 type InputFieldProps = Pick<
   InputProps,
-  'value' | 'onChange' | 'onFocus' | 'onBlur' | 'type' | 'name' | 'placeholder' | 'min' | 'max' | 'maxLength'
+  'id' | 'value' | 'onChange' | 'onFocus' | 'onBlur' | 'type' | 'name' | 'placeholder' | 'min' | 'max' | 'maxLength'
 > & {
   disabled: boolean;
   className: string;
@@ -59,10 +60,12 @@ const getInputState = (variant: InputVariant | undefined, state: InputState | un
 };
 
 const InputField = (props: InputFieldProps) => {
-  const { disabled, value, onChange, onFocus, onBlur, type, name, placeholder, min, max, maxLength, className } = props;
+  const { id, disabled, value, onChange, onFocus, onBlur, type, name, placeholder, min, max, maxLength, className } =
+    props;
 
   return (
     <input
+      id={id}
       disabled={disabled}
       value={value}
       onChange={onChange}
@@ -100,6 +103,7 @@ const TextareaField = (props: TextareaFieldProps) => {
 
 export const Input = (props: InputProps) => {
   const {
+    id,
     variant = 'default',
     style,
     state,
@@ -180,6 +184,9 @@ export const Input = (props: InputProps) => {
   const inputClassName = [
     'body1 min-w-0 bg-transparent outline-none disabled:text-neutral-40',
     multiline ? 'min-h-[6.5rem] w-full resize-none px-3 py-3' : 'flex-1',
+    type === 'number'
+      ? '[appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none'
+      : '',
     inputTextColorClass,
     inputPlaceholderColorClass,
   ]
@@ -212,6 +219,7 @@ export const Input = (props: InputProps) => {
   return (
     <div className={wrapperClassName}>
       <InputField
+        id={id}
         disabled={isDisabled}
         value={value}
         onChange={onChange}
