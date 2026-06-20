@@ -4,11 +4,11 @@ import { useLayerStore } from 'stores/useLayerStore';
 
 import { Header } from 'components/Header';
 
-import { ConfirmModalContent } from './shared/ConfirmModalContent';
-import { DateSelectModalContent } from './shared/DateSelectModalContent';
-import { GroupEditModalContent } from './shared/GroupEditModalContent';
-import { PageInfoModalContent } from './shared/PageInfoModalContent';
+import { ConfirmModal } from '../shared/ConfirmModal';
+import { DateSelectModal } from '../shared/DateSelectModal';
+import { GroupEditModal } from '../shared/GroupEditModal';
 import { GroupSection } from '../shared/GroupSection';
+import { PageInfoModal } from '../shared/PageInfoModal';
 import { RatingSection } from '../shared/RatingSection';
 import { ReadingPeriodSection } from '../shared/ReadingPeriodSection';
 import { ReadingProgressSection } from '../shared/ReadingProgressSection';
@@ -41,14 +41,14 @@ export const NewRecord = () => {
   const handleOpenStartDate = () => {
     push({
       id: 'book-record-start-date-modal',
-      component: <DateSelectModalContent title={MSG_DATE_SELECT_START} onClose={pop} />,
+      component: <DateSelectModal title={MSG_DATE_SELECT_START} onClose={pop} />,
     });
   };
 
   const handleOpenEndDate = () => {
     push({
       id: 'book-record-end-date-modal',
-      component: <DateSelectModalContent title={MSG_DATE_SELECT_END} onClose={pop} />,
+      component: <DateSelectModal title={MSG_DATE_SELECT_END} onClose={pop} />,
     });
   };
 
@@ -56,7 +56,7 @@ export const NewRecord = () => {
     push({
       id: 'book-record-group-delete-modal',
       component: (
-        <ConfirmModalContent
+        <ConfirmModal
           title={MSG_GROUP_DELETE_TITLE}
           description={MSG_GROUP_DELETE_DESCRIPTION}
           confirmLabel={MSG_MODAL_DELETE}
@@ -69,14 +69,14 @@ export const NewRecord = () => {
   const handleOpenGroupEdit = () => {
     push({
       id: 'book-record-group-edit-modal',
-      component: <GroupEditModalContent onClose={pop} onDeleteGroup={handleOpenDeleteGroupModal} />,
+      component: <GroupEditModal onClose={pop} onDeleteGroup={handleOpenDeleteGroupModal} />,
     });
   };
 
   const handleOpenPageInfo = () => {
     push({
       id: 'book-record-page-info-modal',
-      component: <PageInfoModalContent onClose={pop} />,
+      component: <PageInfoModal onClose={pop} />,
     });
   };
 
