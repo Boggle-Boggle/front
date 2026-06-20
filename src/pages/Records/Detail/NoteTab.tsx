@@ -1,6 +1,6 @@
 import IconButton from 'components/Button/IconButton';
 import { TextButton } from 'components/Button/TextButton';
-import { IconFileCopy, IconPen } from 'components/icons';
+import { IconEdit, IconEllipsisVertical } from 'components/icons';
 
 const NOTE_COUNT_TEXT = '8개의 독서 노트가 있습니다';
 const NOTE_MORE_TEXT = '노트 전체보기';
@@ -58,58 +58,65 @@ const NOTE_CARDS = [
 export const NoteTab = () => {
   const handleMoreClick = () => {};
   const handleFloatingClick = () => {};
+  const handleCardMenuClick = () => {};
+
+  const cardShadow = 'shadow-[0_2px_10px_rgba(0,0,0,0.16)]';
 
   return (
-    <section className="pb-safe-bottom pt-4">
-      <div className="flex items-center justify-between gap-3">
-        <p className="text-caption1 text-neutral-60">
-          {NOTE_COUNT_TEXT}
-        </p>
+    <section className="pb-safe-bottom">
+      <div className="flex items-center justify-between">
+        <p className="text-caption1 text-neutral-60">{NOTE_COUNT_TEXT}</p>
         <TextButton onClick={handleMoreClick} text={NOTE_MORE_TEXT} size="md" variant="default" />
       </div>
 
-      <ul className="mt-4 space-y-4 pb-24">
+      <ul className="mt-6">
         {NOTE_CARDS.map((card) => (
-          <li
-            key={`${card.number}-${card.title}`}
-            className="rounded-2xl border border-neutral-10 bg-neutral-0 p-4 shadow-[0_2px_10px_rgba(0,0,0,0.16)]"
-          >
-            <div className="flex items-start justify-between gap-4">
-              <div className="flex flex-1 items-start gap-2">
-                <span className="text-title4 text-neutral-100">{card.number}</span>
-                <div className="min-w-0 flex-1">
-                  <p className="break-words text-body1 text-neutral-100">{card.title}</p>
-                  <p className="mt-2 break-words text-body1 text-neutral-80">{card.content}</p>
-                  <p className="mt-3 text-caption1 text-neutral-60">{card.date}</p>
-                </div>
+          <li key={`${card.number}-${card.title}`} className={`mb-5 rounded-2xl px-4 py-6 ${cardShadow}`}>
+            {/* 카드 헤더 */}
+            <div className="flex items-start justify-between gap-3">
+              <div className="flex items-center gap-2">
+                <span className="text-h2 text-neutral-80">{card.number}</span>
+                <p className="break-words text-caption1 text-neutral-60">{card.title}</p>
               </div>
 
-              <IconButton onClick={handleMoreClick} label="노트 복사" icon={IconFileCopy} size="sm" />
+              <IconButton
+                onClick={handleCardMenuClick}
+                label="메모 더보기"
+                icon={IconEllipsisVertical}
+                size="sm"
+                align="right"
+              />
             </div>
 
-            <div className="mt-4 flex flex-wrap items-center gap-2">
-              {card.tags.map((tag) => (
-                <span
-                  key={`${card.title}-${tag}`}
-                  className="inline-flex items-center rounded-full border border-primary bg-neutral-0 px-2 py-0.5 text-caption1 text-primary"
-                >
-                  {tag}
-                </span>
-              ))}
-              <span className="text-caption1 text-neutral-60">{card.extraCount}</span>
+            {/* 카드 본문 */}
+            <div className="mt-3">
+              <p className="break-words text-body1 text-neutral-80">{card.content}</p>
+              <p className="mt-2 text-caption1 text-neutral-60">{card.date}</p>
+            </div>
+
+            {/* 카드 푸터 */}
+            {/* TODO 각 해시태그 컴포넌트화 */}
+            <div className="mt-4 flex items-center justify-between gap-3">
+              <div className="flex flex-wrap items-center gap-2">
+                {card.tags.map((tag) => (
+                  <span
+                    key={`${card.title}-${tag}`}
+                    className="inline-flex items-center rounded-full border border-primary px-2 py-0.5 text-caption1 text-primary"
+                  >
+                    {tag}
+                  </span>
+                ))}
+                <span className="text-caption1 text-neutral-60">{card.extraCount}</span>
+              </div>
             </div>
           </li>
         ))}
       </ul>
 
-      <button
-        type="button"
-        aria-label="독서 노트 작성"
-        onClick={handleFloatingClick}
-        className="fixed bottom-6 right-mobile flex h-14 w-14 items-center justify-center rounded-full bg-primary text-neutral-0 shadow-[0_8px_24px_rgba(0,0,0,0.24)]"
-      >
-        <IconPen className="size-icon-md" />
-      </button>
+      {/* 독서노트 작성 플로팅 */}
+      <div className="fixed bottom-6 right-mobile">
+        <IconButton onClick={handleFloatingClick} label="독서 노트 작성" icon={IconEdit} size="md" />
+      </div>
     </section>
   );
 };
