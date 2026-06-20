@@ -4,8 +4,8 @@ import { useLayerStore } from 'stores/useLayerStore';
 
 import { Header } from 'components/Header';
 
-import { ConfirmModal } from '../shared/ConfirmModal';
 import { DateSelectModal } from '../shared/DateSelectModal';
+import { GroupDeleteConfirmModal } from '../shared/GroupDeleteConfirmModal';
 import { GroupEditModal } from '../shared/GroupEditModal';
 import { GroupSection } from '../shared/GroupSection';
 import { PageInfoModal } from '../shared/PageInfoModal';
@@ -19,10 +19,6 @@ import { getAddRecordStatus } from '../shared/recordStatus';
 const MSG_ADD_RECORD_SUBMIT = '입력을 끝내고 완료하기';
 const MSG_DATE_SELECT_START = '시작일 선택하기';
 const MSG_DATE_SELECT_END = '종료일 선택하기';
-const MSG_GROUP_DELETE_TITLE = '그룹 삭제하기';
-const MSG_GROUP_DELETE_DESCRIPTION = '정말 이 그룹을 삭제하시나요?';
-const MSG_MODAL_DELETE = '삭제하기';
-
 export const NewRecord = () => {
   const [searchParams] = useSearchParams();
   const [rating, setRating] = useState<number>(0);
@@ -55,14 +51,7 @@ export const NewRecord = () => {
   const handleOpenDeleteGroupModal = () => {
     push({
       id: 'book-record-group-delete-modal',
-      component: (
-        <ConfirmModal
-          title={MSG_GROUP_DELETE_TITLE}
-          description={MSG_GROUP_DELETE_DESCRIPTION}
-          confirmLabel={MSG_MODAL_DELETE}
-          onClose={pop}
-        />
-      ),
+      component: <GroupDeleteConfirmModal onClose={pop} />,
     });
   };
 
