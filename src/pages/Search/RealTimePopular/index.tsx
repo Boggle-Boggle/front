@@ -38,7 +38,7 @@ const RealTimePopular = () => {
               ) : (
                 <p className="w-8 text-body2">{getRankLabel(rank)}</p>
               )}
-              <BookCover className="mx-[0.625rem] w-20" url={url} rounded="sm" />
+              <BookCover className="mx-[0.625rem] w-20" url={url} variant="clear" rounded="sm" />
               <div className="flex min-w-0 flex-col justify-center gap-1">
                 <p className="line-clamp-1 text-title3">{bookTitle}</p>
                 <p className="line-clamp-1 text-caption1 text-neutral-60">{author}</p>

@@ -21,7 +21,7 @@ export const SearchResultItem = (props: SearchResultItemProps) => {
 
   return (
     <Link to={`/books/${isbn}`} className="flex w-full gap-5 py-4">
-      <BookCover className="w-20" url={cover} label={title} shadowLeftBar rounded="sm" />
+      <BookCover className="w-20" url={cover} label={title} variant="mockup" rounded="sm" />
       <div className="flex flex-1 flex-col justify-start">
         <p className="line-clamp-2 pb-1 text-title3">{title}</p>
         <p className="line-clamp-1 text-caption1 text-neutral-60">{author}</p>

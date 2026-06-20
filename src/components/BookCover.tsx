@@ -3,10 +3,12 @@ import { ReactNode } from 'react';
 import { Badge } from 'components/Badge';
 
 type ReadingStatusBadge = 'reading' | 'read' | 'stopped';
+type BookCoverStyle = 'clear' | 'mockup';
 
 type BookCoverProps = {
   url: string;
   label?: string;
+  variant?: BookCoverStyle;
   ratio?: number;
   rounded?: 'sm' | 'lg';
   isAdult?: boolean;
@@ -20,6 +22,7 @@ type BookCoverProps = {
 const MSG_BOOK_COVER_BADGE_READING = '읽는중';
 const MSG_BOOK_COVER_BADGE_READ = '읽음';
 const MSG_BOOK_COVER_BADGE_STOPPED = '중단';
+const DEFAULT_BOOK_COVER_RATIO = 3 / 4;
 
 const getReadingStatusBadgeLabel = (badge: ReadingStatusBadge) => {
   if (badge === 'reading') return MSG_BOOK_COVER_BADGE_READING;
@@ -28,9 +31,20 @@ const getReadingStatusBadgeLabel = (badge: ReadingStatusBadge) => {
   return MSG_BOOK_COVER_BADGE_STOPPED;
 };
 
+const getBookCoverStyle = (variant?: BookCoverStyle, shadowLeftBar?: boolean, shadowRightTriangle?: boolean) => {
+  if (variant) return variant;
+  if (shadowLeftBar || shadowRightTriangle) return 'mockup';
+
+  return 'clear';
+};
+
+const getBookCoverRoundedClass = (rounded: 'sm' | 'lg') => {
+  return rounded === 'sm' ? 'rounded' : 'rounded-md';
+};
+
 const ShadowLeftBar = () => (
   <span
-    className="pointer-events-none absolute left-0 top-0 z-bookShadow h-full w-[9px] mix-blend-multiply"
+    className="pointer-events-none absolute left-0 top-0 z-bookShadow h-full w-[8.5%] min-w-[0.28125rem] max-w-[0.5625rem] mix-blend-multiply"
     style={{ background: 'linear-gradient(90deg, #FFFFFF 65%, #E0E0E0 100%)' }}
   />
 );
@@ -74,25 +88,32 @@ export const BookCover = (props: BookCoverProps) => {
   const {
     url,
     label = '',
+    variant,
     isAdult = false,
     readingStatusBadge,
     shadowLeftBar = false,
     shadowRightTriangle = false,
     overlayBottomRight,
-    ratio = 3 / 4,
+    ratio = DEFAULT_BOOK_COVER_RATIO,
     className = '',
     rounded = 'lg',
   } = props;
-  const roundedClass = rounded === 'sm' ? 'rounded' : 'rounded-md';
+  const resolvedStyle = getBookCoverStyle(variant, shadowLeftBar, shadowRightTriangle);
+  const roundedClass = getBookCoverRoundedClass(rounded);
+  const frameClass =
+    resolvedStyle === 'mockup'
+      ? `relative w-full overflow-hidden bg-[linear-gradient(270deg,_#F9F9F9_0%,_#FFFFFF_90.87%,_#D9D9D9_100%)] ${roundedClass}`
+      : `relative w-full overflow-hidden ring-1 ring-neutral-20 ${roundedClass}`;
+  const imageClass =
+    resolvedStyle === 'mockup'
+      ? 'absolute inset-0 z-bookShadow h-full w-full object-cover mix-blend-multiply'
+      : 'absolute inset-0 z-bookShadow h-full w-full object-cover';
 
   return (
     <div className={`relative ${className}`}>
-      <div
-        className={`relative w-full overflow-hidden ring-1 ring-neutral-20 ${roundedClass}`}
-        style={{ aspectRatio: ratio }}
-      >
-        <img className="absolute inset-0 z-bookShadow h-full w-full object-cover" src={url} alt={label} />
-        {shadowLeftBar && <ShadowLeftBar />}
+      <div className={frameClass} style={{ aspectRatio: ratio }}>
+        <img className={imageClass} src={url} alt={label} />
+        {resolvedStyle === 'mockup' && <ShadowLeftBar />}
         {overlayBottomRight && <div className="absolute bottom-0 right-0 z-badge">{overlayBottomRight}</div>}
         {isAdult && <div className="absolute right-1 top-1 z-badge">19</div>}
         {readingStatusBadge && (

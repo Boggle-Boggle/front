@@ -23,6 +23,7 @@ export const AuthorOtherWorksSection = () => {
             <BookCover
               className="w-[6.25rem]"
               url="https://contents.kyobobook.co.kr/sih/pdt/fit-in/198x396/9788901299402.jpg"
+              variant="clear"
             />
           </div>
           <div className="min-w-0">

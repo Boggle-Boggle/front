@@ -39,15 +39,17 @@ export const ReadingBooksList = (props: ReadingBooksListProps) => {
                 className="ml-mobile w-20 shrink-0"
                 url={cover}
                 label={title}
+                variant="mockup"
                 rounded="sm"
                 isAdult={isAdult}
-                shadowLeftBar
                 shadowRightTriangle
                 readingStatusBadge={readingStatusBadge}
               />
               <div className="z-book min-w-0 pl-5 pr-mobile">
                 <p className="line-clamp-2 text-title3">{title}</p>
-                <p className="line-clamp-1 pb-0.5 text-caption1 text-neutral-80">{MSG_MYBOOKS_LIST_AUTHOR_PLACEHOLDER}</p>
+                <p className="line-clamp-1 pb-0.5 text-caption1 text-neutral-80">
+                  {MSG_MYBOOKS_LIST_AUTHOR_PLACEHOLDER}
+                </p>
                 <StarRating value={rating} size={14} className="text-[#FFAA00]" />
                 <p className="text-caption1 text-neutral-40">{MSG_MYBOOKS_LIST_PERIOD_PLACEHOLDER}</p>
               </div>

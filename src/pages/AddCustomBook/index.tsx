@@ -86,7 +86,7 @@ export const AddCustomBook = () => {
           <BookCover
             className="w-full"
             url={coverImageUrl}
-            shadowLeftBar
+            variant="mockup"
             rounded="sm"
             overlayBottomRight={
               <button

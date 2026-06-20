@@ -41,7 +41,7 @@ export const WishlistSection = (props: WishlistSectionProps) => {
             className="flex items-center justify-between gap-4 border-b border-neutral-20 py-4 last:border-b-0"
           >
             <div className="flex min-w-0 items-stretch self-stretch">
-              <BookCover className="w-20 shrink-0" url={book.cover} label={book.title} rounded="sm" />
+              <BookCover className="w-20 shrink-0" url={book.cover} label={book.title} variant="clear" rounded="sm" />
               <div className="flex min-w-0 flex-1 flex-col pl-4">
                 <p className="line-clamp-2 text-body1">{book.title}</p>
                 <p className="line-clamp-1 text-caption1 text-neutral-80">{MSG_MYBOOKS_WISHLIST_AUTHOR_PLACEHOLDER}</p>

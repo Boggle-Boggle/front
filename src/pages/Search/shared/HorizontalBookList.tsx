@@ -17,7 +17,7 @@ export const HorizontalBookList = () => {
         {items.map(({ id, title, author, url }) => (
           <li key={id} className="w-[6.25rem] shrink-0">
             <Link to={`/books/${id}`} className="w-full">
-              <BookCover className="w-full" url={url} />
+              <BookCover className="w-full" url={url} variant="clear" />
               <p className="text-title3">{title}</p>
               <p className="text-caption1 text-neutral-40">{author}</p>
             </Link>

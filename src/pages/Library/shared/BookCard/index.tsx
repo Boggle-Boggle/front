@@ -31,9 +31,9 @@ export const BookCard = (props: BookCardProps) => {
       <BookCover
         url={book.cover}
         label={book.title}
+        variant="mockup"
         rounded="sm"
         isAdult={book.isAdult}
-        shadowLeftBar
         shadowRightTriangle
         readingStatusBadge={readingStatusBadge}
       />

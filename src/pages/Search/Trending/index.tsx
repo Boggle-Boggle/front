@@ -25,7 +25,7 @@ const Trending = () => {
           <ul className="grid grid-cols-3 gap-x-2 gap-y-9">
             {books.map((book) => (
               <li key={book.id} className="w-full">
-                <BookCover className="w-full" url={book.cover} />
+                <BookCover className="w-full" url={book.cover} variant="clear" />
                 <p className="text-neutral-90 line-clamp-2 pt-2 text-title3">{book.title}</p>
                 <p className="line-clamp-1 text-caption1 text-neutral-40">{book.author}</p>
               </li>
