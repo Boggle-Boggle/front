@@ -6,7 +6,7 @@ import App from './App';
 const Auth = lazy(() => import('pages/Auth'));
 const BookDetail = lazy(() => import('pages/BookDetail'));
 const BookDetailReviews = lazy(() => import('pages/BookDetail/Reviews'));
-const RecordDetailPage = lazy(() => import('pages/RecordDetailPage'));
+const RecordDetailPage = lazy(() => import('pages/Records/Detail'));
 const RecordNew = lazy(() => import('pages/Records/New'));
 const RecordNewCompleted = lazy(() => import('pages/Records/New/Completed'));
 const Report = lazy(() => import('pages/Report'));
