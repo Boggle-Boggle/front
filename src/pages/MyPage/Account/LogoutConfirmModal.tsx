@@ -1,5 +1,4 @@
-import { Button } from 'components/Button';
-import { Modal } from 'components/Layer/Modal';
+import { ActionModal } from 'components/Layer/ActionModal';
 
 type LogoutConfirmModalProps = {
   onCancel: () => void;
@@ -15,21 +14,15 @@ const LogoutConfirmModal = (props: LogoutConfirmModalProps) => {
   const { onCancel, onConfirm } = props;
 
   return (
-    <Modal>
-      <div className="flex flex-col gap-1 pb-4">
-        <h2 className="text-title2">{MSG_LOGOUT_TITLE}</h2>
-        <p className="text-body1 text-neutral-60">{MSG_LOGOUT_DESCRIPTION}</p>
-      </div>
-
-      <div className="flex items-center gap-1 text-body1">
-        <Button onClick={onCancel} variant="grey" size="small">
-          {MSG_LOGOUT_CANCEL}
-        </Button>
-        <Button onClick={onConfirm} variant="warning" size="small">
-          {MSG_LOGOUT_CONFIRM}
-        </Button>
-      </div>
-    </Modal>
+    <ActionModal
+      title={MSG_LOGOUT_TITLE}
+      description={MSG_LOGOUT_DESCRIPTION}
+      cancelLabel={MSG_LOGOUT_CANCEL}
+      confirmLabel={MSG_LOGOUT_CONFIRM}
+      onCancel={onCancel}
+      onConfirm={onConfirm}
+      confirmVariant="warning"
+    />
   );
 };
 

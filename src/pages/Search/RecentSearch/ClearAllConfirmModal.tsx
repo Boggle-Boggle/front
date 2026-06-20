@@ -1,7 +1,6 @@
 import { useLayerStore } from 'stores/useLayerStore';
 
-import { Button } from 'components/Button';
-import { Modal } from 'components/Layer/Modal';
+import { ActionModal } from 'components/Layer/ActionModal';
 
 type ClearAllConfirmModalProps = {
   onConfirm: () => void;
@@ -24,21 +23,14 @@ export const ClearAllConfirmModal = (props: ClearAllConfirmModalProps) => {
   };
 
   return (
-    <Modal>
-      <div className="flex flex-col gap-5 px-5 py-5">
-        <div className="flex flex-col gap-1">
-          <h2 className="text-title2 text-neutral-100">{MSG_RECENT_SEARCH_CLEAR_TITLE}</h2>
-          <p className="text-body1 text-neutral-60">{MSG_RECENT_SEARCH_CLEAR_DESCRIPTION}</p>
-        </div>
-        <div className="flex gap-1">
-          <Button onClick={handleClose} variant="grey" size="small" className="flex-1">
-            {MSG_RECENT_SEARCH_CLEAR_CANCEL}
-          </Button>
-          <Button onClick={handleConfirm} variant="grey" size="small" className="flex-1">
-            {MSG_RECENT_SEARCH_CLEAR_CONFIRM}
-          </Button>
-        </div>
-      </div>
-    </Modal>
+    <ActionModal
+      title={MSG_RECENT_SEARCH_CLEAR_TITLE}
+      description={MSG_RECENT_SEARCH_CLEAR_DESCRIPTION}
+      cancelLabel={MSG_RECENT_SEARCH_CLEAR_CANCEL}
+      confirmLabel={MSG_RECENT_SEARCH_CLEAR_CONFIRM}
+      onCancel={handleClose}
+      onConfirm={handleConfirm}
+      confirmVariant="grey"
+    />
   );
 };
