@@ -18,14 +18,13 @@ export const ReadingPeriodSection = (props: ReadingPeriodSectionProps) => {
     <section className="w-full">
       <SectionTitle title={MSG_ADD_RECORD_PERIOD_TITLE} />
       <div className="flex items-center justify-center gap-4">
-        <ReadingPeriodButton
-          label={MSG_ADD_RECORD_START_DATE}
-          value="00.00.00"
-          isActive
-          onClick={onOpenStartDate}
-        />
+        <ReadingPeriodButton label={MSG_ADD_RECORD_START_DATE} value="00.00.00" isActive onClick={onOpenStartDate} />
         ~
-        <ReadingPeriodButton label={MSG_ADD_RECORD_END_DATE} value={MSG_ADD_RECORD_READING_NOW} onClick={onOpenEndDate} />
+        <ReadingPeriodButton
+          label={MSG_ADD_RECORD_END_DATE}
+          value={MSG_ADD_RECORD_READING_NOW}
+          onClick={onOpenEndDate}
+        />
       </div>
     </section>
   );
