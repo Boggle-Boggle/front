@@ -33,6 +33,9 @@ export const RecordDetailPage = () => {
         cover="https://image.aladin.co.kr/product/36466/21/cover500/k572039816_1.jpg"
         title="리얼파리"
         author="황보경"
+        rating="0.0"
+        readingStatus="읽는중"
+        noteCount="6개"
       />
 
       <div className="px-mobile">
