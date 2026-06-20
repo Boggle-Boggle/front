@@ -24,7 +24,6 @@ export const RecentSearchSection = () => {
 
     push({
       id: LAYER_ID_RECENT_SEARCH_CLEAR_ALL,
-      type: 'MODAL',
       component: <ClearAllConfirmModal onConfirm={() => setRecentTags([])} />,
     });
   };

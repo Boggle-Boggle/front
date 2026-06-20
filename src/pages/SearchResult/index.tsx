@@ -52,7 +52,6 @@ const SearchResult = () => {
   const handleOpenFilter = () => {
     push({
       id: LAYER_ID_SEARCH_FILTER,
-      type: 'BOTTOM_SHEET',
       component: <SearchFilterActionSheet selectedFilter={searchFilter} onSelectFilter={setSearchFilter} />,
     });
   };

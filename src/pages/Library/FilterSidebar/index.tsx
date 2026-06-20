@@ -2,6 +2,7 @@ import { useState } from 'react';
 
 import { Button, TextButton } from 'components/Button';
 import { Divider } from 'components/Divider';
+import { SideBar } from 'components/Layer/SideBar';
 import { Radio } from 'components/Radio';
 import { IconArrowRight, IconCirclePlus } from 'components/icons';
 
@@ -55,81 +56,83 @@ export const FilterSidebar = (props: FilterSidebarProps) => {
   const handleCreateGroup = () => undefined;
 
   return (
-    <div className="flex flex-col justify-between px-[26px] pb-[14px] pt-6">
-      {/* 헤더 */}
-      <div className="flex items-center justify-between pb-3">
-        <p className="text-title2">{MSG_MYBOOKS_FILTER_TITLE}</p>
-        <Button variant="primary" size="small" width="short" onClick={handleApplyFilter}>
-          {MSG_MYBOOKS_FILTER_COMPLETE}
-        </Button>
-      </div>
-
-      {/* 독서 상태 */}
-      <div className="flex-1 overflow-y-auto">
-        {filterOptions.map((option) => {
-          const isChecked = draftFilter === option.value;
-          const statusLabel = typeof option.count === 'number' ? `${option.label} (${option.count})` : option.label;
-
-          return (
-            <button
-              key={option.value}
-              type="button"
-              className="flex w-full items-center justify-between py-3 text-body1 text-neutral-80"
-              onClick={handleSelectFilter(option.value)}
-            >
-              {statusLabel}
-              <Radio
-                id={`mybooks-filter-${option.value}`}
-                name="mybooks-filter"
-                checked={isChecked}
-                onChange={handleSelectFilter(option.value)}
-                variant="primary"
-              />
-            </button>
-          );
-        })}
-
-        <Divider className="my-4 border-neutral-20" />
-
-        {/* 그룹 보기 */}
-        <p className="text-title3">{MSG_MYBOOKS_FILTER_GROUP_VIEW}</p>
-        <div className="mt-2">
-          {GROUP_ITEMS.map((group) => {
-            const groupLabel = `${group.label} (${group.count})`;
-
-            return (
-              <div key={group.id} className="py-3 text-body1 text-neutral-100">
-                {groupLabel}
-              </div>
-            );
-          })}
+    <SideBar>
+      <div className="flex flex-col justify-between px-[26px] pb-[14px] pt-6">
+        {/* 헤더 */}
+        <div className="flex items-center justify-between pb-3">
+          <p className="text-title2">{MSG_MYBOOKS_FILTER_TITLE}</p>
+          <Button variant="primary" size="small" width="short" onClick={handleApplyFilter}>
+            {MSG_MYBOOKS_FILTER_COMPLETE}
+          </Button>
         </div>
 
-        <TextButton
-          text={MSG_MYBOOKS_FILTER_CREATE_GROUP}
-          leftIcon={IconCirclePlus}
-          onClick={handleCreateGroup}
-          className="justify-starts my-2 flex w-full rounded-lg bg-neutral-20 py-2 text-title3 text-neutral-60"
-          size="lg"
-        />
-
-        <Divider className="my-4 border-neutral-20" />
-
-        {/* 기간 보기 */}
-        <p className="text-title3">{MSG_MYBOOKS_FILTER_PERIOD_VIEW}</p>
-        <div className="mt-1">
-          {PERIOD_ITEMS.map((period) => {
-            const periodLabel = `${period.label} (${period.count})`;
+        {/* 독서 상태 */}
+        <div className="flex-1 overflow-y-auto">
+          {filterOptions.map((option) => {
+            const isChecked = draftFilter === option.value;
+            const statusLabel = typeof option.count === 'number' ? `${option.label} (${option.count})` : option.label;
 
             return (
-              <button key={period.id} type="button" className="flex w-full items-center py-3 text-left text-neutral-80">
-                <IconArrowRight className="mr-2 size-icon-sm" />
-                <span className="text-title3">{periodLabel}</span>
+              <button
+                key={option.value}
+                type="button"
+                className="flex w-full items-center justify-between py-3 text-body1 text-neutral-80"
+                onClick={handleSelectFilter(option.value)}
+              >
+                {statusLabel}
+                <Radio
+                  id={`mybooks-filter-${option.value}`}
+                  name="mybooks-filter"
+                  checked={isChecked}
+                  onChange={handleSelectFilter(option.value)}
+                  variant="primary"
+                />
               </button>
             );
           })}
+
+          <Divider className="my-4 border-neutral-20" />
+
+          {/* 그룹 보기 */}
+          <p className="text-title3">{MSG_MYBOOKS_FILTER_GROUP_VIEW}</p>
+          <div className="mt-2">
+            {GROUP_ITEMS.map((group) => {
+              const groupLabel = `${group.label} (${group.count})`;
+
+              return (
+                <div key={group.id} className="py-3 text-body1 text-neutral-100">
+                  {groupLabel}
+                </div>
+              );
+            })}
+          </div>
+
+          <TextButton
+            text={MSG_MYBOOKS_FILTER_CREATE_GROUP}
+            leftIcon={IconCirclePlus}
+            onClick={handleCreateGroup}
+            className="justify-starts my-2 flex w-full rounded-lg bg-neutral-20 py-2 text-title3 text-neutral-60"
+            size="lg"
+          />
+
+          <Divider className="my-4 border-neutral-20" />
+
+          {/* 기간 보기 */}
+          <p className="text-title3">{MSG_MYBOOKS_FILTER_PERIOD_VIEW}</p>
+          <div className="mt-1">
+            {PERIOD_ITEMS.map((period) => {
+              const periodLabel = `${period.label} (${period.count})`;
+
+              return (
+                <button key={period.id} type="button" className="flex w-full items-center py-3 text-left text-neutral-80">
+                  <IconArrowRight className="mr-2 size-icon-sm" />
+                  <span className="text-title3">{periodLabel}</span>
+                </button>
+              );
+            })}
+          </div>
         </div>
       </div>
-    </div>
+    </SideBar>
   );
 };

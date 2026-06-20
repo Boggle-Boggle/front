@@ -17,16 +17,18 @@ const WithdrawConfirmModal = (props: WithdrawConfirmModalProps) => {
 
   return (
     <Modal>
-      <h2 className="pb-1 text-title2">{MSG_WITHDRAW_MODAL_TITLE}</h2>
-      <p className="whitespace-pre-line text-body1 text-neutral-60">{MSG_WITHDRAW_MODAL_DESCRIPTION}</p>
+      <div className="flex flex-col px-5 py-5">
+        <h2 className="pb-1 text-title2">{MSG_WITHDRAW_MODAL_TITLE}</h2>
+        <p className="whitespace-pre-line text-body1 text-neutral-60">{MSG_WITHDRAW_MODAL_DESCRIPTION}</p>
 
-      <div className="flex items-center gap-1 pt-5">
-        <Button onClick={onCancel} variant="grey" size="small">
-          {MSG_WITHDRAW_MODAL_CANCEL}
-        </Button>
-        <Button onClick={onConfirm} variant="warning" size="small">
-          {MSG_WITHDRAW_MODAL_CONFIRM}
-        </Button>
+        <div className="flex items-center gap-1 pt-5">
+          <Button onClick={onCancel} variant="grey" size="small">
+            {MSG_WITHDRAW_MODAL_CANCEL}
+          </Button>
+          <Button onClick={onConfirm} variant="warning" size="small">
+            {MSG_WITHDRAW_MODAL_CONFIRM}
+          </Button>
+        </div>
       </div>
     </Modal>
   );

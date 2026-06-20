@@ -1,11 +1,11 @@
 import { useNavigate } from 'react-router-dom';
 import { useLayerStore } from 'stores/useLayerStore';
 
-import { ActionSheet } from 'components/Layer/ActionSheet';
 import { ToggleButton } from 'components/ToggleButton';
 import { IconHeart, IconHeartFilled } from 'components/icons';
 
 import { BlockUserConfirmModal } from '../BlockUserConfirmModal';
+import { ReviewActionSheet } from './ReviewActionSheet';
 import { BookReview, CURRENT_REVIEW_USER_ID } from '../review.mock';
 
 type ReviewCardProps = {
@@ -13,8 +13,6 @@ type ReviewCardProps = {
   onToggleLike?: (reviewId: string) => void;
 };
 
-const MSG_REVIEW_REPORT = '신고';
-const MSG_REVIEW_BLOCK = '차단';
 const MSG_REVIEW_ID_PREFIX = '님';
 const MSG_MY_REVIEW = '나의 리뷰';
 const MSG_REVIEW_SPOILER = '스포일러가 포함 된 리뷰입니다.\n리뷰를 보려면 박스를 터치하세요.';
@@ -31,7 +29,6 @@ export const ReviewCard = (props: ReviewCardProps) => {
   const handleBlockClick = () => {
     push({
       id: `book-detail-review-block-user-modal-${id}`,
-      type: 'MODAL',
       component: <BlockUserConfirmModal />,
     });
   };
@@ -39,23 +36,7 @@ export const ReviewCard = (props: ReviewCardProps) => {
   const handleOpenActionSheet = () => {
     push({
       id: `book-detail-review-action-sheet-${id}`,
-      type: 'BOTTOM_SHEET',
-      component: (
-        <ActionSheet
-          items={[
-            {
-              key: 'report',
-              label: MSG_REVIEW_REPORT,
-              onSelect: handleReportClick,
-            },
-            {
-              key: 'block',
-              label: MSG_REVIEW_BLOCK,
-              onSelect: handleBlockClick,
-            },
-          ]}
-        />
-      ),
+      component: <ReviewActionSheet onReport={handleReportClick} onBlock={handleBlockClick} />,
     });
   };
 

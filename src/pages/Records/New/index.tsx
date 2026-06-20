@@ -41,7 +41,6 @@ export const NewRecord = () => {
   const handleOpenStartDate = () => {
     push({
       id: 'book-record-start-date-modal',
-      type: 'MODAL',
       component: <DateSelectModalContent title={MSG_DATE_SELECT_START} onClose={pop} />,
     });
   };
@@ -49,7 +48,6 @@ export const NewRecord = () => {
   const handleOpenEndDate = () => {
     push({
       id: 'book-record-end-date-modal',
-      type: 'MODAL',
       component: <DateSelectModalContent title={MSG_DATE_SELECT_END} onClose={pop} />,
     });
   };
@@ -57,7 +55,6 @@ export const NewRecord = () => {
   const handleOpenDeleteGroupModal = () => {
     push({
       id: 'book-record-group-delete-modal',
-      type: 'MODAL',
       component: (
         <ConfirmModalContent
           title={MSG_GROUP_DELETE_TITLE}
@@ -72,7 +69,6 @@ export const NewRecord = () => {
   const handleOpenGroupEdit = () => {
     push({
       id: 'book-record-group-edit-modal',
-      type: 'MODAL',
       component: <GroupEditModalContent onClose={pop} onDeleteGroup={handleOpenDeleteGroupModal} />,
     });
   };
@@ -80,7 +76,6 @@ export const NewRecord = () => {
   const handleOpenPageInfo = () => {
     push({
       id: 'book-record-page-info-modal',
-      type: 'MODAL',
       component: <PageInfoModalContent onClose={pop} />,
     });
   };

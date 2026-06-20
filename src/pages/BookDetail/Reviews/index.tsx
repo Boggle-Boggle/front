@@ -59,7 +59,6 @@ export const Reviews = () => {
   const handleOpenSortLayer = () => {
     push({
       id: LAYER_ID_BOOK_DETAIL_REVIEW_SORT,
-      type: 'BOTTOM_SHEET',
       component: <ReviewSortActionSheet selectedSort={sortType} onSelectSort={setSortType} />,
     });
   };

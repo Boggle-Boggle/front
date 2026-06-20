@@ -6,13 +6,13 @@ import BookCover from 'components/BookCover';
 import { BottomButton } from 'components/Button';
 import IconButton from 'components/Button/IconButton';
 import { Header } from 'components/Header';
-import { ActionSheet } from 'components/Layer/ActionSheet';
 import { Tabs, TabItem } from 'components/Tabs';
 import { ToggleButton } from 'components/ToggleButton';
 import { IconEllipsisVertical, IconHeart, IconHeartFilled } from 'components/icons';
 
 import { useHeaderTitleByScroll } from 'hooks/useHeaderTitleByScroll';
 
+import { BookMenuActionSheet } from './BookMenuActionSheet';
 import { InfoSection } from './InfoSection';
 import { ReviewSection } from './ReviewSection';
 import { AddRecordStatusBottomSheet } from './shared/AddRecordStatusBottomSheet';
@@ -21,8 +21,6 @@ import { useBookDetailQuery } from './useBookDetailQuery';
 const MSG_BOOK_DETAIL_ADD_RECORD = '독서 기록 추가하기';
 const MSG_BOOK_DETAIL_TAB_INFO = '정보';
 const MSG_BOOK_DETAIL_TAB_REVIEW = '리뷰';
-const MSG_BOOK_DETAIL_ACTION_MORE_AT_STORE = '서점 사이트에서 더보기';
-const MSG_BOOK_DETAIL_ACTION_SHARE = '공유하기';
 const LAYER_ID_BOOK_DETAIL_MENU = 'book-detail-menu-bottom-sheet';
 const LAYER_ID_BOOK_DETAIL_ADD_RECORD_STATUS = 'book-detail-add-record-status-bottom-sheet';
 
@@ -69,23 +67,7 @@ export const BookDetail = () => {
   const handleMenuClick = () => {
     push({
       id: LAYER_ID_BOOK_DETAIL_MENU,
-      type: 'BOTTOM_SHEET',
-      component: (
-        <ActionSheet
-          items={[
-            {
-              key: 'store',
-              label: MSG_BOOK_DETAIL_ACTION_MORE_AT_STORE,
-              onSelect: handleOpenStoreClick,
-            },
-            {
-              key: 'share',
-              label: MSG_BOOK_DETAIL_ACTION_SHARE,
-              onSelect: handleShareClick,
-            },
-          ]}
-        />
-      ),
+      component: <BookMenuActionSheet onOpenStore={handleOpenStoreClick} onShare={handleShareClick} />,
     });
   };
 
@@ -94,7 +76,6 @@ export const BookDetail = () => {
   const handleAddRecordClick = () => {
     push({
       id: LAYER_ID_BOOK_DETAIL_ADD_RECORD_STATUS,
-      type: 'BOTTOM_SHEET',
       component: <AddRecordStatusBottomSheet bookId={bookId} />,
     });
   };

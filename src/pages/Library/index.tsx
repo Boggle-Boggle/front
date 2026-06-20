@@ -94,7 +94,6 @@ const Library = () => {
 
     push({
       id: LAYER_ID_MYBOOKS_FILTER,
-      type: 'SIDEBAR',
       component: (
         <FilterSidebar selectedFilter={readingFilter} filterOptions={filterOptions} onApplyFilter={handleApplyFilter} />
       ),
@@ -104,7 +103,6 @@ const Library = () => {
   const handleOpenSortLayer = () => {
     push({
       id: LAYER_ID_MYBOOKS_SORT,
-      type: 'BOTTOM_SHEET',
       component: <SortActionSheet selectedSort={sortType} onSelectSort={setSortType} />,
     });
   };

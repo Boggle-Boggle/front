@@ -64,7 +64,6 @@ const Withdraw = () => {
   const handleOpenWithdrawConfirmModal = () => {
     push({
       id: LAYER_ID_ACCOUNT_WITHDRAW_CONFIRM_MODAL,
-      type: 'MODAL',
       component: <WithdrawConfirmModal onCancel={handleCloseModal} onConfirm={handleMoveToWithdrawComplete} />,
     });
   };

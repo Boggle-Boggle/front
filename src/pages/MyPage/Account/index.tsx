@@ -33,7 +33,6 @@ const Account = () => {
   const handleOpenDownloadBackupModal = () => {
     push({
       id: LAYER_ID_ACCOUNT_DOWNLOAD_BACKUP_MODAL,
-      type: 'MODAL',
       component: <DownloadBackupModal onCancel={handleCloseModal} onConfirm={handleCloseModal} />,
     });
   };
@@ -41,7 +40,6 @@ const Account = () => {
   const handleOpenLogoutConfirmModal = () => {
     push({
       id: LAYER_ID_ACCOUNT_LOGOUT_CONFIRM_MODAL,
-      type: 'MODAL',
       component: <LogoutConfirmModal onCancel={handleCloseModal} onConfirm={handleCloseModal} />,
     });
   };

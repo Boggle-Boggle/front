@@ -69,7 +69,6 @@ export const AddCustomBook = () => {
   const handleOpenCoverImageUrlModal = () => {
     push({
       id: LAYER_ID_ADD_CUSTOM_BOOK_COVER_IMAGE_URL_MODAL,
-      type: 'MODAL',
       component: <CoverImageUrlModal initialValue={coverImageUrl} onSubmit={handleSubmitCoverImageUrl} />,
     });
   };
