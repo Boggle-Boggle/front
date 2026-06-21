@@ -10,9 +10,9 @@ import { SectionButton } from '../shared/SectionButton';
 import { SectionHeader } from '../shared/SectionHeader';
 
 const MSG_ACCOUNT_TITLE = '계정 설정하기';
-const MSG_ACCOUNT_NICKNAME = '닉네임';
+const MSG_ACCOUNT_NICKNAME = '사용자';
 const MSG_ACCOUNT_NICKNAME_SUFFIX = '님';
-const MSG_ACCOUNT_LOGIN_STATUS = '카카오톡으로 로그인 중';
+const MSG_ACCOUNT_LOGIN_STATUS = '로그인 중';
 const MSG_ACCOUNT_NICKNAME_CHANGE = '닉네임 변경';
 const MSG_ACCOUNT_RECORD_DOWNLOAD = '빼곡 기록 다운로드';
 const MSG_ACCOUNT_RECORD_BACKUP_DOWNLOAD = '백업 기록 다운로드';
@@ -37,10 +37,15 @@ const Account = () => {
     });
   };
 
+  const handleLogout = () => {
+    handleCloseModal();
+    navigate('/login', { replace: true });
+  };
+
   const handleOpenLogoutConfirmModal = () => {
     push({
       id: LAYER_ID_ACCOUNT_LOGOUT_CONFIRM_MODAL,
-      component: <LogoutConfirmModal onCancel={handleCloseModal} onConfirm={handleCloseModal} />,
+      component: <LogoutConfirmModal onCancel={handleCloseModal} onConfirm={handleLogout} />,
     });
   };
 

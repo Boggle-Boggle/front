@@ -1,4 +1,5 @@
-import { PaginationResponse } from 'types/api';
+import type { PaginationResponse } from 'api.types';
+
 import { Book } from 'types/book';
 
 const MOCK_BOOKS: Book[] = Array.from({ length: 50 }, (_, i) => ({

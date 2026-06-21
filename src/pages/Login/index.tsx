@@ -1,8 +1,6 @@
 import Highlight from 'components/Highlight';
 import { IconHeadphone } from 'components/icons';
 
-import { startOAuthLogin } from 'services/auth';
-
 import loginImg from 'assets/img/login.png';
 import appleLogoImg from 'assets/logo/apple.png';
 import googleLogoImg from 'assets/logo/google.png';
@@ -45,9 +43,7 @@ const LOGIN_BUTTON_ITEMS: LoginButtonItem[] = [
 ];
 
 const Login = () => {
-  const handleLogin = (provider: LoginProvider) => {
-    startOAuthLogin(provider);
-  };
+  const handleLogin = (_provider: LoginProvider) => {};
 
   return (
     <section className="relative flex h-dvh w-full flex-col justify-center gap-[35rem]">

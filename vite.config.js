@@ -28,8 +28,8 @@ export default defineConfig({
   resolve: {
     alias: [
       {
-        find: 'api',
-        replacement: path.resolve(__dirname, 'src/api.ts'),
+        find: 'api.types',
+        replacement: path.resolve(__dirname, 'src/api.types.ts'),
       },
       {
         find: 'assets',

@@ -13,7 +13,7 @@
     "jsx": "react-jsx",
     /* Path config */
     "paths": {
-      "api": ["./src/api.ts"],
+      "api.types": ["./src/api.types.ts"],
       "assets/*": ["./src/assets/*"],
       "components/*": ["./src/components/*"],
       "icons/*": ["./src/components/icons/*"],

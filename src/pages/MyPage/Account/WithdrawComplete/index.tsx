@@ -1,5 +1,4 @@
 import { useNavigate } from 'react-router-dom';
-import useAuthStore from 'stores/useAuthStore';
 
 import { BottomButton } from 'components/Button';
 import Highlight from 'components/Highlight';
@@ -14,10 +13,8 @@ const MSG_WITHDRAW_COMPLETE_IMAGE_ALT = '회원 탈퇴 완료';
 
 const WithdrawComplete = () => {
   const navigate = useNavigate();
-  const logout = useAuthStore((state) => state.logout);
 
   const handleMoveToLogin = () => {
-    logout();
     navigate('/login', { replace: true });
   };
 

@@ -1,43 +1,32 @@
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { useCallback, useEffect, useRef } from 'react';
 
-import { getBooksSearch } from 'services/books';
-import { BookSearchItemResponse, SearchBookItem, SearchMediaType } from 'types/search';
+import { getSearchBooksMock } from 'services/mock/search';
+import { Book } from 'types/book';
+import { SearchBookItem, SearchMediaType } from 'types/search';
 
 const SEARCH_BOOKS_PAGE_SIZE = 20;
 
-const toSearchBookItem = (book: BookSearchItemResponse): SearchBookItem => {
+const toSearchBookItem = (book: Book): SearchBookItem => {
   return {
-    isbn: book.isbn13,
+    isbn: book.isbn,
     title: book.title,
     author: book.author,
-    publisher: book.publisher ?? '',
-    pubDate: book.publishedDate ?? '',
-    cover: book.coverUrl ?? '',
+    publisher: book.publisher,
+    pubDate: book.pubDate,
+    cover: book.cover,
   };
 };
 
-export const useSearchBooksQuery = (query: string, type: SearchMediaType) => {
+export const useSearchBooksQuery = (query: string, _type: SearchMediaType) => {
   const queryResult = useInfiniteQuery({
-    queryKey: ['books', 'search', query, type],
-    queryFn: ({ pageParam }) =>
-      getBooksSearch({
-        query,
-        type,
-        page: pageParam,
-        size: SEARCH_BOOKS_PAGE_SIZE,
-      }),
+    queryKey: ['books', 'search', query],
+    queryFn: ({ pageParam }) => getSearchBooksMock(query, pageParam),
     getNextPageParam: (lastPage) => {
-      const page = lastPage.meta.page;
+      const totalPageCount = Math.ceil(lastPage.totalResultCnt / lastPage.itemsPerPage);
 
-      if (!page) {
-        return undefined;
-      }
-
-      const totalPageCount = Math.ceil(page.total / page.size);
-
-      if (page.page < totalPageCount) {
-        return page.page + 1;
+      if (lastPage.pageNum < totalPageCount) {
+        return lastPage.pageNum + 1;
       }
 
       return undefined;
@@ -74,8 +63,8 @@ export const useSearchBooksQuery = (query: string, type: SearchMediaType) => {
   const data = queryResult.data
     ? {
         pages: queryResult.data.pages.map((page) => ({
-          items: page.data?.map(toSearchBookItem) ?? [],
-          total: page.meta.page?.total ?? 0,
+          items: page.items.map(toSearchBookItem),
+          total: page.totalResultCnt,
         })),
       }
     : undefined;
