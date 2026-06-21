@@ -1,8 +1,7 @@
 import { useInfiniteQuery } from '@tanstack/react-query';
 
+import type { PaginationResponse } from 'api.types';
 import { useCallback, useEffect, useRef } from 'react';
-
-import { PaginationResponse } from 'types/api';
 
 const useInfiniteScroll = <T>(
   queryKey: unknown[],

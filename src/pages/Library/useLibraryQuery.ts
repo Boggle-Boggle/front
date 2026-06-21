@@ -1,6 +1,6 @@
-import useInfiniteScroll from 'hooks/useInfiniteScroll';
+import type { PaginationResponse } from 'api.types';
 
-import { PaginationResponse } from 'types/api';
+import useInfiniteScroll from 'hooks/useInfiniteScroll';
 
 export type ReadingStatus = '읽는중' | '읽음' | '중단';
 export type SortType = 'latest' | 'oldest' | 'popular';
