@@ -9,6 +9,8 @@ const BookDetailReviews = lazy(() => import('pages/BookDetail/Reviews'));
 const RecordDetailPage = lazy(() => import('pages/Records/Detail'));
 const RecordNew = lazy(() => import('pages/Records/New'));
 const RecordNewCompleted = lazy(() => import('pages/Records/New/Completed'));
+const NoteDetail = lazy(() => import('pages/Notes/Detail'));
+const NoteNew = lazy(() => import('pages/Notes/New'));
 const Report = lazy(() => import('pages/Report'));
 const WithBottomNavLayout = lazy(() => import('pages/Layout/WithBottomNavLayout'));
 const WithoutBottomNavLayout = lazy(() => import('pages/Layout/WithoutBottomNavLayout'));
@@ -107,6 +109,8 @@ const router = createBrowserRouter([
       // 아래 레거시
       { path: '/login', element: <Login /> },
       { path: '/auth', element: <Auth /> },
+      { path: '/notes/new', element: <NoteNew /> },
+      { path: '/notes/:noteId', element: <NoteDetail /> },
       { path: '/terms/:termId', element: <Terms /> },
       {
         path: '/signup',
