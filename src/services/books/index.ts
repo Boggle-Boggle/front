@@ -1,4 +1,4 @@
-import { api } from 'services/index';
+import { api } from 'api';
 
 import { PaginatedApiResponse } from 'types/api';
 import { BookSearchItemResponse, BookSearchRequest } from 'types/search';

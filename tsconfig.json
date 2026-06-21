@@ -12,23 +12,29 @@
     "noEmit": true,
     "jsx": "react-jsx",
     /* Path config */
-    "baseUrl": ".",
     "paths": {
-      "assets/*": ["src/assets/*"],
-      "components/*": ["src/components/*"],
-      "icons/*": ["src/components/icons/*"],
-      "hooks/*": ["src/hooks/*"],
-      "pages/*": ["src/pages/*"],
-      "services/*": ["src/services/*"],
-      "types/*": ["src/types/*"],
-      "utils/*": ["src/utils/*"],
-      "stores/*": ["src/stores/*"],
-      "constants/*": ["src/constants/*"],
-      "routes/*": ["src/routes/*"]
+      "api": ["./src/api.ts"],
+      "assets/*": ["./src/assets/*"],
+      "components/*": ["./src/components/*"],
+      "icons/*": ["./src/components/icons/*"],
+      "hooks/*": ["./src/hooks/*"],
+      "pages/*": ["./src/pages/*"],
+      "services/*": ["./src/services/*"],
+      "types/*": ["./src/types/*"],
+      "utils/*": ["./src/utils/*"],
+      "stores/*": ["./src/stores/*"],
+      "constants/*": ["./src/constants/*"],
+      "routes/*": ["./src/routes/*"]
     },
     /* Linting */
     "strict": true
   },
   "include": ["src"],
-  "exclude": ["node_modules", "src/pages/legacy/**/*", "src/stories/**/*"]
+  "exclude": [
+    "node_modules",
+    "src/pages/legacy/**/*",
+    "src/services/legacy/**/*",
+    "src/hooks/useNickNameInput.ts",
+    "src/stories/**/*"
+  ]
 }

@@ -1,6 +1,6 @@
 import useAuthStore from 'stores/useAuthStore';
 
-import { api } from 'services/index';
+import { api } from 'api';
 
 const useLogout = () => {
   const logoutStore = useAuthStore((state) => state.logout);

@@ -1,4 +1,4 @@
-import { api } from 'services/index';
+import { api } from 'api';
 
 import { ApiResponse } from 'types/api';
 import { LatestTermsResponse, Term } from 'types/auth';
