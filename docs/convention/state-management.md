@@ -2,9 +2,9 @@
 
 ## 문서 목적
 
-이 문서는 빼곡 프론트엔드에서 서버 상태와 클라이언트 상태를 어떤 기준으로 관리하는지 정의한다.
+이 문서는 빼곡 프론트엔드에서 서버 상태를 Query와 Mutation 기준으로 어떻게 관리할지 정의한다.
 
-상태 관리는 화면 구현 방식뿐 아니라 데이터 일관성, 캐시 전략, 유지보수 비용에 직접 영향을 준다. 이 문서는 상태를 어디에 두고 어떤 도구를 사용해야 하는지에 대한 기본 원칙을 정리한다.
+데이터 호출 파일의 위치, `api.ts` 구성, request/response 타입 배치 규칙은 `api.md`를 따른다.
 
 ## 서버 상태 관리 원칙
 
@@ -72,65 +72,3 @@ const updateBookMutation = useMutation({
   },
 });
 ```
-
-## 클라이언트 상태 관리 원칙
-
-### local state를 우선 사용한다
-
-컴포넌트 내부에서 닫힌 상태는 전역 상태로 올리기보다 local state를 우선 사용한다. 상태의 범위보다 큰 저장소를 사용하면 상태 추적과 변경 영향 범위가 불필요하게 커진다.
-
-### local state는 타입을 명시한다
-
-컴포넌트 내부 상태는 `useState` 제네릭으로 타입을 명시한다.
-
-허용 예시:
-
-```tsx
-const [count, setCount] = useState<number>(0);
-const [title, setTitle] = useState<string>('');
-```
-
-## Zustand 사용 기준
-
-### Zustand는 최소한으로 사용한다
-
-Zustand는 프로젝트 전역에서 공유해야 하는 UI 상태처럼 local state로 처리하기 어려운 경우에만 사용한다.
-
-### 전역 UI 상태가 아닌 경우에는 도입을 먼저 검토한다
-
-상태가 여러 화면에서 공유된다는 이유만으로 바로 Zustand에 올리지 않는다. 실제로 전역 저장소가 필요한지 먼저 판단해야 한다.
-
-## Memoization 사용 기준
-
-### `useMemo`, `useCallback`은 기본 선택지가 아니다
-
-memoization은 성능 문제를 해결하거나 참조 안정성이 실제로 필요한 경우에만 사용한다. 불필요한 `useMemo`, `useCallback`은 코드를 복잡하게 만들고 읽기 비용을 높인다.
-
-기본적으로는 단순한 코드 구조를 우선하고, 필요한 경우에만 도입한다.
-
-## 폼 상태 관리 원칙
-
-### 복잡한 폼은 RHF와 Zod를 기준으로 관리한다
-
-폼 입력 상태, 유효성 검사, 제출 흐름이 필요한 경우에는 React Hook Form과 Zod 조합을 우선 고려한다.
-
-이 기준은 타입 안정성과 검증 로직의 일관성을 유지하기 위한 것이다.
-
-허용 예시:
-
-```tsx
-const schema = z.object({
-  title: z.string(),
-  author: z.string(),
-});
-
-type FormValues = z.infer<typeof schema>;
-
-const form = useForm<FormValues>({
-  resolver: zodResolver(schema),
-});
-```
-
-### 단순 입력까지 무조건 폼 라이브러리로 감싸지 않는다
-
-화면 규모와 검증 복잡도에 비해 과한 추상화가 되지 않도록, 단순한 입력은 local state로 처리할 수 있다.

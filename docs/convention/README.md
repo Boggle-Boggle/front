@@ -11,13 +11,15 @@
 규칙을 찾을 때는 주제에 맞는 문서를 먼저 확인한다.
 
 - 프로젝트 구조, 페이지 배치, 웹뷰 기반 하이브리드 웹앱 실행 환경, `shared/`, `legacy` 보호 규칙: `project-structure.md`
+- API 호출 파일 배치, `api.ts` 구성, request/response 타입 위치 규칙: `api.md`
 - 컴포넌트 선언, props, 렌더링, 핸들러, export 규칙: `components.md`
-- 서버 상태, 클라이언트 상태, Query, Mutation, 폼 상태 관리 규칙: `state-management.md`
+- 서버 상태의 Query, Mutation 관리 규칙: `state-management.md`
 - 네이밍, 코드 배치 순서, 상수 관리, 스타일 클래스 규칙: `code-style.md`
 
 ## 문서 목록
 
 - [project-structure.md](./project-structure.md)
+- [api.md](./api.md)
 - [components.md](./components.md)
 - [state-management.md](./state-management.md)
 - [code-style.md](./code-style.md)
