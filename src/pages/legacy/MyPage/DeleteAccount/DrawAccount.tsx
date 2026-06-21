@@ -4,7 +4,7 @@ import Button from 'components/Button';
 
 import { deleteAccount } from 'services/user';
 
-import { DrawType } from 'types/user';
+import { DrawType } from 'types/legacy/user';
 
 type DrawAccountProps = {
   drawType: DrawType | null;

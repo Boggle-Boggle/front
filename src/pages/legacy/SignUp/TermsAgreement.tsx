@@ -11,7 +11,7 @@ import Highlight from 'components/refactor/Highlight';
 
 import { refreshToken, signUp, getTerms } from 'services/user';
 
-import { Term } from 'types/user';
+import { Term } from 'types/legacy/user';
 
 type TermsAgreementProps = {
   onPrev: () => void;

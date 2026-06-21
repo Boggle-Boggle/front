@@ -8,7 +8,7 @@ import HalfScreenModal from 'components/HalfScreenModal';
 
 import { addLibrary, removeLibrary } from 'services/library';
 
-import { CustomLibrary, Libraries, StatusLibrary } from 'types/library';
+import { CustomLibrary, Libraries, StatusLibrary } from 'types/legacy/library';
 
 import Content from './shared/Content';
 import ContentItem from './shared/ContentItem';

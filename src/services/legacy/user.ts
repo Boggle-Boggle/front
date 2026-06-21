@@ -1,7 +1,7 @@
 import useAuthStore from 'stores/useAuthStore';
 
-import { Response } from 'types/api';
-import { AgreementStatus, Authorization, MyPage, Terms, DrawType } from 'types/user';
+import { Response } from 'types/legacy/api';
+import { AgreementStatus, Authorization, MyPage, Terms, DrawType } from 'types/legacy/user';
 
 import { api } from 'services/index';
 

@@ -4,7 +4,7 @@ import Star from 'components/Star';
 
 import { formatDateTimeToDate } from 'utils/format';
 
-import { Record } from 'types/record';
+import { Record } from 'types/legacy/record';
 
 import RecordItem from './shared/RecordItem';
 

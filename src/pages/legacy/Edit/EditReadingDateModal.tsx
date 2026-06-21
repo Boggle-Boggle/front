@@ -7,7 +7,7 @@ import DateSelector from 'pages/legacy/BookDetail/ReadingRecordForm/shared/DateS
 
 import { formatDate, formatDateAndTime, isValidDate } from 'utils/format';
 
-import { DateType, RecordDate, StatusType } from 'types/record';
+import { DateType, RecordDate, StatusType } from 'types/legacy/record';
 
 type EditReadingDateModalProps = {
   editDateIndex: number;

@@ -4,7 +4,7 @@ import Alert from 'components/Alert';
 import Button from 'components/Button';
 import HalfScreenModal from 'components/HalfScreenModal';
 
-import { AddNoteParams } from 'types/record';
+import { AddNoteParams } from 'types/legacy/record';
 
 type PageModalProps = {
   page: number | null;

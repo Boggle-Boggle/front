@@ -1,4 +1,4 @@
-import { RATING_STATUS } from 'types/record';
+import { RATING_STATUS } from 'types/legacy/record';
 
 type EditRatingPros = {
   rating: number | null;

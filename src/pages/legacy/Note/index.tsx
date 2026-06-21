@@ -12,7 +12,7 @@ import useModal from 'hooks/useModal';
 import { addNote, deleteNote, getReadDates, updateNote } from 'services/record';
 import { formatDate, formatDateAndTime, generateDate } from 'utils/format';
 
-import { AddNoteParams, RecordDate } from 'types/record';
+import { AddNoteParams, RecordDate } from 'types/legacy/record';
 
 import bookmarkImg from 'assets/library/note_bookmark.png';
 

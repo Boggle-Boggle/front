@@ -1,9 +1,10 @@
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { useCallback, useEffect, useRef } from 'react';
 
-import { getSearchBooksMock } from 'services/mock/search';
 import { Book } from 'types/book';
 import { SearchBookItem, SearchMediaType } from 'types/search';
+
+import { getSearchBooksMock } from './mock';
 
 const SEARCH_BOOKS_PAGE_SIZE = 20;
 

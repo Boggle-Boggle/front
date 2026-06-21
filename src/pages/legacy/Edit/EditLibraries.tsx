@@ -1,6 +1,6 @@
 import CheckBox from 'components/CheckBox';
 
-import { RecordLibraries } from 'types/record';
+import { RecordLibraries } from 'types/legacy/record';
 
 type EditLibrariesProps = {
   libraries: (RecordLibraries & { selected: boolean })[];

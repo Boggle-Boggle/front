@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { getLibraries } from 'services/library';
 import { formatDate } from 'utils/format';
 
-import { DateType, StatusType } from 'types/record';
+import { DateType, StatusType } from 'types/legacy/record';
 
 import Complete from './Complete';
 import Libraries from './Libraries';

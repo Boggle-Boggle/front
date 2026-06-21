@@ -1,4 +1,4 @@
-import { PaginationResponse, Response } from 'types/api';
+import { PaginationResponse, Response } from 'types/legacy/api';
 import { Book, BookDetail } from 'types/book';
 
 import { api } from 'services/index';

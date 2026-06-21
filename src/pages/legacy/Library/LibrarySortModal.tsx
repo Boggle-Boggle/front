@@ -14,8 +14,8 @@ import HalfScreenModal from 'components/HalfScreenModal';
 
 import { changeLibrarySorting, getLibrarySorting } from 'services/library';
 
-import { PaginationResponse } from 'types/api';
-import { LibraryBook, SortingTitle, SortingType } from 'types/library';
+import { PaginationResponse } from 'types/legacy/api';
+import { LibraryBook, SortingTitle, SortingType } from 'types/legacy/library';
 
 import Content from './shared/Content';
 import ContentItem from './shared/ContentItem';

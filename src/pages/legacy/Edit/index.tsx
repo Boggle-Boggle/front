@@ -8,7 +8,7 @@ import Header from 'components/Header';
 import useDevice from 'hooks/useDevice';
 import { getEditRecord, updateEditRecord } from 'services/record';
 
-import { RecordDate, RecordLibraries, StatusType, UpdateRecordParams } from 'types/record';
+import { RecordDate, RecordLibraries, StatusType, UpdateRecordParams } from 'types/legacy/record';
 
 import EditLibraries from './EditLibraries';
 import EditRating from './EditRating';

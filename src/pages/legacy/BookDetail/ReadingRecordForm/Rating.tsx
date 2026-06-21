@@ -1,4 +1,4 @@
-import { RATING_STATUS } from 'types/record';
+import { RATING_STATUS } from 'types/legacy/record';
 
 import ButtonSet from './shared/ButtonSet';
 import SubTitle from './shared/SubTitle';

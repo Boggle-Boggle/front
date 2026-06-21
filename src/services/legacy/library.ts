@@ -1,5 +1,5 @@
-import { PaginationResponse, Response } from 'types/api';
-import { LibraryBook, GetLibraryBooksParams, SortingType, Libraries } from 'types/library';
+import { PaginationResponse, Response } from 'types/legacy/api';
+import { LibraryBook, GetLibraryBooksParams, SortingType, Libraries } from 'types/legacy/library';
 
 import { api } from 'services/index';
 

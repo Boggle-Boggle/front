@@ -1,6 +1,6 @@
 import Button from 'components/Button';
 
-import { DrawType } from 'types/user';
+import { DrawType } from 'types/legacy/user';
 
 import DRAW_TYPE_LIST from 'constants/user';
 

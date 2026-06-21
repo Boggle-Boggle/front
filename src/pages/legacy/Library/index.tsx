@@ -10,7 +10,7 @@ import useInfiniteScroll from 'hooks/useInfiniteScroll';
 import { getLibraries, getLibraryBooks } from 'services/library';
 import searchDebounce from 'utils/debounce';
 
-import { CustomLibrary, StatusLibrary } from 'types/library';
+import { CustomLibrary, StatusLibrary } from 'types/legacy/library';
 
 import GridLayout from './GridLayout';
 import LibraryEditedModal from './LibraryEditedModal';

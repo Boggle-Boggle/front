@@ -2,7 +2,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 import { formatDateTimeToDate } from 'utils/format';
 
-import { Note } from 'types/record';
+import { Note } from 'types/legacy/record';
 
 type NoteItemProps = {
   note: Note;

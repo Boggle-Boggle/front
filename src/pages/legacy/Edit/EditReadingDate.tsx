@@ -5,8 +5,8 @@ import CheckBox from 'components/CheckBox';
 import useModal from 'hooks/useModal';
 import { formatDateTimeToDate } from 'utils/format';
 
-import { STATUS } from 'types/library';
-import { RecordDate, StatusType } from 'types/record';
+import { STATUS } from 'types/legacy/library';
+import { RecordDate, StatusType } from 'types/legacy/record';
 
 import AddReadingDateModalProps from './AddReadingDateModal';
 import EditReadingDateModal from './EditReadingDateModal';

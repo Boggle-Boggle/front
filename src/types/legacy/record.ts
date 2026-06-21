@@ -15,7 +15,7 @@ import halfStar3 from 'assets/stars/half/star3.png';
 import halfStar4 from 'assets/stars/half/star4.png';
 import halfStar5 from 'assets/stars/half/star5.png';
 
-import { BookDetail } from './book';
+import { BookDetail } from '../book';
 
 export type StatusType = 'completed' | 'reading' | 'pending';
 

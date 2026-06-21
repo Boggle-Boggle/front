@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import useDevice from 'hooks/useDevice';
 
-import { DrawType } from 'types/user';
+import { DrawType } from 'types/legacy/user';
 
 import Complete from './Complete';
 import DrawAccount from './DrawAccount';

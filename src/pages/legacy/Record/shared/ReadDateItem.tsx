@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { Note } from 'types/record';
+import { Note } from 'types/legacy/record';
 
 import NoteItem from './NoteItem';
 

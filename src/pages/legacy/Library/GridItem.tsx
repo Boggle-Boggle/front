@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 
-import { LibraryBook } from 'types/library';
+import { LibraryBook } from 'types/legacy/library';
 
 import shadowImg from 'assets/library/shadow.png';
 import triangleImg from 'assets/library/triangle.png';

@@ -1,4 +1,4 @@
-import { TermWithAgree } from 'types/user';
+import { TermWithAgree } from 'types/legacy/user';
 
 type TermsItemProps = {
   term: TermWithAgree;

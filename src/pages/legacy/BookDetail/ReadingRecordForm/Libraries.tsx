@@ -8,7 +8,7 @@ import CheckBox from 'components/CheckBox';
 
 import { addLibrary } from 'services/library';
 
-import { CustomLibrary } from 'types/library';
+import { CustomLibrary } from 'types/legacy/library';
 
 import ButtonSet from './shared/ButtonSet';
 import SubTitle from './shared/SubTitle';

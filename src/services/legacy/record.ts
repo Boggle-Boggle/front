@@ -1,6 +1,6 @@
 import { BookCase } from 'types/book';
-import { AddNoteParams, RecordType, Record, Notes, RecordDate, EditRecord, UpdateRecordParams } from 'types/record';
-import { Response } from 'types/api';
+import { AddNoteParams, RecordType, Record, Notes, RecordDate, EditRecord, UpdateRecordParams } from 'types/legacy/record';
+import { Response } from 'types/legacy/api';
 
 import { api } from 'services/index';
 

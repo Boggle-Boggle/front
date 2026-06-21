@@ -1,4 +1,4 @@
-import { LibraryBook } from 'types/library';
+import { LibraryBook } from 'types/legacy/library';
 
 import GridItem from './GridItem';
 import NoBook from './NoBook';

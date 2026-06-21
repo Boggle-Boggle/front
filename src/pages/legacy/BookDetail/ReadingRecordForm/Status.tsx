@@ -1,4 +1,4 @@
-import { StatusType } from 'types/record';
+import { StatusType } from 'types/legacy/record';
 
 import bookmark from 'assets/library/status_bookmark.png';
 

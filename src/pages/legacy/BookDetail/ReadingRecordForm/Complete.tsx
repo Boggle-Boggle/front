@@ -5,7 +5,7 @@ import Button from 'components/Button';
 
 import { addRecord } from 'services/record';
 
-import { RecordType } from 'types/record';
+import { RecordType } from 'types/legacy/record';
 
 import SubTitle from './shared/SubTitle';
 import Title from './shared/Title';

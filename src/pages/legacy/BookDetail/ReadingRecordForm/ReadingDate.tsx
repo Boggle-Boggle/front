@@ -4,7 +4,7 @@ import Alert from 'components/Alert';
 
 import { isValidDate } from 'utils/format';
 
-import { DateType } from 'types/record';
+import { DateType } from 'types/legacy/record';
 
 import ButtonSet from './shared/ButtonSet';
 import DateSelector from './shared/DateSelector';

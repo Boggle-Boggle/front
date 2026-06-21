@@ -4,7 +4,7 @@ import Star from 'components/Star';
 
 import { formatDateTimeToDate } from 'utils/format';
 
-import { LibraryBook } from 'types/library';
+import { LibraryBook } from 'types/legacy/library';
 
 import NoBook from './NoBook';
 

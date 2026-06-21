@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 
-import { hasReadingRecordMock } from 'services/mock/search';
+import { hasReadingRecordMock } from './mock';
 
 export const useCheckReadingRecordQuery = (isbn: string) => {
   return useQuery<number | null>({
