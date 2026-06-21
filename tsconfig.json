@@ -30,6 +30,7 @@
     "strict": true
   },
   "include": ["src"],
+  // TODO: 레거시 코드 제거예정
   "exclude": [
     "node_modules",
     "src/pages/legacy/**/*",
