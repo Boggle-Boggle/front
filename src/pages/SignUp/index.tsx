@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Outlet, useNavigate, useOutlet } from 'react-router-dom';
 import { useToastStore } from 'stores/useToastStore';
-import { Term } from 'types/auth';
+
 import validateNickname from 'utils/validateNickname';
 
 import { CompleteStep } from './CompleteStep';
@@ -18,7 +18,7 @@ const MSG_SIGNUP_NICKNAME_DUPLICATED = '이미 사용 중인 닉네임입니다.
 const MSG_SIGNUP_NICKNAME_INVALID = '사용할 수 없는 닉네임입니다. 다시 확인해주세요.';
 
 type Step = (typeof STEP)[keyof typeof STEP];
-const TERMS: Term[] = [
+const TERMS = [
   {
     body: '',
     code: 'TERMS_OF_SERVICE',
@@ -46,7 +46,7 @@ const TERMS: Term[] = [
     title: '마케팅 정보 수신 동의',
     version: 1,
   },
-];
+] as const;
 
 const SignUp = () => {
   const outlet = useOutlet();
@@ -94,13 +94,7 @@ const SignUp = () => {
   if (outlet) return <Outlet />;
 
   if (step === STEP.NICKNAME) {
-    return (
-      <NicknameStep
-        nickname={nickname}
-        onChangeNickname={handleChangeNickname}
-        onNext={handleNicknameNext}
-      />
-    );
+    return <NicknameStep nickname={nickname} onChangeNickname={handleChangeNickname} onNext={handleNicknameNext} />;
   }
 
   if (step === STEP.TERMS) {

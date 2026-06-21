@@ -6,8 +6,6 @@ import { Header } from 'components/Header';
 import { BackButton } from 'components/Header/BackButton';
 import { IconArrowRight } from 'components/icons';
 
-import { Term } from 'types/auth';
-
 import { Description } from '../shared/Description';
 import { Title } from '../shared/Title';
 
@@ -16,7 +14,15 @@ type TermsStepProps = {
   onChangeAgreedTermIds: (ids: number[]) => void;
   onPrev: () => void;
   onNext: () => void;
-  terms: Term[];
+  terms: {
+    body: string;
+    code: string;
+    effectiveAt: string;
+    id: number;
+    required: boolean;
+    title: string;
+    version: number;
+  }[];
 };
 
 const MSG_SIGNUP_HEADER_TITLE = '회원가입';
