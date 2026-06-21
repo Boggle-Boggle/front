@@ -11,7 +11,7 @@ const meta = {
     onClick: { action: 'clicked' },
     size: {
       control: { type: 'select' },
-      options: ['sm', 'md'],
+      options: ['xs', 'sm', 'md'],
     },
     align: {
       control: { type: 'select' },
@@ -39,6 +39,16 @@ export const Small: Story = {
     label: '입력된 검색어 삭제',
     icon: IconCircleCancelFilled,
     size: 'sm',
+    align: 'center',
+    onClick: () => {},
+  },
+};
+
+export const ExtraSmall: Story = {
+  args: {
+    label: '태그 추가',
+    icon: IconCircleCancelFilled,
+    size: 'xs',
     align: 'center',
     onClick: () => {},
   },

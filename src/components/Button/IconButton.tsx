@@ -5,7 +5,7 @@ type IconButtonProps = {
   align?: 'left' | 'right' | 'center';
   icon?: ElementType;
   onClick: MouseEventHandler<HTMLButtonElement>;
-  size?: 'sm' | 'md';
+  size?: 'xs' | 'sm' | 'md';
   className?: string;
 };
 
@@ -13,8 +13,8 @@ const IconButton = (props: IconButtonProps) => {
   const { label, align = 'center', icon: Icon, onClick, size = 'md', className } = props;
 
   const alignClass = `${align === 'left' ? 'justify-start' : align === 'right' ? 'justify-end' : 'justify-center'}`;
-  const sizeClass = size === 'sm' ? 'size-9' : 'size-12';
-  const iconSizeClass = size === 'sm' ? 'size-icon-sm' : 'size-icon-md';
+  const sizeClass = size === 'xs' ? 'size-6' : size === 'sm' ? 'size-9' : 'size-12';
+  const iconSizeClass = size === 'md' ? 'size-icon-md' : 'size-icon-sm';
 
   return (
     <button
