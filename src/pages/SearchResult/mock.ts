@@ -1,4 +1,4 @@
-import type { PaginationResponse } from 'api.types';
+import type { PaginationMockResponse } from 'api.types';
 
 import { Book } from 'types/book';
 
@@ -11,7 +11,7 @@ const MOCK_BOOKS: Book[] = Array.from({ length: 50 }, (_, i) => ({
   cover: 'https://image.aladin.co.kr/product/38242/41/cover500/k462034622_2.jpg',
 }));
 
-export const getSearchBooksMock = async (query: string, page: number): Promise<PaginationResponse<Book[]>> => {
+export const getSearchBooksMock = async (query: string, page: number): Promise<PaginationMockResponse<Book[]>> => {
   return new Promise((resolve) => {
     setTimeout(() => {
       const itemsPerPage = 10;

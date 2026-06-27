@@ -1,4 +1,4 @@
-import type { PaginationResponse } from 'api.types';
+import type { PaginationMockResponse } from 'api.types';
 
 import useInfiniteScroll from 'hooks/useInfiniteScroll';
 
@@ -18,7 +18,7 @@ const MOCK_MOST_READ_BOOKS: MostReadBook[] = Array.from({ length: 100 }, (_, ind
   cover: BOOK_COVER_URL,
 }));
 
-const getMostReadBooksMock = async (page: number): Promise<PaginationResponse<MostReadBook[]>> => {
+const getMostReadBooksMock = async (page: number): Promise<PaginationMockResponse<MostReadBook[]>> => {
   return new Promise((resolve) => {
     setTimeout(() => {
       const itemsPerPage = 20;

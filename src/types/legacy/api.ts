@@ -3,7 +3,7 @@ export type {
   ApiMeta,
   ApiResponse,
   PageMeta,
-  PaginatedApiResponse,
-  PaginationResponse,
+  PaginatedResponse,
+  PaginationMockResponse,
   Response,
 } from 'api.types';

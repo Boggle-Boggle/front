@@ -1,11 +1,11 @@
 import { useInfiniteQuery } from '@tanstack/react-query';
 
-import type { PaginationResponse } from 'api.types';
+import type { PaginationMockResponse } from 'api.types';
 import { useCallback, useEffect, useRef } from 'react';
 
 const useInfiniteScroll = <T>(
   queryKey: unknown[],
-  queryFn: ({ pageParam }: { pageParam: number }) => Promise<PaginationResponse<T>>,
+  queryFn: ({ pageParam }: { pageParam: number }) => Promise<PaginationMockResponse<T>>,
   enabled: boolean,
 ) => {
   const { data, fetchNextPage, hasNextPage, refetch, isFetchingNextPage, isLoading } = useInfiniteQuery({

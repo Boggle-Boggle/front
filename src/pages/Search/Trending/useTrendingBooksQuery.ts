@@ -1,4 +1,4 @@
-import type { PaginationResponse } from 'api.types';
+import type { PaginationMockResponse } from 'api.types';
 
 import useInfiniteScroll from 'hooks/useInfiniteScroll';
 
@@ -18,7 +18,7 @@ const MOCK_TRENDING_BOOKS: TrendingBook[] = Array.from({ length: 100 }, (_, inde
   cover: BOOK_COVER_URL,
 }));
 
-const getTrendingBooksMock = async (page: number): Promise<PaginationResponse<TrendingBook[]>> => {
+const getTrendingBooksMock = async (page: number): Promise<PaginationMockResponse<TrendingBook[]>> => {
   return new Promise((resolve) => {
     setTimeout(() => {
       const itemsPerPage = 20;
