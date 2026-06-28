@@ -1,5 +1,3 @@
-import { useQuery } from '@tanstack/react-query';
-
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -15,7 +13,7 @@ import { STORAGE_KEY } from 'constants/storage';
 
 import { getOAuthStartUrl } from './api';
 import type { LoginProvider } from './api';
-import { getMe } from '../Auth/api';
+import { useGetMeQuery } from '../Auth/useGetMeQuery';
 
 type LoginButtonItem = {
   provider: LoginProvider;
@@ -53,11 +51,7 @@ const Login = () => {
   const navigate = useNavigate();
   const recentLoginProvider = getRecentLoginProvider();
 
-  const { isSuccess } = useQuery({
-    queryKey: ['users', 'me'],
-    queryFn: getMe,
-    retry: false,
-  });
+  const { isSuccess } = useGetMeQuery();
 
   useEffect(() => {
     if (isSuccess) {

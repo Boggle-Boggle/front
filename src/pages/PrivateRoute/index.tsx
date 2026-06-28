@@ -1,17 +1,11 @@
-import { useQuery } from '@tanstack/react-query';
-
 import { Navigate, Outlet } from 'react-router-dom';
 
 import Loading from 'pages/Loading';
 
-import { getMe } from '../Auth/api';
+import { useGetMeQuery } from '../Auth/useGetMeQuery';
 
 const PrivateRoute = () => {
-  const { isError, isLoading, isSuccess } = useQuery({
-    queryKey: ['users', 'me'],
-    queryFn: getMe,
-    retry: false,
-  });
+  const { isError, isLoading, isSuccess } = useGetMeQuery();
 
   if (isLoading) return <Loading />;
 

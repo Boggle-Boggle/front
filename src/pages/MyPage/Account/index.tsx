@@ -3,14 +3,15 @@ import { useLayerStore } from 'stores/useLayerStore';
 
 import { Button } from 'components/Button';
 import { Header } from 'components/Header';
+import Loading from 'pages/Loading';
 
 import DownloadBackupModal from './DownloadBackupModal';
 import LogoutConfirmModal from './LogoutConfirmModal';
+import { useGetMeQuery } from '../../Auth/useGetMeQuery';
 import { SectionButton } from '../shared/SectionButton';
 import { SectionHeader } from '../shared/SectionHeader';
 
 const MSG_ACCOUNT_TITLE = '계정 설정하기';
-const MSG_ACCOUNT_NICKNAME = '사용자';
 const MSG_ACCOUNT_NICKNAME_SUFFIX = '님';
 const MSG_ACCOUNT_LOGIN_STATUS = '로그인 중';
 const MSG_ACCOUNT_NICKNAME_CHANGE = '닉네임 변경';
@@ -25,6 +26,7 @@ const LAYER_ID_ACCOUNT_LOGOUT_CONFIRM_MODAL = 'account-logout-confirm-modal';
 const Account = () => {
   const navigate = useNavigate();
   const { push, pop } = useLayerStore();
+  const { data: me, isLoading } = useGetMeQuery();
 
   const handleOpenDownloadBackupModal = () => {
     push({
@@ -44,6 +46,8 @@ const Account = () => {
     navigate('/mypage/account/withdraw');
   };
 
+  if (isLoading || !me) return <Loading />;
+
   return (
     <div className="flex h-full w-full flex-col">
       <Header title={MSG_ACCOUNT_TITLE} withBack />
@@ -51,7 +55,7 @@ const Account = () => {
       <div className="min-h-0 flex-1 overflow-y-auto pb-safe-bottom">
         <div className="flex w-full flex-col items-center p-8">
           <h2 className="text-title1">
-            {MSG_ACCOUNT_NICKNAME}
+            {me.nickname}
             <span className="pl-[0.125rem] text-h3">{MSG_ACCOUNT_NICKNAME_SUFFIX}</span>
           </h2>
           <p className="pb-4 pt-0.5 text-body2 text-information">{MSG_ACCOUNT_LOGIN_STATUS}</p>
