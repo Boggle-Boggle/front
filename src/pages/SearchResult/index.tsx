@@ -6,10 +6,10 @@ import { TextButton } from 'components/Button';
 import { BackButton } from 'components/Header/BackButton';
 import { Searchbar } from 'components/Searchbar';
 import { IconArrowDown } from 'components/icons';
-import { SearchMediaType } from 'types/search';
 
 import { SearchFilterActionSheet, type SearchFilterType } from './SearchFilterActionSheet';
 import { SearchResultItem } from './SearchResultItem';
+import type { SearchMediaType } from './api';
 import { useSearchBooksQuery } from './useSearchBooksQuery';
 
 const MSG_SEARCH_RESULT_COUNT = (count: number) => `${count}개의 검색 결과가 있습니다`;

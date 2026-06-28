@@ -1,5 +1,5 @@
 import { api } from 'api';
-import type { PaginatedResponse } from 'api.types';
+import type { PaginatedResponse, PaginationParams } from 'api.types';
 
 type ReadingLogStatus = 'ALL' | 'READING' | 'COMPLETED' | 'DROPPED';
 
@@ -13,9 +13,7 @@ type ReadingLogSort =
   | 'CREATED_AT_DESC'
   | 'CREATED_AT_ASC';
 
-export interface GetReadingLogsParams {
-  page: number;
-  size: number;
+interface GetReadingLogsParams extends PaginationParams {
   sort: ReadingLogSort;
   status: ReadingLogStatus;
   bookshelfId?: number;

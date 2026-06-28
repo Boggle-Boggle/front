@@ -13,6 +13,11 @@ interface PaginatedMeta {
   page: PageMeta;
 }
 
+export interface PaginationParams {
+  page: number;
+  size: number;
+}
+
 export interface ApiError {
   code: string;
   message: string;
