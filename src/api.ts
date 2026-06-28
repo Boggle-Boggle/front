@@ -18,6 +18,16 @@ export const api = axios.create({
   withCredentials: true,
 });
 
+export const isApiError = (error: unknown): error is ApiError => {
+  if (typeof error !== 'object' || error === null) return false;
+
+  if (!('code' in error) || !('message' in error)) return false;
+
+  const { code, message } = error;
+
+  return typeof code === 'string' && typeof message === 'string';
+};
+
 api.interceptors.response.use(
   (response) => response,
   (error: unknown) => {
