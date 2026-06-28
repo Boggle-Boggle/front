@@ -20,15 +20,21 @@ export interface ApiError {
   traceId?: string;
 }
 
-export interface ApiResponse<TData = unknown> {
-  data: TData | null;
-  error: ApiError | null;
+export interface ApiSuccessResponse<TData = null> {
+  data: TData;
+  error: null;
   meta: ApiMeta;
 }
 
-export interface PaginatedResponse<TData = unknown> {
-  data: TData | null;
-  error: ApiError | null;
+export interface ApiErrorResponse {
+  data: null;
+  error: ApiError;
+  meta: ApiMeta;
+}
+
+export interface PaginatedResponse<TData> {
+  data: TData;
+  error: null;
   meta: PaginatedMeta;
 }
 

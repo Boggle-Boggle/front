@@ -1,4 +1,4 @@
-import type { ApiError, ApiResponse } from 'api.types';
+import type { ApiError, ApiErrorResponse } from 'api.types';
 import axios from 'axios';
 
 const API_BASE_URL = import.meta.env.VITE_SERVER_BASE_URL;
@@ -22,7 +22,7 @@ api.interceptors.response.use(
   (response) => response,
   (error: unknown) => {
     // Axios 체인 밖에서 발생한 예외
-    if (!axios.isAxiosError<ApiResponse<unknown>>(error))
+    if (!axios.isAxiosError<ApiErrorResponse>(error))
       return Promise.reject(Object.assign(new Error(FALLBACK_API_ERROR.message), FALLBACK_API_ERROR));
 
     const apiError = error.response?.data?.error;
