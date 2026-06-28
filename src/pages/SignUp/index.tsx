@@ -7,6 +7,7 @@ import validateNickname from 'utils/validateNickname';
 import { CompleteStep } from './CompleteStep';
 import { NicknameStep } from './NicknameStep';
 import { TermsStep } from './TermsStep';
+import { useNicknameAvailabilityMutation } from './useNicknameAvailabilityMutation';
 
 const STEP = {
   NICKNAME: 'NICKNAME',
@@ -14,10 +15,10 @@ const STEP = {
   COMPLETE: 'COMPLETE',
 } as const;
 
-const MSG_SIGNUP_NICKNAME_DUPLICATED = '이미 사용 중인 닉네임입니다.';
+type Step = (typeof STEP)[keyof typeof STEP];
+
 const MSG_SIGNUP_NICKNAME_INVALID = '사용할 수 없는 닉네임입니다. 다시 확인해주세요.';
 
-type Step = (typeof STEP)[keyof typeof STEP];
 const TERMS = [
   {
     body: '',
@@ -51,19 +52,25 @@ const TERMS = [
 const SignUp = () => {
   const outlet = useOutlet();
   const navigate = useNavigate();
-
   const { addToast } = useToastStore();
 
   const [step, setStep] = useState<Step>(STEP.NICKNAME);
   const [nickname, setNickname] = useState<string>('');
   const [agreedTermIds, setAgreedTermIds] = useState<number[]>([]);
 
+  const { isPending: isNicknameAvailabilityPending, mutate: getNicknameAvailability } =
+    useNicknameAvailabilityMutation();
+
   const handleChangeNickname = (nextNickname: string) => {
     setNickname(nextNickname);
   };
 
   const handleNicknameNext = () => {
-    if (!validateNickname(nickname.trim())) {
+    if (isNicknameAvailabilityPending) return;
+
+    const trimmedNickname = nickname.trim();
+
+    if (!validateNickname(trimmedNickname)) {
       addToast({
         description: MSG_SIGNUP_NICKNAME_INVALID,
         type: 'error',
@@ -71,15 +78,13 @@ const SignUp = () => {
       return;
     }
 
-    if (nickname.trim() === 'admin') {
-      addToast({
-        description: MSG_SIGNUP_NICKNAME_DUPLICATED,
-        type: 'error',
-      });
-      return;
-    }
+    getNicknameAvailability(trimmedNickname, {
+      onSuccess: (isAvailable) => {
+        if (!isAvailable) return;
 
-    setStep(STEP.TERMS);
+        setStep(STEP.TERMS);
+      },
+    });
   };
 
   const handleChangeAgreedTermIds = (nextAgreedTermIds: number[]) => setAgreedTermIds(nextAgreedTermIds);
