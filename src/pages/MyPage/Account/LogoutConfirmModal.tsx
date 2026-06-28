@@ -1,8 +1,9 @@
 import { ActionModal } from 'components/Layer/ActionModal';
 
+import { useCreateLogoutMutation } from './useCreateLogoutMutation';
+
 type LogoutConfirmModalProps = {
   onCancel: () => void;
-  onConfirm: () => void;
 };
 
 const MSG_LOGOUT_TITLE = '로그아웃하기';
@@ -11,7 +12,8 @@ const MSG_LOGOUT_CANCEL = '아니오';
 const MSG_LOGOUT_CONFIRM = '로그아웃 합니다';
 
 const LogoutConfirmModal = (props: LogoutConfirmModalProps) => {
-  const { onCancel, onConfirm } = props;
+  const { onCancel } = props;
+  const { isPending: isLogoutPending, mutate: logout } = useCreateLogoutMutation();
 
   return (
     <ActionModal
@@ -20,7 +22,8 @@ const LogoutConfirmModal = (props: LogoutConfirmModalProps) => {
       cancelLabel={MSG_LOGOUT_CANCEL}
       confirmLabel={MSG_LOGOUT_CONFIRM}
       onCancel={onCancel}
-      onConfirm={onConfirm}
+      onConfirm={logout}
+      isConfirmLoading={isLogoutPending}
       confirmVariant="warning"
     />
   );

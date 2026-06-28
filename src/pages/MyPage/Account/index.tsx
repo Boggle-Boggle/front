@@ -26,26 +26,17 @@ const Account = () => {
   const navigate = useNavigate();
   const { push, pop } = useLayerStore();
 
-  const handleCloseModal = () => {
-    pop();
-  };
-
   const handleOpenDownloadBackupModal = () => {
     push({
       id: LAYER_ID_ACCOUNT_DOWNLOAD_BACKUP_MODAL,
-      component: <DownloadBackupModal onCancel={handleCloseModal} onConfirm={handleCloseModal} />,
+      component: <DownloadBackupModal onCancel={pop} onConfirm={pop} />,
     });
-  };
-
-  const handleLogout = () => {
-    handleCloseModal();
-    navigate('/login', { replace: true });
   };
 
   const handleOpenLogoutConfirmModal = () => {
     push({
       id: LAYER_ID_ACCOUNT_LOGOUT_CONFIRM_MODAL,
-      component: <LogoutConfirmModal onCancel={handleCloseModal} onConfirm={handleLogout} />,
+      component: <LogoutConfirmModal onCancel={pop} />,
     });
   };
 
@@ -71,19 +62,13 @@ const Account = () => {
 
         <SectionHeader title={MSG_ACCOUNT_RECORD_DOWNLOAD} />
         <div className="flex flex-col gap-2 px-mobile py-2">
-          <SectionButton onClick={handleOpenDownloadBackupModal}>
-            {MSG_ACCOUNT_RECORD_BACKUP_DOWNLOAD}
-          </SectionButton>
+          <SectionButton onClick={handleOpenDownloadBackupModal}>{MSG_ACCOUNT_RECORD_BACKUP_DOWNLOAD}</SectionButton>
         </div>
 
         <SectionHeader title={MSG_ACCOUNT_LOGIN_MANAGEMENT} />
         <div className="flex flex-col gap-2 px-mobile py-2">
-          <SectionButton onClick={handleOpenLogoutConfirmModal}>
-            {MSG_ACCOUNT_LOGOUT}
-          </SectionButton>
-          <SectionButton onClick={handleOpenWithdrawPage}>
-            {MSG_ACCOUNT_DELETE}
-          </SectionButton>
+          <SectionButton onClick={handleOpenLogoutConfirmModal}>{MSG_ACCOUNT_LOGOUT}</SectionButton>
+          <SectionButton onClick={handleOpenWithdrawPage}>{MSG_ACCOUNT_DELETE}</SectionButton>
         </div>
       </div>
     </div>

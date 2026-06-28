@@ -9,11 +9,21 @@ type ActionModalProps = {
   confirmLabel: string;
   onCancel: () => void;
   onConfirm: () => void;
+  isConfirmLoading?: boolean;
   confirmVariant?: 'primary' | 'warning' | 'grey';
 };
 
 export const ActionModal = (props: ActionModalProps) => {
-  const { title, description, cancelLabel, confirmLabel, onCancel, onConfirm, confirmVariant = 'primary' } = props;
+  const {
+    title,
+    description,
+    cancelLabel,
+    confirmLabel,
+    onCancel,
+    onConfirm,
+    isConfirmLoading = false,
+    confirmVariant = 'primary',
+  } = props;
 
   return (
     <Modal>
@@ -26,7 +36,7 @@ export const ActionModal = (props: ActionModalProps) => {
         <Button onClick={onCancel} variant="grey" size="small" className="text-neutral-60">
           {cancelLabel}
         </Button>
-        <Button onClick={onConfirm} variant={confirmVariant} size="small">
+        <Button onClick={onConfirm} variant={confirmVariant} size="small" loading={isConfirmLoading}>
           {confirmLabel}
         </Button>
       </div>
