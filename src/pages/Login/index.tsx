@@ -6,7 +6,8 @@ import appleLogoImg from 'assets/logo/apple.png';
 import googleLogoImg from 'assets/logo/google.png';
 import kakaoLogoImg from 'assets/logo/kakao.png';
 
-type LoginProvider = 'kakao' | 'google' | 'apple';
+import { getOAuthStartUrl } from './api';
+import type { LoginProvider } from './api';
 
 type LoginButtonItem = {
   provider: LoginProvider;
@@ -43,7 +44,9 @@ const LOGIN_BUTTON_ITEMS: LoginButtonItem[] = [
 ];
 
 const Login = () => {
-  const handleLogin = (_provider: LoginProvider) => {};
+  const handleLogin = (provider: LoginProvider) => {
+    window.location.href = getOAuthStartUrl(provider);
+  };
 
   return (
     <section className="relative flex h-dvh w-full flex-col justify-center gap-[35rem]">
