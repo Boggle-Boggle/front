@@ -9,6 +9,7 @@ import { NicknameStep } from './NicknameStep';
 import { TermsStep } from './TermsStep';
 import { useLatestTermsMutation } from './useLatestTermsMutation';
 import { useNicknameAvailabilityMutation } from './useNicknameAvailabilityMutation';
+import { useSignupCompleteMutation } from './useSignupCompleteMutation';
 
 const STEP = {
   NICKNAME: 'NICKNAME',
@@ -38,6 +39,7 @@ const SignUp = () => {
   } = useLatestTermsMutation({
     onSuccess: () => setStep(STEP.TERMS),
   });
+  const { mutate: createSignupComplete } = useSignupCompleteMutation();
 
   const handleChangeNickname = (nextNickname: string) => {
     setNickname(nextNickname);
@@ -68,8 +70,20 @@ const SignUp = () => {
   const handleChangeAgreedTermIds = (nextAgreedTermIds: number[]) => setAgreedTermIds(nextAgreedTermIds);
 
   const handleTermsPrev = () => setStep(STEP.NICKNAME);
+
   const handleTermsNext = () => {
-    setStep(STEP.COMPLETE);
+    createSignupComplete(
+      {
+        nickname: nickname.trim(),
+        agreements: terms.map((term) => ({
+          termsId: term.termsId,
+          agreed: agreedTermIds.includes(term.termsId),
+        })),
+      },
+      {
+        onSuccess: () => setStep(STEP.COMPLETE),
+      },
+    );
   };
 
   const handleComplete = () => navigate('/');
