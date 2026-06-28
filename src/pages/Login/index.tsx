@@ -21,7 +21,6 @@ type LoginButtonItem = {
   provider: LoginProvider;
   logoSrc: string;
   alt: string;
-  isRecent: boolean;
 };
 
 const MSG_LOGIN_TITLE_MAIN = '빼곡하게 채우는';
@@ -30,29 +29,29 @@ const MSG_LOGIN_SNS = 'SNS로 간편로그인';
 const MSG_LOGIN_RECENT = '최근 로그인';
 const MSG_LOGIN_HELP = '가입/로그인 오류 문의하기';
 
+const getRecentLoginProvider = () => window.localStorage.getItem(STORAGE_KEY.RECENT_LOGIN_PROVIDER);
+
 const LOGIN_BUTTON_ITEMS: LoginButtonItem[] = [
   {
     provider: 'kakao',
     logoSrc: kakaoLogoImg,
     alt: '카카오 로그인',
-    isRecent: true,
   },
   {
     provider: 'google',
     logoSrc: googleLogoImg,
     alt: '구글 로그인',
-    isRecent: false,
   },
   {
     provider: 'apple',
     logoSrc: appleLogoImg,
     alt: '애플 로그인',
-    isRecent: false,
   },
 ];
 
 const Login = () => {
   const navigate = useNavigate();
+  const recentLoginProvider = getRecentLoginProvider();
 
   const { isSuccess } = useQuery({
     queryKey: ['users', 'me'],
@@ -90,8 +89,18 @@ const Login = () => {
         {/* 로그인 */}
         <ul className="flex items-start justify-center gap-8">
           {LOGIN_BUTTON_ITEMS.map(({ provider, logoSrc, alt }) => {
+            const isRecent = recentLoginProvider === provider;
+
             return (
               <li key={provider} className="relative flex flex-col items-center">
+                {isRecent && (
+                  <div className="absolute left-1/2 top-[calc(100%+0.625rem)] flex w-20 -translate-x-1/2 flex-col items-center drop-shadow-[0_2px_8px_rgba(0,0,0,0.12)]">
+                    <div className="h-0 w-0 border-x-[0.375rem] border-b-[0.5625rem] border-x-transparent border-b-neutral-0" />
+                    <div className="-mt-px flex h-9 w-full items-center justify-center rounded-lg bg-neutral-0 px-2 text-caption1 text-neutral-80">
+                      {MSG_LOGIN_RECENT}
+                    </div>
+                  </div>
+                )}
                 <button
                   type="button"
                   className="size-[3.375rem] rounded-full shadow-[0px_2px_10px_0px_rgba(0,0,0,0.14)]"
