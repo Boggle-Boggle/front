@@ -86,7 +86,7 @@ const SearchResult = () => {
         {!isLoading && searchResults.length > 0 && (
           <ul className="flex w-full flex-col divide-y divide-neutral-20">
             {searchResults.map((book) => (
-              <li key={book.isbn}>
+              <li key={book.isbn13}>
                 <SearchResultItem book={book} />
               </li>
             ))}
