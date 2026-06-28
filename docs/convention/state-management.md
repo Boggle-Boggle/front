@@ -52,9 +52,33 @@ queryKey는 리소스를 설명하는 정적 값이 먼저 오고, 식별자나 
 
 생성, 수정, 삭제처럼 서버 데이터를 변경하는 작업은 `useMutation`을 기준으로 구현한다.
 
+### 사용자 액션 기반 서버 검증도 useMutation을 사용할 수 있다
+
+HTTP method가 `GET`이더라도 화면 진입 시 자동 조회하는 서버 상태가 아니라, 버튼 클릭 같은 사용자 액션으로 실행하는 서버 검증은 `useMutation`을 사용할 수 있다. 예를 들어 닉네임 사용 가능 여부 확인처럼 실행 시점이 사용자 액션에 묶이고, 성공/실패 후처리가 필요한 API는 mutation으로 다룬다.
+
+허용 예시:
+
+```tsx
+const { isPending, mutate: getNicknameAvailability } = useNicknameAvailabilityMutation();
+
+const handleNicknameNext = () => {
+  if (isPending) return;
+
+  getNicknameAvailability(nickname, {
+    onSuccess: (isAvailable) => {
+      if (!isAvailable) return;
+
+      setStep(STEP.TERMS);
+    },
+  });
+};
+```
+
 ### Mutation은 useMutation으로 직접 관리한다
 
 mutation 역시 custom hook으로 한 번 더 감싸는 것을 기본 규칙으로 두지 않는다. 페이지나 컴포넌트에서 `useMutation`을 직접 선언해도 된다.
+
+다만 특정 화면 전용 mutation이 토스트, 에러 코드 분기, 성공 후처리 같은 UX 정책을 함께 가진다면 페이지 전용 custom hook으로 분리할 수 있다. 이때 hook 반환값은 객체 전체를 그대로 쓰지 않고 필요한 값을 구조분해해서 사용한다.
 
 ### 성공 후에는 관련 Query를 동기화한다
 

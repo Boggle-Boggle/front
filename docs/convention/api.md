@@ -34,6 +34,33 @@ src/pages/SignUp/
 
 ## 타입 규칙
 
+### 공통 envelope 타입은 `api.types.ts`를 사용한다
+
+백엔드 v2 API의 공통 응답 envelope는 전역 `api.types.ts`의 타입을 기준으로 사용한다.
+
+- 성공 응답 body가 있는 API: `ApiSuccessResponse<TData>`
+- 성공 응답 body가 `null`인 API: `ApiSuccessResponse<null>`
+- 페이지 메타가 있는 성공 응답: `PaginatedResponse<TData>`
+- 실패 응답: `ApiErrorResponse`
+- 실패 분기 기준: `ApiError.code`
+
+실패 응답은 axios interceptor에서 `ApiError` 형태로 정규화되므로, API 호출 함수의 성공 응답 타입에는 실패 케이스를 섞지 않는다.
+
+허용 예시:
+
+```ts
+const response = await api.get<ApiSuccessResponse<NicknameAvailabilityResponse>>(
+  '/v2/users/nickname/availability',
+  {
+    params: {
+      nickname,
+    },
+  },
+);
+
+return response.data.data.available;
+```
+
 ### request/response 타입은 `api.ts`에 함께 둔다
 
 API 스펙에 직접 대응하는 request/response 타입은 기본적으로 해당 호출 함수를 선언한 `api.ts` 파일 안에 함께 둔다.
@@ -79,6 +106,34 @@ const termsQuery = useQuery({
   queryKey: ['signup', 'terms'],
   queryFn: getTerms,
 });
+```
+
+### 화면 전용 서버 액션은 custom hook으로 묶을 수 있다
+
+특정 화면에서만 쓰이는 서버 액션이 로딩 상태, 성공/실패 후처리, 토스트 메시지 같은 UX 정책을 함께 가진다면 페이지 전용 custom hook으로 묶을 수 있다. 이 경우에도 실제 엔드포인트 호출 함수는 `api.ts`에 두고, hook은 TanStack Query 연결과 화면 정책만 담당한다.
+
+허용 예시:
+
+```tsx
+const { isPending, mutate: getNicknameAvailability } = useNicknameAvailabilityMutation();
+```
+
+```ts
+export const useNicknameAvailabilityMutation = () => {
+  const { addToast } = useToastStore();
+
+  return useMutation({
+    mutationFn: getNicknameAvailability,
+    onError: (error) => {
+      if (isApiError(error) && error.code === 'USER_NICKNAME_DUPLICATED') {
+        addToast({
+          description: MSG_SIGNUP_NICKNAME_DUPLICATED,
+          type: 'error',
+        });
+      }
+    },
+  });
+};
 ```
 
 ### `queries.ts`는 기본 선택지가 아니다
