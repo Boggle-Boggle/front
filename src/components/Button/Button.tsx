@@ -8,6 +8,7 @@ const Button = ({
   onClick,
   children,
   disabled = false,
+  loading = false,
   form,
   type = 'button',
   width = 'long',
@@ -34,11 +35,12 @@ const Button = ({
           ? 'bg-neutral-0 text-primary border-primary'
           : 'bg-danger text-neutral-0 border-danger';
   const iconSizeClass = size === 'small' ? 'size-icon-sm' : 'size-icon-md';
+  const isInactive = disabled || loading;
 
   const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
     if (type === 'submit') e.preventDefault();
 
-    if (disabled) return;
+    if (isInactive) return;
 
     onClick(e);
   };
@@ -46,14 +48,22 @@ const Button = ({
   return (
     <button
       onClick={handleClick}
-      disabled={disabled}
+      disabled={isInactive}
       type={type}
-      className={`${base} ${sizeClass} ${widthClass} ${borderClass} ${disabled ? disabledClass : variantClass} ${className}`}
+      className={`relative ${base} ${sizeClass} ${widthClass} ${borderClass} ${disabled ? disabledClass : variantClass} ${className}`}
       form={form}
+      aria-busy={loading}
     >
-      {Icon && iconPosition === 'left' && <Icon className={iconSizeClass} />}
-      {children}
-      {Icon && iconPosition === 'right' && <Icon className={iconSizeClass} />}
+      <span className={`${base} ${loading ? 'invisible' : ''}`}>
+        {Icon && iconPosition === 'left' && <Icon className={iconSizeClass} />}
+        {children}
+        {Icon && iconPosition === 'right' && <Icon className={iconSizeClass} />}
+      </span>
+      {loading && (
+        <span className="absolute inset-0 flex items-center justify-center">
+          <span className="size-5 animate-spin rounded-full border-2 border-current border-t-transparent" />
+        </span>
+      )}
     </button>
   );
 };

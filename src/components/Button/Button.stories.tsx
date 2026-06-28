@@ -12,6 +12,7 @@ const meta = {
   argTypes: {
     onClick: { action: 'clicked' },
     disabled: { control: 'boolean' },
+    loading: { control: 'boolean' },
     type: {
       control: { type: 'select' },
       options: ['button', 'submit'],
@@ -46,6 +47,7 @@ const buttonArgs: ComponentProps<typeof Button> = {
   size: 'small',
   width: 'short',
   disabled: false,
+  loading: false,
   type: 'submit',
 };
 
@@ -61,5 +63,12 @@ export const WithLeftIcon: Story = {
     icon: IconArrowLeft,
     iconPosition: 'left',
     children: 'Back',
+  },
+};
+
+export const Loading: Story = {
+  args: {
+    ...buttonArgs,
+    loading: true,
   },
 };
