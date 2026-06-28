@@ -61,7 +61,7 @@ export const NicknameStep = (props: NicknameStepProps) => {
         <p className="pt-1 text-caption2 text-neutral-40">{MSG_SIGNUP_NICKNAME_LIMIT}</p>
       </section>
 
-      <BottomButton onClick={onNext} disabled={!!nickname.length}>
+      <BottomButton onClick={onNext} disabled={!nickname.length}>
         {MSG_SIGNUP_NICKNAME_NEXT}
       </BottomButton>
     </>
