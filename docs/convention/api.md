@@ -65,6 +65,10 @@ return response.data.data.available;
 
 API 스펙에 직접 대응하는 request/response 타입은 기본적으로 해당 호출 함수를 선언한 `api.ts` 파일 안에 함께 둔다.
 
+단, 타입을 파일 상단에 한 번에 모아두지 않는다. API가 여러 개라면 `타입 선언 -> 해당 타입을 사용하는 호출 함수` 단위로 붙여서 배치한다.
+
+이 기준은 한 API의 request/response 스펙과 실제 호출 코드를 가까이 두어, Swagger 변경 시 수정 범위를 빠르게 확인하기 위한 것이다.
+
 허용 예시:
 
 ```ts
@@ -77,6 +81,20 @@ type GetTermsResponse = {
 };
 
 export const getTerms = async () => {
+  // ...
+};
+
+interface SignupCompleteAgreement {
+  termsId: number;
+  agreed: boolean;
+}
+
+interface SignupCompleteRequest {
+  nickname: string;
+  agreements: SignupCompleteAgreement[];
+}
+
+export const createSignupComplete = async (params: SignupCompleteRequest) => {
   // ...
 };
 ```
