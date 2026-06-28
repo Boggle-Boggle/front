@@ -1,14 +1,16 @@
 import { useNavigate } from 'react-router-dom';
 
 import { IconBook, IconGraduation, IconNote } from 'components/icons';
+import Loading from 'pages/Loading';
 
 import profileImage from 'assets/img/profile.png';
 
 import SettingListItem from './SettingListItem';
 import StatItem from './shared/StatItem';
+import { useGetMeQuery } from '../Auth/useGetMeQuery';
 
 const MSG_MY_PAGE_PROFILE_IMAGE_ALT = '프로필 일러스트';
-const MSG_MY_PAGE_NICKNAME = '닉네임 님';
+const MSG_MY_PAGE_NICKNAME_SUFFIX = ' 님';
 const MSG_MY_PAGE_LOGIN_STATUS = '* 카카오톡으로 로그인 중';
 
 type MyPageMenuItem = {
@@ -65,6 +67,9 @@ const MY_PAGE_MENU_ITEMS: MyPageMenuItem[] = [
 
 const MyPage = () => {
   const navigate = useNavigate();
+  const { data: me, isLoading } = useGetMeQuery();
+
+  if (isLoading || !me) return <Loading />;
 
   return (
     <div className="h-full overflow-y-auto bg-neutral-0 pb-safe-bottom">
@@ -86,7 +91,10 @@ const MyPage = () => {
           </div>
 
           {/* 정보 */}
-          <h1 className="pt-[0.625rem] text-title1">{MSG_MY_PAGE_NICKNAME}</h1>
+          <h1 className="pt-[0.625rem] text-title1">
+            {me.nickname}
+            {MSG_MY_PAGE_NICKNAME_SUFFIX}
+          </h1>
           <p className="pt-[0.125rem] text-caption1">{MSG_MY_PAGE_LOGIN_STATUS}</p>
 
           {/* 카드 */}
