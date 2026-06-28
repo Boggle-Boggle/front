@@ -7,9 +7,9 @@ import validateNickname from 'utils/validateNickname';
 import { CompleteStep } from './CompleteStep';
 import { NicknameStep } from './NicknameStep';
 import { TermsStep } from './TermsStep';
-import { useLatestTermsMutation } from './useLatestTermsMutation';
-import { useNicknameAvailabilityMutation } from './useNicknameAvailabilityMutation';
-import { useSignupCompleteMutation } from './useSignupCompleteMutation';
+import { useCreateSignupCompleteMutation } from './useCreateSignupCompleteMutation';
+import { useGetLatestTermsMutation } from './useGetLatestTermsMutation';
+import { useGetNicknameAvailabilityMutation } from './useGetNicknameAvailabilityMutation';
 
 const STEP = {
   NICKNAME: 'NICKNAME',
@@ -30,16 +30,16 @@ const SignUp = () => {
   const [nickname, setNickname] = useState<string>('');
   const [agreedTermIds, setAgreedTermIds] = useState<number[]>([]);
 
-  const { isPending: isNicknameAvailabilityPending, mutate: getNicknameAvailability } =
-    useNicknameAvailabilityMutation();
+  const { isPending: isNicknameAvailabilityPending, mutate: checkNicknameAvailability } =
+    useGetNicknameAvailabilityMutation();
   const {
     data: terms = [],
     isPending: isTermsPending,
-    mutate: getLatestTerms,
-  } = useLatestTermsMutation({
+    mutate: loadLatestTerms,
+  } = useGetLatestTermsMutation({
     onSuccess: () => setStep(STEP.TERMS),
   });
-  const { isPending: isSignupCompletePending, mutate: createSignupComplete } = useSignupCompleteMutation();
+  const { isPending: isSignupCompletePending, mutate: completeSignup } = useCreateSignupCompleteMutation();
 
   const handleChangeNickname = (nextNickname: string) => {
     setNickname(nextNickname);
@@ -56,11 +56,11 @@ const SignUp = () => {
       return;
     }
 
-    getNicknameAvailability(trimmedNickname, {
+    checkNicknameAvailability(trimmedNickname, {
       onSuccess: (isAvailable) => {
         if (!isAvailable) return;
 
-        getLatestTerms();
+        loadLatestTerms();
       },
     });
   };
@@ -70,7 +70,7 @@ const SignUp = () => {
   const handleTermsPrev = () => setStep(STEP.NICKNAME);
 
   const handleTermsNext = () => {
-    createSignupComplete(
+    completeSignup(
       {
         nickname: nickname.trim(),
         agreements: terms.map((term) => ({

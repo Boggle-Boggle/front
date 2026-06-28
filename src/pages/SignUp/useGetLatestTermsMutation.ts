@@ -6,11 +6,11 @@ import { getLatestTerms } from '../Terms/api';
 
 const MSG_SIGNUP_TERMS_LOAD_FAILED = '약관 정보를 불러오지 못했습니다. 다시 시도해주세요.';
 
-interface UseLatestTermsMutationParams {
+interface UseGetLatestTermsMutationParams {
   onSuccess?: () => void;
 }
 
-export const useLatestTermsMutation = (params: UseLatestTermsMutationParams = {}) => {
+export const useGetLatestTermsMutation = (params: UseGetLatestTermsMutationParams = {}) => {
   const { onSuccess } = params;
   const { addToast } = useToastStore();
 

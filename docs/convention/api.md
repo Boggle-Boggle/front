@@ -130,14 +130,25 @@ const termsQuery = useQuery({
 
 특정 화면에서만 쓰이는 서버 액션이 로딩 상태, 성공/실패 후처리, 토스트 메시지 같은 UX 정책을 함께 가진다면 페이지 전용 custom hook으로 묶을 수 있다. 이 경우에도 실제 엔드포인트 호출 함수는 `api.ts`에 두고, hook은 TanStack Query 연결과 화면 정책만 담당한다.
 
+Mutation hook 이름은 반드시 감싸는 API 호출 함수 이름과 맞춘다. 파일명과 export 함수명도 동일하게 둔다.
+
+- API 호출 함수: `createSignupComplete`
+- Mutation hook 파일: `useCreateSignupCompleteMutation.ts`
+- Mutation hook 함수: `useCreateSignupCompleteMutation`
+- API 호출 함수: `getNicknameAvailability`
+- Mutation hook 파일: `useGetNicknameAvailabilityMutation.ts`
+- Mutation hook 함수: `useGetNicknameAvailabilityMutation`
+
+컴포넌트에서 `mutate`를 구조분해할 때는 raw API 함수명과 헷갈리지 않도록 화면 액션 이름으로 alias 한다.
+
 허용 예시:
 
 ```tsx
-const { isPending, mutate: getNicknameAvailability } = useNicknameAvailabilityMutation();
+const { isPending, mutate: checkNicknameAvailability } = useGetNicknameAvailabilityMutation();
 ```
 
 ```ts
-export const useNicknameAvailabilityMutation = () => {
+export const useGetNicknameAvailabilityMutation = () => {
   const { addToast } = useToastStore();
 
   return useMutation({
