@@ -12,6 +12,7 @@ import { Title } from '../shared/Title';
 
 type TermsStepProps = {
   agreedTermIds: number[];
+  isSubmitLoading: boolean;
   onChangeAgreedTermIds: (ids: number[]) => void;
   onPrev: () => void;
   onNext: () => void;
@@ -26,7 +27,7 @@ const MSG_SIGNUP_TERMS_REQUIRED = '필수';
 const MSG_SIGNUP_TERMS_SUBMIT = '회원가입 완료하기';
 
 export const TermsStep = (props: TermsStepProps) => {
-  const { agreedTermIds, onChangeAgreedTermIds, onPrev, onNext, terms } = props;
+  const { agreedTermIds, isSubmitLoading, onChangeAgreedTermIds, onPrev, onNext, terms } = props;
   const navigate = useNavigate();
 
   const requiredTermIds = terms.filter((term) => term.required).map((term) => term.termsId);
@@ -108,7 +109,7 @@ export const TermsStep = (props: TermsStepProps) => {
               );
             })}
           </ul>
-          <Button onClick={handleClickSubmit} disabled={!isCompleteEnabled} className="mt-4">
+          <Button onClick={handleClickSubmit} disabled={!isCompleteEnabled} loading={isSubmitLoading} className="mt-4">
             {MSG_SIGNUP_TERMS_SUBMIT}
           </Button>
         </div>

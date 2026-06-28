@@ -8,6 +8,7 @@ import { Description } from '../shared/Description';
 import { Title } from '../shared/Title';
 
 type NicknameStepProps = {
+  isNextLoading: boolean;
   nickname: string;
   onChangeNickname: (nickname: string) => void;
   onNext: () => void;
@@ -23,7 +24,7 @@ const MSG_SIGNUP_NICKNAME_NEXT = '다음으로';
 const MSG_SIGNUP_NICKNAME_CLEAR_LABEL = '닉네임 입력 초기화';
 
 export const NicknameStep = (props: NicknameStepProps) => {
-  const { nickname, onChangeNickname, onNext } = props;
+  const { isNextLoading, nickname, onChangeNickname, onNext } = props;
 
   const handleChangeNickname = (event: React.ChangeEvent<HTMLInputElement>) => {
     onChangeNickname(event.target.value);
@@ -61,7 +62,7 @@ export const NicknameStep = (props: NicknameStepProps) => {
         <p className="pt-1 text-caption2 text-neutral-40">{MSG_SIGNUP_NICKNAME_LIMIT}</p>
       </section>
 
-      <BottomButton onClick={onNext} disabled={!nickname.length}>
+      <BottomButton onClick={onNext} disabled={!nickname.length} loading={isNextLoading}>
         {MSG_SIGNUP_NICKNAME_NEXT}
       </BottomButton>
     </>

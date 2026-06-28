@@ -39,15 +39,13 @@ const SignUp = () => {
   } = useLatestTermsMutation({
     onSuccess: () => setStep(STEP.TERMS),
   });
-  const { mutate: createSignupComplete } = useSignupCompleteMutation();
+  const { isPending: isSignupCompletePending, mutate: createSignupComplete } = useSignupCompleteMutation();
 
   const handleChangeNickname = (nextNickname: string) => {
     setNickname(nextNickname);
   };
 
   const handleNicknameNext = () => {
-    if (isNicknameAvailabilityPending || isTermsPending) return;
-
     const trimmedNickname = nickname.trim();
 
     if (!validateNickname(trimmedNickname)) {
@@ -91,13 +89,21 @@ const SignUp = () => {
   if (outlet) return <Outlet />;
 
   if (step === STEP.NICKNAME) {
-    return <NicknameStep nickname={nickname} onChangeNickname={handleChangeNickname} onNext={handleNicknameNext} />;
+    return (
+      <NicknameStep
+        isNextLoading={isNicknameAvailabilityPending || isTermsPending}
+        nickname={nickname}
+        onChangeNickname={handleChangeNickname}
+        onNext={handleNicknameNext}
+      />
+    );
   }
 
   if (step === STEP.TERMS) {
     return (
       <TermsStep
         agreedTermIds={agreedTermIds}
+        isSubmitLoading={isSignupCompletePending}
         onChangeAgreedTermIds={handleChangeAgreedTermIds}
         onPrev={handleTermsPrev}
         onNext={handleTermsNext}
