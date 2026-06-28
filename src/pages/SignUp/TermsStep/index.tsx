@@ -5,6 +5,7 @@ import { Checkbox } from 'components/Checkbox';
 import { Header } from 'components/Header';
 import { BackButton } from 'components/Header/BackButton';
 import { IconArrowRight } from 'components/icons';
+import type { TermsItem } from 'pages/Terms/api';
 
 import { Description } from '../shared/Description';
 import { Title } from '../shared/Title';
@@ -14,15 +15,7 @@ type TermsStepProps = {
   onChangeAgreedTermIds: (ids: number[]) => void;
   onPrev: () => void;
   onNext: () => void;
-  terms: {
-    body: string;
-    code: string;
-    effectiveAt: string;
-    id: number;
-    required: boolean;
-    title: string;
-    version: number;
-  }[];
+  terms: TermsItem[];
 };
 
 const MSG_SIGNUP_HEADER_TITLE = '회원가입';
@@ -36,7 +29,7 @@ export const TermsStep = (props: TermsStepProps) => {
   const { agreedTermIds, onChangeAgreedTermIds, onPrev, onNext, terms } = props;
   const navigate = useNavigate();
 
-  const requiredTermIds = terms.filter((term) => term.required).map((term) => term.id);
+  const requiredTermIds = terms.filter((term) => term.required).map((term) => term.termsId);
   const isCompleteEnabled = requiredTermIds.every((id) => agreedTermIds.includes(id));
 
   const handleToggleAll = () => {
@@ -45,7 +38,7 @@ export const TermsStep = (props: TermsStepProps) => {
       return;
     }
 
-    onChangeAgreedTermIds(terms.map((term) => term.id));
+    onChangeAgreedTermIds(terms.map((term) => term.termsId));
   };
 
   const handleClickTermDetail = (termId: number) => {
@@ -83,27 +76,31 @@ export const TermsStep = (props: TermsStepProps) => {
 
           <ul className="mb-3 ml-1.5 mt-4">
             {terms.map((term, index) => {
-              const isChecked = agreedTermIds.includes(term.id);
+              const isChecked = agreedTermIds.includes(term.termsId);
               const detailButtonClass = 'flex items-center gap-1 text-title3 text-neutral-100';
               const itemBorderClass = index === terms.length - 1 ? '' : 'border-b border-neutral-10';
 
               return (
-                <li key={term.id} className={`flex h-12 items-center justify-between ${itemBorderClass}`}>
+                <li key={term.termsId} className={`flex h-12 items-center justify-between ${itemBorderClass}`}>
                   <div className="flex items-center gap-2">
                     {term.required && (
                       <span className="text-body2 font-bold text-danger">{MSG_SIGNUP_TERMS_REQUIRED}</span>
                     )}
 
-                    <button type="button" className={detailButtonClass} onClick={() => handleClickTermDetail(term.id)}>
+                    <button
+                      type="button"
+                      className={detailButtonClass}
+                      onClick={() => handleClickTermDetail(term.termsId)}
+                    >
                       {term.title}
                       <IconArrowRight className="size-4" />
                     </button>
                   </div>
 
                   <Checkbox
-                    id={`signup-term-${term.id}`}
+                    id={`signup-term-${term.termsId}`}
                     checked={isChecked}
-                    onChange={() => handleToggleTerm(term.id)}
+                    onChange={() => handleToggleTerm(term.termsId)}
                     size="regular"
                     variant="color"
                   />

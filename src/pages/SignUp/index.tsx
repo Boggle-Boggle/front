@@ -7,6 +7,7 @@ import validateNickname from 'utils/validateNickname';
 import { CompleteStep } from './CompleteStep';
 import { NicknameStep } from './NicknameStep';
 import { TermsStep } from './TermsStep';
+import { useLatestTermsMutation } from './useLatestTermsMutation';
 import { useNicknameAvailabilityMutation } from './useNicknameAvailabilityMutation';
 
 const STEP = {
@@ -19,36 +20,6 @@ type Step = (typeof STEP)[keyof typeof STEP];
 
 const MSG_SIGNUP_NICKNAME_INVALID = '사용할 수 없는 닉네임입니다. 다시 확인해주세요.';
 
-const TERMS = [
-  {
-    body: '',
-    code: 'TERMS_OF_SERVICE',
-    effectiveAt: '',
-    id: 1,
-    required: true,
-    title: '서비스 이용약관',
-    version: 1,
-  },
-  {
-    body: '',
-    code: 'PRIVACY_POLICY',
-    effectiveAt: '',
-    id: 2,
-    required: true,
-    title: '개인정보 처리방침',
-    version: 1,
-  },
-  {
-    body: '',
-    code: 'MARKETING',
-    effectiveAt: '',
-    id: 3,
-    required: false,
-    title: '마케팅 정보 수신 동의',
-    version: 1,
-  },
-] as const;
-
 const SignUp = () => {
   const outlet = useOutlet();
   const navigate = useNavigate();
@@ -60,13 +31,20 @@ const SignUp = () => {
 
   const { isPending: isNicknameAvailabilityPending, mutate: getNicknameAvailability } =
     useNicknameAvailabilityMutation();
+  const {
+    data: terms = [],
+    isPending: isTermsPending,
+    mutate: getLatestTerms,
+  } = useLatestTermsMutation({
+    onSuccess: () => setStep(STEP.TERMS),
+  });
 
   const handleChangeNickname = (nextNickname: string) => {
     setNickname(nextNickname);
   };
 
   const handleNicknameNext = () => {
-    if (isNicknameAvailabilityPending) return;
+    if (isNicknameAvailabilityPending || isTermsPending) return;
 
     const trimmedNickname = nickname.trim();
 
@@ -82,7 +60,7 @@ const SignUp = () => {
       onSuccess: (isAvailable) => {
         if (!isAvailable) return;
 
-        setStep(STEP.TERMS);
+        getLatestTerms();
       },
     });
   };
@@ -109,7 +87,7 @@ const SignUp = () => {
         onChangeAgreedTermIds={handleChangeAgreedTermIds}
         onPrev={handleTermsPrev}
         onNext={handleTermsNext}
-        terms={TERMS}
+        terms={terms}
       />
     );
   }
