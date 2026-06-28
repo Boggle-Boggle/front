@@ -49,6 +49,36 @@ const MSG_LOGIN_HELP = '가입/로그인 오류 문의하기';
 
 모든 컴포넌트가 같은 읽기 흐름을 가지면 화면 복잡도가 커져도 빠르게 구조를 파악할 수 있다.
 
+### API 요청 hook은 상태 선언 아래에 둔다
+
+API 요청과 연결된 Query, Mutation, custom hook은 컴포넌트 내부에서 `useState`, `useRef` 같은 로컬 상태 선언 아래에 둔다. 로컬 상태를 먼저 확인한 뒤 그 상태를 사용하는 서버 요청 흐름을 읽을 수 있게 하기 위한 기준이다.
+
+허용 예시:
+
+```tsx
+const [nickname, setNickname] = useState<string>('');
+
+const { getNicknameAvailability, isPending } = useNicknameAvailabilityMutation();
+```
+
+### hook 반환값은 구조분해해서 사용한다
+
+custom hook이나 TanStack Query hook의 반환값은 객체 전체를 변수에 담아 점 접근으로 사용하지 않고, 필요한 값을 구조분해해서 사용한다. 사용 값이 컴포넌트 상단에서 바로 드러나게 하기 위한 규칙이다.
+
+허용 예시:
+
+```tsx
+const { getNicknameAvailability, isPending } = useNicknameAvailabilityMutation();
+```
+
+비권장 예시:
+
+```tsx
+const nicknameAvailabilityMutation = useNicknameAvailabilityMutation();
+
+nicknameAvailabilityMutation.getNicknameAvailability(nickname);
+```
+
 ## 상수 관리 원칙
 
 ### 상수는 의미 단위로 분리한다
