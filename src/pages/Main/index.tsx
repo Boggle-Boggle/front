@@ -1,14 +1,44 @@
+import { useQuery } from '@tanstack/react-query';
+
 import { BookCase } from 'components/BookCase';
 import { Searchbar } from 'components/Searchbar';
-import { MainBookCaseItem } from 'types/readingLog';
+
+import { getReadingLogs } from './api';
+
+type MainBookCaseItem = {
+  id: number;
+  page: number;
+  title: string;
+};
 
 const MSG_TITLE_SEARCH_PLACEHOLDER = '책 제목을 입력해주세요';
 const MSG_MAIN_BOOKCASE_TITLE = (year: number) => `${year}년 전체 책장`;
 const MSG_MAIN_BOOKCASE_COUNT = (count: number) => `${count}권 채웠습니다`;
+const MAIN_READING_LOGS_PAGE = 1;
+const MAIN_READING_LOGS_PAGE_SIZE = 100;
+
 const Main = () => {
   const currentYear = new Date().getFullYear();
-  const books: MainBookCaseItem[] = [];
-  const totalCount = books.length;
+
+  const { data: readingLogs } = useQuery({
+    queryKey: ['reading-logs', 'list', currentYear],
+    queryFn: () =>
+      getReadingLogs({
+        page: MAIN_READING_LOGS_PAGE,
+        size: MAIN_READING_LOGS_PAGE_SIZE,
+        sort: 'START_DATE_DESC',
+        status: 'ALL',
+        year: currentYear,
+      }),
+  });
+
+  const books: MainBookCaseItem[] =
+    readingLogs?.data.items.map(({ book, id }) => ({
+      id,
+      page: book.totalPages ?? 0,
+      title: book.title,
+    })) ?? [];
+  const totalCount = readingLogs?.meta.page.total ?? books.length;
 
   return (
     <div className="relative h-dvh overflow-hidden bg-secondary pb-safe-bottom pt-safe-top">
