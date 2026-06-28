@@ -11,6 +11,8 @@ import appleLogoImg from 'assets/logo/apple.png';
 import googleLogoImg from 'assets/logo/google.png';
 import kakaoLogoImg from 'assets/logo/kakao.png';
 
+import { STORAGE_KEY } from 'constants/storage';
+
 import { getOAuthStartUrl } from './api';
 import type { LoginProvider } from './api';
 import { getMe } from '../Auth/api';
@@ -25,7 +27,7 @@ type LoginButtonItem = {
 const MSG_LOGIN_TITLE_MAIN = '빼곡하게 채우는';
 const MSG_LOGIN_TITLE_SUB = '나만의 책장';
 const MSG_LOGIN_SNS = 'SNS로 간편로그인';
-// const MSG_LOGIN_RECENT = '최근 로그인';
+const MSG_LOGIN_RECENT = '최근 로그인';
 const MSG_LOGIN_HELP = '가입/로그인 오류 문의하기';
 
 const LOGIN_BUTTON_ITEMS: LoginButtonItem[] = [
@@ -65,6 +67,7 @@ const Login = () => {
   }, [isSuccess, navigate]);
 
   const handleLogin = (provider: LoginProvider) => {
+    window.localStorage.setItem(STORAGE_KEY.RECENT_LOGIN_PROVIDER, provider);
     window.location.href = getOAuthStartUrl(provider);
   };
 
