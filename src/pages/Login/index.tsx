@@ -1,3 +1,8 @@
+import { useQuery } from '@tanstack/react-query';
+
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 import Highlight from 'components/Highlight';
 import { IconHeadphone } from 'components/icons';
 
@@ -8,6 +13,7 @@ import kakaoLogoImg from 'assets/logo/kakao.png';
 
 import { getOAuthStartUrl } from './api';
 import type { LoginProvider } from './api';
+import { getMe } from '../Auth/api';
 
 type LoginButtonItem = {
   provider: LoginProvider;
@@ -44,6 +50,20 @@ const LOGIN_BUTTON_ITEMS: LoginButtonItem[] = [
 ];
 
 const Login = () => {
+  const navigate = useNavigate();
+
+  const { isSuccess } = useQuery({
+    queryKey: ['users', 'me'],
+    queryFn: getMe,
+    retry: false,
+  });
+
+  useEffect(() => {
+    if (isSuccess) {
+      navigate('/', { replace: true });
+    }
+  }, [isSuccess, navigate]);
+
   const handleLogin = (provider: LoginProvider) => {
     window.location.href = getOAuthStartUrl(provider);
   };

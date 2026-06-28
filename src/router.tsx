@@ -3,6 +3,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 import App from './App';
 
+const Auth = lazy(() => import('pages/Auth'));
 const BookDetail = lazy(() => import('pages/BookDetail'));
 const BookDetailReviews = lazy(() => import('pages/BookDetail/Reviews'));
 const RecordDetailPage = lazy(() => import('pages/Records/Detail'));
@@ -107,6 +108,7 @@ const router = createBrowserRouter([
       },
       // 아래 레거시
       { path: '/login', element: <Login /> },
+      { path: '/auth', element: <Auth /> },
       { path: '/notes/new', element: <NoteNew /> },
       // { path: '/notes/:noteId', element: <NoteDetail /> },
       { path: '/terms/:termId', element: <Terms /> },
