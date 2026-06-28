@@ -45,7 +45,8 @@ const MSG_LOGIN_HELP = '가입/로그인 오류 문의하기';
 2. Data fetching, Side Effect hook
 3. Memoization
 4. 이벤트 핸들러, 내부 헬퍼 함수
-5. Render 반환부
+5. 데이터 가공
+6. Render 반환부
 
 모든 컴포넌트가 같은 읽기 흐름을 가지면 화면 복잡도가 커져도 빠르게 구조를 파악할 수 있다.
 
@@ -77,6 +78,21 @@ const { getNicknameAvailability, isPending } = useNicknameAvailabilityMutation()
 const nicknameAvailabilityMutation = useNicknameAvailabilityMutation();
 
 nicknameAvailabilityMutation.getNicknameAvailability(nickname);
+```
+
+### 렌더링용 데이터 가공은 이벤트 핸들러 아래에 둔다
+
+데이터 가공은 API 응답, 상태, props 등을 렌더링에서 읽기 쉬운 형태로 상수에 할당하는 코드를 말한다. 이벤트 핸들러와 내부 헬퍼 함수 아래에 배치해서 동작 흐름을 먼저 읽고, 그 다음 렌더링에 필요한 파생 값을 확인할 수 있게 한다.
+
+허용 예시:
+
+```tsx
+const handleOpenFilter = () => {
+  openFilter();
+};
+
+const searchResults = data ? data.pages.flatMap((page) => page.data.items) : [];
+const totalCount = data?.pages[0]?.meta.page.total || 0;
 ```
 
 ## 상수 관리 원칙

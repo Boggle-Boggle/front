@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { useLayerStore } from 'stores/useLayerStore';
 
@@ -6,6 +6,8 @@ import { TextButton } from 'components/Button';
 import { BackButton } from 'components/Header/BackButton';
 import { Searchbar } from 'components/Searchbar';
 import { IconArrowDown } from 'components/icons';
+
+import { useInfiniteScrollObserver } from 'hooks/useInfiniteScrollObserver';
 
 import { SearchFilterActionSheet, type SearchFilterType } from './SearchFilterActionSheet';
 import { SearchResultItem } from './SearchResultItem';
@@ -17,9 +19,15 @@ const MSG_SEARCH_FILTER_PAPER = '종이책 검색';
 const MSG_SEARCH_FILTER_EBOOK = '전자책 검색';
 const LAYER_ID_SEARCH_FILTER = 'search-filter-bottom-sheet';
 
-const SEARCH_MEDIA_TYPE_BY_FILTER: Record<SearchFilterType, SearchMediaType> = {
-  ebook: 'EBOOK',
-  paper: 'BOOK',
+const SEARCH_FILTER_OPTION_BY_FILTER: Record<SearchFilterType, { label: string; mediaType: SearchMediaType }> = {
+  ebook: {
+    label: MSG_SEARCH_FILTER_EBOOK,
+    mediaType: 'EBOOK',
+  },
+  paper: {
+    label: MSG_SEARCH_FILTER_PAPER,
+    mediaType: 'BOOK',
+  },
 };
 
 const SearchResult = () => {
@@ -30,12 +38,14 @@ const SearchResult = () => {
   const [searchFilter, setSearchFilter] = useState<SearchFilterType>('paper');
   const { push } = useLayerStore();
 
-  const { data, isLoading, isFetchingNextPage, observerTarget } = useSearchBooksQuery(
+  const { data, fetchNextPage, hasNextPage, isLoading, isFetchingNextPage } = useSearchBooksQuery(
     query,
-    SEARCH_MEDIA_TYPE_BY_FILTER[searchFilter],
+    SEARCH_FILTER_OPTION_BY_FILTER[searchFilter].mediaType,
   );
-  const searchResults = data ? data.pages.flatMap((page) => page.items) : [];
-  const totalCount = data?.pages[0]?.total || 0;
+  const { observerTarget } = useInfiniteScrollObserver({
+    enabled: Boolean(hasNextPage && !isFetchingNextPage),
+    onIntersect: fetchNextPage,
+  });
 
   useEffect(() => {
     setLocalQuery(query);
@@ -56,10 +66,9 @@ const SearchResult = () => {
     });
   };
 
-  const searchFilterLabelByType = {
-    paper: MSG_SEARCH_FILTER_PAPER,
-    ebook: MSG_SEARCH_FILTER_EBOOK,
-  } as const;
+  const searchResults = data ? data.pages.flatMap((page) => page.data.items) : [];
+  const totalCount = data?.pages[0]?.meta.page.total || 0;
+  const searchFilterLabel = SEARCH_FILTER_OPTION_BY_FILTER[searchFilter].label;
 
   return (
     <div className="flex h-full w-full flex-col pb-safe-bottom pt-safe-top">
@@ -73,7 +82,7 @@ const SearchResult = () => {
         <TextButton
           rightIcon={IconArrowDown}
           onClick={handleOpenFilter}
-          text={searchFilterLabelByType[searchFilter]}
+          text={searchFilterLabel}
           size="md"
           variant="filled"
           className="text-neutral-80"
