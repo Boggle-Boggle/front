@@ -1,3 +1,5 @@
+import { useQuery } from '@tanstack/react-query';
+
 import { useNavigate } from 'react-router-dom';
 
 import { IconBook, IconGraduation, IconNote } from 'components/icons';
@@ -6,12 +8,11 @@ import Loading from 'pages/Loading';
 import profileImage from 'assets/img/profile.png';
 
 import SettingListItem from './SettingListItem';
+import { getMyPageProfile, type MyPageProfileResponse } from './api';
 import StatItem from './shared/StatItem';
-import { useGetMeQuery } from '../Auth/useGetMeQuery';
 
 const MSG_MY_PAGE_PROFILE_IMAGE_ALT = '프로필 일러스트';
 const MSG_MY_PAGE_NICKNAME_SUFFIX = ' 님';
-const MSG_MY_PAGE_LOGIN_STATUS = '* 카카오톡으로 로그인 중';
 
 type MyPageMenuItem = {
   title: string;
@@ -19,23 +20,29 @@ type MyPageMenuItem = {
   path: string;
 };
 
-const MY_PAGE_STATS = [
+const LOGIN_PROVIDER_LABEL = {
+  GOOGLE: '구글',
+  KAKAO: '카카오톡',
+  APPLE: '애플',
+} as const;
+
+const getMyPageStats = (profile: MyPageProfileResponse) => [
   {
     icon: <IconGraduation className="size-icon-md" />,
     label: '총 읽은 책',
-    value: '345권',
+    value: `${profile.totalReadCount}권`,
   },
   {
     icon: <IconBook className="size-icon-md" />,
     label: '올해 읽은 책',
-    value: '3권',
+    value: `${profile.thisYearReadCount}권`,
   },
   {
     icon: <IconNote className="size-icon-md" />,
     label: '내 독서 노트',
-    value: '2345장',
+    value: `${profile.totalNoteCount}장`,
   },
-] as const;
+];
 
 const MY_PAGE_MENU_ITEMS: MyPageMenuItem[] = [
   {
@@ -67,9 +74,17 @@ const MY_PAGE_MENU_ITEMS: MyPageMenuItem[] = [
 
 const MyPage = () => {
   const navigate = useNavigate();
-  const { data: me, isLoading } = useGetMeQuery();
+  const { data: profile, isLoading } = useQuery({
+    queryKey: ['users', 'me', 'profile'],
+    queryFn: getMyPageProfile,
+    retry: false,
+    throwOnError: true,
+  });
 
-  if (isLoading || !me) return <Loading />;
+  if (isLoading || !profile) return <Loading />;
+
+  const loginProviderLabel = LOGIN_PROVIDER_LABEL[profile.providers[0]];
+  const myPageStats = getMyPageStats(profile);
 
   return (
     <div className="h-full overflow-y-auto bg-neutral-0 pb-safe-bottom">
@@ -92,14 +107,14 @@ const MyPage = () => {
 
           {/* 정보 */}
           <h1 className="pt-[0.625rem] text-title1">
-            {me.nickname}
+            {profile.nickname}
             {MSG_MY_PAGE_NICKNAME_SUFFIX}
           </h1>
-          <p className="pt-[0.125rem] text-caption1">{MSG_MY_PAGE_LOGIN_STATUS}</p>
+          <p className="pt-[0.125rem] text-caption1">* {loginProviderLabel}로 로그인 중</p>
 
           {/* 카드 */}
           <div className="grid w-full grid-cols-3 gap-2 pt-4">
-            {MY_PAGE_STATS.map((stat) => (
+            {myPageStats.map((stat) => (
               <StatItem key={stat.label} icon={stat.icon} label={stat.label} value={stat.value} />
             ))}
           </div>
