@@ -1,6 +1,16 @@
 import { useQuery } from '@tanstack/react-query';
 
-import { BookDetail } from 'types/book';
+interface BookDetail {
+  title: string;
+  isbn: string;
+  author: string;
+  pubDate: string;
+  cover: string;
+  publisher: string;
+  genre: string;
+  plot: string;
+  link: string;
+}
 
 const MOCK_BOOK_DETAIL: BookDetail = {
   title: '데미안',

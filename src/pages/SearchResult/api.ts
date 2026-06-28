@@ -3,12 +3,12 @@ import type { PaginatedResponse, PaginationParams } from 'api.types';
 
 export type SearchMediaType = 'BOOK' | 'EBOOK';
 
-interface GetSearchBooksParams extends PaginationParams {
+interface GetSearchBooksParams extends Omit<PaginationParams, 'size'> {
   query: string;
   type: SearchMediaType;
 }
 
-interface SearchBookItemResponse {
+export interface SearchBook {
   isbn13: string;
   itemId: number;
   title: string;
@@ -22,7 +22,7 @@ interface SearchBookItemResponse {
 }
 
 interface SearchBooksResponse {
-  items: SearchBookItemResponse[];
+  items: SearchBook[];
   hideAdultContent: boolean;
 }
 

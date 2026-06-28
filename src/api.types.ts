@@ -1,4 +1,4 @@
-interface PageMeta {
+export interface PageMeta {
   page: number;
   size: number;
   total: number;
