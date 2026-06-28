@@ -115,6 +115,7 @@ const router = createBrowserRouter([
       {
         path: '/signup',
         element: <SignUp />,
+        children: [{ path: 'terms/:termId', element: <Terms /> }],
       },
     ],
   },
