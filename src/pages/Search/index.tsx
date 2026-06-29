@@ -11,7 +11,6 @@ import { PopularSearchSection } from './PopularSearch/Section';
 import { RealTimePopularSection } from './RealTimePopular/Section';
 import { RecentSearchSection } from './RecentSearch/Section';
 import { TrendingSection } from './Trending/Section';
-import { useRecentSearchStore } from './useRecentSearchStore';
 
 const MSG_SEARCH_ADD_BOOK_LABEL = '도서 추가';
 
@@ -19,7 +18,6 @@ const Search = () => {
   const [query, setQuery] = useState<string>('');
   const [isSearched, setIsSearched] = useState<boolean>(false);
   const navigate = useNavigate();
-  const { addRecentSearch } = useRecentSearchStore();
 
   const handleSearchChange = (value: string) => setQuery(value);
 
@@ -30,7 +28,6 @@ const Search = () => {
 
     if (!trimmedQuery) return;
 
-    addRecentSearch(trimmedQuery);
     navigate(`/search/result?q=${encodeURIComponent(trimmedQuery)}`);
   };
 

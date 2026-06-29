@@ -13,7 +13,6 @@ import { SearchFilterActionSheet, type SearchFilterType } from './SearchFilterAc
 import { SearchResultItem } from './SearchResultItem';
 import type { SearchMediaType } from './api';
 import { useSearchBooksQuery } from './useSearchBooksQuery';
-import { useRecentSearchStore } from '../Search/useRecentSearchStore';
 
 const MSG_SEARCH_RESULT_COUNT = (count: number) => `${count}개의 검색 결과가 있습니다`;
 const MSG_SEARCH_FILTER_PAPER = '종이책 검색';
@@ -38,7 +37,6 @@ const SearchResult = () => {
   const [localQuery, setLocalQuery] = useState<string>(query);
   const [searchFilter, setSearchFilter] = useState<SearchFilterType>('paper');
   const { push } = useLayerStore();
-  const { addRecentSearch } = useRecentSearchStore();
 
   const { data, fetchNextPage, hasNextPage, isLoading, isFetchingNextPage } = useSearchBooksQuery(
     query,
@@ -58,7 +56,6 @@ const SearchResult = () => {
 
     if (!trimmedQuery) return;
 
-    addRecentSearch(trimmedQuery);
     setSearchParams({ q: trimmedQuery });
   };
 
