@@ -2,6 +2,8 @@ import { useState } from 'react';
 
 import { Header } from 'components/Header';
 
+import { applyStoredThemeColor, setStoredThemeColor, type ThemeColor } from 'utils/theme';
+
 import { SectionHeader } from '../shared/SectionHeader';
 import { SectionRadio } from '../shared/SectionRadio';
 import { SectionToggle } from '../shared/SectionToggle';
@@ -25,22 +27,27 @@ const MODE_OPTIONS = [
 
 const THEME_COLOR_OPTIONS = [
   { key: 'red-grapefruit', label: '레드 자몽', colorVariable: 'var(--theme-red-grapefruit-primary-light)' },
-  { key: 'lemon-ade', label: '레몬 에이드', colorVariable: 'var(--theme-lemonade-primary-light)' },
+  { key: 'lemonade', label: '레몬 에이드', colorVariable: 'var(--theme-lemonade-primary-light)' },
   {
     key: 'green-flower-garden',
     label: '그린 플라워 가든 (기본)',
     colorVariable: 'var(--theme-green-flower-garden-primary-light)',
   },
   { key: 'calm-pistachio', label: '캄 피스타치오', colorVariable: 'var(--theme-calm-pistachio-primary-light)' },
-  { key: 'blue-kids', label: '블루 키즈', colorVariable: 'var(--theme-blue-toy-primary-light)' },
+  { key: 'blue-toy', label: '블루 키즈', colorVariable: 'var(--theme-blue-toy-primary-light)' },
   { key: 'romantic-purple', label: '로맨틱 퍼플', colorVariable: 'var(--theme-romantic-purple-primary-light)' },
   { key: 'peach-candy', label: '복숭아맛 캔디', colorVariable: 'var(--theme-peach-candy-primary-light)' },
-] as const;
+] satisfies { key: ThemeColor; label: string; colorVariable: string }[];
 
 const Appearance = () => {
   const [isDarkMode, setIsDarkMode] = useState<boolean>(false);
   const [isEbookMode, setIsEbookMode] = useState<boolean>(false);
-  const [selectedThemeColor, setSelectedThemeColor] = useState<string>('green-flower-garden');
+  const [selectedThemeColor, setSelectedThemeColor] = useState<ThemeColor>(() => applyStoredThemeColor());
+
+  const handleThemeColorChange = (themeColor: ThemeColor) => {
+    setSelectedThemeColor(themeColor);
+    setStoredThemeColor(themeColor);
+  };
 
   return (
     <div className="flex h-full w-full flex-col">
@@ -71,7 +78,7 @@ const Appearance = () => {
               name="theme-color"
               label={option.label}
               checked={selectedThemeColor === option.key}
-              onChange={() => setSelectedThemeColor(option.key)}
+              onChange={() => handleThemeColorChange(option.key)}
               leading={<div className="size-6 rounded-lg" style={{ backgroundColor: option.colorVariable }} />}
             />
           ))}

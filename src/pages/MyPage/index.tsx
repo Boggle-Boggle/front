@@ -91,9 +91,9 @@ const MyPage = () => {
       <div className="relative h-[24.0625rem] overflow-hidden bg-neutral-0">
         {/* 동그라미 세알 */}
         <div className="absolute inset-0">
-          <div className="opacity-76 absolute right-[-4.35rem] top-[-6.5625rem] h-[18.75rem] w-[18.75rem] rounded-full bg-[radial-gradient(circle_at_34%_38%,rgba(139,207,167,0.96)_0%,rgba(174,222,245,0.9)_100%)] blur-[1rem]" />
-          <div className="absolute -left-[2.65rem] top-[7.6875rem] h-[11.275rem] w-[11.275rem] rounded-full bg-[radial-gradient(circle_at_42%_40%,rgba(139,207,167,0.92)_0%,rgba(174,222,245,0.82)_100%)] opacity-80 blur-[0.95rem]" />
-          <div className="opacity-72 absolute left-[2.55rem] top-[14.625rem] h-[23.5rem] w-[23.5rem] rounded-full bg-[radial-gradient(circle_at_40%_36%,rgba(139,207,167,0.84)_0%,rgba(174,222,245,0.94)_72%)] blur-[0.95rem]" />
+          <div className="opacity-76 absolute right-[-4.35rem] top-[-6.5625rem] h-[18.75rem] w-[18.75rem] rounded-full bg-[radial-gradient(circle_at_34%_38%,color-mix(in_srgb,var(--color-primary)_96%,transparent)_0%,color-mix(in_srgb,var(--color-secondary-light)_90%,transparent)_100%)] blur-[1rem]" />
+          <div className="absolute -left-[2.65rem] top-[7.6875rem] h-[11.275rem] w-[11.275rem] rounded-full bg-[radial-gradient(circle_at_42%_40%,color-mix(in_srgb,var(--color-primary)_92%,transparent)_0%,color-mix(in_srgb,var(--color-secondary-light)_82%,transparent)_100%)] opacity-80 blur-[0.95rem]" />
+          <div className="opacity-72 absolute left-[2.55rem] top-[14.625rem] h-[23.5rem] w-[23.5rem] rounded-full bg-[radial-gradient(circle_at_40%_36%,color-mix(in_srgb,var(--color-primary)_84%,transparent)_0%,color-mix(in_srgb,var(--color-secondary-light)_94%,transparent)_72%)] blur-[0.95rem]" />
         </div>
 
         {/* 유리알 */}

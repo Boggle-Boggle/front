@@ -6,8 +6,12 @@ import { DeviceProvider } from 'stores/useDeviceStore';
 
 import { Loading } from 'components/Loading';
 
+import { applyStoredThemeColor } from 'utils/theme';
+
 import AppRouter from './router';
 import './main.css';
+
+applyStoredThemeColor();
 
 const queryClient = new QueryClient({
   defaultOptions: {

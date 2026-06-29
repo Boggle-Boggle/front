@@ -60,53 +60,53 @@
 
 /* 테마색상 */
 @layer base {
-  html[data-theme='RedGrapefruit'] {
+  html[data-theme='red-grapefruit'] {
     --color-primary: var(--theme-red-grapefruit-primary);
     --color-primary-light: var(--theme-red-grapefruit-primary-light);
     --color-secondary: var(--theme-red-grapefruit-secondary);
     --color-secondary-light: var(--theme-red-grapefruit-secondary-light);
   }
 
-  html[data-theme='Lemonade'] {
+  html[data-theme='lemonade'] {
     --color-primary: var(--theme-lemonade-primary);
     --color-primary-light: var(--theme-lemonade-primary-light);
     --color-secondary: var(--theme-lemonade-secondary);
     --color-secondary-light: var(--theme-lemonade-secondary-light);
   }
 
-  html[data-theme='GreenFlowerGarden'] {
+  html[data-theme='green-flower-garden'] {
     --color-primary: var(--theme-green-flower-garden-primary);
     --color-primary-light: var(--theme-green-flower-garden-primary-light);
     --color-secondary: var(--theme-green-flower-garden-secondary);
     --color-secondary-light: var(--theme-green-flower-garden-secondary-light);
   }
 
-  html[data-theme='CalmPistachio'] {
+  html[data-theme='calm-pistachio'] {
     --color-primary: var(--theme-calm-pistachio-primary);
     --color-primary-light: var(--theme-calm-pistachio-primary-light);
     --color-secondary: var(--theme-calm-pistachio-secondary);
     --color-secondary-light: var(--theme-calm-pistachio-secondary-light);
   }
 
-  html[data-theme='BlueToy'] {
+  html[data-theme='blue-toy'] {
     --color-primary: var(--theme-blue-toy-primary);
     --color-primary-light: var(--theme-blue-toy-primary-light);
     --color-secondary: var(--theme-blue-toy-secondary);
     --color-secondary-light: var(--theme-blue-toy-secondary-light);
   }
-  html[data-theme='RomanticPurple'] {
+  html[data-theme='romantic-purple'] {
     --color-primary: var(--theme-romantic-purple-primary);
     --color-primary-light: var(--theme-romantic-purple-primary-light);
     --color-secondary: var(--theme-romantic-purple-secondary);
     --color-secondary-light: var(--theme-romantic-purple-secondary-light);
   }
-  html[data-theme='PeachCandy'] {
+  html[data-theme='peach-candy'] {
     --color-primary: var(--theme-peach-candy-primary);
     --color-primary-light: var(--theme-peach-candy-primary-light);
     --color-secondary: var(--theme-peach-candy-secondary);
     --color-secondary-light: var(--theme-peach-candy-secondary-light);
   }
-  html[data-theme='GreyScale'] {
+  html[data-theme='grey-scale'] {
     --color-primary: var(--theme-grey-scale-primary);
     --color-primary-light: var(--theme-grey-scale-primary-light);
     --color-secondary: var(--theme-grey-scale-secondary);
