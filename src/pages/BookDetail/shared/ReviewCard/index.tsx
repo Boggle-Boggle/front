@@ -15,6 +15,8 @@ type ReviewCardProps = {
 
 const MSG_REVIEW_ID_PREFIX = '님';
 const MSG_MY_REVIEW = '나의 리뷰';
+const MSG_REVIEW_REPORT = '신고';
+const MSG_REVIEW_BLOCK = '차단';
 const MSG_REVIEW_SPOILER = '스포일러가 포함 된 리뷰입니다.\n리뷰를 보려면 박스를 터치하세요.';
 
 export const ReviewCard = (props: ReviewCardProps) => {
