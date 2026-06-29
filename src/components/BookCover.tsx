@@ -2,11 +2,14 @@ import { ReactNode } from 'react';
 
 import { Badge } from 'components/Badge';
 
+import adultContentImage from 'assets/img/adult_content.png';
+import noImage from 'assets/img/no_image.png';
+
 type ReadingStatusBadge = 'reading' | 'read' | 'stopped';
 type BookCoverStyle = 'clear' | 'mockup';
 
 type BookCoverProps = {
-  url: string;
+  url: string | null;
   label?: string;
   variant?: BookCoverStyle;
   ratio?: number;
@@ -100,6 +103,7 @@ export const BookCover = (props: BookCoverProps) => {
   } = props;
   const resolvedStyle = getBookCoverStyle(variant, shadowLeftBar, shadowRightTriangle);
   const roundedClass = getBookCoverRoundedClass(rounded);
+  const resolvedUrl = url || (isAdult ? adultContentImage : noImage);
   const frameClass =
     resolvedStyle === 'mockup'
       ? `relative w-full overflow-hidden bg-[linear-gradient(270deg,_#F9F9F9_0%,_#FFFFFF_90.87%,_#D9D9D9_100%)] ${roundedClass}`
@@ -112,10 +116,9 @@ export const BookCover = (props: BookCoverProps) => {
   return (
     <div className={`relative ${className}`}>
       <div className={frameClass} style={{ aspectRatio: ratio }}>
-        <img className={imageClass} src={url} alt={label} />
+        <img className={imageClass} src={resolvedUrl} alt={label} />
         {resolvedStyle === 'mockup' && <ShadowLeftBar />}
         {overlayBottomRight && <div className="absolute bottom-0 right-0 z-badge">{overlayBottomRight}</div>}
-        {isAdult && <div className="absolute right-1 top-1 z-badge">19</div>}
         {readingStatusBadge && (
           <div className="absolute bottom-1 right-1 z-badge">
             <Badge text={getReadingStatusBadgeLabel(readingStatusBadge)} variant="gray" />
