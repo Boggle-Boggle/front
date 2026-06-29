@@ -19,6 +19,8 @@ const MSG_SEARCH_FILTER_PAPER = '종이책 검색';
 const MSG_SEARCH_FILTER_EBOOK = '전자책 검색';
 const LAYER_ID_SEARCH_FILTER = 'search-filter-bottom-sheet';
 
+const DEFAULT_SEARCH_MEDIA_TYPE: SearchMediaType = 'BOOK';
+
 const SEARCH_FILTER_OPTION_BY_FILTER: Record<SearchFilterType, { label: string; mediaType: SearchMediaType }> = {
   ebook: {
     label: MSG_SEARCH_FILTER_EBOOK,
@@ -30,17 +32,29 @@ const SEARCH_FILTER_OPTION_BY_FILTER: Record<SearchFilterType, { label: string; 
   },
 };
 
+const SEARCH_FILTER_BY_MEDIA_TYPE: Record<SearchMediaType, SearchFilterType> = {
+  BOOK: 'paper',
+  EBOOK: 'ebook',
+};
+
+const getSearchMediaType = (type: string | null): SearchMediaType => {
+  if (type === 'EBOOK') return 'EBOOK';
+
+  return DEFAULT_SEARCH_MEDIA_TYPE;
+};
+
 const SearchResult = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const query = searchParams.get('q') || '';
+  const searchMediaType = getSearchMediaType(searchParams.get('type'));
+  const searchFilter = SEARCH_FILTER_BY_MEDIA_TYPE[searchMediaType];
 
   const [localQuery, setLocalQuery] = useState<string>(query);
-  const [searchFilter, setSearchFilter] = useState<SearchFilterType>('paper');
   const { push } = useLayerStore();
 
   const { data, fetchNextPage, hasNextPage, isLoading, isFetchingNextPage } = useSearchBooksQuery(
     query,
-    SEARCH_FILTER_OPTION_BY_FILTER[searchFilter].mediaType,
+    searchMediaType,
   );
   const { observerTarget } = useInfiniteScrollObserver({
     enabled: Boolean(hasNextPage && !isFetchingNextPage),
@@ -56,15 +70,22 @@ const SearchResult = () => {
 
     if (!trimmedQuery) return;
 
-    setSearchParams({ q: trimmedQuery });
+    setSearchParams({ q: trimmedQuery, type: searchMediaType });
   };
 
   const handleSearchChange = (value: string) => setLocalQuery(value);
 
+  const handleSelectFilter = (filter: SearchFilterType) => {
+    setSearchParams({
+      q: query,
+      type: SEARCH_FILTER_OPTION_BY_FILTER[filter].mediaType,
+    });
+  };
+
   const handleOpenFilter = () => {
     push({
       id: LAYER_ID_SEARCH_FILTER,
-      component: <SearchFilterActionSheet selectedFilter={searchFilter} onSelectFilter={setSearchFilter} />,
+      component: <SearchFilterActionSheet selectedFilter={searchFilter} onSelectFilter={handleSelectFilter} />,
     });
   };
 
