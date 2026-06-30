@@ -23,6 +23,7 @@ const MSG_BOOK_DETAIL_TAB_INFO = '정보';
 const MSG_BOOK_DETAIL_TAB_REVIEW = '리뷰';
 const LAYER_ID_BOOK_DETAIL_MENU = 'book-detail-menu-bottom-sheet';
 const LAYER_ID_BOOK_DETAIL_ADD_RECORD_STATUS = 'book-detail-add-record-status-bottom-sheet';
+const ALADIN_BOOK_DETAIL_URL = 'https://www.aladin.co.kr/shop/wproduct.aspx';
 
 type DetailTabType = 'info' | 'review';
 
@@ -36,6 +37,8 @@ const BOOK_DETAIL_TABS: TabItem<DetailTabType>[] = [
     label: MSG_BOOK_DETAIL_TAB_REVIEW,
   },
 ];
+
+const getAladinBookDetailUrl = (itemId: number) => `${ALADIN_BOOK_DETAIL_URL}?ItemId=${itemId}`;
 
 export const BookDetail = () => {
   const { bookId = '' } = useParams();
@@ -59,7 +62,7 @@ export const BookDetail = () => {
   const handleOpenStoreClick = () => {
     if (!data) return;
 
-    window.location.href = data.link;
+    window.location.href = getAladinBookDetailUrl(data.itemId);
   };
 
   const handleShareClick = () => {};
@@ -104,7 +107,7 @@ export const BookDetail = () => {
         {!isLoading && !isError && data && (
           <>
             <section className="flex flex-col items-center py-5 text-center">
-              <BookCover className="w-28" url={data.cover} variant="clear" isAdult={data.isAdultContentHidden} />
+              <BookCover className="w-28" url={data.coverUrl} variant="clear" isAdult={data.hideAdultContent} />
               <p className="pt-4 text-title1">{data.title}</p>
               <p className="text-body2 text-neutral-60">{data.author}</p>
             </section>
@@ -113,11 +116,11 @@ export const BookDetail = () => {
             {activeTab === 'info' && (
               <InfoSection
                 publisher={data.publisher}
-                genre={data.genre}
-                pubDate={data.pubDate}
-                isbn={data.isbn}
-                plot={data.plot}
-                sourceLink={data.link}
+                category={data.category}
+                publishedDate={data.publishedDate}
+                isbn13={data.isbn13}
+                description={data.description}
+                sourceLink={getAladinBookDetailUrl(data.itemId)}
               />
             )}
             {activeTab === 'review' && <ReviewSection />}

@@ -2,10 +2,10 @@ import Highlight from 'components/Highlight';
 
 type InfoSectionProps = {
   publisher: string;
-  genre: string;
-  pubDate: string;
-  isbn: string;
-  plot: string;
+  category: string;
+  publishedDate: string;
+  isbn13: string;
+  description: string | null;
   sourceLink: string;
 };
 
@@ -14,12 +14,12 @@ const MSG_BOOK_DETAIL_PLOT_TITLE = '작품 소개/줄거리 ';
 const MSG_BOOK_DETAIL_SOURCE_PREFIX = '* 알라딘으로부터 도서 DB 정보를 제공받았습니다.';
 
 export const InfoSection = (props: InfoSectionProps) => {
-  const { publisher, genre, pubDate, isbn, plot, sourceLink } = props;
+  const { publisher, category, publishedDate, isbn13, description, sourceLink } = props;
   const bookInfoItems = [
     { label: '출판사', value: publisher },
-    { label: '분야', value: genre },
-    { label: '발행일자', value: pubDate },
-    { label: 'ISBN', value: isbn },
+    { label: '분야', value: category },
+    { label: '발행일자', value: publishedDate },
+    { label: 'ISBN', value: isbn13 },
   ];
 
   return (
@@ -34,7 +34,7 @@ export const InfoSection = (props: InfoSectionProps) => {
         ))}
       </ul>
       <Highlight text={MSG_BOOK_DETAIL_PLOT_TITLE} className="w-fit pt-[1.875rem] text-title3" />
-      <p className="whitespace-pre-wrap break-words pt-3 text-body1 text-neutral-80">{plot}</p>
+      <p className="whitespace-pre-wrap break-words pt-3 text-body1 text-neutral-80">{description}</p>
       <button
         type="button"
         onClick={() => {
