@@ -1,47 +1,46 @@
+import { useQuery } from '@tanstack/react-query';
+
 import { Link } from 'react-router-dom';
 
+import { getPopularKeywords } from './api';
 import { Title } from '../shared/Title';
 
 const MSG_SEARCH_POPULAR = '인기 검색어';
 
-const POPULAR_SEARCHES = [
-  { bookId: '9788959897092', label: '1. 나는 왜 따뜻한 대화가 힘들까' },
-  { bookId: '9788925564720', label: '2. 침묵의 퍼레이드' },
-  { bookId: '9791164068928', label: '3. 용선생 추론독해 초등 국어 3단계' },
-  { bookId: '9788932924494', label: '4. 듀얼 브레인' },
-  { bookId: '9791162435821', label: '5. 중학교 내신 A등급을 위한 최고의 선택' },
-  { bookId: '9791191114766', label: '6. 행복은 언제나 당신의 편' },
-  { bookId: '9791170611569', label: '7. 이상한 무인 라면 가게' },
-  { bookId: '9791194033354', label: '8. 행동은 불안을 이긴다' },
-];
-
 export const PopularSearchSection = () => {
-  const leftColumn = POPULAR_SEARCHES.slice(0, 4);
-  const rightColumn = POPULAR_SEARCHES.slice(4, 8);
+  const { data: popularKeywords } = useQuery({
+    queryKey: ['discovery', 'popular-keywords'],
+    queryFn: getPopularKeywords,
+  });
+
+  if (!popularKeywords || popularKeywords.length === 0) return null;
+
+  const leftColumn = popularKeywords.slice(0, 5);
+  const rightColumn = popularKeywords.slice(5, 10);
 
   return (
     <section className="w-full">
       <Title text={MSG_SEARCH_POPULAR} />
       <div className="flex w-full gap-3 px-mobile">
         <div className="flex flex-1 flex-col gap-4">
-          {leftColumn.map(({ bookId, label }) => (
+          {leftColumn.map(({ rank, keyword }) => (
             <Link
-              key={bookId}
-              to={`/books/${bookId}`}
+              key={rank}
+              to={`/search/result?q=${encodeURIComponent(keyword)}`}
               className="line-clamp-1 text-left text-body1 text-neutral-80"
             >
-              {label}
+              {rank}. {keyword}
             </Link>
           ))}
         </div>
         <div className="flex flex-1 flex-col gap-4">
-          {rightColumn.map(({ bookId, label }) => (
+          {rightColumn.map(({ rank, keyword }) => (
             <Link
-              key={bookId}
-              to={`/books/${bookId}`}
+              key={rank}
+              to={`/search/result?q=${encodeURIComponent(keyword)}`}
               className="line-clamp-1 text-left text-body1 text-neutral-80"
             >
-              {label}
+              {rank}. {keyword}
             </Link>
           ))}
         </div>
