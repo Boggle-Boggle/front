@@ -1,8 +1,11 @@
-import { useState } from 'react';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+
 import { useNavigate } from 'react-router-dom';
 
 import { Header } from 'components/Header';
+import Loading from 'pages/Loading';
 
+import { updateUserSettings, getUserSettings } from './api';
 import { SectionHeader } from '../shared/SectionHeader';
 import { SectionLink } from '../shared/SectionLink';
 import { SectionToggle } from '../shared/SectionToggle';
@@ -16,8 +19,33 @@ const MSG_CONTENT_BLOCKED_USERS = '차단한 유저 확인하기';
 
 const Content = () => {
   const navigate = useNavigate();
-  const [isAdultContentHidden, setIsAdultContentHidden] = useState<boolean>(true);
-  const [isPersonalRecommendationEnabled, setIsPersonalRecommendationEnabled] = useState<boolean>(false);
+  const queryClient = useQueryClient();
+
+  const { data: userSettings, isLoading } = useQuery({
+    queryKey: ['users', 'me', 'settings'],
+    queryFn: getUserSettings,
+  });
+
+  const { mutate: updateSettings } = useMutation({
+    mutationFn: updateUserSettings,
+    onSuccess: (updatedSettings) => {
+      queryClient.setQueryData(['users', 'me', 'settings'], updatedSettings);
+    },
+  });
+
+  if (isLoading || !userSettings) return <Loading />;
+
+  const handleAdultContentChange = () => {
+    updateSettings({
+      hideAdultContent: !userSettings.hideAdultContent,
+    });
+  };
+
+  const handleRecommendationChange = () => {
+    updateSettings({
+      recommendForMe: !userSettings.recommendForMe,
+    });
+  };
 
   return (
     <div className="flex h-full w-full flex-col">
@@ -28,13 +56,13 @@ const Content = () => {
         <div className="flex flex-col gap-2 pb-10 pt-2">
           <SectionToggle
             label={MSG_CONTENT_ADULT}
-            checked={isAdultContentHidden}
-            onChange={() => setIsAdultContentHidden((prev) => !prev)}
+            checked={userSettings.hideAdultContent}
+            onChange={handleAdultContentChange}
           />
           <SectionToggle
             label={MSG_CONTENT_RECOMMEND}
-            checked={isPersonalRecommendationEnabled}
-            onChange={() => setIsPersonalRecommendationEnabled((prev) => !prev)}
+            checked={userSettings.recommendForMe}
+            onChange={handleRecommendationChange}
           />
         </div>
 

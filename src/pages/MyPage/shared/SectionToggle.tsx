@@ -7,11 +7,10 @@ type SectionToggleProps = {
   leading?: ReactNode;
   checked: boolean;
   onChange: () => void;
-  disabled?: boolean;
 };
 
 export const SectionToggle = (props: SectionToggleProps) => {
-  const { label, leading, checked, onChange, disabled = false } = props;
+  const { label, leading, checked, onChange } = props;
 
   const handleChange = () => {
     onChange();
@@ -21,7 +20,7 @@ export const SectionToggle = (props: SectionToggleProps) => {
     <div className="flex h-12 items-center gap-2 px-mobile">
       {leading ? <div className="shrink-0">{leading}</div> : null}
       <span className="flex-1 text-body1">{label}</span>
-      <Switch checked={checked} onChange={handleChange} disabled={disabled} ariaLabel={label} />
+      <Switch checked={checked} onChange={handleChange} ariaLabel={label} />
     </div>
   );
 };
