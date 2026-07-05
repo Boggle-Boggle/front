@@ -21,39 +21,32 @@ export const SegmentedControl = <TValue extends string>(props: SegmentedControlP
   const { left, right } = options;
   const isLeftSelected = left.value === value;
   const isRightSelected = right.value === value;
-  const leftButtonClassName = `h-full text-title4 transition-all duration-300 ease-out ${
+  const leftButtonClassName = `inline-flex h-full items-center justify-center text-title4 transition-all duration-300 ease-out ${
     isLeftSelected ? 'bg-primary px-4 text-neutral-0' : 'bg-neutral-0 px-2 text-neutral-60'
   }`;
-  const rightButtonClassName = `h-full text-title4 transition-all duration-300 ease-out ${
+  const rightButtonClassName = `inline-flex h-full items-center justify-center text-title4 transition-all duration-300 ease-out ${
     isRightSelected ? 'bg-primary px-4 text-neutral-0' : 'bg-neutral-0 px-2 text-neutral-60'
   }`;
+  const selectedOption = isLeftSelected ? left : right;
+  const nextValue = isLeftSelected ? right.value : left.value;
 
-  const handleSelectOption = (nextValue: TValue) => () => {
+  const handleToggleOption = () => {
     onChange(nextValue);
   };
 
   return (
-    <div
-      role="group"
-      aria-label={ariaLabel}
+    <button
+      type="button"
+      aria-label={`${ariaLabel}: ${selectedOption.label}`}
+      onClick={handleToggleOption}
       className={`inline-flex h-7 overflow-hidden rounded border border-primary ${className}`}
     >
-      <button
-        type="button"
-        aria-pressed={isLeftSelected}
-        onClick={handleSelectOption(left.value)}
-        className={leftButtonClassName}
-      >
+      <span aria-hidden className={leftButtonClassName}>
         {left.label}
-      </button>
-      <button
-        type="button"
-        aria-pressed={isRightSelected}
-        onClick={handleSelectOption(right.value)}
-        className={rightButtonClassName}
-      >
+      </span>
+      <span aria-hidden className={rightButtonClassName}>
         {right.label}
-      </button>
-    </div>
+      </span>
+    </button>
   );
 };
