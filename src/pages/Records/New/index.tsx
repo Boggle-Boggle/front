@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useLayerStore } from 'stores/useLayerStore';
 
 import { Header } from 'components/Header';
@@ -11,23 +11,25 @@ import { GroupSection } from '../shared/GroupSection';
 import { PageInfoModal } from '../shared/PageInfoModal';
 import { RatingSection } from '../shared/RatingSection';
 import { ReadingPeriodSection } from '../shared/ReadingPeriodSection';
-import { ReadingProgressSection } from '../shared/ReadingProgressSection';
+import { ReadingProgressSection, type ReadingProgressType } from '../shared/ReadingProgressSection';
 import { VisibilitySection } from '../shared/VisibilitySection';
 import { GROUP_ITEMS } from '../shared/mock';
-import { getAddRecordStatus } from '../shared/recordStatus';
 
 const MSG_ADD_RECORD_SUBMIT = '입력을 끝내고 완료하기';
 const MSG_DATE_SELECT_START = '시작일 선택하기';
 const MSG_DATE_SELECT_END = '종료일 선택하기';
+const DEFAULT_TOTAL_PAGE_COUNT = '120';
+
 export const NewRecord = () => {
-  const [searchParams] = useSearchParams();
   const [rating, setRating] = useState<number>(0);
   const [selectedGroups, setSelectedGroups] = useState<string[]>([GROUP_ITEMS[0], GROUP_ITEMS[1]]);
+  const [progressType, setProgressType] = useState<ReadingProgressType>('PAGE');
+  const [progressValue, setProgressValue] = useState<string>('');
+  const [totalPageCount, setTotalPageCount] = useState<string>(DEFAULT_TOTAL_PAGE_COUNT);
 
   const navigate = useNavigate();
   const { push, pop } = useLayerStore();
 
-  const status = getAddRecordStatus(searchParams.get('status'));
   const handleSubmit = () => navigate('/records/new/completed');
 
   const handleToggleGroup = (group: string) => () => {
@@ -65,7 +67,7 @@ export const NewRecord = () => {
   const handleOpenPageInfo = () => {
     push({
       id: 'book-record-page-info-modal',
-      component: <PageInfoModal onClose={pop} />,
+      component: <PageInfoModal initialValue={totalPageCount} onClose={pop} onSubmit={setTotalPageCount} />,
     });
   };
 
@@ -76,7 +78,14 @@ export const NewRecord = () => {
       <div className="flex flex-1 flex-col gap-8 overflow-y-auto px-mobile pb-64 pt-safe-top">
         <RatingSection rating={rating} onChange={setRating} />
         <ReadingPeriodSection onOpenStartDate={handleOpenStartDate} onOpenEndDate={handleOpenEndDate} />
-        <ReadingProgressSection status={status} onOpenPageInfo={handleOpenPageInfo} />
+        <ReadingProgressSection
+          progressType={progressType}
+          progressValue={progressValue}
+          totalPageCount={totalPageCount}
+          onChangeProgressType={setProgressType}
+          onChangeProgressValue={setProgressValue}
+          onOpenPageInfo={handleOpenPageInfo}
+        />
         <GroupSection
           selectedGroups={selectedGroups}
           onOpenGroupEdit={handleOpenGroupEdit}

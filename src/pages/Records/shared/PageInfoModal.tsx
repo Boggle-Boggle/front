@@ -5,7 +5,9 @@ import { Input } from 'components/Input';
 import { ContentModal } from 'components/Layer/ContentModal';
 
 type PageInfoModalProps = {
+  initialValue: string;
   onClose: () => void;
+  onSubmit: (pageCount: string) => void;
 };
 
 const MSG_PAGE_INFO_TITLE = '페이지 정보 수정';
@@ -15,8 +17,8 @@ const MSG_PAGE_INFO_HELP = '* 현재 알라딘에 등록된 페이지 수입니�
 const MSG_MODAL_DONE = '완료';
 
 export const PageInfoModal = (props: PageInfoModalProps) => {
-  const { onClose } = props;
-  const [pageCount, setPageCount] = useState<string>('');
+  const { initialValue, onClose, onSubmit } = props;
+  const [pageCount, setPageCount] = useState<string>(initialValue);
 
   const handleChangePageCount = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setPageCount(e.target.value);
@@ -24,6 +26,11 @@ export const PageInfoModal = (props: PageInfoModalProps) => {
 
   const handleClearPageCount = () => {
     setPageCount('');
+  };
+
+  const handleSubmitPageCount = () => {
+    onSubmit(pageCount);
+    onClose();
   };
 
   return (
@@ -43,7 +50,7 @@ export const PageInfoModal = (props: PageInfoModalProps) => {
         />
         <p className="text-end text-caption1 text-neutral-60">{MSG_PAGE_INFO_HELP}</p>
       </div>
-      <Button onClick={() => {}}>{MSG_MODAL_DONE}</Button>
+      <Button onClick={handleSubmitPageCount}>{MSG_MODAL_DONE}</Button>
     </ContentModal>
   );
 };

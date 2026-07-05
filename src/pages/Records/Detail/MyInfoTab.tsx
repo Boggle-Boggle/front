@@ -8,17 +8,20 @@ import { GroupSection } from '../shared/GroupSection';
 import { PageInfoModal } from '../shared/PageInfoModal';
 import { RatingSection } from '../shared/RatingSection';
 import { ReadingPeriodSection } from '../shared/ReadingPeriodSection';
-import { ReadingProgressSection } from '../shared/ReadingProgressSection';
+import { ReadingProgressSection, type ReadingProgressType } from '../shared/ReadingProgressSection';
 import { VisibilitySection } from '../shared/VisibilitySection';
 import { GROUP_ITEMS } from '../shared/mock';
-import { type AddRecordStatus } from '../shared/recordStatus';
 
 const MSG_DATE_SELECT_START = '시작일 선택하기';
 const MSG_DATE_SELECT_END = '종료일 선택하기';
+const DEFAULT_TOTAL_PAGE_COUNT = '120';
+
 export const MyInfoTab = () => {
   const [rating, setRating] = useState<number>(0);
-  const [status] = useState<AddRecordStatus>('completed');
   const [selectedGroups, setSelectedGroups] = useState<string[]>([GROUP_ITEMS[0], GROUP_ITEMS[1]]);
+  const [progressType, setProgressType] = useState<ReadingProgressType>('PAGE');
+  const [progressValue, setProgressValue] = useState<string>('');
+  const [totalPageCount, setTotalPageCount] = useState<string>(DEFAULT_TOTAL_PAGE_COUNT);
   const { push, pop } = useLayerStore();
 
   const handleToggleGroup = (group: string) => () => {
@@ -56,7 +59,7 @@ export const MyInfoTab = () => {
   const handleOpenPageInfo = () => {
     push({
       id: 'book-record-detail-page-info-modal',
-      component: <PageInfoModal onClose={pop} />,
+      component: <PageInfoModal initialValue={totalPageCount} onClose={pop} onSubmit={setTotalPageCount} />,
     });
   };
 
@@ -64,7 +67,14 @@ export const MyInfoTab = () => {
     <div className="flex flex-col gap-8 pb-safe-bottom pt-[1.875rem]">
       <RatingSection rating={rating} onChange={setRating} />
       <ReadingPeriodSection onOpenStartDate={handleOpenStartDate} onOpenEndDate={handleOpenEndDate} />
-      <ReadingProgressSection status={status} onOpenPageInfo={handleOpenPageInfo} />
+      <ReadingProgressSection
+        progressType={progressType}
+        progressValue={progressValue}
+        totalPageCount={totalPageCount}
+        onChangeProgressType={setProgressType}
+        onChangeProgressValue={setProgressValue}
+        onOpenPageInfo={handleOpenPageInfo}
+      />
       <GroupSection
         selectedGroups={selectedGroups}
         onOpenGroupEdit={handleOpenGroupEdit}
