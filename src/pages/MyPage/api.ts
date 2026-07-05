@@ -1,7 +1,7 @@
 import { api } from 'api';
 import type { ApiSuccessResponse } from 'api.types';
 
-type LoginProvider = 'GOOGLE' | 'KAKAO' | 'APPLE';
+import type { LoginProvider } from './shared/loginProvider';
 
 export interface MyPageProfileResponse {
   nickname: string;

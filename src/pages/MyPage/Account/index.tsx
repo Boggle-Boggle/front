@@ -1,3 +1,5 @@
+import { useQuery } from '@tanstack/react-query';
+
 import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useLayerStore } from 'stores/useLayerStore';
@@ -12,9 +14,10 @@ import NICKNAME_RULE from 'constants/index';
 import DownloadBackupModal from './DownloadBackupModal';
 import LogoutConfirmModal from './LogoutConfirmModal';
 import { useChangeNicknameMutation } from './useChangeNicknameMutation';
-import { useGetMeQuery } from '../../Auth/useGetMeQuery';
+import { getMyPageProfile } from '../api';
 import { SectionButton } from '../shared/SectionButton';
 import { SectionHeader } from '../shared/SectionHeader';
+import { LOGIN_PROVIDER_LABEL } from '../shared/loginProvider';
 
 const MSG_ACCOUNT_TITLE = '계정 설정하기';
 const MSG_ACCOUNT_NICKNAME_SUFFIX = '님';
@@ -37,7 +40,12 @@ const Account = () => {
   const [nickname, setNickname] = useState<string>('');
   const nicknameInputRef = useRef<HTMLInputElement>(null);
 
-  const { data: me, isLoading } = useGetMeQuery();
+  const { data: profile, isLoading } = useQuery({
+    queryKey: ['users', 'me', 'profile'],
+    queryFn: getMyPageProfile,
+    retry: false,
+    throwOnError: true,
+  });
   const { isPending: isChangeNicknamePending, mutate: changeNickname } = useChangeNicknameMutation();
 
   useEffect(() => {
@@ -54,11 +62,11 @@ const Account = () => {
   };
 
   const handleCompleteNicknameEdit = () => {
-    if (!me) return;
+    if (!profile) return;
 
     const trimmedNickname = nickname.trim();
     if (!trimmedNickname || isChangeNicknamePending) return;
-    if (trimmedNickname === me.nickname) {
+    if (trimmedNickname === profile.nickname) {
       setIsEditingNickname(false);
 
       return;
@@ -93,8 +101,9 @@ const Account = () => {
     navigate('/mypage/account/withdraw');
   };
 
-  if (isLoading || !me) return <Loading />;
+  if (isLoading || !profile) return <Loading />;
 
+  const loginProviderLabel = LOGIN_PROVIDER_LABEL[profile.providers[0]];
   const trimmedNickname = nickname.trim();
   const isNicknameChangeDisabled = !trimmedNickname || isChangeNicknamePending;
   const nicknameInputSize = Math.max(
@@ -124,11 +133,13 @@ const Account = () => {
             </div>
           ) : (
             <h2 className="text-title1">
-              {me.nickname}
+              {profile.nickname}
               <span className="pl-[0.125rem] text-h3">{MSG_ACCOUNT_NICKNAME_SUFFIX}</span>
             </h2>
           )}
-          <p className="pb-4 pt-0.5 text-body2 text-information">{MSG_ACCOUNT_LOGIN_STATUS}</p>
+          <p className="pb-4 pt-0.5 text-body2 text-information">
+            {loginProviderLabel}로 {MSG_ACCOUNT_LOGIN_STATUS}
+          </p>
           <Button
             width="short"
             size="small"

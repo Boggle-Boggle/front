@@ -19,6 +19,7 @@ export const useChangeNicknameMutation = () => {
     mutationFn: changeNickname,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['users', 'me'] });
+      queryClient.invalidateQueries({ queryKey: ['users', 'me', 'profile'] });
 
       addToast({
         description: MSG_ACCOUNT_NICKNAME_CHANGE_SUCCESS,

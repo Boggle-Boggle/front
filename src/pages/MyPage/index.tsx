@@ -10,6 +10,7 @@ import profileImage from 'assets/img/profile.png';
 import SettingListItem from './SettingListItem';
 import { getMyPageProfile, type MyPageProfileResponse } from './api';
 import StatItem from './shared/StatItem';
+import { LOGIN_PROVIDER_LABEL } from './shared/loginProvider';
 
 const MSG_MY_PAGE_PROFILE_IMAGE_ALT = '프로필 일러스트';
 const MSG_MY_PAGE_NICKNAME_SUFFIX = ' 님';
@@ -19,12 +20,6 @@ type MyPageMenuItem = {
   description: string;
   path: string;
 };
-
-const LOGIN_PROVIDER_LABEL = {
-  GOOGLE: '구글',
-  KAKAO: '카카오톡',
-  APPLE: '애플',
-} as const;
 
 const getMyPageStats = (profile: MyPageProfileResponse) => [
   {
