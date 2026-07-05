@@ -1,6 +1,7 @@
 import { ChangeEvent } from 'react';
 
 import { Input } from 'components/Input';
+import { SegmentedControl, type SegmentedControlOptions } from 'components/SegmentedControl';
 
 import { SectionTitle } from './SectionTitle';
 
@@ -22,8 +23,20 @@ const MSG_ADD_RECORD_TOTAL_PERCENTAGE = (totalPercentage: number) => `총 ${tota
 const MSG_ADD_RECORD_PROGRESS_PLACEHOLDER = (unit: string) => `0${unit} 읽었어요`;
 const MSG_ADD_RECORD_PAGE_SEGMENT = '쪽';
 const MSG_ADD_RECORD_PERCENTAGE_SEGMENT = '%';
+const MSG_ADD_RECORD_PROGRESS_TYPE_LABEL = '독서량 입력 단위';
 const MIN_PROGRESS_VALUE = 0;
 const MAX_PERCENTAGE_VALUE = 100;
+
+const READING_PROGRESS_TYPE_OPTIONS: SegmentedControlOptions<ReadingProgressType> = {
+  left: {
+    value: 'PAGE',
+    label: MSG_ADD_RECORD_PAGE_SEGMENT,
+  },
+  right: {
+    value: 'PERCENTAGE',
+    label: MSG_ADD_RECORD_PERCENTAGE_SEGMENT,
+  },
+};
 
 export const ReadingProgressSection = (props: ReadingProgressSectionProps) => {
   const { progressType, progressValue, totalPageCount, onChangeProgressType, onChangeProgressValue, onOpenPageInfo } =
@@ -37,10 +50,6 @@ export const ReadingProgressSection = (props: ReadingProgressSectionProps) => {
   const maxProgressValue = isPageType && totalPageCount ? Number(totalPageCount) : MAX_PERCENTAGE_VALUE;
   const progressPlaceholder = MSG_ADD_RECORD_PROGRESS_PLACEHOLDER(progressUnit);
 
-  const handleSelectPageType = () => onChangeProgressType('PAGE');
-
-  const handleSelectPercentageType = () => onChangeProgressType('PERCENTAGE');
-
   const handleProgressValueChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     onChangeProgressValue(event.target.value);
   };
@@ -51,24 +60,12 @@ export const ReadingProgressSection = (props: ReadingProgressSectionProps) => {
     <section className="w-full">
       <div className="flex items-center justify-between">
         <SectionTitle title={MSG_ADD_RECORD_PROGRESS_TITLE} />
-        {/* TODO: 변경 필요 ? */}
-        <div className="flex h-7 overflow-hidden rounded border border-primary">
-          <button
-            type="button"
-            onClick={handleSelectPageType}
-            className={`px-4 text-title4 ${isPageType ? 'bg-primary text-neutral-0' : 'bg-neutral-0 text-neutral-60'}`}
-          >
-            {MSG_ADD_RECORD_PAGE_SEGMENT}
-          </button>
-          <button
-            type="button"
-            aria-pressed={!isPageType}
-            onClick={handleSelectPercentageType}
-            className={`px-2 text-title4 ${isPageType ? 'bg-neutral-0 text-neutral-60' : 'bg-primary text-neutral-0'}`}
-          >
-            {MSG_ADD_RECORD_PERCENTAGE_SEGMENT}
-          </button>
-        </div>
+        <SegmentedControl
+          options={READING_PROGRESS_TYPE_OPTIONS}
+          value={progressType}
+          onChange={onChangeProgressType}
+          ariaLabel={MSG_ADD_RECORD_PROGRESS_TYPE_LABEL}
+        />
       </div>
 
       <p className="pb-1 pt-3 text-caption2 text-neutral-60">{totalProgressText}</p>
