@@ -5,6 +5,20 @@ export const createLogout = async () => {
   await api.post<void>('/v2/auth/logout');
 };
 
+interface ChangeNicknameRequest {
+  nickname: string;
+}
+
+interface ChangeNicknameResponse {
+  nickname: string;
+}
+
+export const changeNickname = async (params: ChangeNicknameRequest) => {
+  const response = await api.patch<ApiSuccessResponse<ChangeNicknameResponse>>('/v2/users/me/nickname', params);
+
+  return response.data.data;
+};
+
 export type WithdrawalReasonCode =
   | 'UNINTUITIVE_UX'
   | 'POOR_VISUAL'
