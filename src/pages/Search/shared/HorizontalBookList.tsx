@@ -16,7 +16,7 @@ interface HorizontalBookListProps {
 
 export const HorizontalBookList = ({ books = [] }: HorizontalBookListProps) => {
   return (
-    <div className="relative w-full overflow-hidden pb-5">
+    <div className="relative w-full overflow-hidden pb-10">
       <ul className="scrollbar-hide flex w-full gap-[0.625rem] overflow-x-auto px-mobile">
         {books.map(({ isbn13, title, author, coverUrl }) => (
           <li key={isbn13} className="w-[6.25rem] shrink-0">
@@ -35,4 +35,3 @@ export const HorizontalBookList = ({ books = [] }: HorizontalBookListProps) => {
 };
 
 export default HorizontalBookList;
-
