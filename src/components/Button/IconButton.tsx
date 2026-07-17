@@ -14,7 +14,7 @@ const IconButton = (props: IconButtonProps) => {
 
   const alignClass = `${align === 'left' ? 'justify-start' : align === 'right' ? 'justify-end' : 'justify-center'}`;
   const sizeClass = size === 'xs' ? 'size-6' : size === 'sm' ? 'size-9' : 'size-12';
-  const iconSizeClass = size === 'md' ? 'size-icon-md' : 'size-icon-sm';
+  const iconSizeClass = size === 'xs' || size === 'md' ? 'size-icon-md' : 'size-icon-sm';
 
   return (
     <button
