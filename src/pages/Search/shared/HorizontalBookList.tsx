@@ -3,23 +3,27 @@ import { Link } from 'react-router-dom';
 import BookCover from 'components/BookCover';
 import { ScrollFadeOverlay } from 'components/ScrollFadeOverlay';
 
-const items = Array.from({ length: 20 }, (_, index) => ({
-  id: index + 1,
-  title: `책 제목 ${index + 1}`,
-  author: `저자 ${index + 1}`,
-  url: 'https://image.aladin.co.kr/product/38515/3/cover500/e202637227_1.jpg',
-}));
+export interface HorizontalBookItem {
+  isbn13: string;
+  title: string;
+  author: string;
+  coverUrl: string | null;
+}
 
-export const HorizontalBookList = () => {
+interface HorizontalBookListProps {
+  books?: HorizontalBookItem[];
+}
+
+export const HorizontalBookList = ({ books = [] }: HorizontalBookListProps) => {
   return (
     <div className="relative w-full overflow-hidden pb-5">
       <ul className="scrollbar-hide flex w-full gap-[0.625rem] overflow-x-auto px-mobile">
-        {items.map(({ id, title, author, url }) => (
-          <li key={id} className="w-[6.25rem] shrink-0">
-            <Link to={`/books/${id}`} className="w-full">
-              <BookCover className="w-full" url={url} variant="clear" />
-              <p className="text-title3">{title}</p>
-              <p className="text-caption1 text-neutral-40">{author}</p>
+        {books.map(({ isbn13, title, author, coverUrl }) => (
+          <li key={isbn13} className="w-[6.25rem] shrink-0">
+            <Link to={`/books/${isbn13}`} className="w-full">
+              <BookCover className="w-full" url={coverUrl} variant="clear" />
+              <p className="line-clamp-1 text-title3">{title}</p>
+              <p className="line-clamp-1 text-caption1 text-neutral-40">{author}</p>
             </Link>
           </li>
         ))}
@@ -31,3 +35,4 @@ export const HorizontalBookList = () => {
 };
 
 export default HorizontalBookList;
+

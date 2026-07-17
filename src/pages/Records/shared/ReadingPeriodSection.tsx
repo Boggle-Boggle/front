@@ -10,6 +10,7 @@ const MSG_ADD_RECORD_PERIOD_TITLE = '독서 기간';
 const MSG_ADD_RECORD_START_DATE = '시작일';
 const MSG_ADD_RECORD_END_DATE = '완료일';
 const MSG_ADD_RECORD_READING_NOW = '읽는 중';
+const MSG_ADD_RECORD_EMPTY_DATE = '00.00.00';
 
 export const ReadingPeriodSection = (props: ReadingPeriodSectionProps) => {
   const { onOpenStartDate, onOpenEndDate } = props;
@@ -18,7 +19,13 @@ export const ReadingPeriodSection = (props: ReadingPeriodSectionProps) => {
     <section className="w-full">
       <SectionTitle title={MSG_ADD_RECORD_PERIOD_TITLE} />
       <div className="flex items-center justify-center gap-4">
-        <ReadingPeriodButton label={MSG_ADD_RECORD_START_DATE} value="00.00.00" isActive onClick={onOpenStartDate} />
+        {/* TODO Dialog 연결 */}
+        <ReadingPeriodButton
+          label={MSG_ADD_RECORD_START_DATE}
+          value={MSG_ADD_RECORD_EMPTY_DATE}
+          isActive
+          onClick={onOpenStartDate}
+        />
         ~
         <ReadingPeriodButton
           label={MSG_ADD_RECORD_END_DATE}

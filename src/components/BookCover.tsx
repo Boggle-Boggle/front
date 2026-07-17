@@ -9,7 +9,7 @@ type ReadingStatusBadge = 'reading' | 'read' | 'stopped';
 type BookCoverStyle = 'clear' | 'mockup';
 
 type BookCoverProps = {
-  url: string | null;
+  url?: string | null;
   label?: string;
   variant?: BookCoverStyle;
   ratio?: number;
