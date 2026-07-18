@@ -118,7 +118,7 @@ export const Reviews = () => {
                 id={REVIEW_SPOILER_CHECKBOX_ID}
                 checked={isSpoiler}
                 onChange={handleToggleSpoiler}
-                size="mini"
+                size="sm"
                 variant="black"
                 className="p-1"
               />

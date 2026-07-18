@@ -7,7 +7,7 @@ type CheckboxProps = {
   checked: boolean;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
   name?: string;
-  size?: 'mini' | 'regular';
+  size?: 'xs' | 'sm' | 'md';
   variant?: 'color' | 'black';
   disabled?: boolean;
   className?: string;
@@ -20,7 +20,7 @@ export const Checkbox = (props: CheckboxProps) => {
     checked,
     onChange,
     name,
-    size = 'regular',
+    size = 'md',
     variant = 'color',
     disabled = false,
     className = '',
@@ -29,13 +29,13 @@ export const Checkbox = (props: CheckboxProps) => {
 
   const labelClass = 'inline-flex items-center justify-center';
   const disabledClass = disabled ? 'opacity-20 cursor-not-allowed' : 'cursor-pointer';
-  const boxSizeClass = size === 'mini' ? 'size-3' : 'size-6';
-  const radiusClass = size === 'mini' ? 'rounded-[2px]' : 'rounded-[4px]';
+  const boxSizeClass = size === 'xs' ? 'size-4' : size === 'sm' ? 'size-3' : 'size-6';
+  const radiusClass = size === 'xs' || size === 'sm' ? 'rounded-[2px]' : 'rounded-[4px]';
   const borderColorClass = variant === 'color' ? 'border-neutral-40' : 'border-neutral-60';
   const checkedColorClass = variant === 'color' ? 'bg-primary' : 'bg-neutral-80';
   const boxColorClass = checked ? checkedColorClass : 'bg-neutral-0';
   const borderClass = checked ? 'border-[1.5px] border-transparent' : `border-[1.5px] ${borderColorClass}`;
-  const checkIconClass = size === 'mini' ? 'h-2 w-3' : 'h-3 w-4';
+  const checkIconClass = size === 'xs' ? 'h-2 w-[10px]' : size === 'sm' ? 'h-2 w-3' : 'h-3 w-4';
 
   return (
     <label htmlFor={id} className={`${labelClass} ${disabledClass} ${className}`}>

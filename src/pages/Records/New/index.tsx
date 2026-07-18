@@ -26,6 +26,7 @@ export const NewRecord = () => {
   const [progressType, setProgressType] = useState<ReadingProgressType>('PAGE');
   const [progressValue, setProgressValue] = useState<string>('');
   const [totalPageCount, setTotalPageCount] = useState<string>(DEFAULT_TOTAL_PAGE_COUNT);
+  const [isPrivate, setIsPrivate] = useState<boolean>(false);
 
   const navigate = useNavigate();
   const { push, pop } = useLayerStore();
@@ -34,6 +35,10 @@ export const NewRecord = () => {
 
   const handleToggleGroup = (group: string) => () => {
     setSelectedGroups((prev) => (prev.includes(group) ? prev.filter((item) => item !== group) : [...prev, group]));
+  };
+
+  const handleTogglePrivate = () => {
+    setIsPrivate((prev) => !prev);
   };
 
   const handleOpenStartDate = () => {
@@ -91,7 +96,7 @@ export const NewRecord = () => {
           onOpenGroupEdit={handleOpenGroupEdit}
           onToggleGroup={handleToggleGroup}
         />
-        <VisibilitySection onClick={() => {}} />
+        <VisibilitySection checked={isPrivate} onChange={handleTogglePrivate} />
       </div>
 
       {/* TODO 바텀버튼 수정 필요 */}

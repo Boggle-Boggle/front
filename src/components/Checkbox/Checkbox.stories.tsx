@@ -13,7 +13,7 @@ const meta = {
     checked: { control: 'boolean' },
     size: {
       control: { type: 'select' },
-      options: ['mini', 'regular'],
+      options: ['xs', 'sm', 'md'],
     },
     variant: {
       control: { type: 'select' },
@@ -30,7 +30,7 @@ const checkboxArgs: ComponentProps<typeof Checkbox> = {
   id: 'check-box',
   checked: false,
   onChange: () => {},
-  size: 'regular',
+  size: 'md',
   variant: 'color',
   disabled: false,
 };
@@ -100,7 +100,7 @@ export const Disabled: Story = {
 export const MiniBlack: Story = {
   args: {
     ...checkboxArgs,
-    size: 'mini',
+    size: 'sm',
     variant: 'black',
   },
   render: (args) => {

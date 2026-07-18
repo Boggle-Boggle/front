@@ -102,7 +102,7 @@ export const TermsStep = (props: TermsStepProps) => {
                     id={`signup-term-${term.termsId}`}
                     checked={isChecked}
                     onChange={() => handleToggleTerm(term.termsId)}
-                    size="regular"
+                    size="md"
                     variant="color"
                   />
                 </li>

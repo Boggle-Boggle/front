@@ -22,10 +22,15 @@ export const MyInfoTab = () => {
   const [progressType, setProgressType] = useState<ReadingProgressType>('PAGE');
   const [progressValue, setProgressValue] = useState<string>('');
   const [totalPageCount, setTotalPageCount] = useState<string>(DEFAULT_TOTAL_PAGE_COUNT);
+  const [isPrivate, setIsPrivate] = useState<boolean>(false);
   const { push, pop } = useLayerStore();
 
   const handleToggleGroup = (group: string) => () => {
     setSelectedGroups((prev) => (prev.includes(group) ? prev.filter((item) => item !== group) : [...prev, group]));
+  };
+
+  const handleTogglePrivate = () => {
+    setIsPrivate((prev) => !prev);
   };
 
   const handleOpenStartDate = () => {
@@ -80,7 +85,7 @@ export const MyInfoTab = () => {
         onOpenGroupEdit={handleOpenGroupEdit}
         onToggleGroup={handleToggleGroup}
       />
-      <VisibilitySection onClick={() => {}} />
+      <VisibilitySection checked={isPrivate} onChange={handleTogglePrivate} />
     </div>
   );
 };
