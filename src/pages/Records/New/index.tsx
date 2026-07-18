@@ -1,8 +1,10 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useLayerStore } from 'stores/useLayerStore';
 
+import { BottomDoubleButton } from 'components/Button';
 import { Header } from 'components/Header';
+import { useBookDetailQuery } from 'pages/BookDetail/useBookDetailQuery';
 
 import { DateSelectModal } from '../shared/DateSelectModal';
 import { GroupDeleteConfirmModal } from '../shared/GroupDeleteConfirmModal';
@@ -29,7 +31,11 @@ export const NewRecord = () => {
   const [isPrivate, setIsPrivate] = useState<boolean>(false);
 
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const { push, pop } = useLayerStore();
+
+  const bookId = searchParams.get('bookId') || '';
+  const { data: bookDetail } = useBookDetailQuery(bookId);
 
   const handleSubmit = () => navigate('/records/new/completed');
 
@@ -78,9 +84,9 @@ export const NewRecord = () => {
 
   return (
     <div className="flex h-full flex-col">
-      <Header withBack />
+      <Header withBack title={bookDetail?.title} />
 
-      <div className="flex flex-1 flex-col gap-8 overflow-y-auto px-mobile pb-64 pt-safe-top">
+      <div className="flex flex-1 flex-col gap-8 overflow-y-auto px-mobile pb-safe-bottom pt-safe-top">
         <RatingSection rating={rating} onChange={setRating} />
         <ReadingPeriodSection onOpenStartDate={handleOpenStartDate} onOpenEndDate={handleOpenEndDate} />
         <ReadingProgressSection
@@ -99,16 +105,12 @@ export const NewRecord = () => {
         <VisibilitySection checked={isPrivate} onChange={handleTogglePrivate} />
       </div>
 
-      {/* TODO 바텀버튼 수정 필요 */}
-      <div className="fixed inset-x-0 bottom-0 z-fixedBtn mx-auto flex h-[4.375rem] w-full max-w-mobile justify-end bg-neutral-0 px-mobile pb-safe-bottom pt-2">
-        <button
-          type="button"
-          onClick={handleSubmit}
-          className="h-[3.375rem] w-[16.1875rem] rounded-xl border border-neutral-40 bg-primary text-body1 text-neutral-0"
-        >
-          {MSG_ADD_RECORD_SUBMIT}
-        </button>
-      </div>
+      <BottomDoubleButton
+        primaryText={MSG_ADD_RECORD_SUBMIT}
+        onPrimaryClick={handleSubmit}
+        secondaryText="이전으로"
+        onSecondaryClick={() => navigate(-1)}
+      />
     </div>
   );
 };
