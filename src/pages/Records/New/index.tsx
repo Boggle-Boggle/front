@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useLayerStore } from 'stores/useLayerStore';
 
-import { BottomDoubleButton } from 'components/Button';
+import { BottomButton } from 'components/Button';
 import { Header } from 'components/Header';
 import { useBookDetailQuery } from 'pages/BookDetail/useBookDetailQuery';
 
@@ -105,12 +105,11 @@ export const NewRecord = () => {
         <VisibilitySection checked={isPrivate} onChange={handleTogglePrivate} />
       </div>
 
-      <BottomDoubleButton
-        primaryText={MSG_ADD_RECORD_SUBMIT}
-        onPrimaryClick={handleSubmit}
-        secondaryText="이전으로"
-        onSecondaryClick={() => navigate(-1)}
-      />
+      <BottomButton
+        onClick={handleSubmit}
+      >
+        {MSG_ADD_RECORD_SUBMIT}
+      </BottomButton>
     </div>
   );
 };
