@@ -19,7 +19,7 @@ export type TextButtonProps = {
   onClick: MouseEventHandler<HTMLButtonElement>;
   text: string;
   disabled?: boolean;
-  size?: 'lg' | 'md' | 'sm';
+  size?: 'lg' | 'md' | 'sm' | 'xs';
   variant?: 'default' | 'primaryLine' | 'filled';
   className?: string;
   leftIcon?: ElementType;

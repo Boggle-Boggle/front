@@ -23,9 +23,11 @@ export const TextButton = (props: TextButtonProps) => {
         ? hasIcon
           ? 'h-7 text-body2'
           : 'h-7 text-body2 px-2'
-        : hasIcon
-          ? 'text-caption1 py-0.5'
-          : 'text-caption1 py-0.5 px-1';
+        : size === 'sm'
+          ? hasIcon
+            ? 'text-caption1 py-0.5'
+            : 'text-caption1 py-0.5 px-1'
+          : 'text-caption1';
 
   const gapClass = hasIcon ? (size === 'lg' ? 'gap-1' : size === 'md' ? 'gap-0.5' : 'gap-[3px]') : '';
 
@@ -40,9 +42,11 @@ export const TextButton = (props: TextButtonProps) => {
           ? hasIcon
             ? 'px-2 py-1'
             : 'px-2 py-1'
-          : hasIcon
-            ? 'px-1.5'
-            : 'px-2.5';
+          : size === 'sm'
+            ? hasIcon
+              ? 'px-1.5'
+              : 'px-2.5'
+            : '';
 
   const variantClass = disabled
     ? variant === 'default'
