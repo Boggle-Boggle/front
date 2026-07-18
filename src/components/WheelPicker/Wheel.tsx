@@ -40,18 +40,20 @@ export const Wheel = (props: WheelProps) => {
       clearTimeout(scrollTimeoutRef.current);
     }
 
-    const { scrollTop } = listRef.current;
-    const selectedIndex = Math.floor((scrollTop + itemHeight / 2) / itemHeight);
-    const clampedIndex = Math.max(0, Math.min(selectedIndex, items.length - 1));
-    const selectedItem = items[clampedIndex];
-
-    if (selectedItem && selectedItem.value !== value) {
-      onChange(selectedItem.value);
-    }
-
+    // 스크롤이 완전히 멈춘 후(100ms 동안 추가 스크롤 이벤트가 없을 때)에만 최종 선택된 아이템의 onChange를 트리거합니다.
     scrollTimeoutRef.current = setTimeout(() => {
       setIsScrolling(false);
-    }, 150);
+
+      if (!listRef.current) return;
+      const { scrollTop } = listRef.current;
+      const selectedIndex = Math.floor((scrollTop + itemHeight / 2) / itemHeight);
+      const clampedIndex = Math.max(0, Math.min(selectedIndex, items.length - 1));
+      const selectedItem = items[clampedIndex];
+
+      if (selectedItem && selectedItem.value !== value) {
+        onChange(selectedItem.value);
+      }
+    }, 100);
   };
 
   // 최초 마운트(브라우저가 화면을 페인팅하기 직전) 동기 스크롤 탑 단속으로 덜컹거림 원천 박멸

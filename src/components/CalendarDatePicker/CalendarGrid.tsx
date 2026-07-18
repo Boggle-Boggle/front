@@ -1,3 +1,20 @@
+export type CalendarDate = {
+  date: Date;
+  dateKey: string;
+  isCurrentMonth: boolean;
+  isToday: boolean;
+  isStart?: boolean;
+  isEnd?: boolean;
+  isInBetween?: boolean;
+  isSelected?: boolean;
+  hasRangeConnection?: boolean;
+};
+
+type CalendarDayButtonProps = {
+  calendarDate: CalendarDate;
+  onSelectDate: (date: Date) => void;
+};
+
 type CalendarGridProps = {
   calendarDates: CalendarDate[];
   onSelectDate: (date: Date) => void;

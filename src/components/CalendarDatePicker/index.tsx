@@ -24,8 +24,7 @@ type CalendarDatePickerProps =
 
 type CalendarDatePickerMode = 'calendar' | 'monthYearPicker';
 
-const YEAR_RANGE_BEFORE = 100;
-const YEAR_RANGE_AFTER = 10;
+const START_YEAR = 2000;
 const CALENDAR_DATE_COUNT = 42;
 
 const MONTH_ITEMS = Array.from({ length: 12 }).map((_, index) => ({
@@ -164,18 +163,19 @@ export const CalendarDatePicker = (props: CalendarDatePickerProps) => {
     return getCalendarDates(visibleYear, visibleMonth, 'single', safeSelectedDate, null, null);
   }, [props, visibleYear, visibleMonth, type]);
 
-  const yearItems = useMemo(
-    () =>
-      Array.from({ length: YEAR_RANGE_BEFORE + YEAR_RANGE_AFTER + 1 }).map((_, index) => {
-        const year = baseYear - YEAR_RANGE_BEFORE + index;
+  const yearItems = useMemo(() => {
+    const currentYear = new Date().getFullYear();
+    const yearLength = currentYear - START_YEAR + 1;
 
-        return {
-          value: year,
-          label: `${year}년`,
-        };
-      }),
-    [baseYear],
-  );
+    return Array.from({ length: yearLength }).map((_, index) => {
+      const year = START_YEAR + index;
+
+      return {
+        value: year,
+        label: `${year}년`,
+      };
+    });
+  }, []);
 
   const pickerColumns: PickerColumn[] = useMemo(
     () => [
