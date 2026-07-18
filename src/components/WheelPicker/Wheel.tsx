@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 
 type WheelItem = {
   value: string | number;
@@ -54,18 +54,24 @@ export const Wheel = (props: WheelProps) => {
     }, 150);
   };
 
+  // 최초 마운트(브라우저가 화면을 페인팅하기 직전) 동기 스크롤 탑 단속으로 덜컹거림 원천 박멸
+  useLayoutEffect(() => {
+    if (!listRef.current) return;
+
+    const selectedIndex = items.findIndex((item) => item.value === value);
+    if (selectedIndex !== -1 && !isInitializedRef.current) {
+      listRef.current.scrollTop = selectedIndex * itemHeight;
+      isInitializedRef.current = true;
+    }
+  }, [value, items, itemHeight]);
+
+  // 이후 선택 변경 시의 유연한 부드러운 스크롤 애니메이션 보장
   useEffect(() => {
-    if (!listRef.current || isScrolling) return;
+    if (!listRef.current || isScrolling || !isInitializedRef.current) return;
 
     const selectedIndex = items.findIndex((item) => item.value === value);
     if (selectedIndex !== -1) {
       const targetScrollTop = selectedIndex * itemHeight;
-
-      if (!isInitializedRef.current) {
-        listRef.current.scrollTop = targetScrollTop;
-        isInitializedRef.current = true;
-        return;
-      }
 
       if (Math.abs(listRef.current.scrollTop - targetScrollTop) > 1) {
         listRef.current.scrollTo({
