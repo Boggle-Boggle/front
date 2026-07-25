@@ -6,18 +6,18 @@ import { SideBar } from 'components/Layer/SideBar';
 import { Radio } from 'components/Radio';
 import { IconArrowRight, IconCirclePlus } from 'components/icons';
 
-import { type ReadingFilterType } from '../useLibraryQuery';
+import { type ReadingLogStatus } from '../api';
 
 type FilterOption = {
-  value: ReadingFilterType;
+  value: ReadingLogStatus;
   label: string;
   count?: number;
 };
 
 type FilterSidebarProps = {
-  selectedFilter: ReadingFilterType;
+  selectedFilter: ReadingLogStatus;
   filterOptions: FilterOption[];
-  onApplyFilter: (filter: ReadingFilterType) => void;
+  onApplyFilter: (filter: ReadingLogStatus) => void;
 };
 
 const MSG_MYBOOKS_FILTER_TITLE = '보기 설정하기';
@@ -43,13 +43,13 @@ const PERIOD_ITEMS = [
 export const FilterSidebar = (props: FilterSidebarProps) => {
   const { selectedFilter, filterOptions, onApplyFilter } = props;
 
-  const [draftFilter, setDraftFilter] = useState<ReadingFilterType>(selectedFilter);
+  const [draftFilter, setDraftFilter] = useState<ReadingLogStatus>(selectedFilter);
 
   const handleApplyFilter = () => {
     onApplyFilter(draftFilter);
   };
 
-  const handleSelectFilter = (nextFilter: ReadingFilterType) => () => {
+  const handleSelectFilter = (nextFilter: ReadingLogStatus) => () => {
     setDraftFilter(nextFilter);
   };
 

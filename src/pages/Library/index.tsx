@@ -7,9 +7,10 @@ import { IconLayoutGrid, IconLayoutList, IconSearch } from 'components/icons';
 
 import { FilterSidebar } from './FilterSidebar';
 import { ReadingSection } from './ReadingSection';
-import { SortActionSheet, type SortType } from './SortActionSheet';
+import { SortActionSheet } from './SortActionSheet';
 import { WishlistSection } from './WishlistSection';
-import { type ReadingFilterType, useLibraryQuery } from './useLibraryQuery';
+import { type ReadingLogSort, type ReadingLogStatus } from './api';
+import { useLibraryQuery } from './useLibraryQuery';
 
 type TabType = 'reading' | 'wishlist';
 type ViewType = 'grid' | 'list';
@@ -42,8 +43,8 @@ const getInitialViewType = (): ViewType => {
 const Library = () => {
   const [activeTab, setActiveTab] = useState<TabType>('reading');
   const [viewType, setViewType] = useState<ViewType>(getInitialViewType);
-  const [readingFilter, setReadingFilter] = useState<ReadingFilterType>('all');
-  const [sortType, setSortType] = useState<SortType>('latest');
+  const [readingFilter, setReadingFilter] = useState<ReadingLogStatus>('ALL');
+  const [sortType, setSortType] = useState<ReadingLogSort>('START_DATE_DESC');
 
   const { push, pop } = useLayerStore();
   const { data, observerTarget, isLoading } = useLibraryQuery(sortType, readingFilter);
@@ -51,24 +52,24 @@ const Library = () => {
   const books = data ? data.pages.flatMap((page) => page.items) : [];
 
   const filterOptionByType = {
-    all: { value: 'all', label: MSG_MYBOOKS_FILTER_ALL },
-    done: { value: 'done', label: MSG_MYBOOKS_FILTER_DONE },
-    reading: { value: 'reading', label: MSG_MYBOOKS_FILTER_READING },
-    stopped: { value: 'stopped', label: MSG_MYBOOKS_FILTER_STOPPED },
+    ALL: { value: 'ALL', label: MSG_MYBOOKS_FILTER_ALL },
+    COMPLETED: { value: 'COMPLETED', label: MSG_MYBOOKS_FILTER_DONE },
+    READING: { value: 'READING', label: MSG_MYBOOKS_FILTER_READING },
+    DROPPED: { value: 'DROPPED', label: MSG_MYBOOKS_FILTER_STOPPED },
   } as const;
 
   const filterOptions = [
-    filterOptionByType.all,
-    filterOptionByType.done,
-    filterOptionByType.reading,
-    filterOptionByType.stopped,
+    filterOptionByType.ALL,
+    filterOptionByType.COMPLETED,
+    filterOptionByType.READING,
+    filterOptionByType.DROPPED,
   ];
 
-  const sortLabelByType = {
-    latest: MSG_MYBOOKS_SORT_LATEST,
-    oldest: MSG_MYBOOKS_SORT_OLDEST,
-    popular: MSG_MYBOOKS_SORT_POPULAR,
-  } as const;
+  const sortLabelByType: Partial<Record<ReadingLogSort, string>> = {
+    START_DATE_DESC: MSG_MYBOOKS_SORT_LATEST,
+    START_DATE_ASC: MSG_MYBOOKS_SORT_OLDEST,
+    RATING_DESC: MSG_MYBOOKS_SORT_POPULAR,
+  };
   const selectedFilterOption = filterOptionByType[readingFilter];
   const totalCount = data?.pages[0]?.totalResultCnt ?? books.length;
   const isGridView = viewType === 'grid';
@@ -87,7 +88,7 @@ const Library = () => {
   };
 
   const handleOpenFilterLayer = () => {
-    const handleApplyFilter = (nextFilter: ReadingFilterType) => {
+    const handleApplyFilter = (nextFilter: ReadingLogStatus) => {
       setReadingFilter(nextFilter);
       pop();
     };
@@ -140,7 +141,7 @@ const Library = () => {
           books={books}
           totalCount={totalCount}
           filterLabel={selectedFilterOption.label}
-          sortLabel={sortLabelByType[sortType]}
+          sortLabel={sortLabelByType[sortType] ?? MSG_MYBOOKS_SORT_LATEST}
           viewMode={viewType}
           isLoading={isLoading}
           observerTarget={observerTarget}

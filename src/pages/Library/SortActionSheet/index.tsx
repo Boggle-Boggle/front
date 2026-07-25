@@ -1,38 +1,38 @@
 import { ActionSheet } from 'components/Layer/ActionSheet';
 
-export type SortType = 'latest' | 'oldest' | 'popular';
+import { type ReadingLogSort } from '../api';
 
 type SortActionSheetProps = {
-  selectedSort: SortType;
-  onSelectSort: (sort: SortType) => void;
+  selectedSort: ReadingLogSort;
+  onSelectSort: (sort: ReadingLogSort) => void;
 };
 
 export const SortActionSheet = (props: SortActionSheetProps) => {
   const { selectedSort, onSelectSort } = props;
 
-  const handleSelectLatest = () => onSelectSort('latest');
-  const handleSelectOldest = () => onSelectSort('oldest');
-  const handleSelectPopular = () => onSelectSort('popular');
+  const handleSelectLatest = () => onSelectSort('START_DATE_DESC');
+  const handleSelectOldest = () => onSelectSort('START_DATE_ASC');
+  const handleSelectPopular = () => onSelectSort('RATING_DESC');
 
   return (
     <ActionSheet
       items={[
         {
-          key: 'latest',
+          key: 'START_DATE_DESC',
           label: '최신순',
-          selected: selectedSort === 'latest',
+          selected: selectedSort === 'START_DATE_DESC',
           onSelect: handleSelectLatest,
         },
         {
-          key: 'oldest',
+          key: 'START_DATE_ASC',
           label: '과거순',
-          selected: selectedSort === 'oldest',
+          selected: selectedSort === 'START_DATE_ASC',
           onSelect: handleSelectOldest,
         },
         {
-          key: 'popular',
+          key: 'RATING_DESC',
           label: '인기순',
-          selected: selectedSort === 'popular',
+          selected: selectedSort === 'RATING_DESC',
           onSelect: handleSelectPopular,
         },
       ]}
