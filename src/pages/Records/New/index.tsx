@@ -1,11 +1,15 @@
+import { useMutation } from '@tanstack/react-query';
+
 import { useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useLayerStore } from 'stores/useLayerStore';
+import { useToastStore } from 'stores/useToastStore';
 
 import { BottomButton } from 'components/Button';
 import { Header } from 'components/Header';
 import { useBookDetailQuery } from 'pages/BookDetail/useBookDetailQuery';
 
+import { createReadingLog } from './api';
 import { DateSelectModal } from '../shared/DateSelectModal';
 import { GroupDeleteConfirmModal } from '../shared/GroupDeleteConfirmModal';
 import { GroupEditModal } from '../shared/GroupEditModal';
@@ -15,36 +19,86 @@ import { RatingSection } from '../shared/RatingSection';
 import { ReadingPeriodSection } from '../shared/ReadingPeriodSection';
 import { ReadingProgressSection, type ReadingProgressType } from '../shared/ReadingProgressSection';
 import { VisibilitySection } from '../shared/VisibilitySection';
-import { GROUP_ITEMS } from '../shared/mock';
+import { getAddRecordStatus } from '../shared/recordStatus';
 
 const MSG_ADD_RECORD_SUBMIT = '입력을 끝내고 완료하기';
+const MSG_ADD_RECORD_FAILED = '독서 기록을 저장하지 못했습니다. 다시 시도해주세요.';
 const MSG_DATE_SELECT_START = '시작일 선택하기';
 const MSG_DATE_SELECT_END = '종료일 선택하기';
-const DEFAULT_TOTAL_PAGE_COUNT = '120';
+const MOCK_START_DATE = '2026-01-01';
+const MOCK_END_DATE = '2026-06-06';
 
 export const NewRecord = () => {
   const [rating, setRating] = useState<number>(0);
-  const [selectedGroups, setSelectedGroups] = useState<string[]>([GROUP_ITEMS[0], GROUP_ITEMS[1]]);
+  const [selectedGroups, setSelectedGroups] = useState<string[]>([]);
+  // TODO 그룹 책장 API 연결 후 실제 선택된 bookshelf id 목록으로 교체한다.
+  const [selectedBookshelfIds] = useState<number[]>([]);
+  // TODO 날짜 선택 모달 연결 후 사용자가 선택한 날짜로 교체한다.
+  const [startDate] = useState<string>(MOCK_START_DATE);
+  const [endDate] = useState<string>(MOCK_END_DATE);
   const [progressType, setProgressType] = useState<ReadingProgressType>('PAGE');
   const [progressValue, setProgressValue] = useState<string>('');
-  const [totalPageCount, setTotalPageCount] = useState<string>(DEFAULT_TOTAL_PAGE_COUNT);
-  const [isPrivate, setIsPrivate] = useState<boolean>(false);
+  const [totalPageCountOverride, setTotalPageCountOverride] = useState<string>('');
+  const [isHidden, setIsHidden] = useState<boolean>(false);
 
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const { push, pop } = useLayerStore();
+  const { addToast } = useToastStore();
 
   const bookId = searchParams.get('bookId') || '';
   const { data: bookDetail } = useBookDetailQuery(bookId);
 
-  const handleSubmit = () => navigate('/records/new/completed');
+  const { isPending, mutate: saveReadingLog } = useMutation({
+    mutationFn: createReadingLog,
+    onSuccess: () => {
+      navigate('/records/new/completed');
+    },
+    onError: () => {
+      addToast({
+        description: MSG_ADD_RECORD_FAILED,
+        type: 'error',
+      });
+    },
+  });
+
+  const handleSubmit = () => {
+    if (!bookDetail || isPending) return;
+
+    const progressParams =
+      progressValue === ''
+        ? {}
+        : {
+            progressType,
+            progressValue: Number(progressValue),
+          };
+    const totalPagesOverrideParams =
+      totalPageCountOverride === ''
+        ? {}
+        : {
+            totalPagesOverride: Number(totalPageCountOverride),
+          };
+
+    saveReadingLog({
+      isbn13: bookDetail.isbn13,
+      mediaType: bookDetail.mediaType,
+      status: getAddRecordStatus(searchParams.get('status')),
+      rating,
+      startDate,
+      endDate,
+      bookshelfIds: selectedBookshelfIds,
+      isHidden,
+      ...progressParams,
+      ...totalPagesOverrideParams,
+    });
+  };
 
   const handleToggleGroup = (group: string) => () => {
     setSelectedGroups((prev) => (prev.includes(group) ? prev.filter((item) => item !== group) : [...prev, group]));
   };
 
   const handleTogglePrivate = () => {
-    setIsPrivate((prev) => !prev);
+    setIsHidden((prev) => !prev);
   };
 
   const handleOpenStartDate = () => {
@@ -76,11 +130,15 @@ export const NewRecord = () => {
   };
 
   const handleOpenPageInfo = () => {
+    const initialPageCount = totalPageCountOverride || bookDetail?.totalPages?.toString() || '';
+
     push({
       id: 'book-record-page-info-modal',
-      component: <PageInfoModal initialValue={totalPageCount} onClose={pop} onSubmit={setTotalPageCount} />,
+      component: <PageInfoModal initialValue={initialPageCount} onClose={pop} onSubmit={setTotalPageCountOverride} />,
     });
   };
+
+  const totalPageCount = totalPageCountOverride || bookDetail?.totalPages?.toString() || '';
 
   return (
     <div className="flex h-full flex-col">
@@ -102,12 +160,10 @@ export const NewRecord = () => {
           onOpenGroupEdit={handleOpenGroupEdit}
           onToggleGroup={handleToggleGroup}
         />
-        <VisibilitySection checked={isPrivate} onChange={handleTogglePrivate} />
+        <VisibilitySection checked={isHidden} onChange={handleTogglePrivate} />
       </div>
 
-      <BottomButton
-        onClick={handleSubmit}
-      >
+      <BottomButton onClick={handleSubmit} disabled={!bookDetail} loading={isPending}>
         {MSG_ADD_RECORD_SUBMIT}
       </BottomButton>
     </div>

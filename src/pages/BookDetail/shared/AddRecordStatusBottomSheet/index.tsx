@@ -17,7 +17,7 @@ type AddRecordStatusBottomSheetProps = {
 
 export const AddRecordStatusBottomSheet = (props: AddRecordStatusBottomSheetProps) => {
   const { bookId } = props;
-  const [selectedStatus, setSelectedStatus] = useState<AddRecordStatus>('completed');
+  const [selectedStatus, setSelectedStatus] = useState<AddRecordStatus>('COMPLETED');
   const navigate = useNavigate();
   const { pop } = useLayerStore();
 
