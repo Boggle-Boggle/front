@@ -1,4 +1,4 @@
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 
 import { useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
@@ -19,6 +19,7 @@ import { RatingSection } from '../shared/RatingSection';
 import { ReadingPeriodSection } from '../shared/ReadingPeriodSection';
 import { ReadingProgressSection, type ReadingProgressType } from '../shared/ReadingProgressSection';
 import { VisibilitySection } from '../shared/VisibilitySection';
+import { BOOKSHELVES_QUERY_KEY, getBookshelves, type BookshelfItem } from '../shared/api';
 import { getAddRecordStatus } from '../shared/recordStatus';
 
 const MSG_ADD_RECORD_SUBMIT = '입력을 끝내고 완료하기';
@@ -30,9 +31,7 @@ const MOCK_END_DATE = '2026-06-06';
 
 export const NewRecord = () => {
   const [rating, setRating] = useState<number>(0);
-  const [selectedGroups, setSelectedGroups] = useState<string[]>([]);
-  // TODO 그룹 책장 API 연결 후 실제 선택된 bookshelf id 목록으로 교체한다.
-  const [selectedBookshelfIds] = useState<number[]>([]);
+  const [selectedBookshelfIds, setSelectedBookshelfIds] = useState<number[]>([]);
   // TODO 날짜 선택 모달 연결 후 사용자가 선택한 날짜로 교체한다.
   const [startDate] = useState<string>(MOCK_START_DATE);
   const [endDate] = useState<string>(MOCK_END_DATE);
@@ -48,6 +47,10 @@ export const NewRecord = () => {
 
   const bookId = searchParams.get('bookId') || '';
   const { data: bookDetail } = useBookDetailQuery(bookId);
+  const { data: bookshelves = [] } = useQuery({
+    queryKey: BOOKSHELVES_QUERY_KEY,
+    queryFn: getBookshelves,
+  });
 
   const { isPending, mutate: saveReadingLog } = useMutation({
     mutationFn: createReadingLog,
@@ -65,6 +68,9 @@ export const NewRecord = () => {
   const handleSubmit = () => {
     if (!bookDetail || isPending) return;
 
+    const validSelectedBookshelfIds = selectedBookshelfIds.filter((bookshelfId) =>
+      bookshelves.some((bookshelf) => bookshelf.id === bookshelfId),
+    );
     const progressParams =
       progressValue === ''
         ? {}
@@ -86,15 +92,21 @@ export const NewRecord = () => {
       rating,
       startDate,
       endDate,
-      bookshelfIds: selectedBookshelfIds,
+      bookshelfIds: validSelectedBookshelfIds,
       isHidden,
       ...progressParams,
       ...totalPagesOverrideParams,
     });
   };
 
-  const handleToggleGroup = (group: string) => () => {
-    setSelectedGroups((prev) => (prev.includes(group) ? prev.filter((item) => item !== group) : [...prev, group]));
+  const handleToggleBookshelf = (bookshelfId: number) => () => {
+    setSelectedBookshelfIds((prev) =>
+      prev.includes(bookshelfId) ? prev.filter((item) => item !== bookshelfId) : [...prev, bookshelfId],
+    );
+  };
+
+  const handleDeleteBookshelfSuccess = (bookshelfId: number) => {
+    setSelectedBookshelfIds((prev) => prev.filter((item) => item !== bookshelfId));
   };
 
   const handleTogglePrivate = () => {
@@ -115,10 +127,12 @@ export const NewRecord = () => {
     });
   };
 
-  const handleOpenDeleteGroupModal = () => {
+  const handleOpenDeleteGroupModal = (bookshelf: BookshelfItem) => {
     push({
       id: 'book-record-group-delete-modal',
-      component: <GroupDeleteConfirmModal onClose={pop} />,
+      component: (
+        <GroupDeleteConfirmModal bookshelf={bookshelf} onClose={pop} onDeleted={handleDeleteBookshelfSuccess} />
+      ),
     });
   };
 
@@ -156,9 +170,10 @@ export const NewRecord = () => {
           onOpenPageInfo={handleOpenPageInfo}
         />
         <GroupSection
-          selectedGroups={selectedGroups}
+          bookshelves={bookshelves}
+          selectedBookshelfIds={selectedBookshelfIds}
           onOpenGroupEdit={handleOpenGroupEdit}
-          onToggleGroup={handleToggleGroup}
+          onToggleBookshelf={handleToggleBookshelf}
         />
         <VisibilitySection checked={isHidden} onChange={handleTogglePrivate} />
       </div>

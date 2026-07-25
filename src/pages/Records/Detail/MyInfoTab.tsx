@@ -1,3 +1,5 @@
+import { useQuery } from '@tanstack/react-query';
+
 import { useState } from 'react';
 import { useLayerStore } from 'stores/useLayerStore';
 
@@ -10,7 +12,7 @@ import { RatingSection } from '../shared/RatingSection';
 import { ReadingPeriodSection } from '../shared/ReadingPeriodSection';
 import { ReadingProgressSection, type ReadingProgressType } from '../shared/ReadingProgressSection';
 import { VisibilitySection } from '../shared/VisibilitySection';
-import { GROUP_ITEMS } from '../shared/mock';
+import { BOOKSHELVES_QUERY_KEY, getBookshelves, type BookshelfItem } from '../shared/api';
 
 const MSG_DATE_SELECT_START = '시작일 선택하기';
 const MSG_DATE_SELECT_END = '종료일 선택하기';
@@ -18,15 +20,25 @@ const DEFAULT_TOTAL_PAGE_COUNT = '120';
 
 export const MyInfoTab = () => {
   const [rating, setRating] = useState<number>(0);
-  const [selectedGroups, setSelectedGroups] = useState<string[]>([GROUP_ITEMS[0], GROUP_ITEMS[1]]);
+  const [selectedBookshelfIds, setSelectedBookshelfIds] = useState<number[]>([]);
   const [progressType, setProgressType] = useState<ReadingProgressType>('PAGE');
   const [progressValue, setProgressValue] = useState<string>('');
   const [totalPageCount, setTotalPageCount] = useState<string>(DEFAULT_TOTAL_PAGE_COUNT);
   const [isPrivate, setIsPrivate] = useState<boolean>(false);
   const { push, pop } = useLayerStore();
+  const { data: bookshelves = [] } = useQuery({
+    queryKey: BOOKSHELVES_QUERY_KEY,
+    queryFn: getBookshelves,
+  });
 
-  const handleToggleGroup = (group: string) => () => {
-    setSelectedGroups((prev) => (prev.includes(group) ? prev.filter((item) => item !== group) : [...prev, group]));
+  const handleToggleBookshelf = (bookshelfId: number) => () => {
+    setSelectedBookshelfIds((prev) =>
+      prev.includes(bookshelfId) ? prev.filter((item) => item !== bookshelfId) : [...prev, bookshelfId],
+    );
+  };
+
+  const handleDeleteBookshelfSuccess = (bookshelfId: number) => {
+    setSelectedBookshelfIds((prev) => prev.filter((item) => item !== bookshelfId));
   };
 
   const handleTogglePrivate = () => {
@@ -47,10 +59,12 @@ export const MyInfoTab = () => {
     });
   };
 
-  const handleOpenDeleteGroupModal = () => {
+  const handleOpenDeleteGroupModal = (bookshelf: BookshelfItem) => {
     push({
       id: 'book-record-detail-group-delete-modal',
-      component: <GroupDeleteConfirmModal onClose={pop} />,
+      component: (
+        <GroupDeleteConfirmModal bookshelf={bookshelf} onClose={pop} onDeleted={handleDeleteBookshelfSuccess} />
+      ),
     });
   };
 
@@ -81,9 +95,10 @@ export const MyInfoTab = () => {
         onOpenPageInfo={handleOpenPageInfo}
       />
       <GroupSection
-        selectedGroups={selectedGroups}
+        bookshelves={bookshelves}
+        selectedBookshelfIds={selectedBookshelfIds}
         onOpenGroupEdit={handleOpenGroupEdit}
-        onToggleGroup={handleToggleGroup}
+        onToggleBookshelf={handleToggleBookshelf}
       />
       <VisibilitySection checked={isPrivate} onChange={handleTogglePrivate} />
     </div>

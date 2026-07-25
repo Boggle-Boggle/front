@@ -1,19 +1,20 @@
 import { IconPlus } from 'components/icons';
 
 import { SectionTitle } from './SectionTitle';
-import { GROUP_ITEMS } from './mock';
+import type { BookshelfItem } from './api';
 
 type GroupSectionProps = {
-  selectedGroups: string[];
+  bookshelves: BookshelfItem[];
+  selectedBookshelfIds: number[];
   onOpenGroupEdit: () => void;
-  onToggleGroup: (group: string) => () => void;
+  onToggleBookshelf: (bookshelfId: number) => () => void;
 };
 
 const MSG_GROUP_SECTION_TITLE = '그룹 설정하기';
 const MSG_NEW_GROUP_ADD = '새 그룹 만들기';
 
 export const GroupSection = (props: GroupSectionProps) => {
-  const { selectedGroups, onOpenGroupEdit, onToggleGroup } = props;
+  const { bookshelves, selectedBookshelfIds, onOpenGroupEdit, onToggleBookshelf } = props;
 
   return (
     <section className="w-full">
@@ -31,21 +32,21 @@ export const GroupSection = (props: GroupSectionProps) => {
           </button>
         </li>
 
-        {GROUP_ITEMS.map((group) => {
-          const isSelected = selectedGroups.includes(group);
+        {bookshelves.map((bookshelf) => {
+          const isSelected = selectedBookshelfIds.includes(bookshelf.id);
 
           return (
-            <li key={group} className="w-full">
+            <li key={bookshelf.id} className="w-full">
               <button
                 type="button"
-                onClick={onToggleGroup(group)}
+                onClick={onToggleBookshelf(bookshelf.id)}
                 className={`flex h-[2.625rem] w-full items-center justify-center rounded-lg border-[1.5px] px-4 text-title4 font-bold transition-all ${
                   isSelected
                     ? 'border-primary bg-neutral-0 text-primary'
                     : 'border-neutral-20 bg-neutral-0 text-neutral-80'
                 }`}
               >
-                {group}
+                {bookshelf.name}
               </button>
             </li>
           );
