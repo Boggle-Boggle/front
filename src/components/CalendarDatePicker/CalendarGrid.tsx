@@ -44,25 +44,25 @@ const CalendarDayButton = (props: CalendarDayButtonProps) => {
   const dateTextClassName = isCurrentMonth ? 'text-neutral-80' : 'text-neutral-40';
   const circleTextClassName = isHighlighted ? 'text-neutral-0' : dateTextClassName;
   const todayLabelClassName = isCurrentMonth ? 'text-neutral-80' : 'text-neutral-40';
-  
+
   // 피그마 시안(2282-20745)에 따른 시작일/종료일 개별 배경색 지정
   const circleBgClassName = isHighlighted ? 'bg-primary' : '';
 
   return (
-    <div className="flex flex-col items-center gap-[0.3125rem] w-full">
+    <div className="flex w-full flex-col items-center gap-[0.3125rem]">
       {/* 날짜 숫자 컨테이너 (높이 30px 고정하여 기간배경 중심 정렬) */}
-      <div className="relative w-full h-[1.875rem] flex items-center justify-center">
+      <div className="relative flex h-[1.875rem] w-full items-center justify-center">
         {/* 기간 선택 연결 배경 (시작일과 종료일이 모두 성립한 hasRangeConnection 일 때만 띠를 활성화) */}
         {isInBetween && hasRangeConnection && (
           <div className="absolute inset-y-0 left-0 right-0 bg-primary opacity-20" />
         )}
-        {isStart && isEnd && (
+        {isStart &&
+          isEnd &&
           // 시작일과 종료일이 같은 날인 경우 배경 생략
-          null
-        )}
+          null}
         {isStart && !isEnd && hasRangeConnection && (
           // 시작일이고 종료일이 뒤에 성립되어 있을 때: 동그라미 우측 1/2 지점부터 우측 끝까지 반투명 배경 채움
-          <div className="absolute inset-y-0 right-0 left-1/2 bg-primary opacity-20" />
+          <div className="absolute inset-y-0 left-1/2 right-0 bg-primary opacity-20" />
         )}
         {isEnd && !isStart && hasRangeConnection && (
           // 종료일이고 시작일이 앞에 성립되어 있을 때: 좌측 끝부터 동그라미의 1/2 지점까지 반투명 배경 채움
@@ -74,18 +74,16 @@ const CalendarDayButton = (props: CalendarDayButtonProps) => {
           type="button"
           aria-label={formatDateSelectButtonText(date)}
           onClick={handleClick}
-          className={`relative z-10 grid size-[1.875rem] place-items-center rounded-full text-caption1 ${circleTextClassName} ${circleBgClassName} transition-colors outline-none`}
+          className={`relative z-10 grid size-[1.875rem] place-items-center rounded-full text-caption1 ${circleTextClassName} ${circleBgClassName} outline-none transition-colors`}
         >
           {date.getDate()}
         </button>
       </div>
 
       {/* 오늘 라벨 표시 영역 (오늘이 아니더라도 상하 높이 균일화 유지를 위해 빈 공간 항상 확보) */}
-      <div className="h-[0.625rem] flex items-center justify-center">
+      <div className="flex h-[0.625rem] items-center justify-center">
         {isToday ? (
-          <span className={`text-caption2 ${todayLabelClassName} leading-[0.625rem]`}>
-            오늘
-          </span>
+          <span className={`text-caption2 ${todayLabelClassName} leading-[0.625rem]`}>오늘</span>
         ) : (
           <div className="h-[0.625rem]" />
         )}
@@ -107,13 +105,9 @@ export const CalendarGrid = (props: CalendarGridProps) => {
         ))}
       </div>
 
-      <div className="grid grid-cols-7 gap-y-1 mt-1">
+      <div className="mt-1 grid grid-cols-7 gap-y-1">
         {calendarDates.map((calendarDate) => (
-          <CalendarDayButton
-            key={calendarDate.dateKey}
-            calendarDate={calendarDate}
-            onSelectDate={onSelectDate}
-          />
+          <CalendarDayButton key={calendarDate.dateKey} calendarDate={calendarDate} onSelectDate={onSelectDate} />
         ))}
       </div>
     </>

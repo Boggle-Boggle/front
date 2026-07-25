@@ -1,6 +1,7 @@
-import { ChangeEvent, useState } from 'react';
+import { useState } from 'react';
 
 import { Button } from 'components/Button';
+import { CalendarDatePicker } from 'components/CalendarDatePicker';
 import { ContentModal } from 'components/Layer/ContentModal';
 
 type DateSelectModalProps = {
@@ -8,32 +9,31 @@ type DateSelectModalProps = {
   onClose: () => void;
 };
 
-const MSG_DATE_SELECT_LABEL = '날짜';
-const MSG_MODAL_DONE = '완료';
+const KOREAN_WEEK_DAYS = ['일', '월', '화', '수', '목', '금', '토'];
 
 export const DateSelectModal = (props: DateSelectModalProps) => {
   const { title, onClose } = props;
-  const [selectedDate, setSelectedDate] = useState<string>('');
+  const [selectedDate, setSelectedDate] = useState<Date>(new Date());
 
-  const handleChangeDate = (event: ChangeEvent<HTMLInputElement>) => {
-    setSelectedDate(event.target.value);
+  const handleSelectDate = (date: Date) => {
+    setSelectedDate(date);
   };
+
+  const selectedYear = selectedDate.getFullYear();
+  const selectedMonth = selectedDate.getMonth() + 1;
+  const selectedDay = selectedDate.getDate();
+  const selectedWeekDay = KOREAN_WEEK_DAYS[selectedDate.getDay()];
+  const selectButtonText = `${selectedYear}년 ${selectedMonth}월 ${selectedDay}일(${selectedWeekDay}) 선택`;
 
   return (
     <ContentModal title={title} onClose={onClose}>
-      <div className="flex flex-col gap-3">
-        <label htmlFor="record-date-select" className="text-body1 font-medium text-neutral-80">
-          {MSG_DATE_SELECT_LABEL}
-        </label>
-        <input
-          id="record-date-select"
-          type="date"
-          value={selectedDate}
-          onChange={handleChangeDate}
-          className="h-12 rounded-lg border border-neutral-20 px-4 text-body1 text-neutral-100"
-        />
+      <div className="[&>div]:min-h-[20.75rem]">
+        <CalendarDatePicker selectedDate={selectedDate} onChange={handleSelectDate} />
       </div>
-      <Button onClick={onClose}>{MSG_MODAL_DONE}</Button>
+
+      <Button onClick={onClose} className="text-[1rem] font-medium">
+        {selectButtonText}
+      </Button>
     </ContentModal>
   );
 };

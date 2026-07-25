@@ -1,9 +1,8 @@
 import { useMemo, useState } from 'react';
 
 import { TextButton } from 'components/Button';
-import { IconArrowDown } from 'components/icons';
-
 import { WheelPicker, type PickerColumn } from 'components/WheelPicker';
+import { IconArrowDown } from 'components/icons';
 
 import { CalendarGrid, type CalendarDate } from './CalendarGrid';
 
@@ -78,11 +77,7 @@ const getCalendarDates = (
     } else {
       isStart = startKey !== null && dateKey === startKey;
       isEnd = endKey !== null && dateKey === endKey;
-      isInBetween =
-        startKey !== null &&
-        endKey !== null &&
-        dateKey > startKey &&
-        dateKey < endKey;
+      isInBetween = startKey !== null && endKey !== null && dateKey > startKey && dateKey < endKey;
     }
 
     return {
@@ -102,18 +97,6 @@ const getCalendarDates = (
 export const CalendarDatePicker = (props: CalendarDatePickerProps) => {
   const { type = 'single' } = props;
   const isRange = type === 'range';
-
-  // 기준 연도 설정 (휠 피커 리스트의 중앙값)
-  const [baseYear] = useState<number>(() => {
-    if (isRange) {
-      const rangeProps = props as { startDate: Date | null };
-      const { startDate } = rangeProps;
-      return startDate instanceof Date ? startDate.getFullYear() : new Date().getFullYear();
-    }
-    const singleProps = props as { selectedDate: Date };
-    const { selectedDate } = singleProps;
-    return selectedDate instanceof Date ? selectedDate.getFullYear() : new Date().getFullYear();
-  });
 
   // 현재 그리드에 보여지는 연/월 네비게이션 상태
   const [visibleYear, setVisibleYear] = useState<number>(() => {
@@ -249,20 +232,17 @@ export const CalendarDatePicker = (props: CalendarDatePickerProps) => {
   };
 
   return (
-    <div className="flex min-h-[21.5rem] flex-col w-full">
+    <div className="flex min-h-[21.5rem] w-full flex-col">
       <TextButton
         text={`${mode === 'calendar' ? visibleYear : pickerYear}년 ${(mode === 'calendar' ? visibleMonth : pickerMonth) + 1}월`}
         onClick={handleHeaderToggle}
         variant="default"
         rightIcon={IconArrowDown}
-        className="mx-auto mb-5 font-pretendard text-[1.375rem] font-light text-neutral-100 outline-none"
+        className="mx-auto mb-5 text-[1.375rem] font-light outline-none"
       />
 
       {mode === 'calendar' ? (
-        <CalendarGrid
-          calendarDates={calendarDates}
-          onSelectDate={handleSelectDate}
-        />
+        <CalendarGrid calendarDates={calendarDates} onSelectDate={handleSelectDate} />
       ) : (
         <div className="flex flex-1 flex-col justify-center py-2">
           <WheelPicker columns={pickerColumns} height={200} itemHeight={40} />
