@@ -17,9 +17,9 @@ export const ContentModal = (props: ContentModalProps) => {
 
   return (
     <Modal className="flex flex-col px-4 pb-6 pt-4">
-      <div className="relative flex items-center justify-center py-6">
+      <div className="flex items-center justify-center pb-6 pt-4">
         <p className="text-center text-body1">{title}</p>
-        <IconButton onClick={onClose} label="닫기" size="md" icon={IconCancel} className="absolute right-0" />
+        <IconButton onClick={onClose} label="닫기" size="md" icon={IconCancel} className="absolute right-2" />
       </div>
       {children}
       {footer}

@@ -71,7 +71,7 @@ export const GroupEditModal = (props: GroupEditModalProps) => {
 
   return (
     <ContentModal title={MSG_GROUP_EDIT_TITLE} onClose={onClose}>
-      <div className="-mt-4 flex min-h-0 flex-col gap-4">
+      <div className="flex min-h-0 flex-col gap-4">
         <Input
           value={groupName}
           onChange={handleChangeGroupName}
@@ -89,12 +89,7 @@ export const GroupEditModal = (props: GroupEditModalProps) => {
                 className="shrink-0 text-danger"
               />
               <span className="min-w-0 flex-1 truncate text-title4">{bookshelf.name}</span>
-              <IconButton
-                label={MSG_GROUP_MODIFY}
-                icon={IconPen}
-                onClick={() => {}}
-                className="shrink-0"
-              />
+              <IconButton label={MSG_GROUP_MODIFY} icon={IconPen} onClick={() => {}} className="shrink-0" />
             </li>
           ))}
         </ul>
