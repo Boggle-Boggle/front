@@ -27,9 +27,7 @@ export const DateSelectModal = (props: DateSelectModalProps) => {
 
   return (
     <ContentModal title={title} onClose={onClose}>
-      <div className="[&>div]:min-h-[20.75rem]">
-        <CalendarDatePicker selectedDate={selectedDate} onChange={handleSelectDate} />
-      </div>
+      <CalendarDatePicker selectedDate={selectedDate} onChange={handleSelectDate} />
 
       <Button onClick={onClose} className="text-[1rem] font-medium">
         {selectButtonText}

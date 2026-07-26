@@ -232,22 +232,23 @@ export const CalendarDatePicker = (props: CalendarDatePickerProps) => {
   };
 
   return (
-    <div className="flex min-h-[21.5rem] w-full flex-col">
+    <div className="flex h-[24rem] w-full flex-col">
       <TextButton
         text={`${mode === 'calendar' ? visibleYear : pickerYear}년 ${(mode === 'calendar' ? visibleMonth : pickerMonth) + 1}월`}
         onClick={handleHeaderToggle}
         variant="default"
         rightIcon={IconArrowDown}
-        className="mx-auto mb-5 text-[1.375rem] font-light outline-none"
+        // todo: 폰트 토큰 이상한것 같음 ..
+        className="mr-auto justify-start font-pretendard text-[1.375rem] text-h3 font-light outline-none"
       />
 
-      {mode === 'calendar' ? (
-        <CalendarGrid calendarDates={calendarDates} onSelectDate={handleSelectDate} />
-      ) : (
-        <div className="flex flex-1 flex-col justify-center py-2">
+      <div className="grid flex-1 items-center overflow-hidden">
+        {mode === 'calendar' ? (
+          <CalendarGrid calendarDates={calendarDates} onSelectDate={handleSelectDate} />
+        ) : (
           <WheelPicker columns={pickerColumns} height={200} itemHeight={40} />
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 };

@@ -16,12 +16,11 @@ export const ContentModal = (props: ContentModalProps) => {
   const { title, onClose, footer, children } = props;
 
   return (
-    <Modal className="flex flex-col gap-6 px-4 pb-6 pt-4">
-      <div className="relative flex min-h-12 items-center justify-center">
+    <Modal className="flex flex-col px-4 pb-6 pt-4">
+      <div className="relative flex items-center justify-center py-6">
         <p className="text-center text-body1">{title}</p>
         <IconButton onClick={onClose} label="닫기" size="md" icon={IconCancel} className="absolute right-0" />
       </div>
-
       {children}
       {footer}
     </Modal>
