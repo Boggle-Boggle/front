@@ -168,6 +168,7 @@ export const NewRecord = () => {
   };
 
   const totalPageCount = totalPageCountOverride || bookDetail?.totalPages?.toString() || '';
+  const currentStatus = getAddRecordStatus(searchParams.get('status'));
 
   return (
     <div className="flex h-full flex-col">
@@ -176,19 +177,22 @@ export const NewRecord = () => {
       <div className="flex flex-1 flex-col gap-8 overflow-y-auto px-mobile pb-safe-bottom pt-safe-top">
         <RatingSection rating={rating} onChange={setRating} />
         <ReadingPeriodSection
+          status={currentStatus}
           startDate={startDate}
           endDate={endDate}
           onOpenStartDate={handleOpenStartDate}
           onOpenEndDate={handleOpenEndDate}
         />
-        <ReadingProgressSection
-          progressType={progressType}
-          progressValue={progressValue}
-          totalPageCount={totalPageCount}
-          onChangeProgressType={setProgressType}
-          onChangeProgressValue={setProgressValue}
-          onOpenPageInfo={handleOpenPageInfo}
-        />
+        {currentStatus !== 'COMPLETED' && (
+          <ReadingProgressSection
+            progressType={progressType}
+            progressValue={progressValue}
+            totalPageCount={totalPageCount}
+            onChangeProgressType={setProgressType}
+            onChangeProgressValue={setProgressValue}
+            onOpenPageInfo={handleOpenPageInfo}
+          />
+        )}
         <GroupSection
           bookshelves={bookshelves}
           selectedBookshelfIds={selectedBookshelfIds}

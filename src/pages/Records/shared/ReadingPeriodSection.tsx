@@ -1,9 +1,11 @@
 import { ReadingPeriodButton } from './ReadingPeriodButton';
 import { SectionTitle } from './SectionTitle';
+import { AddRecordStatus } from './recordStatus';
 
 type ReadingPeriodSectionProps = {
   startDate: string;
   endDate: string;
+  status?: AddRecordStatus;
   onOpenStartDate: () => void;
   onOpenEndDate: () => void;
 };
@@ -22,7 +24,9 @@ const formatDateLabel = (dateString: string) => {
 };
 
 export const ReadingPeriodSection = (props: ReadingPeriodSectionProps) => {
-  const { startDate, endDate, onOpenStartDate, onOpenEndDate } = props;
+  const { startDate, endDate, status = 'COMPLETED', onOpenStartDate, onOpenEndDate } = props;
+
+  const isReading = status === 'READING';
 
   return (
     <section className="w-full">
@@ -37,9 +41,9 @@ export const ReadingPeriodSection = (props: ReadingPeriodSectionProps) => {
         ~
         <ReadingPeriodButton
           label={MSG_ADD_RECORD_END_DATE}
-          value={formatDateLabel(endDate)}
-          isActive={Boolean(endDate)}
-          onClick={onOpenEndDate}
+          value={isReading ? '읽는 중' : formatDateLabel(endDate)}
+          isActive={!isReading && Boolean(endDate)}
+          onClick={isReading ? () => {} : onOpenEndDate}
         />
       </div>
     </section>
