@@ -21,6 +21,23 @@ const DEFAULT_TOTAL_PAGE_COUNT = '120';
 export const MyInfoTab = () => {
   const [rating, setRating] = useState<number>(0);
   const [selectedBookshelfIds, setSelectedBookshelfIds] = useState<number[]>([]);
+
+  // 오늘 날짜 문자열(YYYY-MM-DD)을 기본값으로 사용하는 동적 날짜 상태
+  const [startDate, setStartDate] = useState<string>(() => {
+    const date = new Date();
+    const yyyy = date.getFullYear();
+    const mm = String(date.getMonth() + 1).padStart(2, '0');
+    const dd = String(date.getDate()).padStart(2, '0');
+    return `${yyyy}-${mm}-${dd}`;
+  });
+  const [endDate, setEndDate] = useState<string>(() => {
+    const date = new Date();
+    const yyyy = date.getFullYear();
+    const mm = String(date.getMonth() + 1).padStart(2, '0');
+    const dd = String(date.getDate()).padStart(2, '0');
+    return `${yyyy}-${mm}-${dd}`;
+  });
+
   const [progressType, setProgressType] = useState<ReadingProgressType>('PAGE');
   const [progressValue, setProgressValue] = useState<string>('');
   const [totalPageCount, setTotalPageCount] = useState<string>(DEFAULT_TOTAL_PAGE_COUNT);
@@ -48,14 +65,28 @@ export const MyInfoTab = () => {
   const handleOpenStartDate = () => {
     push({
       id: 'book-record-detail-start-date-modal',
-      component: <DateSelectModal title={MSG_DATE_SELECT_START} onClose={pop} />,
+      component: (
+        <DateSelectModal
+          title={MSG_DATE_SELECT_START}
+          initialDate={startDate}
+          onSubmit={setStartDate}
+          onClose={pop}
+        />
+      ),
     });
   };
 
   const handleOpenEndDate = () => {
     push({
       id: 'book-record-detail-end-date-modal',
-      component: <DateSelectModal title={MSG_DATE_SELECT_END} onClose={pop} />,
+      component: (
+        <DateSelectModal
+          title={MSG_DATE_SELECT_END}
+          initialDate={endDate}
+          onSubmit={setEndDate}
+          onClose={pop}
+        />
+      ),
     });
   };
 
@@ -85,7 +116,12 @@ export const MyInfoTab = () => {
   return (
     <div className="flex flex-col gap-8 pb-safe-bottom pt-[1.875rem]">
       <RatingSection rating={rating} onChange={setRating} />
-      <ReadingPeriodSection onOpenStartDate={handleOpenStartDate} onOpenEndDate={handleOpenEndDate} />
+      <ReadingPeriodSection
+        startDate={startDate}
+        endDate={endDate}
+        onOpenStartDate={handleOpenStartDate}
+        onOpenEndDate={handleOpenEndDate}
+      />
       <ReadingProgressSection
         progressType={progressType}
         progressValue={progressValue}

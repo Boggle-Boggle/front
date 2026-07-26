@@ -26,15 +26,26 @@ const MSG_ADD_RECORD_SUBMIT = '입력을 끝내고 완료하기';
 const MSG_ADD_RECORD_FAILED = '독서 기록을 저장하지 못했습니다. 다시 시도해주세요.';
 const MSG_DATE_SELECT_START = '시작일 선택하기';
 const MSG_DATE_SELECT_END = '종료일 선택하기';
-const MOCK_START_DATE = '2026-01-01';
-const MOCK_END_DATE = '2026-06-06';
 
 export const NewRecord = () => {
   const [rating, setRating] = useState<number>(0);
   const [selectedBookshelfIds, setSelectedBookshelfIds] = useState<number[]>([]);
-  // TODO 날짜 선택 모달 연결 후 사용자가 선택한 날짜로 교체한다.
-  const [startDate] = useState<string>(MOCK_START_DATE);
-  const [endDate] = useState<string>(MOCK_END_DATE);
+
+  const [startDate, setStartDate] = useState<string>(() => {
+    const date = new Date();
+    const yyyy = date.getFullYear();
+    const mm = String(date.getMonth() + 1).padStart(2, '0');
+    const dd = String(date.getDate()).padStart(2, '0');
+    return `${yyyy}-${mm}-${dd}`;
+  });
+  const [endDate, setEndDate] = useState<string>(() => {
+    const date = new Date();
+    const yyyy = date.getFullYear();
+    const mm = String(date.getMonth() + 1).padStart(2, '0');
+    const dd = String(date.getDate()).padStart(2, '0');
+    return `${yyyy}-${mm}-${dd}`;
+  });
+
   const [progressType, setProgressType] = useState<ReadingProgressType>('PAGE');
   const [progressValue, setProgressValue] = useState<string>('');
   const [totalPageCountOverride, setTotalPageCountOverride] = useState<string>('');
@@ -116,14 +127,18 @@ export const NewRecord = () => {
   const handleOpenStartDate = () => {
     push({
       id: 'book-record-start-date-modal',
-      component: <DateSelectModal title={MSG_DATE_SELECT_START} onClose={pop} />,
+      component: (
+        <DateSelectModal title={MSG_DATE_SELECT_START} initialDate={startDate} onSubmit={setStartDate} onClose={pop} />
+      ),
     });
   };
 
   const handleOpenEndDate = () => {
     push({
       id: 'book-record-end-date-modal',
-      component: <DateSelectModal title={MSG_DATE_SELECT_END} onClose={pop} />,
+      component: (
+        <DateSelectModal title={MSG_DATE_SELECT_END} initialDate={endDate} onSubmit={setEndDate} onClose={pop} />
+      ),
     });
   };
 
@@ -160,7 +175,12 @@ export const NewRecord = () => {
 
       <div className="flex flex-1 flex-col gap-8 overflow-y-auto px-mobile pb-safe-bottom pt-safe-top">
         <RatingSection rating={rating} onChange={setRating} />
-        <ReadingPeriodSection onOpenStartDate={handleOpenStartDate} onOpenEndDate={handleOpenEndDate} />
+        <ReadingPeriodSection
+          startDate={startDate}
+          endDate={endDate}
+          onOpenStartDate={handleOpenStartDate}
+          onOpenEndDate={handleOpenEndDate}
+        />
         <ReadingProgressSection
           progressType={progressType}
           progressValue={progressValue}
