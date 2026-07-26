@@ -1,3 +1,5 @@
+import { useQuery } from '@tanstack/react-query';
+
 import { useState } from 'react';
 import { useLayerStore } from 'stores/useLayerStore';
 
@@ -9,8 +11,9 @@ import { FilterSidebar } from './FilterSidebar';
 import { ReadingSection } from './ReadingSection';
 import { SortActionSheet } from './SortActionSheet';
 import { WishlistSection } from './WishlistSection';
-import { type ReadingLogSort, type ReadingLogStatus } from './api';
+import { getBookshelves, type ReadingLogSort, type ReadingLogStatus } from './api';
 import { useLibraryQuery } from './useLibraryQuery';
+import { useWishlistQuery } from './useWishlistQuery';
 
 type TabType = 'reading' | 'wishlist';
 type ViewType = 'grid' | 'list';
@@ -24,7 +27,7 @@ const MSG_MYBOOKS_SORT_POPULAR = '인기순';
 const MSG_MYBOOKS_ICON_SEARCH = '검색';
 const MSG_MYBOOKS_ICON_VIEW_TO_GRID = '그리드형으로 보기';
 const MSG_MYBOOKS_ICON_VIEW_TO_LIST = '리스트형으로 보기';
-const MSG_MYBOOKS_FILTER_ALL = '모든 책모든 책모든 책모든 책모든 책';
+const MSG_MYBOOKS_FILTER_ALL = '모든 책';
 const MSG_MYBOOKS_FILTER_DONE = '모두 읽은 책';
 const MSG_MYBOOKS_FILTER_READING = '읽고 있는 책';
 const MSG_MYBOOKS_FILTER_STOPPED = '중단한 책';
@@ -45,11 +48,27 @@ const Library = () => {
   const [viewType, setViewType] = useState<ViewType>(getInitialViewType);
   const [readingFilter, setReadingFilter] = useState<ReadingLogStatus>('ALL');
   const [sortType, setSortType] = useState<ReadingLogSort>('START_DATE_DESC');
+  const [bookshelfId, setBookshelfId] = useState<number>();
 
   const { push, pop } = useLayerStore();
-  const { data, observerTarget, isLoading } = useLibraryQuery(sortType, readingFilter);
+  const {
+    data: readingData,
+    observerTarget: readingObserverTarget,
+    isLoading: isReadingLoading,
+  } = useLibraryQuery(sortType, readingFilter, bookshelfId, activeTab === 'reading');
 
-  const books = data ? data.pages.flatMap((page) => page.items) : [];
+  const { data: bookshelvesData } = useQuery({
+    queryKey: ['bookshelves'],
+    queryFn: getBookshelves,
+  });
+  const {
+    data: wishlistData,
+    observerTarget: wishlistObserverTarget,
+    isLoading: isWishlistLoading,
+  } = useWishlistQuery(activeTab === 'wishlist');
+
+  const readingBooks = readingData ? readingData.pages.flatMap((page) => page.items) : [];
+  const wishlistBooks = wishlistData ? wishlistData.pages.flatMap((page) => page.items) : [];
 
   const filterOptionByType = {
     ALL: { value: 'ALL', label: MSG_MYBOOKS_FILTER_ALL },
@@ -71,7 +90,12 @@ const Library = () => {
     RATING_DESC: MSG_MYBOOKS_SORT_POPULAR,
   };
   const selectedFilterOption = filterOptionByType[readingFilter];
-  const totalCount = data?.pages[0]?.totalResultCnt ?? books.length;
+  const selectedBookshelf = bookshelvesData?.find((group) => group.id === bookshelfId);
+  const filterLabel = selectedBookshelf
+    ? `${selectedFilterOption.label} (${selectedBookshelf.name})`
+    : selectedFilterOption.label;
+
+  const totalCount = readingData?.pages[0]?.totalResultCnt ?? readingBooks.length;
   const isGridView = viewType === 'grid';
   const viewToggleLabel = isGridView ? MSG_MYBOOKS_ICON_VIEW_TO_LIST : MSG_MYBOOKS_ICON_VIEW_TO_GRID;
   const viewToggleIcon = isGridView ? IconLayoutList : IconLayoutGrid;
@@ -88,15 +112,21 @@ const Library = () => {
   };
 
   const handleOpenFilterLayer = () => {
-    const handleApplyFilter = (nextFilter: ReadingLogStatus) => {
+    const handleApplyFilter = (nextFilter: ReadingLogStatus, nextBookshelfId?: number) => {
       setReadingFilter(nextFilter);
+      setBookshelfId(nextBookshelfId);
       pop();
     };
 
     push({
       id: LAYER_ID_MYBOOKS_FILTER,
       component: (
-        <FilterSidebar selectedFilter={readingFilter} filterOptions={filterOptions} onApplyFilter={handleApplyFilter} />
+        <FilterSidebar
+          selectedFilter={readingFilter}
+          filterOptions={filterOptions}
+          onApplyFilter={handleApplyFilter}
+          selectedBookshelfId={bookshelfId}
+        />
       ),
     });
   };
@@ -138,20 +168,20 @@ const Library = () => {
 
       {activeTab === 'reading' && (
         <ReadingSection
-          books={books}
+          books={readingBooks}
           totalCount={totalCount}
-          filterLabel={selectedFilterOption.label}
+          filterLabel={filterLabel}
           sortLabel={sortLabelByType[sortType] ?? MSG_MYBOOKS_SORT_LATEST}
           viewMode={viewType}
-          isLoading={isLoading}
-          observerTarget={observerTarget}
+          isLoading={isReadingLoading}
+          observerTarget={readingObserverTarget}
           onOpenFilterLayer={handleOpenFilterLayer}
           onOpenSortLayer={handleOpenSortLayer}
         />
       )}
 
       {activeTab === 'wishlist' && (
-        <WishlistSection books={books} isLoading={isLoading} observerTarget={observerTarget} />
+        <WishlistSection books={wishlistBooks} isLoading={isWishlistLoading} observerTarget={wishlistObserverTarget} />
       )}
     </div>
   );

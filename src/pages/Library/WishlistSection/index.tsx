@@ -13,8 +13,6 @@ type WishlistSectionProps = {
 };
 
 const MSG_MYBOOKS_LOADING = '불러오는 중...';
-const MSG_MYBOOKS_WISHLIST_AUTHOR_PLACEHOLDER = '노아 차니 외 1명';
-const MSG_MYBOOKS_WISHLIST_ADDED_DATE = '2023년 5월 12일에 추가 됨';
 const MSG_MYBOOKS_WISHLIST_ARIA_LABEL_KO = '{title} 관심 도서';
 const MSG_MYBOOKS_WISHLIST_ARIA_LABEL_EN = '{title} wishlist book';
 
@@ -25,6 +23,11 @@ const getWishlistAriaLabel = (title: string) => {
     : MSG_MYBOOKS_WISHLIST_ARIA_LABEL_EN;
 
   return ariaLabelTemplate.replace('{title}', title);
+};
+
+const formatWishlistAddedDate = (createdAt = '') => {
+  const [year, month, day] = createdAt.split('T')[0].split('-');
+  return `${year}년 ${parseInt(month, 10)}월 ${parseInt(day, 10)}일에 추가 됨`;
 };
 
 export const WishlistSection = (props: WishlistSectionProps) => {
@@ -44,8 +47,10 @@ export const WishlistSection = (props: WishlistSectionProps) => {
               <BookCover className="w-20 shrink-0" url={book.cover} label={book.title} variant="clear" rounded="sm" />
               <div className="flex min-w-0 flex-1 flex-col pl-4">
                 <p className="line-clamp-2 text-body1">{book.title}</p>
-                <p className="line-clamp-1 text-caption1 text-neutral-80">{MSG_MYBOOKS_WISHLIST_AUTHOR_PLACEHOLDER}</p>
-                <p className="mt-auto pt-1 text-caption1 text-neutral-40">{MSG_MYBOOKS_WISHLIST_ADDED_DATE}</p>
+                <p className="line-clamp-1 text-caption1 text-neutral-80">{book.author}</p>
+                <p className="mt-auto pt-1 text-caption1 text-neutral-40">
+                  {formatWishlistAddedDate(book.createdAt)}
+                </p>
               </div>
             </div>
 

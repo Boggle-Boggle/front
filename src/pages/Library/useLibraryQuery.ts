@@ -2,7 +2,12 @@ import type { PaginationMockResponse } from 'api.types';
 
 import useInfiniteScroll from 'hooks/useInfiniteScroll';
 
-import { getLibraryReadingLogs, type ReadingLogListItemResponse, type ReadingLogSort, type ReadingLogStatus } from './api';
+import {
+  getLibraryReadingLogs,
+  type ReadingLogListItemResponse,
+  type ReadingLogSort,
+  type ReadingLogStatus,
+} from './api';
 
 export type ReadingStatus = '읽는중' | '읽음' | '중단';
 
@@ -15,9 +20,9 @@ export type MyBook = {
   rating: number;
   readCount: number;
   progress: number;
+  author?: string;
+  createdAt?: string;
 };
-
-const LIBRARY_READING_LOGS_PAGE_SIZE = 12;
 
 const READING_STATUS_BY_API_STATUS: Record<Exclude<ReadingLogStatus, 'ALL'>, ReadingStatus> = {
   COMPLETED: '읽음',
@@ -47,12 +52,15 @@ const getLibraryBooks = async (
   page: number,
   sortType: ReadingLogSort,
   readingFilter: ReadingLogStatus,
+  size = 15,
+  bookshelfId?: number,
 ): Promise<PaginationMockResponse<MyBook[]>> => {
   const response = await getLibraryReadingLogs({
     page,
-    size: LIBRARY_READING_LOGS_PAGE_SIZE,
+    size,
     sort: sortType,
     status: readingFilter,
+    bookshelfId,
   });
 
   return {
@@ -63,10 +71,15 @@ const getLibraryBooks = async (
   };
 };
 
-export const useLibraryQuery = (sortType: ReadingLogSort, readingFilter: ReadingLogStatus) => {
+export const useLibraryQuery = (
+  sortType: ReadingLogSort,
+  readingFilter: ReadingLogStatus,
+  bookshelfId?: number,
+  enabled = true,
+) => {
   return useInfiniteScroll<MyBook[]>(
-    ['reading-logs', 'library', sortType, readingFilter],
-    ({ pageParam = 1 }) => getLibraryBooks(pageParam, sortType, readingFilter),
-    true,
+    ['reading-logs', 'library', sortType, readingFilter, bookshelfId],
+    ({ pageParam, size }) => getLibraryBooks(pageParam, sortType, readingFilter, size, bookshelfId),
+    enabled,
   );
 };

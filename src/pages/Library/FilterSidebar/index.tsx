@@ -1,3 +1,5 @@
+import { useQuery } from '@tanstack/react-query';
+
 import { useState } from 'react';
 
 import { Button, TextButton } from 'components/Button';
@@ -6,7 +8,7 @@ import { SideBar } from 'components/Layer/SideBar';
 import { Radio } from 'components/Radio';
 import { IconArrowRight, IconCirclePlus } from 'components/icons';
 
-import { type ReadingLogStatus } from '../api';
+import { getBookshelves, type ReadingLogStatus } from '../api';
 
 type FilterOption = {
   value: ReadingLogStatus;
@@ -17,7 +19,8 @@ type FilterOption = {
 type FilterSidebarProps = {
   selectedFilter: ReadingLogStatus;
   filterOptions: FilterOption[];
-  onApplyFilter: (filter: ReadingLogStatus) => void;
+  onApplyFilter: (filter: ReadingLogStatus, bookshelfId?: number) => void;
+  selectedBookshelfId?: number;
 };
 
 const MSG_MYBOOKS_FILTER_TITLE = '보기 설정하기';
@@ -25,13 +28,6 @@ const MSG_MYBOOKS_FILTER_COMPLETE = '완료';
 const MSG_MYBOOKS_FILTER_GROUP_VIEW = '그룹 보기';
 const MSG_MYBOOKS_FILTER_CREATE_GROUP = '새 그룹 만들기';
 const MSG_MYBOOKS_FILTER_PERIOD_VIEW = '기간 선택 보기';
-
-const GROUP_ITEMS = [
-  { id: 'group-01', label: '내가 만든 그룹 01', count: 0 },
-  { id: 'group-02', label: '내가 만든 그룹 02', count: 0 },
-  { id: 'group-03', label: '내가 만든 그룹 03', count: 0 },
-  { id: 'group-04', label: '내가 만든 그룹 04', count: 0 },
-];
 
 const PERIOD_ITEMS = [
   { id: 'period-2025', label: '2025년 책 모음', count: 662 },
@@ -41,16 +37,26 @@ const PERIOD_ITEMS = [
 ];
 
 export const FilterSidebar = (props: FilterSidebarProps) => {
-  const { selectedFilter, filterOptions, onApplyFilter } = props;
+  const { selectedFilter, filterOptions, onApplyFilter, selectedBookshelfId } = props;
 
   const [draftFilter, setDraftFilter] = useState<ReadingLogStatus>(selectedFilter);
+  const [draftBookshelfId, setDraftBookshelfId] = useState<number | undefined>(selectedBookshelfId);
+
+  const { data: bookshelvesData, isLoading: isBookshelvesLoading } = useQuery({
+    queryKey: ['bookshelves'],
+    queryFn: getBookshelves,
+  });
 
   const handleApplyFilter = () => {
-    onApplyFilter(draftFilter);
+    onApplyFilter(draftFilter, draftBookshelfId);
   };
 
   const handleSelectFilter = (nextFilter: ReadingLogStatus) => () => {
     setDraftFilter(nextFilter);
+  };
+
+  const handleSelectBookshelf = (bookshelfId: number) => () => {
+    setDraftBookshelfId((prev) => (prev === bookshelfId ? undefined : bookshelfId));
   };
 
   const handleCreateGroup = () => undefined;
@@ -95,16 +101,35 @@ export const FilterSidebar = (props: FilterSidebarProps) => {
 
           {/* 그룹 보기 */}
           <p className="text-title3">{MSG_MYBOOKS_FILTER_GROUP_VIEW}</p>
-          <div className="mt-2">
-            {GROUP_ITEMS.map((group) => {
-              const groupLabel = `${group.label} (${group.count})`;
+          <div className="mt-2 min-h-[4rem]">
+            {isBookshelvesLoading ? (
+              <div className="py-3 text-body1 text-neutral-60">로딩 중...</div>
+            ) : bookshelvesData && bookshelvesData.length > 0 ? (
+              bookshelvesData.map((group) => {
+                const isChecked = draftBookshelfId === group.id;
 
-              return (
-                <div key={group.id} className="py-3 text-body1 text-neutral-100">
-                  {groupLabel}
-                </div>
-              );
-            })}
+                return (
+                  <button
+                    key={group.id}
+                    type="button"
+                    className="active:bg-neutral-10/50 flex w-full items-center justify-between rounded-lg py-4 pl-0 pr-2 text-body1 text-neutral-80 outline-none transition-all"
+                    onClick={handleSelectBookshelf(group.id)}
+                  >
+                    <span className="text-title3 font-normal text-neutral-80">{group.name}</span>
+                    <Radio
+                      id={`mybooks-filter-bookshelf-${group.id}`}
+                      name="mybooks-filter-bookshelf"
+                      checked={isChecked}
+                      onChange={() => {}}
+                      variant="primary"
+                      className="pointer-events-none"
+                    />
+                  </button>
+                );
+              })
+            ) : (
+              <div className="py-3 text-body1 text-neutral-60">생성된 그룹책장이 없습니다.</div>
+            )}
           </div>
 
           <TextButton
@@ -124,7 +149,11 @@ export const FilterSidebar = (props: FilterSidebarProps) => {
               const periodLabel = `${period.label} (${period.count})`;
 
               return (
-                <button key={period.id} type="button" className="flex w-full items-center py-3 text-left text-neutral-80">
+                <button
+                  key={period.id}
+                  type="button"
+                  className="flex w-full items-center py-3 text-left text-neutral-80"
+                >
                   <IconArrowRight className="mr-2 size-icon-sm" />
                   <span className="text-title3">{periodLabel}</span>
                 </button>

@@ -107,7 +107,7 @@ export const BookDetail = () => {
         {!isLoading && !isError && data && (
           <>
             <section className="flex flex-col items-center py-5 text-center">
-              <BookCover className="w-28" url={data.coverUrl} variant="clear" isAdult={data.hideAdultContent} />
+              <BookCover className="w-28" url={data.coverUrl} variant="clear" isAdult={data.isAdult && data.hideAdultContent} />
               <p className="pt-4 text-title1">{data.title}</p>
               <p className="text-body2 text-neutral-60">{data.author}</p>
             </section>

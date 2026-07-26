@@ -19,6 +19,7 @@ export interface SearchBook {
   description: string | null;
   category: string;
   mediaType: SearchMediaType;
+  isAdult: boolean;
 }
 
 interface SearchBooksResponse {

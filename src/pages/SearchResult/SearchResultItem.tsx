@@ -15,7 +15,7 @@ export const SearchResultItem = (props: SearchResultItemProps) => {
   return (
     <Link to={`/books/${isbn13}`} className="flex w-full gap-5 py-4">
       {/* TODO: 폴백 이미지 */}
-      <BookCover className="w-20" url={coverUrl ?? ''} label={title} variant="mockup" rounded="sm" />
+      <BookCover className="w-20" url={coverUrl} label={title} variant="mockup" rounded="sm" isAdult={book.isAdult} />
       <div className="flex flex-1 flex-col justify-start">
         <p className="line-clamp-2 pb-1 text-title3">{title}</p>
         <p className="line-clamp-1 text-caption1 text-neutral-60">{author}</p>

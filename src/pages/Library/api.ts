@@ -1,5 +1,5 @@
 import { api } from 'api';
-import type { PaginatedResponse, PaginationParams } from 'api.types';
+import type { PaginatedResponse, PaginationParams, ApiSuccessResponse } from 'api.types';
 
 import type { AddRecordStatus } from 'pages/Records/shared/recordStatus';
 
@@ -84,4 +84,29 @@ export const getInterestedBooks = async (params: GetInterestedBooksParams) => {
 
 export const deleteInterestedBook = async (bookId: number) => {
   await api.delete(`/v2/interested-books/${bookId}`);
+};
+
+export interface BookshelfItemResponse {
+  id: number;
+  name: string;
+}
+
+interface GetBookshelvesResponse {
+  items: BookshelfItemResponse[];
+}
+
+export const getBookshelves = async () => {
+  const response = await api.get<ApiSuccessResponse<GetBookshelvesResponse>>('/v2/bookshelves');
+
+  return response.data.data.items;
+};
+
+export interface CreateBookshelfRequest {
+  name: string;
+}
+
+export const createBookshelf = async (params: CreateBookshelfRequest) => {
+  const response = await api.post<ApiSuccessResponse<BookshelfItemResponse>>('/v2/bookshelves', params);
+
+  return response.data.data;
 };

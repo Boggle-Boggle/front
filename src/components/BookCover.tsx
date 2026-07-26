@@ -103,7 +103,7 @@ export const BookCover = (props: BookCoverProps) => {
   } = props;
   const resolvedStyle = getBookCoverStyle(variant, shadowLeftBar, shadowRightTriangle);
   const roundedClass = getBookCoverRoundedClass(rounded);
-  const resolvedUrl = url || (isAdult ? adultContentImage : noImage);
+  const resolvedUrl = isAdult ? adultContentImage : (url || noImage);
   const frameClass =
     resolvedStyle === 'mockup'
       ? `relative w-full overflow-hidden bg-[linear-gradient(270deg,_#F9F9F9_0%,_#FFFFFF_90.87%,_#D9D9D9_100%)] ${roundedClass}`

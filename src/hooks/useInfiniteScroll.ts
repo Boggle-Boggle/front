@@ -5,12 +5,12 @@ import { useCallback, useEffect, useRef } from 'react';
 
 const useInfiniteScroll = <T>(
   queryKey: unknown[],
-  queryFn: ({ pageParam }: { pageParam: number }) => Promise<PaginationMockResponse<T>>,
+  queryFn: (params: { pageParam: number; size?: number }) => Promise<PaginationMockResponse<T>>,
   enabled: boolean,
 ) => {
   const { data, fetchNextPage, hasNextPage, refetch, isFetchingNextPage, isLoading } = useInfiniteQuery({
     queryKey,
-    queryFn,
+    queryFn: ({ pageParam }) => queryFn({ pageParam, size: 15 }),
     getNextPageParam: (lastPage) => {
       if (lastPage.pageNum < Math.ceil(lastPage.totalResultCnt / lastPage.itemsPerPage)) {
         return lastPage.pageNum + 1;

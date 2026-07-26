@@ -16,6 +16,7 @@ export interface BookDetail {
   totalPages: number | null;
   mediaType: BookMediaType;
   hideAdultContent: boolean;
+  isAdult: boolean;
 }
 
 export const getBookDetail = async (isbn13: string) => {
