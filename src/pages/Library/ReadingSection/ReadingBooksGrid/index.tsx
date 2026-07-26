@@ -22,7 +22,7 @@ export const ReadingBooksGrid = ({ books }: ReadingBooksGridProps) => {
     <ul className="pb-6">
       {rows.map((row) => (
         <li key={row.toString()} className="relative pb-5">
-          <ul className="z-book relative mx-auto flex justify-around">
+          <ul className="relative z-book mx-auto grid grid-cols-3 justify-items-center items-start">
             {row.map((book) => (
               <li key={book.id} className="w-20">
                 <BookCard book={book} />
