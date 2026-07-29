@@ -115,7 +115,7 @@ export const FilterSidebar = (props: FilterSidebarProps) => {
                     className="active:bg-neutral-10/50 flex w-full items-center justify-between rounded-lg py-4 pl-0 pr-2 text-body1 text-neutral-80 outline-none transition-all"
                     onClick={handleSelectBookshelf(group.id)}
                   >
-                    <span className="text-title3 font-normal text-neutral-80">{group.name}</span>
+                    <span className="text-body1 text-neutral-80">{group.name}</span>
                     <Radio
                       id={`mybooks-filter-bookshelf-${group.id}`}
                       name="mybooks-filter-bookshelf"
@@ -155,7 +155,7 @@ export const FilterSidebar = (props: FilterSidebarProps) => {
                   className="flex w-full items-center py-3 text-left text-neutral-80"
                 >
                   <IconArrowRight className="mr-2 size-icon-sm" />
-                  <span className="text-title3">{periodLabel}</span>
+                  <span className="text-body1">{periodLabel}</span>
                 </button>
               );
             })}
