@@ -6,7 +6,7 @@ import { Button, TextButton } from 'components/Button';
 import { Divider } from 'components/Divider';
 import { SideBar } from 'components/Layer/SideBar';
 import { Radio } from 'components/Radio';
-import { IconArrowRight, IconCirclePlus } from 'components/icons';
+import { IconCirclePlus } from 'components/icons';
 
 import { getBookshelves, type ReadingLogStatus } from '../api';
 
@@ -144,7 +144,7 @@ export const FilterSidebar = (props: FilterSidebarProps) => {
 
           {/* 기간 보기 */}
           <p className="text-title3">{MSG_MYBOOKS_FILTER_PERIOD_VIEW}</p>
-          <div className="mt-1">
+          <div className="mt-2">
             {PERIOD_ITEMS.map((period) => {
               const periodLabel = `${period.label} (${period.count})`;
 
@@ -152,10 +152,16 @@ export const FilterSidebar = (props: FilterSidebarProps) => {
                 <button
                   key={period.id}
                   type="button"
-                  className="flex w-full items-center py-3 text-left text-neutral-80"
+                  className="flex w-full items-center justify-between py-3 text-body1 text-neutral-80"
                 >
-                  <IconArrowRight className="mr-2 size-icon-sm" />
-                  <span className="text-body1">{periodLabel}</span>
+                  <span>{periodLabel}</span>
+                  <Radio
+                    id={`mybooks-filter-period-${period.id}`}
+                    name="mybooks-filter-period"
+                    checked={false}
+                    onChange={() => {}}
+                    variant="primary"
+                  />
                 </button>
               );
             })}
