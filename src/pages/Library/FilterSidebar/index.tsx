@@ -27,14 +27,6 @@ const MSG_MYBOOKS_FILTER_TITLE = '보기 설정하기';
 const MSG_MYBOOKS_FILTER_COMPLETE = '완료';
 const MSG_MYBOOKS_FILTER_GROUP_VIEW = '그룹 보기';
 const MSG_MYBOOKS_FILTER_CREATE_GROUP = '새 그룹 만들기';
-const MSG_MYBOOKS_FILTER_PERIOD_VIEW = '기간 선택 보기';
-
-const PERIOD_ITEMS = [
-  { id: 'period-2025', label: '2025년 책 모음', count: 662 },
-  { id: 'period-2024', label: '2024년 책 모음', count: 746 },
-  { id: 'period-2023', label: '2023년 책 모음', count: 305 },
-  { id: 'period-2022', label: '2022년 책 모음', count: 677 },
-];
 
 export const FilterSidebar = (props: FilterSidebarProps) => {
   const { selectedFilter, filterOptions, onApplyFilter, selectedBookshelfId } = props;
@@ -139,33 +131,6 @@ export const FilterSidebar = (props: FilterSidebarProps) => {
             className="justify-starts my-2 flex w-full rounded-lg bg-neutral-20 py-2 text-title3 text-neutral-60"
             size="lg"
           />
-
-          <Divider className="my-4 border-neutral-20" />
-
-          {/* 기간 보기 */}
-          <p className="text-title3">{MSG_MYBOOKS_FILTER_PERIOD_VIEW}</p>
-          <div className="mt-2">
-            {PERIOD_ITEMS.map((period) => {
-              const periodLabel = `${period.label} (${period.count})`;
-
-              return (
-                <button
-                  key={period.id}
-                  type="button"
-                  className="flex w-full items-center justify-between py-3 text-body1 text-neutral-80"
-                >
-                  <span>{periodLabel}</span>
-                  <Radio
-                    id={`mybooks-filter-period-${period.id}`}
-                    name="mybooks-filter-period"
-                    checked={false}
-                    onChange={() => {}}
-                    variant="primary"
-                  />
-                </button>
-              );
-            })}
-          </div>
         </div>
       </div>
     </SideBar>

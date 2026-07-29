@@ -91,9 +91,8 @@ const Library = () => {
   };
   const selectedFilterOption = filterOptionByType[readingFilter];
   const selectedBookshelf = bookshelvesData?.find((group) => group.id === bookshelfId);
-  const filterLabel = selectedBookshelf
-    ? `${selectedFilterOption.label} (${selectedBookshelf.name})`
-    : selectedFilterOption.label;
+  const { label } = selectedFilterOption;
+  const filterLabel = selectedBookshelf ? `${label} (${selectedBookshelf.name})` : label;
 
   const totalCount = readingData?.pages[0]?.totalResultCnt ?? readingBooks.length;
   const isGridView = viewType === 'grid';
