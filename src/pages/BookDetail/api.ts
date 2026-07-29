@@ -17,6 +17,7 @@ export interface BookDetail {
   mediaType: BookMediaType;
   hideAdultContent: boolean;
   isAdult: boolean;
+  isInterested: boolean;
 }
 
 export const getBookDetail = async (isbn13: string) => {
