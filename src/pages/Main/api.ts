@@ -1,7 +1,7 @@
 import { api } from 'api';
 import type { PaginatedResponse, PaginationParams } from 'api.types';
 
-type ReadingLogStatus = 'ALL' | 'READING' | 'COMPLETED' | 'DROPPED';
+import type { Nullable, ReadingLogProgressType, ReadingLogStatus } from 'types';
 
 type ReadingLogSort =
   | 'START_DATE_DESC'
@@ -33,7 +33,7 @@ interface ReadingLogListItemResponse {
   book: ReadingLogBookResponse;
   status: Exclude<ReadingLogStatus, 'ALL'>;
   rating?: number | null;
-  progressType?: 'PERCENTAGE' | 'PAGE' | null;
+  progressType?: Nullable<ReadingLogProgressType>;
   progressValue?: number | null;
   progressPercentage?: number | null;
   startDate?: string | null;

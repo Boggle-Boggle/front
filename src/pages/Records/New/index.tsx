@@ -9,6 +9,8 @@ import { BottomButton } from 'components/Button';
 import { Header } from 'components/Header';
 import { useBookDetailQuery } from 'pages/BookDetail/useBookDetailQuery';
 
+import type { ReadingLogProgressType } from 'types';
+
 import { createReadingLog } from './api';
 import { DateSelectModal } from '../shared/DateSelectModal';
 import { GroupDeleteConfirmModal } from '../shared/GroupDeleteConfirmModal';
@@ -17,7 +19,7 @@ import { GroupSection } from '../shared/GroupSection';
 import { PageInfoModal } from '../shared/PageInfoModal';
 import { RatingSection } from '../shared/RatingSection';
 import { ReadingPeriodSection } from '../shared/ReadingPeriodSection';
-import { ReadingProgressSection, type ReadingProgressType } from '../shared/ReadingProgressSection';
+import { ReadingProgressSection } from '../shared/ReadingProgressSection';
 import { VisibilitySection } from '../shared/VisibilitySection';
 import { BOOKSHELVES_QUERY_KEY, getBookshelves, type BookshelfItem } from '../shared/api';
 import { getAddRecordStatus } from '../shared/recordStatus';
@@ -46,7 +48,7 @@ export const NewRecord = () => {
     return `${yyyy}-${mm}-${dd}`;
   });
 
-  const [progressType, setProgressType] = useState<ReadingProgressType>('PAGE');
+  const [progressType, setProgressType] = useState<ReadingLogProgressType>('PAGE');
   const [progressValue, setProgressValue] = useState<string>('');
   const [totalPageCountOverride, setTotalPageCountOverride] = useState<string>('');
   const [isHidden, setIsHidden] = useState<boolean>(false);

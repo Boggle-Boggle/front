@@ -1,8 +1,8 @@
+import type { AddRecordStatus } from 'types';
+
 import completedImage from 'assets/img/add-record-status-completed.png';
 import droppedImage from 'assets/img/add-record-status-pending.png';
 import readingImage from 'assets/img/add-record-status-reading.png';
-
-export type AddRecordStatus = 'COMPLETED' | 'READING' | 'DROPPED';
 
 export type AddRecordStatusOption = {
   id: AddRecordStatus;

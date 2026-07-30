@@ -1,7 +1,7 @@
 import { api } from 'api';
 import type { ApiSuccessResponse } from 'api.types';
 
-export type BookMediaType = 'BOOK' | 'EBOOK';
+import type { BookMediaType } from 'types';
 
 export interface BookDetail {
   isbn13: string;

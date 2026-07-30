@@ -7,11 +7,13 @@ import { IconButton } from 'components/Button';
 import Highlight from 'components/Highlight';
 import { IconLayoutGrid, IconLayoutList, IconSearch } from 'components/icons';
 
+import type { ReadingLogStatus } from 'types';
+
 import { FilterSidebar } from './FilterSidebar';
 import { ReadingSection } from './ReadingSection';
 import { SortActionSheet } from './SortActionSheet';
 import { WishlistSection } from './WishlistSection';
-import { getBookshelves, type ReadingLogSort, type ReadingLogStatus } from './api';
+import { getBookshelves, type ReadingLogSort } from './api';
 import { useLibraryQuery } from './useLibraryQuery';
 import { useWishlistQuery } from './useWishlistQuery';
 
@@ -70,12 +72,12 @@ const Library = () => {
   const readingBooks = readingData ? readingData.pages.flatMap((page) => page.items) : [];
   const wishlistBooks = wishlistData ? wishlistData.pages.flatMap((page) => page.items) : [];
 
-  const filterOptionByType = {
+  const filterOptionByType: Record<ReadingLogStatus, { value: ReadingLogStatus; label: string }> = {
     ALL: { value: 'ALL', label: MSG_MYBOOKS_FILTER_ALL },
     COMPLETED: { value: 'COMPLETED', label: MSG_MYBOOKS_FILTER_DONE },
     READING: { value: 'READING', label: MSG_MYBOOKS_FILTER_READING },
     DROPPED: { value: 'DROPPED', label: MSG_MYBOOKS_FILTER_STOPPED },
-  } as const;
+  };
 
   const filterOptions = [
     filterOptionByType.ALL,

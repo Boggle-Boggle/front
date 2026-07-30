@@ -2,32 +2,21 @@ import type { PaginationMockResponse } from 'api.types';
 
 import useInfiniteScroll from 'hooks/useInfiniteScroll';
 
-import {
-  getLibraryReadingLogs,
-  type ReadingLogListItemResponse,
-  type ReadingLogSort,
-  type ReadingLogStatus,
-} from './api';
+import { READING_STATUS_LABEL_BY_CODE, type ReadingLogStatus, type ReadingStatusLabel } from 'types';
 
-export type ReadingStatus = '읽는중' | '읽음' | '중단';
+import { getLibraryReadingLogs, type ReadingLogListItemResponse, type ReadingLogSort } from './api';
 
 export type MyBook = {
   id: number;
   title: string;
   cover: string;
   isAdult: boolean;
-  readingStatus: ReadingStatus;
+  readingStatus: ReadingStatusLabel;
   rating: number;
   readCount: number;
   progress: number;
   author?: string;
   createdAt?: string;
-};
-
-const READING_STATUS_BY_API_STATUS: Record<Exclude<ReadingLogStatus, 'ALL'>, ReadingStatus> = {
-  COMPLETED: '읽음',
-  DROPPED: '중단',
-  READING: '읽는중',
 };
 
 const getProgressPercentage = (readingLog: ReadingLogListItemResponse) => {
@@ -42,7 +31,7 @@ const convertReadingLogToMyBook = (readingLog: ReadingLogListItemResponse): MyBo
   title: readingLog.book.title,
   cover: readingLog.book.coverUrl ?? '',
   isAdult: readingLog.book.isAdult,
-  readingStatus: READING_STATUS_BY_API_STATUS[readingLog.status],
+  readingStatus: READING_STATUS_LABEL_BY_CODE[readingLog.status],
   rating: readingLog.rating ?? 0,
   readCount: 0,
   progress: getProgressPercentage(readingLog),

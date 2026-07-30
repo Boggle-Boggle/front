@@ -1,9 +1,7 @@
 import { api } from 'api';
 import type { PaginatedResponse, PaginationParams, ApiSuccessResponse } from 'api.types';
 
-import type { AddRecordStatus } from 'pages/Records/shared/recordStatus';
-
-export type ReadingLogStatus = 'ALL' | AddRecordStatus;
+import type { Nullable, ReadingLogProgressType, ReadingLogStatus } from 'types';
 
 export type ReadingLogSort =
   | 'START_DATE_DESC'
@@ -14,8 +12,6 @@ export type ReadingLogSort =
   | 'RATING_ASC'
   | 'CREATED_AT_DESC'
   | 'CREATED_AT_ASC';
-
-export type ReadingLogProgressType = 'PERCENTAGE' | 'PAGE';
 
 export interface GetReadingLogsParams extends PaginationParams {
   sort: ReadingLogSort;
@@ -38,7 +34,7 @@ export interface ReadingLogListItemResponse {
   book: ReadingLogBookResponse;
   status: Exclude<ReadingLogStatus, 'ALL'>;
   rating?: number | null;
-  progressType?: ReadingLogProgressType | null;
+  progressType?: Nullable<ReadingLogProgressType>;
   progressValue?: number | null;
   progressPercentage?: number | null;
   startDate?: string | null;

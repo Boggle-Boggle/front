@@ -3,15 +3,15 @@ import { ChangeEvent } from 'react';
 import { Input } from 'components/Input';
 import { SegmentedControl, type SegmentedControlOptions } from 'components/SegmentedControl';
 
+import type { ReadingLogProgressType } from 'types';
+
 import { SectionTitle } from './SectionTitle';
 
-export type ReadingProgressType = 'PAGE' | 'PERCENTAGE';
-
 interface ReadingProgressSectionProps {
-  progressType: ReadingProgressType;
+  progressType: ReadingLogProgressType;
   progressValue: string;
   totalPageCount: string;
-  onChangeProgressType: (progressType: ReadingProgressType) => void;
+  onChangeProgressType: (progressType: ReadingLogProgressType) => void;
   onChangeProgressValue: (progressValue: string) => void;
   onOpenPageInfo: () => void;
 }
@@ -27,7 +27,7 @@ const MSG_ADD_RECORD_PROGRESS_TYPE_LABEL = '독서량 입력 단위';
 const MIN_PROGRESS_VALUE = 0;
 const MAX_PERCENTAGE_VALUE = 100;
 
-const READING_PROGRESS_TYPE_OPTIONS: SegmentedControlOptions<ReadingProgressType> = {
+const READING_PROGRESS_TYPE_OPTIONS: SegmentedControlOptions<ReadingLogProgressType> = {
   left: {
     value: 'PAGE',
     label: MSG_ADD_RECORD_PAGE_SEGMENT,

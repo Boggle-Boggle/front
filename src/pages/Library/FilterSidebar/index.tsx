@@ -8,7 +8,9 @@ import { SideBar } from 'components/Layer/SideBar';
 import { Radio } from 'components/Radio';
 import { IconCirclePlus } from 'components/icons';
 
-import { getBookshelves, type ReadingLogStatus } from '../api';
+import type { ReadingLogStatus } from 'types';
+
+import { getBookshelves } from '../api';
 
 type FilterOption = {
   value: ReadingLogStatus;

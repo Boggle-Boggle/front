@@ -1,9 +1,7 @@
 import { api } from 'api';
 import type { ApiSuccessResponse } from 'api.types';
 
-import type { BookMediaType } from 'pages/BookDetail/api';
-
-import type { AddRecordStatus } from '../shared/recordStatus';
+import type { AddRecordStatus, BookMediaType, ReadingLogProgressType } from 'types';
 
 export interface CreateReadingLogRequest {
   isbn13: string;
@@ -12,7 +10,7 @@ export interface CreateReadingLogRequest {
   rating: number;
   startDate: string;
   endDate: string;
-  progressType?: 'PAGE' | 'PERCENTAGE';
+  progressType?: ReadingLogProgressType;
   progressValue?: number;
   totalPagesOverride?: number;
   bookshelfIds: number[];

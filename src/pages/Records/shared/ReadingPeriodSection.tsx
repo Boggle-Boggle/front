@@ -1,6 +1,7 @@
+import type { AddRecordStatus } from 'types';
+
 import { ReadingPeriodButton } from './ReadingPeriodButton';
 import { SectionTitle } from './SectionTitle';
-import { AddRecordStatus } from './recordStatus';
 
 type ReadingPeriodSectionProps = {
   startDate: string;

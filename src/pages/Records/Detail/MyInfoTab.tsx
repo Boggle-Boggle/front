@@ -3,6 +3,8 @@ import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useLayerStore } from 'stores/useLayerStore';
 
+import type { ReadingLogProgressType } from 'types';
+
 import { DateSelectModal } from '../shared/DateSelectModal';
 import { GroupDeleteConfirmModal } from '../shared/GroupDeleteConfirmModal';
 import { GroupEditModal } from '../shared/GroupEditModal';
@@ -10,7 +12,7 @@ import { GroupSection } from '../shared/GroupSection';
 import { PageInfoModal } from '../shared/PageInfoModal';
 import { RatingSection } from '../shared/RatingSection';
 import { ReadingPeriodSection } from '../shared/ReadingPeriodSection';
-import { ReadingProgressSection, type ReadingProgressType } from '../shared/ReadingProgressSection';
+import { ReadingProgressSection } from '../shared/ReadingProgressSection';
 import { VisibilitySection } from '../shared/VisibilitySection';
 import { BOOKSHELVES_QUERY_KEY, getBookshelves, type BookshelfItem } from '../shared/api';
 
@@ -38,7 +40,7 @@ export const MyInfoTab = () => {
     return `${yyyy}-${mm}-${dd}`;
   });
 
-  const [progressType, setProgressType] = useState<ReadingProgressType>('PAGE');
+  const [progressType, setProgressType] = useState<ReadingLogProgressType>('PAGE');
   const [progressValue, setProgressValue] = useState<string>('');
   const [totalPageCount, setTotalPageCount] = useState<string>(DEFAULT_TOTAL_PAGE_COUNT);
   const [isPrivate, setIsPrivate] = useState<boolean>(false);
@@ -66,12 +68,7 @@ export const MyInfoTab = () => {
     push({
       id: 'book-record-detail-start-date-modal',
       component: (
-        <DateSelectModal
-          title={MSG_DATE_SELECT_START}
-          initialDate={startDate}
-          onSubmit={setStartDate}
-          onClose={pop}
-        />
+        <DateSelectModal title={MSG_DATE_SELECT_START} initialDate={startDate} onSubmit={setStartDate} onClose={pop} />
       ),
     });
   };
@@ -80,12 +77,7 @@ export const MyInfoTab = () => {
     push({
       id: 'book-record-detail-end-date-modal',
       component: (
-        <DateSelectModal
-          title={MSG_DATE_SELECT_END}
-          initialDate={endDate}
-          onSubmit={setEndDate}
-          onClose={pop}
-        />
+        <DateSelectModal title={MSG_DATE_SELECT_END} initialDate={endDate} onSubmit={setEndDate} onClose={pop} />
       ),
     });
   };
