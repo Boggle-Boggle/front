@@ -37,7 +37,8 @@ export const Reviews = () => {
     queryKey: ['books', isbn13, 'reviews', sortType],
     queryFn: ({ pageParam }) => getBookReviews({ isbn13, page: pageParam, size: 10, sort: sortType }),
     getNextPageParam: (lastPage, allPages) => {
-      const loadedCount = allPages.flatMap((page) => page.reviews).length;
+      const hasMyReview = allPages[0]?.myReview ? 1 : 0;
+      const loadedCount = allPages.flatMap((page) => page.reviews).length + hasMyReview;
       if (loadedCount < lastPage.totalReviewCount) return allPages.length + 1;
 
       return undefined;
@@ -88,7 +89,9 @@ export const Reviews = () => {
 
   const handleToggleLike = () => {};
 
+  const myReview = data?.pages[0]?.myReview;
   const reviews = data ? data.pages.flatMap((page) => page.reviews) : [];
+  const allReviews = myReview ? [myReview, ...reviews] : reviews;
   const totalReviewCount = data?.pages[0]?.totalReviewCount || 0;
 
   return (
@@ -157,8 +160,13 @@ export const Reviews = () => {
         ) : (
           <>
             <ul className="divide-y divide-neutral-20">
-              {reviews.map((review) => (
-                <ReviewCard key={review.id} review={review} onToggleLike={handleToggleLike} />
+              {allReviews.map((review) => (
+                <ReviewCard
+                  key={review.id}
+                  review={review}
+                  onToggleLike={handleToggleLike}
+                  isMyReview={review.id === myReview?.id}
+                />
               ))}
             </ul>
 

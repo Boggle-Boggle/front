@@ -22,7 +22,9 @@ export const ReviewSection = () => {
     enabled: Boolean(isbn13),
   });
 
-  const previewReviews = data?.reviews || [];
+  const myReview = data?.myReview;
+  const reviewsList = data?.reviews || [];
+  const previewReviews = myReview ? [myReview, ...reviewsList] : reviewsList;
   const totalReviewCount = data?.totalReviewCount || 0;
 
   const handleToggleLike = () => {};
@@ -38,13 +40,15 @@ export const ReviewSection = () => {
           {MSG_REVIEW_SUMMARY_SUFFIX}
         </p>
 
-        <TextButton
-          onClick={handleReviewMoreClick}
-          text={MSG_REVIEW_MORE}
-          size="md"
-          variant="default"
-          rightIcon={IconArrowRight}
-        />
+        {totalReviewCount > 0 && (
+          <TextButton
+            onClick={handleReviewMoreClick}
+            text={MSG_REVIEW_MORE}
+            size="md"
+            variant="default"
+            rightIcon={IconArrowRight}
+          />
+        )}
       </div>
 
       {totalReviewCount === 0 ? (
@@ -54,7 +58,14 @@ export const ReviewSection = () => {
       ) : (
         <ul className="divide-y divide-neutral-20 pt-3">
           {previewReviews.map((review) => {
-            return <ReviewCard key={review.id} review={review} onToggleLike={handleToggleLike} />;
+            return (
+              <ReviewCard
+                key={review.id}
+                review={review}
+                onToggleLike={handleToggleLike}
+                isMyReview={review.id === myReview?.id}
+              />
+            );
           })}
         </ul>
       )}

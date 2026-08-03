@@ -13,6 +13,7 @@ import { BlockUserConfirmModal } from '../BlockUserConfirmModal';
 type ReviewCardProps = {
   review: BookReviewItem;
   onToggleLike?: (reviewId: string) => void;
+  isMyReview?: boolean;
 };
 
 const MSG_REVIEW_ID_PREFIX = '님';
@@ -23,12 +24,10 @@ const MSG_REVIEW_SPOILER = '스포일러가 포함 된 리뷰입니다.\n리뷰�
 const MSG_READER_LEVEL_DEFAULT = '빼곡 독서가';
 
 export const ReviewCard = (props: ReviewCardProps) => {
-  const { review, onToggleLike } = props;
+  const { review, onToggleLike, isMyReview = false } = props;
 
   const { id, author, content, likeCount, isSpoiler, isLiked, createdAt } = review;
   const formattedDate = formatDateTimeToDate(createdAt);
-
-  const isMyReview = false; // 내 리뷰 여부는 현재 작업 범위 제외로 임시 고정 처리
 
   const { push } = useLayerStore();
   const navigate = useNavigate();
