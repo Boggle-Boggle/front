@@ -1,4 +1,4 @@
-import { useInfiniteQuery } from '@tanstack/react-query';
+import { useInfiniteQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { ChangeEvent, useState } from 'react';
 import { useParams } from 'react-router-dom';
@@ -12,7 +12,7 @@ import { IconArrowDown } from 'components/icons';
 import { useInfiniteScrollObserver } from 'hooks/useInfiniteScrollObserver';
 
 import { ReviewSortActionSheet } from './SortActionSheet';
-import { getBookReviews, REVIEW_SORT_OPTIONS, type ReviewSortType } from '../api';
+import { createBookReview, getBookReviews, REVIEW_SORT_OPTIONS, type ReviewSortType } from '../api';
 import { ReviewCard } from '../shared/ReviewCard';
 
 const MSG_REVIEW_PAGE_TITLE = '빼곡한 리뷰';
@@ -26,11 +26,13 @@ const MAX_REVIEW_LENGTH = 700;
 export const Reviews = () => {
   const { isbn13 = '' } = useParams();
   const { push } = useLayerStore();
+  const queryClient = useQueryClient();
 
   const [sortType, setSortType] = useState<ReviewSortType>('RECENT');
   const [content, setContent] = useState<string>('');
   const [isSpoiler, setIsSpoiler] = useState<boolean>(false);
 
+  // 리액트 쿼리 무한 스크롤 조회 연동
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } = useInfiniteQuery({
     queryKey: ['books', isbn13, 'reviews', sortType],
     queryFn: ({ pageParam }) => getBookReviews({ isbn13, page: pageParam, size: 10, sort: sortType }),
@@ -49,6 +51,16 @@ export const Reviews = () => {
     onIntersect: fetchNextPage,
   });
 
+  // 리뷰 등록 mutation 연동
+  const createReviewMutation = useMutation({
+    mutationFn: createBookReview,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['books', isbn13, 'reviews'] });
+      setContent('');
+      setIsSpoiler(false);
+    },
+  });
+
   const handleOpenSortLayer = () => {
     push({
       id: LAYER_ID_BOOK_DETAIL_REVIEW_SORT,
@@ -64,7 +76,15 @@ export const Reviews = () => {
     setIsSpoiler((prev) => !prev);
   };
 
-  const handleSubmitReview = () => {};
+  const handleSubmitReview = () => {
+    if (!content.trim() || createReviewMutation.isPending) return;
+
+    createReviewMutation.mutate({
+      isbn13,
+      content: content.trim(),
+      isSpoiler,
+    });
+  };
 
   const handleToggleLike = () => {};
 
@@ -109,7 +129,7 @@ export const Reviews = () => {
             width="short"
             size="small"
             variant="primary"
-            disabled={!content.trim()}
+            disabled={!content.trim() || createReviewMutation.isPending}
             className="px-5"
           >
             {MSG_REVIEW_SUBMIT}

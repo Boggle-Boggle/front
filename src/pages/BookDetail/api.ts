@@ -63,3 +63,16 @@ export const getBookReviews = async (params: GetBookReviewsRequest) => {
 
   return response.data.data;
 };
+
+export interface CreateBookReviewRequest {
+  isbn13: string;
+  content: string;
+  isSpoiler: boolean;
+}
+
+export const createBookReview = async (params: CreateBookReviewRequest) => {
+  const { isbn13, ...body } = params;
+  const response = await api.post<ApiSuccessResponse<null>>(`/v2/books/${isbn13}/reviews`, body);
+
+  return response.data.data;
+};
