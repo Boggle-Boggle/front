@@ -4,8 +4,8 @@ import { useLayerStore } from 'stores/useLayerStore';
 import { ToggleButton } from 'components/ToggleButton';
 import { IconHeart, IconHeartFilled } from 'components/icons';
 
-import { BlockUserConfirmModal } from '../BlockUserConfirmModal';
 import { ReviewActionSheet } from './ReviewActionSheet';
+import { BlockUserConfirmModal } from '../BlockUserConfirmModal';
 import { BookReview, CURRENT_REVIEW_USER_ID } from '../review.mock';
 
 type ReviewCardProps = {

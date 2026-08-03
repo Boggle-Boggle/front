@@ -1,7 +1,7 @@
 import { api } from 'api';
 import type { PaginatedResponse, PaginationParams } from 'api.types';
 
-import type { Nullable, ReadingLogProgressType, ReadingLogStatus } from 'types';
+import type { Book, Nullable, ReadingLogProgressType, ReadingLogStatus } from 'types';
 
 type ReadingLogSort =
   | 'START_DATE_DESC'
@@ -21,12 +21,7 @@ interface GetReadingLogsParams extends PaginationParams {
   month?: number;
 }
 
-interface ReadingLogBookResponse {
-  title: string;
-  author: string;
-  coverUrl?: string | null;
-  totalPages?: number | null;
-}
+type ReadingLogBookResponse = Pick<Book, 'title' | 'author' | 'coverUrl' | 'totalPages'>;
 
 interface ReadingLogListItemResponse {
   id: number;

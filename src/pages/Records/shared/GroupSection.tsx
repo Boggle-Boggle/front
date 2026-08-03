@@ -7,7 +7,7 @@ type GroupSectionProps = {
   bookshelves: BookshelfItem[];
   selectedBookshelfIds: number[];
   onOpenGroupEdit: () => void;
-  onToggleBookshelf: (bookshelfId: number) => () => void;
+  onToggleBookshelf: (bookshelfId: number) => void;
 };
 
 const MSG_GROUP_SECTION_TITLE = '그룹 설정하기';
@@ -39,7 +39,7 @@ export const GroupSection = (props: GroupSectionProps) => {
             <li key={bookshelf.id} className="w-full">
               <button
                 type="button"
-                onClick={onToggleBookshelf(bookshelf.id)}
+                onClick={() => onToggleBookshelf(bookshelf.id)}
                 className={`flex h-[2.625rem] w-full items-center justify-center rounded-lg border-[1.5px] px-4 text-title4 font-bold transition-all ${
                   isSelected
                     ? 'border-primary bg-neutral-0 text-primary'

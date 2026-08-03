@@ -1,7 +1,7 @@
 import { api } from 'api';
 import type { PaginatedResponse, PaginationParams, ApiSuccessResponse } from 'api.types';
 
-import type { Nullable, ReadingLogProgressType, ReadingLogStatus } from 'types';
+import type { Book, Nullable, ReadingLogProgressType, ReadingLogStatus } from 'types';
 
 export type ReadingLogSort =
   | 'START_DATE_DESC'
@@ -21,13 +21,7 @@ export interface GetReadingLogsParams extends PaginationParams {
   month?: number;
 }
 
-interface ReadingLogBookResponse {
-  title: string;
-  author: string;
-  coverUrl?: string | null;
-  totalPages?: number | null;
-  isAdult: boolean;
-}
+type ReadingLogBookResponse = Pick<Book, 'title' | 'author' | 'coverUrl' | 'totalPages' | 'isAdult'>;
 
 export interface ReadingLogListItemResponse {
   id: number;
@@ -56,14 +50,10 @@ export const getLibraryReadingLogs = async (params: GetReadingLogsParams) => {
 
 export type GetInterestedBooksParams = PaginationParams;
 
-export interface InterestedBookItemResponse {
+export type InterestedBookItemResponse = Pick<Book, 'isbn13' | 'title' | 'author' | 'coverUrl'> & {
   bookId: number;
-  isbn13: string;
-  title: string;
-  author: string;
-  coverUrl?: string | null;
   createdAt: string;
-}
+};
 
 interface InterestedBookListResponse {
   items: InterestedBookItemResponse[];

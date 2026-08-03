@@ -1,6 +1,9 @@
-import { useEffect, useRef, useState } from 'react';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+
+import { useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useLayerStore } from 'stores/useLayerStore';
+import { useToastStore } from 'stores/useToastStore';
 
 import BookCover from 'components/BookCover';
 import { BottomButton } from 'components/Button';
@@ -12,15 +15,19 @@ import { IconEllipsisVertical, IconHeart, IconHeartFilled } from 'components/ico
 
 import { useHeaderTitleByScroll } from 'hooks/useHeaderTitleByScroll';
 
+import type { BookDetail as BookDetailType } from 'types';
+
 import { BookMenuActionSheet } from './BookMenuActionSheet';
 import { InfoSection } from './InfoSection';
 import { ReviewSection } from './ReviewSection';
+import { addInterestedBook, deleteInterestedBookByIsbn13 } from './api';
 import { AddRecordStatusBottomSheet } from './shared/AddRecordStatusBottomSheet';
 import { useBookDetailQuery } from './useBookDetailQuery';
 
 const MSG_BOOK_DETAIL_ADD_RECORD = '독서 기록 추가하기';
 const MSG_BOOK_DETAIL_TAB_INFO = '정보';
 const MSG_BOOK_DETAIL_TAB_REVIEW = '리뷰';
+const MSG_BOOK_DETAIL_WISHLIST_FAILED = '관심도서 처리에 실패했습니다.';
 const LAYER_ID_BOOK_DETAIL_MENU = 'book-detail-menu-bottom-sheet';
 const LAYER_ID_BOOK_DETAIL_ADD_RECORD_STATUS = 'book-detail-add-record-status-bottom-sheet';
 const ALADIN_BOOK_DETAIL_URL = 'https://www.aladin.co.kr/shop/wproduct.aspx';
@@ -45,14 +52,11 @@ export const BookDetail = () => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const tabSentinelRef = useRef<HTMLDivElement>(null);
   const [activeTab, setActiveTab] = useState<DetailTabType>('info');
-  const [isWishlistSelected, setIsWishlistSelected] = useState<boolean>(false);
   const { push } = useLayerStore();
+  const { addToast } = useToastStore();
+  const queryClient = useQueryClient();
 
   const { data, isLoading, isError } = useBookDetailQuery(bookId);
-
-  useEffect(() => {
-    if (data) setIsWishlistSelected(data.isInterested);
-  }, [data]);
 
   const { isVisible } = useHeaderTitleByScroll({
     rootRef: scrollContainerRef,
@@ -60,8 +64,32 @@ export const BookDetail = () => {
   });
   const title = isVisible ? data?.title : undefined;
 
+  const { mutate: toggleWishlist } = useMutation({
+    mutationFn: async (isInterested: boolean) => {
+      if (!data) return;
+      if (isInterested) await deleteInterestedBookByIsbn13(data.isbn13);
+      else await addInterestedBook(data.isbn13);
+    },
+    onMutate: async (isInterested) => {
+      queryClient.setQueryData<BookDetailType>(['book-detail', bookId], (prev) => {
+        if (!prev) return prev;
+        return { ...prev, isInterested: !isInterested };
+      });
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['book-detail', bookId] });
+      queryClient.invalidateQueries({ queryKey: ['interested-books'] });
+    },
+    onError: () => {
+      addToast({
+        description: MSG_BOOK_DETAIL_WISHLIST_FAILED,
+        type: 'error',
+      });
+    },
+  });
+
   const handleWishlistClick = () => {
-    setIsWishlistSelected((prev) => !prev);
+    toggleWishlist(data?.isInterested ?? false);
   };
 
   const handleOpenStoreClick = () => {
@@ -84,7 +112,7 @@ export const BookDetail = () => {
   const handleAddRecordClick = () => {
     push({
       id: LAYER_ID_BOOK_DETAIL_ADD_RECORD_STATUS,
-      component: <AddRecordStatusBottomSheet bookId={bookId} />,
+      component: <AddRecordStatusBottomSheet isbn13={bookId} bookDetail={data} />,
     });
   };
 
@@ -97,7 +125,7 @@ export const BookDetail = () => {
           <div className="flex items-center gap-2 pr-mobile">
             <ToggleButton
               variant="iconText"
-              selected={isWishlistSelected}
+              selected={data?.isInterested ?? false}
               onClick={handleWishlistClick}
               icon={IconHeart}
               selectedIcon={IconHeartFilled}

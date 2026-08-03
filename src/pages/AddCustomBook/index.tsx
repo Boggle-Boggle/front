@@ -1,10 +1,14 @@
 import { SubmitHandler, useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 import { useLayerStore } from 'stores/useLayerStore';
 
 import BookCover from 'components/BookCover';
 import { BottomButton } from 'components/Button';
 import { Header } from 'components/Header';
 import { IconCirclePlus } from 'components/icons';
+import { AddRecordStatusBottomSheet } from 'pages/BookDetail/shared/AddRecordStatusBottomSheet';
+
+import type { Book } from 'types';
 
 import { CoverImageUrlModal } from './shared/CoverImageUrlModal';
 import { FormField } from './shared/FormField';
@@ -27,17 +31,22 @@ const MIN_TOTAL_PAGE_COUNT = 1;
 const MAX_TOTAL_PAGE_COUNT = 99999;
 const LAYER_ID_ADD_CUSTOM_BOOK_COVER_IMAGE_URL_MODAL = 'add-custom-book-cover-image-url-modal';
 
-type BookForm = {
-  coverImageUrl: string;
-  title: string;
-  author: string;
-  publisher: string;
+/**
+ * 직접 도서추가 폼 입력 상태 타입 (전역 Book에서 필요한 필드를 취하고, 폼 내 문자열 바인딩이 요구되는 필드만 재정의)
+ */
+type BookForm = Omit<
+  Pick<Book, 'title' | 'author' | 'publisher' | 'coverUrl' | 'totalPages' | 'description'>,
+  'coverUrl' | 'totalPages' | 'description'
+> & {
+  coverUrl: string;
+  totalPages: string;
+  description: string;
   isbn: string;
-  totalPageCount: string;
-  plot: string;
 };
 
 export const AddCustomBook = () => {
+  const navigate = useNavigate();
+
   const {
     control,
     handleSubmit,
@@ -48,28 +57,53 @@ export const AddCustomBook = () => {
   } = useForm<BookForm>({
     mode: 'onChange',
     defaultValues: {
-      coverImageUrl: '',
+      coverUrl: '',
       title: '',
       author: '',
       publisher: '',
       isbn: '',
-      totalPageCount: '',
-      plot: '',
+      totalPages: '',
+      description: '',
     },
   });
   const { push } = useLayerStore();
-  const coverImageUrl = watch('coverImageUrl');
+  const coverUrl = watch('coverUrl');
 
-  const onSubmit: SubmitHandler<BookForm> = () => {};
+  const onSubmit: SubmitHandler<BookForm> = (formData) => {
+    push({
+      id: 'add-custom-book-status-bottom-sheet',
+      component: (
+        <AddRecordStatusBottomSheet
+          onSubmit={(status) => {
+            navigate('/records/new', {
+              state: {
+                customBook: {
+                  title: formData.title.trim(),
+                  author: formData.author.trim(),
+                  publisher: formData.publisher.trim() || undefined,
+                  isbn: formData.isbn.trim() || undefined,
+                  totalPages: formData.totalPages ? parseInt(formData.totalPages, 10) : undefined,
+                  coverUrl: formData.coverUrl.trim() || undefined,
+                  description: formData.description.trim() || undefined,
+                  mediaType: 'BOOK',
+                },
+                status,
+              },
+            });
+          }}
+        />
+      ),
+    });
+  };
 
   const handleSubmitCoverImageUrl = (imageUrl: string) => {
-    setValue('coverImageUrl', imageUrl, { shouldDirty: true });
+    setValue('coverUrl', imageUrl, { shouldDirty: true });
   };
 
   const handleOpenCoverImageUrlModal = () => {
     push({
       id: LAYER_ID_ADD_CUSTOM_BOOK_COVER_IMAGE_URL_MODAL,
-      component: <CoverImageUrlModal initialValue={coverImageUrl} onSubmit={handleSubmitCoverImageUrl} />,
+      component: <CoverImageUrlModal initialValue={coverUrl} onSubmit={handleSubmitCoverImageUrl} />,
     });
   };
 
@@ -85,7 +119,7 @@ export const AddCustomBook = () => {
         <div className="mx-auto mt-4 w-[6.25rem]">
           <BookCover
             className="w-full"
-            url={coverImageUrl}
+            url={coverUrl}
             variant="mockup"
             rounded="sm"
             overlayBottomRight={
@@ -138,7 +172,7 @@ export const AddCustomBook = () => {
             />
 
             <FormField
-              name="totalPageCount"
+              name="totalPages"
               control={control}
               resetField={resetField}
               label={MSG_ADD_CUSTOM_BOOK_TOTAL_PAGE}
@@ -150,7 +184,7 @@ export const AddCustomBook = () => {
           </div>
 
           <FormField
-            name="plot"
+            name="description"
             control={control}
             label={MSG_ADD_CUSTOM_BOOK_PLOT}
             placeholder={MSG_ADD_CUSTOM_BOOK_PLOT_PLACEHOLDER}

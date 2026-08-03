@@ -50,7 +50,7 @@ export const MyInfoTab = () => {
     queryFn: getBookshelves,
   });
 
-  const handleToggleBookshelf = (bookshelfId: number) => () => {
+  const handleToggleBookshelf = (bookshelfId: number) => {
     setSelectedBookshelfIds((prev) =>
       prev.includes(bookshelfId) ? prev.filter((item) => item !== bookshelfId) : [...prev, bookshelfId],
     );

@@ -6,7 +6,7 @@ import { Button } from 'components/Button';
 import { BottomSheet } from 'components/Layer/BottomSheet';
 import { ADD_RECORD_STATUS_OPTIONS } from 'pages/Records/shared/recordStatus';
 
-import type { AddRecordStatus } from 'types';
+import type { AddRecordStatus, BookDetail } from 'types';
 
 const MSG_ADD_RECORD_STATUS_TITLE = '이 책을 내 책 목록에 추가하시겠어요?';
 const MSG_ADD_RECORD_STATUS_DESCRIPTION = '책을 얼마나 읽으셨나요?';
@@ -14,11 +14,13 @@ const MSG_ADD_RECORD_STATUS_HELP = '* 나중에 수정할 수 있어요';
 const MSG_ADD_RECORD_STATUS_SUBMIT = '책 추가하기';
 
 type AddRecordStatusBottomSheetProps = {
-  bookId: string;
+  isbn13?: string;
+  bookDetail?: BookDetail;
+  onSubmit?: (status: AddRecordStatus) => void;
 };
 
 export const AddRecordStatusBottomSheet = (props: AddRecordStatusBottomSheetProps) => {
-  const { bookId } = props;
+  const { isbn13, bookDetail, onSubmit } = props;
   const [selectedStatus, setSelectedStatus] = useState<AddRecordStatus>('COMPLETED');
   const navigate = useNavigate();
   const { pop } = useLayerStore();
@@ -29,7 +31,12 @@ export const AddRecordStatusBottomSheet = (props: AddRecordStatusBottomSheetProp
 
   const handleAddBookClick = () => {
     pop();
-    navigate(`/records/new?bookId=${bookId}&status=${selectedStatus}`);
+    if (onSubmit) onSubmit(selectedStatus);
+    if (isbn13) {
+      navigate(`/records/new?isbn13=${isbn13}&status=${selectedStatus}`, {
+        state: { bookDetail },
+      });
+    }
   };
 
   return (
