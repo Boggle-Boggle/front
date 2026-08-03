@@ -76,8 +76,8 @@ const router = createBrowserRouter([
             children: [
               { path: '/search/result', element: <SearchResult /> },
               { path: '/search/add', element: <AddCustomBook /> },
-              { path: '/books/:bookId', element: <BookDetail /> },
-              { path: '/books/:bookId/reviews', element: <BookDetailReviews /> },
+              { path: '/books/:isbn13', element: <BookDetail /> },
+              { path: '/books/:isbn13/reviews', element: <BookDetailReviews /> },
               {
                 path: '/records/new',
                 children: [

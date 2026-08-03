@@ -17,7 +17,13 @@ export const deleteInterestedBookByIsbn13 = async (isbn13: string) => {
   await api.delete(`/v2/interested-books/${isbn13}`);
 };
 
-export type ReviewSortParamType = 'RECENT' | 'OLDEST' | 'POPULAR';
+export type ReviewSortType = 'RECENT' | 'OLDEST' | 'POPULAR';
+
+export const REVIEW_SORT_OPTIONS: Record<ReviewSortType, string> = {
+  RECENT: '최신순',
+  OLDEST: '과거순',
+  POPULAR: '인기순',
+};
 
 export interface ReviewAuthor {
   userId: number;
@@ -46,7 +52,7 @@ export interface GetBookReviewsRequest {
   isbn13: string;
   page?: number;
   size?: number;
-  sort?: ReviewSortParamType;
+  sort?: ReviewSortType;
 }
 
 export const getBookReviews = async (params: GetBookReviewsRequest) => {

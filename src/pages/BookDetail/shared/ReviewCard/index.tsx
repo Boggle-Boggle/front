@@ -3,13 +3,15 @@ import { useLayerStore } from 'stores/useLayerStore';
 
 import { ToggleButton } from 'components/ToggleButton';
 import { IconHeart, IconHeartFilled } from 'components/icons';
+import type { BookReviewItem } from 'pages/BookDetail/api';
+
+import { formatDateTimeToDate } from 'utils/format';
 
 import { ReviewActionSheet } from './ReviewActionSheet';
 import { BlockUserConfirmModal } from '../BlockUserConfirmModal';
-import { BookReview, CURRENT_REVIEW_USER_ID } from '../review.mock';
 
 type ReviewCardProps = {
-  review: BookReview;
+  review: BookReviewItem;
   onToggleLike?: (reviewId: string) => void;
 };
 
@@ -18,11 +20,16 @@ const MSG_MY_REVIEW = '나의 리뷰';
 const MSG_REVIEW_REPORT = '신고';
 const MSG_REVIEW_BLOCK = '차단';
 const MSG_REVIEW_SPOILER = '스포일러가 포함 된 리뷰입니다.\n리뷰를 보려면 박스를 터치하세요.';
+const MSG_READER_LEVEL_DEFAULT = '빼곡 독서가';
 
 export const ReviewCard = (props: ReviewCardProps) => {
   const { review, onToggleLike } = props;
-  const { id, userId, nickname, readerLevel, content, createdAt, likeCount, isSpoiler, isLiked } = review;
-  const isMyReview = userId === CURRENT_REVIEW_USER_ID;
+
+  const { id, author, content, likeCount, isSpoiler, isLiked, createdAt } = review;
+  const formattedDate = formatDateTimeToDate(createdAt);
+
+  const isMyReview = false; // 내 리뷰 여부는 현재 작업 범위 제외로 임시 고정 처리
+
   const { push } = useLayerStore();
   const navigate = useNavigate();
 
@@ -43,7 +50,7 @@ export const ReviewCard = (props: ReviewCardProps) => {
   };
 
   const handleLikeClick = () => {
-    onToggleLike?.(id);
+    onToggleLike?.(String(id));
   };
 
   return (
@@ -51,12 +58,12 @@ export const ReviewCard = (props: ReviewCardProps) => {
       <div className="mb-2 flex items-center gap-1">
         {!isMyReview && (
           <>
-            <p className="text-body2 font-bold">{nickname}</p>
+            <p className="text-body2 font-bold">{author.nickname}</p>
             <p className="text-body2 font-medium">{MSG_REVIEW_ID_PREFIX}</p>
           </>
         )}
         {isMyReview && <span className="text-body2 font-bold text-primary">{MSG_MY_REVIEW}</span>}
-        <p className="text-caption1 text-neutral-60">{readerLevel}</p>
+        <p className="text-caption1 text-neutral-60">{MSG_READER_LEVEL_DEFAULT}</p>
       </div>
 
       {!isSpoiler && <p>{content}</p>}
@@ -68,7 +75,7 @@ export const ReviewCard = (props: ReviewCardProps) => {
 
       <div className="flex items-center justify-between pt-3">
         <div className="flex items-center gap-1 text-neutral-60">
-          <p className="text-body2 font-medium text-neutral-40">{createdAt}</p>
+          <p className="text-body2 font-medium text-neutral-40">{formattedDate}</p>
           {!isMyReview && (
             <button
               type="button"

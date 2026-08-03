@@ -48,7 +48,7 @@ const BOOK_DETAIL_TABS: TabItem<DetailTabType>[] = [
 const getAladinBookDetailUrl = (itemId: number) => `${ALADIN_BOOK_DETAIL_URL}?ItemId=${itemId}`;
 
 export const BookDetail = () => {
-  const { bookId = '' } = useParams();
+  const { isbn13 = '' } = useParams();
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const tabSentinelRef = useRef<HTMLDivElement>(null);
   const [activeTab, setActiveTab] = useState<DetailTabType>('info');
@@ -56,7 +56,7 @@ export const BookDetail = () => {
   const { addToast } = useToastStore();
   const queryClient = useQueryClient();
 
-  const { data, isLoading, isError } = useBookDetailQuery(bookId);
+  const { data, isLoading, isError } = useBookDetailQuery(isbn13);
 
   const { isVisible } = useHeaderTitleByScroll({
     rootRef: scrollContainerRef,
@@ -71,13 +71,13 @@ export const BookDetail = () => {
       else await addInterestedBook(data.isbn13);
     },
     onMutate: async (isInterested) => {
-      queryClient.setQueryData<BookDetailType>(['book-detail', bookId], (prev) => {
+      queryClient.setQueryData<BookDetailType>(['book-detail', isbn13], (prev) => {
         if (!prev) return prev;
         return { ...prev, isInterested: !isInterested };
       });
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['book-detail', bookId] });
+      queryClient.invalidateQueries({ queryKey: ['book-detail', isbn13] });
       queryClient.invalidateQueries({ queryKey: ['interested-books'] });
     },
     onError: () => {
@@ -112,7 +112,7 @@ export const BookDetail = () => {
   const handleAddRecordClick = () => {
     push({
       id: LAYER_ID_BOOK_DETAIL_ADD_RECORD_STATUS,
-      component: <AddRecordStatusBottomSheet isbn13={bookId} bookDetail={data} />,
+      component: <AddRecordStatusBottomSheet isbn13={isbn13} bookDetail={data} />,
     });
   };
 

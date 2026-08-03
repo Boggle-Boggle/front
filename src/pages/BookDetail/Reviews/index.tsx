@@ -1,4 +1,7 @@
+import { useInfiniteQuery } from '@tanstack/react-query';
+
 import { ChangeEvent, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import { useLayerStore } from 'stores/useLayerStore';
 
 import { Button, TextButton } from 'components/Button';
@@ -6,9 +9,11 @@ import { Checkbox } from 'components/Checkbox';
 import { Header } from 'components/Header';
 import { IconArrowDown } from 'components/icons';
 
-import { ReviewSortActionSheet, ReviewSortType } from './SortActionSheet';
+import { useInfiniteScrollObserver } from 'hooks/useInfiniteScrollObserver';
+
+import { ReviewSortActionSheet } from './SortActionSheet';
+import { getBookReviews, REVIEW_SORT_OPTIONS, type ReviewSortType } from '../api';
 import { ReviewCard } from '../shared/ReviewCard';
-import { BookReview, createMockReviews, CURRENT_REVIEW_USER_ID, MAX_REVIEW_LENGTH } from '../shared/review.mock';
 
 const MSG_REVIEW_PAGE_TITLE = '빼곡한 리뷰';
 const MSG_REVIEW_SUBMIT = '등록하기';
@@ -16,44 +21,32 @@ const MSG_REVIEW_SPOILER_LABEL = '스포일러가 포함 된 리뷰입니다';
 const MSG_REVIEW_TEXTAREA_PLACEHOLDER = '리뷰를 작성해주세요';
 const LAYER_ID_BOOK_DETAIL_REVIEW_SORT = 'book-detail-review-sort-bottom-sheet';
 const REVIEW_SPOILER_CHECKBOX_ID = 'review-spoiler-checkbox';
-
-const sortLabelByType: Record<ReviewSortType, string> = {
-  latest: '최신순',
-  oldest: '과거순',
-  popular: '인기순',
-};
-
-const createDraftReview = (content: string, isSpoiler: boolean): BookReview => {
-  const now = new Date();
-  const month = `${now.getMonth() + 1}`.padStart(2, '0');
-  const day = `${now.getDate()}`.padStart(2, '0');
-
-  return {
-    id: `draft-review-${now.getTime()}`,
-    userId: CURRENT_REVIEW_USER_ID,
-    nickname: '나의리뷰',
-    readerLevel: '1권 독서가',
-    content: isSpoiler ? '스포일러가 포함 된 리뷰입니다. 리뷰를 보려면 박스를 터치하세요.' : content.trim(),
-    createdAt: `${now.getFullYear()}.${month}.${day}`,
-    createdAtTimestamp: now.getTime(),
-    likeCount: 0,
-    isLiked: false,
-    isSpoiler,
-  };
-};
+const MAX_REVIEW_LENGTH = 700;
 
 export const Reviews = () => {
-  const [reviews, setReviews] = useState<BookReview[]>(createMockReviews);
-  const [sortType, setSortType] = useState<ReviewSortType>('latest');
-  const [content, setContent] = useState<string>('');
-  const [isSpoiler, setIsSpoiler] = useState<boolean>(false);
+  const { isbn13 = '' } = useParams();
   const { push } = useLayerStore();
 
-  const sortedReviews = [...reviews].sort((left, right) => {
-    if (sortType === 'popular') return right.likeCount - left.likeCount;
-    if (sortType === 'oldest') return left.createdAtTimestamp - right.createdAtTimestamp;
+  const [sortType, setSortType] = useState<ReviewSortType>('RECENT');
+  const [content, setContent] = useState<string>('');
+  const [isSpoiler, setIsSpoiler] = useState<boolean>(false);
 
-    return right.createdAtTimestamp - left.createdAtTimestamp;
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } = useInfiniteQuery({
+    queryKey: ['books', isbn13, 'reviews', sortType],
+    queryFn: ({ pageParam }) => getBookReviews({ isbn13, page: pageParam, size: 10, sort: sortType }),
+    getNextPageParam: (lastPage, allPages) => {
+      const loadedCount = allPages.flatMap((page) => page.reviews).length;
+      if (loadedCount < lastPage.totalReviewCount) return allPages.length + 1;
+
+      return undefined;
+    },
+    initialPageParam: 1,
+    enabled: Boolean(isbn13),
+  });
+
+  const { observerTarget } = useInfiniteScrollObserver({
+    enabled: Boolean(hasNextPage && !isFetchingNextPage),
+    onIntersect: fetchNextPage,
   });
 
   const handleOpenSortLayer = () => {
@@ -71,32 +64,12 @@ export const Reviews = () => {
     setIsSpoiler((prev) => !prev);
   };
 
-  const handleSubmitReview = () => {
-    if (!content.trim()) return;
+  const handleSubmitReview = () => {};
 
-    setReviews((prev) => [createDraftReview(content, isSpoiler), ...prev]);
-    setContent('');
-    setIsSpoiler(false);
-    setSortType('latest');
-  };
+  const handleToggleLike = () => {};
 
-  const handleToggleLike = (reviewId: string) => {
-    const nextReviews = [...reviews];
-    const reviewIndex = nextReviews.findIndex((review) => review.id === reviewId);
-
-    if (reviewIndex < 0) return;
-
-    const targetReview = nextReviews[reviewIndex];
-    const nextIsLiked = !targetReview.isLiked;
-
-    nextReviews[reviewIndex] = {
-      ...targetReview,
-      isLiked: nextIsLiked,
-      likeCount: nextIsLiked ? targetReview.likeCount + 1 : Math.max(0, targetReview.likeCount - 1),
-    };
-
-    setReviews(nextReviews);
-  };
+  const reviews = data ? data.pages.flatMap((page) => page.reviews) : [];
+  const totalReviewCount = data?.pages[0]?.totalReviewCount || 0;
 
   return (
     <>
@@ -145,23 +118,33 @@ export const Reviews = () => {
 
         <div className="flex items-center justify-between border-b border-neutral-20 pb-3 pt-7">
           <p className="text-title4">
-            {MSG_REVIEW_PAGE_TITLE} ({reviews.length})
+            {MSG_REVIEW_PAGE_TITLE} ({totalReviewCount})
           </p>
 
           <TextButton
             onClick={handleOpenSortLayer}
-            text={sortLabelByType[sortType]}
+            text={REVIEW_SORT_OPTIONS[sortType]}
             size="md"
             variant="filled"
             rightIcon={IconArrowDown}
           />
         </div>
 
-        <ul className="divide-y divide-neutral-20">
-          {sortedReviews.map((review) => (
-            <ReviewCard key={review.id} review={review} onToggleLike={handleToggleLike} />
-          ))}
-        </ul>
+        {totalReviewCount === 0 && !isLoading ? (
+          <div className="py-20 text-center text-body2 text-neutral-40">
+            아직 등록된 리뷰가 없습니다. 첫 리뷰를 작성해 보세요!
+          </div>
+        ) : (
+          <>
+            <ul className="divide-y divide-neutral-20">
+              {reviews.map((review) => (
+                <ReviewCard key={review.id} review={review} onToggleLike={handleToggleLike} />
+              ))}
+            </ul>
+
+            <div ref={observerTarget} className="h-4 w-full" />
+          </>
+        )}
       </div>
     </>
   );
