@@ -1,8 +1,12 @@
+import { useRef } from 'react';
+
 import { BookCover } from 'components/BookCover';
 import IconButton from 'components/Button/IconButton';
 import { Header } from 'components/Header';
 import { ShelfBase } from 'components/ShelfBase';
 import { IconEllipsisVertical } from 'components/icons';
+
+import { useHeaderTitleByScroll } from 'hooks/useHeaderTitleByScroll';
 
 type RecordDetailHeroProps = {
   cover: string;
@@ -11,6 +15,7 @@ type RecordDetailHeroProps = {
   rating?: string;
   readingStatus?: string;
   noteCount?: string;
+  scrollContainerRef: React.RefObject<HTMLDivElement | null>;
 };
 
 const HERO_SHELF_PRIMARY_HEIGHT = 42;
@@ -53,7 +58,25 @@ const HeroStatItem = (props: HeroStatItemProps) => {
 };
 
 export const RecordDetailHero = (props: RecordDetailHeroProps) => {
-  const { cover, title, author, rating = '0.0', readingStatus = '읽는중', noteCount = '6개' } = props;
+  const {
+    cover,
+    title,
+    author,
+    rating = '0.0',
+    readingStatus = '읽는중',
+    noteCount = '6개',
+    scrollContainerRef,
+  } = props;
+
+  const titleRef = useRef<HTMLParagraphElement>(null);
+
+  // 스크롤 시 도서 타이틀 영역이 헤더 위치에 도달하면 헤더에 타이틀을 표시하기 위한 훅 바인딩
+  const { isVisible } = useHeaderTitleByScroll({
+    rootRef: scrollContainerRef,
+    targetRef: titleRef,
+  });
+
+  const headerTitle = isVisible ? title : undefined;
 
   const handleMoreClick = () => {};
 
@@ -79,7 +102,8 @@ export const RecordDetailHero = (props: RecordDetailHeroProps) => {
       <Header
         withBack
         withSpacer={false}
-        transparent
+        transparent={!isVisible}
+        title={headerTitle}
         rightBtn={<IconButton onClick={handleMoreClick} label={MSG_RECORD_DETAIL_MORE} icon={IconEllipsisVertical} />}
       />
 
@@ -102,9 +126,11 @@ export const RecordDetailHero = (props: RecordDetailHeroProps) => {
           </div>
 
           {/* 타이틀 및 스펙 정보 섹션 */}
-          <div className="relative flex w-full flex-col items-center px-3 pb-7">
+          <div className="relative flex w-full max-w-[21.4375rem] flex-col items-center px-[0.375rem] pb-7">
             <div className="w-full text-center" style={{ marginTop: HERO_TITLE_PULL_UP_REM }}>
-              <p className="text-title2">{title}</p>
+              <p className="text-title2 text-neutral-100" ref={titleRef}>
+                {title}
+              </p>
               <p className="text-caption1 text-neutral-60">{author}</p>
             </div>
 

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 
 import { Tabs, type TabItem } from 'components/Tabs';
 
@@ -26,10 +26,12 @@ const RECORD_DETAIL_TABS: TabItem<DetailTabType>[] = [
 
 export const RecordDetailPage = () => {
   const [activeTab, setActiveTab] = useState<DetailTabType>('info');
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   return (
-    <div className="h-full overflow-y-auto pb-safe-bottom">
+    <div className="h-full overflow-y-auto pb-safe-bottom" ref={scrollContainerRef}>
       <RecordDetailHero
+        scrollContainerRef={scrollContainerRef}
         cover="https://image.aladin.co.kr/product/36466/21/cover500/k572039816_1.jpg"
         title="리얼파리"
         author="황보경"
