@@ -5,6 +5,7 @@ import { useLayerStore } from 'stores/useLayerStore';
 
 import type { ReadingLogProgressType } from 'types';
 
+import type { ReadingLogInfo } from './api';
 import { DateSelectModal } from '../shared/DateSelectModal';
 import { GroupDeleteConfirmModal } from '../shared/GroupDeleteConfirmModal';
 import { GroupEditModal } from '../shared/GroupEditModal';
@@ -20,30 +21,33 @@ const MSG_DATE_SELECT_START = '시작일 선택하기';
 const MSG_DATE_SELECT_END = '종료일 선택하기';
 const DEFAULT_TOTAL_PAGE_COUNT = '120';
 
-export const MyInfoTab = () => {
-  const [rating, setRating] = useState<number>(0);
-  const [selectedBookshelfIds, setSelectedBookshelfIds] = useState<number[]>([]);
+export interface MyInfoTabProps {
+  readingLog: ReadingLogInfo;
+}
 
-  // 오늘 날짜 문자열(YYYY-MM-DD)을 기본값으로 사용하는 동적 날짜 상태
+export const MyInfoTab = ({ readingLog }: MyInfoTabProps) => {
+  const [rating, setRating] = useState<number>(readingLog.rating);
+  const [selectedBookshelfIds, setSelectedBookshelfIds] = useState<number[]>(() =>
+    readingLog.bookshelves.map((b) => b.id),
+  );
+
+  // API 날짜 형식 (예: 2026-05-01T00:00:00.000+00:00)에서 YYYY-MM-DD 만 추출하여 사용합니다.
   const [startDate, setStartDate] = useState<string>(() => {
-    const date = new Date();
-    const yyyy = date.getFullYear();
-    const mm = String(date.getMonth() + 1).padStart(2, '0');
-    const dd = String(date.getDate()).padStart(2, '0');
-    return `${yyyy}-${mm}-${dd}`;
+    return readingLog.startDate ? readingLog.startDate.split('T')[0] : '';
   });
   const [endDate, setEndDate] = useState<string>(() => {
-    const date = new Date();
-    const yyyy = date.getFullYear();
-    const mm = String(date.getMonth() + 1).padStart(2, '0');
-    const dd = String(date.getDate()).padStart(2, '0');
-    return `${yyyy}-${mm}-${dd}`;
+    return readingLog.endDate ? readingLog.endDate.split('T')[0] : '';
   });
 
-  const [progressType, setProgressType] = useState<ReadingLogProgressType>('PAGE');
-  const [progressValue, setProgressValue] = useState<string>('');
-  const [totalPageCount, setTotalPageCount] = useState<string>(DEFAULT_TOTAL_PAGE_COUNT);
-  const [isPrivate, setIsPrivate] = useState<boolean>(false);
+  const [progressType, setProgressType] = useState<ReadingLogProgressType>(readingLog.progress?.type || 'PAGE');
+  const [progressValue, setProgressValue] = useState<string>(
+    readingLog.progress ? String(readingLog.progress.value) : '',
+  );
+  const [totalPageCount, setTotalPageCount] = useState<string>(
+    readingLog.progress ? String(readingLog.progress.totalPages) : DEFAULT_TOTAL_PAGE_COUNT,
+  );
+  const [isPrivate, setIsPrivate] = useState<boolean>(readingLog.isHidden);
+
   const { push, pop } = useLayerStore();
   const { data: bookshelves = [] } = useQuery({
     queryKey: BOOKSHELVES_QUERY_KEY,
@@ -132,3 +136,4 @@ export const MyInfoTab = () => {
     </div>
   );
 };
+export default MyInfoTab;

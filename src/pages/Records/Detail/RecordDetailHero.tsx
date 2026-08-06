@@ -8,8 +8,10 @@ import { IconEllipsisVertical } from 'components/icons';
 
 import { useHeaderTitleByScroll } from 'hooks/useHeaderTitleByScroll';
 
+import noImage from 'assets/img/no_image.png';
+
 type RecordDetailHeroProps = {
-  cover: string;
+  cover: string | null;
   title: string;
   author: string;
   rating?: string;
@@ -78,6 +80,9 @@ export const RecordDetailHero = (props: RecordDetailHeroProps) => {
 
   const headerTitle = isVisible ? title : undefined;
 
+  // 표지 이미지가 없거나 null인 경우 기본 모킹 표지 이미지를 적용합니다.
+  const resolvedCover = cover || noImage;
+
   const handleMoreClick = () => {};
 
   return (
@@ -86,7 +91,12 @@ export const RecordDetailHero = (props: RecordDetailHeroProps) => {
       {/* 아우터 컨테이너의 bg-[#303030]를 제거하여 서브픽셀 렌더링에 따른 미세한 어두운 경계선 유출을 근본적으로 방지합니다. */}
       <div className="absolute inset-x-0 top-0 h-80 overflow-hidden">
         <div className="absolute inset-0 bg-[#303030]">
-          <img src={cover} alt="" aria-hidden className="h-full w-full scale-110 object-cover opacity-80 blur-[15px]" />
+          <img
+            src={resolvedCover}
+            alt=""
+            aria-hidden
+            className="h-full w-full scale-110 object-cover opacity-80 blur-[15px]"
+          />
         </div>
 
         {/* 1. 이미지 위에 확실하게 얹혀 피그마의 안쪽 그림자를 완벽히 재현하는 오버레이 */}
@@ -115,7 +125,14 @@ export const RecordDetailHero = (props: RecordDetailHeroProps) => {
         <div className="flex w-full flex-1 flex-col items-center px-mobile pt-[2.125rem]">
           {/* 책 표지 (피그마 전용 109:152 비율 고정) */}
           <div className="relative z-book w-[7.875rem] shrink-0">
-            <BookCover className="w-full" url={cover} label={title} variant="mockup" ratio={109 / 152} rounded="sm" />
+            <BookCover
+              className="w-full"
+              url={resolvedCover}
+              label={title}
+              variant="mockup"
+              ratio={109 / 152}
+              rounded="sm"
+            />
           </div>
 
           {/* 책 선반 영역 (바깥으로 확장 + negative margin으로 책과 자연스럽게 겹치도록 설정) */}
@@ -126,7 +143,7 @@ export const RecordDetailHero = (props: RecordDetailHeroProps) => {
           </div>
 
           {/* 타이틀 및 스펙 정보 섹션 */}
-          <div className="relative flex w-full max-w-[21.4375rem] flex-col items-center px-[0.375rem] pb-7">
+          <div className="relative flex w-full max-w-[21.4375rem] flex-col items-center px-[0.375rem]">
             <div className="w-full text-center" style={{ marginTop: HERO_TITLE_PULL_UP_REM }}>
               <p className="text-title2 text-neutral-100" ref={titleRef}>
                 {title}
