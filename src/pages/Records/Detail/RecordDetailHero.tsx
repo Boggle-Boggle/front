@@ -143,7 +143,7 @@ export const RecordDetailHero = (props: RecordDetailHeroProps) => {
           </div>
 
           {/* 타이틀 및 스펙 정보 섹션 */}
-          <div className="relative flex w-full max-w-[21.4375rem] flex-col items-center px-[0.375rem]">
+          <div className="relative flex w-full flex-col items-center px-3 pb-7">
             <div className="w-full text-center" style={{ marginTop: HERO_TITLE_PULL_UP_REM }}>
               <p className="text-title2 text-neutral-100" ref={titleRef}>
                 {title}
