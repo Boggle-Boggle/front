@@ -1,10 +1,13 @@
 import { useQuery } from '@tanstack/react-query';
 
-import { useState } from 'react';
+import { disassemble, getChoseong } from 'es-hangul';
+import { useState, useMemo } from 'react';
 import { useLayerStore } from 'stores/useLayerStore';
 
 import { IconButton } from 'components/Button';
+import { BackButton } from 'components/Header/BackButton';
 import Highlight from 'components/Highlight';
+import { Searchbar } from 'components/Searchbar';
 import { IconLayoutGrid, IconLayoutList, IconSearch } from 'components/icons';
 
 import type { ReadingLogStatus } from 'types';
@@ -33,6 +36,7 @@ const MSG_MYBOOKS_FILTER_ALL = '모든 책';
 const MSG_MYBOOKS_FILTER_DONE = '모두 읽은 책';
 const MSG_MYBOOKS_FILTER_READING = '읽고 있는 책';
 const MSG_MYBOOKS_FILTER_STOPPED = '중단한 책';
+const MSG_MYBOOKS_SEARCH_PLACEHOLDER = '서재 안 도서 검색';
 
 const STORAGE_KEY_MYBOOKS_VIEW_TYPE = 'mybooks-view-type';
 const LAYER_ID_MYBOOKS_FILTER = 'mybooks-filter-sidebar';
@@ -46,6 +50,9 @@ const getInitialViewType = (): ViewType => {
 };
 
 const Library = () => {
+  const [isSearchMode, setIsSearchMode] = useState<boolean>(false);
+  const [searchKeyword, setSearchKeyword] = useState<string>('');
+
   const [activeTab, setActiveTab] = useState<TabType>('reading');
   const [viewType, setViewType] = useState<ViewType>(getInitialViewType);
   const [readingFilter, setReadingFilter] = useState<ReadingLogStatus>('ALL');
@@ -69,8 +76,49 @@ const Library = () => {
     isLoading: isWishlistLoading,
   } = useWishlistQuery(activeTab === 'wishlist');
 
-  const readingBooks = readingData ? readingData.pages.flatMap((page) => page.items) : [];
-  const wishlistBooks = wishlistData ? wishlistData.pages.flatMap((page) => page.items) : [];
+  const readingBooks = useMemo(() => {
+    return readingData ? readingData.pages.flatMap((page) => page.items) : [];
+  }, [readingData]);
+
+  const wishlistBooks = useMemo(() => {
+    return wishlistData ? wishlistData.pages.flatMap((page) => page.items) : [];
+  }, [wishlistData]);
+
+  // 검색 키워드에 따른 독서 기록 도서 필터링 (초성 및 자모분리 지원)
+  const filteredReadingBooks = useMemo(() => {
+    const cleanedKeyword = searchKeyword.trim().toLowerCase();
+    if (!cleanedKeyword) return readingBooks;
+
+    const disKeyword = disassemble(cleanedKeyword);
+    const choKeyword = getChoseong(cleanedKeyword);
+
+    return readingBooks.filter((book) => {
+      const lowerTitle = book.title.toLowerCase();
+      if (lowerTitle.includes(cleanedKeyword)) return true;
+      if (disassemble(lowerTitle).includes(disKeyword)) return true;
+      if (getChoseong(lowerTitle).includes(choKeyword)) return true;
+
+      return false;
+    });
+  }, [searchKeyword, readingBooks]);
+
+  // 검색 키워드에 따른 관심 도서 필터링 (초성 및 자모분리 지원)
+  const filteredWishlistBooks = useMemo(() => {
+    const cleanedKeyword = searchKeyword.trim().toLowerCase();
+    if (!cleanedKeyword) return wishlistBooks;
+
+    const disKeyword = disassemble(cleanedKeyword);
+    const choKeyword = getChoseong(cleanedKeyword);
+
+    return wishlistBooks.filter((book) => {
+      const lowerTitle = book.title.toLowerCase();
+      if (lowerTitle.includes(cleanedKeyword)) return true;
+      if (disassemble(lowerTitle).includes(disKeyword)) return true;
+      if (getChoseong(lowerTitle).includes(choKeyword)) return true;
+
+      return false;
+    });
+  }, [searchKeyword, wishlistBooks]);
 
   const filterOptionByType: Record<ReadingLogStatus, { value: ReadingLogStatus; label: string }> = {
     ALL: { value: 'ALL', label: MSG_MYBOOKS_FILTER_ALL },
@@ -101,8 +149,16 @@ const Library = () => {
   const viewToggleLabel = isGridView ? MSG_MYBOOKS_ICON_VIEW_TO_LIST : MSG_MYBOOKS_ICON_VIEW_TO_GRID;
   const viewToggleIcon = isGridView ? IconLayoutList : IconLayoutGrid;
 
-  const handleReadingTab = () => setActiveTab('reading');
-  const handleWishlistTab = () => setActiveTab('wishlist');
+  const handleReadingTab = () => {
+    setActiveTab('reading');
+    setSearchKeyword('');
+  };
+
+  const handleWishlistTab = () => {
+    setActiveTab('wishlist');
+    setSearchKeyword('');
+  };
+
   const handleToggleViewType = () => {
     setViewType((prevViewType) => {
       const nextViewType = prevViewType === 'grid' ? 'list' : 'grid';
@@ -139,50 +195,73 @@ const Library = () => {
     });
   };
 
+  const handleOpenSearchMode = () => setIsSearchMode(true);
+
+  const handleCloseSearchMode = () => {
+    setIsSearchMode(false);
+    setSearchKeyword('');
+  };
+
   return (
     <div className="flex h-full w-full flex-col pb-safe-bottom pt-safe-top">
-      {/* 독서기록/관심도서/보기방식 */}
-      <div className="flex items-center justify-between px-mobile py-3">
-        <div className="flex items-center gap-2.5">
-          <button type="button" onClick={handleReadingTab}>
-            {activeTab === 'reading' ? (
-              <Highlight text={MSG_MYBOOKS_TAB_READING} className="text-title2" />
-            ) : (
-              <span className="text-title2 text-neutral-40">{MSG_MYBOOKS_TAB_READING}</span>
-            )}
-          </button>
-          <button type="button" onClick={handleWishlistTab}>
-            {activeTab === 'wishlist' ? (
-              <Highlight text={MSG_MYBOOKS_TAB_WISHLIST} className="text-title2" />
-            ) : (
-              <span className="text-title2 text-neutral-40">{MSG_MYBOOKS_TAB_WISHLIST}</span>
-            )}
-          </button>
+      {/* 독서기록/관심도서/보기방식 혹은 검색바 */}
+      {isSearchMode ? (
+        <div className="flex w-full items-center justify-start py-3 pr-mobile">
+          <BackButton onClick={handleCloseSearchMode} />
+          <Searchbar
+            value={searchKeyword}
+            onChange={setSearchKeyword}
+            placeholder={MSG_MYBOOKS_SEARCH_PLACEHOLDER}
+            className="grow"
+          />
         </div>
-        <div className="flex items-center">
-          {activeTab === 'reading' && (
-            <IconButton icon={viewToggleIcon} label={viewToggleLabel} onClick={handleToggleViewType} />
-          )}
-          <IconButton icon={IconSearch} label={MSG_MYBOOKS_ICON_SEARCH} onClick={() => {}} />
+      ) : (
+        <div className="flex items-center justify-between px-mobile py-3">
+          <div className="flex items-center gap-2.5">
+            <button type="button" onClick={handleReadingTab}>
+              {activeTab === 'reading' ? (
+                <Highlight text={MSG_MYBOOKS_TAB_READING} className="text-title2" />
+              ) : (
+                <span className="text-title2 text-neutral-40">{MSG_MYBOOKS_TAB_READING}</span>
+              )}
+            </button>
+            <button type="button" onClick={handleWishlistTab}>
+              {activeTab === 'wishlist' ? (
+                <Highlight text={MSG_MYBOOKS_TAB_WISHLIST} className="text-title2" />
+              ) : (
+                <span className="text-title2 text-neutral-40">{MSG_MYBOOKS_TAB_WISHLIST}</span>
+              )}
+            </button>
+          </div>
+          <div className="flex items-center">
+            {activeTab === 'reading' && (
+              <IconButton icon={viewToggleIcon} label={viewToggleLabel} onClick={handleToggleViewType} />
+            )}
+            <IconButton icon={IconSearch} label={MSG_MYBOOKS_ICON_SEARCH} onClick={handleOpenSearchMode} />
+          </div>
         </div>
-      </div>
+      )}
 
       {activeTab === 'reading' && (
         <ReadingSection
-          books={readingBooks}
-          totalCount={totalCount}
+          books={filteredReadingBooks}
+          totalCount={searchKeyword.trim() ? filteredReadingBooks.length : totalCount}
           filterLabel={filterLabel}
           sortLabel={sortLabelByType[sortType] ?? MSG_MYBOOKS_SORT_LATEST}
           viewMode={viewType}
           isLoading={isReadingLoading}
-          observerTarget={readingObserverTarget}
+          observerTarget={searchKeyword.trim() ? { current: null } : readingObserverTarget}
           onOpenFilterLayer={handleOpenFilterLayer}
           onOpenSortLayer={handleOpenSortLayer}
         />
       )}
 
       {activeTab === 'wishlist' && (
-        <WishlistSection books={wishlistBooks} isLoading={isWishlistLoading} observerTarget={wishlistObserverTarget} />
+        <WishlistSection
+          books={filteredWishlistBooks}
+          isLoading={isWishlistLoading}
+          observerTarget={searchKeyword.trim() ? { current: null } : wishlistObserverTarget}
+        />
       )}
     </div>
   );
