@@ -5,7 +5,6 @@ import { useQuery } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import useLayerStore from 'stores/useLayerStore';
 
-import Button from 'components/Button/Button';
 import IconButton from 'components/Button/IconButton';
 import { TextButton } from 'components/Button/TextButton';
 import { IconEdit, IconEllipsisVertical } from 'components/icons';
@@ -130,9 +129,12 @@ export const NoteTab = ({ readingLogId, bookTitle }: NoteTabProps) => {
 
       {/* 독서노트 작성 플로팅 */}
       <div className="fixed bottom-6 right-mobile">
-        <Button onClick={handleFloatingClick} icon={IconEdit} size="medium" width="short" variant="primary">
-          <span className="sr-only">{MSG_NOTE_TAB_WRITE_ARIA_LABEL}</span>
-        </Button>
+        <IconButton
+          onClick={handleFloatingClick}
+          label={MSG_NOTE_TAB_WRITE_ARIA_LABEL}
+          icon={IconEdit}
+          className="size-12 rounded-xl bg-primary text-neutral-0 shadow-[0px_4px_8px_0px_rgba(33,34,44,0.16)]"
+        />
       </div>
     </section>
   );
