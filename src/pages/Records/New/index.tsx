@@ -101,28 +101,28 @@ export const NewRecord = () => {
           progressType: progressValue ? progressType : undefined,
           progressValue: progressValue ? Number(progressValue) : undefined,
         },
-        });
+      });
 
-        return;
-        }
+      return;
+    }
 
-        if (!bookDetail) return;
+    if (!bookDetail) return;
 
-        // [분기 B] 일반 검색(알라딘) 연동 도서 정보로 진입하여 기록을 추가하는 경우
-        saveReadingLog({
-        isbn13: bookDetail.isbn13,
-        mediaType: bookDetail.mediaType,
-        status,
-        rating,
-        startDate,
-        endDate,
-        bookshelfIds: selectedBookshelfIds,
-        isHidden,
-        // 값이 기입되어 있을 때만 안전하게 인라인 변환 전송 (비어 있으면 undefined 로 가드해 전송 누락)
-        progressType: progressValue ? progressType : undefined,
-        progressValue: progressValue ? Number(progressValue) : undefined,
-        totalPagesOverride: totalPageCountOverride ? Number(totalPageCountOverride) : undefined,
-        });
+    // [분기 B] 일반 검색(알라딘) 연동 도서 정보로 진입하여 기록을 추가하는 경우
+    saveReadingLog({
+      isbn13: bookDetail.isbn13,
+      mediaType: bookDetail.mediaType,
+      status,
+      rating,
+      startDate,
+      endDate,
+      bookshelfIds: selectedBookshelfIds,
+      isHidden,
+      // 값이 기입되어 있을 때만 안전하게 인라인 변환 전송 (비어 있으면 undefined 로 가드해 전송 누락)
+      progressType: progressValue ? progressType : undefined,
+      progressValue: progressValue ? Number(progressValue) : undefined,
+      totalPagesOverride: totalPageCountOverride ? Number(totalPageCountOverride) : undefined,
+    });
   };
 
   const handleToggleBookshelf = (bookshelfId: number) =>
@@ -180,7 +180,7 @@ export const NewRecord = () => {
     <div className="flex h-full flex-col">
       <Header withBack title={customBook ? customBook.title : bookDetail?.title} />
 
-      <div className="flex flex-1 flex-col gap-8 overflow-y-auto px-mobile pb-safe-bottom pt-safe-top">
+      <div className="flex flex-1 flex-col gap-8 overflow-y-auto px-mobile pb-safe-bottom">
         <RatingSection rating={rating} onChange={setRating} />
         <ReadingPeriodSection
           status={status}
