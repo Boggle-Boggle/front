@@ -1,122 +1,112 @@
+import { useQuery } from '@tanstack/react-query';
+
+import { useNavigate } from 'react-router-dom';
+
+import Button from 'components/Button/Button';
 import IconButton from 'components/Button/IconButton';
 import { TextButton } from 'components/Button/TextButton';
 import { IconEdit, IconEllipsisVertical } from 'components/icons';
 
-const NOTE_COUNT_TEXT = '8개의 독서 노트가 있습니다';
-const NOTE_MORE_TEXT = '노트 전체보기';
+import { formatDateTime } from 'utils/format';
 
-const NOTE_TAGS = ['해시태그', '해시태그', '해시태그'];
+import { getReadingLogNotes, PageResponse } from './api';
 
-const NOTE_CARDS = [
-  {
-    number: '4',
-    title: '2회독_400p',
-    content:
-      '하나 혹은 적은 수의 생명체에 처음으로 생명이 깃들고 이 행성이 중력의 법칙에 따라 도는 동안 너무나도 간단한 기원으로부터 끝없는 생명들이 가장 아름답고, 가장 놀랍도록 존재해 왔고, 존재하고 있으며, 진화해 왔다. 이러한 생명관에는 장엄함이 있다.',
-    date: '0000.00.00 00:00',
-    tags: NOTE_TAGS,
-    extraCount: '+12',
-  },
-  {
-    number: '3',
-    title: '2회독_301p',
-    content:
-      '하나 혹은 적은 수의 생명체에 처음으로 생명이 깃들고 이 행성이 중력의 법칙에 따라 도는 동안 너무나도 간단한 기원으로부터 끝없는 생명들이 가장 아름답고, 가장 놀랍도록 존재해 왔고, 존재하고 있으며, 진화해 왔다. 이러한 생명관에는 장엄함이 있다.',
-    date: '0000.00.00 00:00',
-    tags: NOTE_TAGS,
-    extraCount: '+12',
-  },
-  {
-    number: '2',
-    title: '2회독_202p',
-    content:
-      '하나 혹은 적은 수의 생명체에 처음으로 생명이 깃들고 이 행성이 중력의 법칙에 따라 도는 동안 너무나도 간단한 기원으로부터 끝없는 생명들이 가장 아름답고, 가장 놀랍도록 존재해 왔고, 존재하고 있으며, 진화해 왔다. 이러한 생명관에는 장엄함이 있다.',
-    date: '0000.00.00 00:00',
-    tags: NOTE_TAGS,
-    extraCount: '+12',
-  },
-  {
-    number: '1',
-    title: '2회독_102p',
-    content:
-      '하나 혹은 적은 수의 생명체에 처음으로 생명이 깃들고 이 행성이 중력의 법칙에 따라 도는 동안 너무나도 간단한 기원으로부터 끝없는 생명들이 가장 아름답고, 가장 놀랍도록 존재해 왔고, 존재하고 있으며, 진화해 왔다. 이러한 생명관에는 장엄함이 있다.',
-    date: '0000.00.00 00:00',
-    tags: NOTE_TAGS,
-    extraCount: '+12',
-  },
-  {
-    number: '4',
-    title: '1회독_202p',
-    content:
-      '하나 혹은 적은 수의 생명체에 처음으로 생명이 깃들고 이 행성이 중력의 법칙에 따라 도는 동안 너무나도 간단한 기원으로부터 끝없는 생명들이 가장 아름답고, 가장 놀랍도록 존재해 왔고, 존재하고 있으며, 진화해 왔다. 이러한 생명관에는 장엄함이 있다.',
-    date: '0000.00.00 00:00',
-    tags: NOTE_TAGS,
-    extraCount: '+12',
-  },
-];
+type NoteTabProps = {
+  readingLogId: string;
+};
 
-export const NoteTab = () => {
+const MSG_NOTE_TAB_MORE_TEXT = '노트 전체보기';
+const MSG_NOTE_TAB_LOADING = '노트를 불러오는 중입니다...';
+const MSG_NOTE_TAB_COUNT_SUFFIX = '개의 독서 노트가 있습니다';
+const MSG_NOTE_TAB_EMPTY = '등록된 독서 노트가 없습니다. 첫 노트를 작성해 보세요!';
+const MSG_NOTE_TAB_CARD_MENU_ARIA_LABEL = '메모 더보기';
+const MSG_NOTE_TAB_WRITE_ARIA_LABEL = '독서 노트 작성';
+
+const formatNotePage = (page: PageResponse) => {
+  return `P. ${page.endPage ? `${page.startPage} ~ ${page.endPage}` : page.startPage}`;
+};
+
+export const NoteTab = ({ readingLogId }: NoteTabProps) => {
+  const navigate = useNavigate();
+  const { data: notes = [], isLoading } = useQuery({
+    queryKey: ['reading-log-notes', readingLogId],
+    queryFn: () => getReadingLogNotes(readingLogId),
+    enabled: !!readingLogId,
+  });
+
   const handleMoreClick = () => {};
-  const handleFloatingClick = () => {};
+  const handleFloatingClick = () => navigate('/notes/new', { state: { readingLogId } });
+
   const handleCardMenuClick = () => {};
 
   const cardShadow = 'shadow-[0_2px_10px_rgba(0,0,0,0.16)]';
 
+  if (isLoading)
+    return <div className="flex justify-center py-20 text-body2 text-neutral-60">{MSG_NOTE_TAB_LOADING}</div>;
+
   return (
     <section className="pb-safe-bottom">
       <div className="flex items-center justify-between">
-        <p className="text-caption1 text-neutral-60">{NOTE_COUNT_TEXT}</p>
-        <TextButton onClick={handleMoreClick} text={NOTE_MORE_TEXT} size="md" variant="default" />
+        <p className="text-caption1 text-neutral-60">{`${notes.length}${MSG_NOTE_TAB_COUNT_SUFFIX}`}</p>
+        <TextButton onClick={handleMoreClick} text={MSG_NOTE_TAB_MORE_TEXT} size="md" variant="default" />
       </div>
 
-      <ul className="mt-6">
-        {NOTE_CARDS.map((card) => (
-          <li key={`${card.number}-${card.title}`} className={`mb-5 rounded-2xl px-4 py-6 ${cardShadow}`}>
-            {/* 카드 헤더 */}
-            <div className="flex items-start justify-between gap-3">
-              <div className="flex items-center gap-2">
-                <span className="text-h2 text-neutral-80">{card.number}</span>
-                <p className="break-words text-caption1 text-neutral-60">{card.title}</p>
+      {notes.length === 0 ? (
+        <div className="flex flex-col items-center justify-center py-20 text-body2 text-neutral-60">
+          {MSG_NOTE_TAB_EMPTY}
+        </div>
+      ) : (
+        <ul className="mt-6">
+          {notes.map((note) => (
+            <li key={note.id} className={`mb-5 flex flex-col rounded-2xl px-4 pb-5 pt-2 ${cardShadow}`}>
+              {/* 카드 헤더 */}
+              <div className="flex items-center justify-between">
+                <p className="text-body1 font-medium text-neutral-60">{note.title}</p>
+                <IconButton
+                  onClick={handleCardMenuClick}
+                  label={MSG_NOTE_TAB_CARD_MENU_ARIA_LABEL}
+                  icon={IconEllipsisVertical}
+                  size="sm"
+                  align="right"
+                />
               </div>
 
-              <IconButton
-                onClick={handleCardMenuClick}
-                label="메모 더보기"
-                icon={IconEllipsisVertical}
-                size="sm"
-                align="right"
-              />
-            </div>
+              {/* 카드 본문 */}
+              <p className="whitespace-pre-wrap break-words pb-3 pt-1 font-serif text-[14px] leading-[1.6]">
+                {note.body}
+              </p>
 
-            {/* 카드 본문 */}
-            <div className="mt-3">
-              <p className="break-words text-body1 text-neutral-80">{card.content}</p>
-              <p className="mt-2 text-caption1 text-neutral-60">{card.date}</p>
-            </div>
+              <p className="text-caption2 text-neutral-60">
+                {note.page
+                  ? `${formatDateTime(note.createdAt)} | ${formatNotePage(note.page)}`
+                  : formatDateTime(note.createdAt)}
+              </p>
 
-            {/* 카드 푸터 */}
-            {/* TODO 각 해시태그 컴포넌트화 */}
-            <div className="mt-4 flex items-center justify-between gap-3">
-              <div className="flex flex-wrap items-center gap-2">
-                {card.tags.map((tag) => (
-                  <span
-                    key={`${card.title}-${tag}`}
-                    className="inline-flex items-center rounded-full border border-primary px-2 py-0.5 text-caption1 text-primary"
-                  >
-                    {tag}
-                  </span>
-                ))}
-                <span className="text-caption1 text-neutral-60">{card.extraCount}</span>
-              </div>
-            </div>
-          </li>
-        ))}
-      </ul>
+              {/* 카드 푸터 (태그 기능 - 잠시 주석 처리) */}
+              {/* {note.tags.length > 0 && (
+                <div className="flex flex-wrap items-center gap-2">
+                  {note.tags.map((tag) => (
+                    <span
+                      key={tag.id}
+                      className="inline-flex items-center rounded-full border border-primary px-2 py-0.5 text-caption1 text-primary"
+                    >
+                      {tag.name}
+                    </span>
+                  ))}
+                </div>
+              )} */}
+            </li>
+          ))}
+        </ul>
+      )}
 
       {/* 독서노트 작성 플로팅 */}
       <div className="fixed bottom-6 right-mobile">
-        <IconButton onClick={handleFloatingClick} label="독서 노트 작성" icon={IconEdit} size="md" />
+        <Button onClick={handleFloatingClick} icon={IconEdit} size="medium" width="short" variant="primary">
+          <span className="sr-only">{MSG_NOTE_TAB_WRITE_ARIA_LABEL}</span>
+        </Button>
       </div>
     </section>
   );
 };
+export default NoteTab;
