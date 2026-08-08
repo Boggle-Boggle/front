@@ -15,6 +15,15 @@ export const formatDateTimeToDate = (dateTime: string) => {
   return `${yy}.${mm}.${dd}`;
 };
 
+export const formatDateTime = (dateTime: string) => {
+  try {
+    const { yy, mm, dd, h, m } = formatDateAndTime(dateTime);
+    return `${yy}.${mm}.${dd} ${h}:${m}`;
+  } catch {
+    return dateTime;
+  }
+};
+
 export const formatBookGenre = (Genre: string) => {
   const formattedGenre = Genre.split('>');
 
