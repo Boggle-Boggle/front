@@ -17,6 +17,7 @@ import { getReadingLogNotes, PageResponse, ReadingNoteResponse } from './api';
 
 type NoteTabProps = {
   readingLogId: string;
+  bookTitle: string;
 };
 
 const MSG_NOTE_TAB_MORE_TEXT = '노트 전체보기';
@@ -30,7 +31,7 @@ const formatNotePage = (page: PageResponse) => {
   return `P. ${page.endPage ? `${page.startPage} ~ ${page.endPage}` : page.startPage}`;
 };
 
-export const NoteTab = ({ readingLogId }: NoteTabProps) => {
+export const NoteTab = ({ readingLogId, bookTitle }: NoteTabProps) => {
   const navigate = useNavigate();
   const { push } = useLayerStore();
 
@@ -52,7 +53,12 @@ export const NoteTab = ({ readingLogId }: NoteTabProps) => {
   };
 
   const handleCardClick = (note: ReadingNoteResponse) => {
-    navigate(`/notes/${note.id}`, { state: { note } });
+    navigate(`/notes/${note.id}`, {
+      state: {
+        note,
+        bookTitle,
+      },
+    });
   };
 
   const cardShadow = 'shadow-[0_2px_10px_rgba(0,0,0,0.16)]';

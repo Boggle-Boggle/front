@@ -69,7 +69,7 @@ export const RecordDetailPage = () => {
       <div className="px-mobile">
         <Tabs tabs={RECORD_DETAIL_TABS} value={activeTab} onChange={setActiveTab} className="mb-6" />
         {activeTab === 'info' && <BookInfoTab book={data.book} />}
-        {activeTab === 'note' && <NoteTab readingLogId={recordId} />}
+        {activeTab === 'note' && <NoteTab readingLogId={recordId} bookTitle={data.book.title} />}
         {activeTab === 'myInfo' && <MyInfoTab readingLog={data.readingLog} />}
       </div>
     </div>

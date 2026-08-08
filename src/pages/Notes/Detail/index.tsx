@@ -17,7 +17,7 @@ const MSG_NOTE_DETAIL_MORE = '노트 더보기';
 
 type NoteDetailState = {
   note?: ReadingNoteResponse;
-  noteIndex?: number;
+  bookTitle?: string;
 };
 
 const NoteDetail = () => {
@@ -25,16 +25,16 @@ const NoteDetail = () => {
   const { push } = useLayerStore();
   const { addToast } = useToastStore();
 
-  const { note } = (location.state as NoteDetailState) || {};
+  const { note, bookTitle: stateBookTitle } = (location.state as NoteDetailState) || {};
 
   // React Query를 사용하여 상위 독서기록상세에서 책 제목을 비동기 조회 (Prop Drilling 소거)
   const { data: readingLogData } = useQuery({
     queryKey: ['reading-log', note?.readingLogId],
     queryFn: () => getReadingLogDetail(note!.readingLogId!),
-    enabled: !!note?.readingLogId,
+    enabled: !stateBookTitle && !!note?.readingLogId,
   });
 
-  const bookTitle = readingLogData?.book.title || '독서 노트';
+  const bookTitle = stateBookTitle || readingLogData?.book.title || '독서 노트';
 
   const handleMoreClick = () => {
     if (!note) {
