@@ -79,8 +79,8 @@ const Main = () => {
   const displayCount = keyword.trim() ? filteredBooks.length : totalCount;
 
   return (
-    <div className="relative h-dvh overflow-hidden bg-secondary pb-safe-bottom pt-safe-top">
-      <div className="relative z-background flex h-full flex-col px-mobile">
+    <div className="relative h-dvh overflow-hidden bg-secondary">
+      <div className="relative z-background flex h-full flex-col px-mobile pb-safe-bottom pt-safe-top">
         <Searchbar
           value={keyword}
           onChange={setKeyword}
@@ -89,7 +89,7 @@ const Main = () => {
         />
         <p className="mt-4 text-title1">{MSG_MAIN_BOOKCASE_TITLE(currentYear)}</p>
         <p className="mb-[1.375rem] text-body1 text-neutral-60">{MSG_MAIN_BOOKCASE_COUNT(displayCount)}</p>
-        <div className="min-h-0 flex-1 overflow-y-auto pb-safe-bottom">
+        <div className="h-0 flex-grow overflow-y-auto pb-safe-bottom">
           <BookCase books={filteredBooks} />
         </div>
       </div>
