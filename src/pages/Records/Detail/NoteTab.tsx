@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 
 import { useNavigate } from 'react-router-dom';
+import useLayerStore from 'stores/useLayerStore';
 
 import Button from 'components/Button/Button';
 import IconButton from 'components/Button/IconButton';
@@ -9,7 +10,8 @@ import { IconEdit, IconEllipsisVertical } from 'components/icons';
 
 import { formatDateTime } from 'utils/format';
 
-import { getReadingLogNotes, PageResponse } from './api';
+import { NoteMenuActionSheet } from './NoteMenuActionSheet';
+import { getReadingLogNotes, PageResponse, ReadingNoteResponse } from './api';
 
 type NoteTabProps = {
   readingLogId: string;
@@ -28,6 +30,8 @@ const formatNotePage = (page: PageResponse) => {
 
 export const NoteTab = ({ readingLogId }: NoteTabProps) => {
   const navigate = useNavigate();
+  const { push } = useLayerStore();
+
   const { data: notes = [], isLoading } = useQuery({
     queryKey: ['reading-log-notes', readingLogId],
     queryFn: () => getReadingLogNotes(readingLogId),
@@ -37,7 +41,12 @@ export const NoteTab = ({ readingLogId }: NoteTabProps) => {
   const handleMoreClick = () => {};
   const handleFloatingClick = () => navigate('/notes/new', { state: { readingLogId } });
 
-  const handleCardMenuClick = () => {};
+  const handleCardMenuClick = (note: ReadingNoteResponse) => {
+    push({
+      id: `note-menu-action-sheet-${note.id}`,
+      component: <NoteMenuActionSheet note={note} />,
+    });
+  };
 
   const cardShadow = 'shadow-[0_2px_10px_rgba(0,0,0,0.16)]';
 
@@ -63,7 +72,7 @@ export const NoteTab = ({ readingLogId }: NoteTabProps) => {
               <div className="flex items-center justify-between">
                 <p className="text-body1 font-medium text-neutral-60">{note.title}</p>
                 <IconButton
-                  onClick={handleCardMenuClick}
+                  onClick={() => handleCardMenuClick(note)}
                   label={MSG_NOTE_TAB_CARD_MENU_ARIA_LABEL}
                   icon={IconEllipsisVertical}
                   size="sm"
