@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 import { useQuery } from '@tanstack/react-query';
 
 import { useNavigate } from 'react-router-dom';
@@ -41,11 +43,16 @@ export const NoteTab = ({ readingLogId }: NoteTabProps) => {
   const handleMoreClick = () => {};
   const handleFloatingClick = () => navigate('/notes/new', { state: { readingLogId } });
 
-  const handleCardMenuClick = (note: ReadingNoteResponse) => {
+  const handleCardMenuClick = (e: React.MouseEvent, note: ReadingNoteResponse) => {
+    e.stopPropagation();
     push({
       id: `note-menu-action-sheet-${note.id}`,
       component: <NoteMenuActionSheet note={note} />,
     });
+  };
+
+  const handleCardClick = (note: ReadingNoteResponse) => {
+    navigate(`/notes/${note.id}`, { state: { note } });
   };
 
   const cardShadow = 'shadow-[0_2px_10px_rgba(0,0,0,0.16)]';
@@ -66,46 +73,52 @@ export const NoteTab = ({ readingLogId }: NoteTabProps) => {
         </div>
       ) : (
         <ul className="mt-6">
-          {notes.map((note) => (
-            <li key={note.id} className={`mb-5 flex flex-col rounded-2xl px-4 pb-5 pt-2 ${cardShadow}`}>
-              {/* 카드 헤더 */}
-              <div className="flex items-center justify-between">
-                <p className="text-body1 font-medium text-neutral-60">{note.title}</p>
-                <IconButton
-                  onClick={() => handleCardMenuClick(note)}
-                  label={MSG_NOTE_TAB_CARD_MENU_ARIA_LABEL}
-                  icon={IconEllipsisVertical}
-                  size="sm"
-                  align="right"
-                />
-              </div>
-
-              {/* 카드 본문 */}
-              <p className="whitespace-pre-wrap break-words pb-3 pt-1 font-serif text-[14px] leading-[1.6]">
-                {note.body}
-              </p>
-
-              <p className="text-caption2 text-neutral-60">
-                {note.page
-                  ? `${formatDateTime(note.createdAt)} | ${formatNotePage(note.page)}`
-                  : formatDateTime(note.createdAt)}
-              </p>
-
-              {/* 카드 푸터 (태그 기능 - 잠시 주석 처리) */}
-              {/* {note.tags.length > 0 && (
-                <div className="flex flex-wrap items-center gap-2">
-                  {note.tags.map((tag) => (
-                    <span
-                      key={tag.id}
-                      className="inline-flex items-center rounded-full border border-primary px-2 py-0.5 text-caption1 text-primary"
-                    >
-                      {tag.name}
-                    </span>
-                  ))}
+          {notes.map((note) => {
+            return (
+              <li
+                key={note.id}
+                className={`mb-5 flex flex-col rounded-2xl px-4 pb-5 pt-2 ${cardShadow} cursor-pointer text-left`}
+                onClick={() => handleCardClick(note)}
+              >
+                {/* 카드 헤더 */}
+                <div className="flex items-center justify-between">
+                  <p className="text-body1 font-medium text-neutral-60">{note.title}</p>
+                  <IconButton
+                    onClick={(e) => handleCardMenuClick(e, note)}
+                    label={MSG_NOTE_TAB_CARD_MENU_ARIA_LABEL}
+                    icon={IconEllipsisVertical}
+                    size="sm"
+                    align="right"
+                  />
                 </div>
-              )} */}
-            </li>
-          ))}
+
+                {/* 카드 본문 */}
+                <p className="whitespace-pre-wrap break-words pb-3 pt-1 font-serif text-[14px] leading-[1.6]">
+                  {note.body}
+                </p>
+
+                <p className="text-caption2 text-neutral-60">
+                  {note.page
+                    ? `${formatDateTime(note.createdAt)} | ${formatNotePage(note.page)}`
+                    : formatDateTime(note.createdAt)}
+                </p>
+
+                {/* 카드 푸터 (태그 기능 - 잠시 주석 처리) */}
+                {/* {note.tags.length > 0 && (
+                  <div className="flex flex-wrap items-center gap-2">
+                    {note.tags.map((tag) => (
+                      <span
+                        key={tag.id}
+                        className="inline-flex items-center rounded-full border border-primary px-2 py-0.5 text-caption1 text-primary"
+                      >
+                        {tag.name}
+                      </span>
+                    ))}
+                  </div>
+                )} */}
+              </li>
+            );
+          })}
         </ul>
       )}
 
