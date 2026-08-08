@@ -82,7 +82,7 @@ const MyPage = () => {
   const myPageStats = getMyPageStats(profile);
 
   return (
-    <div className="h-full overflow-y-auto bg-neutral-0 pb-safe-bottom">
+    <div className="h-full overflow-y-auto bg-neutral-0 pb-safe-bottom pt-safe-top">
       <div className="relative h-[24.0625rem] overflow-hidden bg-neutral-0">
         {/* 동그라미 세알 */}
         <div className="absolute inset-0">
