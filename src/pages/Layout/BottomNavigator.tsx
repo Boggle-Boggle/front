@@ -49,7 +49,7 @@ const BottomNavigator = () => {
       <ul className="grid h-14 w-full grid-cols-4 items-center text-xs">
         {Navigator.map(({ caption, url, icon, activeIcon }) => (
           <li className="size-full" key={caption}>
-            <NavLink to={url} className="flex h-full flex-col items-center justify-center">
+            <NavLink replace to={url} className="flex h-full flex-col items-center justify-center">
               {({ isActive }) => (
                 <>
                   {isActive ? activeIcon : icon}

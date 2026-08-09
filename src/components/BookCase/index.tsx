@@ -8,6 +8,7 @@ export type BookCaseBook = {
 
 type BookCaseProps = {
   books: BookCaseBook[];
+  onBookClick?: (id: number) => void;
 };
 
 const getThicknessPx = (page: number) => {
@@ -61,7 +62,7 @@ const getShelfBooks = (books: BookCaseBook[], bookcaseWidth: number) => {
 };
 
 export const BookCase = (props: BookCaseProps) => {
-  const { books } = props;
+  const { books, onBookClick } = props;
   const remToPx = (rem: number) => rem * parseFloat(getComputedStyle(document.documentElement).fontSize);
 
   // bookcaseWidth = 전체 화면너비 - 양쪽 패딩(1rem * 2) - 책장 사이 간격(1.25rem * 2) - 책장과 양끝 책사이간격-  border(2px * 2)
@@ -91,7 +92,7 @@ export const BookCase = (props: BookCaseProps) => {
             <div className={shelfSpacingClass} key={`shelf-${idx}`}>
               <div className="h-[5.625rem] px-[0.625rem]">
                 {shelfBooks.map(({ id, page, title }) => (
-                  <Book page={page} title={title} key={id} />
+                  <Book page={page} title={title} key={id} onClick={() => onBookClick?.(id)} />
                 ))}
               </div>
 

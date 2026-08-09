@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 
 import { disassemble, getChoseong } from 'es-hangul';
 import { useState, useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { BookCase } from 'components/BookCase';
 import { Searchbar } from 'components/Searchbar';
@@ -23,6 +24,7 @@ const MAIN_READING_LOGS_PAGE = 1;
 const MAIN_READING_LOGS_PAGE_SIZE = 100;
 
 const Main = () => {
+  const navigate = useNavigate();
   const currentYear = new Date().getFullYear();
   const [keyword, setKeyword] = useState<string>('');
 
@@ -90,7 +92,7 @@ const Main = () => {
         <p className="mt-4 text-title1">{MSG_MAIN_BOOKCASE_TITLE(currentYear)}</p>
         <p className="mb-[1.375rem] text-body1 text-neutral-60">{MSG_MAIN_BOOKCASE_COUNT(displayCount)}</p>
         <div className="h-0 flex-grow overflow-y-auto pb-safe-bottom">
-          <BookCase books={filteredBooks} />
+          <BookCase books={filteredBooks} onBookClick={(id) => navigate(`/records/${id}`)} />
         </div>
       </div>
 
