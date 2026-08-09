@@ -4,6 +4,7 @@ import { useLayerStore } from 'stores/useLayerStore';
 
 import { TextButton } from 'components/Button';
 import { BackButton } from 'components/Header/BackButton';
+import { Loading } from 'components/Loading';
 import { Searchbar } from 'components/Searchbar';
 import { IconArrowDown } from 'components/icons';
 
@@ -93,6 +94,20 @@ const SearchResult = () => {
   const totalCount = data?.pages[0]?.meta.page.total || 0;
   const searchFilterLabel = SEARCH_FILTER_OPTION_BY_FILTER[searchFilter].label;
 
+  if (isLoading) {
+    return (
+      <div className="flex h-full w-full flex-col pb-safe-bottom pt-safe-top">
+        <div className="flex w-full items-center justify-start gap-2 pb-4 pr-mobile">
+          <BackButton />
+          <Searchbar value={localQuery} onChange={handleSearchChange} onSubmit={handleSearchSubmit} className="grow" />
+        </div>
+        <div className="flex flex-1 items-center justify-center">
+          <Loading />
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="flex h-full w-full flex-col pb-safe-bottom pt-safe-top">
       <div className="flex w-full items-center justify-start gap-2 pb-4 pr-mobile">
@@ -113,9 +128,11 @@ const SearchResult = () => {
       </div>
 
       <div className="flex-1 overflow-y-auto px-mobile">
-        {isLoading || (isFetchingNextPage && <div>검색중</div>)}
-        {!isLoading && searchResults.length === 0 && <div>결과 없음</div>}
-        {!isLoading && searchResults.length > 0 && (
+        {searchResults.length === 0 ? (
+          <div className="flex h-full w-full items-center justify-center py-20 text-body2 text-neutral-60">
+            검색 결과가 없습니다.
+          </div>
+        ) : (
           <ul className="flex w-full flex-col divide-y divide-neutral-20">
             {searchResults.map((book) => (
               <li key={book.isbn13}>
@@ -124,7 +141,7 @@ const SearchResult = () => {
             ))}
           </ul>
         )}
-        <div ref={observerTarget} className="h-4 w-full" />
+        {(isFetchingNextPage || hasNextPage) && <div ref={observerTarget} className="h-4 w-full" />}
       </div>
     </div>
   );
