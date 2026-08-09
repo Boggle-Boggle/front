@@ -65,7 +65,7 @@ const Login = () => {
   };
 
   return (
-    <section className="relative flex h-dvh w-full flex-col justify-center gap-[35rem]">
+    <section className="relative flex h-dvh w-full flex-col justify-center gap-[30rem]">
       <header className="relative flex flex-col items-center text-neutral-80">
         <Highlight text={MSG_LOGIN_TITLE_MAIN} className="text-h3" />
         <h1 className="mt-1 text-h1">{MSG_LOGIN_TITLE_SUB}</h1>
