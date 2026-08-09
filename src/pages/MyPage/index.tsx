@@ -83,7 +83,7 @@ const MyPage = () => {
 
   return (
     <div className="h-full overflow-y-auto bg-neutral-0 pb-safe-bottom">
-      <div className="relative h-[24.0625rem] overflow-hidden bg-neutral-0 pt-safe-top">
+      <div className="relative h-auto overflow-hidden bg-neutral-0 pb-6 pt-safe-top">
         {/* 동그라미 세알 */}
         <div className="absolute inset-0">
           <div className="opacity-76 absolute right-[-4.35rem] top-[-6.5625rem] h-[18.75rem] w-[18.75rem] rounded-full bg-[radial-gradient(circle_at_34%_38%,color-mix(in_srgb,var(--color-primary)_96%,transparent)_0%,color-mix(in_srgb,var(--color-secondary-light)_90%,transparent)_100%)] blur-[1rem]" />
