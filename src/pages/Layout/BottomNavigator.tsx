@@ -46,7 +46,7 @@ const BottomNavigator = () => {
 
   return (
     <div className="fixed bottom-0 z-navigator w-full max-w-mobile rounded-t-2xl border-t border-neutral-20 bg-neutral-0 pb-safe-bottom">
-      <ul className="grid h-16 w-full grid-cols-4 items-center text-xs">
+      <ul className="grid h-14 w-full grid-cols-4 items-center text-xs">
         {Navigator.map(({ caption, url, icon, activeIcon }) => (
           <li className="size-full" key={caption}>
             <NavLink to={url} className="flex h-full flex-col items-center justify-center">
