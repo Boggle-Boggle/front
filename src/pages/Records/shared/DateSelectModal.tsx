@@ -23,6 +23,9 @@ export const DateSelectModal = (props: DateSelectModalProps) => {
     return new Date();
   });
 
+  // 캘린더 데이트피커의 현재 뷰 모드 상태 (기본은 달력 모드)
+  const [pickerMode, setPickerMode] = useState<'calendar' | 'monthYearPicker'>('calendar');
+
   const handleSelectDate = (date: Date) => {
     setSelectedDate(date);
   };
@@ -31,9 +34,19 @@ export const DateSelectModal = (props: DateSelectModalProps) => {
   const selectedMonth = selectedDate.getMonth() + 1;
   const selectedDay = selectedDate.getDate();
   const selectedWeekDay = KOREAN_WEEK_DAYS[selectedDate.getDay()];
-  const selectButtonText = `${selectedYear}년 ${selectedMonth}월 ${selectedDay}일(${selectedWeekDay}) 선택`;
+
+  // 모드에 따라 버튼 텍스트를 다르게 렌더링
+  const selectButtonText =
+    pickerMode === 'monthYearPicker'
+      ? `${selectedYear}년 ${selectedMonth}월 선택`
+      : `${selectedYear}년 ${selectedMonth}월 ${selectedDay}일(${selectedWeekDay}) 선택`;
 
   const handleConfirm = () => {
+    if (pickerMode === 'monthYearPicker') {
+      setPickerMode('calendar');
+      return;
+    }
+
     const yyyy = selectedDate.getFullYear();
     const mm = String(selectedDate.getMonth() + 1).padStart(2, '0');
     const dd = String(selectedDate.getDate()).padStart(2, '0');
@@ -43,7 +56,12 @@ export const DateSelectModal = (props: DateSelectModalProps) => {
 
   return (
     <ContentModal title={title} onClose={onClose}>
-      <CalendarDatePicker selectedDate={selectedDate} onChange={handleSelectDate} />
+      <CalendarDatePicker
+        selectedDate={selectedDate}
+        onChange={handleSelectDate}
+        mode={pickerMode}
+        onModeChange={setPickerMode}
+      />
 
       <Button onClick={handleConfirm} className="text-[1rem] font-medium">
         {selectButtonText}

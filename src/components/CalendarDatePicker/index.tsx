@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 
 import { TextButton } from 'components/Button';
 import { WheelPicker, type PickerColumn } from 'components/WheelPicker';
@@ -11,14 +11,16 @@ type CalendarDatePickerProps =
       type?: 'single';
       selectedDate: Date;
       onChange: (date: Date) => void;
-      onModeChange?: (mode: 'calendar' | 'monthYearPicker') => void;
+      mode?: CalendarDatePickerMode;
+      onModeChange?: (mode: CalendarDatePickerMode) => void;
     }
   | {
       type: 'range';
       startDate: Date | null;
       endDate: Date | null;
       onChange: (startDate: Date | null, endDate: Date | null) => void;
-      onModeChange?: (mode: 'calendar' | 'monthYearPicker') => void;
+      mode?: CalendarDatePickerMode;
+      onModeChange?: (mode: CalendarDatePickerMode) => void;
     };
 
 type CalendarDatePickerMode = 'calendar' | 'monthYearPicker';
@@ -95,7 +97,7 @@ const getCalendarDates = (
 };
 
 export const CalendarDatePicker = (props: CalendarDatePickerProps) => {
-  const { type = 'single' } = props;
+  const { type = 'single', mode: externalMode, onModeChange: externalOnModeChange } = props;
   const isRange = type === 'range';
 
   // 현재 그리드에 보여지는 연/월 네비게이션 상태
@@ -124,15 +126,32 @@ export const CalendarDatePicker = (props: CalendarDatePickerProps) => {
   // 연월 휠 피커의 내부 상태
   const [pickerYear, setPickerYear] = useState<number>(visibleYear);
   const [pickerMonth, setPickerMonth] = useState<number>(visibleMonth);
-  const [mode, setMode] = useState<CalendarDatePickerMode>('calendar');
+
+  // 외부에서 mode가 주입되면 제어 컴포넌트로 동작하고, 아니면 비제어 내부 상태로 렌더
+  const [internalMode, setInternalMode] = useState<CalendarDatePickerMode>('calendar');
+  const mode = externalMode !== undefined ? externalMode : internalMode;
 
   const handleModeChange = (newMode: CalendarDatePickerMode) => {
-    setMode(newMode);
-    const { onModeChange } = props;
-    if (onModeChange) {
-      onModeChange(newMode);
-    }
+    if (externalMode === undefined) setInternalMode(newMode);
+    if (externalOnModeChange) externalOnModeChange(newMode);
   };
+
+  const prevModeRef = useRef(mode);
+
+  useEffect(() => {
+    if (prevModeRef.current !== mode) {
+      if (mode === 'calendar') {
+        // 휠 피커에서 캘린더 모드로 돌아갈 때 (버튼 클릭 등 외부 요인 포함)
+        setVisibleYear(pickerYear);
+        setVisibleMonth(pickerMonth);
+      } else {
+        // 캘린더에서 휠 피커로 진입할 때
+        setPickerYear(visibleYear);
+        setPickerMonth(visibleMonth);
+      }
+      prevModeRef.current = mode;
+    }
+  }, [mode, pickerYear, pickerMonth, visibleYear, visibleMonth]);
 
   const calendarDates = useMemo(() => {
     if (type === 'range') {
@@ -169,6 +188,17 @@ export const CalendarDatePicker = (props: CalendarDatePickerProps) => {
         onChange: (value) => {
           if (typeof value !== 'number') return;
           setPickerYear(value);
+
+          if (type !== 'range') {
+            const singleProps = props as { selectedDate: Date; onChange: (date: Date) => void };
+            const { selectedDate, onChange } = singleProps;
+            const currentDay = selectedDate.getDate();
+
+            const maxDayInNewMonth = new Date(value, pickerMonth + 1, 0).getDate();
+            const safeDay = Math.min(currentDay, maxDayInNewMonth);
+
+            onChange(new Date(value, pickerMonth, safeDay));
+          }
         },
       },
       {
@@ -178,10 +208,21 @@ export const CalendarDatePicker = (props: CalendarDatePickerProps) => {
         onChange: (value) => {
           if (typeof value !== 'number') return;
           setPickerMonth(value);
+
+          if (type !== 'range') {
+            const singleProps = props as { selectedDate: Date; onChange: (date: Date) => void };
+            const { selectedDate, onChange } = singleProps;
+            const currentDay = selectedDate.getDate();
+
+            const maxDayInNewMonth = new Date(pickerYear, value + 1, 0).getDate();
+            const safeDay = Math.min(currentDay, maxDayInNewMonth);
+
+            onChange(new Date(pickerYear, value, safeDay));
+          }
         },
       },
     ],
-    [pickerMonth, pickerYear, yearItems],
+    [pickerMonth, pickerYear, yearItems, type, props],
   );
 
   const handleSelectDate = (date: Date) => {
@@ -220,15 +261,7 @@ export const CalendarDatePicker = (props: CalendarDatePickerProps) => {
   };
 
   const handleHeaderToggle = () => {
-    if (mode === 'calendar') {
-      setPickerYear(visibleYear);
-      setPickerMonth(visibleMonth);
-      handleModeChange('monthYearPicker');
-    } else {
-      setVisibleYear(pickerYear);
-      setVisibleMonth(pickerMonth);
-      handleModeChange('calendar');
-    }
+    handleModeChange(mode === 'calendar' ? 'monthYearPicker' : 'calendar');
   };
 
   return (
