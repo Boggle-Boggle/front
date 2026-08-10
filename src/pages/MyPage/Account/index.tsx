@@ -72,12 +72,13 @@ const Account = () => {
       return;
     }
 
+    setIsEditingNickname(false);
+
     changeNickname(
       { nickname: trimmedNickname },
       {
-        onSuccess: () => {
-          setNickname(trimmedNickname);
-          setIsEditingNickname(false);
+        onError: () => {
+          setNickname(profile.nickname);
         },
       },
     );
