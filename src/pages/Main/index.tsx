@@ -3,10 +3,13 @@ import { useQuery } from '@tanstack/react-query';
 import { disassemble, getChoseong } from 'es-hangul';
 import { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
+import useLayerStore from 'stores/useLayerStore';
 
 import { BookCase } from 'components/BookCase';
 import { Searchbar } from 'components/Searchbar';
+import { IconArrowDown } from 'components/icons';
 
+import { MainPeriodModal } from './MainPeriodModal';
 import { getReadingLogs } from './api';
 
 type MainBookCaseItem = {
@@ -25,8 +28,11 @@ const MAIN_READING_LOGS_PAGE_SIZE = 100;
 
 const Main = () => {
   const navigate = useNavigate();
+  const { push } = useLayerStore();
   const currentYear = new Date().getFullYear();
+
   const [keyword, setKeyword] = useState<string>('');
+  const [periodFilter, setPeriodFilter] = useState<'ALL' | 'GROUP' | 'PERIOD'>('ALL');
 
   const { data: readingLogs } = useQuery({
     queryKey: ['reading-logs', 'list', currentYear],
@@ -39,6 +45,13 @@ const Main = () => {
         year: currentYear,
       }),
   });
+
+  const handleOpenFilter = () => {
+    push({
+      id: 'main-period-modal',
+      component: <MainPeriodModal currentFilter={periodFilter} onSelectFilter={setPeriodFilter} />,
+    });
+  };
 
   // 1. 책 목록을 최초 로드했을 때 딱 한 번만 es-hangul의 disassemble 및 getChoseong을 미리 연산(Pre-compute)하여 캐싱해 둡니다.
   const processedBooks = useMemo<MainBookCaseItem[]>(() => {
@@ -89,7 +102,11 @@ const Main = () => {
           onSubmit={() => {}}
           placeholder={MSG_TITLE_SEARCH_PLACEHOLDER}
         />
-        <p className="mt-4 text-title1">{MSG_MAIN_BOOKCASE_TITLE(currentYear)}</p>
+        <button type="button" onClick={handleOpenFilter} className="mt-4 flex items-center gap-1 text-left text-title1">
+          {MSG_MAIN_BOOKCASE_TITLE(currentYear)}
+
+          <IconArrowDown className="ml-1 size-icon-sm text-neutral-60" />
+        </button>
         <p className="mb-[1.375rem] text-body1 text-neutral-60">{MSG_MAIN_BOOKCASE_COUNT(displayCount)}</p>
         <div className="h-0 flex-grow overflow-y-auto pb-safe-bottom">
           <BookCase books={filteredBooks} onBookClick={(id) => navigate(`/records/${id}`)} />
