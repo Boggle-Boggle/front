@@ -11,6 +11,7 @@ import { IconArrowDown } from 'components/icons';
 
 import { MainPeriodModal } from './MainPeriodModal';
 import { getReadingLogs } from './api';
+import type { MainPeriodFilterType } from './types';
 
 type MainBookCaseItem = {
   id: number;
@@ -32,7 +33,7 @@ const Main = () => {
   const currentYear = new Date().getFullYear();
 
   const [keyword, setKeyword] = useState<string>('');
-  const [periodFilter, setPeriodFilter] = useState<'ALL' | 'GROUP' | 'PERIOD'>('ALL');
+  const [periodFilter, setPeriodFilter] = useState<MainPeriodFilterType>('ALL');
 
   const { data: readingLogs } = useQuery({
     queryKey: ['reading-logs', 'list', currentYear],
