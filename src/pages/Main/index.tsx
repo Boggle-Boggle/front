@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 
+import { api } from 'api';
 import { disassemble, getChoseong } from 'es-hangul';
 import { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -11,7 +12,7 @@ import { IconArrowDown } from 'components/icons';
 
 import { MainPeriodModal } from './MainPeriodModal';
 import { getReadingLogs } from './api';
-import type { MainPeriodFilterType } from './types';
+import type { MainPeriodFilterType, Bookshelf } from './types';
 
 type MainBookCaseItem = {
   id: number;
@@ -47,10 +48,20 @@ const Main = () => {
       }),
   });
 
+  const { data: bookshelves } = useQuery<Bookshelf[]>({
+    queryKey: ['bookshelves'],
+    queryFn: async () => {
+      const response = await api.get('/v2/bookshelves');
+      return response.data.data.items;
+    },
+  });
+
   const handleOpenFilter = () => {
     push({
       id: 'main-period-modal',
-      component: <MainPeriodModal currentFilter={periodFilter} onSelectFilter={setPeriodFilter} />,
+      component: (
+        <MainPeriodModal currentFilter={periodFilter} onSelectFilter={setPeriodFilter} bookshelves={bookshelves} />
+      ),
     });
   };
 
