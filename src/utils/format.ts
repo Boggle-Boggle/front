@@ -62,3 +62,11 @@ export const isValidDate = (year: number, month: number, day: number) => {
 
   return result;
 };
+
+export const formatDateLabel = (dateString?: string | null) => {
+  if (!dateString) return '00.00.00';
+  const datePart = dateString.split('T')[0];
+  const [year, month, day] = datePart.split('-');
+  if (!year || !month || !day) return '00.00.00';
+  return `${year.slice(-2)}.${month}.${day}`;
+};

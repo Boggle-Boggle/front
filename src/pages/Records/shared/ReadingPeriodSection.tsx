@@ -1,3 +1,5 @@
+import { formatDateLabel } from 'utils/format';
+
 import type { AddRecordStatus } from 'types';
 
 import { ReadingPeriodButton } from './ReadingPeriodButton';
@@ -14,15 +16,6 @@ type ReadingPeriodSectionProps = {
 const MSG_ADD_RECORD_PERIOD_TITLE = '독서 기간';
 const MSG_ADD_RECORD_START_DATE = '시작일';
 const MSG_ADD_RECORD_END_DATE = '완료일';
-const MSG_ADD_RECORD_EMPTY_DATE = '00.00.00';
-
-const formatDateLabel = (dateString: string) => {
-  if (!dateString) return MSG_ADD_RECORD_EMPTY_DATE;
-  const datePart = dateString.split('T')[0];
-  const [year, month, day] = datePart.split('-');
-  if (!year || !month || !day) return MSG_ADD_RECORD_EMPTY_DATE;
-  return `${year.slice(-2)}.${month}.${day}`;
-};
 
 export const ReadingPeriodSection = (props: ReadingPeriodSectionProps) => {
   const { startDate, endDate, status = 'COMPLETED', onOpenStartDate, onOpenEndDate } = props;
