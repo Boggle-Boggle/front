@@ -32,9 +32,9 @@ const RealTimePopular = () => {
               <li className="flex items-center py-5">
                 <Link to={`/books/${book.isbn13}`} className="flex w-full items-center">
                   {book.rank <= 3 ? (
-                    <Highlight text={getRankLabel(book.rank)} className="w-8 text-center text-body2" />
+                    <Highlight text={getRankLabel(book.rank)} className="w-10 shrink-0 text-center text-body2" />
                   ) : (
-                    <p className="w-8 text-center text-body2">{getRankLabel(book.rank)}</p>
+                    <p className="w-10 shrink-0 text-center text-body2">{getRankLabel(book.rank)}</p>
                   )}
                   <BookCover className="mx-[0.625rem] w-20 shrink-0" url={book.coverUrl} variant="clear" rounded="sm" />
                   <div className="flex min-w-0 flex-col justify-center gap-1">
