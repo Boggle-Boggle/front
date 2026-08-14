@@ -122,10 +122,8 @@ export const MainPeriodModal = (props: MainPeriodModalProps) => {
                       key={group.id}
                       type="button"
                       onClick={() => setSelectedBookshelfId(group.id)}
-                      className={`active:bg-neutral-10/50 flex h-[42px] w-full items-center justify-center rounded-lg border-[1.5px] text-title4 transition-colors ${
-                        isGroupSelected
-                          ? 'border-primary bg-primary-light text-primary'
-                          : 'border-neutral-20 bg-white text-neutral-40'
+                      className={`h-[42px] w-full items-center justify-center rounded-lg border-[1.5px] text-title4 transition-colors ${
+                        isGroupSelected ? 'border-primary text-primary' : 'border-neutral-20 text-neutral-40'
                       }`}
                     >
                       {group.name}
