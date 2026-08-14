@@ -1,4 +1,4 @@
-import { ChangeEvent } from 'react';
+import { ChangeEvent, ReactNode } from 'react';
 
 type RadioProps = {
   id: string;
@@ -9,13 +9,23 @@ type RadioProps = {
   checked: boolean;
   disabled?: boolean;
   className?: string;
+  children?: ReactNode;
 };
 
 export const Radio = (props: RadioProps) => {
-  const { id, name, checked, onChange, size = 'medium', variant = 'primary', disabled = false, className = '' } = props;
+  const {
+    id,
+    name,
+    checked,
+    onChange,
+    size = 'medium',
+    variant = 'primary',
+    disabled = false,
+    className = '',
+    children,
+  } = props;
 
   const baseClass = 'flex items-center justify-center rounded-full border bg-neutral-0';
-  const labelClass = 'inline-flex items-center justify-center';
   const disabledClass = disabled ? 'opacity-20 cursor-not-allowed' : 'cursor-pointer';
   const variantInnerClass = variant === 'primary' ? 'bg-primary' : 'bg-neutral-80';
   const variantOuterClass =
@@ -25,8 +35,12 @@ export const Radio = (props: RadioProps) => {
   const sizeInnerClass = size === 'small' ? 'h-[10.7px] w-[10.7px]' : 'h-[15px] w-[15px]';
   const sizeOuterClass = size === 'small' ? 'size-4' : 'size-6';
 
+  const containerClass = children
+    ? 'flex w-full items-center justify-between py-2 text-left'
+    : 'inline-flex items-center justify-center';
+
   return (
-    <label htmlFor={id} className={`${labelClass} ${disabledClass} ${className}`}>
+    <label htmlFor={id} className={`${containerClass} ${disabledClass} ${className}`}>
       <input
         id={id}
         name={name}
@@ -36,7 +50,8 @@ export const Radio = (props: RadioProps) => {
         disabled={disabled}
         className="peer sr-only"
       />
-      <span className={`${baseClass} ${sizeOuterClass} ${variantOuterClass}`}>
+      {children && <div className="flex-grow">{children}</div>}
+      <span className={`${baseClass} ${sizeOuterClass} ${variantOuterClass} shrink-0`}>
         {checked ? <span className={`block rounded-full ${sizeInnerClass} ${variantInnerClass}`} /> : null}
       </span>
     </label>

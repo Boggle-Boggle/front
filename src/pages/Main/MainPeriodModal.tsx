@@ -3,6 +3,7 @@ import { useLayerStore } from 'stores/useLayerStore';
 
 import { Button } from 'components/Button';
 import { ContentModal } from 'components/Layer/ContentModal';
+import { Radio } from 'components/Radio';
 import { WheelPicker, type PickerColumn } from 'components/WheelPicker';
 
 import type { MainPeriodFilterType, Bookshelf } from './types';
@@ -80,44 +81,32 @@ export const MainPeriodModal = (props: MainPeriodModalProps) => {
       <div className="flex w-full flex-col gap-2 pb-7">
         {/* 전체 보기 */}
         <div className="flex flex-col">
-          <button
-            type="button"
-            onClick={() => setSelectedFilter('ALL')}
-            className="flex w-full items-center justify-between py-2 text-left"
+          <Radio
+            id="filter-all"
+            name="filter-type"
+            checked={selectedFilter === 'ALL'}
+            onChange={() => setSelectedFilter('ALL')}
           >
             <div className="flex flex-col gap-[2px]">
               <p className="text-title4 text-neutral-80">{MSG_MAIN_FILTER_ALL_TITLE}</p>
               <p className="text-caption1 text-neutral-60">{MSG_MAIN_FILTER_ALL_DESC}</p>
             </div>
-
-            {/* 라디오 버튼 UI */}
-            <div
-              className={`flex size-6 shrink-0 items-center justify-center rounded-full border-2 ${selectedFilter === 'ALL' ? 'border-primary' : 'border-neutral-40'}`}
-            >
-              {selectedFilter === 'ALL' && <div className="size-3 rounded-full bg-primary" />}
-            </div>
-          </button>
+          </Radio>
         </div>
 
         {/* 그룹별로 보기 */}
         <div className="flex flex-col">
-          <button
-            type="button"
-            onClick={() => setSelectedFilter('GROUP')}
-            className="flex w-full items-center justify-between py-2 text-left"
+          <Radio
+            id="filter-group"
+            name="filter-type"
+            checked={selectedFilter === 'GROUP'}
+            onChange={() => setSelectedFilter('GROUP')}
           >
             <div className="flex flex-col gap-[2px]">
               <p className="text-title4 text-neutral-80">{MSG_MAIN_FILTER_GROUP_TITLE}</p>
               <p className="text-caption1 text-neutral-60">{MSG_MAIN_FILTER_GROUP_DESC}</p>
             </div>
-
-            {/* 라디오 버튼 UI */}
-            <div
-              className={`flex size-6 shrink-0 items-center justify-center rounded-full border-2 ${selectedFilter === 'GROUP' ? 'border-primary' : 'border-neutral-40'}`}
-            >
-              {selectedFilter === 'GROUP' && <div className="size-3 rounded-full bg-primary" />}
-            </div>
-          </button>
+          </Radio>
 
           {/* 하위 그룹 목록 스크롤 영역 */}
           {selectedFilter === 'GROUP' && (
@@ -149,23 +138,17 @@ export const MainPeriodModal = (props: MainPeriodModalProps) => {
 
         {/* 기간별로 보기 */}
         <div className="flex flex-col">
-          <button
-            type="button"
-            onClick={() => setSelectedFilter('PERIOD')}
-            className="flex w-full items-center justify-between py-2 text-left"
+          <Radio
+            id="filter-period"
+            name="filter-type"
+            checked={selectedFilter === 'PERIOD'}
+            onChange={() => setSelectedFilter('PERIOD')}
           >
             <div className="flex flex-col gap-[2px]">
               <p className="text-title4 text-neutral-80">{MSG_MAIN_FILTER_PERIOD_TITLE}</p>
               <p className="text-caption1 text-neutral-60">{MSG_MAIN_FILTER_PERIOD_DESC}</p>
             </div>
-
-            {/* 라디오 버튼 UI */}
-            <div
-              className={`flex size-6 shrink-0 items-center justify-center rounded-full border-2 ${selectedFilter === 'PERIOD' ? 'border-primary' : 'border-neutral-40'}`}
-            >
-              {selectedFilter === 'PERIOD' && <div className="size-3 rounded-full bg-primary" />}
-            </div>
-          </button>
+          </Radio>
 
           {/* 하위 기간 선택 WheelPicker 영역 */}
           {selectedFilter === 'PERIOD' && (
