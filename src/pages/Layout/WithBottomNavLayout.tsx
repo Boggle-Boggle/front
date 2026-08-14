@@ -4,7 +4,7 @@ import BottomNavigator from './BottomNavigator';
 
 const WithBottomNavLayout = () => {
   return (
-    <section className="h-dvh w-full overflow-hidden pb-[calc(env(safe-area-inset-bottom)+54px)]">
+    <section className="h-dvh w-full overflow-hidden pb-[calc(env(safe-area-inset-bottom)+56px)]">
       <Outlet />
       <BottomNavigator />
     </section>
