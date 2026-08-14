@@ -17,6 +17,8 @@ export type MyBook = {
   progress: number;
   author?: string;
   createdAt?: string;
+  startDate?: string | null;
+  endDate?: string | null;
 };
 
 const getProgressPercentage = (readingLog: ReadingLogListItemResponse) => {
@@ -35,6 +37,9 @@ const convertReadingLogToMyBook = (readingLog: ReadingLogListItemResponse): MyBo
   rating: readingLog.rating ?? 0,
   readCount: 0,
   progress: getProgressPercentage(readingLog),
+  author: readingLog.book.author,
+  startDate: readingLog.startDate,
+  endDate: readingLog.endDate,
 });
 
 const getLibraryBooks = async (
