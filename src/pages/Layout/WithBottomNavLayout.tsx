@@ -4,9 +4,8 @@ import BottomNavigator from './BottomNavigator';
 
 const WithBottomNavLayout = () => {
   return (
-    <section className="h-dvh w-full">
+    <section className="h-dvh w-full overflow-hidden pb-[calc(env(safe-area-inset-bottom)+60px)]">
       <Outlet />
-      <div className="h-[calc(env(safe-area-inset-bottom)+40px)]" />
       <BottomNavigator />
     </section>
   );

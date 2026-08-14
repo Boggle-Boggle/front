@@ -139,7 +139,7 @@ const Main = () => {
   const displayCount = keyword.trim() ? filteredBooks.length : totalCount;
 
   return (
-    <div className="relative h-dvh overflow-hidden bg-secondary">
+    <div className="relative h-full overflow-hidden bg-secondary">
       <div className="relative z-background flex h-full flex-col px-mobile pb-safe-bottom pt-safe-top">
         <Searchbar
           value={keyword}
