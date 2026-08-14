@@ -1,6 +1,7 @@
 import { RefObject } from 'react';
 
 import { TextButton } from 'components/Button';
+import { Loading } from 'components/Loading';
 import { IconArrowDown, IconMenu } from 'components/icons';
 
 import { ReadingBooksGrid } from './ReadingBooksGrid';
@@ -48,7 +49,7 @@ export const ReadingSection = (props: ReadingSectionProps) => {
         {isGridView && <ReadingBooksGrid books={books} />}
         {!isGridView && <ReadingBooksList books={books} />}
       </div>
-      {isLoading && <div> 로딩중</div>}
+      {isLoading && <Loading />}
       <div ref={observerTarget} className="h-4 w-full" />
     </>
   );
