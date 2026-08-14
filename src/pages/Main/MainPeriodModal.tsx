@@ -31,6 +31,9 @@ const MSG_MAIN_FILTER_GROUP_DESC = '완독한 책을 그룹별로 볼 수 있어
 const MSG_MAIN_FILTER_PERIOD_TITLE = '기간별로 보기';
 const MSG_MAIN_FILTER_PERIOD_DESC = '완독한 책을 기간별로 볼 수 있어요';
 
+const MSG_MAIN_FILTER_NO_GROUP = '생성된 그룹책장이 없습니다.';
+const MSG_MAIN_FILTER_CONFIRM = '확인';
+
 export const MainPeriodModal = (props: MainPeriodModalProps) => {
   const { currentFilter, currentBookshelfId, currentYear, currentMonth, onConfirm, bookshelves } = props;
   const { pop } = useLayerStore();
@@ -130,7 +133,7 @@ export const MainPeriodModal = (props: MainPeriodModalProps) => {
                   );
                 })
               ) : (
-                <p className="py-2 text-body2 text-neutral-60">생성된 그룹책장이 없습니다.</p>
+                <p className="py-2 text-body2 text-neutral-60">{MSG_MAIN_FILTER_NO_GROUP}</p>
               )}
             </div>
           )}
@@ -160,8 +163,8 @@ export const MainPeriodModal = (props: MainPeriodModalProps) => {
       </div>
 
       {/* 확인 버튼 */}
-      <Button onClick={handleConfirm} size="medium" variant="primary">
-        확인
+      <Button onClick={handleConfirm} size="medium" variant="primary" className="w-full">
+        {MSG_MAIN_FILTER_CONFIRM}
       </Button>
     </ContentModal>
   );
