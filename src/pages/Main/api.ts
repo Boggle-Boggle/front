@@ -13,7 +13,7 @@ type ReadingLogSort =
   | 'CREATED_AT_DESC'
   | 'CREATED_AT_ASC';
 
-interface GetReadingLogsParams extends PaginationParams {
+export interface GetReadingLogsParams extends PaginationParams {
   sort: ReadingLogSort;
   status: ReadingLogStatus;
   bookshelfId?: number;

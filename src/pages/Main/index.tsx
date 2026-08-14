@@ -11,7 +11,7 @@ import { Searchbar } from 'components/Searchbar';
 import { IconArrowDown } from 'components/icons';
 
 import { MainPeriodModal } from './MainPeriodModal';
-import { getReadingLogs } from './api';
+import { getReadingLogs, type GetReadingLogsParams } from './api';
 import type { MainPeriodFilterType, Bookshelf } from './types';
 
 type MainBookCaseItem = {
@@ -23,7 +23,6 @@ type MainBookCaseItem = {
 };
 
 const MSG_TITLE_SEARCH_PLACEHOLDER = '책 제목을 입력해주세요';
-const MSG_MAIN_BOOKCASE_TITLE = (year: number) => `${year}년 전체 책장`;
 const MSG_MAIN_BOOKCASE_COUNT = (count: number) => `${count}권 채웠습니다`;
 const MAIN_READING_LOGS_PAGE = 1;
 const MAIN_READING_LOGS_PAGE_SIZE = 100;
@@ -31,21 +30,32 @@ const MAIN_READING_LOGS_PAGE_SIZE = 100;
 const Main = () => {
   const navigate = useNavigate();
   const { push } = useLayerStore();
-  const currentYear = new Date().getFullYear();
 
   const [keyword, setKeyword] = useState<string>('');
   const [periodFilter, setPeriodFilter] = useState<MainPeriodFilterType>('ALL');
+  const [selectedBookshelfId, setSelectedBookshelfId] = useState<number | null>(null);
+  const [selectedYear, setSelectedYear] = useState<number>(new Date().getFullYear());
+  const [selectedMonth, setSelectedMonth] = useState<number>(new Date().getMonth() + 1);
 
   const { data: readingLogs } = useQuery({
-    queryKey: ['reading-logs', 'list', currentYear],
-    queryFn: () =>
-      getReadingLogs({
+    queryKey: ['reading-logs', 'list', periodFilter, selectedBookshelfId, selectedYear, selectedMonth],
+    queryFn: () => {
+      const params: GetReadingLogsParams = {
         page: MAIN_READING_LOGS_PAGE,
         size: MAIN_READING_LOGS_PAGE_SIZE,
         sort: 'START_DATE_DESC',
         status: 'ALL',
-        year: currentYear,
-      }),
+      };
+
+      if (periodFilter === 'GROUP' && selectedBookshelfId) {
+        params.bookshelfId = selectedBookshelfId;
+      } else if (periodFilter === 'PERIOD') {
+        params.year = selectedYear;
+        params.month = selectedMonth;
+      }
+
+      return getReadingLogs(params);
+    },
   });
 
   const { data: bookshelves } = useQuery<Bookshelf[]>({
@@ -60,9 +70,32 @@ const Main = () => {
     push({
       id: 'main-period-modal',
       component: (
-        <MainPeriodModal currentFilter={periodFilter} onSelectFilter={setPeriodFilter} bookshelves={bookshelves} />
+        <MainPeriodModal
+          currentFilter={periodFilter}
+          currentBookshelfId={selectedBookshelfId}
+          currentYear={selectedYear}
+          currentMonth={selectedMonth}
+          onConfirm={({ filter, bookshelfId, year, month }) => {
+            setPeriodFilter(filter);
+            setSelectedBookshelfId(bookshelfId);
+            setSelectedYear(year);
+            setSelectedMonth(month);
+          }}
+          bookshelves={bookshelves}
+        />
       ),
     });
+  };
+
+  const getBookcaseTitle = () => {
+    if (periodFilter === 'GROUP') {
+      const activeBookshelf = bookshelves?.find((b) => b.id === selectedBookshelfId);
+      return activeBookshelf ? `${activeBookshelf.name} 책장` : '그룹별 책장';
+    }
+    if (periodFilter === 'PERIOD') {
+      return `${selectedYear}년 ${selectedMonth}월 책장`;
+    }
+    return '전체 책장';
   };
 
   // 1. 책 목록을 최초 로드했을 때 딱 한 번만 es-hangul의 disassemble 및 getChoseong을 미리 연산(Pre-compute)하여 캐싱해 둡니다.
@@ -115,7 +148,7 @@ const Main = () => {
           placeholder={MSG_TITLE_SEARCH_PLACEHOLDER}
         />
         <button type="button" onClick={handleOpenFilter} className="mt-4 flex items-center gap-1 text-left text-title1">
-          {MSG_MAIN_BOOKCASE_TITLE(currentYear)}
+          {getBookcaseTitle()}
 
           <IconArrowDown className="ml-1 size-icon-sm text-neutral-60" />
         </button>
