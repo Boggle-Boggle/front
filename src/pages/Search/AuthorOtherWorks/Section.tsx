@@ -24,7 +24,7 @@ export const AuthorOtherWorksSection = () => {
   return (
     <>
       <Title text={MSG_SEARCH_AUTHOR_OTHER_WORKS_TITLE} onLoadMore={handleLoadMore} />
-      <ul className="flex justify-center px-mobile">
+      <ul className="mb-3 flex justify-center px-mobile">
         <li className="flex h-[11.625rem] w-full rounded-[16px] border-[1px] border-neutral-20 shadow-[0_0.375rem_0.9375rem_0_#A0B1C040]">
           <Link to={`/books/${primaryBook.isbn13}`} className="flex h-full w-full min-w-0 gap-5 p-6">
             <div className="shrink-0">
