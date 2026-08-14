@@ -73,21 +73,17 @@ export const FilterSidebar = (props: FilterSidebarProps) => {
             const statusLabel = typeof option.count === 'number' ? `${option.label} (${option.count})` : option.label;
 
             return (
-              <button
+              <Radio
                 key={option.value}
-                type="button"
-                className="flex w-full items-center justify-between py-3 text-body1 text-neutral-80"
-                onClick={handleSelectFilter(option.value)}
+                id={`mybooks-filter-${option.value}`}
+                name="mybooks-filter"
+                checked={isChecked}
+                onChange={handleSelectFilter(option.value)}
+                variant="primary"
+                className="py-3"
               >
-                {statusLabel}
-                <Radio
-                  id={`mybooks-filter-${option.value}`}
-                  name="mybooks-filter"
-                  checked={isChecked}
-                  onChange={handleSelectFilter(option.value)}
-                  variant="primary"
-                />
-              </button>
+                <span className="text-body1 text-neutral-80">{statusLabel}</span>
+              </Radio>
             );
           })}
 
@@ -103,22 +99,17 @@ export const FilterSidebar = (props: FilterSidebarProps) => {
                 const isChecked = draftBookshelfId === group.id;
 
                 return (
-                  <button
+                  <Radio
                     key={group.id}
-                    type="button"
-                    className="active:bg-neutral-10/50 flex w-full items-center justify-between rounded-lg py-4 pl-0 pr-2 text-body1 text-neutral-80 outline-none transition-all"
-                    onClick={handleSelectBookshelf(group.id)}
+                    id={`mybooks-filter-bookshelf-${group.id}`}
+                    name="mybooks-filter-bookshelf"
+                    checked={isChecked}
+                    onChange={handleSelectBookshelf(group.id)}
+                    variant="primary"
+                    className="active:bg-neutral-10/50 rounded-lg py-4 pl-0 pr-2 transition-all"
                   >
                     <span className="text-body1 text-neutral-80">{group.name}</span>
-                    <Radio
-                      id={`mybooks-filter-bookshelf-${group.id}`}
-                      name="mybooks-filter-bookshelf"
-                      checked={isChecked}
-                      onChange={() => {}}
-                      variant="primary"
-                      className="pointer-events-none"
-                    />
-                  </button>
+                  </Radio>
                 );
               })
             ) : (
