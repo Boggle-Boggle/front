@@ -52,11 +52,13 @@ export const MainPeriodModal = (props: MainPeriodModalProps) => {
     pop();
   };
 
+  const START_YEAR = 2000;
   const currentYearNum = new Date().getFullYear();
-  const years = Array.from({ length: 10 }, (_, i) => {
-    const y = currentYearNum - 9 + i;
+  const yearLength = currentYearNum - START_YEAR + 1;
+  const years = Array.from({ length: yearLength }, (_, i) => {
+    const y = START_YEAR + i;
     return { value: y, label: `${y}년` };
-  }).reverse();
+  });
 
   const months = Array.from({ length: 12 }, (_, i) => {
     const m = i + 1;
