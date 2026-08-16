@@ -71,16 +71,19 @@ const SearchResult = () => {
 
     if (!trimmedQuery) return;
 
-    setSearchParams({ q: trimmedQuery, type: searchMediaType });
+    setSearchParams({ q: trimmedQuery, type: searchMediaType }, { replace: true });
   };
 
   const handleSearchChange = (value: string) => setLocalQuery(value);
 
   const handleSelectFilter = (filter: SearchFilterType) => {
-    setSearchParams({
-      q: query,
-      type: SEARCH_FILTER_OPTION_BY_FILTER[filter].mediaType,
-    });
+    setSearchParams(
+      {
+        q: query,
+        type: SEARCH_FILTER_OPTION_BY_FILTER[filter].mediaType,
+      },
+      { replace: true },
+    );
   };
 
   const handleOpenFilter = () => {
