@@ -71,20 +71,35 @@ export const BookDetail = () => {
       else await addInterestedBook(data.isbn13);
     },
     onMutate: async (isInterested) => {
-      queryClient.setQueryData<BookDetailType>(['book-detail', isbn13], (prev) => {
+      // 1. 진행 중인 리페칭을 취소합니다.
+      await queryClient.cancelQueries({ queryKey: ['books', 'detail', isbn13] });
+
+      // 2. 이전 상태 데이터를 보관(스냅샷)합니다.
+      const previousDetail = queryClient.getQueryData<BookDetailType>(['books', 'detail', isbn13]);
+
+      // 3. 캐시 데이터를 낙천적으로 업데이트합니다.
+      queryClient.setQueryData<BookDetailType>(['books', 'detail', isbn13], (prev) => {
         if (!prev) return prev;
         return { ...prev, isInterested: !isInterested };
       });
+
+      // 4. 에러 발생 시 원래 상태로 복구하기 위한 컨텍스트를 반환합니다.
+      return { previousDetail };
     },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['book-detail', isbn13] });
-      queryClient.invalidateQueries({ queryKey: ['interested-books'] });
-    },
-    onError: () => {
+    onError: (err, isInterested, context) => {
+      // 5. 에러 발생 시 원래 상태로 롤백합니다.
+      if (context?.previousDetail) {
+        queryClient.setQueryData(['books', 'detail', isbn13], context.previousDetail);
+      }
       addToast({
         description: MSG_BOOK_DETAIL_WISHLIST_FAILED,
         type: 'error',
       });
+    },
+    onSettled: () => {
+      // 6. 완료 시 서버 동기화를 위해 인밸리데이션을 진행합니다.
+      queryClient.invalidateQueries({ queryKey: ['books', 'detail', isbn13] });
+      queryClient.invalidateQueries({ queryKey: ['interested-books'] });
     },
   });
 
