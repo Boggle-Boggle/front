@@ -58,7 +58,7 @@ export const AddRecordStatusBottomSheet = (props: AddRecordStatusBottomSheetProp
                   onClick={handleSelectStatus(option.id)}
                   className={`flex h-[8.875rem] w-full flex-col items-center justify-end gap-2 overflow-hidden rounded-xl border-[2px] bg-neutral-0 px-4 pb-3 pt-4 ${cardClassName}`}
                 >
-                  <img src={option.imageSrc} alt="" className="h-[5.125rem] w-[5.125rem]" />
+                  <img src={option.imageSrc} alt="" decoding="async" className="size-[5.125rem]" />
                   <span className={labelClassName}>{option.label}</span>
                 </button>
               </li>
