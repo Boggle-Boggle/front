@@ -61,7 +61,7 @@ const Login = () => {
 
   const handleLogin = (provider: LoginProvider) => {
     window.localStorage.setItem(STORAGE_KEY.RECENT_LOGIN_PROVIDER, provider);
-    window.location.href = getOAuthStartUrl(provider);
+    window.location.replace(getOAuthStartUrl(provider));
   };
 
   return (

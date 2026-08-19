@@ -84,7 +84,7 @@ const SignUp = () => {
     );
   };
 
-  const handleComplete = () => navigate('/');
+  const handleComplete = () => navigate('/', { replace: true });
 
   if (outlet) return <Outlet />;
 
