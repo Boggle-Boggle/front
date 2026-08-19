@@ -47,7 +47,7 @@ export const BookCard = (props: BookCardProps) => {
             <span className="shrink-0 text-[10px] text-neutral-60">{book.progress}%</span>
           </div>
         )}
-        {isStopped && (
+        {(isRead || isStopped) && (
           <div className="flex h-3.5 items-center">
             <StarRating value={book.rating} size={10.5} className="text-[#FFAA00]" />
           </div>
