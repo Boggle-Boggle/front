@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react';
 import type { ChangeEvent, FormEvent } from 'react';
 
 import Cancel from 'components/icons/Cancel';
@@ -14,6 +15,7 @@ type SearchbarProps = {
   isSearched?: boolean;
   ariaLabel?: string;
   onFocus?: () => void;
+  autoFocus?: boolean;
 };
 
 export const Searchbar = (props: SearchbarProps) => {
@@ -26,7 +28,16 @@ export const Searchbar = (props: SearchbarProps) => {
     isSearched = false,
     ariaLabel = 'search',
     onFocus,
+    autoFocus,
   } = props;
+
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (autoFocus && inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [autoFocus]);
 
   const isEmpty = value.length === 0;
   const showSearchIcon = isEmpty || isSearched;
@@ -52,6 +63,7 @@ export const Searchbar = (props: SearchbarProps) => {
         className="flex h-10 w-full items-center justify-between rounded-[28px] border border-neutral-20 bg-neutral-0 px-4 py-2"
       >
         <input
+          ref={inputRef}
           type="text"
           value={value}
           onChange={handleInputChange}

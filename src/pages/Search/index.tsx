@@ -42,6 +42,7 @@ const Search = () => {
           onChange={handleSearchChange}
           onFocus={handleFocus}
           onSubmit={handleSearchSubmit}
+          autoFocus
         />
         <IconButton label={MSG_SEARCH_ADD_BOOK_LABEL} icon={BookPlus} onClick={handleAddCustomBook} />
       </div>
