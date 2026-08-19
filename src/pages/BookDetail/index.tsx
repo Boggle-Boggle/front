@@ -110,7 +110,8 @@ export const BookDetail = () => {
   const handleOpenStoreClick = () => {
     if (!data) return;
 
-    window.location.href = getAladinBookDetailUrl(data.itemId);
+    const searchQuery = data.isbn13 || data.title;
+    window.location.href = `https://www.aladin.co.kr/search/wsearchresult.aspx?SearchTarget=All&SearchWord=${encodeURIComponent(searchQuery)}`;
   };
 
   const handleShareClick = () => {};
