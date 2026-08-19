@@ -16,6 +16,7 @@ const convertInterestedBookToMyBook = (book: InterestedBookItemResponse): MyBook
   progress: 0,
   author: book.author,
   createdAt: book.createdAt,
+  isbn13: book.isbn13,
 });
 
 const getWishlistBooks = async (page: number, size = 15): Promise<PaginationMockResponse<MyBook[]>> => {

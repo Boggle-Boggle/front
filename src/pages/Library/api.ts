@@ -21,7 +21,7 @@ export interface GetReadingLogsParams extends PaginationParams {
   month?: number;
 }
 
-type ReadingLogBookResponse = Pick<Book, 'title' | 'author' | 'coverUrl' | 'totalPages' | 'isAdult'>;
+type ReadingLogBookResponse = Pick<Book, 'title' | 'author' | 'coverUrl' | 'totalPages' | 'isAdult' | 'isbn13'>;
 
 export interface ReadingLogListItemResponse {
   id: number;
