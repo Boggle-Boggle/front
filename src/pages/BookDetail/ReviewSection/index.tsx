@@ -40,15 +40,14 @@ export const ReviewSection = () => {
           {MSG_REVIEW_SUMMARY_SUFFIX}
         </p>
 
-        {totalReviewCount > 0 && (
-          <TextButton
-            onClick={handleReviewMoreClick}
-            text={MSG_REVIEW_MORE}
-            size="md"
-            variant="default"
-            rightIcon={IconArrowRight}
-          />
-        )}
+        {/* TODO: 리뷰 더보기 정책 결정 */}
+        <TextButton
+          onClick={handleReviewMoreClick}
+          text={MSG_REVIEW_MORE}
+          size="md"
+          variant="default"
+          rightIcon={IconArrowRight}
+        />
       </div>
 
       {totalReviewCount === 0 ? (
