@@ -76,3 +76,21 @@ export const createBookReview = async (params: CreateBookReviewRequest) => {
 
   return response.data.data;
 };
+
+export interface ReviewLikeResponse {
+  reviewId: number;
+  likeCount: number;
+  isLiked: boolean;
+}
+
+export const likeBookReview = async (reviewId: string) => {
+  const response = await api.post<ApiSuccessResponse<ReviewLikeResponse>>(`/v2/reviews/${reviewId}/like`);
+
+  return response.data.data;
+};
+
+export const unlikeBookReview = async (reviewId: string) => {
+  const response = await api.delete<ApiSuccessResponse<ReviewLikeResponse>>(`/v2/reviews/${reviewId}/like`);
+
+  return response.data.data;
+};

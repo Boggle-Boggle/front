@@ -12,7 +12,14 @@ import { IconArrowDown } from 'components/icons';
 import { useInfiniteScrollObserver } from 'hooks/useInfiniteScrollObserver';
 
 import { ReviewSortActionSheet } from './SortActionSheet';
-import { createBookReview, getBookReviews, REVIEW_SORT_OPTIONS, type ReviewSortType } from '../api';
+import {
+  createBookReview,
+  getBookReviews,
+  likeBookReview,
+  unlikeBookReview,
+  REVIEW_SORT_OPTIONS,
+  type ReviewSortType,
+} from '../api';
 import { ReviewCard } from '../shared/ReviewCard';
 
 const MSG_REVIEW_PAGE_TITLE = '빼곡한 리뷰';
@@ -46,6 +53,11 @@ export const Reviews = () => {
     initialPageParam: 1,
     enabled: Boolean(isbn13),
   });
+
+  const myReview = data?.pages[0]?.myReview;
+  const reviews = data ? data.pages.flatMap((page) => page.reviews) : [];
+  const allReviews = myReview ? [myReview, ...reviews] : reviews;
+  const totalReviewCount = data?.pages[0]?.totalReviewCount || 0;
 
   const { observerTarget } = useInfiniteScrollObserver({
     enabled: Boolean(hasNextPage && !isFetchingNextPage),
@@ -87,12 +99,24 @@ export const Reviews = () => {
     });
   };
 
-  const handleToggleLike = () => {};
+  // 리뷰 좋아요 Mutation
+  const toggleLikeMutation = useMutation({
+    mutationFn: ({ reviewId, isLiked }: { reviewId: string; isLiked: boolean }) =>
+      isLiked ? unlikeBookReview(reviewId) : likeBookReview(reviewId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['books', isbn13, 'reviews'] });
+    },
+  });
 
-  const myReview = data?.pages[0]?.myReview;
-  const reviews = data ? data.pages.flatMap((page) => page.reviews) : [];
-  const allReviews = myReview ? [myReview, ...reviews] : reviews;
-  const totalReviewCount = data?.pages[0]?.totalReviewCount || 0;
+  const handleToggleLike = (reviewId: string) => {
+    const review = allReviews.find((r) => String(r.id) === reviewId);
+    if (!review || toggleLikeMutation.isPending) return;
+
+    toggleLikeMutation.mutate({
+      reviewId,
+      isLiked: review.isLiked,
+    });
+  };
 
   return (
     <>

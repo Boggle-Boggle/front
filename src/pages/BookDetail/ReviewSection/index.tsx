@@ -1,11 +1,11 @@
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 import { useNavigate, useParams } from 'react-router-dom';
 
 import { TextButton } from 'components/Button/TextButton';
 import { IconArrowRight } from 'components/icons';
 
-import { getBookReviews } from '../api';
+import { getBookReviews, likeBookReview, unlikeBookReview } from '../api';
 import { ReviewCard } from '../shared/ReviewCard';
 
 const MSG_REVIEW_SUMMARY_PREFIX = '총 ';
@@ -14,6 +14,7 @@ const MSG_REVIEW_MORE = '리뷰 더보기';
 
 export const ReviewSection = () => {
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const { isbn13 = '' } = useParams();
 
   const { data } = useQuery({
@@ -27,7 +28,24 @@ export const ReviewSection = () => {
   const previewReviews = myReview ? [myReview, ...reviewsList] : reviewsList;
   const totalReviewCount = data?.totalReviewCount || 0;
 
-  const handleToggleLike = () => {};
+  // 리뷰 좋아요 Mutation
+  const toggleLikeMutation = useMutation({
+    mutationFn: ({ reviewId, isLiked }: { reviewId: string; isLiked: boolean }) =>
+      isLiked ? unlikeBookReview(reviewId) : likeBookReview(reviewId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['books', isbn13, 'reviews'] });
+    },
+  });
+
+  const handleToggleLike = (reviewId: string) => {
+    const review = previewReviews.find((r) => String(r.id) === reviewId);
+    if (!review || toggleLikeMutation.isPending) return;
+
+    toggleLikeMutation.mutate({
+      reviewId,
+      isLiked: review.isLiked,
+    });
+  };
 
   const handleReviewMoreClick = () => navigate(`/books/${isbn13}/reviews`);
 
