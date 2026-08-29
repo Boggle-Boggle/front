@@ -7,6 +7,8 @@ import { ContentModal } from 'components/Layer/ContentModal';
 type DateSelectModalProps = {
   title: string;
   initialDate?: string;
+  minDate?: string;
+  maxDate?: string;
   onSubmit: (date: string) => void;
   onClose: () => void;
 };
@@ -14,7 +16,7 @@ type DateSelectModalProps = {
 const KOREAN_WEEK_DAYS = ['일', '월', '화', '수', '목', '금', '토'];
 
 export const DateSelectModal = (props: DateSelectModalProps) => {
-  const { title, initialDate, onSubmit, onClose } = props;
+  const { title, initialDate, minDate, maxDate, onSubmit, onClose } = props;
   const [selectedDate, setSelectedDate] = useState<Date>(() => {
     if (initialDate) {
       const parsedDate = new Date(initialDate);
@@ -22,6 +24,9 @@ export const DateSelectModal = (props: DateSelectModalProps) => {
     }
     return new Date();
   });
+
+  const parsedMinDate = minDate ? new Date(minDate) : undefined;
+  const parsedMaxDate = maxDate ? new Date(maxDate) : undefined;
 
   // 캘린더 데이트피커의 현재 뷰 모드 상태 (기본은 달력 모드)
   const [pickerMode, setPickerMode] = useState<'calendar' | 'monthYearPicker'>('calendar');
@@ -61,6 +66,8 @@ export const DateSelectModal = (props: DateSelectModalProps) => {
         onChange={handleSelectDate}
         mode={pickerMode}
         onModeChange={setPickerMode}
+        minDate={parsedMinDate}
+        maxDate={parsedMaxDate}
       />
 
       <Button onClick={handleConfirm} className="text-[1rem] font-medium">

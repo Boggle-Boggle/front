@@ -13,6 +13,8 @@ type CalendarDatePickerProps =
       onChange: (date: Date) => void;
       mode?: CalendarDatePickerMode;
       onModeChange?: (mode: CalendarDatePickerMode) => void;
+      minDate?: Date;
+      maxDate?: Date;
     }
   | {
       type: 'range';
@@ -21,6 +23,8 @@ type CalendarDatePickerProps =
       onChange: (startDate: Date | null, endDate: Date | null) => void;
       mode?: CalendarDatePickerMode;
       onModeChange?: (mode: CalendarDatePickerMode) => void;
+      minDate?: Date;
+      maxDate?: Date;
     };
 
 type CalendarDatePickerMode = 'calendar' | 'monthYearPicker';
@@ -51,6 +55,8 @@ const getCalendarDates = (
   selectedDate: Date | null,
   startDate: Date | null,
   endDate: Date | null,
+  minDate?: Date | null,
+  maxDate?: Date | null,
 ): CalendarDate[] => {
   const firstDate = new Date(year, month, 1);
   const startDateOfCalendar = new Date(year, month, 1 - firstDate.getDay());
@@ -59,6 +65,8 @@ const getCalendarDates = (
   const selectedKey = selectedDate instanceof Date ? getDateKey(selectedDate) : null;
   const startKey = startDate instanceof Date ? getDateKey(startDate) : null;
   const endKey = endDate instanceof Date ? getDateKey(endDate) : null;
+  const minKey = minDate instanceof Date ? getDateKey(minDate) : null;
+  const maxKey = maxDate instanceof Date ? getDateKey(maxDate) : null;
   const hasRangeConnection = startKey !== null && endKey !== null;
 
   return Array.from({ length: CALENDAR_DATE_COUNT }).map((_, index) => {
@@ -82,6 +90,10 @@ const getCalendarDates = (
       isInBetween = startKey !== null && endKey !== null && dateKey > startKey && dateKey < endKey;
     }
 
+    let isDisabled = false;
+    if (minKey && dateKey < minKey) isDisabled = true;
+    if (maxKey && dateKey > maxKey) isDisabled = true;
+
     return {
       date,
       dateKey,
@@ -92,12 +104,13 @@ const getCalendarDates = (
       isInBetween,
       isSelected,
       hasRangeConnection,
+      isDisabled,
     };
   });
 };
 
 export const CalendarDatePicker = (props: CalendarDatePickerProps) => {
-  const { type = 'single', mode: externalMode, onModeChange: externalOnModeChange } = props;
+  const { type = 'single', mode: externalMode, onModeChange: externalOnModeChange, minDate, maxDate } = props;
   const isRange = type === 'range';
 
   // 현재 그리드에 보여지는 연/월 네비게이션 상태
@@ -157,13 +170,13 @@ export const CalendarDatePicker = (props: CalendarDatePickerProps) => {
     if (type === 'range') {
       const rangeProps = props as { startDate: Date | null; endDate: Date | null };
       const { startDate, endDate } = rangeProps;
-      return getCalendarDates(visibleYear, visibleMonth, 'range', null, startDate, endDate);
+      return getCalendarDates(visibleYear, visibleMonth, 'range', null, startDate, endDate, minDate, maxDate);
     }
     const singleProps = props as { selectedDate: Date };
     const { selectedDate } = singleProps;
     const safeSelectedDate = selectedDate instanceof Date ? selectedDate : new Date();
-    return getCalendarDates(visibleYear, visibleMonth, 'single', safeSelectedDate, null, null);
-  }, [props, visibleYear, visibleMonth, type]);
+    return getCalendarDates(visibleYear, visibleMonth, 'single', safeSelectedDate, null, null, minDate, maxDate);
+  }, [props, visibleYear, visibleMonth, type, minDate, maxDate]);
 
   const yearItems = useMemo(() => {
     const currentYear = new Date().getFullYear();

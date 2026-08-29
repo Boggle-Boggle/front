@@ -9,6 +9,8 @@ import { BottomButton } from 'components/Button';
 import { Header } from 'components/Header';
 import { createCustomReadingLog } from 'pages/AddCustomBook/api';
 
+import { getTodayDateString } from 'utils/format';
+
 import type { AddRecordStatus, BookDetail, CustomBookDto, ReadingLogProgressType } from 'types';
 
 import { createReadingLog } from './api';
@@ -36,20 +38,8 @@ export const NewRecord = () => {
   const [progressValue, setProgressValue] = useState<string>('');
   const [totalPageCountOverride, setTotalPageCountOverride] = useState<string>('');
   const [isHidden, setIsHidden] = useState<boolean>(false);
-  const [startDate, setStartDate] = useState<string>(() => {
-    const date = new Date();
-    const yyyy = date.getFullYear();
-    const mm = String(date.getMonth() + 1).padStart(2, '0');
-    const dd = String(date.getDate()).padStart(2, '0');
-    return `${yyyy}-${mm}-${dd}`;
-  });
-  const [endDate, setEndDate] = useState<string>(() => {
-    const date = new Date();
-    const yyyy = date.getFullYear();
-    const mm = String(date.getMonth() + 1).padStart(2, '0');
-    const dd = String(date.getDate()).padStart(2, '0');
-    return `${yyyy}-${mm}-${dd}`;
-  });
+  const [startDate, setStartDate] = useState<string>(getTodayDateString);
+  const [endDate, setEndDate] = useState<string>(getTodayDateString);
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -139,7 +129,13 @@ export const NewRecord = () => {
     push({
       id: 'book-record-start-date-modal',
       component: (
-        <DateSelectModal title={MSG_DATE_SELECT_START} initialDate={startDate} onSubmit={setStartDate} onClose={pop} />
+        <DateSelectModal
+          title={MSG_DATE_SELECT_START}
+          initialDate={startDate}
+          maxDate={getTodayDateString()}
+          onSubmit={setStartDate}
+          onClose={pop}
+        />
       ),
     });
   };
@@ -148,7 +144,14 @@ export const NewRecord = () => {
     push({
       id: 'book-record-end-date-modal',
       component: (
-        <DateSelectModal title={MSG_DATE_SELECT_END} initialDate={endDate} onSubmit={setEndDate} onClose={pop} />
+        <DateSelectModal
+          title={MSG_DATE_SELECT_END}
+          initialDate={endDate}
+          minDate={startDate}
+          maxDate={getTodayDateString()}
+          onSubmit={setEndDate}
+          onClose={pop}
+        />
       ),
     });
   };
