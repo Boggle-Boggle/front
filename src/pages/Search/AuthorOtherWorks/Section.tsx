@@ -17,7 +17,7 @@ export const AuthorOtherWorksSection = () => {
 
   const books = data?.items ?? [];
 
-  if (isLoading) return null;
+  if (isLoading || books.length === 0) return null;
 
   const primaryBook = books[0];
 

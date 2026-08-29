@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import IconButton from 'components/Button/IconButton';
 import { Searchbar } from 'components/Searchbar';
@@ -15,8 +15,11 @@ import { TrendingSection } from './Trending/Section';
 const MSG_SEARCH_ADD_BOOK_LABEL = '도서 추가';
 
 const Search = () => {
+  const { state } = useLocation();
+  const shouldAutoFocus = state?.autoFocus ?? false;
+
   const [query, setQuery] = useState<string>('');
-  const [isSearched, setIsSearched] = useState<boolean>(false);
+  const [isSearched, setIsSearched] = useState<boolean>(shouldAutoFocus);
   const navigate = useNavigate();
 
   const handleSearchChange = (value: string) => setQuery(value);
@@ -42,7 +45,7 @@ const Search = () => {
           onChange={handleSearchChange}
           onFocus={handleFocus}
           onSubmit={handleSearchSubmit}
-          autoFocus
+          autoFocus={shouldAutoFocus}
         />
         <IconButton label={MSG_SEARCH_ADD_BOOK_LABEL} icon={BookPlus} onClick={handleAddCustomBook} />
       </div>

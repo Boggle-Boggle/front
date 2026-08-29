@@ -113,7 +113,7 @@ const Main = () => {
         <Searchbar
           value=""
           onChange={() => {}}
-          onFocus={() => navigate('/search')}
+          onFocus={() => navigate('/search', { state: { autoFocus: true } })}
           placeholder={MSG_TITLE_SEARCH_PLACEHOLDER}
         />
         <button type="button" onClick={handleOpenFilter} className="mt-4 flex items-center gap-1 text-left text-title1">
