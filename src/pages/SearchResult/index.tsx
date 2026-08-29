@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { useLayerStore } from 'stores/useLayerStore';
 
@@ -53,6 +53,9 @@ const SearchResult = () => {
   const [localQuery, setLocalQuery] = useState<string>(query);
   const { push } = useLayerStore();
 
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const scrollStorageKey = `search_result_scroll_top_${query}_${searchMediaType}`;
+
   const { data, fetchNextPage, hasNextPage, isLoading, isFetchingNextPage } = useSearchBooksQuery(
     query,
     searchMediaType,
@@ -61,6 +64,24 @@ const SearchResult = () => {
     enabled: Boolean(hasNextPage && !isFetchingNextPage),
     onIntersect: fetchNextPage,
   });
+
+  const searchResults = data ? data.pages.flatMap((page) => page.data.items) : [];
+
+  const handleScroll = () => {
+    if (scrollContainerRef.current) {
+      sessionStorage.setItem(scrollStorageKey, String(scrollContainerRef.current.scrollTop));
+    }
+  };
+
+  useLayoutEffect(() => {
+    if (searchResults.length > 0 && scrollContainerRef.current) {
+      const savedScrollTop = sessionStorage.getItem(scrollStorageKey);
+      if (savedScrollTop) {
+        scrollContainerRef.current.scrollTop = Number(savedScrollTop);
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchResults.length, scrollStorageKey]);
 
   useEffect(() => {
     setLocalQuery(query);
@@ -93,7 +114,6 @@ const SearchResult = () => {
     });
   };
 
-  const searchResults = data ? data.pages.flatMap((page) => page.data.items) : [];
   const totalCount = data?.pages[0]?.meta.page.total || 0;
   const searchFilterLabel = SEARCH_FILTER_OPTION_BY_FILTER[searchFilter].label;
 
@@ -130,7 +150,7 @@ const SearchResult = () => {
         />
       </div>
 
-      <div className="flex-1 overflow-y-auto px-mobile">
+      <div ref={scrollContainerRef} onScroll={handleScroll} className="flex-1 overflow-y-auto px-mobile">
         {searchResults.length === 0 ? (
           <div className="flex h-full w-full items-center justify-center py-20 text-body2 text-neutral-60">
             검색 결과가 없습니다.
