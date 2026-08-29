@@ -48,7 +48,7 @@ export const ReadingBooksList = (props: ReadingBooksListProps) => {
                 readingStatusBadge={readingStatusBadge}
               />
               <div className="z-book min-w-0 pl-5 pr-mobile">
-                <p className="line-clamp-2 text-title3">{title}</p>
+                <p className="line-clamp-2 text-title4">{title}</p>
                 <p className="line-clamp-1 pb-0.5 text-caption1 text-neutral-80">{author}</p>
                 <StarRating value={rating} size={14} />
                 <p className="text-caption1 text-neutral-40">{periodText}</p>
