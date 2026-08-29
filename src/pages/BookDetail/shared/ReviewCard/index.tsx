@@ -32,12 +32,14 @@ export const ReviewCard = (props: ReviewCardProps) => {
   const { push } = useLayerStore();
   const navigate = useNavigate();
 
-  const handleReportClick = () => navigate('/report');
+  const handleReportClick = () => {
+    navigate('/report', { state: { reviewId: id, userId: author.userId } });
+  };
 
   const handleBlockClick = () => {
     push({
       id: `book-detail-review-block-user-modal-${id}`,
-      component: <BlockUserConfirmModal />,
+      component: <BlockUserConfirmModal userId={author.userId} />,
     });
   };
 

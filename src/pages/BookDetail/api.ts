@@ -94,3 +94,7 @@ export const unlikeBookReview = async (reviewId: string) => {
 
   return response.data.data;
 };
+
+export const blockUser = async (userId: number) => {
+  await api.post(`/v2/users/${userId}/block`);
+};
