@@ -203,7 +203,7 @@ const Library = () => {
   };
 
   return (
-    <div className="flex h-full w-full flex-col pb-safe-bottom pt-safe-top">
+    <div className="flex h-full w-full flex-col pt-safe-top">
       {/* 독서기록/관심도서/보기방식 혹은 검색바 */}
       {isSearchMode ? (
         <div className="flex w-full items-center justify-start py-3 pr-mobile">

@@ -109,7 +109,7 @@ const Main = () => {
 
   return (
     <div className="relative h-full overflow-hidden bg-secondary">
-      <div className="relative z-background flex h-full flex-col px-mobile pb-safe-bottom pt-safe-top">
+      <div className="relative z-background flex h-full flex-col px-mobile pt-safe-top">
         <Searchbar
           value=""
           onChange={() => {}}
