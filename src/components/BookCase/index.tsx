@@ -1,4 +1,7 @@
+import { useState, useEffect, useRef } from 'react';
+
 import { Book } from './Book';
+import { getBookThickness } from './utils';
 
 export type BookCaseBook = {
   id: number;
@@ -11,15 +14,6 @@ type BookCaseProps = {
   onBookClick?: (id: number) => void;
 };
 
-const getThicknessPx = (page: number) => {
-  if (page >= 500) return 54;
-  if (page > 400) return 48;
-  if (page > 300) return 40;
-  if (page > 200) return 32;
-  if (page > 100) return 24;
-  return 16;
-};
-
 const getShelfBooks = (books: BookCaseBook[], bookcaseWidth: number) => {
   const { currentShelfBooks, shelves: reducedShelves } = books.reduce<{
     currentShelfBooks: BookCaseBook[];
@@ -27,7 +21,7 @@ const getShelfBooks = (books: BookCaseBook[], bookcaseWidth: number) => {
     shelves: BookCaseBook[][];
   }>(
     (acc, book) => {
-      const thickness = getThicknessPx(book.page);
+      const thickness = getBookThickness(book.page).px;
       const shouldStartNextShelf =
         acc.currentShelfBooks.length > 0 && acc.currentShelfWidth + thickness >= bookcaseWidth;
 
@@ -63,10 +57,43 @@ const getShelfBooks = (books: BookCaseBook[], bookcaseWidth: number) => {
 
 export const BookCase = (props: BookCaseProps) => {
   const { books, onBookClick } = props;
-  const remToPx = (rem: number) => rem * parseFloat(getComputedStyle(document.documentElement).fontSize);
+  const containerRef = useRef<HTMLDivElement>(null);
 
-  // bookcaseWidth = 전체 화면너비 - 양쪽 패딩(1rem * 2) - 책장 사이 간격(1.25rem * 2) - 책장과 양끝 책사이간격-  border(2px * 2)
-  const bookcaseWidth = window.innerWidth - remToPx(1 * 2) - remToPx(1.25 * 2) - remToPx(0.625 * 2) - 4;
+  const remToPx = (rem: number) => {
+    if (typeof document === 'undefined') return rem * 16;
+    return rem * parseFloat(getComputedStyle(document.documentElement).fontSize);
+  };
+
+  const [containerWidth, setContainerWidth] = useState<number>(() => {
+    if (typeof window === 'undefined') return 300;
+    try {
+      const rootFontSize = parseFloat(getComputedStyle(document.documentElement).fontSize) || 16;
+      // bookcaseWidth = 전체 화면너비 - 양쪽 패딩(1rem * 2) - 책장 외곽 패딩(1.25rem * 2) - border(1px * 2)
+      return window.innerWidth - rootFontSize * (1 * 2 + 1.25 * 2) - 2;
+    } catch {
+      return 300;
+    }
+  });
+
+  useEffect(() => {
+    const element = containerRef.current;
+    if (!element) return;
+
+    const observer = new ResizeObserver((entries) => {
+      entries.forEach((entry) => {
+        setContainerWidth(entry.contentRect.width);
+      });
+    });
+
+    observer.observe(element);
+
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
+
+  // bookcaseWidth = ResizeObserver로 구한 가용 너비 - 책장 내부의 양끝 책 간격(px-[0.625rem] * 2)
+  const bookcaseWidth = containerWidth - remToPx(0.625 * 2);
   const allBooks = getShelfBooks(books, bookcaseWidth);
 
   const outerHeight = 524 + 126 * (allBooks.length - 4);
@@ -77,6 +104,7 @@ export const BookCase = (props: BookCaseProps) => {
 
   return (
     <div
+      ref={containerRef}
       style={{ boxShadow: outerBoxShadow, height: outerHeight }}
       className="w-full rounded-[32px] border border-neutral-20 bg-neutral-0 p-5"
     >

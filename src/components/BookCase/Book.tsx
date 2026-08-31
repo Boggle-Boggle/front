@@ -1,3 +1,5 @@
+import { getBookThickness } from './utils';
+
 type BookProps = {
   page: number;
   title: string;
@@ -10,23 +12,13 @@ export const Book = (props: BookProps) => {
   const { page, title, onClick } = props;
   const bgColorClass = bookColors[page % bookColors.length];
 
-  const widthClass =
-    page >= 500
-      ? 'w-14'
-      : page >= 400
-        ? 'w-12'
-        : page >= 300
-          ? 'w-10'
-          : page >= 200
-            ? 'w-8'
-            : page >= 100
-              ? 'w-6'
-              : 'w-4';
+  const { className: widthClass } = getBookThickness(page);
 
   const filteredTitle = title.replace(/[^a-zA-Z0-9가-힣]+/g, '').slice(0, page >= 400 ? 21 : page >= 200 ? 14 : 7);
 
   return (
-    <div
+    <button
+      type="button"
       style={{
         boxShadow: 'inset 0px -1.11px 3.33px rgba(0, 0, 0, 0.25)',
         writingMode: 'vertical-lr',
@@ -38,6 +30,6 @@ export const Book = (props: BookProps) => {
       <span className="flex w-3 items-center justify-center text-center font-book text-[10px] leading-none text-neutral-100 opacity-40">
         {filteredTitle}
       </span>
-    </div>
+    </button>
   );
 };
