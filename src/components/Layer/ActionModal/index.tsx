@@ -29,7 +29,7 @@ export const ActionModal = (props: ActionModalProps) => {
     <Modal>
       <div className="flex flex-col gap-1 pb-4">
         <h1 className="text-title2">{title}</h1>
-        {description && <p className="text-body1 text-neutral-60">{description}</p>}
+        {description && <p className="whitespace-pre-line text-body1 text-neutral-60">{description}</p>}
       </div>
 
       <div className="flex items-center gap-1 text-body1">
