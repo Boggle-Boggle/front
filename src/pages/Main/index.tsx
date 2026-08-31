@@ -9,6 +9,8 @@ import { BookCase } from 'components/BookCase';
 import { Searchbar } from 'components/Searchbar';
 import { IconArrowDown } from 'components/icons';
 
+import { useScrollRestoration } from 'hooks/useScrollRestoration';
+
 import { MainPeriodModal } from './MainPeriodModal';
 import { getReadingLogs, type GetReadingLogsParams } from './api';
 import type { MainPeriodFilterType, Bookshelf } from './types';
@@ -52,6 +54,10 @@ const Main = () => {
 
       return getReadingLogs(params);
     },
+  });
+
+  const scrollRef = useScrollRestoration<HTMLDivElement>({
+    isReady: readingLogs !== undefined,
   });
 
   const { data: bookshelves } = useQuery<Bookshelf[]>({
@@ -122,7 +128,7 @@ const Main = () => {
           <IconArrowDown className="ml-1 size-icon-sm text-neutral-60" />
         </button>
         <p className="mb-[1.375rem] text-body1 text-neutral-60">{MSG_MAIN_BOOKCASE_COUNT(displayCount)}</p>
-        <div className="h-0 flex-grow overflow-y-auto pb-safe-bottom">
+        <div ref={scrollRef} className="h-0 flex-grow overflow-y-auto pb-safe-bottom">
           <BookCase books={processedBooks} onBookClick={(id) => navigate(`/records/${id}`)} />
         </div>
       </div>

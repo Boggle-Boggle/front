@@ -14,6 +14,7 @@ import { ToggleButton } from 'components/ToggleButton';
 import { IconEllipsisVertical, IconHeart, IconHeartFilled } from 'components/icons';
 
 import { useHeaderTitleByScroll } from 'hooks/useHeaderTitleByScroll';
+import { useScrollRestoration } from 'hooks/useScrollRestoration';
 
 import type { BookDetail as BookDetailType } from 'types';
 
@@ -49,7 +50,6 @@ const getAladinBookDetailUrl = (itemId: number) => `${ALADIN_BOOK_DETAIL_URL}?It
 
 export const BookDetail = () => {
   const { isbn13 = '' } = useParams();
-  const scrollContainerRef = useRef<HTMLDivElement>(null);
   const tabSentinelRef = useRef<HTMLDivElement>(null);
   const [activeTab, setActiveTab] = useState<DetailTabType>('info');
   const { push } = useLayerStore();
@@ -57,6 +57,10 @@ export const BookDetail = () => {
   const queryClient = useQueryClient();
 
   const { data, isLoading, isError } = useBookDetailQuery(isbn13);
+
+  const scrollContainerRef = useScrollRestoration<HTMLDivElement>({
+    isReady: data !== undefined,
+  });
 
   const { isVisible } = useHeaderTitleByScroll({
     rootRef: scrollContainerRef,

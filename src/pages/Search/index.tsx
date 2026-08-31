@@ -5,6 +5,8 @@ import IconButton from 'components/Button/IconButton';
 import { Searchbar } from 'components/Searchbar';
 import BookPlus from 'components/icons/BookPlus';
 
+import { useScrollRestoration } from 'hooks/useScrollRestoration';
+
 import { AuthorOtherWorksSection } from './AuthorOtherWorks/Section';
 import { MostReadSection } from './MostRead/Section';
 import { PopularSearchSection } from './PopularSearch/Section';
@@ -21,6 +23,8 @@ const Search = () => {
   const [query, setQuery] = useState<string>('');
   const [isSearched, setIsSearched] = useState<boolean>(shouldAutoFocus);
   const navigate = useNavigate();
+
+  const scrollRef = useScrollRestoration<HTMLDivElement>();
 
   const handleSearchChange = (value: string) => setQuery(value);
 
@@ -49,7 +53,7 @@ const Search = () => {
         />
         <IconButton label={MSG_SEARCH_ADD_BOOK_LABEL} icon={BookPlus} onClick={handleAddCustomBook} />
       </div>
-      <div className="mt-5 min-h-0 w-full flex-1 overflow-y-auto">
+      <div ref={scrollRef} className="mt-5 min-h-0 w-full flex-1 overflow-y-auto">
         {isSearched ? (
           <>
             <RecentSearchSection />
