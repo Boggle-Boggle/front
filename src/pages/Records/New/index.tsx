@@ -56,13 +56,13 @@ export const NewRecord = () => {
 
   const { isPending: isCustomPending, mutate: saveCustomReadingLog } = useMutation({
     mutationFn: createCustomReadingLog,
-    onSuccess: () => navigate('/records/new/completed'),
+    onSuccess: () => navigate('/records/new/completed', { replace: true }),
     onError: () => addToast({ description: MSG_ADD_RECORD_FAILED, type: 'error' }),
   });
 
   const { isPending, mutate: saveReadingLog } = useMutation({
     mutationFn: createReadingLog,
-    onSuccess: () => navigate('/records/new/completed'),
+    onSuccess: () => navigate('/records/new/completed', { replace: true }),
     onError: () => addToast({ description: MSG_ADD_RECORD_FAILED, type: 'error' }),
   });
 
