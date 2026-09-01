@@ -1,6 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
 
-import { disassemble, getChoseong } from 'es-hangul';
 import { useState, useMemo, useEffect } from 'react';
 import { useLayerStore } from 'stores/useLayerStore';
 
@@ -9,6 +8,8 @@ import { BackButton } from 'components/Header/BackButton';
 import Highlight from 'components/Highlight';
 import { Searchbar } from 'components/Searchbar';
 import { IconLayoutGrid, IconLayoutList, IconSearch } from 'components/icons';
+
+import { useHangulSearch } from 'hooks/useHangulSearch';
 
 import type { ReadingLogStatus } from 'types';
 
@@ -138,41 +139,9 @@ const Library = () => {
     return wishlistData ? wishlistData.pages.flatMap((page) => page.items) : [];
   }, [wishlistData]);
 
-  // 검색 키워드에 따른 독서 기록 도서 필터링 (초성 및 자모분리 지원)
-  const filteredReadingBooks = useMemo(() => {
-    const cleanedKeyword = searchKeyword.trim().toLowerCase();
-    if (!cleanedKeyword) return readingBooks;
-
-    const disKeyword = disassemble(cleanedKeyword);
-    const choKeyword = getChoseong(cleanedKeyword);
-
-    return readingBooks.filter((book) => {
-      const lowerTitle = book.title.toLowerCase();
-      if (lowerTitle.includes(cleanedKeyword)) return true;
-      if (disassemble(lowerTitle).includes(disKeyword)) return true;
-      if (getChoseong(lowerTitle).includes(choKeyword)) return true;
-
-      return false;
-    });
-  }, [searchKeyword, readingBooks]);
-
-  // 검색 키워드에 따른 관심 도서 필터링 (초성 및 자모분리 지원)
-  const filteredWishlistBooks = useMemo(() => {
-    const cleanedKeyword = searchKeyword.trim().toLowerCase();
-    if (!cleanedKeyword) return wishlistBooks;
-
-    const disKeyword = disassemble(cleanedKeyword);
-    const choKeyword = getChoseong(cleanedKeyword);
-
-    return wishlistBooks.filter((book) => {
-      const lowerTitle = book.title.toLowerCase();
-      if (lowerTitle.includes(cleanedKeyword)) return true;
-      if (disassemble(lowerTitle).includes(disKeyword)) return true;
-      if (getChoseong(lowerTitle).includes(choKeyword)) return true;
-
-      return false;
-    });
-  }, [searchKeyword, wishlistBooks]);
+  // 검색 키워드에 따른 한글 필터링 (초성 및 자모분리 지원 커스텀 훅 적용)
+  const filteredReadingBooks = useHangulSearch(readingBooks, searchKeyword, (book) => book.title);
+  const filteredWishlistBooks = useHangulSearch(wishlistBooks, searchKeyword, (book) => book.title);
 
   const filterOptionByType: Record<ReadingLogStatus, { value: ReadingLogStatus; label: string }> = {
     ALL: { value: 'ALL', label: MSG_MYBOOKS_FILTER_ALL },
