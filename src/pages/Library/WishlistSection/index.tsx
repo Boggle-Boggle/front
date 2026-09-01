@@ -1,5 +1,5 @@
 import { RefObject } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import BookCover from 'components/BookCover';
 import { ToggleButton } from 'components/ToggleButton';
@@ -33,15 +33,8 @@ const formatWishlistAddedDate = (createdAt = '') => {
 
 export const WishlistSection = (props: WishlistSectionProps) => {
   const { books, isLoading, observerTarget } = props;
-  const navigate = useNavigate();
 
   const handleToggleWishlist = () => undefined;
-
-  const handleBookClick = (isbn13?: string) => () => {
-    if (isbn13) {
-      navigate(`/books/${isbn13}`);
-    }
-  };
 
   return (
     <>
@@ -51,20 +44,17 @@ export const WishlistSection = (props: WishlistSectionProps) => {
             key={book.id}
             className="flex items-center justify-between gap-4 border-b border-neutral-20 py-4 last:border-b-0"
           >
-            <button
-              type="button"
-              onClick={handleBookClick(book.isbn13)}
+            <Link
+              to={book.isbn13 ? `/books/${book.isbn13}` : '#'}
               className="flex min-w-0 flex-1 items-stretch self-stretch text-left"
             >
               <BookCover className="w-20 shrink-0" url={book.cover} label={book.title} variant="clear" rounded="sm" />
               <div className="flex min-w-0 flex-1 flex-col pl-4">
                 <p className="line-clamp-2 text-body1">{book.title}</p>
                 <p className="line-clamp-1 text-caption1 text-neutral-80">{book.author}</p>
-                <p className="mt-auto pt-1 text-caption1 text-neutral-40">
-                  {formatWishlistAddedDate(book.createdAt)}
-                </p>
+                <p className="mt-auto pt-1 text-caption1 text-neutral-40">{formatWishlistAddedDate(book.createdAt)}</p>
               </div>
-            </button>
+            </Link>
 
             <ToggleButton
               variant="icon"
