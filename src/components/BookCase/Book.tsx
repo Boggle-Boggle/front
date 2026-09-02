@@ -25,7 +25,7 @@ export const Book = (props: BookProps) => {
         textOrientation: 'upright',
       }}
       onClick={onClick}
-      className={`inline-flex h-[5.625rem] items-center justify-center rounded-sm py-1 cursor-pointer ${widthClass} ${bgColorClass}`}
+      className={`inline-flex h-[5.625rem] items-center justify-center rounded-sm p-0 m-0 border-0 outline-none cursor-pointer ${widthClass} ${bgColorClass}`}
     >
       <span className="flex w-3 items-center justify-center text-center font-book text-[10px] leading-none text-neutral-100 opacity-40">
         {filteredTitle}
