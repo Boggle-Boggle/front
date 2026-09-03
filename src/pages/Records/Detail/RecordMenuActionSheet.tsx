@@ -15,14 +15,19 @@ type RecordMenuActionSheetProps = {
 };
 
 const MSG_RECORD_ACTION_SEARCH_MORE = '도서 검색에서 더보기';
+const MSG_RECORD_ACTION_EDIT_CUSTOM = '내가 등록한 책 정보 수정하기';
 const MSG_RECORD_ACTION_DELETE = '내 책에서 삭제하기';
 const MSG_RECORD_ACTION_EXPORT = '노트 TXT 파일 내보내기';
 
-export const RecordMenuActionSheet = ({ recordId, isbn13 }: RecordMenuActionSheetProps) => {
+export const RecordMenuActionSheet = (props: RecordMenuActionSheetProps) => {
+  const { recordId, isbn13 } = props;
   const { push, pop } = useLayerStore();
+  const { addToast } = useToastStore();
+
   const queryClient = useQueryClient();
   const navigate = useNavigate();
-  const { addToast } = useToastStore();
+
+  const isCustomBook = !isbn13;
 
   const { mutate: deleteLog, isPending } = useMutation({
     mutationFn: () => deleteReadingLog(recordId),
@@ -76,16 +81,28 @@ export const RecordMenuActionSheet = ({ recordId, isbn13 }: RecordMenuActionShee
     });
   };
 
-  const handleSearchMore = () => undefined;
+  const handleSearchMoreOrEdit = () => {
+    if (isCustomBook) {
+      // 수동 등록 도서인 경우 (수정하기 클릭)
+      addToast({
+        type: 'info',
+        description: '책 정보 수정 기능이 준비 중입니다.',
+      });
+    } else if (isbn13) {
+      // 일반 도서인 경우 (서점 사이트 열기)
+      window.location.href = `https://www.aladin.co.kr/search/wsearchresult.aspx?SearchTarget=All&SearchWord=${encodeURIComponent(isbn13)}`;
+    }
+  };
+
   const handleExportNote = () => undefined;
 
   return (
     <ActionSheet
       items={[
         {
-          key: 'search_more',
-          label: MSG_RECORD_ACTION_SEARCH_MORE,
-          onSelect: handleSearchMore,
+          key: isCustomBook ? 'edit_custom' : 'search_more',
+          label: isCustomBook ? MSG_RECORD_ACTION_EDIT_CUSTOM : MSG_RECORD_ACTION_SEARCH_MORE,
+          onSelect: handleSearchMoreOrEdit,
         },
         {
           key: 'delete_my_book',
