@@ -57,6 +57,8 @@ export const RecordDetailPage = () => {
   return (
     <div className="h-full overflow-y-auto pb-safe-bottom" ref={scrollContainerRef}>
       <RecordDetailHero
+        recordId={recordId}
+        isbn13={data.book.isbn13}
         scrollContainerRef={scrollContainerRef}
         cover={data.book.coverUrl}
         title={data.book.title}

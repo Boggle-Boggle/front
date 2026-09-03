@@ -84,3 +84,7 @@ export const createReadingNote = async (readingLogId: string | number, data: Cre
   );
   return response.data.data;
 };
+
+export const deleteReadingLog = async (id: string | number) => {
+  await api.delete(`/v2/reading-logs/${id}`);
+};

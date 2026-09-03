@@ -1,4 +1,5 @@
 import { useRef } from 'react';
+import { useLayerStore } from 'stores/useLayerStore';
 
 import { BookCover } from 'components/BookCover';
 import IconButton from 'components/Button/IconButton';
@@ -10,7 +11,11 @@ import { useHeaderTitleByScroll } from 'hooks/useHeaderTitleByScroll';
 
 import noImage from 'assets/img/no_image.png';
 
+import { RecordMenuActionSheet } from './RecordMenuActionSheet';
+
 type RecordDetailHeroProps = {
+  recordId: string | number;
+  isbn13: string | null;
   cover: string | null;
   title: string;
   author: string;
@@ -61,6 +66,8 @@ const HeroStatItem = (props: HeroStatItemProps) => {
 
 export const RecordDetailHero = (props: RecordDetailHeroProps) => {
   const {
+    recordId,
+    isbn13,
     cover,
     title,
     author,
@@ -71,6 +78,7 @@ export const RecordDetailHero = (props: RecordDetailHeroProps) => {
   } = props;
 
   const titleRef = useRef<HTMLParagraphElement>(null);
+  const { push } = useLayerStore();
 
   // 스크롤 시 도서 타이틀 영역이 헤더 위치에 도달하면 헤더에 타이틀을 표시하기 위한 훅 바인딩
   const { isVisible } = useHeaderTitleByScroll({
@@ -83,7 +91,12 @@ export const RecordDetailHero = (props: RecordDetailHeroProps) => {
   // 표지 이미지가 없거나 null인 경우 기본 모킹 표지 이미지를 적용합니다.
   const resolvedCover = cover || noImage;
 
-  const handleMoreClick = () => {};
+  const handleMoreClick = () => {
+    push({
+      id: 'record-detail-more-bottom-sheet',
+      component: <RecordMenuActionSheet recordId={recordId} isbn13={isbn13} />,
+    });
+  };
 
   return (
     <section className="relative overflow-hidden bg-neutral-0">
