@@ -1,10 +1,14 @@
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+
 import { RefObject } from 'react';
 import { Link } from 'react-router-dom';
+import { useToastStore } from 'stores/useToastStore';
 
 import BookCover from 'components/BookCover';
 import { ToggleButton } from 'components/ToggleButton';
 import { IconHeart, IconHeartFilled } from 'components/icons';
 
+import { deleteInterestedBook } from '../api';
 import { MyBook } from '../useLibraryQuery';
 
 type WishlistSectionProps = {
@@ -33,8 +37,30 @@ const formatWishlistAddedDate = (createdAt = '') => {
 
 export const WishlistSection = (props: WishlistSectionProps) => {
   const { books, isLoading, observerTarget } = props;
+  const queryClient = useQueryClient();
+  const { addToast } = useToastStore();
 
-  const handleToggleWishlist = () => undefined;
+  const { mutate: unlikeBook } = useMutation({
+    mutationFn: (bookId: number) => deleteInterestedBook(bookId),
+    onSuccess: (_, bookId) => {
+      queryClient.invalidateQueries({ queryKey: ['interested-books'] });
+
+      const deletedBook = books.find((b) => b.id === bookId);
+      if (deletedBook?.isbn13) {
+        queryClient.invalidateQueries({ queryKey: ['books', 'detail', deletedBook.isbn13] });
+      }
+    },
+    onError: () => {
+      addToast({
+        description: '관심도서 해제에 실패했습니다.',
+        type: 'error',
+      });
+    },
+  });
+
+  const handleToggleWishlist = (bookId: number) => () => {
+    unlikeBook(bookId);
+  };
 
   return (
     <>
@@ -52,14 +78,16 @@ export const WishlistSection = (props: WishlistSectionProps) => {
               <div className="flex min-w-0 flex-1 flex-col pl-4">
                 <p className="line-clamp-2 text-body1">{book.title}</p>
                 <p className="line-clamp-1 text-caption1 text-neutral-80">{book.author}</p>
-                <p className="mt-auto pt-1 text-caption1 text-neutral-40">{formatWishlistAddedDate(book.createdAt)}</p>
+                <p className="mt-auto pt-1 text-caption1 text-neutral-40">
+                  {formatWishlistAddedDate(book.createdAt)}
+                </p>
               </div>
             </Link>
 
             <ToggleButton
               variant="icon"
               selected
-              onClick={handleToggleWishlist}
+              onClick={handleToggleWishlist(book.id)}
               icon={IconHeart}
               selectedIcon={IconHeartFilled}
               className="shrink-0"
