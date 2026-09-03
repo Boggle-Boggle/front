@@ -32,23 +32,17 @@ export const RecordMenuActionSheet = (props: RecordMenuActionSheetProps) => {
   const { mutate: deleteLog, isPending } = useMutation({
     mutationFn: () => deleteReadingLog(recordId),
     onSuccess: () => {
-      // 1. 확인 모달 닫기
       pop();
 
-      // 2. 관련 캐시 일괄 무효화 및 동기화
       queryClient.invalidateQueries({ queryKey: ['reading-logs'] });
       queryClient.invalidateQueries({ queryKey: ['library'] });
-      if (isbn13) {
-        queryClient.invalidateQueries({ queryKey: ['books', 'detail', isbn13] });
-      }
+      if (isbn13) queryClient.invalidateQueries({ queryKey: ['books', 'detail', isbn13] });
 
-      // 3. 완료 안내 토스트 팝업 (피그마 3614-42210 반영)
       addToast({
         type: 'success',
         description: '내 책에서 정상적으로 삭제되었습니다.',
       });
 
-      // 4. 서재 메인으로 리다이렉션 이동
       navigate('/library', { replace: true });
     },
     onError: () => {
@@ -60,10 +54,7 @@ export const RecordMenuActionSheet = (props: RecordMenuActionSheetProps) => {
   });
 
   const handleDeleteClick = () => {
-    // 1. 기존의 더보기 바텀시트 팝업 닫기
     pop();
-
-    // 2. 삭제 여부 재확인 모달 띄우기 (피그마 3614-42193 반영)
     push({
       id: 'delete-confirm-modal',
       component: (
