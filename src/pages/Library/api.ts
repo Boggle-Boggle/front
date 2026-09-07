@@ -68,8 +68,8 @@ export const getInterestedBooks = async (params: GetInterestedBooksParams) => {
   return response.data;
 };
 
-export const deleteInterestedBook = async (bookId: number) => {
-  await api.delete(`/v2/interested-books/${bookId}`);
+export const deleteInterestedBook = async (isbn13: string) => {
+  await api.delete(`/v2/interested-books/${isbn13}`);
 };
 
 export interface BookshelfItemResponse {

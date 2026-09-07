@@ -41,14 +41,10 @@ export const WishlistSection = (props: WishlistSectionProps) => {
   const { addToast } = useToastStore();
 
   const { mutate: unlikeBook } = useMutation({
-    mutationFn: (bookId: number) => deleteInterestedBook(bookId),
-    onSuccess: (_, bookId) => {
+    mutationFn: (isbn13: string) => deleteInterestedBook(isbn13),
+    onSuccess: (_, isbn13) => {
       queryClient.invalidateQueries({ queryKey: ['interested-books'] });
-
-      const deletedBook = books.find((b) => b.id === bookId);
-      if (deletedBook?.isbn13) {
-        queryClient.invalidateQueries({ queryKey: ['books', 'detail', deletedBook.isbn13] });
-      }
+      queryClient.invalidateQueries({ queryKey: ['books', 'detail', isbn13] });
     },
     onError: () => {
       addToast({
@@ -58,8 +54,10 @@ export const WishlistSection = (props: WishlistSectionProps) => {
     },
   });
 
-  const handleToggleWishlist = (bookId: number) => () => {
-    unlikeBook(bookId);
+  const handleToggleWishlist = (isbn13?: string) => () => {
+    if (isbn13) {
+      unlikeBook(isbn13);
+    }
   };
 
   return (
@@ -78,16 +76,14 @@ export const WishlistSection = (props: WishlistSectionProps) => {
               <div className="flex min-w-0 flex-1 flex-col pl-4">
                 <p className="line-clamp-2 text-body1">{book.title}</p>
                 <p className="line-clamp-1 text-caption1 text-neutral-80">{book.author}</p>
-                <p className="mt-auto pt-1 text-caption1 text-neutral-40">
-                  {formatWishlistAddedDate(book.createdAt)}
-                </p>
+                <p className="mt-auto pt-1 text-caption1 text-neutral-40">{formatWishlistAddedDate(book.createdAt)}</p>
               </div>
             </Link>
 
             <ToggleButton
               variant="icon"
               selected
-              onClick={handleToggleWishlist(book.id)}
+              onClick={handleToggleWishlist(book.isbn13)}
               icon={IconHeart}
               selectedIcon={IconHeartFilled}
               className="shrink-0"
