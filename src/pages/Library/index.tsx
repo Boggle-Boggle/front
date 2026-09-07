@@ -26,8 +26,10 @@ type ViewType = 'grid' | 'list';
 
 const MSG_MYBOOKS_TAB_READING = '독서 기록';
 const MSG_MYBOOKS_TAB_WISHLIST = '관심 도서';
-const MSG_MYBOOKS_SORT_LATEST = '최신순';
-const MSG_MYBOOKS_SORT_OLDEST = '과거순';
+const MSG_MYBOOKS_SORT_READ_LATEST = '최근 읽은 순';
+const MSG_MYBOOKS_SORT_READ_OLDEST = '과거 읽은 순';
+const MSG_MYBOOKS_SORT_REG_LATEST = '최근 등록 순';
+const MSG_MYBOOKS_SORT_REG_OLDEST = '과거 등록 순';
 const MSG_MYBOOKS_SORT_POPULAR = '인기순';
 // const MSG_MYBOOKS_EMPTY_WISHLIST = '관심 도서가 없습니다';
 const MSG_MYBOOKS_ICON_SEARCH = '검색';
@@ -158,8 +160,10 @@ const Library = () => {
   ];
 
   const sortLabelByType: Partial<Record<ReadingLogSort, string>> = {
-    START_DATE_DESC: MSG_MYBOOKS_SORT_LATEST,
-    START_DATE_ASC: MSG_MYBOOKS_SORT_OLDEST,
+    START_DATE_DESC: MSG_MYBOOKS_SORT_READ_LATEST,
+    START_DATE_ASC: MSG_MYBOOKS_SORT_READ_OLDEST,
+    CREATED_AT_DESC: MSG_MYBOOKS_SORT_REG_LATEST,
+    CREATED_AT_ASC: MSG_MYBOOKS_SORT_REG_OLDEST,
     RATING_DESC: MSG_MYBOOKS_SORT_POPULAR,
   };
   const selectedFilterOption = filterOptionByType[readingFilter];
@@ -270,7 +274,7 @@ const Library = () => {
           books={filteredReadingBooks}
           totalCount={searchKeyword.trim() ? filteredReadingBooks.length : totalCount}
           filterLabel={filterLabel}
-          sortLabel={sortLabelByType[sortType] ?? MSG_MYBOOKS_SORT_LATEST}
+          sortLabel={sortLabelByType[sortType] ?? MSG_MYBOOKS_SORT_READ_LATEST}
           viewMode={viewType}
           isLoading={isReadingLoading}
           observerTarget={searchKeyword.trim() ? { current: null } : readingObserverTarget}

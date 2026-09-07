@@ -10,30 +10,38 @@ type SortActionSheetProps = {
 export const SortActionSheet = (props: SortActionSheetProps) => {
   const { selectedSort, onSelectSort } = props;
 
-  const handleSelectLatest = () => onSelectSort('START_DATE_DESC');
-  const handleSelectOldest = () => onSelectSort('START_DATE_ASC');
-  const handleSelectPopular = () => onSelectSort('RATING_DESC');
-
   return (
     <ActionSheet
       items={[
         {
           key: 'START_DATE_DESC',
-          label: '최신순',
+          label: '최근 읽은 순',
           selected: selectedSort === 'START_DATE_DESC',
-          onSelect: handleSelectLatest,
+          onSelect: () => onSelectSort('START_DATE_DESC'),
         },
         {
           key: 'START_DATE_ASC',
-          label: '과거순',
+          label: '과거 읽은 순',
           selected: selectedSort === 'START_DATE_ASC',
-          onSelect: handleSelectOldest,
+          onSelect: () => onSelectSort('START_DATE_ASC'),
+        },
+        {
+          key: 'CREATED_AT_DESC',
+          label: '최근 등록 순',
+          selected: selectedSort === 'CREATED_AT_DESC',
+          onSelect: () => onSelectSort('CREATED_AT_DESC'),
+        },
+        {
+          key: 'CREATED_AT_ASC',
+          label: '과거 등록 순',
+          selected: selectedSort === 'CREATED_AT_ASC',
+          onSelect: () => onSelectSort('CREATED_AT_ASC'),
         },
         {
           key: 'RATING_DESC',
           label: '인기순',
           selected: selectedSort === 'RATING_DESC',
-          onSelect: handleSelectPopular,
+          onSelect: () => onSelectSort('RATING_DESC'),
         },
       ]}
     />
