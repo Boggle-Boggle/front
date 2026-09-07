@@ -78,3 +78,13 @@ export const getTodayDateString = () => {
   const dd = String(date.getDate()).padStart(2, '0');
   return `${yyyy}-${mm}-${dd}`;
 };
+
+export const formatKoreanDate = (dateString?: string | null) => {
+  if (!dateString) return '-';
+  const datePart = dateString.split('T')[0];
+  const [year, month, day] = datePart.split('-');
+  if (!year || !month || !day) return dateString;
+  const paddedMonth = month.padStart(2, '0');
+  const paddedDay = day.padStart(2, '0');
+  return `${year}년 ${paddedMonth}월 ${paddedDay}일`;
+};
