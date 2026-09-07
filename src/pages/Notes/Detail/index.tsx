@@ -10,7 +10,7 @@ import { IconEllipsisVertical } from 'components/icons';
 import { NoteMenuActionSheet } from 'pages/Records/Detail/NoteMenuActionSheet';
 import { getReadingLogDetail, ReadingNoteResponse } from 'pages/Records/Detail/api';
 
-import { formatDateTime } from 'utils/format';
+import { formatDateTime } from 'utils/date';
 
 const MSG_NOTE_DETAIL_MORE = '노트 더보기';
 // const MSG_NOTE_DETAIL_TAG = '태그';

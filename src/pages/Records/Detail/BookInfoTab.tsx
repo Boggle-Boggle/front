@@ -1,6 +1,6 @@
 import Highlight from 'components/Highlight';
 
-import { formatKoreanDate } from 'utils/format';
+import { formatKoreanDate } from 'utils/date';
 
 import type { BookInfo } from './api';
 

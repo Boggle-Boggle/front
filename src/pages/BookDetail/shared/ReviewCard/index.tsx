@@ -5,7 +5,7 @@ import { ToggleButton } from 'components/ToggleButton';
 import { IconHeart, IconHeartFilled } from 'components/icons';
 import type { BookReviewItem } from 'pages/BookDetail/api';
 
-import { formatDateTimeToDate } from 'utils/format';
+import { formatDateTimeToDate } from 'utils/date';
 
 import { ReviewActionSheet } from './ReviewActionSheet';
 import { BlockUserConfirmModal } from '../BlockUserConfirmModal';

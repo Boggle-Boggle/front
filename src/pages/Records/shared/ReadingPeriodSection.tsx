@@ -1,4 +1,4 @@
-import { formatDateLabel } from 'utils/format';
+import { formatDateLabel } from 'utils/date';
 
 import type { AddRecordStatus } from 'types';
 

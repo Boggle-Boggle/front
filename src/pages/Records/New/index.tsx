@@ -9,7 +9,7 @@ import { BottomButton } from 'components/Button';
 import { Header } from 'components/Header';
 import { createCustomReadingLog } from 'pages/AddCustomBook/api';
 
-import { getTodayDateString } from 'utils/format';
+import { getTodayDateString } from 'utils/date';
 
 import type { AddRecordStatus, BookDetail, CustomBookDto, ReadingLogProgressType } from 'types';
 

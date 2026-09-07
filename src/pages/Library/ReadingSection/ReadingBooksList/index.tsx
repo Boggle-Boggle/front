@@ -5,7 +5,7 @@ import { ShelfBase } from 'components/ShelfBase';
 import { StarRating } from 'components/StarRating';
 import { MyBook } from 'pages/Library/useLibraryQuery';
 
-import { formatDateLabel } from 'utils/format';
+import { formatDateLabel } from 'utils/date';
 
 type ReadingBooksListProps = {
   books: MyBook[];

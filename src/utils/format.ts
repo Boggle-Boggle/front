@@ -1,90 +1,11 @@
-export const formatDateAndTime = (dateTime: string) => {
-  const [date, time] = dateTime.split('T');
-
-  const [yy, mm, dd] = date.split('-');
-  const [h, m, s] = time.split(':');
-
-  return { yy, mm, dd, h, m, s };
-};
-
-export const formatDateTimeToDate = (dateTime: string) => {
-  const date = dateTime.split('T')[0];
-
-  const [yy, mm, dd] = date.split('-');
-
-  return `${yy}.${mm}.${dd}`;
-};
-
-export const formatDateTime = (dateTime: string) => {
-  try {
-    const { yy, mm, dd, h, m } = formatDateAndTime(dateTime);
-    return `${yy}.${mm}.${dd} ${h}:${m}`;
-  } catch {
-    return dateTime;
-  }
-};
-
 export const formatBookGenre = (Genre: string) => {
   const formattedGenre = Genre.split('>');
 
   return formattedGenre[2];
 };
 
-export const formatDate = (year: number, month: number, day: number) => {
-  const fullYear = year > 2000 ? year : 2000 + year;
-  const paddedMonth = String(month).padStart(2, '0');
-  const paddedDay = String(day).padStart(2, '0');
-
-  return `${fullYear}-${paddedMonth}-${paddedDay}T00:00:00`;
-};
-
-export const generateDate = () => {
-  const date = new Date();
-
-  const year = date.getFullYear();
-  const month = date.getMonth() + 1;
-  const day = date.getDate();
-
-  return { year, month, day };
-};
-
 export const getHttpsLink = (link: string) => {
   const [http, domain] = link.split('://');
 
   return `${http}s://${domain}`;
-};
-
-export const isValidDate = (year: number, month: number, day: number) => {
-  const newYear = year < 2000 ? 2000 + year : year;
-  const date = new Date(newYear, month - 1, day);
-
-  const result = date.getFullYear() === newYear && date.getMonth() === month - 1 && date.getDate() === day;
-
-  return result;
-};
-
-export const formatDateLabel = (dateString?: string | null) => {
-  if (!dateString) return '00.00.00';
-  const datePart = dateString.split('T')[0];
-  const [year, month, day] = datePart.split('-');
-  if (!year || !month || !day) return '00.00.00';
-  return `${year.slice(-2)}.${month}.${day}`;
-};
-
-export const getTodayDateString = () => {
-  const date = new Date();
-  const yyyy = date.getFullYear();
-  const mm = String(date.getMonth() + 1).padStart(2, '0');
-  const dd = String(date.getDate()).padStart(2, '0');
-  return `${yyyy}-${mm}-${dd}`;
-};
-
-export const formatKoreanDate = (dateString?: string | null) => {
-  if (!dateString) return '-';
-  const datePart = dateString.split('T')[0];
-  const [year, month, day] = datePart.split('-');
-  if (!year || !month || !day) return dateString;
-  const paddedMonth = month.padStart(2, '0');
-  const paddedDay = day.padStart(2, '0');
-  return `${year}년 ${paddedMonth}월 ${paddedDay}일`;
 };

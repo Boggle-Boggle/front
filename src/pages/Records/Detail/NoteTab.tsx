@@ -9,7 +9,7 @@ import IconButton from 'components/Button/IconButton';
 import { TextButton } from 'components/Button/TextButton';
 import { IconEdit, IconEllipsisVertical } from 'components/icons';
 
-import { formatDateTime } from 'utils/format';
+import { formatDateTime } from 'utils/date';
 
 import { NoteMenuActionSheet } from './NoteMenuActionSheet';
 import { getReadingLogNotes, PageResponse, ReadingNoteResponse } from './api';
