@@ -35,7 +35,10 @@ const parseDateString = (dateString?: string | null) => {
 /**
  * 구분자 및 스타일에 기반해 유연한 공통 포맷팅을 지원하는 통합 날짜 포맷 함수 (모듈 내부 전용)
  */
-const formatBaseDate = (dateString?: string | null, options: FormatDateOptions = {}): string => {
+const formatBaseDate = (
+  dateString?: string | null,
+  options: FormatDateOptions = {}
+): string => {
   const { separator = '.', includeTime = false, twoDigitYear = false, fallback = '-' } = options;
 
   const parsed = parseDateString(dateString);
@@ -48,40 +51,47 @@ const formatBaseDate = (dateString?: string | null, options: FormatDateOptions =
   let formattedDate = `${targetYear}${separator}${month}${separator}${day}`;
 
   // 2. 특수한 경우에 한해 조건부로 재대입(덮어쓰기)
-  if (separator === 'korean') formattedDate = `${targetYear}년 ${month}월 ${day}일`;
-  if (separator === 'none') formattedDate = `${targetYear}${month}${day}`;
-  if (includeTime) return `${formattedDate} ${h}:${m}`;
+  if (separator === 'korean') {
+    formattedDate = `${targetYear}년 ${month}월 ${day}일`;
+  }
+  if (separator === 'none') {
+    formattedDate = `${targetYear}${month}${day}`;
+  }
+
+  if (includeTime) {
+    return `${formattedDate} ${h}:${m}`;
+  }
 
   return formattedDate;
 };
 
-// --- [개별 기성 의미적 공용 유틸리티 함수 매핑] ---
+// --- [🌟 일관성 있고 직관적인 공용 포맷팅 함수들] ---
 
 /**
- * 2025.03.28 형태로 포맷팅
+ * YYYY.MM.DD 형태로 온점(Dot) 구분 포맷팅 (예: 2025.03.28)
  */
-export const formatDateTimeToDate = (dateTime: string) => {
+export const formatToDotDate = (dateTime: string) => {
   return formatBaseDate(dateTime, { separator: '.' });
 };
 
 /**
- * 2025.03.28 14:30 형태로 포맷팅 (시간 포함)
+ * YYYY.MM.DD HH:mm 형태로 온점 구분 및 시간 동시 포맷팅 (예: 2025.03.28 14:30)
  */
-export const formatDateTime = (dateTime: string) => {
+export const formatToDotDateTime = (dateTime: string) => {
   return formatBaseDate(dateTime, { separator: '.', includeTime: true, fallback: dateTime });
 };
 
 /**
- * 25.03.28 형태로 포맷팅 (2자리 연도 표기 리스트용)
+ * YY.MM.DD 형태로 2자리 숏 연도 온점 포맷팅 (예: 25.03.28)
  */
-export const formatDateLabel = (dateString?: string | null) => {
+export const formatToShortDotDate = (dateString?: string | null) => {
   return formatBaseDate(dateString, { separator: '.', twoDigitYear: true, fallback: '00.00.00' });
 };
 
 /**
- * 2025년 03월 28일 형태로 포맷팅 (한국어 전용)
+ * YYYY년 MM월 DD일 한글 전용 포맷팅 (예: 2025년 03월 28일)
  */
-export const formatKoreanDate = (dateString?: string | null) => {
+export const formatToKoreanDate = (dateString?: string | null) => {
   return formatBaseDate(dateString, { separator: 'korean' });
 };
 

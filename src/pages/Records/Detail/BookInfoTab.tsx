@@ -1,6 +1,6 @@
 import Highlight from 'components/Highlight';
 
-import { formatKoreanDate } from 'utils/date';
+import { formatToKoreanDate } from 'utils/date';
 
 import type { BookInfo } from './api';
 
@@ -16,7 +16,7 @@ export const BookInfoTab = ({ book }: BookInfoTabProps) => {
     { label: '작가이름', value: book.author },
     { label: '출판사', value: book.publisher },
     { label: '분야', value: book.category || '-' },
-    { label: '발행일자', value: formatKoreanDate(book.publishedDate) },
+    { label: '발행일자', value: formatToKoreanDate(book.publishedDate) },
     { label: 'ISBN', value: book.isbn13 || '-' },
   ];
 

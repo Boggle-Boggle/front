@@ -5,7 +5,7 @@ import { ToggleButton } from 'components/ToggleButton';
 import { IconHeart, IconHeartFilled } from 'components/icons';
 import type { BookReviewItem } from 'pages/BookDetail/api';
 
-import { formatDateTimeToDate } from 'utils/date';
+import { formatToDotDate } from 'utils/date';
 
 import { ReviewActionSheet } from './ReviewActionSheet';
 import { BlockUserConfirmModal } from '../BlockUserConfirmModal';
@@ -27,7 +27,7 @@ export const ReviewCard = (props: ReviewCardProps) => {
   const { review, onToggleLike, isMyReview = false } = props;
 
   const { id, author, content, likeCount, isSpoiler, isLiked, createdAt } = review;
-  const formattedDate = formatDateTimeToDate(createdAt);
+  const formattedDate = formatToDotDate(createdAt);
 
   const { push } = useLayerStore();
   const navigate = useNavigate();

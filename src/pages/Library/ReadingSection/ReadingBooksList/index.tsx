@@ -5,7 +5,7 @@ import { ShelfBase } from 'components/ShelfBase';
 import { StarRating } from 'components/StarRating';
 import { MyBook } from 'pages/Library/useLibraryQuery';
 
-import { formatDateLabel } from 'utils/date';
+import { formatToShortDotDate } from 'utils/date';
 
 type ReadingBooksListProps = {
   books: MyBook[];
@@ -28,8 +28,8 @@ export const ReadingBooksList = (props: ReadingBooksListProps) => {
         const isStopped = readingStatus === MSG_MYBOOKS_BOOK_STATUS_STOPPED;
         const readingStatusBadge = isReading ? 'reading' : isRead ? 'read' : isStopped ? 'stopped' : undefined;
 
-        const start = formatDateLabel(startDate);
-        const end = formatDateLabel(endDate);
+        const start = formatToShortDotDate(startDate);
+        const end = formatToShortDotDate(endDate);
         const periodText = `${start} ~ ${end}`;
 
         const handleBookClick = () => navigate(`/records/${id}`);

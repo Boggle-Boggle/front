@@ -10,7 +10,7 @@ import { IconEllipsisVertical } from 'components/icons';
 import { NoteMenuActionSheet } from 'pages/Records/Detail/NoteMenuActionSheet';
 import { getReadingLogDetail, ReadingNoteResponse } from 'pages/Records/Detail/api';
 
-import { formatDateTime } from 'utils/date';
+import { formatToDotDateTime } from 'utils/date';
 
 const MSG_NOTE_DETAIL_MORE = '노트 더보기';
 // const MSG_NOTE_DETAIL_TAG = '태그';
@@ -62,7 +62,7 @@ const NoteDetail = () => {
         <p className="whitespace-pre-wrap text-left font-serif text-[14px] leading-[1.6] tracking-[-0.28px] text-neutral-80">
           {note.body || '등록된 내용이 없습니다.'}
         </p>
-        <p className="text-caption2 text-neutral-60">{formatDateTime(note.createdAt)}</p>
+        <p className="text-caption2 text-neutral-60">{formatToDotDateTime(note.createdAt)}</p>
 
         {/* 태그 영역
           {note?.tags && (

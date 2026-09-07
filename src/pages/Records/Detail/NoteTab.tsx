@@ -9,7 +9,7 @@ import IconButton from 'components/Button/IconButton';
 import { TextButton } from 'components/Button/TextButton';
 import { IconEdit, IconEllipsisVertical } from 'components/icons';
 
-import { formatDateTime } from 'utils/date';
+import { formatToDotDateTime } from 'utils/date';
 
 import { NoteMenuActionSheet } from './NoteMenuActionSheet';
 import { getReadingLogNotes, PageResponse, ReadingNoteResponse } from './api';
@@ -104,8 +104,8 @@ export const NoteTab = ({ readingLogId, bookTitle }: NoteTabProps) => {
 
                 <p className="text-caption2 text-neutral-60">
                   {note.page
-                    ? `${formatDateTime(note.createdAt)} | ${formatNotePage(note.page)}`
-                    : formatDateTime(note.createdAt)}
+                    ? `${formatToDotDateTime(note.createdAt)} | ${formatNotePage(note.page)}`
+                    : formatToDotDateTime(note.createdAt)}
                 </p>
 
                 {/* 카드 푸터 (태그 기능 - 잠시 주석 처리) */}

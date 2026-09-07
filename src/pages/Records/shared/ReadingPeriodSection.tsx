@@ -1,4 +1,4 @@
-import { formatDateLabel } from 'utils/date';
+import { formatToShortDotDate } from 'utils/date';
 
 import type { AddRecordStatus } from 'types';
 
@@ -28,14 +28,14 @@ export const ReadingPeriodSection = (props: ReadingPeriodSectionProps) => {
       <div className="flex items-center justify-center gap-4">
         <ReadingPeriodButton
           label={MSG_ADD_RECORD_START_DATE}
-          value={formatDateLabel(startDate)}
+          value={formatToShortDotDate(startDate)}
           isActive={Boolean(startDate)}
           onClick={onOpenStartDate}
         />
         ~
         <ReadingPeriodButton
           label={MSG_ADD_RECORD_END_DATE}
-          value={isReading ? '읽는 중' : formatDateLabel(endDate)}
+          value={isReading ? '읽는 중' : formatToShortDotDate(endDate)}
           isActive={!isReading && Boolean(endDate)}
           onClick={isReading ? () => {} : onOpenEndDate}
         />
