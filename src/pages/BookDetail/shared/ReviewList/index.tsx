@@ -13,6 +13,7 @@ import { getBookReviews, likeBookReview, unlikeBookReview, REVIEW_SORT_OPTIONS, 
 import { ReviewCard } from '../ReviewCard';
 
 const MSG_REVIEW_PAGE_TITLE = '빼곡한 리뷰';
+const MSG_REVIEW_EMPTY = '아직 등록된 리뷰가 없습니다. 첫 리뷰를 작성해 보세요!';
 const LAYER_ID_BOOK_DETAIL_REVIEW_SORT = 'book-detail-review-sort-bottom-sheet';
 
 type ReviewListProps = {
@@ -94,7 +95,7 @@ export const ReviewList = ({ isbn13 }: ReviewListProps) => {
 
       {totalReviewCount === 0 && !isLoading ? (
         <div className="py-20 text-center text-body2 text-neutral-40">
-          아직 등록된 리뷰가 없습니다. 첫 리뷰를 작성해 보세요!
+          {MSG_REVIEW_EMPTY}
         </div>
       ) : (
         <>
