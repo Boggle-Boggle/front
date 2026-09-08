@@ -1,6 +1,6 @@
 import { ActionSheet } from 'components/Layer/ActionSheet';
 
-import { REVIEW_SORT_OPTIONS, type ReviewSortType } from '../api';
+import { REVIEW_SORT_OPTIONS, type ReviewSortType } from '../../api';
 
 type ReviewSortActionSheetProps = {
   selectedSort: ReviewSortType;

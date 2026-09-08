@@ -1,3 +1,4 @@
+import { useState, KeyboardEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useLayerStore } from 'stores/useLayerStore';
 
@@ -29,6 +30,8 @@ export const ReviewCard = (props: ReviewCardProps) => {
   const { id, author, content, likeCount, isSpoiler, isLiked, createdAt } = review;
   const formattedDate = formatToDotDate(createdAt);
 
+  const [isOpenSpoiler, setIsOpenSpoiler] = useState<boolean>(false);
+
   const { push } = useLayerStore();
   const navigate = useNavigate();
 
@@ -54,6 +57,13 @@ export const ReviewCard = (props: ReviewCardProps) => {
     onToggleLike?.(String(id));
   };
 
+  const handleKeyDownSpoiler = (event: KeyboardEvent<HTMLDivElement>) => {
+    if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      setIsOpenSpoiler(true);
+    }
+  };
+
   return (
     <li className="py-mobile text-body1">
       <div className="mb-2 flex items-center gap-1">
@@ -67,9 +77,15 @@ export const ReviewCard = (props: ReviewCardProps) => {
         <p className="text-caption1 text-neutral-60">{MSG_READER_LEVEL_DEFAULT}</p>
       </div>
 
-      {!isSpoiler && <p>{content}</p>}
-      {isSpoiler && (
-        <div className="bg-neutral-10 whitespace-pre-line rounded-lg border border-dashed border-neutral-40 p-4 text-center text-body2 font-medium text-neutral-40">
+      {(!isSpoiler || isOpenSpoiler) && <p>{content}</p>}
+      {isSpoiler && !isOpenSpoiler && (
+        <div
+          role="button"
+          tabIndex={0}
+          onClick={() => setIsOpenSpoiler(true)}
+          onKeyDown={handleKeyDownSpoiler}
+          className="bg-neutral-10 whitespace-pre-line rounded-lg border border-dashed border-neutral-40 p-4 text-center text-body2 font-medium text-neutral-40 cursor-pointer hover:bg-neutral-20 transition-colors"
+        >
           {MSG_REVIEW_SPOILER}
         </div>
       )}
