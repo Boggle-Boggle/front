@@ -50,12 +50,12 @@ export const ReviewInput = ({ isbn13 }: ReviewInputProps) => {
   };
 
   return (
-    <section className="flex flex-col items-end gap-2 pt-4">
+    <section className="mt-4 flex w-full flex-col gap-6 rounded-[4px] border border-neutral-20 p-3 outline-primary">
       <textarea
         value={content}
         onChange={handleChangeContent}
         placeholder={MSG_REVIEW_TEXTAREA_PLACEHOLDER}
-        className="h-[5.5rem] w-full resize-none rounded-xl border border-neutral-20 px-4 py-3 text-caption1 outline-primary placeholder:text-neutral-40"
+        className="h-[5.5rem] w-full resize-none text-caption1 outline-none placeholder:text-neutral-40"
       />
 
       <div className="flex w-full items-center justify-between">
@@ -68,25 +68,22 @@ export const ReviewInput = ({ isbn13 }: ReviewInputProps) => {
             variant="black"
             className="p-1"
           />
-          <label htmlFor={REVIEW_SPOILER_CHECKBOX_ID} className="text-caption1 text-neutral-80">
+          <label htmlFor={REVIEW_SPOILER_CHECKBOX_ID} className="cursor-pointer text-caption1 text-neutral-80">
             {MSG_REVIEW_SPOILER_LABEL}
           </label>
         </div>
-        <span className="text-caption1 text-neutral-40">
-          {content.length}/{MAX_REVIEW_LENGTH}자
-        </span>
-      </div>
 
-      <Button
-        onClick={handleSubmitReview}
-        width="short"
-        size="small"
-        variant="primary"
-        disabled={!content.trim() || createReviewMutation.isPending}
-        className="px-5"
-      >
-        {MSG_REVIEW_SUBMIT}
-      </Button>
+        <Button
+          onClick={handleSubmitReview}
+          width="short"
+          size="small"
+          variant="primary"
+          disabled={!content.trim() || createReviewMutation.isPending}
+          className="px-5"
+        >
+          {MSG_REVIEW_SUBMIT}
+        </Button>
+      </div>
     </section>
   );
 };
