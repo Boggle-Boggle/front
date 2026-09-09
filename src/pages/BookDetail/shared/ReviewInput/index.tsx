@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useState, useRef, useEffect } from 'react';
 
 import { Button } from 'components/Button';
 import { Checkbox } from 'components/Checkbox';
@@ -18,9 +18,11 @@ type ReviewInputProps = {
 };
 
 export const ReviewInput = ({ isbn13 }: ReviewInputProps) => {
-  const queryClient = useQueryClient();
   const [content, setContent] = useState<string>('');
   const [isSpoilerChecked, setIsSpoilerChecked] = useState<boolean>(false);
+
+  const queryClient = useQueryClient();
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   const createReviewMutation = useMutation({
     mutationFn: createBookReview,
@@ -49,13 +51,26 @@ export const ReviewInput = ({ isbn13 }: ReviewInputProps) => {
     });
   };
 
+  useEffect(() => {
+    if (textareaRef.current) {
+      textareaRef.current.style.height = 'auto';
+
+      const { scrollHeight } = textareaRef.current;
+      const nextHeight = Math.min(Math.max(scrollHeight, 80), 130);
+
+      textareaRef.current.style.height = `${nextHeight}px`;
+    }
+  }, [content]);
+
   return (
-    <section className="mt-4 flex w-full flex-col gap-6 rounded-[4px] border border-neutral-20 p-3 outline-primary">
+    <section className="mt-4 flex w-full flex-col gap-2 rounded-[4px] border border-neutral-20 p-3">
       <textarea
+        ref={textareaRef}
         value={content}
         onChange={handleChangeContent}
         placeholder={MSG_REVIEW_TEXTAREA_PLACEHOLDER}
-        className="h-[5.5rem] w-full resize-none text-caption1 outline-none placeholder:text-neutral-40"
+        style={{ height: '80px' }}
+        className="w-full resize-none overflow-y-auto bg-transparent text-body1 outline-none placeholder:text-neutral-40"
       />
 
       <div className="flex w-full items-center justify-between">
@@ -65,10 +80,8 @@ export const ReviewInput = ({ isbn13 }: ReviewInputProps) => {
             checked={isSpoilerChecked}
             onChange={handleToggleSpoiler}
             size="sm"
-            variant="black"
-            className="p-1"
           />
-          <label htmlFor={REVIEW_SPOILER_CHECKBOX_ID} className="cursor-pointer text-caption1 text-neutral-80">
+          <label htmlFor={REVIEW_SPOILER_CHECKBOX_ID} className="cursor-pointer pl-1 text-caption1 text-neutral-80">
             {MSG_REVIEW_SPOILER_LABEL}
           </label>
         </div>
