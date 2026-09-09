@@ -28,6 +28,8 @@ export const REVIEW_SORT_OPTIONS: Record<ReviewSortType, string> = {
 export interface ReviewAuthor {
   userId: number;
   nickname: string;
+  readBookCount: number;
+  totalReadCount: number;
 }
 
 export interface BookReviewItem {
@@ -39,6 +41,7 @@ export interface BookReviewItem {
   updatedAt: string;
   isSpoiler: boolean;
   isLiked: boolean;
+  isBlinded: boolean;
 }
 
 export interface ReviewListResponse {
