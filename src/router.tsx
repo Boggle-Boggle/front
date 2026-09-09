@@ -5,7 +5,6 @@ import App from './App';
 
 const Auth = lazy(() => import('pages/Auth'));
 const BookDetail = lazy(() => import('pages/BookDetail'));
-const BookDetailReviews = lazy(() => import('pages/BookDetail/Reviews'));
 const RecordDetailPage = lazy(() => import('pages/Records/Detail'));
 const RecordNew = lazy(() => import('pages/Records/New'));
 const RecordNewCompleted = lazy(() => import('pages/Records/New/Completed'));
@@ -77,7 +76,6 @@ const router = createBrowserRouter([
               { path: '/search/result', element: <SearchResult /> },
               { path: '/search/add', element: <AddCustomBook /> },
               { path: '/books/:isbn13', element: <BookDetail /> },
-              { path: '/books/:isbn13/reviews', element: <BookDetailReviews /> },
               {
                 path: '/records/new',
                 children: [
