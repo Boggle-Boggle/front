@@ -1,6 +1,7 @@
 import { useState, KeyboardEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useLayerStore } from 'stores/useLayerStore';
+import { useToastStore } from 'stores/useToastStore';
 
 import { ToggleButton } from 'components/ToggleButton';
 import { IconHeart, IconHeartFilled } from 'components/icons';
@@ -8,6 +9,8 @@ import type { BookReviewItem } from 'pages/BookDetail/api';
 
 import { formatToDotDate } from 'utils/date';
 
+import { DeleteReviewConfirmModal } from './DeleteReviewConfirmModal';
+import { MyReviewActionSheet } from './MyReviewActionSheet';
 import { ReviewActionSheet } from './ReviewActionSheet';
 import { BlockUserConfirmModal } from '../BlockUserConfirmModal';
 
@@ -22,8 +25,10 @@ const MSG_MY_REVIEW = '나의 리뷰';
 const MSG_REVIEW_REPORT = '신고';
 const MSG_REVIEW_BLOCK = '차단';
 const MSG_REVIEW_SPOILER = '스포일러가 포함 된 리뷰입니다.\n리뷰를 보려면 박스를 터치하세요.';
-const MSG_READER_LEVEL_DEFAULT = '빼곡 독서가';
-const MSG_READER_LEVEL_SUFFIX = '권 독서가';
+const MSG_USER_LEVEL_DEFAULT = '빼곡 독서가';
+const MSG_USER_LEVEL_SUFFIX = '권 독서가';
+const MSG_REVIEW_EDITED = '(수정됨)';
+const MSG_MY_REVIEW_OPTIONS = '수정/삭제';
 
 export const ReviewCard = (props: ReviewCardProps) => {
   const { review, onToggleLike, isMyReview = false } = props;
@@ -31,12 +36,12 @@ export const ReviewCard = (props: ReviewCardProps) => {
 
   const { id, author, content, likeCount, isSpoiler, isLiked, createdAt } = review;
   const { push } = useLayerStore();
+  const { addToast } = useToastStore();
   const navigate = useNavigate();
 
   const formattedDate = formatToDotDate(createdAt);
   const readBookCount = author.readBookCount ?? author.totalReadCount ?? 0;
-  // TODO: 변수명 이상한데 수정필요
-  const readerLevel = readBookCount > 0 ? `${readBookCount}${MSG_READER_LEVEL_SUFFIX}` : MSG_READER_LEVEL_DEFAULT;
+  const userLevel = readBookCount > 0 ? `${readBookCount}${MSG_USER_LEVEL_SUFFIX}` : MSG_USER_LEVEL_DEFAULT;
   const isEdited = review.createdAt !== review.updatedAt;
 
   const handleReportClick = () => {
@@ -57,6 +62,27 @@ export const ReviewCard = (props: ReviewCardProps) => {
     });
   };
 
+  const handleEditClick = () => {
+    addToast({
+      description: '리뷰 수정 기능은 준비 중입니다.',
+      type: 'error',
+    });
+  };
+
+  const handleDeleteClick = () => {
+    push({
+      id: `book-detail-review-delete-modal-${id}`,
+      component: <DeleteReviewConfirmModal reviewId={String(id)} />,
+    });
+  };
+
+  const handleOpenMyReviewActionSheet = () => {
+    push({
+      id: `book-detail-review-my-action-sheet-${id}`,
+      component: <MyReviewActionSheet onEdit={handleEditClick} onDelete={handleDeleteClick} />,
+    });
+  };
+
   const handleLikeClick = () => {
     onToggleLike?.(String(id));
   };
@@ -72,22 +98,20 @@ export const ReviewCard = (props: ReviewCardProps) => {
     <li className="py-mobile text-body2">
       {/* 프로필 */}
       <div className="mb-2 flex w-full items-start justify-between">
-        {/* TODO: 아래 div 박스 두줄로 나옴 수정 필요 */}
-        <div className="inline">
+        <div>
           {isMyReview ? (
             <span className="text-primary">{MSG_MY_REVIEW}</span>
           ) : (
-            <div>
+            <span>
               {author.nickname}
-              {MSG_REVIEW_ID_PREFIX}
-            </div>
+              <span>{MSG_REVIEW_ID_PREFIX}</span>
+            </span>
           )}
-          <p className="text-caption1 font-medium text-neutral-40">{readerLevel}</p>
+          <span className="pl-1 text-caption1 text-neutral-40">{userLevel}</span>
         </div>
 
-        <p className="text-caption1 font-medium text-neutral-40">
-          {/* TODO: 수정됨 다국어 처리 */}
-          {formattedDate} {isEdited ?? '수정됨'}
+        <p className="text-caption1 text-neutral-40">
+          {formattedDate} {isEdited && MSG_REVIEW_EDITED}
         </p>
       </div>
 
@@ -107,11 +131,10 @@ export const ReviewCard = (props: ReviewCardProps) => {
       )}
 
       {/* 바텀영역 */}
-      <div className="mt-3 flex items-center justify-between">
+      <div className="mt-3 flex items-center justify-between text-caption1">
         {isMyReview ? (
-          // TODO: 내 리뷰일 경유 UI 및 액션 연결
-          <button type="button" onClick={handleOpenActionSheet} className="cursor-pointer text-neutral-60">
-            {MSG_REVIEW_REPORT}/{MSG_REVIEW_BLOCK}
+          <button type="button" onClick={handleOpenMyReviewActionSheet} className="cursor-pointer text-primary">
+            {MSG_MY_REVIEW_OPTIONS}
           </button>
         ) : (
           <button type="button" onClick={handleOpenActionSheet} className="cursor-pointer text-neutral-60">

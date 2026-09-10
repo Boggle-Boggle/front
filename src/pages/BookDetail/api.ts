@@ -101,3 +101,7 @@ export const unlikeBookReview = async (reviewId: string) => {
 export const blockUser = async (userId: number) => {
   await api.post(`/v2/users/${userId}/block`);
 };
+
+export const deleteBookReview = async (reviewId: string) => {
+  await api.delete(`/v2/reviews/${reviewId}`);
+};
