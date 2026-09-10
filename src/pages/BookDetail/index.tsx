@@ -49,12 +49,14 @@ const BOOK_DETAIL_TABS: TabItem<DetailTabType>[] = [
 const getAladinBookDetailUrl = (itemId: number) => `${ALADIN_BOOK_DETAIL_URL}?ItemId=${itemId}`;
 
 export const BookDetail = () => {
-  const { isbn13 = '' } = useParams();
+  const [activeTab, setActiveTab] = useState<DetailTabType>('review');
+
   const tabSentinelRef = useRef<HTMLDivElement>(null);
-  const [activeTab, setActiveTab] = useState<DetailTabType>('info');
+  const queryClient = useQueryClient();
+
+  const { isbn13 = '' } = useParams();
   const { push } = useLayerStore();
   const { addToast } = useToastStore();
-  const queryClient = useQueryClient();
 
   const { data, isLoading, isError } = useBookDetailQuery(isbn13);
 

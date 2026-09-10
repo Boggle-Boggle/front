@@ -13,8 +13,8 @@ import { BlockUserConfirmModal } from '../BlockUserConfirmModal';
 
 type ReviewCardProps = {
   review: BookReviewItem;
-  onToggleLike?: (reviewId: string) => void;
-  isMyReview?: boolean;
+  onToggleLike: (reviewId: string) => void;
+  isMyReview: boolean;
 };
 
 const MSG_REVIEW_ID_PREFIX = '님';
@@ -23,17 +23,21 @@ const MSG_REVIEW_REPORT = '신고';
 const MSG_REVIEW_BLOCK = '차단';
 const MSG_REVIEW_SPOILER = '스포일러가 포함 된 리뷰입니다.\n리뷰를 보려면 박스를 터치하세요.';
 const MSG_READER_LEVEL_DEFAULT = '빼곡 독서가';
+const MSG_READER_LEVEL_SUFFIX = '권 독서가';
 
 export const ReviewCard = (props: ReviewCardProps) => {
   const { review, onToggleLike, isMyReview = false } = props;
-
-  const { id, author, content, likeCount, isSpoiler, isLiked, createdAt } = review;
-  const formattedDate = formatToDotDate(createdAt);
-
   const [isOpenSpoiler, setIsOpenSpoiler] = useState<boolean>(false);
 
+  const { id, author, content, likeCount, isSpoiler, isLiked, createdAt } = review;
   const { push } = useLayerStore();
   const navigate = useNavigate();
+
+  const formattedDate = formatToDotDate(createdAt);
+  const readBookCount = author.readBookCount ?? author.totalReadCount ?? 0;
+  // TODO: 변수명 이상한데 수정필요
+  const readerLevel = readBookCount > 0 ? `${readBookCount}${MSG_READER_LEVEL_SUFFIX}` : MSG_READER_LEVEL_DEFAULT;
+  const isEdited = review.createdAt !== review.updatedAt;
 
   const handleReportClick = () => {
     navigate('/report', { state: { reviewId: id, userId: author.userId } });
@@ -65,44 +69,55 @@ export const ReviewCard = (props: ReviewCardProps) => {
   };
 
   return (
-    <li className="py-mobile text-body1">
-      <div className="mb-2 flex items-center gap-1">
-        {!isMyReview && (
-          <>
-            <p className="text-body2 font-bold">{author.nickname}</p>
-            <p className="text-body2 font-medium">{MSG_REVIEW_ID_PREFIX}</p>
-          </>
-        )}
-        {isMyReview && <span className="text-body2 font-bold text-primary">{MSG_MY_REVIEW}</span>}
-        <p className="text-caption1 text-neutral-60">{MSG_READER_LEVEL_DEFAULT}</p>
+    <li className="py-mobile text-body2">
+      {/* 프로필 */}
+      <div className="mb-2 flex w-full items-start justify-between">
+        {/* TODO: 아래 div 박스 두줄로 나옴 수정 필요 */}
+        <div className="inline">
+          {isMyReview ? (
+            <span className="text-primary">{MSG_MY_REVIEW}</span>
+          ) : (
+            <div>
+              {author.nickname}
+              {MSG_REVIEW_ID_PREFIX}
+            </div>
+          )}
+          <p className="text-caption1 font-medium text-neutral-40">{readerLevel}</p>
+        </div>
+
+        <p className="text-caption1 font-medium text-neutral-40">
+          {/* TODO: 수정됨 다국어 처리 */}
+          {formattedDate} {isEdited ?? '수정됨'}
+        </p>
       </div>
 
-      {(!isSpoiler || isOpenSpoiler) && <p>{content}</p>}
-      {isSpoiler && !isOpenSpoiler && (
+      {/* 본문 */}
+      {!isSpoiler || isOpenSpoiler ? (
+        <p className="text-body1">{content}</p>
+      ) : (
         <div
           role="button"
           tabIndex={0}
           onClick={() => setIsOpenSpoiler(true)}
           onKeyDown={handleKeyDownSpoiler}
-          className="bg-neutral-10 whitespace-pre-line rounded-lg border border-dashed border-neutral-40 p-4 text-center text-body2 font-medium text-neutral-40 cursor-pointer hover:bg-neutral-20 transition-colors"
+          className="cursor-pointer whitespace-pre-line rounded-lg border border-dashed border-neutral-40 p-4 text-center text-caption1 text-neutral-40"
         >
           {MSG_REVIEW_SPOILER}
         </div>
       )}
 
-      <div className="flex items-center justify-between pt-3">
-        <div className="flex items-center gap-1 text-neutral-60">
-          <p className="text-body2 font-medium text-neutral-40">{formattedDate}</p>
-          {!isMyReview && (
-            <button
-              type="button"
-              onClick={handleOpenActionSheet}
-              className="pl-2 text-body2 font-medium text-neutral-60"
-            >
-              {MSG_REVIEW_REPORT}/{MSG_REVIEW_BLOCK}
-            </button>
-          )}
-        </div>
+      {/* 바텀영역 */}
+      <div className="mt-3 flex items-center justify-between">
+        {isMyReview ? (
+          // TODO: 내 리뷰일 경유 UI 및 액션 연결
+          <button type="button" onClick={handleOpenActionSheet} className="cursor-pointer text-neutral-60">
+            {MSG_REVIEW_REPORT}/{MSG_REVIEW_BLOCK}
+          </button>
+        ) : (
+          <button type="button" onClick={handleOpenActionSheet} className="cursor-pointer text-neutral-60">
+            {MSG_REVIEW_REPORT}/{MSG_REVIEW_BLOCK}
+          </button>
+        )}
 
         <ToggleButton
           variant="iconCount"
