@@ -9,12 +9,12 @@ import type { BookReviewItem } from 'pages/BookDetail/api';
 
 import { formatToDotDate } from 'utils/date';
 
+import { BlockUserConfirmModal } from './BlockUserConfirmModal';
 import { DeleteReviewConfirmModal } from './DeleteReviewConfirmModal';
 import { MyReviewActionSheet } from './MyReviewActionSheet';
 import { ReviewActionSheet } from './ReviewActionSheet';
-import { BlockUserConfirmModal } from '../BlockUserConfirmModal';
 
-type ReviewCardProps = {
+type ReviewItemProps = {
   review: BookReviewItem;
   onToggleLike: (reviewId: string) => void;
   isMyReview: boolean;
@@ -30,7 +30,7 @@ const MSG_USER_LEVEL_SUFFIX = '권 독서가';
 const MSG_REVIEW_EDITED = '(수정됨)';
 const MSG_MY_REVIEW_OPTIONS = '수정/삭제';
 
-export const ReviewCard = (props: ReviewCardProps) => {
+export const ReviewItem = (props: ReviewItemProps) => {
   const { review, onToggleLike, isMyReview = false } = props;
   const [isOpenSpoiler, setIsOpenSpoiler] = useState<boolean>(false);
 
