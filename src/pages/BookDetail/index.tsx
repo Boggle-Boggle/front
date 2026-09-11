@@ -18,11 +18,11 @@ import { useScrollRestoration } from 'hooks/useScrollRestoration';
 
 import type { BookDetail as BookDetailType } from 'types';
 
+import { AddRecordStatusBottomSheet } from './AddRecordStatusBottomSheet';
 import { BookMenuActionSheet } from './BookMenuActionSheet';
 import { InfoSection } from './InfoSection';
 import { ReviewSection } from './ReviewSection';
 import { addInterestedBook, deleteInterestedBookByIsbn13 } from './api';
-import { AddRecordStatusBottomSheet } from './shared/AddRecordStatusBottomSheet';
 import { useBookDetailQuery } from './useBookDetailQuery';
 
 const MSG_BOOK_DETAIL_ADD_RECORD = '독서 기록 추가하기';
