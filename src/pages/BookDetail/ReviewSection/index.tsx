@@ -1,7 +1,7 @@
 import { useParams } from 'react-router-dom';
 
-import { ReviewInput } from '../shared/ReviewInput';
-import { ReviewList } from '../shared/ReviewList';
+import { ReviewInput } from './ReviewInput';
+import { ReviewList } from './ReviewList';
 
 export const ReviewSection = () => {
   const { isbn13 = '' } = useParams();

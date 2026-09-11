@@ -5,7 +5,7 @@ import { ChangeEvent, useState, useRef, useEffect } from 'react';
 import { Button } from 'components/Button';
 import { Checkbox } from 'components/Checkbox';
 
-import { createBookReview } from '../../api';
+import { createBookReview } from '../api';
 
 const MSG_REVIEW_SUBMIT = '등록하기';
 const MSG_REVIEW_SPOILER_LABEL = '스포일러가 포함됨';

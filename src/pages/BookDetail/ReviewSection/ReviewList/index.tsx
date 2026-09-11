@@ -8,9 +8,9 @@ import { IconArrowDown } from 'components/icons';
 
 import { useInfiniteScrollObserver } from 'hooks/useInfiniteScrollObserver';
 
+import { ReviewItem } from './ReviewItem';
 import { ReviewSortActionSheet } from './SortActionSheet';
 import { getBookReviews, likeBookReview, unlikeBookReview, REVIEW_SORT_OPTIONS, type ReviewSortType } from '../../api';
-import { ReviewCard } from '../ReviewCard';
 
 const MSG_REVIEW_PAGE_TITLE = '빼곡한 리뷰';
 const MSG_REVIEW_EMPTY = '아직 등록된 리뷰가 없습니다. 첫 리뷰를 작성해 보세요!';
@@ -101,7 +101,7 @@ export const ReviewList = ({ isbn13 }: ReviewListProps) => {
         <>
           <ul className="divide-y divide-neutral-20">
             {allReviews.map((review) => (
-              <ReviewCard
+              <ReviewItem
                 key={review.id}
                 review={review}
                 onToggleLike={handleToggleLike}
