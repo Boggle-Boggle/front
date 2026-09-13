@@ -118,7 +118,6 @@ export const MyInfoTab = ({ readingLog }: MyInfoTabProps) => {
   return (
     <div className="flex flex-col gap-8 pb-safe-bottom">
       <MyInfoHeader isEdit={isEdit} onToggleEdit={handleToggleEdit} />
-
       <RatingSection rating={rating} onChange={setRating} isEdit={isEdit} />
       <ReadingPeriodSection
         startDate={startDate}
