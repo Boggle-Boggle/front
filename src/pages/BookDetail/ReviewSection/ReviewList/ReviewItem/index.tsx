@@ -21,7 +21,6 @@ type ReviewItemProps = {
 };
 
 const MSG_REVIEW_ID_PREFIX = '님';
-const MSG_MY_REVIEW = '나의 리뷰';
 const MSG_REVIEW_REPORT = '신고';
 const MSG_REVIEW_BLOCK = '차단';
 const MSG_REVIEW_SPOILER = '스포일러가 포함 된 리뷰입니다.\n리뷰를 보려면 박스를 터치하세요.';
@@ -99,14 +98,10 @@ export const ReviewItem = (props: ReviewItemProps) => {
       {/* 프로필 */}
       <div className="mb-2 flex w-full items-start justify-between">
         <div>
-          {isMyReview ? (
-            <span className="text-primary">{MSG_MY_REVIEW}</span>
-          ) : (
-            <span>
-              {author.nickname}
-              <span>{MSG_REVIEW_ID_PREFIX}</span>
-            </span>
-          )}
+          <span className={isMyReview ? 'text-primary' : ''}>
+            {author.nickname}
+            <span>{MSG_REVIEW_ID_PREFIX}</span>
+          </span>
           <span className="pl-1 text-caption1 text-neutral-40">{userLevel}</span>
         </div>
 
