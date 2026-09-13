@@ -116,34 +116,36 @@ export const MyInfoTab = ({ readingLog }: MyInfoTabProps) => {
   };
 
   return (
-    <div className="flex flex-col gap-8 pb-safe-bottom">
+    <>
       <MyInfoHeader isEdit={isEdit} onToggleEdit={handleToggleEdit} />
-      <RatingSection rating={rating} onChange={setRating} isEdit={isEdit} />
-      <ReadingPeriodSection
-        startDate={startDate}
-        endDate={endDate}
-        onOpenStartDate={handleOpenStartDate}
-        onOpenEndDate={handleOpenEndDate}
-        isEdit={isEdit}
-      />
-      <ReadingProgressSection
-        progressType={progressType}
-        progressValue={progressValue}
-        totalPageCount={totalPageCount}
-        onChangeProgressType={setProgressType}
-        onChangeProgressValue={setProgressValue}
-        onOpenPageInfo={handleOpenPageInfo}
-        isEdit={isEdit}
-      />
-      <GroupSection
-        bookshelves={bookshelves}
-        selectedBookshelfIds={selectedBookshelfIds}
-        onOpenGroupEdit={handleOpenGroupEdit}
-        onToggleBookshelf={handleToggleBookshelf}
-        isEdit={isEdit}
-      />
-      <VisibilitySection checked={isPrivate} onChange={handleTogglePrivate} isEdit={isEdit} />
-    </div>
+      <div className="flex flex-col gap-9 pb-safe-bottom">
+        <RatingSection rating={rating} onChange={setRating} isEdit={isEdit} />
+        <ReadingPeriodSection
+          startDate={startDate}
+          endDate={endDate}
+          onOpenStartDate={handleOpenStartDate}
+          onOpenEndDate={handleOpenEndDate}
+          isEdit={isEdit}
+        />
+        <ReadingProgressSection
+          progressType={progressType}
+          progressValue={progressValue}
+          totalPageCount={totalPageCount}
+          onChangeProgressType={setProgressType}
+          onChangeProgressValue={setProgressValue}
+          onOpenPageInfo={handleOpenPageInfo}
+          isEdit={isEdit}
+        />
+        <GroupSection
+          bookshelves={bookshelves}
+          selectedBookshelfIds={selectedBookshelfIds}
+          onOpenGroupEdit={handleOpenGroupEdit}
+          onToggleBookshelf={handleToggleBookshelf}
+          isEdit={isEdit}
+        />
+        <VisibilitySection checked={isPrivate} onChange={handleTogglePrivate} isEdit={isEdit} />
+      </div>
+    </>
   );
 };
 export default MyInfoTab;

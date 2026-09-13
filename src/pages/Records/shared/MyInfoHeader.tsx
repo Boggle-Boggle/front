@@ -9,7 +9,7 @@ const MSG_EDIT_START = '수정하기';
 
 export const MyInfoHeader = ({ isEdit, onToggleEdit }: MyInfoHeaderProps) => {
   return (
-    <div className="flex items-center justify-between">
+    <div className="flex items-center justify-between pb-4">
       <span className="text-caption1 text-neutral-60">{MSG_MY_READING_INFO}</span>
       <button type="button" onClick={onToggleEdit} className="text-body2 text-information outline-none">
         {isEdit ? MSG_EDIT_COMPLETE : MSG_EDIT_START}
