@@ -22,7 +22,7 @@ export const ContentModal = (props: ContentModalProps) => {
         <IconButton onClick={onClose} label="닫기" size="md" icon={IconCancel} className="absolute right-2" />
       </div>
       {children}
-      {footer}
+      {footer && <div className="mt-4">{footer}</div>}
     </Modal>
   );
 };
