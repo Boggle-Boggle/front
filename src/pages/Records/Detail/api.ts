@@ -88,3 +88,20 @@ export const createReadingNote = async (readingLogId: string | number, data: Cre
 export const deleteReadingLog = async (id: string | number) => {
   await api.delete(`/v2/reading-logs/${id}`);
 };
+
+export interface UpdateReadingLogRequest {
+  status: AddRecordStatus;
+  rating: number;
+  startDate: string;
+  endDate: string | null;
+  progressType?: ReadingLogProgressType;
+  progressValue?: number;
+  totalPagesOverride?: number;
+  bookshelfIds: number[];
+  isHidden: boolean;
+}
+
+export const updateReadingLog = async (id: string | number, data: UpdateReadingLogRequest) => {
+  const response = await api.put<ApiSuccessResponse<void>>(`/v2/reading-logs/${id}`, data);
+  return response.data.data;
+};

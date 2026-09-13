@@ -1,11 +1,13 @@
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { useState } from 'react';
+import { useParams } from 'react-router-dom';
 import { useLayerStore } from 'stores/useLayerStore';
+import { useToastStore } from 'stores/useToastStore';
 
 import type { ReadingLogProgressType } from 'types';
 
-import type { ReadingLogInfo } from './api';
+import { updateReadingLog, type UpdateReadingLogRequest, type ReadingLogInfo } from './api';
 import { DateSelectModal } from '../shared/DateSelectModal';
 import { GroupDeleteConfirmModal } from '../shared/GroupDeleteConfirmModal';
 import { GroupEditModal } from '../shared/GroupEditModal';
@@ -50,10 +52,33 @@ export const MyInfoTab = ({ readingLog }: MyInfoTabProps) => {
   );
   const [isPrivate, setIsPrivate] = useState<boolean>(readingLog.isHidden);
 
+  const { recordId = '' } = useParams<{ recordId: string }>();
+  const queryClient = useQueryClient();
+  const { addToast } = useToastStore();
+
   const { push, pop } = useLayerStore();
   const { data: bookshelves = [] } = useQuery({
     queryKey: BOOKSHELVES_QUERY_KEY,
     queryFn: getBookshelves,
+  });
+
+  const { mutate: updateRecord, isPending } = useMutation({
+    mutationFn: (data: UpdateReadingLogRequest) => updateReadingLog(recordId, data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['reading-log', recordId] });
+      queryClient.invalidateQueries({ queryKey: ['reading-logs'] });
+      addToast({
+        description: '독서 정보가 성공적으로 수정되었어요.',
+        type: 'success',
+      });
+      setIsEdit(false);
+    },
+    onError: () => {
+      addToast({
+        description: '독서 정보 수정에 실패했습니다. 다시 시도해 주세요.',
+        type: 'error',
+      });
+    },
   });
 
   const handleToggleBookshelf = (bookshelfId: number) => {
@@ -112,12 +137,27 @@ export const MyInfoTab = ({ readingLog }: MyInfoTabProps) => {
   };
 
   const handleToggleEdit = () => {
-    setIsEdit((prev) => !prev);
+    if (isEdit) {
+      const requestData: UpdateReadingLogRequest = {
+        status: readingLog.status,
+        rating,
+        startDate: startDate ? `${startDate}T00:00:00.000Z` : '',
+        endDate: endDate ? `${endDate}T00:00:00.000Z` : null,
+        progressType,
+        progressValue: progressValue ? Number(progressValue) : undefined,
+        totalPagesOverride: totalPageCount ? Number(totalPageCount) : undefined,
+        bookshelfIds: selectedBookshelfIds,
+        isHidden: isPrivate,
+      };
+      updateRecord(requestData);
+    } else {
+      setIsEdit(true);
+    }
   };
 
   return (
     <>
-      <MyInfoHeader isEdit={isEdit} onToggleEdit={handleToggleEdit} />
+      <MyInfoHeader isEdit={isEdit} disabled={isPending} onToggleEdit={handleToggleEdit} />
       <div className="flex flex-col gap-9 pb-safe-bottom">
         <RatingSection rating={rating} onChange={setRating} isEdit={isEdit} />
         <ReadingPeriodSection
