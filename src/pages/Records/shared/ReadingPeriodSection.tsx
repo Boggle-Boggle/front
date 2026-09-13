@@ -11,6 +11,7 @@ type ReadingPeriodSectionProps = {
   status?: AddRecordStatus;
   onOpenStartDate: () => void;
   onOpenEndDate: () => void;
+  isEdit?: boolean;
 };
 
 const MSG_ADD_RECORD_PERIOD_TITLE = '독서 기간';
@@ -18,12 +19,12 @@ const MSG_ADD_RECORD_START_DATE = '시작일';
 const MSG_ADD_RECORD_END_DATE = '완료일';
 
 export const ReadingPeriodSection = (props: ReadingPeriodSectionProps) => {
-  const { startDate, endDate, status = 'COMPLETED', onOpenStartDate, onOpenEndDate } = props;
+  const { startDate, endDate, status = 'COMPLETED', onOpenStartDate, onOpenEndDate, isEdit = false } = props;
 
   const isReading = status === 'READING';
 
   return (
-    <section className="w-full">
+    <section className="w-full" data-isedit={isEdit}>
       <SectionTitle title={MSG_ADD_RECORD_PERIOD_TITLE} />
       <div className="flex items-center justify-center gap-4">
         <ReadingPeriodButton

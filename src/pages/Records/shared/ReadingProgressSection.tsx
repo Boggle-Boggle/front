@@ -14,6 +14,7 @@ interface ReadingProgressSectionProps {
   onChangeProgressType: (progressType: ReadingLogProgressType) => void;
   onChangeProgressValue: (progressValue: string) => void;
   onOpenPageInfo: () => void;
+  isEdit?: boolean;
 }
 
 const MSG_ADD_RECORD_PROGRESS_TITLE = '지금까지 읽은 독서량';
@@ -39,8 +40,15 @@ const READING_PROGRESS_TYPE_OPTIONS: SegmentedControlOptions<ReadingLogProgressT
 };
 
 export const ReadingProgressSection = (props: ReadingProgressSectionProps) => {
-  const { progressType, progressValue, totalPageCount, onChangeProgressType, onChangeProgressValue, onOpenPageInfo } =
-    props;
+  const {
+    progressType,
+    progressValue,
+    totalPageCount,
+    onChangeProgressType,
+    onChangeProgressValue,
+    onOpenPageInfo,
+    isEdit = false,
+  } = props;
 
   const isPageType = progressType === 'PAGE';
   const progressUnit = isPageType ? MSG_ADD_RECORD_PAGE_SEGMENT : MSG_ADD_RECORD_PERCENTAGE_SEGMENT;
@@ -57,7 +65,7 @@ export const ReadingProgressSection = (props: ReadingProgressSectionProps) => {
   const handleClearProgressValue = () => onChangeProgressValue('');
 
   return (
-    <section className="w-full">
+    <section className="w-full" data-isedit={isEdit}>
       <div className="flex items-center justify-between">
         <SectionTitle title={MSG_ADD_RECORD_PROGRESS_TITLE} />
         <SegmentedControl

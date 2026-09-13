@@ -184,13 +184,14 @@ export const NewRecord = () => {
       <Header withBack title={customBook ? customBook.title : bookDetail?.title} />
 
       <div className="flex flex-1 flex-col gap-8 overflow-y-auto px-mobile pb-safe-bottom">
-        <RatingSection rating={rating} onChange={setRating} />
+        <RatingSection rating={rating} onChange={setRating} isEdit />
         <ReadingPeriodSection
           status={status}
           startDate={startDate}
           endDate={endDate}
           onOpenStartDate={handleOpenStartDate}
           onOpenEndDate={handleOpenEndDate}
+          isEdit
         />
         {status !== 'COMPLETED' && (
           <ReadingProgressSection
@@ -200,6 +201,7 @@ export const NewRecord = () => {
             onChangeProgressType={setProgressType}
             onChangeProgressValue={setProgressValue}
             onOpenPageInfo={handleOpenPageInfo}
+            isEdit
           />
         )}
         <GroupSection
@@ -207,8 +209,9 @@ export const NewRecord = () => {
           selectedBookshelfIds={selectedBookshelfIds}
           onOpenGroupEdit={handleOpenGroupEdit}
           onToggleBookshelf={handleToggleBookshelf}
+          isEdit
         />
-        <VisibilitySection checked={isHidden} onChange={handleTogglePrivate} />
+        <VisibilitySection checked={isHidden} onChange={handleTogglePrivate} isEdit />
       </div>
 
       <BottomButton

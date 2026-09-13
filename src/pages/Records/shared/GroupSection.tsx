@@ -8,18 +8,18 @@ type GroupSectionProps = {
   selectedBookshelfIds: number[];
   onOpenGroupEdit: () => void;
   onToggleBookshelf: (bookshelfId: number) => void;
+  isEdit?: boolean;
 };
 
 const MSG_GROUP_SECTION_TITLE = '그룹 설정하기';
 const MSG_NEW_GROUP_ADD = '새 그룹 만들기';
 
 export const GroupSection = (props: GroupSectionProps) => {
-  const { bookshelves, selectedBookshelfIds, onOpenGroupEdit, onToggleBookshelf } = props;
+  const { bookshelves, selectedBookshelfIds, onOpenGroupEdit, onToggleBookshelf, isEdit = false } = props;
 
   return (
-    <section className="w-full">
-      <SectionTitle title={MSG_GROUP_SECTION_TITLE} />
-
+    <section className="w-full" data-isedit={isEdit}>
+      <SectionTitle title={MSG_GROUP_SECTION_TITLE} />ㅈ
       <ul className="mt-3 flex flex-col gap-2">
         <li className="w-full">
           <button
