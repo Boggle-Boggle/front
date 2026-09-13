@@ -10,6 +10,7 @@ import { DateSelectModal } from '../shared/DateSelectModal';
 import { GroupDeleteConfirmModal } from '../shared/GroupDeleteConfirmModal';
 import { GroupEditModal } from '../shared/GroupEditModal';
 import { GroupSection } from '../shared/GroupSection';
+import { MyInfoHeader } from '../shared/MyInfoHeader';
 import { PageInfoModal } from '../shared/PageInfoModal';
 import { RatingSection } from '../shared/RatingSection';
 import { ReadingPeriodSection } from '../shared/ReadingPeriodSection';
@@ -110,18 +111,13 @@ export const MyInfoTab = ({ readingLog }: MyInfoTabProps) => {
     });
   };
 
+  const handleToggleEdit = () => {
+    setIsEdit((prev) => !prev);
+  };
+
   return (
     <div className="flex flex-col gap-8 pb-safe-bottom">
-      <div className="flex items-center justify-between border-b pb-4">
-        <span className="text-caption1 text-neutral-60">내가 기록한 독서 정보</span>
-        <button
-          type="button"
-          onClick={() => setIsEdit((prev) => !prev)}
-          className="text-body2 text-information outline-none"
-        >
-          {isEdit ? '완료하기' : '수정하기'}
-        </button>
-      </div>
+      <MyInfoHeader isEdit={isEdit} onToggleEdit={handleToggleEdit} />
 
       <RatingSection rating={rating} onChange={setRating} isEdit={isEdit} />
       <ReadingPeriodSection
