@@ -42,12 +42,12 @@ export interface BookReviewItem {
   isSpoiler: boolean;
   isLiked: boolean;
   isBlinded: boolean;
+  isMine: boolean;
 }
 
 export interface ReviewListResponse {
   canWriteReview: boolean;
   totalReviewCount: number;
-  myReview: BookReviewItem | null;
   reviews: BookReviewItem[];
 }
 

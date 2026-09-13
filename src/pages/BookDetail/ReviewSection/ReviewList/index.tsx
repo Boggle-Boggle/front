@@ -35,8 +35,7 @@ export const ReviewList = ({ isbn13 }: ReviewListProps) => {
     queryKey: ['books', isbn13, 'reviews', sortType],
     queryFn: ({ pageParam }) => getBookReviews({ isbn13, page: pageParam, size: 10, sort: sortType }),
     getNextPageParam: (lastPage, allPages) => {
-      const hasMyReview = allPages[0]?.myReview ? 1 : 0;
-      const loadedCount = allPages.flatMap((page) => page.reviews).length + hasMyReview;
+      const loadedCount = allPages.flatMap((page) => page.reviews).length;
       if (loadedCount < lastPage.totalReviewCount) return allPages.length + 1;
 
       return undefined;
@@ -45,9 +44,8 @@ export const ReviewList = ({ isbn13 }: ReviewListProps) => {
     enabled: Boolean(isbn13),
   });
 
-  const myReview = data?.pages[0]?.myReview;
-  const reviews = data ? data.pages.flatMap((page) => page.reviews) : [];
-  const allReviews = myReview ? [myReview, ...reviews] : reviews;
+  const allReviews = data ? data.pages.flatMap((page) => page.reviews) : [];
+  const myReview = allReviews.find((review) => review.isMine);
   const totalReviewCount = data?.pages[0]?.totalReviewCount || 0;
 
   const { observerTarget } = useInfiniteScrollObserver({
@@ -115,7 +113,7 @@ export const ReviewList = ({ isbn13 }: ReviewListProps) => {
                 key={review.id}
                 review={review}
                 onToggleLike={handleToggleLike}
-                isMyReview={review.id === myReview?.id}
+                isMyReview={review.isMine}
               />
             ))}
           </ul>
