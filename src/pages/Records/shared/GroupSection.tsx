@@ -19,7 +19,7 @@ export const GroupSection = (props: GroupSectionProps) => {
 
   return (
     <section className="w-full" data-isedit={isEdit}>
-      <SectionTitle title={MSG_GROUP_SECTION_TITLE} />ㅈ
+      <SectionTitle title={MSG_GROUP_SECTION_TITLE} />
       <ul className="mt-3 flex flex-col gap-2">
         <li className="w-full">
           <button
