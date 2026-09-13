@@ -4,11 +4,12 @@ type ReadingPeriodButtonProps = {
   label: string;
   value: string;
   isActive?: boolean;
+  disabled?: boolean;
   onClick: () => void;
 };
 
 export const ReadingPeriodButton = (props: ReadingPeriodButtonProps) => {
-  const { label, value, isActive = false, onClick } = props;
+  const { label, value, isActive = false, disabled = false, onClick } = props;
 
   const borderClass = isActive ? 'border-2 border-primary' : 'border border-neutral-20';
   const valueClassName = isActive ? 'text-caption1 text-neutral-100' : 'text-body1 text-neutral-100';
@@ -17,9 +18,12 @@ export const ReadingPeriodButton = (props: ReadingPeriodButtonProps) => {
     <button
       type="button"
       onClick={onClick}
-      className={`flex h-16 flex-1 flex-col justify-center rounded-xl px-3 text-left ${borderClass}`}
+      disabled={disabled}
+      className={`flex h-16 flex-1 flex-col justify-center rounded-xl px-3 text-left ${borderClass} ${
+        disabled ? 'cursor-default' : 'cursor-pointer'
+      }`}
     >
-      <p className="pb-1 text-caption3 text-neutral-60">{label}</p>
+      <p className="pb-1 text-caption1 text-neutral-60">{label}</p>
       <span className={`flex items-center gap-1 ${valueClassName}`}>
         <IconCalendar className="size-icon-sm" />
         {value}

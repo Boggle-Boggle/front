@@ -19,7 +19,7 @@ const MSG_ADD_RECORD_START_DATE = '시작일';
 const MSG_ADD_RECORD_END_DATE = '완료일';
 
 export const ReadingPeriodSection = (props: ReadingPeriodSectionProps) => {
-  const { startDate, endDate, status = 'COMPLETED', onOpenStartDate, onOpenEndDate, isEdit = false } = props;
+  const { startDate, endDate, status = 'COMPLETED', onOpenStartDate, onOpenEndDate, isEdit } = props;
 
   const isReading = status === 'READING';
 
@@ -30,14 +30,16 @@ export const ReadingPeriodSection = (props: ReadingPeriodSectionProps) => {
         <ReadingPeriodButton
           label={MSG_ADD_RECORD_START_DATE}
           value={formatToShortDotDate(startDate)}
-          isActive={Boolean(startDate)}
+          isActive={isEdit && Boolean(startDate)}
+          disabled={!isEdit}
           onClick={onOpenStartDate}
         />
         ~
         <ReadingPeriodButton
           label={MSG_ADD_RECORD_END_DATE}
           value={isReading ? '읽는 중' : formatToShortDotDate(endDate)}
-          isActive={!isReading && Boolean(endDate)}
+          isActive={isEdit && !isReading && Boolean(endDate)}
+          disabled={!isEdit}
           onClick={isReading ? () => {} : onOpenEndDate}
         />
       </div>
