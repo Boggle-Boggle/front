@@ -67,37 +67,44 @@ export const ReadingProgressSection = (props: ReadingProgressSectionProps) => {
   return (
     <section className="w-full" data-isedit={isEdit}>
       <div className="flex items-center justify-between">
-        <SectionTitle title={MSG_ADD_RECORD_PROGRESS_TITLE} />
-        <SegmentedControl
-          options={READING_PROGRESS_TYPE_OPTIONS}
-          value={progressType}
-          onChange={onChangeProgressType}
-          ariaLabel={MSG_ADD_RECORD_PROGRESS_TYPE_LABEL}
-        />
+        <SectionTitle title={`${MSG_ADD_RECORD_PROGRESS_TITLE} (${isPageType ? 'p' : '%'})`} />
+        {isEdit && (
+          <SegmentedControl
+            options={READING_PROGRESS_TYPE_OPTIONS}
+            value={progressType}
+            onChange={onChangeProgressType}
+            ariaLabel={MSG_ADD_RECORD_PROGRESS_TYPE_LABEL}
+          />
+        )}
       </div>
 
       <p className="pb-1 pt-3 text-caption2 text-neutral-60">{totalProgressText}</p>
-      <Input
-        value={progressValue}
-        onChange={handleProgressValueChange}
-        onClear={handleClearProgressValue}
-        type="number"
-        min={MIN_PROGRESS_VALUE}
-        max={maxProgressValue}
-        placeholder={progressPlaceholder}
-        variant="primary"
-      />
 
-      {isPageType ? (
+      {isEdit ? (
+        <Input
+          value={progressValue}
+          onChange={handleProgressValueChange}
+          onClear={handleClearProgressValue}
+          type="number"
+          min={MIN_PROGRESS_VALUE}
+          max={maxProgressValue}
+          placeholder={progressPlaceholder}
+          variant="primary"
+        />
+      ) : (
+        <div className="flex h-12 w-full cursor-default select-none items-center rounded-lg border border-neutral-20 px-4 text-body1">
+          {progressValue ? `${progressValue}${progressUnit} 읽었어요` : `0${progressUnit} 읽었어요`}
+        </div>
+      )}
+
+      {isEdit && isPageType && (
         <button
           type="button"
           onClick={onOpenPageInfo}
-          className="w-full pt-3 text-right text-caption1 text-information"
+          className="w-full pt-3 text-right text-caption1 text-information outline-none"
         >
           {MSG_ADD_RECORD_PAGE_EDIT}
         </button>
-      ) : (
-        <div className="h-8" />
       )}
     </section>
   );
