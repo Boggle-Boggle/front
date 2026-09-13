@@ -7,6 +7,7 @@ import useLayerStore from 'stores/useLayerStore';
 
 import IconButton from 'components/Button/IconButton';
 import { TextButton } from 'components/Button/TextButton';
+import { Empty } from 'components/Empty';
 import { IconEdit, IconEllipsisVertical } from 'components/icons';
 
 import { formatToDotDateTime } from 'utils/date';
@@ -22,7 +23,7 @@ type NoteTabProps = {
 const MSG_NOTE_TAB_MORE_TEXT = '노트 전체보기';
 const MSG_NOTE_TAB_LOADING = '노트를 불러오는 중입니다...';
 const MSG_NOTE_TAB_COUNT_SUFFIX = '개의 독서 노트가 있습니다';
-const MSG_NOTE_TAB_EMPTY = '등록된 독서 노트가 없습니다. 첫 노트를 작성해 보세요!';
+const MSG_NOTE_TAB_EMPTY = '등록된 독서 노트가 없어요.\n첫 노트를 작성해 보세요!';
 const MSG_NOTE_TAB_CARD_MENU_ARIA_LABEL = '메모 더보기';
 const MSG_NOTE_TAB_WRITE_ARIA_LABEL = '독서 노트 작성';
 
@@ -67,17 +68,15 @@ export const NoteTab = ({ readingLogId, bookTitle }: NoteTabProps) => {
 
   return (
     <section className="pb-safe-bottom">
-      <div className="flex items-center justify-between">
+      <div className="mb-6 flex items-center justify-between">
         <p className="text-caption1 text-neutral-60">{`${notes.length}${MSG_NOTE_TAB_COUNT_SUFFIX}`}</p>
         <TextButton onClick={handleMoreClick} text={MSG_NOTE_TAB_MORE_TEXT} size="md" variant="default" />
       </div>
 
       {notes.length === 0 ? (
-        <div className="flex flex-col items-center justify-center py-20 text-body2 text-neutral-60">
-          {MSG_NOTE_TAB_EMPTY}
-        </div>
+        <Empty text={MSG_NOTE_TAB_EMPTY} />
       ) : (
-        <ul className="mt-6">
+        <ul>
           {notes.map((note) => {
             return (
               <li

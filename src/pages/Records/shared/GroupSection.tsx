@@ -1,3 +1,4 @@
+import { Empty } from 'components/Empty';
 import { IconPlus } from 'components/icons';
 
 import { SectionTitle } from './SectionTitle';
@@ -13,7 +14,7 @@ type GroupSectionProps = {
 
 const MSG_GROUP_SECTION_TITLE = '그룹 책장';
 const MSG_NEW_GROUP_ADD = '새 그룹 만들기';
-const MSG_NO_INCLUDED_GROUPS = '포함된 책장이 없습니다.';
+const MSG_NO_INCLUDED_GROUPS = '포함된 책장이 없어요.';
 
 export const GroupSection = (props: GroupSectionProps) => {
   const { bookshelves, selectedBookshelfIds, onOpenGroupEdit, onToggleBookshelf, isEdit = false } = props;
@@ -56,9 +57,7 @@ export const GroupSection = (props: GroupSectionProps) => {
           );
         })}
 
-        {!isEdit && visibleBookshelves.length === 0 && (
-          <li className="w-full py-2 text-center text-caption2 text-neutral-40">{MSG_NO_INCLUDED_GROUPS}</li>
-        )}
+        {!isEdit && visibleBookshelves.length === 0 && <Empty text={MSG_NO_INCLUDED_GROUPS} />}
       </ul>
     </section>
   );
