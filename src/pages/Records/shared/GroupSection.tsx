@@ -14,7 +14,7 @@ type GroupSectionProps = {
 
 const MSG_GROUP_SECTION_TITLE = '그룹 책장';
 const MSG_NEW_GROUP_ADD = '새 그룹 만들기';
-const MSG_NO_INCLUDED_GROUPS = '포함된 책장이 없어요.';
+const MSG_NO_INCLUDED_GROUPS = '그룹 책장이 없어요.';
 
 export const GroupSection = (props: GroupSectionProps) => {
   const { bookshelves, selectedBookshelfIds, onOpenGroupEdit, onToggleBookshelf, isEdit = false } = props;
