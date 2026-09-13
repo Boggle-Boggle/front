@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { useToastStore } from 'stores/useToastStore';
 
 import BookCover from 'components/BookCover';
+import { InfiniteScrollTrigger } from 'components/InfiniteScrollTrigger';
 import { ToggleButton } from 'components/ToggleButton';
 import { IconHeart, IconHeartFilled } from 'components/icons';
 
@@ -14,6 +15,8 @@ import { MyBook } from '../useLibraryQuery';
 type WishlistSectionProps = {
   books: MyBook[];
   isLoading: boolean;
+  hasNextPage?: boolean;
+  isFetchingNextPage?: boolean;
   observerTarget: RefObject<HTMLDivElement>;
 };
 
@@ -36,7 +39,7 @@ const formatWishlistAddedDate = (createdAt = '') => {
 };
 
 export const WishlistSection = (props: WishlistSectionProps) => {
-  const { books, isLoading, observerTarget } = props;
+  const { books, isLoading, hasNextPage, isFetchingNextPage, observerTarget } = props;
   const queryClient = useQueryClient();
   const { addToast } = useToastStore();
 
@@ -92,7 +95,11 @@ export const WishlistSection = (props: WishlistSectionProps) => {
           </li>
         ))}
       </ul>
-      <div ref={observerTarget} className="h-20 w-full" />
+      <InfiniteScrollTrigger
+        observerTarget={observerTarget}
+        hasNextPage={hasNextPage}
+        isFetching={isFetchingNextPage}
+      />
       {isLoading && (
         <div className="flex justify-center py-4">
           <span className="text-caption1 text-neutral-60">{MSG_MYBOOKS_LOADING}</span>

@@ -1,6 +1,8 @@
+import { useInfiniteQuery } from '@tanstack/react-query';
+
 import type { PaginationMockResponse } from 'api.types';
 
-import useInfiniteScroll from 'hooks/useInfiniteScroll';
+import { useInfiniteScrollObserver } from 'hooks/useInfiniteScrollObserver';
 
 import { getInterestedBooks, type InterestedBookItemResponse } from './api';
 import type { MyBook } from './useLibraryQuery';
@@ -34,9 +36,26 @@ const getWishlistBooks = async (page: number, size = 15): Promise<PaginationMock
 };
 
 export const useWishlistQuery = (enabled: boolean) => {
-  return useInfiniteScroll<MyBook[]>(
-    ['interested-books', 'library'],
-    ({ pageParam, size }) => getWishlistBooks(pageParam, size),
+  const queryResult = useInfiniteQuery({
+    queryKey: ['interested-books', 'library'],
+    queryFn: ({ pageParam }) => getWishlistBooks(pageParam, 15),
+    getNextPageParam: (lastPage) => {
+      if (lastPage.pageNum < Math.ceil(lastPage.totalResultCnt / lastPage.itemsPerPage)) {
+        return lastPage.pageNum + 1;
+      }
+      return undefined;
+    },
+    initialPageParam: 1,
     enabled,
-  );
+  });
+
+  const { observerTarget } = useInfiniteScrollObserver({
+    enabled: Boolean(queryResult.hasNextPage && !queryResult.isFetchingNextPage && enabled),
+    onIntersect: queryResult.fetchNextPage,
+  });
+
+  return {
+    ...queryResult,
+    observerTarget,
+  };
 };

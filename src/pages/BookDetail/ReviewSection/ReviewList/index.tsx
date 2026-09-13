@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useLayerStore } from 'stores/useLayerStore';
 
 import { TextButton } from 'components/Button';
+import { InfiniteScrollTrigger } from 'components/InfiniteScrollTrigger';
 import { IconArrowDown } from 'components/icons';
 
 import { useInfiniteScrollObserver } from 'hooks/useInfiniteScrollObserver';
@@ -94,9 +95,7 @@ export const ReviewList = ({ isbn13 }: ReviewListProps) => {
       </div>
 
       {totalReviewCount === 0 && !isLoading ? (
-        <div className="py-20 text-center text-body2 text-neutral-40">
-          {MSG_REVIEW_EMPTY}
-        </div>
+        <div className="py-20 text-center text-body2 text-neutral-40">{MSG_REVIEW_EMPTY}</div>
       ) : (
         <>
           <ul className="divide-y divide-neutral-20">
@@ -110,7 +109,11 @@ export const ReviewList = ({ isbn13 }: ReviewListProps) => {
             ))}
           </ul>
 
-          <div ref={observerTarget} className="h-4 w-full" />
+          <InfiniteScrollTrigger
+            observerTarget={observerTarget}
+            hasNextPage={hasNextPage}
+            isFetching={isFetchingNextPage}
+          />
         </>
       )}
     </>

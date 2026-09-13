@@ -1,6 +1,8 @@
+import { useInfiniteQuery } from '@tanstack/react-query';
+
 import type { PaginationMockResponse } from 'api.types';
 
-import useInfiniteScroll from 'hooks/useInfiniteScroll';
+import { useInfiniteScrollObserver } from 'hooks/useInfiniteScrollObserver';
 
 import { READING_STATUS_LABEL_BY_CODE, type ReadingLogStatus, type ReadingStatusLabel } from 'types';
 
@@ -73,9 +75,26 @@ export const useLibraryQuery = (
   bookshelfId?: number,
   enabled = true,
 ) => {
-  return useInfiniteScroll<MyBook[]>(
-    ['reading-logs', 'library', sortType, readingFilter, bookshelfId],
-    ({ pageParam, size }) => getLibraryBooks(pageParam, sortType, readingFilter, size, bookshelfId),
+  const queryResult = useInfiniteQuery({
+    queryKey: ['reading-logs', 'library', sortType, readingFilter, bookshelfId],
+    queryFn: ({ pageParam }) => getLibraryBooks(pageParam, sortType, readingFilter, 15, bookshelfId),
+    getNextPageParam: (lastPage) => {
+      if (lastPage.pageNum < Math.ceil(lastPage.totalResultCnt / lastPage.itemsPerPage)) {
+        return lastPage.pageNum + 1;
+      }
+      return undefined;
+    },
+    initialPageParam: 1,
     enabled,
-  );
+  });
+
+  const { observerTarget } = useInfiniteScrollObserver({
+    enabled: Boolean(queryResult.hasNextPage && !queryResult.isFetchingNextPage && enabled),
+    onIntersect: queryResult.fetchNextPage,
+  });
+
+  return {
+    ...queryResult,
+    observerTarget,
+  };
 };

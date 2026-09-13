@@ -4,6 +4,7 @@ import { useLayerStore } from 'stores/useLayerStore';
 
 import { TextButton } from 'components/Button';
 import { BackButton } from 'components/Header/BackButton';
+import { InfiniteScrollTrigger } from 'components/InfiniteScrollTrigger';
 import { Loading } from 'components/Loading';
 import { Searchbar } from 'components/Searchbar';
 import { IconArrowDown } from 'components/icons';
@@ -151,7 +152,11 @@ const SearchResult = () => {
             ))}
           </ul>
         )}
-        {(isFetchingNextPage || hasNextPage) && <div ref={observerTarget} className="h-4 w-full" />}
+        <InfiniteScrollTrigger
+          observerTarget={observerTarget}
+          hasNextPage={hasNextPage}
+          isFetching={isFetchingNextPage}
+        />
       </div>
     </div>
   );

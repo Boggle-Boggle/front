@@ -1,6 +1,7 @@
 import { RefObject } from 'react';
 
 import { TextButton } from 'components/Button';
+import { InfiniteScrollTrigger } from 'components/InfiniteScrollTrigger';
 import { Loading } from 'components/Loading';
 import { IconArrowDown, IconMenu } from 'components/icons';
 
@@ -15,6 +16,8 @@ type ReadingSectionProps = {
   sortLabel: string;
   viewMode: 'grid' | 'list';
   isLoading: boolean;
+  hasNextPage?: boolean;
+  isFetchingNextPage?: boolean;
   observerTarget: RefObject<HTMLDivElement>;
   onOpenFilterLayer: () => void;
   onOpenSortLayer: () => void;
@@ -28,6 +31,8 @@ export const ReadingSection = (props: ReadingSectionProps) => {
     sortLabel,
     viewMode,
     isLoading,
+    hasNextPage,
+    isFetchingNextPage,
     observerTarget,
     onOpenFilterLayer,
     onOpenSortLayer,
@@ -50,7 +55,11 @@ export const ReadingSection = (props: ReadingSectionProps) => {
         {!isGridView && <ReadingBooksList books={books} />}
       </div>
       {isLoading && <Loading />}
-      <div ref={observerTarget} className="h-4 w-full" />
+      <InfiniteScrollTrigger
+        observerTarget={observerTarget}
+        hasNextPage={hasNextPage}
+        isFetching={isFetchingNextPage}
+      />
     </>
   );
 };

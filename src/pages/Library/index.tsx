@@ -121,6 +121,8 @@ const Library = () => {
     data: readingData,
     observerTarget: readingObserverTarget,
     isLoading: isReadingLoading,
+    hasNextPage: hasNextReadingPage,
+    isFetchingNextPage: isFetchingNextReadingPage,
   } = useLibraryQuery(sortType, readingFilter, bookshelfId, activeTab === 'reading');
 
   const { data: bookshelvesData } = useQuery({
@@ -131,6 +133,8 @@ const Library = () => {
     data: wishlistData,
     observerTarget: wishlistObserverTarget,
     isLoading: isWishlistLoading,
+    hasNextPage: hasNextWishlistPage,
+    isFetchingNextPage: isFetchingNextWishlistPage,
   } = useWishlistQuery(activeTab === 'wishlist');
 
   const readingBooks = useMemo(() => {
@@ -277,6 +281,8 @@ const Library = () => {
           sortLabel={sortLabelByType[sortType] ?? MSG_MYBOOKS_SORT_READ_LATEST}
           viewMode={viewType}
           isLoading={isReadingLoading}
+          hasNextPage={hasNextReadingPage}
+          isFetchingNextPage={isFetchingNextReadingPage}
           observerTarget={searchKeyword.trim() ? { current: null } : readingObserverTarget}
           onOpenFilterLayer={handleOpenFilterLayer}
           onOpenSortLayer={handleOpenSortLayer}
@@ -287,6 +293,8 @@ const Library = () => {
         <WishlistSection
           books={filteredWishlistBooks}
           isLoading={isWishlistLoading}
+          hasNextPage={hasNextWishlistPage}
+          isFetchingNextPage={isFetchingNextWishlistPage}
           observerTarget={searchKeyword.trim() ? { current: null } : wishlistObserverTarget}
         />
       )}
