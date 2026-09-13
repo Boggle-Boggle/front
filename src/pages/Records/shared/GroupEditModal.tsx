@@ -22,6 +22,7 @@ const MSG_GROUP_DELETE = '그룹 삭제';
 const MSG_GROUP_MODIFY = '그룹 수정';
 const MSG_GROUP_SUBMIT = '완료';
 const MSG_GROUP_SAVE_FAILED = '그룹을 저장하지 못했습니다. 다시 시도해주세요.';
+const MSG_GROUP_LIMIT_EXCEEDED = '그룹 책장은 20개 까지 생성할 수 있어요';
 
 export const GroupEditModal = (props: GroupEditModalProps) => {
   const { onClose, onDeleteGroup } = props;
@@ -63,6 +64,11 @@ export const GroupEditModal = (props: GroupEditModalProps) => {
 
     if (name === '') {
       onClose();
+      return;
+    }
+
+    if (bookshelves.length >= 20) {
+      addToast({ description: MSG_GROUP_LIMIT_EXCEEDED, type: 'error' });
       return;
     }
 
