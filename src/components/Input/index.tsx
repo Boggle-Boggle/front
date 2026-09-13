@@ -157,17 +157,7 @@ export const Input = (props: InputProps) => {
   const inputTextColorClass = [
     isError ? 'text-danger' : '',
     !isError && isDisabled ? 'text-neutral-40' : '',
-    !isError && !isDisabled && isActive ? 'text-neutral-100' : '',
-    !isError && !isDisabled && !isActive ? 'text-neutral-40' : '',
-  ]
-    .filter(Boolean)
-    .join(' ');
-
-  const inputPlaceholderColorClass = [
-    isError ? 'placeholder:text-danger' : '',
-    !isError && isDisabled ? 'placeholder:text-neutral-40' : '',
-    !isError && !isDisabled && isActive ? 'placeholder:text-neutral-100' : '',
-    !isError && !isDisabled && !isActive ? 'placeholder:text-neutral-40' : '',
+    !isError && !isDisabled ? 'text-neutral-100' : '',
   ]
     .filter(Boolean)
     .join(' ');
@@ -188,7 +178,6 @@ export const Input = (props: InputProps) => {
       ? '[appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none'
       : '',
     inputTextColorClass,
-    inputPlaceholderColorClass,
   ]
     .filter(Boolean)
     .join(' ');
