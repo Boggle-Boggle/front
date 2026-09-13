@@ -120,12 +120,10 @@ export const BookDetail = () => {
     window.location.href = `https://www.aladin.co.kr/search/wsearchresult.aspx?SearchTarget=All&SearchWord=${encodeURIComponent(searchQuery)}`;
   };
 
-  const handleShareClick = () => {};
-
   const handleMenuClick = () => {
     push({
       id: LAYER_ID_BOOK_DETAIL_MENU,
-      component: <BookMenuActionSheet onOpenStore={handleOpenStoreClick} onShare={handleShareClick} />,
+      component: <BookMenuActionSheet onOpenStore={handleOpenStoreClick} />,
     });
   };
 
