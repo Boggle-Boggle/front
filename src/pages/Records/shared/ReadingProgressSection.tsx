@@ -22,6 +22,7 @@ const MSG_ADD_RECORD_PAGE_EDIT = '총 페이지 수 추가/수정하기';
 const MSG_ADD_RECORD_TOTAL_PAGE = (totalPageCount: string) => `총 ${totalPageCount}쪽 중에서`;
 const MSG_ADD_RECORD_TOTAL_PERCENTAGE = (totalPercentage: number) => `총 ${totalPercentage}% 중에서`;
 const MSG_ADD_RECORD_PROGRESS_PLACEHOLDER = (unit: string) => `0${unit} 읽었어요`;
+const MSG_ADD_RECORD_PROGRESS_READ = (value: string, unit: string) => `${value || '0'}${unit} 읽었어요`;
 const MSG_ADD_RECORD_PAGE_SEGMENT = '쪽';
 const MSG_ADD_RECORD_PERCENTAGE_SEGMENT = '%';
 const MSG_ADD_RECORD_PROGRESS_TYPE_LABEL = '독서량 입력 단위';
@@ -93,7 +94,7 @@ export const ReadingProgressSection = (props: ReadingProgressSectionProps) => {
         />
       ) : (
         <div className="flex h-12 w-full cursor-default select-none items-center rounded-lg border border-neutral-20 px-4 text-body1">
-          {progressValue ? `${progressValue}${progressUnit} 읽었어요` : `0${progressUnit} 읽었어요`}
+          {MSG_ADD_RECORD_PROGRESS_READ(progressValue, progressUnit)}
         </div>
       )}
 
