@@ -2,6 +2,7 @@ import { useInfiniteQuery, useMutation, useQueryClient } from '@tanstack/react-q
 
 import { useState } from 'react';
 import { useLayerStore } from 'stores/useLayerStore';
+import { useToastStore } from 'stores/useToastStore';
 
 import { TextButton } from 'components/Button';
 import { InfiniteScrollTrigger } from 'components/InfiniteScrollTrigger';
@@ -15,6 +16,7 @@ import { getBookReviews, likeBookReview, unlikeBookReview, REVIEW_SORT_OPTIONS, 
 
 const MSG_REVIEW_PAGE_TITLE = '빼곡한 리뷰';
 const MSG_REVIEW_EMPTY = '아직 등록된 리뷰가 없습니다. 첫 리뷰를 작성해 보세요!';
+const MSG_REVIEW_MY_LIKE_FORBIDDEN = '자기가 쓴 리뷰에는 좋아요를 누를 수 없습니다.';
 const LAYER_ID_BOOK_DETAIL_REVIEW_SORT = 'book-detail-review-sort-bottom-sheet';
 
 type ReviewListProps = {
@@ -23,6 +25,7 @@ type ReviewListProps = {
 
 export const ReviewList = ({ isbn13 }: ReviewListProps) => {
   const { push } = useLayerStore();
+  const { addToast } = useToastStore();
   const queryClient = useQueryClient();
 
   const [sortType, setSortType] = useState<ReviewSortType>('RECENT');
@@ -71,6 +74,14 @@ export const ReviewList = ({ isbn13 }: ReviewListProps) => {
   const handleToggleLike = (reviewId: string) => {
     const review = allReviews.find((r) => String(r.id) === reviewId);
     if (!review || toggleLikeMutation.isPending) return;
+
+    if (myReview && review.id === myReview.id) {
+      addToast({
+        description: MSG_REVIEW_MY_LIKE_FORBIDDEN,
+        type: 'error',
+      });
+      return;
+    }
 
     toggleLikeMutation.mutate({
       reviewId,
