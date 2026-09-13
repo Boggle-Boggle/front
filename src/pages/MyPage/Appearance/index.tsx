@@ -6,24 +6,24 @@ import { applyStoredThemeColor, setStoredThemeColor, type ThemeColor } from 'uti
 
 import { SectionHeader } from '../shared/SectionHeader';
 import { SectionRadio } from '../shared/SectionRadio';
-import { SectionToggle } from '../shared/SectionToggle';
+// import { SectionToggle } from '../shared/SectionToggle';
 
 const MSG_THEME_FONT_TITLE = '테마/폰트 변경하기';
-const MSG_THEME_MODE_SECTION = '모드 선택하기';
+// const MSG_THEME_MODE_SECTION = '모드 선택하기';
 const MSG_THEME_COLOR_SECTION = '테마 색상 변경하기';
 
-const MODE_OPTIONS = [
-  {
-    key: 'dark',
-    label: '다크모드 사용하기',
-    colorClassName: 'bg-neutral-100',
-  },
-  {
-    key: 'ebook',
-    label: '이북모드 사용하기',
-    colorClassName: 'bg-neutral-100',
-  },
-] as const;
+// const MODE_OPTIONS = [
+//   {
+//     key: 'dark',
+//     label: '다크모드 사용하기',
+//     colorClassName: 'bg-neutral-100',
+//   },
+//   {
+//     key: 'ebook',
+//     label: '이북모드 사용하기',
+//     colorClassName: 'bg-neutral-100',
+//   },
+// ] as const;
 
 const THEME_COLOR_OPTIONS = [
   { key: 'red-grapefruit', label: '레드 자몽', colorVariable: 'var(--theme-red-grapefruit-primary-light)' },
@@ -40,8 +40,8 @@ const THEME_COLOR_OPTIONS = [
 ] satisfies { key: ThemeColor; label: string; colorVariable: string }[];
 
 const Appearance = () => {
-  const [isDarkMode, setIsDarkMode] = useState<boolean>(false);
-  const [isEbookMode, setIsEbookMode] = useState<boolean>(false);
+  // const [isDarkMode, setIsDarkMode] = useState<boolean>(false);
+  // const [isEbookMode, setIsEbookMode] = useState<boolean>(false);
   const [selectedThemeColor, setSelectedThemeColor] = useState<ThemeColor>(() => applyStoredThemeColor());
 
   const handleThemeColorChange = (themeColor: ThemeColor) => {
@@ -54,6 +54,7 @@ const Appearance = () => {
       <Header title={MSG_THEME_FONT_TITLE} withBack />
 
       <div className="min-h-0 flex-1 overflow-y-auto pb-safe-bottom">
+        {/* 모드 선택하기 (미구현으로 임시 주석 처리)
         <SectionHeader title={MSG_THEME_MODE_SECTION} />
         <div className="flex flex-col gap-2 pb-10 pt-2">
           <SectionToggle
@@ -69,6 +70,7 @@ const Appearance = () => {
             leading={<div className={`size-6 rounded-lg ${MODE_OPTIONS[1].colorClassName}`} />}
           />
         </div>
+        */}
 
         <SectionHeader title={MSG_THEME_COLOR_SECTION} />
         <div className="flex flex-col gap-2 pt-2">
