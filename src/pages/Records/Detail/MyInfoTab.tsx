@@ -26,6 +26,7 @@ export interface MyInfoTabProps {
 }
 
 export const MyInfoTab = ({ readingLog }: MyInfoTabProps) => {
+  const [isEdit, setIsEdit] = useState<boolean>(false);
   const [rating, setRating] = useState<number>(readingLog.rating);
   const [selectedBookshelfIds, setSelectedBookshelfIds] = useState<number[]>(() =>
     readingLog.bookshelves.map((b) => b.id),
@@ -110,13 +111,25 @@ export const MyInfoTab = ({ readingLog }: MyInfoTabProps) => {
   };
 
   return (
-    <div className="flex flex-col gap-8 pb-safe-bottom pt-[1.875rem]">
-      <RatingSection rating={rating} onChange={setRating} />
+    <div className="flex flex-col gap-8 pb-safe-bottom">
+      <div className="flex items-center justify-between border-b pb-4">
+        <span className="text-caption1 text-neutral-60">내가 기록한 독서 정보</span>
+        <button
+          type="button"
+          onClick={() => setIsEdit((prev) => !prev)}
+          className="text-body2 text-information outline-none"
+        >
+          {isEdit ? '완료하기' : '수정하기'}
+        </button>
+      </div>
+
+      <RatingSection rating={rating} onChange={setRating} isEdit={isEdit} />
       <ReadingPeriodSection
         startDate={startDate}
         endDate={endDate}
         onOpenStartDate={handleOpenStartDate}
         onOpenEndDate={handleOpenEndDate}
+        isEdit={isEdit}
       />
       <ReadingProgressSection
         progressType={progressType}
@@ -125,14 +138,16 @@ export const MyInfoTab = ({ readingLog }: MyInfoTabProps) => {
         onChangeProgressType={setProgressType}
         onChangeProgressValue={setProgressValue}
         onOpenPageInfo={handleOpenPageInfo}
+        isEdit={isEdit}
       />
       <GroupSection
         bookshelves={bookshelves}
         selectedBookshelfIds={selectedBookshelfIds}
         onOpenGroupEdit={handleOpenGroupEdit}
         onToggleBookshelf={handleToggleBookshelf}
+        isEdit={isEdit}
       />
-      <VisibilitySection checked={isPrivate} onChange={handleTogglePrivate} />
+      <VisibilitySection checked={isPrivate} onChange={handleTogglePrivate} isEdit={isEdit} />
     </div>
   );
 };
