@@ -3,22 +3,27 @@ import { ChangeEvent, FocusEvent, useState } from 'react';
 import { IconButton } from 'components/Button';
 import { IconCancel } from 'components/icons';
 
+type InputAppearance = 'box' | 'line';
 type InputStyle = 'default' | 'primary';
 type InputState = 'default' | 'error' | 'disabled';
 type InputVariant = InputStyle | Exclude<InputState, 'default'>;
 
-type InputProps = {
+export type InputChangeEvent = ChangeEvent<HTMLInputElement | HTMLTextAreaElement>;
+export type InputFocusEvent = FocusEvent<HTMLInputElement | HTMLTextAreaElement>;
+
+export type InputProps = {
   id?: string;
+  appearance?: InputAppearance;
   variant?: InputVariant;
   style?: InputStyle;
   state?: InputState;
   multiline?: boolean;
   margin?: string;
   value: string | number;
-  onChange: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
+  onChange: (e: InputChangeEvent) => void;
   onClear?: () => void;
-  onFocus?: (e: FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
-  onBlur?: (e: FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
+  onFocus?: (e: InputFocusEvent) => void;
+  onBlur?: (e: InputFocusEvent) => void;
   placeholder?: string;
   type?: string;
   name?: string;
@@ -26,14 +31,7 @@ type InputProps = {
   max?: number;
   maxLength?: number;
   rows?: number;
-};
-
-type InputFieldProps = Pick<
-  InputProps,
-  'id' | 'value' | 'onChange' | 'onFocus' | 'onBlur' | 'type' | 'name' | 'placeholder' | 'min' | 'max' | 'maxLength'
-> & {
-  disabled: boolean;
-  className: string;
+  clearButtonLabel?: string;
 };
 
 type TextareaFieldProps = Pick<
@@ -45,41 +43,18 @@ type TextareaFieldProps = Pick<
   className: string;
 };
 
-const getInputStyle = (variant: InputVariant | undefined, style: InputStyle | undefined): InputStyle => {
+const getInputStyle = (variant: InputProps['variant'], style: InputProps['style']): InputStyle => {
   if (style) return style;
   if (variant === 'primary') return 'primary';
 
   return 'default';
 };
 
-const getInputState = (variant: InputVariant | undefined, state: InputState | undefined): InputState => {
+const getInputState = (variant: InputProps['variant'], state: InputProps['state']): InputState => {
   if (state) return state;
   if (variant === 'error' || variant === 'disabled') return variant;
 
   return 'default';
-};
-
-const InputField = (props: InputFieldProps) => {
-  const { id, disabled, value, onChange, onFocus, onBlur, type, name, placeholder, min, max, maxLength, className } =
-    props;
-
-  return (
-    <input
-      id={id}
-      disabled={disabled}
-      value={value}
-      onChange={onChange}
-      onFocus={onFocus}
-      onBlur={onBlur}
-      type={type}
-      name={name}
-      placeholder={placeholder}
-      min={min}
-      max={max}
-      maxLength={maxLength}
-      className={className}
-    />
-  );
 };
 
 const TextareaField = (props: TextareaFieldProps) => {
@@ -104,6 +79,7 @@ const TextareaField = (props: TextareaFieldProps) => {
 export const Input = (props: InputProps) => {
   const {
     id,
+    appearance = 'box',
     variant = 'default',
     style,
     state,
@@ -121,11 +97,13 @@ export const Input = (props: InputProps) => {
     max,
     maxLength,
     rows,
+    clearButtonLabel = 'clear',
   } = props;
   const [isFocused, setIsFocused] = useState<boolean>(false);
 
   const inputStyle = getInputStyle(variant, style);
   const inputState = getInputState(variant, state);
+  const isLine = appearance === 'line' && !multiline;
   const isError = inputState === 'error';
   const isDisabled = inputState === 'disabled';
   const isPrimary = inputStyle === 'primary';
@@ -141,7 +119,7 @@ export const Input = (props: InputProps) => {
     onBlur?.(e);
   };
 
-  const wrapperClassName = [
+  const boxWrapperClassName = [
     'w-full min-w-0 rounded border',
     multiline ? 'min-h-[6.5rem]' : 'flex h-10 items-center justify-between gap-2.5 px-3 py-2',
     isDisabled ? 'border-transparent bg-neutral-20' : 'bg-neutral-0',
@@ -149,6 +127,17 @@ export const Input = (props: InputProps) => {
     !isDisabled && !isError && isActive ? 'border-primary' : '',
     !isDisabled && !isError && !isActive && isPrimary ? 'border-primary' : '',
     !isDisabled && !isError && !isActive && !isPrimary ? 'border-neutral-20' : '',
+    margin,
+  ]
+    .filter(Boolean)
+    .join(' ');
+
+  const lineWrapperClassName = [
+    'flex h-10 w-full min-w-0 items-center justify-between gap-2 border-b bg-transparent',
+    isDisabled ? 'border-neutral-20' : '',
+    !isDisabled && isError ? 'border-danger' : '',
+    !isDisabled && !isError && isActive ? 'border-primary' : '',
+    !isDisabled && !isError && !isActive ? 'border-neutral-40' : '',
     margin,
   ]
     .filter(Boolean)
@@ -174,6 +163,7 @@ export const Input = (props: InputProps) => {
   const inputClassName = [
     'body1 min-w-0 bg-transparent outline-none disabled:text-neutral-40',
     multiline ? 'min-h-[6.5rem] w-full resize-none px-3 py-3' : 'flex-1',
+    isLine ? 'placeholder:text-neutral-40' : '',
     type === 'number'
       ? '[appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none'
       : '',
@@ -182,6 +172,7 @@ export const Input = (props: InputProps) => {
     .filter(Boolean)
     .join(' ');
 
+  const wrapperClassName = isLine ? lineWrapperClassName : boxWrapperClassName;
   const showCancelBtn = !multiline && !isDisabled && value && String(value).length > 0 && onClear;
 
   if (multiline) {
@@ -207,7 +198,7 @@ export const Input = (props: InputProps) => {
 
   return (
     <div className={wrapperClassName}>
-      <InputField
+      <input
         id={id}
         disabled={isDisabled}
         value={value}
@@ -224,7 +215,7 @@ export const Input = (props: InputProps) => {
       />
       {showCancelBtn && (
         <IconButton
-          label="clear"
+          label={clearButtonLabel}
           align="right"
           icon={IconCancel}
           onClick={onClear}
