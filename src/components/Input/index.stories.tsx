@@ -75,6 +75,43 @@ export const WithClearButton: Story = {
   args: {
     value: '텍스트를 지울 수 있습니다',
     onChange: noop,
-    onClear: () => console.log('Clear clicked'),
+    onClear: noop,
+  },
+};
+
+export const Line: Story = {
+  args: {
+    appearance: 'line',
+    placeholder: '닉네임을 입력해주세요',
+    value: '',
+    onChange: noop,
+  },
+};
+
+export const LineError: Story = {
+  args: {
+    appearance: 'line',
+    value: '에러 상태 텍스트',
+    onChange: noop,
+    state: 'error',
+  },
+};
+
+export const LineDisabled: Story = {
+  args: {
+    appearance: 'line',
+    placeholder: '비활성화 상태',
+    value: '',
+    onChange: noop,
+    state: 'disabled',
+  },
+};
+
+export const LineWithClearButton: Story = {
+  args: {
+    appearance: 'line',
+    value: '텍스트를 지울 수 있습니다',
+    onChange: noop,
+    onClear: noop,
   },
 };

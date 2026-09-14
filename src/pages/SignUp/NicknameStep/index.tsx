@@ -1,6 +1,6 @@
-import { BottomButton, IconButton } from 'components/Button';
+import { BottomButton } from 'components/Button';
 import { Header } from 'components/Header';
-import { IconCancel } from 'components/icons';
+import { Input, type InputChangeEvent } from 'components/Input';
 
 import NICKNAME_RULE from 'constants/index';
 
@@ -26,7 +26,7 @@ const MSG_SIGNUP_NICKNAME_CLEAR_LABEL = '닉네임 입력 초기화';
 export const NicknameStep = (props: NicknameStepProps) => {
   const { isNextLoading, nickname, onChangeNickname, onNext } = props;
 
-  const handleChangeNickname = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChangeNickname = (event: InputChangeEvent) => {
     onChangeNickname(event.target.value);
   };
 
@@ -39,24 +39,16 @@ export const NicknameStep = (props: NicknameStepProps) => {
         <Title text={MSG_SIGNUP_NICKNAME_TITLE} />
         <Description text={MSG_SIGNUP_NICKNAME_DESCRIPTION} tone="warning" />
 
-        {/* 닉네임 인풋 */}
-        <div className="mt-6 flex h-10 w-full border-b border-neutral-40">
-          <input
-            className="flex-1 placeholder:text-neutral-40"
-            placeholder={MSG_SIGNUP_NICKNAME_PLACEHOLDER}
-            maxLength={NICKNAME_RULE.MAX}
-            value={nickname}
-            onChange={handleChangeNickname}
-          />
-          {nickname && (
-            <IconButton
-              onClick={handleClearNickname}
-              label={MSG_SIGNUP_NICKNAME_CLEAR_LABEL}
-              icon={IconCancel}
-              size="sm"
-            />
-          )}
-        </div>
+        <Input
+          appearance="line"
+          margin="mt-6"
+          placeholder={MSG_SIGNUP_NICKNAME_PLACEHOLDER}
+          maxLength={NICKNAME_RULE.MAX}
+          value={nickname}
+          onChange={handleChangeNickname}
+          onClear={handleClearNickname}
+          clearButtonLabel={MSG_SIGNUP_NICKNAME_CLEAR_LABEL}
+        />
 
         {/* 인풋 description */}
         <p className="pt-1 text-caption2 text-neutral-40">{MSG_SIGNUP_NICKNAME_LIMIT}</p>
