@@ -38,7 +38,7 @@ const RealTimePopular = () => {
                   )}
                   <BookCover className="mx-[0.625rem] w-20 shrink-0" url={book.coverUrl} variant="clear" rounded="sm" />
                   <div className="flex min-w-0 flex-col justify-center gap-1">
-                    <p className="line-clamp-1 text-title3">{book.title}</p>
+                    <p className="line-clamp-1 text-title4">{book.title}</p>
                     <p className="line-clamp-1 text-caption1 text-neutral-60">{book.author}</p>
                   </div>
                 </Link>

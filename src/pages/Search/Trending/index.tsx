@@ -28,7 +28,7 @@ const Trending = () => {
               <li key={book.isbn13} className="w-full">
                 <Link to={`/books/${book.isbn13}`} className="w-full">
                   <BookCover className="w-full" url={book.coverUrl} variant="clear" />
-                  <p className="text-neutral-90 line-clamp-2 pt-2 text-title3">{book.title}</p>
+                  <p className="text-neutral-90 line-clamp-2 pt-2 text-title4">{book.title}</p>
                   <p className="line-clamp-1 text-caption1 text-neutral-40">{book.author}</p>
                 </Link>
               </li>

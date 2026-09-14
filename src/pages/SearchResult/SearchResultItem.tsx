@@ -17,7 +17,7 @@ export const SearchResultItem = (props: SearchResultItemProps) => {
       {/* TODO: 폴백 이미지 */}
       <BookCover className="w-20" url={coverUrl} label={title} variant="mockup" rounded="sm" isAdult={book.isAdult} />
       <div className="flex flex-1 flex-col justify-start">
-        <p className="line-clamp-2 pb-1 text-title3">{title}</p>
+        <p className="line-clamp-2 pb-1 text-title4">{title}</p>
         <p className="line-clamp-1 text-caption1 text-neutral-60">{author}</p>
         <p className="line-clamp-1 text-caption2 text-neutral-60">{publisher}</p>
       </div>
