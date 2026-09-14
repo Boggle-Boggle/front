@@ -162,8 +162,7 @@ export const Input = (props: InputProps) => {
 
   const inputClassName = [
     'body1 min-w-0 bg-transparent outline-none disabled:text-neutral-40',
-    multiline ? 'min-h-[6.5rem] w-full resize-none px-3 py-3' : 'flex-1',
-    isLine ? 'placeholder:text-neutral-40' : '',
+    multiline ? 'min-h-[6.5rem] w-full resize-none px-3 py-3' : 'flex-1'
     type === 'number'
       ? '[appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none'
       : '',
