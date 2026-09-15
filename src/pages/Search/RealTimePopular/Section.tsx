@@ -41,6 +41,8 @@ export const RealTimePopularSection = () => {
                 <div className="min-w-0">
                   <p className="line-clamp-1 text-title4">{book.title}</p>
                   <p className="line-clamp-1 text-caption1 text-neutral-60">{book.author}</p>
+                  {/* TODO: 나의 책 여부 확인 */}
+                  {/* <p className="line-clamp-1 text-caption1 text-information">{book.author}</p> */}
                 </div>
               </Link>
             </li>
