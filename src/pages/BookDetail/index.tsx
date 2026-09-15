@@ -49,7 +49,7 @@ const BOOK_DETAIL_TABS: TabItem<DetailTabType>[] = [
 const getAladinBookDetailUrl = (itemId: number) => `${ALADIN_BOOK_DETAIL_URL}?ItemId=${itemId}`;
 
 export const BookDetail = () => {
-  const [activeTab, setActiveTab] = useState<DetailTabType>('review');
+  const [activeTab, setActiveTab] = useState<DetailTabType>('info');
 
   const tabSentinelRef = useRef<HTMLDivElement>(null);
   const queryClient = useQueryClient();
@@ -166,7 +166,7 @@ export const BookDetail = () => {
                 variant="clear"
                 isAdult={data.isAdult && data.hideAdultContent}
               />
-              <p className="pt-4 text-title1">{data.title}</p>
+              <p className="pt-4 text-title2">{data.title}</p>
               <p className="text-body2 text-neutral-60">{data.author}</p>
             </section>
 
