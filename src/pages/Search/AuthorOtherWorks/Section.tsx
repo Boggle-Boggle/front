@@ -29,7 +29,7 @@ export const AuthorOtherWorksSection = () => {
               <BookCover className="w-[6.25rem]" url={coverUrl} variant="clear" />
             </div>
             <div className="min-w-0 flex-1">
-              <p className="truncate pb-2 text-title3">{title}</p>
+              <p className="truncate pb-2 text-title4">{title}</p>
               <p className="line-clamp-5 break-all text-caption1 text-neutral-60">
                 {description || MSG_SEARCH_AUTHOR_OTHER_WORKS_EMPTY_DESCRIPTION}
               </p>

@@ -71,7 +71,7 @@ export const RecentSearchSection = () => {
       />
 
       <div className="w-full overflow-hidden">
-        <ul className="scrollbar-hide flex w-full gap-2 overflow-x-auto px-mobile pb-4">
+        <ul className="scrollbar-hide flex w-full gap-2 overflow-x-auto px-mobile pb-8">
           {recentSearches.map((recentSearch) => (
             <li key={recentSearch} className="shrink-0">
               <RecentSearchChip

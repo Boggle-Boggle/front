@@ -22,7 +22,7 @@ export const HorizontalBookList = ({ books = [] }: HorizontalBookListProps) => {
           <li key={isbn13} className="w-[6.25rem] shrink-0">
             <Link to={`/books/${isbn13}`} className="w-full">
               <BookCover className="w-full" url={coverUrl} variant="clear" />
-              <p className="line-clamp-1 text-title3">{title}</p>
+              <p className="mt-2 line-clamp-1 text-title4">{title}</p>
               <p className="line-clamp-1 text-caption1 text-neutral-40">{author}</p>
             </Link>
           </li>

@@ -39,7 +39,7 @@ export const RealTimePopularSection = () => {
                   rounded="sm"
                 />
                 <div className="min-w-0">
-                  <p className="line-clamp-1 text-title3">{book.title}</p>
+                  <p className="line-clamp-1 text-title4">{book.title}</p>
                   <p className="line-clamp-1 text-caption1 text-neutral-60">{book.author}</p>
                 </div>
               </Link>
