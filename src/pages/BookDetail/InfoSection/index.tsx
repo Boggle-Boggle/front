@@ -1,3 +1,4 @@
+import { Empty } from 'components/Empty';
 import Highlight from 'components/Highlight';
 
 type InfoSectionProps = {
@@ -11,10 +12,12 @@ type InfoSectionProps = {
 
 const MSG_BOOK_DETAIL_INFO_TITLE = '작품 정보 ';
 const MSG_BOOK_DETAIL_PLOT_TITLE = '작품 소개/줄거리 ';
+const MSG_BOOK_DETAIL_EMPTY_PLOT = '줄거리 정보가 없어요';
 const MSG_BOOK_DETAIL_SOURCE_PREFIX = '* 알라딘으로부터 도서 DB 정보를 제공받았습니다.';
 
 export const InfoSection = (props: InfoSectionProps) => {
   const { publisher, category, publishedDate, isbn13, description, sourceLink } = props;
+  const hasDescription = Boolean(description?.trim());
   const bookInfoItems = [
     { label: '출판사', value: publisher },
     { label: '분야', value: category },
@@ -24,7 +27,7 @@ export const InfoSection = (props: InfoSectionProps) => {
 
   return (
     <>
-      <Highlight text={MSG_BOOK_DETAIL_INFO_TITLE} className="w-fit pt-[1.875rem] text-title3" />
+      <Highlight text={MSG_BOOK_DETAIL_INFO_TITLE} className="w-fit pt-6 text-title4" />
       <ul className="pt-3">
         {bookInfoItems.map((item) => (
           <li key={item.label} className="pb-1 text-caption1 text-neutral-80">
@@ -33,8 +36,14 @@ export const InfoSection = (props: InfoSectionProps) => {
           </li>
         ))}
       </ul>
-      <Highlight text={MSG_BOOK_DETAIL_PLOT_TITLE} className="w-fit pt-[1.875rem] text-title3" />
-      <p className="whitespace-pre-wrap break-words pt-3 text-body1 text-neutral-80">{description}</p>
+      <Highlight text={MSG_BOOK_DETAIL_PLOT_TITLE} className="w-fit pt-6 text-title4" />
+      <div className="pt-3">
+        {hasDescription ? (
+          <p className="whitespace-pre-wrap break-words text-body1 text-neutral-80">{description}</p>
+        ) : (
+          <Empty text={MSG_BOOK_DETAIL_EMPTY_PLOT} />
+        )}
+      </div>
       <button
         type="button"
         onClick={() => {
