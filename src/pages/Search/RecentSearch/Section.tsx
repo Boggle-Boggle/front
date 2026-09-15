@@ -12,6 +12,7 @@ import { Title } from '../shared/Title';
 
 const MSG_SEARCH_RECENT = '최근 검색어';
 const MSG_SEARCH_RECENT_CLEAR_ALL = '전체 삭제';
+const MSG_SEARCH_RECENT_EMPTY = '최근 검색어가 없어요.';
 const LAYER_ID_RECENT_SEARCH_CLEAR_ALL = 'recent-search-clear-all-modal';
 
 export const RecentSearchSection = () => {
@@ -70,18 +71,24 @@ export const RecentSearchSection = () => {
         }
       />
 
-      <div className="w-full overflow-hidden">
-        <ul className="scrollbar-hide flex w-full gap-2 overflow-x-auto px-mobile pb-8">
-          {recentSearches.map((recentSearch) => (
-            <li key={recentSearch} className="shrink-0">
-              <RecentSearchChip
-                keyword={recentSearch}
-                onClick={() => handleSearchClick(recentSearch)}
-                onRemove={() => removeRecentSearch(recentSearch)}
-              />
-            </li>
-          ))}
-        </ul>
+      <div className="w-full overflow-hidden pb-8">
+        {!isLoading && recentSearches.length === 0 && (
+          <p className="px-mobile text-left text-caption1 text-neutral-40">{MSG_SEARCH_RECENT_EMPTY}</p>
+        )}
+
+        {recentSearches.length > 0 && (
+          <ul className="scrollbar-hide flex w-full gap-2 overflow-x-auto px-mobile">
+            {recentSearches.map((recentSearch) => (
+              <li key={recentSearch} className="shrink-0">
+                <RecentSearchChip
+                  keyword={recentSearch}
+                  onClick={() => handleSearchClick(recentSearch)}
+                  onRemove={() => removeRecentSearch(recentSearch)}
+                />
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
     </section>
   );
