@@ -69,7 +69,7 @@ export const Searchbar = (props: SearchbarProps) => {
           onChange={handleInputChange}
           onFocus={onFocus}
           placeholder={placeholder}
-          className="flex-1 bg-transparent text-body1 text-neutral-100 outline-none placeholder:text-neutral-60"
+          className="flex-1 bg-transparent text-body1 outline-none"
           aria-label={ariaLabel}
         />
         {showSearchIcon && (
