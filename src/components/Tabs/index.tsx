@@ -20,13 +20,15 @@ export const Tabs = <T extends string>(props: TabsProps<T>) => {
   }
 
   const containerClassName = `w-full border-b border-neutral-20 ${className}`;
-  const listClassName = 'flex w-full items-stretch overflow-hidden';
+  const listClassName = 'relative flex w-full items-stretch overflow-hidden';
   const tabBaseClassName =
-    'relative inline-flex flex-1 items-center justify-center border-b-2  py-[0.375rem] text-body1 transition-colors';
+    'relative z-10 inline-flex flex-1 items-center justify-center py-[0.375rem] text-body1 transition-colors';
   const tabDisabledClassName = 'disabled:cursor-not-allowed disabled:opacity-40';
+  const activeTabIndex = tabs.findIndex((tab) => tab.id === value);
+  const indicatorWidth = `${100 / tabs.length}%`;
+  const indicatorTranslate = `${Math.max(activeTabIndex, 0) * 100}%`;
 
   const getTabTextClassName = (isSelected: boolean) => (isSelected ? 'text-neutral-100' : 'text-neutral-60');
-  const getTabBorderClassName = (isSelected: boolean) => (isSelected ? 'border-neutral-100' : 'border-transparent');
 
   const handleTabClick = (tabId: T) => {
     onChange(tabId);
@@ -37,12 +39,7 @@ export const Tabs = <T extends string>(props: TabsProps<T>) => {
       <div role="tablist" aria-label={ariaLabel} className={listClassName}>
         {tabs.map((tab) => {
           const isSelected = tab.id === value;
-          const tabClassName = [
-            tabBaseClassName,
-            getTabBorderClassName(isSelected),
-            getTabTextClassName(isSelected),
-            tabDisabledClassName,
-          ].join(' ');
+          const tabClassName = [tabBaseClassName, getTabTextClassName(isSelected), tabDisabledClassName].join(' ');
 
           const handleClick = () => {
             handleTabClick(tab.id);
@@ -63,6 +60,14 @@ export const Tabs = <T extends string>(props: TabsProps<T>) => {
             </button>
           );
         })}
+        <span
+          aria-hidden="true"
+          className="absolute bottom-0 left-0 h-0.5 bg-neutral-100 transition-transform duration-200 ease-out"
+          style={{
+            width: indicatorWidth,
+            transform: `translateX(${indicatorTranslate})`,
+          }}
+        />
       </div>
     </div>
   );
