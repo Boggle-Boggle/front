@@ -62,6 +62,7 @@ export const BookDetail = () => {
     rootRef: scrollContainerRef,
     targetRef: tabSentinelRef,
   });
+
   const title = isVisible ? data?.title : undefined;
 
   const { mutate: toggleWishlist } = useMutation({
@@ -110,6 +111,8 @@ export const BookDetail = () => {
   const handleChangeDetailTab = setActiveTab;
 
   const handleAddRecordClick = () => {
+    if (!data) return;
+
     push({
       id: LAYER_ID_BOOK_DETAIL_ADD_RECORD_STATUS,
       component: <AddRecordStatusBottomSheet isbn13={isbn13} bookDetail={data} />,
@@ -156,6 +159,7 @@ export const BookDetail = () => {
                 publishedDate={data.publishedDate}
                 isbn13={data.isbn13}
                 description={data.description}
+                isAdultBook={data.isAdult && data.hideAdultContent}
               />
             )}
             {activeTab === 'review' && <ReviewSection />}
