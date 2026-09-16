@@ -103,7 +103,7 @@ export const ReviewItem = (props: ReviewItemProps) => {
 
       {/* 본문 */}
       {!isSpoiler || isOpenSpoiler ? (
-        <p className="text-body1">{content}</p>
+        <p className="whitespace-pre-wrap break-words text-body1">{content}</p>
       ) : (
         <div
           role="button"
