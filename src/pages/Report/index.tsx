@@ -44,7 +44,7 @@ export const Report = () => {
     onSuccess: () => {
       addToast({
         description: MSG_REPORT_SUCCESS_TOAST,
-        type: 'error',
+        type: 'success',
       });
       setStep('complete');
     },
@@ -62,7 +62,7 @@ export const Report = () => {
     onSuccess: () => {
       addToast({
         description: MSG_REPORT_BLOCK_SUCCESS_TOAST,
-        type: 'error',
+        type: 'success',
       });
       setIsBlocked(true);
     },
