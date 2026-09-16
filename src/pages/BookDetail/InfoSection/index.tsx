@@ -1,20 +1,25 @@
 import { Empty } from 'components/Empty';
 import Highlight from 'components/Highlight';
 
+import adultContentGuideImage from 'assets/img/adult-content-guide.png';
+
 type InfoSectionProps = {
   publisher: string;
   category: string;
   publishedDate: string;
   isbn13: string;
   description: string | null;
+  isAdultBook?: boolean;
 };
 
 const MSG_BOOK_DETAIL_INFO_TITLE = '작품 정보 ';
 const MSG_BOOK_DETAIL_PLOT_TITLE = '작품 소개/줄거리 ';
 const MSG_BOOK_DETAIL_EMPTY_PLOT = '줄거리 정보가 없어요';
+const MSG_BOOK_DETAIL_ADULT_CONTENT =
+  "해당 작품은 성인용 콘텐츠입니다.\n고양이를 치우고 열람을 원하시면 [설정] > [콘텐츠 설정]에서 '성인용 콘텐츠 가리기'를 끄고 성인 인증을 진행해주세요.";
 
 export const InfoSection = (props: InfoSectionProps) => {
-  const { publisher, category, publishedDate, isbn13, description } = props;
+  const { publisher, category, publishedDate, isbn13, description, isAdultBook = false } = props;
   const hasDescription = Boolean(description?.trim());
   const bookInfoItems = [
     { label: '출판사', value: publisher },
@@ -36,8 +41,15 @@ export const InfoSection = (props: InfoSectionProps) => {
       </ul>
       <Highlight text={MSG_BOOK_DETAIL_PLOT_TITLE} className="w-fit pt-6 text-title4" />
       <div className="pt-3">
-        {hasDescription ? (
-          <p className="whitespace-pre-wrap break-words text-body1 text-neutral-80">{description}</p>
+        {isAdultBook ? (
+          <>
+            <img className="m-auto size-[13.4375rem]" src={adultContentGuideImage} alt="" />
+            <p className="whitespace-pre-line break-keep text-caption1 text-neutral-80">
+              {MSG_BOOK_DETAIL_ADULT_CONTENT}
+            </p>
+          </>
+        ) : hasDescription ? (
+          <p className="whitespace-pre-wrap break-words text-caption1 text-neutral-80">{description}</p>
         ) : (
           <Empty text={MSG_BOOK_DETAIL_EMPTY_PLOT} />
         )}
