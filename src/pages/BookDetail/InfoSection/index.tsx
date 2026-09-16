@@ -16,7 +16,7 @@ const MSG_BOOK_DETAIL_INFO_TITLE = '작품 정보 ';
 const MSG_BOOK_DETAIL_PLOT_TITLE = '작품 소개/줄거리 ';
 const MSG_BOOK_DETAIL_EMPTY_PLOT = '줄거리 정보가 없어요';
 const MSG_BOOK_DETAIL_ADULT_CONTENT =
-  "해당 작품은 성인용 콘텐츠입니다.\n고양이를 치우고 열람을 원하시면 [설정] > [콘텐츠 설정]에서 '성인용 콘텐츠 가리기'를 끄고 성인 인증을 진행해주세요.";
+  "해당 작품은 성인용 콘텐츠입니다.\n열람을 원하시면 [설정] > [콘텐츠 설정]에서 '성인용 콘텐츠 가리기'를 꺼주세요.";
 
 export const InfoSection = (props: InfoSectionProps) => {
   const { publisher, category, publishedDate, isbn13, description, isAdultBook = false } = props;
