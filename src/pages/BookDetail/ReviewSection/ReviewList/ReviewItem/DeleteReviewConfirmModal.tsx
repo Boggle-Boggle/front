@@ -11,7 +11,7 @@ const MSG_DELETE_REVIEW_MODAL_TITLE = '리뷰 삭제하기';
 const MSG_DELETE_REVIEW_MODAL_DESCRIPTION = '정말 작성하신 리뷰를 삭제하시겠어요?';
 const MSG_DELETE_REVIEW_MODAL_CANCEL = '아니오';
 const MSG_DELETE_REVIEW_MODAL_CONFIRM = '네';
-const MSG_DELETE_REVIEW_SUCCESS_TOAST = '리뷰가 삭제되었습니다.';
+const MSG_DELETE_REVIEW_SUCCESS_TOAST = '리뷰가 성공적으로 삭제되었어요.';
 const MSG_DELETE_REVIEW_FAILED_TOAST = '리뷰 삭제에 실패했습니다.';
 
 type DeleteReviewConfirmModalProps = {
