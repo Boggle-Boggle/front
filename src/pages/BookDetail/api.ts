@@ -80,23 +80,6 @@ export const createBookReview = async (params: CreateBookReviewRequest) => {
   return response.data.data;
 };
 
-export interface EditBookReviewRequest {
-  reviewId: string;
-  content: string;
-  isSpoiler: boolean;
-}
-
-export interface ReviewIdResponse {
-  id: number;
-}
-
-export const editBookReview = async (params: EditBookReviewRequest) => {
-  const { reviewId, ...body } = params;
-  const response = await api.patch<ApiSuccessResponse<ReviewIdResponse>>(`/v2/reviews/${reviewId}`, body);
-
-  return response.data.data;
-};
-
 export interface ReviewLikeResponse {
   reviewId: number;
   likeCount: number;
