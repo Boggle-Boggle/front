@@ -70,7 +70,7 @@ const Withdraw = () => {
         <h2 className="whitespace-pre-line pb-3 pt-8 text-title1">{feedbackTitle}</h2>
         <div className="flex flex-col gap-1">
           {withdrawalReasonItems.map((reason) => (
-            <label key={reason.code} htmlFor={`withdraw-reason-${reason.code}`} className="flex h-9 items-center gap-1">
+            <label key={reason.code} htmlFor={`withdraw-reason-${reason.code}`} className="flex h-9 items-center gap-2">
               <Radio
                 id={`withdraw-reason-${reason.code}`}
                 name="withdraw-reason"
