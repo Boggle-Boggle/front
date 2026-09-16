@@ -45,7 +45,6 @@ const STORAGE_KEY_MYBOOKS_VIEW_TYPE = 'mybooks-view-type';
 const STORAGE_KEY_MYBOOKS_SORT_TYPE = 'mybooks-sort-type';
 const STORAGE_KEY_MYBOOKS_FILTER = 'mybooks-filter';
 const STORAGE_KEY_MYBOOKS_BOOKSHELF_ID = 'mybooks-bookshelf-id';
-const STORAGE_KEY_MYBOOKS_ACTIVE_TAB = 'mybooks-active-tab';
 
 const LAYER_ID_MYBOOKS_FILTER = 'mybooks-filter-sidebar';
 const LAYER_ID_MYBOOKS_SORT = 'mybooks-sort-bottom-sheet';
@@ -78,27 +77,16 @@ const getInitialBookshelfId = (): number | undefined => {
   return storedId ? Number(storedId) : undefined;
 };
 
-const getInitialActiveTab = (): TabType => {
-  if (typeof window === 'undefined') return 'reading';
-
-  const storedTab = window.localStorage.getItem(STORAGE_KEY_MYBOOKS_ACTIVE_TAB);
-  return storedTab === 'wishlist' ? 'wishlist' : 'reading';
-};
-
 const Library = () => {
   const [isSearchMode, setIsSearchMode] = useState<boolean>(false);
   const [searchKeyword, setSearchKeyword] = useState<string>('');
 
   // TODO: 여러 정렬 기준 훅으로 분리
-  const [activeTab, setActiveTab] = useState<TabType>(getInitialActiveTab);
+  const [activeTab, setActiveTab] = useState<TabType>('reading');
   const [viewType, setViewType] = useState<ViewType>(getInitialViewType);
   const [readingFilter, setReadingFilter] = useState<ReadingLogStatus>(getInitialFilter);
   const [sortType, setSortType] = useState<ReadingLogSort>(getInitialSortType);
   const [bookshelfId, setBookshelfId] = useState<number | undefined>(getInitialBookshelfId);
-
-  useEffect(() => {
-    window.localStorage.setItem(STORAGE_KEY_MYBOOKS_ACTIVE_TAB, activeTab);
-  }, [activeTab]);
 
   useEffect(() => {
     window.localStorage.setItem(STORAGE_KEY_MYBOOKS_SORT_TYPE, sortType);
