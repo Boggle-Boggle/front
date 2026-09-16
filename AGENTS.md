@@ -25,6 +25,12 @@
 
 - `https://staging.api.bbaegok.store/v3/api-docs`
 
+## Figma API
+
+- Figma API를 호출할 때는 프로젝트 최상위 `.env.local`의 `FIGMA_TOKEN`을 우선 사용한다.
+- 터미널에서 직접 호출할 경우 `set -a; source .env.local; set +a`로 `.env.local`을 로드한 뒤 호출한다.
+- 토큰 값은 응답이나 로그에 노출하지 않는다.
+
 ## 프로젝트 특이사항
 
 - 이 프로젝트는 네이티브 앱의 웹뷰 안에서 URL 형태로 구동되는 하이브리드 웹앱이다.
