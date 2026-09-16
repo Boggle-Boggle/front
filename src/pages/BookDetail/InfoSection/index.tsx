@@ -7,16 +7,14 @@ type InfoSectionProps = {
   publishedDate: string;
   isbn13: string;
   description: string | null;
-  sourceLink: string;
 };
 
 const MSG_BOOK_DETAIL_INFO_TITLE = '작품 정보 ';
 const MSG_BOOK_DETAIL_PLOT_TITLE = '작품 소개/줄거리 ';
 const MSG_BOOK_DETAIL_EMPTY_PLOT = '줄거리 정보가 없어요';
-const MSG_BOOK_DETAIL_SOURCE_PREFIX = '* 알라딘으로부터 도서 DB 정보를 제공받았습니다.';
 
 export const InfoSection = (props: InfoSectionProps) => {
-  const { publisher, category, publishedDate, isbn13, description, sourceLink } = props;
+  const { publisher, category, publishedDate, isbn13, description } = props;
   const hasDescription = Boolean(description?.trim());
   const bookInfoItems = [
     { label: '출판사', value: publisher },
@@ -44,15 +42,6 @@ export const InfoSection = (props: InfoSectionProps) => {
           <Empty text={MSG_BOOK_DETAIL_EMPTY_PLOT} />
         )}
       </div>
-      <button
-        type="button"
-        onClick={() => {
-          window.location.href = sourceLink;
-        }}
-        className="break-words pt-7 text-left text-caption1 text-neutral-60"
-      >
-        {MSG_BOOK_DETAIL_SOURCE_PREFIX}
-      </button>
     </>
   );
 };

@@ -7,11 +7,10 @@ import { useToastStore } from 'stores/useToastStore';
 
 import BookCover from 'components/BookCover';
 import { BottomButton } from 'components/Button';
-import IconButton from 'components/Button/IconButton';
 import { Header } from 'components/Header';
 import { Tabs, TabItem } from 'components/Tabs';
 import { ToggleButton } from 'components/ToggleButton';
-import { IconEllipsisVertical, IconHeart, IconHeartFilled } from 'components/icons';
+import { IconHeart, IconHeartFilled } from 'components/icons';
 
 import { useHeaderTitleByScroll } from 'hooks/useHeaderTitleByScroll';
 import { useScrollRestoration } from 'hooks/useScrollRestoration';
@@ -19,7 +18,6 @@ import { useScrollRestoration } from 'hooks/useScrollRestoration';
 import type { BookDetail as BookDetailType } from 'types';
 
 import { AddRecordStatusBottomSheet } from './AddRecordStatusBottomSheet';
-import { BookMenuActionSheet } from './BookMenuActionSheet';
 import { InfoSection } from './InfoSection';
 import { ReviewSection } from './ReviewSection';
 import { addInterestedBook, deleteInterestedBookByIsbn13 } from './api';
@@ -29,9 +27,7 @@ const MSG_BOOK_DETAIL_ADD_RECORD = '독서 기록 추가하기';
 const MSG_BOOK_DETAIL_TAB_INFO = '정보';
 const MSG_BOOK_DETAIL_TAB_REVIEW = '리뷰';
 const MSG_BOOK_DETAIL_WISHLIST_FAILED = '관심도서 처리에 실패했습니다.';
-const LAYER_ID_BOOK_DETAIL_MENU = 'book-detail-menu-bottom-sheet';
 const LAYER_ID_BOOK_DETAIL_ADD_RECORD_STATUS = 'book-detail-add-record-status-bottom-sheet';
-const ALADIN_BOOK_DETAIL_URL = 'https://www.aladin.co.kr/shop/wproduct.aspx';
 
 type DetailTabType = 'info' | 'review';
 
@@ -45,8 +41,6 @@ const BOOK_DETAIL_TABS: TabItem<DetailTabType>[] = [
     label: MSG_BOOK_DETAIL_TAB_REVIEW,
   },
 ];
-
-const getAladinBookDetailUrl = (itemId: number) => `${ALADIN_BOOK_DETAIL_URL}?ItemId=${itemId}`;
 
 export const BookDetail = () => {
   const [activeTab, setActiveTab] = useState<DetailTabType>('info');
@@ -113,20 +107,6 @@ export const BookDetail = () => {
     toggleWishlist(data?.isInterested ?? false);
   };
 
-  const handleOpenStoreClick = () => {
-    if (!data) return;
-
-    const searchQuery = data.isbn13 || data.title;
-    window.location.href = `https://www.aladin.co.kr/search/wsearchresult.aspx?SearchTarget=All&SearchWord=${encodeURIComponent(searchQuery)}`;
-  };
-
-  const handleMenuClick = () => {
-    push({
-      id: LAYER_ID_BOOK_DETAIL_MENU,
-      component: <BookMenuActionSheet onOpenStore={handleOpenStoreClick} />,
-    });
-  };
-
   const handleChangeDetailTab = setActiveTab;
 
   const handleAddRecordClick = () => {
@@ -142,17 +122,15 @@ export const BookDetail = () => {
         withBack
         title={title}
         rightBtn={
-          <div className="flex items-center gap-2 pr-mobile">
-            <ToggleButton
-              variant="iconText"
-              selected={data?.isInterested ?? false}
-              onClick={handleWishlistClick}
-              icon={IconHeart}
-              selectedIcon={IconHeartFilled}
-              label="관심 도서"
-            />
-            <IconButton onClick={handleMenuClick} label="더보기" icon={IconEllipsisVertical} size="sm" />
-          </div>
+          <ToggleButton
+            variant="iconText"
+            selected={data?.isInterested ?? false}
+            onClick={handleWishlistClick}
+            icon={IconHeart}
+            selectedIcon={IconHeartFilled}
+            label="관심 도서"
+            className="mr-2"
+          />
         }
       />
 
@@ -178,7 +156,6 @@ export const BookDetail = () => {
                 publishedDate={data.publishedDate}
                 isbn13={data.isbn13}
                 description={data.description}
-                sourceLink={getAladinBookDetailUrl(data.itemId)}
               />
             )}
             {activeTab === 'review' && <ReviewSection />}
