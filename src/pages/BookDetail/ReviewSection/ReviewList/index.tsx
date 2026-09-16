@@ -5,6 +5,7 @@ import { useLayerStore } from 'stores/useLayerStore';
 import { useToastStore } from 'stores/useToastStore';
 
 import { TextButton } from 'components/Button';
+import { Empty } from 'components/Empty';
 import { InfiniteScrollTrigger } from 'components/InfiniteScrollTrigger';
 import { IconArrowDown } from 'components/icons';
 
@@ -15,7 +16,7 @@ import { ReviewSortActionSheet } from './SortActionSheet';
 import { getBookReviews, likeBookReview, unlikeBookReview, REVIEW_SORT_OPTIONS, type ReviewSortType } from '../../api';
 
 const MSG_REVIEW_PAGE_TITLE = '빼곡한 리뷰';
-const MSG_REVIEW_EMPTY = '아직 등록된 리뷰가 없습니다. 첫 리뷰를 작성해 보세요!';
+const MSG_REVIEW_EMPTY = '아직 작성된 리뷰가 없어요';
 const MSG_REVIEW_MY_LIKE_FORBIDDEN = '자기가 쓴 리뷰에는 좋아요를 누를 수 없습니다.';
 const LAYER_ID_BOOK_DETAIL_REVIEW_SORT = 'book-detail-review-sort-bottom-sheet';
 
@@ -89,7 +90,7 @@ export const ReviewList = ({ isbn13 }: ReviewListProps) => {
 
   return (
     <>
-      <div className="flex items-center justify-between border-b border-neutral-20 pb-3 pt-7">
+      <div className="flex items-center justify-between pb-3 pt-7">
         <p className="text-title4">
           {MSG_REVIEW_PAGE_TITLE} ({totalReviewCount})
         </p>
@@ -104,17 +105,12 @@ export const ReviewList = ({ isbn13 }: ReviewListProps) => {
       </div>
 
       {totalReviewCount === 0 && !isLoading ? (
-        <div className="py-20 text-center text-body2 text-neutral-40">{MSG_REVIEW_EMPTY}</div>
+        <Empty text={MSG_REVIEW_EMPTY} />
       ) : (
         <>
           <ul className="divide-y divide-neutral-20">
             {allReviews.map((review) => (
-              <ReviewItem
-                key={review.id}
-                review={review}
-                onToggleLike={handleToggleLike}
-                isMyReview={review.isMine}
-              />
+              <ReviewItem key={review.id} review={review} onToggleLike={handleToggleLike} isMyReview={review.isMine} />
             ))}
           </ul>
 
