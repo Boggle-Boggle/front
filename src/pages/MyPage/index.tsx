@@ -48,8 +48,8 @@ const MY_PAGE_MENU_ITEMS: MyPageMenuItem[] = [
     path: '/mypage/account',
   },
   {
-    title: '테마/폰트 변경하기',
-    description: '모드 선택하기, 테마 색상 변경하기 | 폰트 변경하기',
+    title: '테마 변경하기',
+    description: '테마 색상 변경하기',
     path: '/mypage/appearance',
   },
   {

@@ -8,7 +8,7 @@ import { SectionHeader } from '../shared/SectionHeader';
 import { SectionRadio } from '../shared/SectionRadio';
 // import { SectionToggle } from '../shared/SectionToggle';
 
-const MSG_THEME_FONT_TITLE = '테마/폰트 변경하기';
+const MSG_THEME_TITLE = '테마 변경하기';
 // const MSG_THEME_MODE_SECTION = '모드 선택하기';
 const MSG_THEME_COLOR_SECTION = '테마 색상 변경하기';
 
@@ -51,7 +51,7 @@ const Appearance = () => {
 
   return (
     <div className="flex h-full w-full flex-col">
-      <Header title={MSG_THEME_FONT_TITLE} withBack />
+      <Header title={MSG_THEME_TITLE} withBack />
 
       <div className="min-h-0 flex-1 overflow-y-auto pb-safe-bottom">
         {/* 모드 선택하기 (미구현으로 임시 주석 처리)
