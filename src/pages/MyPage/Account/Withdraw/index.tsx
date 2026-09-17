@@ -86,7 +86,6 @@ const Withdraw = () => {
                 name="withdraw-reason"
                 checked={selectedReasons.includes(reason.code)}
                 onChange={() => handleReasonChange(reason.code)}
-                size="xs"
               />
               <label htmlFor={`withdraw-reason-${reason.code}`} className="cursor-pointer text-body1 font-medium">
                 {reason.label}
