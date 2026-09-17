@@ -51,26 +51,22 @@ const Content = () => {
     <div className="flex h-full w-full flex-col">
       <Header title={MSG_CONTENT_TITLE} withBack />
 
-      <div className="min-h-0 flex-1 overflow-y-auto pb-safe-bottom">
-        <SectionHeader title={MSG_CONTENT_ENV_SECTION} />
-        <div className="flex flex-col gap-2 pb-10 pt-2">
-          <SectionToggle
-            label={MSG_CONTENT_ADULT}
-            checked={userSettings.hideAdultContent}
-            onChange={handleAdultContentChange}
-          />
-          <SectionToggle
-            label={MSG_CONTENT_RECOMMEND}
-            checked={userSettings.recommendForMe}
-            onChange={handleRecommendationChange}
-          />
-        </div>
-
-        <SectionHeader title={MSG_CONTENT_BLOCK_SECTION} />
-        <div className="pt-2">
-          <SectionLink label={MSG_CONTENT_BLOCKED_USERS} onClick={() => navigate('/mypage/content/blocked-users')} />
-        </div>
+      <SectionHeader title={MSG_CONTENT_ENV_SECTION} />
+      <div className="flex flex-col gap-2 pb-10">
+        <SectionToggle
+          label={MSG_CONTENT_ADULT}
+          checked={userSettings.hideAdultContent}
+          onChange={handleAdultContentChange}
+        />
+        <SectionToggle
+          label={MSG_CONTENT_RECOMMEND}
+          checked={userSettings.recommendForMe}
+          onChange={handleRecommendationChange}
+        />
       </div>
+
+      <SectionHeader title={MSG_CONTENT_BLOCK_SECTION} />
+      <SectionLink label={MSG_CONTENT_BLOCKED_USERS} onClick={() => navigate('/mypage/content/blocked-users')} />
     </div>
   );
 };

@@ -116,8 +116,9 @@ const Account = () => {
     <div className="flex h-full w-full flex-col">
       <Header title={MSG_ACCOUNT_TITLE} withBack />
 
+      {/* 닉네임 영역 */}
       <div className="min-h-0 flex-1 overflow-y-auto pb-safe-bottom">
-        <div className="flex w-full flex-col items-center p-8">
+        <div className="flex w-full flex-col items-center p-10">
           {isEditingNickname ? (
             <div className="flex w-full items-center justify-center gap-2">
               <input
@@ -154,12 +155,12 @@ const Account = () => {
         </div>
 
         <SectionHeader title={MSG_ACCOUNT_RECORD_DOWNLOAD} />
-        <div className="flex flex-col gap-2 px-mobile py-2">
+        <div className="flex flex-col gap-2 px-mobile pb-8">
           <SectionButton onClick={handleOpenDownloadBackupModal}>{MSG_ACCOUNT_RECORD_BACKUP_DOWNLOAD}</SectionButton>
         </div>
 
         <SectionHeader title={MSG_ACCOUNT_LOGIN_MANAGEMENT} />
-        <div className="flex flex-col gap-2 px-mobile py-2">
+        <div className="flex flex-col gap-2 px-mobile">
           <SectionButton onClick={handleOpenLogoutConfirmModal}>{MSG_ACCOUNT_LOGOUT}</SectionButton>
           <SectionButton onClick={handleOpenWithdrawPage}>{MSG_ACCOUNT_DELETE}</SectionButton>
         </div>

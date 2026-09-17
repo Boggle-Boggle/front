@@ -21,20 +21,14 @@ const Support = () => {
     <div className="flex h-full w-full flex-col">
       <Header title={MSG_SUPPORT_TITLE} withBack />
 
-      <div className="min-h-0 flex-1 overflow-y-auto pb-safe-bottom pt-10">
-        <SectionHeader title={MSG_SUPPORT_CUSTOMER_CENTER_SECTION} />
-        <div className="flex flex-col pt-2">
-          <SectionLink label={MSG_SUPPORT_FAQ} onClick={handleClickFaq} />
-          <SectionLink label={MSG_SUPPORT_CONTACT} onClick={handleClickContact} />
-        </div>
-
-        <div className="pt-10">
-          <SectionHeader title={MSG_SUPPORT_FEEDBACK_SECTION} />
-          <div className="pt-2">
-            <SectionLink label={MSG_SUPPORT_FEEDBACK} onClick={handleClickFeedback} />
-          </div>
-        </div>
+      <SectionHeader title={MSG_SUPPORT_CUSTOMER_CENTER_SECTION} />
+      <div className="flex flex-col pb-10">
+        <SectionLink label={MSG_SUPPORT_FAQ} onClick={handleClickFaq} />
+        <SectionLink label={MSG_SUPPORT_CONTACT} onClick={handleClickContact} />
       </div>
+
+      <SectionHeader title={MSG_SUPPORT_FEEDBACK_SECTION} />
+      <SectionLink label={MSG_SUPPORT_FEEDBACK} onClick={handleClickFeedback} />
     </div>
   );
 };

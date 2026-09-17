@@ -73,18 +73,16 @@ const Appearance = () => {
         */}
 
         <SectionHeader title={MSG_THEME_COLOR_SECTION} />
-        <div className="flex flex-col gap-2 pt-2">
-          {THEME_COLOR_OPTIONS.map((option) => (
-            <SectionRadio
-              key={option.key}
-              name="theme-color"
-              label={option.label}
-              checked={selectedThemeColor === option.key}
-              onChange={() => handleThemeColorChange(option.key)}
-              leading={<div className="size-6 rounded-lg" style={{ backgroundColor: option.colorVariable }} />}
-            />
-          ))}
-        </div>
+        {THEME_COLOR_OPTIONS.map((option) => (
+          <SectionRadio
+            key={option.key}
+            name="theme-color"
+            label={option.label}
+            checked={selectedThemeColor === option.key}
+            onChange={() => handleThemeColorChange(option.key)}
+            leading={<div className="size-6 rounded-lg" style={{ backgroundColor: option.colorVariable }} />}
+          />
+        ))}
       </div>
     </div>
   );
