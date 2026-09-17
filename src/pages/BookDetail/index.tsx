@@ -27,6 +27,8 @@ const MSG_BOOK_DETAIL_ADD_RECORD = '독서 기록 추가하기';
 const MSG_BOOK_DETAIL_TAB_INFO = '정보';
 const MSG_BOOK_DETAIL_TAB_REVIEW = '리뷰';
 const MSG_BOOK_DETAIL_WISHLIST_FAILED = '관심도서 처리에 실패했습니다.';
+const MSG_BOOK_DETAIL_WISHLIST_ADD_SUCCESS = '관심도서에 등록되었습니다.';
+const MSG_BOOK_DETAIL_WISHLIST_DELETE_SUCCESS = '관심도서에서 해제되었습니다.';
 const LAYER_ID_BOOK_DETAIL_ADD_RECORD_STATUS = 'book-detail-add-record-status-bottom-sheet';
 
 type DetailTabType = 'info' | 'review';
@@ -95,6 +97,12 @@ export const BookDetail = () => {
       addToast({
         description: MSG_BOOK_DETAIL_WISHLIST_FAILED,
         type: 'error',
+      });
+    },
+    onSuccess: (_, isInterested) => {
+      addToast({
+        description: isInterested ? MSG_BOOK_DETAIL_WISHLIST_DELETE_SUCCESS : MSG_BOOK_DETAIL_WISHLIST_ADD_SUCCESS,
+        type: 'success',
       });
     },
     onSettled: () => {

@@ -25,6 +25,8 @@ const MSG_MYBOOKS_LOADING = '불러오는 중...';
 const MSG_MYBOOKS_WISHLIST_COUNT_SUFFIX = '개의 관심도서가 있어요';
 const MSG_MYBOOKS_WISHLIST_ARIA_LABEL_KO = '{title} 관심 도서';
 const MSG_MYBOOKS_WISHLIST_ARIA_LABEL_EN = '{title} wishlist book';
+const MSG_MYBOOKS_WISHLIST_DELETE_SUCCESS = '관심도서에서 해제되었습니다.';
+const MSG_MYBOOKS_WISHLIST_DELETE_FAILED = '관심도서 해제에 실패했습니다.';
 
 const getWishlistAriaLabel = (title: string) => {
   const browserLanguage = typeof navigator === 'undefined' ? 'ko' : navigator.language.toLowerCase();
@@ -50,10 +52,14 @@ export const WishlistSection = (props: WishlistSectionProps) => {
     onSuccess: (_, isbn13) => {
       queryClient.invalidateQueries({ queryKey: ['interested-books'] });
       queryClient.invalidateQueries({ queryKey: ['books', 'detail', isbn13] });
+      addToast({
+        description: MSG_MYBOOKS_WISHLIST_DELETE_SUCCESS,
+        type: 'success',
+      });
     },
     onError: () => {
       addToast({
-        description: '관심도서 해제에 실패했습니다.',
+        description: MSG_MYBOOKS_WISHLIST_DELETE_FAILED,
         type: 'error',
       });
     },
