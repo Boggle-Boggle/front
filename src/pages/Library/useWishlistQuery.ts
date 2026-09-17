@@ -21,8 +21,13 @@ const convertInterestedBookToMyBook = (book: InterestedBookItemResponse): MyBook
   isbn13: book.isbn13,
 });
 
-const getWishlistBooks = async (page: number, size = 15): Promise<PaginationMockResponse<MyBook[]>> => {
+const getWishlistBooks = async (
+  page: number,
+  searchKeyword: string,
+  size = 15,
+): Promise<PaginationMockResponse<MyBook[]>> => {
   const response = await getInterestedBooks({
+    q: searchKeyword.trim() || undefined,
     page,
     size,
   });
@@ -35,10 +40,10 @@ const getWishlistBooks = async (page: number, size = 15): Promise<PaginationMock
   };
 };
 
-export const useWishlistQuery = (enabled: boolean) => {
+export const useWishlistQuery = (searchKeyword: string, enabled: boolean) => {
   const queryResult = useInfiniteQuery({
-    queryKey: ['interested-books', 'library'],
-    queryFn: ({ pageParam }) => getWishlistBooks(pageParam, 15),
+    queryKey: ['interested-books', 'library', searchKeyword.trim()],
+    queryFn: ({ pageParam }) => getWishlistBooks(pageParam, searchKeyword, 15),
     getNextPageParam: (lastPage) => {
       if (lastPage.pageNum < Math.ceil(lastPage.totalResultCnt / lastPage.itemsPerPage)) {
         return lastPage.pageNum + 1;

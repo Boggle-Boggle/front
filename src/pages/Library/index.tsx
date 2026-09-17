@@ -123,7 +123,7 @@ const Library = () => {
     isLoading: isWishlistLoading,
     hasNextPage: hasNextWishlistPage,
     isFetchingNextPage: isFetchingNextWishlistPage,
-  } = useWishlistQuery(activeTab === 'wishlist');
+  } = useWishlistQuery(searchKeyword, activeTab === 'wishlist');
 
   const readingBooks = useMemo(() => {
     return readingData ? readingData.pages.flatMap((page) => page.items) : [];
@@ -135,7 +135,6 @@ const Library = () => {
 
   // 검색 키워드에 따른 한글 필터링 (초성 및 자모분리 지원 커스텀 훅 적용)
   const filteredReadingBooks = useHangulSearch(readingBooks, searchKeyword, (book) => book.title);
-  const filteredWishlistBooks = useHangulSearch(wishlistBooks, searchKeyword, (book) => book.title);
 
   const filterOptionByType: Record<ReadingLogStatus, { value: ReadingLogStatus; label: string }> = {
     ALL: { value: 'ALL', label: MSG_MYBOOKS_FILTER_ALL },
@@ -164,6 +163,7 @@ const Library = () => {
   const filterLabel = selectedBookshelf ? `${label} (${selectedBookshelf.name})` : label;
 
   const totalCount = readingData?.pages[0]?.totalResultCnt ?? readingBooks.length;
+  const wishlistTotalCount = wishlistData?.pages[0]?.totalResultCnt ?? wishlistBooks.length;
   const isGridView = viewType === 'grid';
   const viewToggleLabel = isGridView ? MSG_MYBOOKS_ICON_VIEW_TO_LIST : MSG_MYBOOKS_ICON_VIEW_TO_GRID;
   const viewToggleIcon = isGridView ? IconLayoutList : IconLayoutGrid;
@@ -279,11 +279,12 @@ const Library = () => {
 
       {activeTab === 'wishlist' && (
         <WishlistSection
-          books={filteredWishlistBooks}
+          books={wishlistBooks}
+          totalCount={wishlistTotalCount}
           isLoading={isWishlistLoading}
           hasNextPage={hasNextWishlistPage}
           isFetchingNextPage={isFetchingNextWishlistPage}
-          observerTarget={searchKeyword.trim() ? { current: null } : wishlistObserverTarget}
+          observerTarget={wishlistObserverTarget}
         />
       )}
     </div>

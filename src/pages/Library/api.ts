@@ -48,7 +48,9 @@ export const getLibraryReadingLogs = async (params: GetReadingLogsParams) => {
   return response.data;
 };
 
-export type GetInterestedBooksParams = PaginationParams;
+export interface GetInterestedBooksParams extends PaginationParams {
+  q?: string;
+}
 
 export type InterestedBookItemResponse = Pick<Book, 'isbn13' | 'title' | 'author' | 'coverUrl'> & {
   bookId: number;

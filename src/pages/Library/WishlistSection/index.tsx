@@ -14,6 +14,7 @@ import { MyBook } from '../useLibraryQuery';
 
 type WishlistSectionProps = {
   books: MyBook[];
+  totalCount: number;
   isLoading: boolean;
   hasNextPage?: boolean;
   isFetchingNextPage?: boolean;
@@ -21,6 +22,7 @@ type WishlistSectionProps = {
 };
 
 const MSG_MYBOOKS_LOADING = '불러오는 중...';
+const MSG_MYBOOKS_WISHLIST_COUNT_SUFFIX = '개의 관심도서가 있어요';
 const MSG_MYBOOKS_WISHLIST_ARIA_LABEL_KO = '{title} 관심 도서';
 const MSG_MYBOOKS_WISHLIST_ARIA_LABEL_EN = '{title} wishlist book';
 
@@ -39,7 +41,7 @@ const formatWishlistAddedDate = (createdAt = '') => {
 };
 
 export const WishlistSection = (props: WishlistSectionProps) => {
-  const { books, isLoading, hasNextPage, isFetchingNextPage, observerTarget } = props;
+  const { books, totalCount, isLoading, hasNextPage, isFetchingNextPage, observerTarget } = props;
   const queryClient = useQueryClient();
   const { addToast } = useToastStore();
 
@@ -65,6 +67,13 @@ export const WishlistSection = (props: WishlistSectionProps) => {
 
   return (
     <>
+      <div className="flex items-center justify-between px-mobile">
+        <p className="text-caption1 text-neutral-60">
+          {totalCount}
+          {MSG_MYBOOKS_WISHLIST_COUNT_SUFFIX}
+        </p>
+      </div>
+
       <ul className="flex flex-col overflow-y-auto px-mobile">
         {books.map((book) => (
           <li
