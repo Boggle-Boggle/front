@@ -5,7 +5,7 @@ import { useDeleteMeMutation } from '../useDeleteMeMutation';
 
 type WithdrawConfirmModalProps = {
   onCancel: () => void;
-  reason: WithdrawalReasonCode;
+  reasons: WithdrawalReasonCode[];
   customText: string;
 };
 
@@ -16,14 +16,16 @@ const MSG_WITHDRAW_MODAL_CANCEL = '뒤로가기';
 const MSG_WITHDRAW_MODAL_CONFIRM = '계정을 삭제합니다';
 
 const WithdrawConfirmModal = (props: WithdrawConfirmModalProps) => {
-  const { onCancel, reason, customText } = props;
+  const { onCancel, reasons, customText } = props;
   const { isPending: isDeleteMePending, mutate: deleteMe } = useDeleteMeMutation();
   const trimmedCustomText = customText.trim();
 
   const handleConfirm = () => {
     deleteMe({
-      reason,
-      ...(reason === 'OTHER' && trimmedCustomText.length > 0 ? { customText: trimmedCustomText } : {}),
+      reasons: reasons.map((reason) => ({
+        reason,
+        ...(trimmedCustomText.length > 0 ? { customText: trimmedCustomText } : {}),
+      })),
     });
   };
 

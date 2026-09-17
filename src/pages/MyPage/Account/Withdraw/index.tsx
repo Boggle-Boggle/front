@@ -5,9 +5,9 @@ import { useNavigate } from 'react-router-dom';
 import { useLayerStore } from 'stores/useLayerStore';
 
 import { Button } from 'components/Button';
+import { Checkbox } from 'components/Checkbox';
 import { Header } from 'components/Header';
 import { Input } from 'components/Input';
-import { Radio } from 'components/Radio';
 import Loading from 'pages/Loading';
 
 import WithdrawConfirmModal from './WithdrawConfirmModal';
@@ -28,7 +28,7 @@ const LAYER_ID_ACCOUNT_WITHDRAW_CONFIRM_MODAL = 'account-withdraw-confirm-modal'
 const Withdraw = () => {
   const navigate = useNavigate();
   const { push, pop } = useLayerStore();
-  const [selectedReason, setSelectedReason] = useState<WithdrawalReasonCode>();
+  const [selectedReasons, setSelectedReasons] = useState<WithdrawalReasonCode[]>([]);
   const [feedback, setFeedback] = useState<string>('');
 
   const { data: profile, isLoading: isProfileLoading } = useQuery({
@@ -47,15 +47,25 @@ const Withdraw = () => {
 
   if (isLoading || isProfileLoading || !withdrawalReasonItems || !profile) return <Loading />;
 
-  const selectedReasonCode = selectedReason ?? withdrawalReasonItems[0]?.code;
+  const hasSelectedReasons = selectedReasons.length > 0;
   const feedbackTitle = `${profile.nickname}${MSG_WITHDRAW_FEEDBACK_SUFFIX}\n${MSG_WITHDRAW_FEEDBACK_TITLE}`;
 
+  const handleReasonChange = (reasonCode: WithdrawalReasonCode) => {
+    setSelectedReasons((prevSelectedReasons) => {
+      if (prevSelectedReasons.includes(reasonCode)) {
+        return prevSelectedReasons.filter((selectedReason) => selectedReason !== reasonCode);
+      }
+
+      return [...prevSelectedReasons, reasonCode];
+    });
+  };
+
   const handleOpenWithdrawConfirmModal = () => {
-    if (!selectedReasonCode) return;
+    if (!hasSelectedReasons) return;
 
     push({
       id: LAYER_ID_ACCOUNT_WITHDRAW_CONFIRM_MODAL,
-      component: <WithdrawConfirmModal onCancel={pop} reason={selectedReasonCode} customText={feedback} />,
+      component: <WithdrawConfirmModal onCancel={pop} reasons={selectedReasons} customText={feedback} />,
     });
   };
 
@@ -70,17 +80,18 @@ const Withdraw = () => {
         <h2 className="whitespace-pre-line pb-3 pt-8 text-title1">{feedbackTitle}</h2>
         <div className="flex flex-col gap-1">
           {withdrawalReasonItems.map((reason) => (
-            <label key={reason.code} htmlFor={`withdraw-reason-${reason.code}`} className="flex h-9 items-center gap-2">
-              <Radio
+            <div key={reason.code} className="flex h-9 items-center gap-2">
+              <Checkbox
                 id={`withdraw-reason-${reason.code}`}
                 name="withdraw-reason"
-                checked={selectedReasonCode === reason.code}
-                onChange={() => setSelectedReason(reason.code)}
-                size="small"
-                variant="primary"
+                checked={selectedReasons.includes(reason.code)}
+                onChange={() => handleReasonChange(reason.code)}
+                size="xs"
               />
-              <span className="text-body1 font-medium">{reason.label}</span>
-            </label>
+              <label htmlFor={`withdraw-reason-${reason.code}`} className="cursor-pointer text-body1 font-medium">
+                {reason.label}
+              </label>
+            </div>
           ))}
           <Input
             value={feedback}
@@ -104,7 +115,7 @@ const Withdraw = () => {
             width="long"
             size="medium"
             variant="warning"
-            disabled={!selectedReasonCode}
+            disabled={!hasSelectedReasons}
             onClick={handleOpenWithdrawConfirmModal}
           >
             {MSG_WITHDRAW_CONFIRM}
