@@ -80,16 +80,16 @@ const Withdraw = () => {
         <h2 className="whitespace-pre-line pb-3 pt-8 text-title1">{feedbackTitle}</h2>
         <div className="flex flex-col gap-1">
           {withdrawalReasonItems.map((reason) => (
-            <div key={reason.code} className="flex h-9 items-center gap-2">
+            <div key={reason.code} className="flex h-9 items-center">
               <Checkbox
                 id={`withdraw-reason-${reason.code}`}
                 name="withdraw-reason"
                 checked={selectedReasons.includes(reason.code)}
                 onChange={() => handleReasonChange(reason.code)}
-              />
-              <label htmlFor={`withdraw-reason-${reason.code}`} className="cursor-pointer text-body1 font-medium">
-                {reason.label}
-              </label>
+                className="h-full w-full gap-2"
+              >
+                <span className="text-body1 font-medium">{reason.label}</span>
+              </Checkbox>
             </div>
           ))}
           <Input

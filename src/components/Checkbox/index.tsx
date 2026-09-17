@@ -1,4 +1,4 @@
-import { ChangeEvent } from 'react';
+import { ChangeEvent, ReactNode } from 'react';
 
 import { IconCheckMark } from '../icons';
 
@@ -12,6 +12,7 @@ type CheckboxProps = {
   disabled?: boolean;
   className?: string;
   ariaLabel?: string;
+  children?: ReactNode;
 };
 
 export const Checkbox = (props: CheckboxProps) => {
@@ -25,9 +26,10 @@ export const Checkbox = (props: CheckboxProps) => {
     disabled = false,
     className = '',
     ariaLabel,
+    children,
   } = props;
 
-  const labelClass = 'inline-flex items-center justify-center';
+  const labelClass = children ? 'flex items-center' : 'inline-flex items-center justify-center';
   const disabledClass = disabled ? 'opacity-20 cursor-not-allowed' : 'cursor-pointer';
   const boxSizeClass = size === 'xs' ? 'size-4' : size === 'sm' ? 'size-3' : 'size-6';
   const radiusClass = size === 'xs' || size === 'sm' ? 'rounded-[2px]' : 'rounded-[4px]';
@@ -54,6 +56,7 @@ export const Checkbox = (props: CheckboxProps) => {
       >
         {checked ? <IconCheckMark className={checkIconClass} aria-hidden="true" /> : null}
       </span>
+      {children}
     </label>
   );
 };
