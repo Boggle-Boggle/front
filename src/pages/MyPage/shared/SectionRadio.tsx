@@ -21,10 +21,19 @@ export const SectionRadio = (props: SectionRadioProps) => {
   };
 
   return (
-    <div className="flex h-12 items-center gap-2 px-mobile">
-      <div className="shrink-0">{leading}</div>
-      <span className="flex-1 text-body1">{label}</span>
-      <Radio id={id} name={name} checked={checked} onChange={handleChange} variant="primary" disabled={disabled} />
-    </div>
+    <Radio
+      id={id}
+      name={name}
+      checked={checked}
+      onChange={handleChange}
+      variant="primary"
+      disabled={disabled}
+      className="h-12 gap-2 px-mobile"
+    >
+      <div className="flex items-center gap-2">
+        <div className="shrink-0">{leading}</div>
+        <span className="flex-1 text-body1">{label}</span>
+      </div>
+    </Radio>
   );
 };
