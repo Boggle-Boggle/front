@@ -8,7 +8,7 @@ import { ADD_RECORD_STATUS_OPTIONS } from 'pages/Records/shared/recordStatus';
 
 import type { AddRecordStatus, BookDetail } from 'types';
 
-const MSG_ADD_RECORD_STATUS_TITLE = '이 책을 내 책 목록에 추가하시겠어요?';
+const MSG_ADD_RECORD_STATUS_TITLE = '이 책에 대한 독서기록을 작성할까요?';
 const MSG_ADD_RECORD_STATUS_DESCRIPTION = '책을 얼마나 읽으셨나요?';
 const MSG_ADD_RECORD_STATUS_HELP = '* 나중에 수정할 수 있어요';
 const MSG_ADD_RECORD_STATUS_SUBMIT = '책 추가하기';
