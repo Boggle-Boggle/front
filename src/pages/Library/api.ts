@@ -74,6 +74,10 @@ export const deleteInterestedBook = async (isbn13: string) => {
   await api.delete(`/v2/interested-books/${isbn13}`);
 };
 
+export const addInterestedBook = async (isbn13: string) => {
+  await api.post('/v2/interested-books', { isbn13 });
+};
+
 export interface BookshelfItemResponse {
   id: number;
   name: string;

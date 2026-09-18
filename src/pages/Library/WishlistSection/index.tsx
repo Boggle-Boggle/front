@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-import { RefObject } from 'react';
+import { RefObject, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useToastStore } from 'stores/useToastStore';
 
@@ -9,7 +9,7 @@ import { InfiniteScrollTrigger } from 'components/InfiniteScrollTrigger';
 import { ToggleButton } from 'components/ToggleButton';
 import { IconHeart, IconHeartFilled } from 'components/icons';
 
-import { deleteInterestedBook } from '../api';
+import { addInterestedBook, deleteInterestedBook } from '../api';
 import { MyBook } from '../useLibraryQuery';
 
 type WishlistSectionProps = {
@@ -27,6 +27,8 @@ const MSG_MYBOOKS_WISHLIST_ARIA_LABEL_KO = '{title} 관심 도서';
 const MSG_MYBOOKS_WISHLIST_ARIA_LABEL_EN = '{title} wishlist book';
 const MSG_MYBOOKS_WISHLIST_DELETE_SUCCESS = '관심도서에서 해제되었습니다.';
 const MSG_MYBOOKS_WISHLIST_DELETE_FAILED = '관심도서 해제에 실패했습니다.';
+const MSG_MYBOOKS_WISHLIST_ADD_SUCCESS = '관심도서에 등록되었습니다.';
+const MSG_MYBOOKS_WISHLIST_ADD_FAILED = '관심도서 등록에 실패했습니다.';
 
 const getWishlistAriaLabel = (title: string) => {
   const browserLanguage = typeof navigator === 'undefined' ? 'ko' : navigator.language.toLowerCase();
@@ -44,20 +46,34 @@ const formatWishlistAddedDate = (createdAt = '') => {
 
 export const WishlistSection = (props: WishlistSectionProps) => {
   const { books, totalCount, isLoading, hasNextPage, isFetchingNextPage, observerTarget } = props;
+  const [unlikedIsbnSet, setUnlikedIsbnSet] = useState<Set<string>>(() => new Set());
   const queryClient = useQueryClient();
   const { addToast } = useToastStore();
 
+  useEffect(() => {
+    return () => {
+      queryClient.invalidateQueries({ queryKey: ['interested-books'] });
+    };
+  }, [queryClient]);
+
   const { mutate: unlikeBook } = useMutation({
     mutationFn: (isbn13: string) => deleteInterestedBook(isbn13),
+    onMutate: (isbn13) => {
+      setUnlikedIsbnSet((prev) => new Set(prev).add(isbn13));
+    },
     onSuccess: (_, isbn13) => {
-      queryClient.invalidateQueries({ queryKey: ['interested-books'] });
       queryClient.invalidateQueries({ queryKey: ['books', 'detail', isbn13] });
       addToast({
         description: MSG_MYBOOKS_WISHLIST_DELETE_SUCCESS,
         type: 'success',
       });
     },
-    onError: () => {
+    onError: (_, isbn13) => {
+      setUnlikedIsbnSet((prev) => {
+        const next = new Set(prev);
+        next.delete(isbn13);
+        return next;
+      });
       addToast({
         description: MSG_MYBOOKS_WISHLIST_DELETE_FAILED,
         type: 'error',
@@ -65,10 +81,40 @@ export const WishlistSection = (props: WishlistSectionProps) => {
     },
   });
 
+  const { mutate: likeBook } = useMutation({
+    mutationFn: (isbn13: string) => addInterestedBook(isbn13),
+    onMutate: (isbn13) => {
+      setUnlikedIsbnSet((prev) => {
+        const next = new Set(prev);
+        next.delete(isbn13);
+        return next;
+      });
+    },
+    onSuccess: (_, isbn13) => {
+      queryClient.invalidateQueries({ queryKey: ['books', 'detail', isbn13] });
+      addToast({
+        description: MSG_MYBOOKS_WISHLIST_ADD_SUCCESS,
+        type: 'success',
+      });
+    },
+    onError: (_, isbn13) => {
+      setUnlikedIsbnSet((prev) => new Set(prev).add(isbn13));
+      addToast({
+        description: MSG_MYBOOKS_WISHLIST_ADD_FAILED,
+        type: 'error',
+      });
+    },
+  });
+
   const handleToggleWishlist = (isbn13?: string) => () => {
-    if (isbn13) {
-      unlikeBook(isbn13);
+    if (!isbn13) return;
+
+    if (unlikedIsbnSet.has(isbn13)) {
+      likeBook(isbn13);
+      return;
     }
+
+    unlikeBook(isbn13);
   };
 
   return (
@@ -100,7 +146,7 @@ export const WishlistSection = (props: WishlistSectionProps) => {
 
             <ToggleButton
               variant="icon"
-              selected
+              selected={!book.isbn13 || !unlikedIsbnSet.has(book.isbn13)}
               onClick={handleToggleWishlist(book.isbn13)}
               icon={IconHeart}
               selectedIcon={IconHeartFilled}
