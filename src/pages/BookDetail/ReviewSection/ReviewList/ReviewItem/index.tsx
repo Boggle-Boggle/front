@@ -38,6 +38,7 @@ export const ReviewItem = (props: ReviewItemProps) => {
   const formattedDate = formatToDotDate(createdAt);
   const readBookCount = author.readBookCount ?? author.totalReadCount ?? 0;
   const userLevel = readBookCount > 0 ? `${readBookCount}${MSG_USER_LEVEL_SUFFIX}` : MSG_USER_LEVEL_DEFAULT;
+  const shouldShowContent = !isSpoiler || isOpenSpoiler;
 
   const handleReportClick = () => {
     navigate('/report', { state: { reviewId: id, userId: author.userId } });
@@ -98,17 +99,30 @@ export const ReviewItem = (props: ReviewItemProps) => {
       </div>
 
       {/* 본문 */}
-      {!isSpoiler || isOpenSpoiler ? (
+      {!isSpoiler ? (
         <p className="whitespace-pre-wrap break-words text-body1">{content}</p>
       ) : (
-        <div
-          role="button"
-          tabIndex={0}
-          onClick={() => setIsOpenSpoiler(true)}
-          onKeyDown={handleKeyDownSpoiler}
-          className="cursor-pointer whitespace-pre-line rounded-lg border border-dashed border-neutral-40 p-4 text-center text-caption1 text-neutral-40"
-        >
-          {MSG_REVIEW_SPOILER}
+        <div className="grid transition-all duration-300">
+          <p
+            className={`col-start-1 row-start-1 whitespace-pre-wrap break-words text-body1 transition-opacity duration-300 ${
+              shouldShowContent ? 'opacity-100' : 'opacity-0'
+            }`}
+          >
+            {content}
+          </p>
+          <div
+            role="button"
+            tabIndex={0}
+            onClick={() => setIsOpenSpoiler(true)}
+            onKeyDown={handleKeyDownSpoiler}
+            className={`col-start-1 row-start-1 flex cursor-pointer items-center justify-center overflow-hidden whitespace-pre-line rounded-lg border border-dashed bg-neutral-0 text-center text-caption1 text-neutral-40 transition-all duration-300 ${
+              shouldShowContent
+                ? 'pointer-events-none max-h-0 scale-95 border-transparent p-0 opacity-0'
+                : 'max-h-40 min-h-[5.5rem] scale-100 border-neutral-40 p-4 opacity-100'
+            }`}
+          >
+            {MSG_REVIEW_SPOILER}
+          </div>
         </div>
       )}
 
