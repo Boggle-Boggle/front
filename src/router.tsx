@@ -74,12 +74,12 @@ const router = createBrowserRouter([
             element: <WithoutBottomNavLayout />,
             children: [
               { path: '/search/result', element: <SearchResult /> },
-              { path: '/search/add', element: <AddCustomBook /> },
               { path: '/books/:isbn13', element: <BookDetail /> },
               {
                 path: '/records/new',
                 children: [
                   { index: true, element: <RecordNew /> },
+                  { path: 'custom-book', element: <AddCustomBook /> },
                   { path: 'completed', element: <RecordNewCompleted /> },
                 ],
               },

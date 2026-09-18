@@ -38,7 +38,7 @@ const Search = () => {
     navigate(`/search/result?q=${encodeURIComponent(trimmedQuery)}`);
   };
 
-  const handleAddCustomBook = () => navigate('/search/add');
+  const handleAddCustomBook = () => navigate('/records/new/custom-book');
 
   return (
     <div className="flex h-full w-full flex-col items-center justify-start overflow-hidden pt-safe-top">
