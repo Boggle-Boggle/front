@@ -57,9 +57,9 @@ export const FilterSidebar = (props: FilterSidebarProps) => {
 
   return (
     <SideBar>
-      <div className="flex flex-col justify-between px-[26px] pb-[14px] pt-6">
+      <div className="flex h-full min-h-0 flex-col overflow-hidden px-[26px] pb-[14px] pt-6">
         {/* 헤더 */}
-        <div className="flex items-center justify-between pb-3">
+        <div className="flex shrink-0 items-center justify-between pb-3">
           <p className="text-title2">{MSG_MYBOOKS_FILTER_TITLE}</p>
           <Button variant="primary" size="small" width="short" onClick={handleApplyFilter}>
             {MSG_MYBOOKS_FILTER_COMPLETE}
@@ -67,7 +67,7 @@ export const FilterSidebar = (props: FilterSidebarProps) => {
         </div>
 
         {/* 독서 상태 */}
-        <div className="flex-1 overflow-y-auto">
+        <div className="shrink-0">
           {filterOptions.map((option) => {
             const isChecked = draftFilter === option.value;
             const statusLabel = typeof option.count === 'number' ? `${option.label} (${option.count})` : option.label;
@@ -86,36 +86,36 @@ export const FilterSidebar = (props: FilterSidebarProps) => {
               </Radio>
             );
           })}
+        </div>
 
-          <Divider className="my-4 border-neutral-20" />
+        <Divider className="my-4 shrink-0 border-neutral-20" />
 
-          {/* 그룹 보기 */}
-          <p className="text-title3">{MSG_MYBOOKS_FILTER_GROUP_VIEW}</p>
-          <div className="mt-2 min-h-[4rem]">
-            {isBookshelvesLoading ? (
-              <div className="py-3 text-body1 text-neutral-60">로딩 중...</div>
-            ) : bookshelvesData && bookshelvesData.length > 0 ? (
-              bookshelvesData.map((group) => {
-                const isChecked = draftBookshelfId === group.id;
+        {/* 그룹 보기 */}
+        <p className="shrink-0 text-title3">{MSG_MYBOOKS_FILTER_GROUP_VIEW}</p>
+        <div className="mt-2 min-h-0 flex-1 overflow-y-auto overscroll-contain">
+          {isBookshelvesLoading ? (
+            <div className="py-3 text-body1 text-neutral-60">로딩 중...</div>
+          ) : bookshelvesData && bookshelvesData.length > 0 ? (
+            bookshelvesData.map((group) => {
+              const isChecked = draftBookshelfId === group.id;
 
-                return (
-                  <Radio
-                    key={group.id}
-                    id={`mybooks-filter-bookshelf-${group.id}`}
-                    name="mybooks-filter-bookshelf"
-                    checked={isChecked}
-                    onChange={handleSelectBookshelf(group.id)}
-                    variant="primary"
-                    className="active:bg-neutral-10/50 rounded-lg py-4 pl-0 pr-2 transition-all"
-                  >
-                    <span className="text-body1 text-neutral-80">{group.name}</span>
-                  </Radio>
-                );
-              })
-            ) : (
-              <div className="py-3 text-body1 text-neutral-60">생성된 그룹책장이 없습니다.</div>
-            )}
-          </div>
+              return (
+                <Radio
+                  key={group.id}
+                  id={`mybooks-filter-bookshelf-${group.id}`}
+                  name="mybooks-filter-bookshelf"
+                  checked={isChecked}
+                  onChange={handleSelectBookshelf(group.id)}
+                  variant="primary"
+                  className="active:bg-neutral-10/50 rounded-lg py-4 pl-0 pr-2 transition-all"
+                >
+                  <span className="text-body1 text-neutral-80">{group.name}</span>
+                </Radio>
+              );
+            })
+          ) : (
+            <div className="py-3 text-body1 text-neutral-60">생성된 그룹책장이 없습니다.</div>
+          )}
 
           <TextButton
             text={MSG_MYBOOKS_FILTER_CREATE_GROUP}
