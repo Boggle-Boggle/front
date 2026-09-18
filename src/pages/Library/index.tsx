@@ -263,14 +263,14 @@ const Library = () => {
               {activeTab === 'reading' ? (
                 <Highlight text={MSG_MYBOOKS_TAB_READING} className="text-title2" />
               ) : (
-                <span className="text-title2 text-neutral-40">{MSG_MYBOOKS_TAB_READING}</span>
+                <span className="inline-block px-1 text-title2 text-neutral-40">{MSG_MYBOOKS_TAB_READING}</span>
               )}
             </button>
             <button type="button" onClick={handleWishlistTab}>
               {activeTab === 'wishlist' ? (
                 <Highlight text={MSG_MYBOOKS_TAB_WISHLIST} className="text-title2" />
               ) : (
-                <span className="text-title2 text-neutral-40">{MSG_MYBOOKS_TAB_WISHLIST}</span>
+                <span className="inline-block px-1 text-title2 text-neutral-40">{MSG_MYBOOKS_TAB_WISHLIST}</span>
               )}
             </button>
           </div>
