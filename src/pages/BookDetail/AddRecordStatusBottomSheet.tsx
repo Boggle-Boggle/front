@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useLayerStore } from 'stores/useLayerStore';
 
@@ -19,11 +19,37 @@ type AddRecordStatusBottomSheetProps = {
   onSubmit?: (status: AddRecordStatus) => void;
 };
 
+const preloadImage = (src: string) =>
+  new Promise<void>((resolve) => {
+    const image = new Image();
+
+    image.onload = () => resolve();
+    image.onerror = () => resolve();
+    image.src = src;
+
+    if (image.decode) {
+      image.decode().then(resolve).catch(resolve);
+    }
+  });
+
 export const AddRecordStatusBottomSheet = (props: AddRecordStatusBottomSheetProps) => {
   const { isbn13, bookDetail, onSubmit } = props;
   const [selectedStatus, setSelectedStatus] = useState<AddRecordStatus>('COMPLETED');
+  const [isImageReady, setIsImageReady] = useState<boolean>(false);
   const navigate = useNavigate();
   const { pop } = useLayerStore();
+
+  useEffect(() => {
+    let isMounted = true;
+
+    Promise.all(ADD_RECORD_STATUS_OPTIONS.map((option) => preloadImage(option.imageSrc))).then(() => {
+      if (isMounted) setIsImageReady(true);
+    });
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   const handleSelectStatus = (status: AddRecordStatus) => () => {
     setSelectedStatus(status);
@@ -45,7 +71,11 @@ export const AddRecordStatusBottomSheet = (props: AddRecordStatusBottomSheetProp
         <p className="text-title4">{MSG_ADD_RECORD_STATUS_TITLE}</p>
         <p className="text-body1 text-neutral-80">{MSG_ADD_RECORD_STATUS_DESCRIPTION}</p>
 
-        <ul className="grid grid-cols-3 gap-1 pb-9 pt-5">
+        <ul
+          className={`grid grid-cols-3 gap-1 pb-9 pt-5 transition-opacity duration-150 ${
+            isImageReady ? 'opacity-100' : 'opacity-0'
+          }`}
+        >
           {ADD_RECORD_STATUS_OPTIONS.map((option) => {
             const isSelected = option.id === selectedStatus;
             const cardClassName = isSelected ? 'border-primary opacity-100' : 'border-neutral-20 opacity-40';
@@ -58,7 +88,7 @@ export const AddRecordStatusBottomSheet = (props: AddRecordStatusBottomSheetProp
                   onClick={handleSelectStatus(option.id)}
                   className={`flex h-[8.875rem] w-full flex-col items-center justify-end gap-2 overflow-hidden rounded-xl border-[2px] bg-neutral-0 px-4 pb-3 pt-4 ${cardClassName}`}
                 >
-                  <img src={option.imageSrc} alt="" decoding="async" className="size-[5.125rem]" />
+                  <img src={option.imageSrc} alt="" decoding="sync" className="size-[5.125rem]" />
                   <span className={labelClassName}>{option.label}</span>
                 </button>
               </li>
