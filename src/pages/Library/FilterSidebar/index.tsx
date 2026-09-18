@@ -26,6 +26,7 @@ type FilterSidebarProps = {
 const MSG_MYBOOKS_FILTER_TITLE = '보기 설정하기';
 const MSG_MYBOOKS_FILTER_GROUP_VIEW = '그룹 보기';
 const MSG_MYBOOKS_FILTER_CREATE_GROUP = '새 그룹 만들기';
+const NAME_MYBOOKS_FILTER_RADIO = 'mybooks-filter';
 
 export const FilterSidebar = (props: FilterSidebarProps) => {
   const { selectedFilter, filterOptions, onApplyFilter, selectedBookshelfId } = props;
@@ -36,13 +37,13 @@ export const FilterSidebar = (props: FilterSidebarProps) => {
   });
 
   const handleSelectFilter = (nextFilter: ReadingLogStatus) => () => {
-    onApplyFilter(nextFilter, selectedBookshelfId);
+    onApplyFilter(nextFilter);
   };
 
   const handleSelectBookshelf = (bookshelfId: number) => () => {
     const nextBookshelfId = selectedBookshelfId === bookshelfId ? undefined : bookshelfId;
 
-    onApplyFilter(selectedFilter, nextBookshelfId);
+    onApplyFilter('ALL', nextBookshelfId);
   };
 
   const handleCreateGroup = () => undefined;
@@ -58,14 +59,14 @@ export const FilterSidebar = (props: FilterSidebarProps) => {
         {/* 독서 상태 */}
         <div className="shrink-0">
           {filterOptions.map((option) => {
-            const isChecked = selectedFilter === option.value;
+            const isChecked = !selectedBookshelfId && selectedFilter === option.value;
             const statusLabel = typeof option.count === 'number' ? `${option.label} (${option.count})` : option.label;
 
             return (
               <Radio
                 key={option.value}
                 id={`mybooks-filter-${option.value}`}
-                name="mybooks-filter"
+                name={NAME_MYBOOKS_FILTER_RADIO}
                 checked={isChecked}
                 onChange={handleSelectFilter(option.value)}
                 variant="primary"
@@ -92,7 +93,7 @@ export const FilterSidebar = (props: FilterSidebarProps) => {
                 <Radio
                   key={group.id}
                   id={`mybooks-filter-bookshelf-${group.id}`}
-                  name="mybooks-filter-bookshelf"
+                  name={NAME_MYBOOKS_FILTER_RADIO}
                   checked={isChecked}
                   onChange={handleSelectBookshelf(group.id)}
                   variant="primary"
