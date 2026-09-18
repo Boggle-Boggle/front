@@ -82,7 +82,7 @@ export const FilterSidebar = (props: FilterSidebarProps) => {
 
         {/* 그룹 보기 */}
         <p className="shrink-0 text-title3">{MSG_MYBOOKS_FILTER_GROUP_VIEW}</p>
-        <div className="mt-2 min-h-0 flex-1 overflow-y-auto overscroll-contain">
+        <div className="mt-2 min-h-0 flex-1 overflow-y-auto overflow-x-hidden overscroll-contain">
           {isBookshelvesLoading ? (
             <div className="py-3 text-body1 text-neutral-60">로딩 중...</div>
           ) : bookshelvesData && bookshelvesData.length > 0 ? (
@@ -97,7 +97,7 @@ export const FilterSidebar = (props: FilterSidebarProps) => {
                   checked={isChecked}
                   onChange={handleSelectBookshelf(group.id)}
                   variant="primary"
-                  className="active:bg-neutral-10/50 rounded-lg py-4 pl-0 pr-2 transition-all"
+                  className="active:bg-neutral-10/50 rounded-lg py-4 pl-0 transition-all"
                 >
                   <span className="text-body1 text-neutral-80">{group.name}</span>
                 </Radio>
