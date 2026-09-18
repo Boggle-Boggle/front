@@ -25,7 +25,7 @@ export const RealTimePopularSection = () => {
     <>
       <Title text={MSG_SEARCH_REALTIME_POPULAR_TITLE} onLoadMore={handleLoadMore} />
       <section className="relative w-full pb-10">
-        <ol className="scrollbar-hide grid grid-flow-col grid-rows-3 gap-x-10 gap-y-4 overflow-x-auto px-mobile">
+        <ol className="scrollbar-hide grid grid-flow-col grid-rows-3 gap-x-2 gap-y-4 overflow-x-auto px-mobile">
           {books.map((book) => (
             <li key={book.isbn13} className="flex h-28 w-80 items-center">
               <Link to={`/books/${book.isbn13}`} className="flex w-full items-center">
