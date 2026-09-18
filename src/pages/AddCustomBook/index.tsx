@@ -116,24 +116,24 @@ export const AddCustomBook = () => {
         onSubmit={handleSubmit(onSubmit)}
         className="h-full overflow-y-auto px-mobile pb-4"
       >
-        <div className="mx-auto mt-4 w-[6.25rem]">
+        <button
+          type="button"
+          onClick={handleOpenCoverImageUrlModal}
+          aria-label="표지 추가"
+          className="mx-auto mt-4 block w-[6.25rem]"
+        >
           <BookCover
             className="w-full"
             url={coverUrl}
             variant="mockup"
             rounded="sm"
             overlayBottomRight={
-              <button
-                type="button"
-                onClick={handleOpenCoverImageUrlModal}
-                aria-label="표지 추가"
-                className="relative z-badge grid size-[2.25rem] place-items-center rounded-br-[0.25rem] rounded-tl-lg bg-primary text-neutral-0"
-              >
+              <span className="relative z-badge grid size-[2.25rem] place-items-center rounded-br-[0.25rem] rounded-tl-lg bg-primary text-neutral-0">
                 <IconCirclePlus className="size-6" />
-              </button>
+              </span>
             }
           />
-        </div>
+        </button>
 
         <div className="flex flex-col gap-5 pt-8">
           <FormField
