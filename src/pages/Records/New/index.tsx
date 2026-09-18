@@ -193,17 +193,15 @@ export const NewRecord = () => {
           onOpenEndDate={handleOpenEndDate}
           isEdit
         />
-        {status !== 'COMPLETED' && (
-          <ReadingProgressSection
-            progressType={progressType}
-            progressValue={progressValue}
-            totalPageCount={totalPageCount}
-            onChangeProgressType={setProgressType}
-            onChangeProgressValue={setProgressValue}
-            onOpenPageInfo={handleOpenPageInfo}
-            isEdit
-          />
-        )}
+        <ReadingProgressSection
+          progressType={progressType}
+          progressValue={progressValue}
+          totalPageCount={totalPageCount}
+          onChangeProgressType={setProgressType}
+          onChangeProgressValue={setProgressValue}
+          onOpenPageInfo={handleOpenPageInfo}
+          isEdit
+        />
         <GroupSection
           bookshelves={bookshelves}
           selectedBookshelfIds={selectedBookshelfIds}
