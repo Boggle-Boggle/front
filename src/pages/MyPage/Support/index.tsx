@@ -22,10 +22,8 @@ const Support = () => {
       <Header title={MSG_SUPPORT_TITLE} withBack />
 
       <SectionHeader title={MSG_SUPPORT_CUSTOMER_CENTER_SECTION} />
-      <div className="flex flex-col pb-10">
-        <SectionLink label={MSG_SUPPORT_FAQ} onClick={handleClickFaq} />
-        <SectionLink label={MSG_SUPPORT_CONTACT} onClick={handleClickContact} />
-      </div>
+      <SectionLink label={MSG_SUPPORT_FAQ} onClick={handleClickFaq} />
+      <SectionLink label={MSG_SUPPORT_CONTACT} onClick={handleClickContact} isLast />
 
       <SectionHeader title={MSG_SUPPORT_FEEDBACK_SECTION} />
       <SectionLink label={MSG_SUPPORT_FEEDBACK} onClick={handleClickFeedback} />

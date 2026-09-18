@@ -28,13 +28,12 @@ const About = () => {
 
       <div className="min-h-0 flex-1 overflow-y-auto pb-safe-bottom">
         <SectionHeader title={MSG_ABOUT_TERMS_SECTION} />
-        <div className="flex flex-col pb-10">
-          <SectionLink
-            label={TERMS_OF_SERVICE_TITLE}
-            onClick={() => handleClickTermsDetail(TERM_ID.TERMS_OF_SERVICE)}
-          />
-          <SectionLink label={PRIVACY_POLICY_TITLE} onClick={() => handleClickTermsDetail(TERM_ID.PRIVACY_POLICY)} />
-        </div>
+        <SectionLink label={TERMS_OF_SERVICE_TITLE} onClick={() => handleClickTermsDetail(TERM_ID.TERMS_OF_SERVICE)} />
+        <SectionLink
+          label={PRIVACY_POLICY_TITLE}
+          onClick={() => handleClickTermsDetail(TERM_ID.PRIVACY_POLICY)}
+          isLast
+        />
 
         <SectionHeader title={MSG_ABOUT_APP_INFO_SECTION} />
         <SectionValue label={MSG_ABOUT_VERSION} value={MSG_ABOUT_VERSION_VALUE} />
