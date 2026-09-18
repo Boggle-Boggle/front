@@ -25,7 +25,6 @@ const MSG_REVIEW_BLOCK = '차단';
 const MSG_REVIEW_SPOILER = '스포일러가 포함 된 리뷰입니다.\n리뷰를 보려면 박스를 터치하세요.';
 const MSG_USER_LEVEL_DEFAULT = '빼곡 독서가';
 const MSG_USER_LEVEL_SUFFIX = '권 독서가';
-const MSG_REVIEW_EDITED = '(수정됨)';
 const MSG_MY_REVIEW_OPTIONS = '삭제';
 
 export const ReviewItem = (props: ReviewItemProps) => {
@@ -39,7 +38,6 @@ export const ReviewItem = (props: ReviewItemProps) => {
   const formattedDate = formatToDotDate(createdAt);
   const readBookCount = author.readBookCount ?? author.totalReadCount ?? 0;
   const userLevel = readBookCount > 0 ? `${readBookCount}${MSG_USER_LEVEL_SUFFIX}` : MSG_USER_LEVEL_DEFAULT;
-  const isEdited = review.createdAt !== review.updatedAt;
 
   const handleReportClick = () => {
     navigate('/report', { state: { reviewId: id, userId: author.userId } });
@@ -96,9 +94,7 @@ export const ReviewItem = (props: ReviewItemProps) => {
           <span className="pl-1 text-caption1 text-neutral-40">{userLevel}</span>
         </div>
 
-        <p className="text-caption1 text-neutral-40">
-          {formattedDate} {isEdited && MSG_REVIEW_EDITED}
-        </p>
+        <p className="text-caption1 text-neutral-40">{formattedDate}</p>
       </div>
 
       {/* 본문 */}
