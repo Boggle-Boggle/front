@@ -47,7 +47,7 @@ const BOOK_DETAIL_TABS: TabItem<DetailTabType>[] = [
 export const BookDetail = () => {
   const [activeTab, setActiveTab] = useState<DetailTabType>('info');
 
-  const tabSentinelRef = useRef<HTMLDivElement>(null);
+  const titleRef = useRef<HTMLParagraphElement>(null);
   const queryClient = useQueryClient();
 
   const { isbn13 = '' } = useParams();
@@ -62,7 +62,7 @@ export const BookDetail = () => {
 
   const { isVisible } = useHeaderTitleByScroll({
     rootRef: scrollContainerRef,
-    targetRef: tabSentinelRef,
+    targetRef: titleRef,
   });
 
   const title = isVisible ? data?.title : undefined;
@@ -145,7 +145,7 @@ export const BookDetail = () => {
         }
       />
 
-      <div className="flex h-full w-full flex-col overflow-y-auto px-mobile pb-safe-bottom">
+      <div ref={scrollContainerRef} className="flex h-full w-full flex-col overflow-y-auto px-mobile pb-safe-bottom">
         {!isLoading && !isError && data && (
           <>
             <section className="flex flex-col items-center py-5 text-center">
@@ -155,7 +155,9 @@ export const BookDetail = () => {
                 variant="clear"
                 isAdult={data.isAdult && data.hideAdultContent}
               />
-              <p className="pt-4 text-title2">{data.title}</p>
+              <p ref={titleRef} className="pt-4 text-title2">
+                {data.title}
+              </p>
               <p className="text-body2 text-neutral-60">{data.author}</p>
             </section>
 
