@@ -182,7 +182,7 @@ const Library = () => {
   const selectedFilterOption = filterOptionByType[readingFilter];
   const selectedBookshelf = bookshelvesData?.find((group) => group.id === bookshelfId);
   const { label } = selectedFilterOption;
-  const filterLabel = selectedBookshelf ? `${label} (${selectedBookshelf.name})` : label;
+  const filterLabel = selectedBookshelf ? selectedBookshelf.name : label;
 
   const totalCount = readingData?.pages[0]?.totalResultCnt ?? readingBooks.length;
   const wishlistTotalCount = wishlistData?.pages[0]?.totalResultCnt ?? wishlistBooks.length;
