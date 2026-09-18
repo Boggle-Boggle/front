@@ -11,6 +11,7 @@ type ActionModalProps = {
   onConfirm: () => void;
   isConfirmLoading?: boolean;
   confirmVariant?: 'primary' | 'warning' | 'grey';
+  isConfirmEmphasized?: boolean;
 };
 
 export const ActionModal = (props: ActionModalProps) => {
@@ -23,7 +24,10 @@ export const ActionModal = (props: ActionModalProps) => {
     onConfirm,
     isConfirmLoading = false,
     confirmVariant = 'primary',
+    isConfirmEmphasized = false,
   } = props;
+  const cancelButtonWrapperClass = isConfirmEmphasized ? 'flex-[35]' : 'flex-1';
+  const confirmButtonWrapperClass = isConfirmEmphasized ? 'flex-[65]' : 'flex-1';
 
   return (
     <Modal>
@@ -33,12 +37,16 @@ export const ActionModal = (props: ActionModalProps) => {
       </div>
 
       <div className="flex items-center gap-1 text-body1">
-        <Button onClick={onCancel} variant="grey" size="small" className="text-neutral-60">
-          {cancelLabel}
-        </Button>
-        <Button onClick={onConfirm} variant={confirmVariant} size="small" loading={isConfirmLoading}>
-          {confirmLabel}
-        </Button>
+        <div className={cancelButtonWrapperClass}>
+          <Button onClick={onCancel} variant="grey" size="small" className="text-neutral-60">
+            {cancelLabel}
+          </Button>
+        </div>
+        <div className={confirmButtonWrapperClass}>
+          <Button onClick={onConfirm} variant={confirmVariant} size="small" loading={isConfirmLoading}>
+            {confirmLabel}
+          </Button>
+        </div>
       </div>
     </Modal>
   );

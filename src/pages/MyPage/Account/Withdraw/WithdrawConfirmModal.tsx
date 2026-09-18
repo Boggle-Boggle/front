@@ -39,6 +39,7 @@ const WithdrawConfirmModal = (props: WithdrawConfirmModalProps) => {
       onConfirm={handleConfirm}
       isConfirmLoading={isDeleteMePending}
       confirmVariant="warning"
+      isConfirmEmphasized
     />
   );
 };
