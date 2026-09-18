@@ -17,7 +17,6 @@ type RecordMenuActionSheetProps = {
 const MSG_RECORD_ACTION_SEARCH_MORE = '도서 검색에서 더보기';
 const MSG_RECORD_ACTION_EDIT_CUSTOM = '내가 등록한 책 정보 수정하기';
 const MSG_RECORD_ACTION_DELETE = '독서기록 삭제하기';
-const MSG_RECORD_ACTION_EXPORT = '노트 TXT 파일 내보내기';
 
 const MSG_RECORD_ACTION_DELETE_SUCCESS = '독서기록이 정상적으로 삭제되었습니다.';
 const MSG_RECORD_ACTION_DELETE_FAILED = '삭제에 실패했습니다. 다시 시도해 주세요.';
@@ -89,12 +88,9 @@ export const RecordMenuActionSheet = (props: RecordMenuActionSheetProps) => {
         description: MSG_RECORD_ACTION_EDIT_CUSTOM_PREPARING,
       });
     } else if (isbn13) {
-      // 일반 도서인 경우 (서점 사이트 열기)
-      window.location.href = `https://www.aladin.co.kr/search/wsearchresult.aspx?SearchTarget=All&SearchWord=${encodeURIComponent(isbn13)}`;
+      navigate(`/books/${isbn13}`);
     }
   };
-
-  const handleExportNote = () => undefined;
 
   return (
     <ActionSheet
@@ -108,11 +104,6 @@ export const RecordMenuActionSheet = (props: RecordMenuActionSheetProps) => {
           key: 'delete_my_book',
           label: MSG_RECORD_ACTION_DELETE,
           onSelect: handleDeleteClick,
-        },
-        {
-          key: 'export_note',
-          label: MSG_RECORD_ACTION_EXPORT,
-          onSelect: handleExportNote,
         },
       ]}
     />
