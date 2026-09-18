@@ -77,9 +77,9 @@ export const RecentSearchSection = () => {
         )}
 
         {recentSearches.length > 0 && (
-          <ul className="scrollbar-hide flex w-full gap-2 overflow-x-auto px-mobile">
+          <ul className="scrollbar-hide flex w-full snap-x snap-mandatory scroll-px-mobile gap-2 overflow-x-auto scroll-smooth px-mobile">
             {recentSearches.map((recentSearch) => (
-              <li key={recentSearch} className="shrink-0">
+              <li key={recentSearch} className="shrink-0 snap-start">
                 <RecentSearchChip
                   keyword={recentSearch}
                   onClick={() => handleSearchClick(recentSearch)}
