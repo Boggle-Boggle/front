@@ -19,6 +19,7 @@ type WishlistSectionProps = {
   hasNextPage?: boolean;
   isFetchingNextPage?: boolean;
   observerTarget: RefObject<HTMLDivElement>;
+  scrollContainerRef?: RefObject<HTMLDivElement>;
 };
 
 const MSG_MYBOOKS_LOADING = '불러오는 중...';
@@ -45,7 +46,7 @@ const formatWishlistAddedDate = (createdAt = '') => {
 };
 
 export const WishlistSection = (props: WishlistSectionProps) => {
-  const { books, totalCount, isLoading, hasNextPage, isFetchingNextPage, observerTarget } = props;
+  const { books, totalCount, isLoading, hasNextPage, isFetchingNextPage, observerTarget, scrollContainerRef } = props;
   const [unlikedIsbnSet, setUnlikedIsbnSet] = useState<Set<string>>(() => new Set());
   const queryClient = useQueryClient();
   const { addToast } = useToastStore();
@@ -126,46 +127,50 @@ export const WishlistSection = (props: WishlistSectionProps) => {
         </p>
       </div>
 
-      <ul className="flex flex-col overflow-y-auto px-mobile">
-        {books.map((book) => (
-          <li
-            key={book.id}
-            className="flex items-center justify-between gap-4 border-b border-neutral-20 py-4 last:border-b-0"
-          >
-            <Link
-              to={book.isbn13 ? `/books/${book.isbn13}` : '#'}
-              className="flex min-w-0 flex-1 items-stretch self-stretch text-left"
+      <div ref={scrollContainerRef} className="min-h-0 flex-1 overflow-y-auto">
+        <ul className="flex flex-col px-mobile">
+          {books.map((book) => (
+            <li
+              key={book.id}
+              className="flex items-center justify-between gap-4 border-b border-neutral-20 py-4 last:border-b-0"
             >
-              <BookCover className="w-20 shrink-0" url={book.cover} label={book.title} variant="clear" rounded="sm" />
-              <div className="flex min-w-0 flex-1 flex-col pl-4">
-                <p className="line-clamp-2 text-body1">{book.title}</p>
-                <p className="line-clamp-1 text-caption1 text-neutral-80">{book.author}</p>
-                <p className="mt-auto pt-1 text-caption1 text-neutral-40">{formatWishlistAddedDate(book.createdAt)}</p>
-              </div>
-            </Link>
+              <Link
+                to={book.isbn13 ? `/books/${book.isbn13}` : '#'}
+                className="flex min-w-0 flex-1 items-stretch self-stretch text-left"
+              >
+                <BookCover className="w-20 shrink-0" url={book.cover} label={book.title} variant="clear" rounded="sm" />
+                <div className="flex min-w-0 flex-1 flex-col pl-4">
+                  <p className="line-clamp-2 text-body1">{book.title}</p>
+                  <p className="line-clamp-1 text-caption1 text-neutral-80">{book.author}</p>
+                  <p className="mt-auto pt-1 text-caption1 text-neutral-40">
+                    {formatWishlistAddedDate(book.createdAt)}
+                  </p>
+                </div>
+              </Link>
 
-            <ToggleButton
-              variant="icon"
-              selected={!book.isbn13 || !unlikedIsbnSet.has(book.isbn13)}
-              onClick={handleToggleWishlist(book.isbn13)}
-              icon={IconHeart}
-              selectedIcon={IconHeartFilled}
-              className="shrink-0"
-              ariaLabel={getWishlistAriaLabel(book.title)}
-            />
-          </li>
-        ))}
-      </ul>
-      <InfiniteScrollTrigger
-        observerTarget={observerTarget}
-        hasNextPage={hasNextPage}
-        isFetching={isFetchingNextPage}
-      />
-      {isLoading && (
-        <div className="flex justify-center py-4">
-          <span className="text-caption1 text-neutral-60">{MSG_MYBOOKS_LOADING}</span>
-        </div>
-      )}
+              <ToggleButton
+                variant="icon"
+                selected={!book.isbn13 || !unlikedIsbnSet.has(book.isbn13)}
+                onClick={handleToggleWishlist(book.isbn13)}
+                icon={IconHeart}
+                selectedIcon={IconHeartFilled}
+                className="shrink-0"
+                ariaLabel={getWishlistAriaLabel(book.title)}
+              />
+            </li>
+          ))}
+        </ul>
+        <InfiniteScrollTrigger
+          observerTarget={observerTarget}
+          hasNextPage={hasNextPage}
+          isFetching={isFetchingNextPage}
+        />
+        {isLoading && (
+          <div className="flex justify-center py-4">
+            <span className="text-caption1 text-neutral-60">{MSG_MYBOOKS_LOADING}</span>
+          </div>
+        )}
+      </div>
     </>
   );
 };

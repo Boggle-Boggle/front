@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 
 import { useState, useMemo, useEffect } from 'react';
+import { useNavigationType } from 'react-router-dom';
 import { useLayerStore } from 'stores/useLayerStore';
 
 import { IconButton } from 'components/Button';
@@ -10,6 +11,7 @@ import { Searchbar } from 'components/Searchbar';
 import { IconLayoutGrid, IconLayoutList, IconSearch } from 'components/icons';
 
 import { useHangulSearch } from 'hooks/useHangulSearch';
+import { useScrollRestoration } from 'hooks/useScrollRestoration';
 
 import type { ReadingLogStatus } from 'types';
 
@@ -45,6 +47,7 @@ const STORAGE_KEY_MYBOOKS_VIEW_TYPE = 'mybooks-view-type';
 const STORAGE_KEY_MYBOOKS_SORT_TYPE = 'mybooks-sort-type';
 const STORAGE_KEY_MYBOOKS_FILTER = 'mybooks-filter';
 const STORAGE_KEY_MYBOOKS_BOOKSHELF_ID = 'mybooks-bookshelf-id';
+const STORAGE_KEY_MYBOOKS_ACTIVE_TAB = 'mybooks-active-tab';
 
 const LAYER_ID_MYBOOKS_FILTER = 'mybooks-filter-sidebar';
 const LAYER_ID_MYBOOKS_SORT = 'mybooks-sort-bottom-sheet';
@@ -77,12 +80,22 @@ const getInitialBookshelfId = (): number | undefined => {
   return storedId ? Number(storedId) : undefined;
 };
 
+const getStoredActiveTab = (): TabType => {
+  if (typeof window === 'undefined') return 'reading';
+
+  const storedActiveTab = window.sessionStorage.getItem(STORAGE_KEY_MYBOOKS_ACTIVE_TAB);
+  return storedActiveTab === 'wishlist' ? 'wishlist' : 'reading';
+};
+
 const Library = () => {
+  const navigationType = useNavigationType();
   const [isSearchMode, setIsSearchMode] = useState<boolean>(false);
   const [searchKeyword, setSearchKeyword] = useState<string>('');
 
   // TODO: 여러 정렬 기준 훅으로 분리
-  const [activeTab, setActiveTab] = useState<TabType>('reading');
+  const [activeTab, setActiveTab] = useState<TabType>(() =>
+    navigationType === 'POP' ? getStoredActiveTab() : 'reading',
+  );
   const [viewType, setViewType] = useState<ViewType>(getInitialViewType);
   const [readingFilter, setReadingFilter] = useState<ReadingLogStatus>(getInitialFilter);
   const [sortType, setSortType] = useState<ReadingLogSort>(getInitialSortType);
@@ -91,6 +104,10 @@ const Library = () => {
   useEffect(() => {
     window.localStorage.setItem(STORAGE_KEY_MYBOOKS_SORT_TYPE, sortType);
   }, [sortType]);
+
+  useEffect(() => {
+    window.sessionStorage.setItem(STORAGE_KEY_MYBOOKS_ACTIVE_TAB, activeTab);
+  }, [activeTab]);
 
   useEffect(() => {
     window.localStorage.setItem(STORAGE_KEY_MYBOOKS_FILTER, readingFilter);
@@ -132,6 +149,11 @@ const Library = () => {
   const wishlistBooks = useMemo(() => {
     return wishlistData ? wishlistData.pages.flatMap((page) => page.items) : [];
   }, [wishlistData]);
+
+  const wishlistScrollRef = useScrollRestoration<HTMLDivElement>({
+    customKey: `library_wishlist_scroll_top_${searchKeyword.trim()}`,
+    isReady: activeTab === 'wishlist' && wishlistBooks.length > 0,
+  });
 
   // 검색 키워드에 따른 한글 필터링 (초성 및 자모분리 지원 커스텀 훅 적용)
   const filteredReadingBooks = useHangulSearch(readingBooks, searchKeyword, (book) => book.title);
@@ -222,7 +244,7 @@ const Library = () => {
   };
 
   return (
-    <div className="flex h-full w-full flex-col pt-safe-top">
+    <div className="flex h-full min-h-0 w-full flex-col pt-safe-top">
       {/* 독서기록/관심도서/보기방식 혹은 검색바 */}
       {isSearchMode ? (
         <div className="flex w-full items-center justify-start py-3 pr-mobile">
@@ -285,6 +307,7 @@ const Library = () => {
           hasNextPage={hasNextWishlistPage}
           isFetchingNextPage={isFetchingNextWishlistPage}
           observerTarget={wishlistObserverTarget}
+          scrollContainerRef={wishlistScrollRef}
         />
       )}
     </div>
