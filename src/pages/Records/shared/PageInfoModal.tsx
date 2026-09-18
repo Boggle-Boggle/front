@@ -13,7 +13,6 @@ type PageInfoModalProps = {
 const MSG_PAGE_INFO_TITLE = '페이지 정보 수정';
 const MSG_PAGE_INFO_LABEL = '총 페이지 수 (선택)';
 const MSG_PAGE_INFO_PLACEHOLDER = '페이지 정보를 가져올 수 없습니다';
-const MSG_PAGE_INFO_HELP = '* 현재 알라딘에 등록된 페이지 수입니다';
 const MSG_MODAL_DONE = '완료';
 
 export const PageInfoModal = (props: PageInfoModalProps) => {
@@ -48,7 +47,6 @@ export const PageInfoModal = (props: PageInfoModalProps) => {
           type="number"
           placeholder={MSG_PAGE_INFO_PLACEHOLDER}
         />
-        <p className="text-end text-caption1 text-neutral-60">{MSG_PAGE_INFO_HELP}</p>
       </div>
       <Button onClick={handleSubmitPageCount}>{MSG_MODAL_DONE}</Button>
     </ContentModal>
