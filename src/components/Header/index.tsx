@@ -7,6 +7,7 @@ type HeaderProps = {
   withBack?: boolean;
   withSpacer?: boolean;
   transparent?: boolean;
+  className?: string;
 };
 
 export const Header = ({
@@ -16,11 +17,12 @@ export const Header = ({
   withBack = false,
   withSpacer = true,
   transparent = false,
+  className = '',
 }: HeaderProps) => {
   const transparentClass = transparent ? 'bg-transparent' : 'bg-neutral-0';
   return (
     <>
-      <div className={`fixed z-header w-full max-w-mobile pt-safe-top ${transparentClass}`}>
+      <div className={`fixed z-header w-full max-w-mobile pt-safe-top ${transparentClass} ${className}`}>
         <div className="grid h-header grid-cols-[1fr_auto_1fr] items-center">
           <div className="flex justify-start">
             {withBack && <BackButton />}

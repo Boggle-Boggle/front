@@ -12,6 +12,7 @@ import { useHeaderTitleByScroll } from 'hooks/useHeaderTitleByScroll';
 import noImage from 'assets/img/no_image.png';
 
 import { RecordMenuActionSheet } from './RecordMenuActionSheet';
+import { useHeroHeaderContrast } from './useHeroHeaderContrast';
 
 type RecordDetailHeroProps = {
   recordId: string | number;
@@ -78,6 +79,7 @@ export const RecordDetailHero = (props: RecordDetailHeroProps) => {
   } = props;
 
   const titleRef = useRef<HTMLParagraphElement>(null);
+  const backgroundRef = useRef<HTMLDivElement>(null);
   const { push } = useLayerStore();
 
   // 스크롤 시 도서 타이틀 영역이 헤더 위치에 도달하면 헤더에 타이틀을 표시하기 위한 훅 바인딩
@@ -90,6 +92,12 @@ export const RecordDetailHero = (props: RecordDetailHeroProps) => {
 
   // 표지 이미지가 없거나 null인 경우 기본 모킹 표지 이미지를 적용합니다.
   const resolvedCover = cover || noImage;
+  const { headerClassName } = useHeroHeaderContrast({
+    cover: resolvedCover,
+    backgroundRef,
+    scrollContainerRef,
+    isOpaque: isVisible,
+  });
 
   const handleMoreClick = () => {
     push({
@@ -102,7 +110,7 @@ export const RecordDetailHero = (props: RecordDetailHeroProps) => {
     <section className="relative overflow-hidden bg-neutral-0">
       {/* 배경 영역 */}
       {/* 아우터 컨테이너의 bg-[#303030]를 제거하여 서브픽셀 렌더링에 따른 미세한 어두운 경계선 유출을 근본적으로 방지합니다. */}
-      <div className="absolute inset-x-0 top-0 h-80 overflow-hidden">
+      <div ref={backgroundRef} className="absolute inset-x-0 top-0 h-80 overflow-hidden">
         <div className="absolute inset-0 bg-[#303030]">
           <img
             src={resolvedCover}
@@ -123,6 +131,7 @@ export const RecordDetailHero = (props: RecordDetailHeroProps) => {
       </div>
 
       <Header
+        className={headerClassName}
         withBack
         withSpacer={false}
         transparent={!isVisible}
