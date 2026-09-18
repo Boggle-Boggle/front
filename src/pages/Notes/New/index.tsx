@@ -67,7 +67,7 @@ const NoteNew = () => {
   };
 
   return (
-    <div className="flex h-full flex-col bg-neutral-0 pt-safe-top">
+    <div className="flex h-full flex-col bg-neutral-0">
       <Header
         title={MSG_NOTE_NEW_PAGE_TITLE}
         withBack
