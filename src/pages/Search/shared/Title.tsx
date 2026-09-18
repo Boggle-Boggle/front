@@ -16,7 +16,7 @@ export const Title = (props: TitleProps) => {
 
   return (
     <div className="flex w-full items-center justify-between px-mobile pb-5">
-      <Highlight text={text} className="text-title3" />
+      <Highlight text={text} className="text-title2" />
       {rightAction}
       {!rightAction && onLoadMore && (
         <button
