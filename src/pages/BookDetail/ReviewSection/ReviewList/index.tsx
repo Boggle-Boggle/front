@@ -46,7 +46,6 @@ export const ReviewList = ({ isbn13 }: ReviewListProps) => {
   });
 
   const allReviews = data ? data.pages.flatMap((page) => page.reviews) : [];
-  const myReview = allReviews.find((review) => review.isMine);
   const totalReviewCount = data?.pages[0]?.totalReviewCount || 0;
 
   const { observerTarget } = useInfiniteScrollObserver({
@@ -74,7 +73,7 @@ export const ReviewList = ({ isbn13 }: ReviewListProps) => {
     const review = allReviews.find((r) => String(r.id) === reviewId);
     if (!review || toggleLikeMutation.isPending) return;
 
-    if (myReview && review.id === myReview.id) {
+    if (review.isMine) {
       addToast({
         description: MSG_REVIEW_MY_LIKE_FORBIDDEN,
         type: 'error',
