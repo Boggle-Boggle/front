@@ -1,8 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 
-import { useState } from 'react';
-
-import { Button, TextButton } from 'components/Button';
+import { TextButton } from 'components/Button';
 import { Divider } from 'components/Divider';
 import { SideBar } from 'components/Layer/SideBar';
 import { Radio } from 'components/Radio';
@@ -26,31 +24,25 @@ type FilterSidebarProps = {
 };
 
 const MSG_MYBOOKS_FILTER_TITLE = '보기 설정하기';
-const MSG_MYBOOKS_FILTER_COMPLETE = '완료';
 const MSG_MYBOOKS_FILTER_GROUP_VIEW = '그룹 보기';
 const MSG_MYBOOKS_FILTER_CREATE_GROUP = '새 그룹 만들기';
 
 export const FilterSidebar = (props: FilterSidebarProps) => {
   const { selectedFilter, filterOptions, onApplyFilter, selectedBookshelfId } = props;
 
-  const [draftFilter, setDraftFilter] = useState<ReadingLogStatus>(selectedFilter);
-  const [draftBookshelfId, setDraftBookshelfId] = useState<number | undefined>(selectedBookshelfId);
-
   const { data: bookshelvesData, isLoading: isBookshelvesLoading } = useQuery({
     queryKey: ['bookshelves'],
     queryFn: getBookshelves,
   });
 
-  const handleApplyFilter = () => {
-    onApplyFilter(draftFilter, draftBookshelfId);
-  };
-
   const handleSelectFilter = (nextFilter: ReadingLogStatus) => () => {
-    setDraftFilter(nextFilter);
+    onApplyFilter(nextFilter, selectedBookshelfId);
   };
 
   const handleSelectBookshelf = (bookshelfId: number) => () => {
-    setDraftBookshelfId((prev) => (prev === bookshelfId ? undefined : bookshelfId));
+    const nextBookshelfId = selectedBookshelfId === bookshelfId ? undefined : bookshelfId;
+
+    onApplyFilter(selectedFilter, nextBookshelfId);
   };
 
   const handleCreateGroup = () => undefined;
@@ -61,15 +53,12 @@ export const FilterSidebar = (props: FilterSidebarProps) => {
         {/* 헤더 */}
         <div className="flex shrink-0 items-center justify-between pb-3">
           <p className="text-title2">{MSG_MYBOOKS_FILTER_TITLE}</p>
-          <Button variant="primary" size="small" width="short" onClick={handleApplyFilter}>
-            {MSG_MYBOOKS_FILTER_COMPLETE}
-          </Button>
         </div>
 
         {/* 독서 상태 */}
         <div className="shrink-0">
           {filterOptions.map((option) => {
-            const isChecked = draftFilter === option.value;
+            const isChecked = selectedFilter === option.value;
             const statusLabel = typeof option.count === 'number' ? `${option.label} (${option.count})` : option.label;
 
             return (
@@ -97,7 +86,7 @@ export const FilterSidebar = (props: FilterSidebarProps) => {
             <div className="py-3 text-body1 text-neutral-60">로딩 중...</div>
           ) : bookshelvesData && bookshelvesData.length > 0 ? (
             bookshelvesData.map((group) => {
-              const isChecked = draftBookshelfId === group.id;
+              const isChecked = selectedBookshelfId === group.id;
 
               return (
                 <Radio
