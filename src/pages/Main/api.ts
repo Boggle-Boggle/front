@@ -27,6 +27,7 @@ interface ReadingLogListItemResponse {
   id: number;
   book: ReadingLogBookResponse;
   status: Exclude<ReadingLogStatus, 'ALL'>;
+  isHidden?: boolean;
   rating?: number | null;
   progressType?: Nullable<ReadingLogProgressType>;
   progressValue?: number | null;
