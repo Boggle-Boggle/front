@@ -15,7 +15,7 @@ const MSG_CONTENT_ENV_SECTION = '콘텐츠 환경 설정';
 const MSG_CONTENT_BLOCK_SECTION = '차단 관리';
 const MSG_CONTENT_REVIEW_SECTION = '리뷰 관리';
 const MSG_CONTENT_ADULT = '민감한 콘텐츠 가리기';
-const MSG_CONTENT_RECOMMEND = '나를 위한 콘텐츠 추천받기';
+// const MSG_CONTENT_RECOMMEND = '나를 위한 콘텐츠 추천받기';
 const MSG_CONTENT_BLOCKED_USERS = '차단한 유저 확인하기';
 const MSG_CONTENT_MY_REVIEWS = '내가 쓴 리뷰';
 
@@ -43,11 +43,11 @@ const Content = () => {
     });
   };
 
-  const handleRecommendationChange = () => {
-    updateSettings({
-      recommendForMe: !userSettings.recommendForMe,
-    });
-  };
+  // const handleRecommendationChange = () => {
+  //   updateSettings({
+  //     recommendForMe: !userSettings.recommendForMe,
+  //   });
+  // };
 
   return (
     <div className="flex h-full w-full flex-col">
@@ -60,11 +60,11 @@ const Content = () => {
           checked={userSettings.hideAdultContent}
           onChange={handleAdultContentChange}
         />
-        <SectionToggle
+        {/* <SectionToggle
           label={MSG_CONTENT_RECOMMEND}
           checked={userSettings.recommendForMe}
           onChange={handleRecommendationChange}
-        />
+        /> */}
       </div>
 
       <SectionHeader title={MSG_CONTENT_REVIEW_SECTION} />
