@@ -41,7 +41,7 @@ export const Toast = (props: ToastProps) => {
     <div
       role={type === 'error' ? 'alert' : 'status'}
       aria-live={type === 'error' ? 'assertive' : 'polite'}
-      className={`rounded-xl px-4 py-2 text-neutral-0 shadow-[0_0.5rem_1.5rem_rgba(0,0,0,0.16)] ${backgroundClass} ${animationClass} ${layoutClass}`}
+      className={`rounded-xl px-4 py-4 text-neutral-0 shadow-[0_0.5rem_1.5rem_rgba(0,0,0,0.16)] ${backgroundClass} ${animationClass} ${layoutClass}`}
     >
       {showTitle && (
         <div className="flex items-center justify-between gap-2">
