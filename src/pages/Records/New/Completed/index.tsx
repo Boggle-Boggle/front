@@ -18,9 +18,9 @@ const RecordNewCompleted = () => {
   const handleWriteNote = () => {
     if (!readingLogId) return;
 
-    navigate('/notes/new', { state: { readingLogId } });
+    navigate('/notes/new', { replace: true, state: { readingLogId } });
   };
-  const handleContinue = () => navigate('/search');
+  const handleContinue = () => navigate('/search', { replace: true });
 
   return (
     <div className="flex h-full flex-col px-mobile pb-safe-bottom pt-safe-top">
