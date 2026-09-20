@@ -1,6 +1,6 @@
-export type ImageUrlValidationResult = 'valid' | 'invalid-url' | 'load-failed';
+import { TIME_MS } from 'constants/time';
 
-const IMAGE_LOAD_TIMEOUT_MS = 8000;
+export type ImageUrlValidationResult = 'valid' | 'invalid-url' | 'load-failed';
 
 const isHttpUrl = (value: string) => {
   try {
@@ -19,7 +19,7 @@ const canLoadImage = (imageUrl: string) =>
       image.onload = null;
       image.onerror = null;
       resolve(false);
-    }, IMAGE_LOAD_TIMEOUT_MS);
+    }, TIME_MS.SECOND_8);
 
     image.onload = () => {
       window.clearTimeout(timeout);

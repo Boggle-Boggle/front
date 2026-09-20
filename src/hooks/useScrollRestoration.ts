@@ -1,6 +1,8 @@
 import { useEffect, useRef } from 'react';
 import { useLocation, useNavigationType } from 'react-router-dom';
 
+import { TIME_MS } from 'constants/time';
+
 interface ScrollRestorationOptions {
   customKey?: string;
   isReady?: boolean;
@@ -33,7 +35,7 @@ export const useScrollRestoration = <T extends HTMLElement>({
           if (container) {
             container.scrollTop = targetScrollTop;
           }
-        }, 50);
+        }, TIME_MS.MS_50);
         return () => clearTimeout(timer);
       }
     } else {

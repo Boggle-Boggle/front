@@ -2,6 +2,8 @@ import { create } from 'zustand';
 
 import { ToastProps } from 'components/Toast';
 
+import { TIME_MS } from 'constants/time';
+
 type Toast = ToastProps & { id: string };
 type ToastTimeouts = Record<string, ReturnType<typeof setTimeout>>;
 
@@ -11,7 +13,6 @@ type ToastStoreType = {
   removeToast: (id: string) => void;
 };
 
-const TOAST_DURATION_MS = 2400;
 const toastTimeouts: ToastTimeouts = {};
 
 export const useToastStore = create<ToastStoreType>((set, get) => ({
@@ -34,7 +35,7 @@ export const useToastStore = create<ToastStoreType>((set, get) => ({
 
     toastTimeouts[id] = setTimeout(() => {
       get().removeToast(id);
-    }, TOAST_DURATION_MS);
+    }, TIME_MS.SECOND_2_4);
   },
 }));
 

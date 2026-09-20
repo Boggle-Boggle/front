@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 
 import { IconCancel, IconCircleCancel, IconCircleCheck, IconCircleInfo } from 'components/icons';
 
+import { TIME_MS } from 'constants/time';
+
 export type ToastProps = {
   type: 'info' | 'error' | 'success';
   description: string;
@@ -10,8 +12,6 @@ export type ToastProps = {
   dismissible?: boolean;
 };
 
-const TOAST_VISIBLE_DURATION_MS = 2000;
-
 export const Toast = (props: ToastProps) => {
   const { type, description, title, size = 'small', dismissible = false } = props;
   const [isLeaving, setIsLeaving] = useState(false);
@@ -19,7 +19,7 @@ export const Toast = (props: ToastProps) => {
   useEffect(() => {
     const timer = setTimeout(() => {
       setIsLeaving(true);
-    }, TOAST_VISIBLE_DURATION_MS);
+    }, TIME_MS.SECOND_2);
 
     return () => clearTimeout(timer);
   }, []);

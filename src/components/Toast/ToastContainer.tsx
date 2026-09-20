@@ -1,6 +1,8 @@
 import { useLayoutEffect, useRef } from 'react';
 import { useToastStore } from 'stores/useToastStore';
 
+import { TIME_MS } from 'constants/time';
+
 import { Toast } from '.';
 
 export const ToastContainer = () => {
@@ -29,7 +31,7 @@ export const ToastContainer = () => {
       element.style.transform = `translateY(${deltaY}px)`;
 
       requestAnimationFrame(() => {
-        element.style.transition = 'transform 300ms ease-out';
+        element.style.transition = `transform ${TIME_MS.MS_300}ms ease-out`;
         element.style.transform = '';
       });
     });

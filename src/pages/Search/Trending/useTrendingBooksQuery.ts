@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 
-import { QUERY_STALE_TIME } from 'constants/index';
+import { TIME_MS } from 'constants/time';
 
 import { getTrendingBooks } from './api';
 
@@ -8,6 +8,6 @@ export const useTrendingBooksQuery = () => {
   return useQuery({
     queryKey: ['books', 'trending'],
     queryFn: getTrendingBooks,
-    staleTime: QUERY_STALE_TIME.MIN_10,
+    staleTime: TIME_MS.MINUTE_10,
   });
 };
