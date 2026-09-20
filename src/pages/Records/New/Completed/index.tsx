@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import { Button } from 'components/Button';
 import Highlight from 'components/Highlight';
@@ -12,7 +12,14 @@ const MSG_ADD_RECORD_CONTINUE = '이어서 도서 등록하기';
 
 const RecordNewCompleted = () => {
   const navigate = useNavigate();
-  const handleWriteNote = () => {};
+  const location = useLocation();
+  const readingLogId = location.state?.readingLogId as number | string | undefined;
+
+  const handleWriteNote = () => {
+    if (!readingLogId) return;
+
+    navigate('/notes/new', { state: { readingLogId } });
+  };
   const handleContinue = () => navigate('/search');
 
   return (
@@ -25,7 +32,9 @@ const RecordNewCompleted = () => {
       </div>
 
       <div className="flex flex-col gap-2 pb-4">
-        <Button onClick={handleWriteNote}>{MSG_ADD_RECORD_WRITE_NOTE}</Button>
+        <Button onClick={handleWriteNote} disabled={!readingLogId}>
+          {MSG_ADD_RECORD_WRITE_NOTE}
+        </Button>
         <Button onClick={handleContinue} variant="grey">
           {MSG_ADD_RECORD_CONTINUE}
         </Button>
