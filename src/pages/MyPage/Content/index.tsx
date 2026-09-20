@@ -13,7 +13,7 @@ import { SectionToggle } from '../shared/SectionToggle';
 const MSG_CONTENT_TITLE = '콘텐츠 설정하기';
 const MSG_CONTENT_ENV_SECTION = '콘텐츠 환경 설정';
 const MSG_CONTENT_BLOCK_SECTION = '차단 관리';
-const MSG_CONTENT_ADULT = '성인용 콘텐츠 가리기';
+const MSG_CONTENT_ADULT = '민감한 콘텐츠 가리기';
 const MSG_CONTENT_RECOMMEND = '나를 위한 콘텐츠 추천받기';
 const MSG_CONTENT_BLOCKED_USERS = '차단한 유저 확인하기';
 
