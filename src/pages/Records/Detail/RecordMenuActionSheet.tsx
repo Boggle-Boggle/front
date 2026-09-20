@@ -9,9 +9,20 @@ import { ActionSheet } from 'components/Layer/ActionSheet';
 
 import { deleteReadingLog } from './api';
 
+type EditableCustomBook = {
+  title: string;
+  author: string;
+  publisher?: string;
+  isbn?: string;
+  totalPages?: number;
+  coverUrl?: string;
+  description?: string;
+};
+
 type RecordMenuActionSheetProps = {
   recordId: string | number;
   isbn13?: string | null;
+  customBook?: EditableCustomBook;
 };
 
 const MSG_RECORD_ACTION_SEARCH_MORE = '도서 검색에서 더보기';
@@ -25,10 +36,9 @@ const MSG_RECORD_ACTION_DELETE_CONFIRM_DESC =
   '이 독서기록에 등록하신 모든 정보가 삭제되며 복구할 수 없습니다.\n정말로 삭제하시겠습니까?';
 const MSG_RECORD_ACTION_CANCEL = '아니오';
 const MSG_RECORD_ACTION_CONFIRM = '삭제합니다';
-const MSG_RECORD_ACTION_EDIT_CUSTOM_PREPARING = '책 정보 수정 기능이 준비 중입니다.';
 
 export const RecordMenuActionSheet = (props: RecordMenuActionSheetProps) => {
-  const { recordId, isbn13 } = props;
+  const { recordId, isbn13, customBook } = props;
   const { push, pop } = useLayerStore();
   const { addToast } = useToastStore();
 
@@ -81,11 +91,17 @@ export const RecordMenuActionSheet = (props: RecordMenuActionSheetProps) => {
   };
 
   const handleSearchMoreOrEdit = () => {
-    if (isCustomBook) {
-      // 수동 등록 도서인 경우 (수정하기 클릭)
-      addToast({
-        type: 'info',
-        description: MSG_RECORD_ACTION_EDIT_CUSTOM_PREPARING,
+    if (isCustomBook && customBook) {
+      pop();
+      navigate('/records/new/custom-book', {
+        state: {
+          mode: 'edit',
+          recordId,
+          customBook: {
+            ...customBook,
+            mediaType: 'BOOK',
+          },
+        },
       });
     } else if (isbn13) {
       navigate(`/books/${isbn13}`);

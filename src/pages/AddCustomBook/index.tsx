@@ -1,6 +1,8 @@
+import { useEffect } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useLayerStore } from 'stores/useLayerStore';
+import { useToastStore } from 'stores/useToastStore';
 
 import BookCover from 'components/BookCover';
 import { BottomButton } from 'components/Button';
@@ -8,13 +10,16 @@ import { Header } from 'components/Header';
 import { IconCirclePlus } from 'components/icons';
 import { AddRecordStatusBottomSheet } from 'pages/BookDetail/AddRecordStatusBottomSheet';
 
-import type { Book } from 'types';
+import type { Book, CustomBookDto } from 'types';
 
 import { CoverImageUrlModal } from './shared/CoverImageUrlModal';
 import { FormField } from './shared/FormField';
 
 const MSG_ADD_CUSTOM_BOOK_PAGE_TITLE = '직접 등록하기';
+const MSG_EDIT_CUSTOM_BOOK_PAGE_TITLE = '내가 등록한 책 정보 수정하기';
 const MSG_ADD_CUSTOM_BOOK_SUBMIT = '독서 기록 추가하기';
+const MSG_EDIT_CUSTOM_BOOK_SUBMIT = '수정 완료하기';
+const MSG_EDIT_CUSTOM_BOOK_UNAVAILABLE = '책 정보 수정 API가 아직 연결되지 않았습니다.';
 const MSG_ADD_CUSTOM_BOOK_TITLE = '책 제목';
 const MSG_ADD_CUSTOM_BOOK_TITLE_PLACEHOLDER = '책 제목을 입력해주세요';
 const MSG_ADD_CUSTOM_BOOK_AUTHOR = '저자 이름';
@@ -34,6 +39,12 @@ const LAYER_ID_ADD_CUSTOM_BOOK_COVER_IMAGE_URL_MODAL = 'add-custom-book-cover-im
 /**
  * 직접 도서추가 폼 입력 상태 타입 (전역 Book에서 필요한 필드를 취하고, 폼 내 문자열 바인딩이 요구되는 필드만 재정의)
  */
+export type EditCustomBookState = {
+  mode: 'edit';
+  recordId: string | number;
+  customBook: CustomBookDto;
+};
+
 type BookForm = Omit<
   Pick<Book, 'title' | 'author' | 'publisher' | 'coverUrl' | 'totalPages' | 'description'>,
   'coverUrl' | 'totalPages' | 'description'
@@ -46,6 +57,12 @@ type BookForm = Omit<
 
 export const AddCustomBook = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const { addToast } = useToastStore();
+
+  const editState = location.state as EditCustomBookState | null;
+  const isEditMode = editState?.mode === 'edit';
+  const editCustomBook = isEditMode ? editState.customBook : undefined;
 
   const {
     control,
@@ -53,23 +70,33 @@ export const AddCustomBook = () => {
     formState: { isValid },
     resetField,
     setValue,
+    trigger,
     watch,
   } = useForm<BookForm>({
     mode: 'onChange',
     defaultValues: {
-      coverUrl: '',
-      title: '',
-      author: '',
-      publisher: '',
-      isbn: '',
-      totalPages: '',
-      description: '',
+      coverUrl: editCustomBook?.coverUrl ?? '',
+      title: editCustomBook?.title ?? '',
+      author: editCustomBook?.author ?? '',
+      publisher: editCustomBook?.publisher ?? '',
+      isbn: editCustomBook?.isbn ?? '',
+      totalPages: editCustomBook?.totalPages ? String(editCustomBook.totalPages) : '',
+      description: editCustomBook?.description ?? '',
     },
   });
   const { push } = useLayerStore();
   const coverUrl = watch('coverUrl');
 
+  useEffect(() => {
+    if (isEditMode) trigger();
+  }, [isEditMode, trigger]);
+
   const onSubmit: SubmitHandler<BookForm> = (formData) => {
+    if (isEditMode) {
+      addToast({ type: 'info', description: MSG_EDIT_CUSTOM_BOOK_UNAVAILABLE });
+      return;
+    }
+
     push({
       id: 'add-custom-book-status-bottom-sheet',
       component: (
@@ -109,7 +136,7 @@ export const AddCustomBook = () => {
 
   return (
     <>
-      <Header withBack title={MSG_ADD_CUSTOM_BOOK_PAGE_TITLE} />
+      <Header withBack title={isEditMode ? MSG_EDIT_CUSTOM_BOOK_PAGE_TITLE : MSG_ADD_CUSTOM_BOOK_PAGE_TITLE} />
 
       <form
         id="add-custom-book-form"
@@ -194,7 +221,7 @@ export const AddCustomBook = () => {
       </form>
 
       <BottomButton form="add-custom-book-form" type="submit" onClick={handleSubmit(onSubmit)} disabled={!isValid}>
-        {MSG_ADD_CUSTOM_BOOK_SUBMIT}
+        {isEditMode ? MSG_EDIT_CUSTOM_BOOK_SUBMIT : MSG_ADD_CUSTOM_BOOK_SUBMIT}
       </BottomButton>
     </>
   );

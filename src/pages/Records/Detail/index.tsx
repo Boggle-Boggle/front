@@ -63,6 +63,9 @@ export const RecordDetailPage = () => {
         cover={data.book.coverUrl}
         title={data.book.title}
         author={data.book.author}
+        publisher={data.book.publisher}
+        description={data.book.description}
+        totalPages={data.readingLog.progress?.totalPages}
         rating={String(data.readingLog.rating)}
         readingStatus={readingStatusLabel}
         noteCount={`${data.readingLog.noteCount}개`}

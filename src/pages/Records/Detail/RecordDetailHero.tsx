@@ -20,6 +20,9 @@ type RecordDetailHeroProps = {
   cover: string | null;
   title: string;
   author: string;
+  publisher?: string | null;
+  description?: string | null;
+  totalPages?: number | null;
   rating?: string;
   readingStatus?: string;
   noteCount?: string;
@@ -72,6 +75,9 @@ export const RecordDetailHero = (props: RecordDetailHeroProps) => {
     cover,
     title,
     author,
+    publisher,
+    description,
+    totalPages,
     rating = '0.0',
     readingStatus = '읽는중',
     noteCount = '6개',
@@ -102,7 +108,20 @@ export const RecordDetailHero = (props: RecordDetailHeroProps) => {
   const handleMoreClick = () => {
     push({
       id: 'record-detail-more-bottom-sheet',
-      component: <RecordMenuActionSheet recordId={recordId} isbn13={isbn13} />,
+      component: (
+        <RecordMenuActionSheet
+          recordId={recordId}
+          isbn13={isbn13}
+          customBook={{
+            title,
+            author,
+            publisher: publisher ?? undefined,
+            totalPages: totalPages ?? undefined,
+            coverUrl: cover ?? undefined,
+            description: description ?? undefined,
+          }}
+        />
+      ),
     });
   };
 
