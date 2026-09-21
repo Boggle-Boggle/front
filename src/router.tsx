@@ -30,6 +30,7 @@ const MyPageAccountWithdraw = lazy(() => import('pages/MyPage/Account/Withdraw')
 const MyPageAccountWithdrawComplete = lazy(() => import('pages/MyPage/Account/WithdrawComplete'));
 const MyPageContent = lazy(() => import('pages/MyPage/Content'));
 const MyPageContentBlockedUsers = lazy(() => import('pages/MyPage/Content/BlockedUsers'));
+const MyPageContentMyReviews = lazy(() => import('pages/MyPage/Content/MyReviews'));
 const MyPageSupport = lazy(() => import('pages/MyPage/Support'));
 const MyPageAppearance = lazy(() => import('pages/MyPage/Appearance'));
 const Terms = lazy(() => import('pages/Terms'));
@@ -90,6 +91,7 @@ const router = createBrowserRouter([
               { path: '/mypage/account/withdraw-complete', element: <MyPageAccountWithdrawComplete /> },
               { path: '/mypage/content', element: <MyPageContent /> },
               { path: '/mypage/content/blocked-users', element: <MyPageContentBlockedUsers /> },
+              { path: '/mypage/content/reviews', element: <MyPageContentMyReviews /> },
               { path: '/mypage/support', element: <MyPageSupport /> },
               { path: '/mypage/appearance', element: <MyPageAppearance /> },
               { path: '/report', element: <Report /> },
