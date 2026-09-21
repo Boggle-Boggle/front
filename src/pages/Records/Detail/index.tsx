@@ -1,10 +1,12 @@
 import { useQuery } from '@tanstack/react-query';
 
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
 
 import { Tabs, type TabItem } from 'components/Tabs';
 import Loading from 'pages/Loading';
+
+import { useScrollRestoration } from 'hooks/useScrollRestoration';
 
 import { READING_STATUS_LABEL_BY_CODE } from 'types';
 
@@ -35,12 +37,15 @@ export const RecordDetailPage = () => {
   const { recordId = '' } = useParams();
   const location = useLocation();
   const [activeTab, setActiveTab] = useState<DetailTabType>((location.state?.activeTab as DetailTabType) || 'info');
-  const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   const { data, isLoading, isError } = useQuery({
     queryKey: ['reading-log', recordId],
     queryFn: () => getReadingLogDetail(recordId),
     enabled: !!recordId,
+  });
+
+  const scrollContainerRef = useScrollRestoration<HTMLDivElement>({
+    isReady: !!data,
   });
 
   if (isLoading) return <Loading />;
