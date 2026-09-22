@@ -4,6 +4,7 @@ import { useToastStore } from 'stores/useToastStore';
 
 import { Button } from 'components/Button';
 import { Header } from 'components/Header';
+import { IconCircleBan } from 'components/icons';
 import Loading from 'pages/Loading';
 
 import { getMyBlocks, unblockUser } from '../api';
@@ -76,6 +77,7 @@ const BlockedUsers = () => {
                   width="short"
                   size="small"
                   variant="warning"
+                  icon={IconCircleBan}
                   onClick={() => handleUnblock(user.userId)}
                 >
                   {MSG_BLOCKED_USERS_STATUS}
@@ -90,4 +92,3 @@ const BlockedUsers = () => {
 };
 
 export default BlockedUsers;
-
