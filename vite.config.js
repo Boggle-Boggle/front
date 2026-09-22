@@ -68,6 +68,10 @@ export default defineConfig({
         replacement: path.resolve(__dirname, 'src/constants'),
       },
       {
+        find: 'policy',
+        replacement: path.resolve(__dirname, 'src/policy'),
+      },
+      {
         find: 'stores',
         replacement: path.resolve(__dirname, 'src/stores'),
       },

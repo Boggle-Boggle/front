@@ -26,6 +26,7 @@
       "utils/*": ["./src/utils/*"],
       "stores/*": ["./src/stores/*"],
       "constants/*": ["./src/constants/*"],
+      "policy/*": ["./src/policy/*"],
       "routes/*": ["./src/routes/*"]
     },
     /* Linting */
