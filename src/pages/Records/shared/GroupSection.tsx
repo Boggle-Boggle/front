@@ -32,7 +32,7 @@ export const GroupSection = (props: GroupSectionProps) => {
               onClick={onOpenGroupEdit}
               className="flex h-[2.625rem] w-full items-center justify-center gap-1 rounded-lg border-[1.5px] border-primary bg-primary text-title4 font-bold text-neutral-0 transition-all hover:opacity-90 active:opacity-80"
             >
-              <IconPlus className="size-4 text-neutral-0" />
+              <IconPlus className="size-icon-sm text-neutral-0" />
               <span>{MSG_NEW_GROUP_ADD}</span>
             </button>
           </li>

@@ -94,7 +94,7 @@ export const TermsStep = (props: TermsStepProps) => {
                       onClick={() => handleClickTermDetail(term.termsId)}
                     >
                       {term.title}
-                      <IconArrowRight className="size-4" />
+                      <IconArrowRight className="size-icon-sm" />
                     </button>
                   </div>
 

@@ -113,7 +113,7 @@ const Login = () => {
         href={import.meta.env.VITE_INQUIRY_GOOGLE_FORM_URL}
         className="absolute bottom-[calc(env(safe-area-inset-bottom)+0.625rem)] left-1/2 flex -translate-x-1/2 items-center gap-0.5 text-caption2 text-neutral-60"
       >
-        <IconHeadphone className="size-[1.125rem]" />
+        <IconHeadphone className="size-icon-sm" />
         {MSG_LOGIN_HELP}
       </a>
     </section>

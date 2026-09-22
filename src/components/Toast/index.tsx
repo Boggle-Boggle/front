@@ -30,11 +30,11 @@ export const Toast = (props: ToastProps) => {
   const showTitle = Boolean(title) && size === 'large';
   const icon =
     type === 'info' ? (
-      <IconCircleInfo className="size-4 text-neutral-0" />
+      <IconCircleInfo className="size-icon-sm text-neutral-0" />
     ) : type === 'error' ? (
-      <IconCircleCancel className="size-4 text-neutral-0" />
+      <IconCircleCancel className="size-icon-sm text-neutral-0" />
     ) : (
-      <IconCircleCheck className="size-4 text-neutral-0" />
+      <IconCircleCheck className="size-icon-sm text-neutral-0" />
     );
 
   return (
@@ -51,7 +51,7 @@ export const Toast = (props: ToastProps) => {
           </div>
           {dismissible && (
             <button type="button" aria-label="닫기">
-              <IconCancel className="size-4 text-neutral-0 opacity-60" />
+              <IconCancel className="size-icon-sm text-neutral-0 opacity-60" />
             </button>
           )}
         </div>
@@ -62,7 +62,7 @@ export const Toast = (props: ToastProps) => {
       </div>
       {dismissible && !showTitle && (
         <button type="button" aria-label="닫기" className="ml-auto">
-          <IconCancel className="size-4 text-neutral-0 opacity-60" />
+          <IconCancel className="size-icon-sm text-neutral-0 opacity-60" />
         </button>
       )}
     </div>

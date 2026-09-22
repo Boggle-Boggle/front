@@ -156,7 +156,7 @@ export const AddCustomBook = () => {
             rounded="sm"
             overlayBottomRight={
               <span className="relative z-badge grid size-[2.25rem] place-items-center rounded-br-[0.25rem] rounded-tl-lg bg-primary text-neutral-0">
-                <IconCirclePlus className="size-6" />
+                <IconCirclePlus className="size-icon-md" />
               </span>
             }
           />

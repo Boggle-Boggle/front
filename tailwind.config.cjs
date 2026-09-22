@@ -54,6 +54,7 @@ module.exports = {
 
         header: '3rem',
 
+        'icon-xs': '0.875rem',
         'icon-sm': '1rem',
         'icon-md': '1.5rem',
         'icon-lg': '2rem',

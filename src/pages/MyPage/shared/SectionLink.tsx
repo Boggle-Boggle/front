@@ -21,7 +21,7 @@ export const SectionLink = (props: SectionLinkProps) => {
     >
       {leading ? <div className="shrink-0">{leading}</div> : null}
       <span className="flex-1 text-left text-body1">{label}</span>
-      <IconArrowRight className="size-4 shrink-0" />
+      <IconArrowRight className="size-icon-sm shrink-0" />
     </button>
   );
 };

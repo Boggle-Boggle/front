@@ -131,7 +131,7 @@ const Account = () => {
                 className="min-w-4 max-w-[12rem] bg-transparent text-center text-title1 outline-none"
               />
               <span className="shrink-0 text-h3">{MSG_ACCOUNT_NICKNAME_SUFFIX}</span>
-              <IconPen className="size-6 shrink-0 text-neutral-60" />
+              <IconPen className="size-icon-md shrink-0 text-neutral-60" />
             </div>
           ) : (
             <h2 className="text-title1">
