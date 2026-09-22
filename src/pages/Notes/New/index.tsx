@@ -4,9 +4,7 @@ import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useToastStore } from 'stores/useToastStore';
 
-import { IconButton } from 'components/Button';
 import { Header } from 'components/Header';
-import { IconPlus } from 'components/icons';
 import { createReadingNote } from 'pages/Records/Detail/api';
 
 const MSG_NOTE_NEW_PAGE_TITLE = '노트 작성하기';
@@ -15,9 +13,6 @@ const MSG_NOTE_NEW_TITLE_PLACEHOLDER = '노트의 제목을 입력하세요';
 const MSG_NOTE_NEW_BODY_PLACEHOLDER = '여기를 터치하여 내용을 입력하세요';
 const MSG_NOTE_NEW_TITLE_ARIA_LABEL = '노트 제목';
 const MSG_NOTE_NEW_BODY_ARIA_LABEL = '노트 본문';
-const MSG_NOTE_NEW_TAG = '태그 : ';
-const MSG_NOTE_NEW_ADD_TAG_ARIA_LABEL = '태그 추가';
-// const MSG_NOTE_NEW_TAG_DEFAULT = '태그';
 const MSG_NOTE_NEW_CHARACTER_COUNT_SUFFIX = '자';
 const MSG_NOTE_NEW_SUCCESS = '독서 노트가 저장되었습니다.';
 const MSG_NOTE_NEW_FAILED = '독서 노트를 저장하지 못했습니다. 다시 시도해 주세요.';
@@ -30,7 +25,6 @@ type NoteNewLocationState = {
 const NoteNew = () => {
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
-  // const [tags, setTags] = useState<string[]>([]);
   const bodyTextareaRef = useRef<HTMLTextAreaElement>(null);
 
   const navigate = useNavigate();
@@ -46,7 +40,6 @@ const NoteNew = () => {
         title: data.title,
         body: data.body,
         page: null,
-        tags: [],
       });
     },
 
@@ -70,10 +63,6 @@ const NoteNew = () => {
 
   const handleBodyChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
     setBody(event.target.value.slice(0, MAX_NOTE_CHARACTER_COUNT));
-  };
-
-  const handleAddTag = () => {
-    // setTags((prev) => [...prev, `${MSG_NOTE_NEW_TAG_DEFAULT} ${prev.length + 1}`]);
   };
 
   useEffect(() => {
@@ -124,19 +113,6 @@ const NoteNew = () => {
 
       <footer className="px-mobile pb-safe-bottom">
         <p className="mb-1 text-right text-caption2 text-neutral-60">{noteCharacterCountText}</p>
-
-        {/* 태그영역 */}
-        <div className="flex h-11 items-center border-t border-neutral-20 text-caption1 text-neutral-60">
-          <span>{MSG_NOTE_NEW_TAG}</span>
-
-          <IconButton
-            icon={IconPlus}
-            onClick={handleAddTag}
-            label={MSG_NOTE_NEW_ADD_TAG_ARIA_LABEL}
-            size="xs"
-            className="m-2 rounded-full bg-neutral-20"
-          />
-        </div>
       </footer>
     </div>
   );
