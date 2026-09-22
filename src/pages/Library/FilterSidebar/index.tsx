@@ -24,7 +24,7 @@ type FilterSidebarProps = {
 };
 
 const MSG_MYBOOKS_FILTER_TITLE = '보기 설정하기';
-const MSG_MYBOOKS_FILTER_GROUP_VIEW = '그룹 보기';
+const MSG_MYBOOKS_FILTER_GROUP_VIEW = '그룹 책장 보기';
 const MSG_MYBOOKS_FILTER_CREATE_GROUP = '새 그룹 만들기';
 const NAME_MYBOOKS_FILTER_RADIO = 'mybooks-filter';
 
