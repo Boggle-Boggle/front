@@ -32,6 +32,7 @@ const MSG_ADD_CUSTOM_BOOK_TOTAL_PAGE = '총 페이지 수';
 const MSG_ADD_CUSTOM_BOOK_TOTAL_PAGE_PLACEHOLDER = '총 페이지 수';
 const MSG_ADD_CUSTOM_BOOK_PLOT = '작품 소개/줄거리';
 const MSG_ADD_CUSTOM_BOOK_PLOT_PLACEHOLDER = '작품 소개/줄거리 입력해주세요';
+const MAX_CUSTOM_BOOK_TEXT_LENGTH = 500;
 const MIN_TOTAL_PAGE_COUNT = 1;
 const MAX_TOTAL_PAGE_COUNT = 99999;
 const LAYER_ID_ADD_CUSTOM_BOOK_COVER_IMAGE_URL_MODAL = 'add-custom-book-cover-image-url-modal';
@@ -169,6 +170,7 @@ export const AddCustomBook = () => {
             resetField={resetField}
             label={MSG_ADD_CUSTOM_BOOK_TITLE}
             placeholder={MSG_ADD_CUSTOM_BOOK_TITLE_PLACEHOLDER}
+            maxLength={MAX_CUSTOM_BOOK_TEXT_LENGTH}
             required
           />
 
@@ -178,6 +180,7 @@ export const AddCustomBook = () => {
             resetField={resetField}
             label={MSG_ADD_CUSTOM_BOOK_AUTHOR}
             placeholder={MSG_ADD_CUSTOM_BOOK_AUTHOR_PLACEHOLDER}
+            maxLength={MAX_CUSTOM_BOOK_TEXT_LENGTH}
             required
           />
 
@@ -187,6 +190,7 @@ export const AddCustomBook = () => {
             resetField={resetField}
             label={MSG_ADD_CUSTOM_BOOK_PUBLISHER}
             placeholder={MSG_ADD_CUSTOM_BOOK_PUBLISHER_PLACEHOLDER}
+            maxLength={MAX_CUSTOM_BOOK_TEXT_LENGTH}
           />
 
           <div className="flex gap-2">
@@ -196,6 +200,7 @@ export const AddCustomBook = () => {
               resetField={resetField}
               label={MSG_ADD_CUSTOM_BOOK_ISBN}
               placeholder={MSG_ADD_CUSTOM_BOOK_ISBN_PLACEHOLDER}
+              maxLength={MAX_CUSTOM_BOOK_TEXT_LENGTH}
             />
 
             <FormField
@@ -215,6 +220,7 @@ export const AddCustomBook = () => {
             control={control}
             label={MSG_ADD_CUSTOM_BOOK_PLOT}
             placeholder={MSG_ADD_CUSTOM_BOOK_PLOT_PLACEHOLDER}
+            maxLength={MAX_CUSTOM_BOOK_TEXT_LENGTH}
             multiline
           />
         </div>
