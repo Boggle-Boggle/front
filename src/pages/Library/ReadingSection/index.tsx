@@ -50,16 +50,16 @@ export const ReadingSection = (props: ReadingSectionProps) => {
         <TextButton variant="filled" size="sm" rightIcon={IconArrowDown} onClick={onOpenSortLayer} text={sortLabel} />
       </div>
 
-      <div className="overflow-y-auto">
+      <div className="min-h-0 flex-1 overflow-y-auto">
         {isGridView && <ReadingBooksGrid books={books} />}
         {!isGridView && <ReadingBooksList books={books} />}
+        <InfiniteScrollTrigger
+          observerTarget={observerTarget}
+          hasNextPage={hasNextPage}
+          isFetching={isFetchingNextPage}
+        />
       </div>
       {isLoading && <Loading />}
-      <InfiniteScrollTrigger
-        observerTarget={observerTarget}
-        hasNextPage={hasNextPage}
-        isFetching={isFetchingNextPage}
-      />
     </>
   );
 };
