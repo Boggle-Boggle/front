@@ -83,6 +83,26 @@ export interface BookshelfItemResponse {
   name: string;
 }
 
+export interface BookshelfCountResponse extends BookshelfItemResponse {
+  count: number;
+}
+
+export interface ReadingLogSummaryResponse {
+  total: number;
+  byStatus: {
+    reading: number;
+    completed: number;
+    dropped: number;
+  };
+  bookshelves: BookshelfCountResponse[];
+}
+
+export const getReadingLogSummary = async () => {
+  const response = await api.get<ApiSuccessResponse<ReadingLogSummaryResponse>>('/v2/reading-logs/summary');
+
+  return response.data.data;
+};
+
 interface GetBookshelvesResponse {
   items: BookshelfItemResponse[];
 }

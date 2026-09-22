@@ -1,5 +1,3 @@
-import { useQuery } from '@tanstack/react-query';
-
 import { TextButton } from 'components/Button';
 import { Divider } from 'components/Divider';
 import { SideBar } from 'components/Layer/SideBar';
@@ -8,7 +6,7 @@ import { IconCirclePlus } from 'components/icons';
 
 import type { ReadingLogStatus } from 'types';
 
-import { getBookshelves } from '../api';
+import type { BookshelfCountResponse } from '../api';
 
 type FilterOption = {
   value: ReadingLogStatus;
@@ -19,8 +17,10 @@ type FilterOption = {
 type FilterSidebarProps = {
   selectedFilter: ReadingLogStatus;
   filterOptions: FilterOption[];
+  bookshelves: BookshelfCountResponse[];
   onApplyFilter: (filter: ReadingLogStatus, bookshelfId?: number) => void;
   selectedBookshelfId?: number;
+  isLoadingBookshelves?: boolean;
 };
 
 const MSG_MYBOOKS_FILTER_TITLE = '보기 설정하기';
@@ -29,12 +29,14 @@ const MSG_MYBOOKS_FILTER_CREATE_GROUP = '새 그룹 만들기';
 const NAME_MYBOOKS_FILTER_RADIO = 'mybooks-filter';
 
 export const FilterSidebar = (props: FilterSidebarProps) => {
-  const { selectedFilter, filterOptions, onApplyFilter, selectedBookshelfId } = props;
-
-  const { data: bookshelvesData, isLoading: isBookshelvesLoading } = useQuery({
-    queryKey: ['bookshelves'],
-    queryFn: getBookshelves,
-  });
+  const {
+    selectedFilter,
+    filterOptions,
+    bookshelves,
+    onApplyFilter,
+    selectedBookshelfId,
+    isLoadingBookshelves = false,
+  } = props;
 
   const handleSelectFilter = (nextFilter: ReadingLogStatus) => () => {
     onApplyFilter(nextFilter);
@@ -83,11 +85,12 @@ export const FilterSidebar = (props: FilterSidebarProps) => {
         {/* 그룹 보기 */}
         <p className="shrink-0 text-title3">{MSG_MYBOOKS_FILTER_GROUP_VIEW}</p>
         <div className="mt-2 min-h-0 flex-1 overflow-y-auto overflow-x-hidden overscroll-contain">
-          {isBookshelvesLoading ? (
+          {isLoadingBookshelves ? (
             <div className="py-3 text-body1 text-neutral-60">로딩 중...</div>
-          ) : bookshelvesData && bookshelvesData.length > 0 ? (
-            bookshelvesData.map((group) => {
+          ) : bookshelves.length > 0 ? (
+            bookshelves.map((group) => {
               const isChecked = selectedBookshelfId === group.id;
+              const groupLabel = `${group.name} (${group.count})`;
 
               return (
                 <Radio
@@ -99,7 +102,7 @@ export const FilterSidebar = (props: FilterSidebarProps) => {
                   variant="primary"
                   className="active:bg-neutral-10/50 rounded-lg py-4 pl-0 transition-all"
                 >
-                  <span className="text-body1 text-neutral-80">{group.name}</span>
+                  <span className="text-body1 text-neutral-80">{groupLabel}</span>
                 </Radio>
               );
             })

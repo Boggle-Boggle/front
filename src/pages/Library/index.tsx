@@ -19,7 +19,7 @@ import { FilterSidebar } from './FilterSidebar';
 import { ReadingSection } from './ReadingSection';
 import { SortActionSheet } from './SortActionSheet';
 import { WishlistSection } from './WishlistSection';
-import { getBookshelves, type ReadingLogSort } from './api';
+import { getReadingLogSummary, type ReadingLogSort } from './api';
 import { useLibraryQuery } from './useLibraryQuery';
 import { useWishlistQuery } from './useWishlistQuery';
 
@@ -130,9 +130,9 @@ const Library = () => {
     isFetchingNextPage: isFetchingNextReadingPage,
   } = useLibraryQuery(sortType, readingFilter, bookshelfId, activeTab === 'reading');
 
-  const { data: bookshelvesData } = useQuery({
-    queryKey: ['bookshelves'],
-    queryFn: getBookshelves,
+  const { data: readingLogSummary, isLoading: isReadingLogSummaryLoading } = useQuery({
+    queryKey: ['reading-logs', 'summary'],
+    queryFn: getReadingLogSummary,
   });
   const {
     data: wishlistData,
@@ -158,11 +158,18 @@ const Library = () => {
   // 검색 키워드에 따른 한글 필터링 (초성 및 자모분리 지원 커스텀 훅 적용)
   const filteredReadingBooks = useHangulSearch(readingBooks, searchKeyword, (book) => book.title);
 
-  const filterOptionByType: Record<ReadingLogStatus, { value: ReadingLogStatus; label: string }> = {
-    ALL: { value: 'ALL', label: MSG_MYBOOKS_FILTER_ALL },
-    COMPLETED: { value: 'COMPLETED', label: MSG_MYBOOKS_FILTER_DONE },
-    READING: { value: 'READING', label: MSG_MYBOOKS_FILTER_READING },
-    DROPPED: { value: 'DROPPED', label: MSG_MYBOOKS_FILTER_STOPPED },
+  const statusCountByType: Partial<Record<ReadingLogStatus, number>> = {
+    ALL: readingLogSummary?.total,
+    COMPLETED: readingLogSummary?.byStatus.completed,
+    READING: readingLogSummary?.byStatus.reading,
+    DROPPED: readingLogSummary?.byStatus.dropped,
+  };
+
+  const filterOptionByType: Record<ReadingLogStatus, { value: ReadingLogStatus; label: string; count?: number }> = {
+    ALL: { value: 'ALL', label: MSG_MYBOOKS_FILTER_ALL, count: statusCountByType.ALL },
+    COMPLETED: { value: 'COMPLETED', label: MSG_MYBOOKS_FILTER_DONE, count: statusCountByType.COMPLETED },
+    READING: { value: 'READING', label: MSG_MYBOOKS_FILTER_READING, count: statusCountByType.READING },
+    DROPPED: { value: 'DROPPED', label: MSG_MYBOOKS_FILTER_STOPPED, count: statusCountByType.DROPPED },
   };
 
   const filterOptions = [
@@ -180,7 +187,8 @@ const Library = () => {
     RATING_DESC: MSG_MYBOOKS_SORT_RATING,
   };
   const selectedFilterOption = filterOptionByType[readingFilter];
-  const selectedBookshelf = bookshelvesData?.find((group) => group.id === bookshelfId);
+  const bookshelves = readingLogSummary?.bookshelves ?? [];
+  const selectedBookshelf = bookshelves.find((group) => group.id === bookshelfId);
   const { label } = selectedFilterOption;
   const filterLabel = selectedBookshelf ? selectedBookshelf.name : label;
 
@@ -222,8 +230,10 @@ const Library = () => {
         <FilterSidebar
           selectedFilter={readingFilter}
           filterOptions={filterOptions}
+          bookshelves={bookshelves}
           onApplyFilter={handleApplyFilter}
           selectedBookshelfId={bookshelfId}
+          isLoadingBookshelves={isReadingLogSummaryLoading}
         />
       ),
     });
