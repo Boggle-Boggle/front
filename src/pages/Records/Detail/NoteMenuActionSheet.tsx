@@ -1,22 +1,37 @@
+import { useLocation } from 'react-router-dom';
+import useLayerStore from 'stores/useLayerStore';
 import useToastStore from 'stores/useToastStore';
 
 import { ActionSheet } from 'components/Layer/ActionSheet';
 
+import { NoteDeleteConfirmModal } from './NoteDeleteConfirmModal';
 import { ReadingNoteResponse } from './api';
 
 type NoteMenuActionSheetProps = {
   note: ReadingNoteResponse;
+  readingLogId?: string | number;
 };
 
 const MSG_NOTE_ACTION_EDIT = '수정하기';
 const MSG_NOTE_ACTION_COPY = '노트 복사하기';
 const MSG_NOTE_ACTION_DELETE = '삭제하기';
 
-export const NoteMenuActionSheet = ({ note }: NoteMenuActionSheetProps) => {
+export const NoteMenuActionSheet = (props: NoteMenuActionSheetProps) => {
+  const { note, readingLogId: propReadingLogId } = props;
   const { addToast } = useToastStore();
+  const { push } = useLayerStore();
+  const location = useLocation();
+
+  const readingLogId = propReadingLogId ?? note.readingLogId;
+  const isNoteDetailPage = location.pathname.startsWith('/notes/');
 
   const handleEdit = () => addToast({ type: 'info', description: '노트 수정 기능이 준비 중입니다.' });
-  const handleDelete = () => addToast({ type: 'info', description: '노트 삭제 기능이 준비 중입니다.' });
+  const handleDelete = () => {
+    push({
+      id: `note-delete-confirm-modal-${note.id}`,
+      component: <NoteDeleteConfirmModal note={note} readingLogId={readingLogId} isNoteDetailPage={isNoteDetailPage} />,
+    });
+  };
 
   const handleCopy = async () => {
     try {

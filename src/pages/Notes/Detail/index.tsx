@@ -18,6 +18,7 @@ const MSG_NOTE_DETAIL_MORE = '노트 더보기';
 type NoteDetailState = {
   note?: ReadingNoteResponse;
   bookTitle?: string;
+  readingLogId?: string;
 };
 
 const NoteDetail = () => {
@@ -25,13 +26,14 @@ const NoteDetail = () => {
   const { push } = useLayerStore();
   const { addToast } = useToastStore();
 
-  const { note, bookTitle: stateBookTitle } = (location.state as NoteDetailState) || {};
+  const { note, bookTitle: stateBookTitle, readingLogId: stateReadingLogId } = (location.state as NoteDetailState) || {};
+  const readingLogId = stateReadingLogId ?? (note?.readingLogId ? String(note.readingLogId) : undefined);
 
   // React Query를 사용하여 상위 독서기록상세에서 책 제목을 비동기 조회 (Prop Drilling 소거)
   const { data: readingLogData } = useQuery({
-    queryKey: ['reading-log', note?.readingLogId],
-    queryFn: () => getReadingLogDetail(note!.readingLogId!),
-    enabled: !stateBookTitle && !!note?.readingLogId,
+    queryKey: ['reading-log', readingLogId],
+    queryFn: () => getReadingLogDetail(readingLogId ?? ''),
+    enabled: !stateBookTitle && !!readingLogId,
   });
 
   const bookTitle = stateBookTitle || readingLogData?.book.title || '독서 노트';
@@ -44,7 +46,7 @@ const NoteDetail = () => {
 
     push({
       id: `note-menu-action-sheet-${note.id}`,
-      component: <NoteMenuActionSheet note={note} />,
+      component: <NoteMenuActionSheet note={note} readingLogId={readingLogId} />,
     });
   };
   if (!note) return <div>dd</div>;

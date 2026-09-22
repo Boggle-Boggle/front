@@ -23,6 +23,10 @@ const MSG_NOTE_NEW_SUCCESS = '독서 노트가 저장되었습니다.';
 const MSG_NOTE_NEW_FAILED = '독서 노트를 저장하지 못했습니다. 다시 시도해 주세요.';
 const MAX_NOTE_CHARACTER_COUNT = 10000;
 
+type NoteNewLocationState = {
+  readingLogId?: string;
+};
+
 const NoteNew = () => {
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
@@ -33,7 +37,8 @@ const NoteNew = () => {
   const queryClient = useQueryClient();
   const { addToast } = useToastStore();
 
-  const readingLogId = location.state?.readingLogId as string;
+  const locationState = location.state as NoteNewLocationState | undefined;
+  const readingLogId = locationState?.readingLogId ?? '';
   const { mutate: saveNote, isPending } = useMutation({
     mutationFn: (data: { title: string; body: string }) => {
       return createReadingNote(readingLogId, {

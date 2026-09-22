@@ -49,7 +49,7 @@ export const NoteTab = ({ readingLogId, bookTitle }: NoteTabProps) => {
     e.stopPropagation();
     push({
       id: `note-menu-action-sheet-${note.id}`,
-      component: <NoteMenuActionSheet note={note} />,
+      component: <NoteMenuActionSheet note={note} readingLogId={readingLogId} />,
     });
   };
 
@@ -58,6 +58,7 @@ export const NoteTab = ({ readingLogId, bookTitle }: NoteTabProps) => {
       state: {
         note,
         bookTitle,
+        readingLogId,
       },
     });
   };
