@@ -4,7 +4,7 @@ import type { PaginationMockResponse } from 'api.types';
 
 import { useInfiniteScrollObserver } from 'hooks/useInfiniteScrollObserver';
 
-import { getInterestedBooks, type InterestedBookItemResponse } from './api';
+import { getInterestedBooks, type InterestedBookItemResponse, type InterestedBookSort } from './api';
 import type { MyBook } from './useLibraryQuery';
 
 const convertInterestedBookToMyBook = (book: InterestedBookItemResponse): MyBook => ({
@@ -24,12 +24,14 @@ const convertInterestedBookToMyBook = (book: InterestedBookItemResponse): MyBook
 const getWishlistBooks = async (
   page: number,
   searchKeyword: string,
+  sortType: InterestedBookSort,
   size = 15,
 ): Promise<PaginationMockResponse<MyBook[]>> => {
   const response = await getInterestedBooks({
     q: searchKeyword.trim() || undefined,
     page,
     size,
+    sort: sortType,
   });
 
   return {
@@ -40,10 +42,10 @@ const getWishlistBooks = async (
   };
 };
 
-export const useWishlistQuery = (searchKeyword: string, enabled: boolean) => {
+export const useWishlistQuery = (searchKeyword: string, sortType: InterestedBookSort, enabled: boolean) => {
   const queryResult = useInfiniteQuery({
-    queryKey: ['interested-books', 'library', searchKeyword.trim()],
-    queryFn: ({ pageParam }) => getWishlistBooks(pageParam, searchKeyword, 15),
+    queryKey: ['interested-books', 'library', searchKeyword.trim(), sortType],
+    queryFn: ({ pageParam }) => getWishlistBooks(pageParam, searchKeyword, sortType, 15),
     getNextPageParam: (lastPage) => {
       if (lastPage.pageNum < Math.ceil(lastPage.totalResultCnt / lastPage.itemsPerPage)) {
         return lastPage.pageNum + 1;

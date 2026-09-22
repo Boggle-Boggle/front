@@ -5,9 +5,10 @@ import { Link } from 'react-router-dom';
 import { useToastStore } from 'stores/useToastStore';
 
 import BookCover from 'components/BookCover';
+import { TextButton } from 'components/Button';
 import { InfiniteScrollTrigger } from 'components/InfiniteScrollTrigger';
 import { ToggleButton } from 'components/ToggleButton';
-import { IconHeart, IconHeartFilled } from 'components/icons';
+import { IconArrowDown, IconHeart, IconHeartFilled } from 'components/icons';
 
 import { addInterestedBook, deleteInterestedBook } from '../api';
 import { MyBook } from '../useLibraryQuery';
@@ -20,6 +21,8 @@ type WishlistSectionProps = {
   isFetchingNextPage?: boolean;
   observerTarget: RefObject<HTMLDivElement>;
   scrollContainerRef?: RefObject<HTMLDivElement>;
+  sortLabel: string;
+  onOpenSortLayer: () => void;
 };
 
 const MSG_MYBOOKS_LOADING = '불러오는 중...';
@@ -46,7 +49,17 @@ const formatWishlistAddedDate = (createdAt = '') => {
 };
 
 export const WishlistSection = (props: WishlistSectionProps) => {
-  const { books, totalCount, isLoading, hasNextPage, isFetchingNextPage, observerTarget, scrollContainerRef } = props;
+  const {
+    books,
+    totalCount,
+    isLoading,
+    hasNextPage,
+    isFetchingNextPage,
+    observerTarget,
+    scrollContainerRef,
+    sortLabel,
+    onOpenSortLayer,
+  } = props;
   const [unlikedIsbnSet, setUnlikedIsbnSet] = useState<Set<string>>(() => new Set());
   const queryClient = useQueryClient();
   const { addToast } = useToastStore();
@@ -120,11 +133,12 @@ export const WishlistSection = (props: WishlistSectionProps) => {
 
   return (
     <>
-      <div className="flex items-center justify-between px-mobile">
+      <div className="flex items-center justify-between px-mobile pb-3">
         <p className="text-caption1 text-neutral-60">
           {totalCount}
           {MSG_MYBOOKS_WISHLIST_COUNT_SUFFIX}
         </p>
+        <TextButton variant="filled" size="sm" rightIcon={IconArrowDown} onClick={onOpenSortLayer} text={sortLabel} />
       </div>
 
       <div ref={scrollContainerRef} className="min-h-0 flex-1 overflow-y-auto">
