@@ -46,7 +46,6 @@ const MSG_MYBOOKS_SEARCH_PLACEHOLDER = '서재 안 도서 검색';
 
 const STORAGE_KEY_MYBOOKS_VIEW_TYPE = 'mybooks-view-type';
 const STORAGE_KEY_MYBOOKS_SORT_TYPE = 'mybooks-sort-type';
-const STORAGE_KEY_MYBOOKS_WISHLIST_SORT_TYPE = 'mybooks-wishlist-sort-type';
 const STORAGE_KEY_MYBOOKS_FILTER = 'mybooks-filter';
 const STORAGE_KEY_MYBOOKS_BOOKSHELF_ID = 'mybooks-bookshelf-id';
 const STORAGE_KEY_MYBOOKS_ACTIVE_TAB = 'mybooks-active-tab';
@@ -71,7 +70,7 @@ const getInitialSortType = (): ReadingLogSort => {
 const getInitialWishlistSortType = (): InterestedBookSort => {
   if (typeof window === 'undefined') return 'RECENT';
 
-  const storedSortType = window.localStorage.getItem(STORAGE_KEY_MYBOOKS_WISHLIST_SORT_TYPE);
+  const storedSortType = window.localStorage.getItem('mybooks-wishlist-sort-type');
   return storedSortType === 'OLDEST' ? 'OLDEST' : 'RECENT';
 };
 
@@ -114,10 +113,6 @@ const Library = () => {
   useEffect(() => {
     window.localStorage.setItem(STORAGE_KEY_MYBOOKS_SORT_TYPE, sortType);
   }, [sortType]);
-
-  useEffect(() => {
-    window.localStorage.setItem(STORAGE_KEY_MYBOOKS_WISHLIST_SORT_TYPE, wishlistSortType);
-  }, [wishlistSortType]);
 
   useEffect(() => {
     window.sessionStorage.setItem(STORAGE_KEY_MYBOOKS_ACTIVE_TAB, activeTab);
@@ -262,7 +257,11 @@ const Library = () => {
       id: LAYER_ID_MYBOOKS_SORT,
       component:
         activeTab === 'wishlist' ? (
-          <WishlistSortActionSheet selectedSort={wishlistSortType} onSelectSort={setWishlistSortType} />
+          <WishlistSortActionSheet
+            selectedSort={wishlistSortType}
+            searchKeyword={searchKeyword}
+            onSelectSort={setWishlistSortType}
+          />
         ) : (
           <SortActionSheet selectedSort={sortType} onSelectSort={setSortType} />
         ),
