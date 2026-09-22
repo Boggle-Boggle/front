@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-import { useState } from 'react';
+import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useToastStore } from 'stores/useToastStore';
 
@@ -31,6 +31,7 @@ const NoteNew = () => {
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
   // const [tags, setTags] = useState<string[]>([]);
+  const bodyTextareaRef = useRef<HTMLTextAreaElement>(null);
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -67,9 +68,20 @@ const NoteNew = () => {
     saveNote({ title: title.trim(), body: body.trim() });
   };
 
+  const handleBodyChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
+    setBody(event.target.value.slice(0, MAX_NOTE_CHARACTER_COUNT));
+  };
+
   const handleAddTag = () => {
     // setTags((prev) => [...prev, `${MSG_NOTE_NEW_TAG_DEFAULT} ${prev.length + 1}`]);
   };
+
+  useEffect(() => {
+    if (!bodyTextareaRef.current) return;
+
+    bodyTextareaRef.current.style.height = 'auto';
+    bodyTextareaRef.current.style.height = `${bodyTextareaRef.current.scrollHeight}px`;
+  }, [body]);
 
   return (
     <div className="flex h-full flex-col bg-neutral-0">
@@ -100,11 +112,12 @@ const NoteNew = () => {
         />
 
         <textarea
+          ref={bodyTextareaRef}
           value={body}
-          onChange={(event) => setBody(event.target.value.slice(0, MAX_NOTE_CHARACTER_COUNT))}
+          onChange={handleBodyChange}
           placeholder={MSG_NOTE_NEW_BODY_PLACEHOLDER}
           aria-label={MSG_NOTE_NEW_BODY_ARIA_LABEL}
-          className="min-h-[1.25rem] w-full resize-none px-mobile text-caption2 text-neutral-80 outline-none placeholder:text-neutral-40"
+          className="min-h-[1.25rem] w-full resize-none overflow-hidden break-words px-mobile text-caption2 text-neutral-80 outline-none placeholder:text-neutral-40"
           rows={1}
         />
       </section>
