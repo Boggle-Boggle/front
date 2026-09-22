@@ -32,15 +32,6 @@ export const RecentSearchSection = () => {
     },
   });
 
-  const { isPending: isClearPending, mutate: clearRecentSearches } = useMutation({
-    mutationFn: async (keywords: string[]) => {
-      await Promise.all(keywords.map((keyword) => deleteRecentSearch(keyword)));
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['books', 'recent-searches'] });
-    },
-  });
-
   const handleSearchClick = (keyword: string) => {
     navigate(`/search/result?q=${encodeURIComponent(keyword)}`);
   };
@@ -50,11 +41,11 @@ export const RecentSearchSection = () => {
 
     push({
       id: LAYER_ID_RECENT_SEARCH_CLEAR_ALL,
-      component: <ClearAllConfirmModal onConfirm={() => clearRecentSearches(recentSearches)} />,
+      component: <ClearAllConfirmModal keywords={recentSearches} />,
     });
   };
 
-  const isClearDisabled = isLoading || isRemovePending || isClearPending || recentSearches.length === 0;
+  const isClearDisabled = isLoading || isRemovePending || recentSearches.length === 0;
 
   return (
     <section className="w-full">
