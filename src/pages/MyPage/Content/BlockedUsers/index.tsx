@@ -1,49 +1,33 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 
-import { useToastStore } from 'stores/useToastStore';
+import { useLayerStore } from 'stores/useLayerStore';
 
 import { Button } from 'components/Button';
 import { Header } from 'components/Header';
 import { IconCircleBan } from 'components/icons';
 import Loading from 'pages/Loading';
 
-import { getMyBlocks, unblockUser } from '../api';
+import { UnblockUserConfirmModal } from './UnblockUserConfirmModal';
+import { getMyBlocks } from '../api';
 
 const MSG_BLOCKED_USERS_TITLE = '차단한 유저 확인하기';
 const MSG_BLOCKED_USERS_SUFFIX = ' 님';
 const MSG_BLOCKED_USERS_STATUS = '차단됨';
 const MSG_BLOCKED_USERS_EMPTY = '차단한 유저가 없습니다.';
-const MSG_UNBLOCK_SUCCESS = '차단이 해제되었습니다.';
-const MSG_UNBLOCK_FAILED = '차단 해제에 실패했습니다. 다시 시도해주세요.';
 
 const BlockedUsers = () => {
-  const queryClient = useQueryClient();
-  const { addToast } = useToastStore();
+  const { push } = useLayerStore();
 
   const { data, isLoading } = useQuery({
     queryKey: ['users', 'me', 'blocks'],
     queryFn: () => getMyBlocks(),
   });
 
-  const { mutate: unblock } = useMutation({
-    mutationFn: unblockUser,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['users', 'me', 'blocks'] });
-      addToast({
-        description: MSG_UNBLOCK_SUCCESS,
-        type: 'success',
-      });
-    },
-    onError: () => {
-      addToast({
-        description: MSG_UNBLOCK_FAILED,
-        type: 'error',
-      });
-    },
-  });
-
-  const handleUnblock = (userId: number) => {
-    unblock(userId);
+  const handleOpenUnblockConfirmModal = (userId: number) => {
+    push({
+      id: `mypage-content-unblock-user-modal-${userId}`,
+      component: <UnblockUserConfirmModal userId={userId} />,
+    });
   };
 
   if (isLoading) return <Loading />;
@@ -78,7 +62,7 @@ const BlockedUsers = () => {
                   size="small"
                   variant="warning"
                   icon={IconCircleBan}
-                  onClick={() => handleUnblock(user.userId)}
+                  onClick={() => handleOpenUnblockConfirmModal(user.userId)}
                 >
                   {MSG_BLOCKED_USERS_STATUS}
                 </Button>
