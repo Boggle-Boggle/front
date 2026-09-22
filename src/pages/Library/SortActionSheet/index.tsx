@@ -39,7 +39,7 @@ export const SortActionSheet = (props: SortActionSheetProps) => {
         },
         {
           key: 'RATING_DESC',
-          label: '인기순',
+          label: '별점순',
           selected: selectedSort === 'RATING_DESC',
           onSelect: () => onSelectSort('RATING_DESC'),
         },

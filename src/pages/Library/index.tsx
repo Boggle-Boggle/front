@@ -32,7 +32,7 @@ const MSG_MYBOOKS_SORT_READ_LATEST = '최근 읽은 순';
 const MSG_MYBOOKS_SORT_READ_OLDEST = '과거 읽은 순';
 const MSG_MYBOOKS_SORT_REG_LATEST = '최근 등록 순';
 const MSG_MYBOOKS_SORT_REG_OLDEST = '과거 등록 순';
-const MSG_MYBOOKS_SORT_POPULAR = '인기순';
+const MSG_MYBOOKS_SORT_RATING = '별점순';
 // const MSG_MYBOOKS_EMPTY_WISHLIST = '관심 도서가 없습니다';
 const MSG_MYBOOKS_ICON_SEARCH = '검색';
 const MSG_MYBOOKS_ICON_VIEW_TO_GRID = '그리드형으로 보기';
@@ -177,7 +177,7 @@ const Library = () => {
     START_DATE_ASC: MSG_MYBOOKS_SORT_READ_OLDEST,
     CREATED_AT_DESC: MSG_MYBOOKS_SORT_REG_LATEST,
     CREATED_AT_ASC: MSG_MYBOOKS_SORT_REG_OLDEST,
-    RATING_DESC: MSG_MYBOOKS_SORT_POPULAR,
+    RATING_DESC: MSG_MYBOOKS_SORT_RATING,
   };
   const selectedFilterOption = filterOptionByType[readingFilter];
   const selectedBookshelf = bookshelvesData?.find((group) => group.id === bookshelfId);
