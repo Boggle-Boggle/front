@@ -16,10 +16,10 @@ jobs:
           fetch-depth: 0
 
       - name: Enable pnpm
-        run: corepack enable && corepack prepare pnpm@8.15.4 --activate
+        run: corepack enable && corepack prepare pnpm@9.15.9 --activate
 
       - name: Install dependencies
-        run: pnpm install
+        run: pnpm install --frozen-lockfile
 
       - uses: chromaui/action@latest
         with:
