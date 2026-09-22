@@ -41,6 +41,7 @@ export const NoteTab = ({ readingLogId, bookTitle }: NoteTabProps) => {
     enabled: !!readingLogId,
   });
 
+  // TODO: 노트 전체보기
   const handleMoreClick = () => {};
   const handleFloatingClick = () => navigate('/notes/new', { replace: true, state: { readingLogId } });
 
