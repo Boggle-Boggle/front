@@ -42,7 +42,7 @@ export const NoteTab = ({ readingLogId, bookTitle }: NoteTabProps) => {
   });
 
   const handleMoreClick = () => {};
-  const handleFloatingClick = () => navigate('/notes/new', { state: { readingLogId } });
+  const handleFloatingClick = () => navigate('/notes/new', { replace: true, state: { readingLogId } });
 
   const handleCardMenuClick = (e: React.MouseEvent, note: ReadingNoteResponse) => {
     e.stopPropagation();
