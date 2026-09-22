@@ -13,7 +13,8 @@ const MSG_ABOUT_TERMS_SECTION = '어플 사용 약관';
 const MSG_ABOUT_APP_INFO_SECTION = '앱 정보';
 const MSG_ABOUT_VERSION = '버전 정보';
 const MSG_ABOUT_VERSION_VALUE = '버전 1.0.6';
-const MSG_ABOUT_WEB = '웹으로 이동하기';
+// todo: 추후배포
+// const MSG_ABOUT_WEB = '웹으로 이동하기';
 
 const About = () => {
   const navigate = useNavigate();
@@ -37,7 +38,8 @@ const About = () => {
 
         <SectionHeader title={MSG_ABOUT_APP_INFO_SECTION} />
         <SectionValue label={MSG_ABOUT_VERSION} value={MSG_ABOUT_VERSION_VALUE} />
-        <SectionLink label={MSG_ABOUT_WEB} onClick={() => {}} />
+        {/* todo: 추후배포 */}
+        {/* <SectionLink label={MSG_ABOUT_WEB} onClick={() => {}} /> */}
       </div>
     </div>
   );
