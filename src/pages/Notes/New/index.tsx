@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
+import { NOTE_BODY } from 'policy/input';
 import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useToastStore } from 'stores/useToastStore';
@@ -16,7 +17,6 @@ const MSG_NOTE_NEW_BODY_ARIA_LABEL = '노트 본문';
 const MSG_NOTE_NEW_CHARACTER_COUNT_SUFFIX = '자';
 const MSG_NOTE_NEW_SUCCESS = '독서 노트가 저장되었습니다.';
 const MSG_NOTE_NEW_FAILED = '독서 노트를 저장하지 못했습니다. 다시 시도해 주세요.';
-const MAX_NOTE_CHARACTER_COUNT = 10000;
 
 type NoteNewLocationState = {
   readingLogId?: string;
@@ -54,7 +54,7 @@ const NoteNew = () => {
   const isSubmitEnabled = title.trim().length > 0 && body.trim().length > 0 && !isPending;
 
   const characterCount = title.length + body.length;
-  const noteCharacterCountText = `${characterCount.toLocaleString()} / ${MAX_NOTE_CHARACTER_COUNT.toLocaleString()}${MSG_NOTE_NEW_CHARACTER_COUNT_SUFFIX}`;
+  const noteCharacterCountText = `${characterCount.toLocaleString()} / ${NOTE_BODY.maxLength.toLocaleString()}${MSG_NOTE_NEW_CHARACTER_COUNT_SUFFIX}`;
 
   const handleSubmitClick = () => {
     if (!isSubmitEnabled) return;
@@ -62,7 +62,7 @@ const NoteNew = () => {
   };
 
   const handleBodyChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
-    setBody(event.target.value.slice(0, MAX_NOTE_CHARACTER_COUNT));
+    setBody(event.target.value.slice(0, NOTE_BODY.maxLength));
   };
 
   useEffect(() => {
@@ -104,6 +104,7 @@ const NoteNew = () => {
           ref={bodyTextareaRef}
           value={body}
           onChange={handleBodyChange}
+          maxLength={NOTE_BODY.maxLength}
           placeholder={MSG_NOTE_NEW_BODY_PLACEHOLDER}
           aria-label={MSG_NOTE_NEW_BODY_ARIA_LABEL}
           className="min-h-[1.25rem] w-full resize-none overflow-hidden break-words px-mobile text-caption2 text-neutral-80 outline-none placeholder:text-neutral-40"

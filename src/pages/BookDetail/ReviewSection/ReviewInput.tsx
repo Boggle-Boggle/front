@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { isApiError } from 'api';
+import { REVIEW_CONTENT } from 'policy/input';
 import { ChangeEvent, useState, useRef, useEffect } from 'react';
 import { useToastStore } from 'stores/useToastStore';
 
@@ -16,7 +17,6 @@ const MSG_REVIEW_NOT_ELIGIBLE = '읽지 않은 책에는 리뷰를 남길 수 �
 const MSG_REVIEW_CREATE_FAILED = '리뷰 등록에 실패했습니다. 다시 시도해 주세요.';
 const REVIEW_NOT_ELIGIBLE_ERROR_CODE = 'REVIEW_NOT_ELIGIBLE';
 const REVIEW_SPOILER_CHECKBOX_ID = 'review-spoiler-checkbox';
-const MAX_REVIEW_LENGTH = 700;
 
 type ReviewInputProps = {
   isbn13: string;
@@ -49,7 +49,7 @@ export const ReviewInput = ({ isbn13 }: ReviewInputProps) => {
   });
 
   const handleChangeContent = (event: ChangeEvent<HTMLTextAreaElement>) => {
-    setContent(event.target.value.slice(0, MAX_REVIEW_LENGTH));
+    setContent(event.target.value.slice(0, REVIEW_CONTENT.maxLength));
   };
 
   const handleToggleSpoiler = () => {
@@ -83,6 +83,7 @@ export const ReviewInput = ({ isbn13 }: ReviewInputProps) => {
         ref={textareaRef}
         value={content}
         onChange={handleChangeContent}
+        maxLength={REVIEW_CONTENT.maxLength}
         placeholder={MSG_REVIEW_TEXTAREA_PLACEHOLDER}
         style={{ height: '80px' }}
         className="w-full resize-none overflow-y-auto bg-transparent text-body1 outline-none placeholder:text-neutral-40"

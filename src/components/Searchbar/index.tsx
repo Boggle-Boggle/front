@@ -16,6 +16,7 @@ type SearchbarProps = {
   ariaLabel?: string;
   onFocus?: () => void;
   autoFocus?: boolean;
+  maxLength?: number;
 };
 
 export const Searchbar = (props: SearchbarProps) => {
@@ -29,6 +30,7 @@ export const Searchbar = (props: SearchbarProps) => {
     ariaLabel = 'search',
     onFocus,
     autoFocus,
+    maxLength,
   } = props;
 
   const inputRef = useRef<HTMLInputElement>(null);
@@ -69,6 +71,7 @@ export const Searchbar = (props: SearchbarProps) => {
           onChange={handleInputChange}
           onFocus={onFocus}
           placeholder={placeholder}
+          maxLength={maxLength}
           className="flex-1 bg-transparent text-body1 outline-none"
           aria-label={ariaLabel}
         />

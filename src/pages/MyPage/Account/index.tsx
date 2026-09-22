@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 
+import { NICKNAME } from 'policy/input';
 import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useLayerStore } from 'stores/useLayerStore';
@@ -8,8 +9,6 @@ import { Button } from 'components/Button';
 import { Header } from 'components/Header';
 import { IconPen } from 'components/icons';
 import Loading from 'pages/Loading';
-
-import NICKNAME_RULE from 'constants/index';
 
 import DownloadBackupModal from './DownloadBackupModal';
 import LogoutConfirmModal from './LogoutConfirmModal';
@@ -126,7 +125,7 @@ const Account = () => {
                 aria-label={MSG_ACCOUNT_NICKNAME_INPUT_LABEL}
                 value={nickname}
                 onChange={handleChangeNickname}
-                maxLength={NICKNAME_RULE.MAX}
+                maxLength={NICKNAME.maxLength}
                 size={nicknameInputSize}
                 className="min-w-4 max-w-[12rem] bg-transparent text-center text-title1 outline-none"
               />
