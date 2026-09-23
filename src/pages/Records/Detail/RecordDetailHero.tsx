@@ -16,11 +16,13 @@ import { useHeroHeaderContrast } from './useHeroHeaderContrast';
 
 type RecordDetailHeroProps = {
   recordId: string | number;
+  bookId?: string | number;
   isbn13: string | null;
   cover: string | null;
   title: string;
   author: string;
   publisher?: string | null;
+  isbn?: string | null;
   description?: string | null;
   totalPages?: number | null;
   rating?: string;
@@ -71,11 +73,13 @@ const HeroStatItem = (props: HeroStatItemProps) => {
 export const RecordDetailHero = (props: RecordDetailHeroProps) => {
   const {
     recordId,
+    bookId,
     isbn13,
     cover,
     title,
     author,
     publisher,
+    isbn,
     description,
     totalPages,
     rating = '0.0',
@@ -113,9 +117,11 @@ export const RecordDetailHero = (props: RecordDetailHeroProps) => {
           recordId={recordId}
           isbn13={isbn13}
           customBook={{
+            id: bookId,
             title,
             author,
             publisher: publisher ?? undefined,
+            isbn: isbn ?? undefined,
             totalPages: totalPages ?? undefined,
             coverUrl: cover ?? undefined,
             description: description ?? undefined,

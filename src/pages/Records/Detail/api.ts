@@ -1,13 +1,17 @@
 import { api } from 'api';
 import type { ApiSuccessResponse } from 'api.types';
 
-import type { AddRecordStatus, ReadingLogProgressType, Book } from 'types';
+import type { AddRecordStatus, Book, BookSource, ReadingLogProgressType } from 'types';
 
 export interface BookInfo
   extends Pick<Book, 'title' | 'author' | 'publisher' | 'coverUrl' | 'description' | 'isAdult'> {
+  id: number;
+  source: BookSource;
   category: string | null;
   publishedDate: string | null;
+  isbn?: string | null;
   isbn13: string | null;
+  totalPages: number | null;
 }
 
 export interface Progress {

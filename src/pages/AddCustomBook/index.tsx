@@ -1,3 +1,5 @@
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+
 import {
   CUSTOM_BOOK_AUTHOR,
   CUSTOM_BOOK_DESCRIPTION,
@@ -20,6 +22,7 @@ import { AddRecordStatusBottomSheet } from 'pages/BookDetail/AddRecordStatusBott
 
 import type { Book, CustomBookDto } from 'types';
 
+import { updateCustomBook, type UpdateCustomBookRequest } from './api';
 import { CoverImageUrlModal } from './shared/CoverImageUrlModal';
 import { FormField } from './shared/FormField';
 
@@ -27,7 +30,9 @@ const MSG_ADD_CUSTOM_BOOK_PAGE_TITLE = '직접 등록하기';
 const MSG_EDIT_CUSTOM_BOOK_PAGE_TITLE = '내가 등록한 책 정보 수정하기';
 const MSG_ADD_CUSTOM_BOOK_SUBMIT = '독서 기록 추가하기';
 const MSG_EDIT_CUSTOM_BOOK_SUBMIT = '수정 완료하기';
-const MSG_EDIT_CUSTOM_BOOK_UNAVAILABLE = '책 정보 수정 API가 아직 연결되지 않았습니다.';
+const MSG_EDIT_CUSTOM_BOOK_SUCCESS = '책 정보가 수정되었습니다.';
+const MSG_EDIT_CUSTOM_BOOK_FAILED = '책 정보 수정에 실패했습니다.';
+const MSG_EDIT_CUSTOM_BOOK_INVALID = '수정할 책 정보를 찾을 수 없습니다.';
 const MSG_ADD_CUSTOM_BOOK_TITLE = '책 제목';
 const MSG_ADD_CUSTOM_BOOK_TITLE_PLACEHOLDER = '책 제목을 입력해주세요';
 const MSG_ADD_CUSTOM_BOOK_AUTHOR = '저자 이름';
@@ -50,7 +55,7 @@ const LAYER_ID_ADD_CUSTOM_BOOK_COVER_IMAGE_URL_MODAL = 'add-custom-book-cover-im
 export type EditCustomBookState = {
   mode: 'edit';
   recordId: string | number;
-  customBook: CustomBookDto;
+  customBook: CustomBookDto & { id?: string | number };
 };
 
 type BookForm = Omit<
@@ -67,6 +72,7 @@ export const AddCustomBook = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { addToast } = useToastStore();
+  const queryClient = useQueryClient();
 
   const editState = location.state as EditCustomBookState | null;
   const isEditMode = editState?.mode === 'edit';
@@ -95,13 +101,44 @@ export const AddCustomBook = () => {
   const { push } = useLayerStore();
   const coverUrl = watch('coverUrl');
 
+  const { mutate: mutateCustomBook, isPending: isUpdatingCustomBook } = useMutation({
+    mutationFn: ({ bookId, request }: { bookId: string | number; request: UpdateCustomBookRequest }) =>
+      updateCustomBook(bookId, request),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['reading-log', editState?.recordId] });
+      queryClient.invalidateQueries({ queryKey: ['reading-logs'] });
+      addToast({ type: 'success', description: MSG_EDIT_CUSTOM_BOOK_SUCCESS });
+      navigate(-1);
+    },
+    onError: () => {
+      addToast({ type: 'error', description: MSG_EDIT_CUSTOM_BOOK_FAILED });
+    },
+  });
+
   useEffect(() => {
     if (isEditMode) trigger();
   }, [isEditMode, trigger]);
 
   const onSubmit: SubmitHandler<BookForm> = (formData) => {
     if (isEditMode) {
-      addToast({ type: 'info', description: MSG_EDIT_CUSTOM_BOOK_UNAVAILABLE });
+      if (!editCustomBook?.id) {
+        addToast({ type: 'error', description: MSG_EDIT_CUSTOM_BOOK_INVALID });
+        return;
+      }
+
+      mutateCustomBook({
+        bookId: editCustomBook.id,
+        request: {
+          title: formData.title.trim(),
+          author: formData.author.trim(),
+          publisher: formData.publisher.trim() || null,
+          isbn: formData.isbn.trim() || null,
+          totalPages: formData.totalPages ? parseInt(formData.totalPages, 10) : null,
+          coverUrl: formData.coverUrl.trim() || null,
+          description: formData.description.trim() || null,
+          mediaType: 'BOOK',
+        },
+      });
       return;
     }
 
@@ -234,7 +271,12 @@ export const AddCustomBook = () => {
         </div>
       </form>
 
-      <BottomButton form="add-custom-book-form" type="submit" onClick={handleSubmit(onSubmit)} disabled={!isValid}>
+      <BottomButton
+        form="add-custom-book-form"
+        type="submit"
+        onClick={handleSubmit(onSubmit)}
+        disabled={!isValid || isUpdatingCustomBook}
+      >
         {isEditMode ? MSG_EDIT_CUSTOM_BOOK_SUBMIT : MSG_ADD_CUSTOM_BOOK_SUBMIT}
       </BottomButton>
     </>

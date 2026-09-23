@@ -32,6 +32,11 @@ export type ReadingStatusLabel = (typeof READING_STATUS_LABEL_BY_CODE)[AddRecord
 export type BookMediaType = 'BOOK' | 'EBOOK';
 
 /**
+ * 도서 출처 유형 (외부 서점 유래, 사용자 직접 등록)
+ */
+export type BookSource = 'STORE' | 'CUSTOM';
+
+/**
  * 독서 상태 유형
  */
 export type ReadingLogStatus = 'ALL' | AddRecordStatus;

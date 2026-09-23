@@ -63,14 +63,16 @@ export const RecordDetailPage = () => {
     <div className="h-full overflow-y-auto pb-safe-bottom" ref={scrollContainerRef}>
       <RecordDetailHero
         recordId={recordId}
+        bookId={data.book.id}
         isbn13={data.book.isbn13}
         scrollContainerRef={scrollContainerRef}
         cover={data.book.coverUrl}
         title={data.book.title}
         author={data.book.author}
         publisher={data.book.publisher}
+        isbn={data.book.isbn}
         description={data.book.description}
-        totalPages={data.readingLog.progress?.totalPages}
+        totalPages={data.book.totalPages}
         rating={String(data.readingLog.rating)}
         readingStatus={readingStatusLabel}
         noteCount={`${data.readingLog.noteCount}개`}

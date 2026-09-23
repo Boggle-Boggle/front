@@ -6,6 +6,7 @@ import { ActionSheet } from 'components/Layer/ActionSheet';
 import { RecordDeleteConfirmModal } from './RecordDeleteConfirmModal';
 
 type EditableCustomBook = {
+  id?: string | number;
   title: string;
   author: string;
   publisher?: string;
