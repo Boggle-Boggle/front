@@ -79,14 +79,23 @@ export interface CreateNoteRequest {
   title: string;
   body: string;
   page?: PageResponse | null;
-  tags?: string[];
+  tagIds?: number[];
 }
 
 export const createReadingNote = async (readingLogId: string | number, data: CreateNoteRequest) => {
-  const response = await api.post<ApiSuccessResponse<ReadingNoteResponse>>(
-    `/v2/reading-logs/${readingLogId}/notes`,
-    data,
-  );
+  const response = await api.post<ApiSuccessResponse<{ id: number }>>(`/v2/reading-logs/${readingLogId}/notes`, data);
+  return response.data.data;
+};
+
+export interface UpdateNoteRequest {
+  title: string;
+  body: string;
+  page?: PageResponse | null;
+  tagIds: number[];
+}
+
+export const updateReadingNote = async (noteId: string | number, data: UpdateNoteRequest) => {
+  const response = await api.put<ApiSuccessResponse<{ id: number }>>(`/v2/reading-notes/${noteId}`, data);
   return response.data.data;
 };
 

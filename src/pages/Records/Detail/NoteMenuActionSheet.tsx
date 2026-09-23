@@ -1,4 +1,4 @@
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import useLayerStore from 'stores/useLayerStore';
 import useToastStore from 'stores/useToastStore';
 
@@ -18,14 +18,22 @@ const MSG_NOTE_ACTION_DELETE = '삭제하기';
 
 export const NoteMenuActionSheet = (props: NoteMenuActionSheetProps) => {
   const { note, readingLogId: propReadingLogId } = props;
-  const { addToast } = useToastStore();
   const { push } = useLayerStore();
+  const { addToast } = useToastStore();
   const location = useLocation();
+  const navigate = useNavigate();
 
   const readingLogId = propReadingLogId ?? note.readingLogId;
   const isNoteDetailPage = location.pathname.startsWith('/notes/');
 
-  const handleEdit = () => addToast({ type: 'info', description: '노트 수정 기능이 준비 중입니다.' });
+  const handleEdit = () => {
+    navigate(`/notes/${note.id}/edit`, {
+      state: {
+        note,
+        readingLogId: readingLogId ? String(readingLogId) : undefined,
+      },
+    });
+  };
   const handleDelete = () => {
     push({
       id: `note-delete-confirm-modal-${note.id}`,
