@@ -4,6 +4,7 @@ import { useLayerStore } from 'stores/useLayerStore';
 import { ActionSheet } from 'components/Layer/ActionSheet';
 
 import { RecordDeleteConfirmModal } from './RecordDeleteConfirmModal';
+import type { BookInfo } from './api';
 
 type EditableCustomBook = {
   id?: string | number;
@@ -18,6 +19,7 @@ type EditableCustomBook = {
 
 type RecordMenuActionSheetProps = {
   recordId: string | number;
+  bookSource: BookInfo['source'];
   isbn13?: string | null;
   customBook?: EditableCustomBook;
 };
@@ -27,12 +29,12 @@ const MSG_RECORD_ACTION_EDIT_CUSTOM = '내가 등록한 책 정보 수정하기'
 const MSG_RECORD_ACTION_DELETE = '독서기록 삭제하기';
 
 export const RecordMenuActionSheet = (props: RecordMenuActionSheetProps) => {
-  const { recordId, isbn13, customBook } = props;
+  const { recordId, bookSource, isbn13, customBook } = props;
   const { push, pop } = useLayerStore();
 
   const navigate = useNavigate();
 
-  const isCustomBook = !isbn13;
+  const isCustomBook = bookSource === 'CUSTOM';
 
   const handleDeleteClick = () => {
     pop();
