@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-import { NOTE_BODY } from 'policy/input';
+import { NOTE_BODY, NOTE_TITLE } from 'policy/input';
 import { ChangeEvent, PointerEvent, SVGProps, useEffect, useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useToastStore } from 'stores/useToastStore';
@@ -78,6 +78,10 @@ const NoteNew = () => {
     saveNote({ title: title.trim(), body: body.trim() });
   };
 
+  const handleTitleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setTitle(event.target.value.slice(0, NOTE_TITLE.maxLength));
+  };
+
   const handleBodyChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
     setBody(event.target.value.slice(0, NOTE_BODY.maxLength));
   };
@@ -121,7 +125,9 @@ const NoteNew = () => {
       <section className="flex flex-1 flex-col overflow-y-auto pt-4">
         <input
           value={title}
-          onChange={(event) => setTitle(event.target.value)}
+          onChange={handleTitleChange}
+          minLength={NOTE_TITLE.minLength}
+          maxLength={NOTE_TITLE.maxLength}
           placeholder={MSG_NOTE_NEW_TITLE_PLACEHOLDER}
           aria-label={MSG_NOTE_NEW_TITLE_ARIA_LABEL}
           className="mb-3 w-full px-mobile text-title3 text-neutral-80 outline-none placeholder:text-neutral-40"
@@ -133,6 +139,7 @@ const NoteNew = () => {
           onChange={handleBodyChange}
           onFocus={handleBodyFocus}
           onBlur={handleBodyBlur}
+          minLength={NOTE_BODY.minLength}
           maxLength={NOTE_BODY.maxLength}
           placeholder={MSG_NOTE_NEW_BODY_PLACEHOLDER}
           aria-label={MSG_NOTE_NEW_BODY_ARIA_LABEL}

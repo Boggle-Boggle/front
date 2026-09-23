@@ -78,6 +78,7 @@ export const REVIEW_CONTENT = {
 export const NOTE_TITLE = {
   description: '독서 노트 제목',
   minLength: 1,
+  maxLength: 100,
   allowLineBreak: false,
 } satisfies InputPolicy;
 
