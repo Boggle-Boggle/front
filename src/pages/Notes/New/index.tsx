@@ -91,7 +91,7 @@ const NoteNew = () => {
         }
       />
 
-      <section className="flex-1 overflow-y-auto pt-4">
+      <section className="flex flex-1 flex-col overflow-y-auto pt-4">
         <input
           value={title}
           onChange={(event) => setTitle(event.target.value)}
@@ -107,7 +107,7 @@ const NoteNew = () => {
           maxLength={NOTE_BODY.maxLength}
           placeholder={MSG_NOTE_NEW_BODY_PLACEHOLDER}
           aria-label={MSG_NOTE_NEW_BODY_ARIA_LABEL}
-          className="min-h-[1.25rem] w-full resize-none overflow-hidden break-words px-mobile text-caption2 text-neutral-80 outline-none placeholder:text-neutral-40"
+          className="min-h-[1.25rem] flex-1 resize-none overflow-hidden break-words px-mobile text-caption2 text-neutral-80 outline-none placeholder:text-neutral-40"
           rows={1}
         />
       </section>
