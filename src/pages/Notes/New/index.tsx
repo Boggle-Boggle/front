@@ -1,14 +1,15 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 import { NOTE_BODY, NOTE_TITLE } from 'policy/input';
 import { ChangeEvent, PointerEvent, SVGProps, useEffect, useRef, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useToastStore } from 'stores/useToastStore';
 
 import { Header } from 'components/Header';
-import { createReadingNote } from 'pages/Records/Detail/api';
+import { createReadingNote, getReadingNote, updateReadingNote } from 'pages/Records/Detail/api';
 
 const MSG_NOTE_NEW_PAGE_TITLE = '노트 작성하기';
+const MSG_NOTE_EDIT_PAGE_TITLE = '노트 수정하기';
 const MSG_NOTE_NEW_SUBMIT = '완료';
 const MSG_NOTE_NEW_TITLE_PLACEHOLDER = '노트의 제목을 입력하세요';
 const MSG_NOTE_NEW_BODY_PLACEHOLDER = '여기를 터치하여 내용을 입력하세요';
@@ -18,6 +19,8 @@ const MSG_NOTE_NEW_DISMISS_KEYBOARD = '키보드 닫기';
 const MSG_NOTE_NEW_CHARACTER_COUNT_SUFFIX = '자';
 const MSG_NOTE_NEW_SUCCESS = '독서 노트가 저장되었습니다.';
 const MSG_NOTE_NEW_FAILED = '독서 노트를 저장하지 못했습니다. 다시 시도해 주세요.';
+const MSG_NOTE_EDIT_SUCCESS = '독서 노트가 수정되었습니다.';
+const MSG_NOTE_EDIT_FAILED = '독서 노트를 수정하지 못했습니다. 다시 시도해 주세요.';
 
 type NoteNewLocationState = {
   readingLogId?: string;
@@ -46,17 +49,28 @@ const NoteNew = () => {
 
   const navigate = useNavigate();
   const location = useLocation();
+  const { noteId } = useParams();
   const queryClient = useQueryClient();
   const { addToast } = useToastStore();
 
   const locationState = location.state as NoteNewLocationState | undefined;
-  const readingLogId = locationState?.readingLogId ?? '';
-  const { mutate: saveNote, isPending } = useMutation({
+  const isEditMode = !!noteId;
+  const { data: editableNote } = useQuery({
+    queryKey: ['reading-note', noteId],
+    queryFn: () => getReadingNote(noteId ?? ''),
+    enabled: isEditMode && !!noteId,
+  });
+
+  const readingLogId =
+    locationState?.readingLogId ?? (editableNote?.readingLogId ? String(editableNote.readingLogId) : '');
+
+  const { mutate: saveNote, isPending: isCreatePending } = useMutation({
     mutationFn: (data: { title: string; body: string }) => {
       return createReadingNote(readingLogId, {
         title: data.title,
         body: data.body,
         page: null,
+        tagIds: [],
       });
     },
 
@@ -68,6 +82,41 @@ const NoteNew = () => {
     onError: () => addToast({ description: MSG_NOTE_NEW_FAILED, type: 'error' }),
   });
 
+  const { mutate: editNote, isPending: isUpdatePending } = useMutation({
+    mutationFn: (data: { title: string; body: string }) => {
+      return updateReadingNote(noteId ?? '', {
+        title: data.title,
+        body: data.body,
+        page: editableNote?.page ?? null,
+        tagIds: editableNote?.tags.map((tag) => tag.id) ?? [],
+      });
+    },
+
+    onSuccess: () => {
+      addToast({ description: MSG_NOTE_EDIT_SUCCESS, type: 'success' });
+      queryClient.invalidateQueries({ queryKey: ['reading-note', noteId] });
+      if (readingLogId) queryClient.invalidateQueries({ queryKey: ['reading-log-notes', readingLogId] });
+      navigate(`/notes/${noteId}`, {
+        state: {
+          note: {
+            ...editableNote,
+            id: Number(noteId),
+            readingLogId: editableNote?.readingLogId ?? (readingLogId ? Number(readingLogId) : null),
+            title: title.trim(),
+            body: body.trim(),
+            page: editableNote?.page ?? null,
+            tags: editableNote?.tags ?? [],
+            createdAt: editableNote?.createdAt ?? new Date().toISOString(),
+          },
+          readingLogId,
+        },
+        replace: true,
+      });
+    },
+    onError: () => addToast({ description: MSG_NOTE_EDIT_FAILED, type: 'error' }),
+  });
+
+  const isPending = isCreatePending || isUpdatePending;
   const isSubmitEnabled = title.trim().length > 0 && body.trim().length > 0 && !isPending;
 
   const characterCount = title.length + body.length;
@@ -75,6 +124,11 @@ const NoteNew = () => {
 
   const handleSubmitClick = () => {
     if (!isSubmitEnabled) return;
+    if (isEditMode) {
+      editNote({ title: title.trim(), body: body.trim() });
+      return;
+    }
+
     saveNote({ title: title.trim(), body: body.trim() });
   };
 
@@ -103,10 +157,17 @@ const NoteNew = () => {
     bodyTextareaRef.current.style.height = `${bodyTextareaRef.current.scrollHeight}px`;
   }, [body]);
 
+  useEffect(() => {
+    if (!editableNote) return;
+
+    setTitle(editableNote.title);
+    setBody(editableNote.body);
+  }, [editableNote]);
+
   return (
     <div className="flex h-full flex-col bg-neutral-0">
       <Header
-        title={MSG_NOTE_NEW_PAGE_TITLE}
+        title={isEditMode ? MSG_NOTE_EDIT_PAGE_TITLE : MSG_NOTE_NEW_PAGE_TITLE}
         withBack
         rightBtn={
           <button

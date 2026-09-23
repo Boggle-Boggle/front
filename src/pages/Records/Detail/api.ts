@@ -87,6 +87,11 @@ export const createReadingNote = async (readingLogId: string | number, data: Cre
   return response.data.data;
 };
 
+export const getReadingNote = async (noteId: string | number) => {
+  const response = await api.get<ApiSuccessResponse<ReadingNoteResponse>>(`/v2/reading-notes/${noteId}`);
+  return response.data.data;
+};
+
 export interface UpdateNoteRequest {
   title: string;
   body: string;

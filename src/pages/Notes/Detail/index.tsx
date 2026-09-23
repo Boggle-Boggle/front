@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 
-import { useLocation } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import useLayerStore from 'stores/useLayerStore';
 import useToastStore from 'stores/useToastStore';
 
@@ -8,7 +8,7 @@ import IconButton from 'components/Button/IconButton';
 import { Header } from 'components/Header';
 import { IconEllipsisVertical } from 'components/icons';
 import { NoteMenuActionSheet } from 'pages/Records/Detail/NoteMenuActionSheet';
-import { getReadingLogDetail, ReadingNoteResponse } from 'pages/Records/Detail/api';
+import { getReadingLogDetail, getReadingNote } from 'pages/Records/Detail/api';
 
 import { formatToDotDateTime } from 'utils/date';
 
@@ -16,17 +16,24 @@ const MSG_NOTE_DETAIL_MORE = '노트 더보기';
 // const MSG_NOTE_DETAIL_TAG = '태그';
 
 type NoteDetailState = {
-  note?: ReadingNoteResponse;
   bookTitle?: string;
   readingLogId?: string;
 };
 
 const NoteDetail = () => {
   const location = useLocation();
+  const { noteId } = useParams();
   const { push } = useLayerStore();
   const { addToast } = useToastStore();
 
-  const { note, bookTitle: stateBookTitle, readingLogId: stateReadingLogId } = (location.state as NoteDetailState) || {};
+  const { bookTitle: stateBookTitle, readingLogId: stateReadingLogId } = (location.state as NoteDetailState) || {};
+
+  const { data: note } = useQuery({
+    queryKey: ['reading-note', noteId],
+    queryFn: () => getReadingNote(noteId ?? ''),
+    enabled: !!noteId,
+  });
+
   const readingLogId = stateReadingLogId ?? (note?.readingLogId ? String(note.readingLogId) : undefined);
 
   // React Query를 사용하여 상위 독서기록상세에서 책 제목을 비동기 조회 (Prop Drilling 소거)
@@ -49,7 +56,7 @@ const NoteDetail = () => {
       component: <NoteMenuActionSheet note={note} readingLogId={readingLogId} />,
     });
   };
-  if (!note) return <div>dd</div>;
+  if (!note) return null;
 
   return (
     <>
@@ -64,7 +71,7 @@ const NoteDetail = () => {
         <p className="whitespace-pre-wrap text-left font-serif text-[14px] leading-[1.6] tracking-[-0.28px] text-neutral-80">
           {note.body || '등록된 내용이 없습니다.'}
         </p>
-        <p className="text-caption2 text-neutral-60">{formatToDotDateTime(note.createdAt)}</p>
+        <p className="pt-4 text-caption2 text-neutral-60">{formatToDotDateTime(note.createdAt)}</p>
 
         {/* 태그 영역
           {note?.tags && (
