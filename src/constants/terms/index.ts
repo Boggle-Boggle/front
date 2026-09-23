@@ -8,9 +8,9 @@ export const TERM_ID = {
   TERMS_OF_SERVICE: 2,
 } as const;
 
-export type TermId = (typeof TERM_ID)[keyof typeof TERM_ID];
+type TermId = (typeof TERM_ID)[keyof typeof TERM_ID];
 
-export type TermContent = {
+type TermContent = {
   id: TermId;
   title: string;
   content: string;
@@ -28,22 +28,3 @@ export const TERM_BY_ID: Record<TermId, TermContent> = {
     content: TERMS_OF_SERVICE_CONTENT,
   },
 };
-
-export type SignUpTerm = {
-  id: TermId;
-  title: string;
-  required: boolean;
-};
-
-export const SIGNUP_TERMS: SignUpTerm[] = [
-  {
-    id: TERM_ID.PRIVACY_POLICY,
-    title: PRIVACY_POLICY_TITLE,
-    required: true,
-  },
-  {
-    id: TERM_ID.TERMS_OF_SERVICE,
-    title: TERMS_OF_SERVICE_TITLE,
-    required: true,
-  },
-];
