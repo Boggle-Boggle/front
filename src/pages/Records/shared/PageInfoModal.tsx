@@ -1,3 +1,4 @@
+import { READING_TOTAL_PAGES } from 'policy/input';
 import { ChangeEvent, useState } from 'react';
 
 import { Button } from 'components/Button';
@@ -44,7 +45,11 @@ export const PageInfoModal = (props: PageInfoModalProps) => {
           value={pageCount}
           onChange={handleChangePageCount}
           onClear={handleClearPageCount}
+          blurOnEnter
           type="number"
+          min={READING_TOTAL_PAGES.minValue}
+          max={READING_TOTAL_PAGES.maxValue}
+          maxLength={READING_TOTAL_PAGES.maxLength}
           placeholder={MSG_PAGE_INFO_PLACEHOLDER}
         />
       </div>

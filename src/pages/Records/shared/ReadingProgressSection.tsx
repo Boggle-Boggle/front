@@ -102,7 +102,7 @@ export const ReadingProgressSection = (props: ReadingProgressSectionProps) => {
         <button
           type="button"
           onClick={onOpenPageInfo}
-          className="w-full pt-3 text-right text-caption1 text-information outline-none"
+          className="ml-auto block pt-3 text-caption1 text-information outline-none"
         >
           {MSG_ADD_RECORD_PAGE_EDIT}
         </button>

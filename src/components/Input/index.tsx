@@ -1,5 +1,5 @@
 import { OPTIONAL_DIGIT_PATTERN } from 'policy/input';
-import { ChangeEvent, FocusEvent, useState } from 'react';
+import { ChangeEvent, FocusEvent, KeyboardEvent, useState } from 'react';
 
 import { IconButton } from 'components/Button';
 import { IconCancel } from 'components/icons';
@@ -11,6 +11,7 @@ type InputVariant = InputStyle | Exclude<InputState, 'default'>;
 
 export type InputChangeEvent = ChangeEvent<HTMLInputElement | HTMLTextAreaElement>;
 export type InputFocusEvent = FocusEvent<HTMLInputElement | HTMLTextAreaElement>;
+export type InputKeyboardEvent = KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>;
 
 export type InputProps = {
   id?: string;
@@ -25,6 +26,7 @@ export type InputProps = {
   onClear?: () => void;
   onFocus?: (e: InputFocusEvent) => void;
   onBlur?: (e: InputFocusEvent) => void;
+  onKeyDown?: (e: InputKeyboardEvent) => void;
   placeholder?: string;
   type?: string;
   name?: string;
@@ -33,11 +35,12 @@ export type InputProps = {
   maxLength?: number;
   rows?: number;
   clearButtonLabel?: string;
+  blurOnEnter?: boolean;
 };
 
 type TextareaFieldProps = Pick<
   InputProps,
-  'value' | 'onChange' | 'onFocus' | 'onBlur' | 'name' | 'placeholder' | 'maxLength'
+  'value' | 'onChange' | 'onFocus' | 'onBlur' | 'onKeyDown' | 'name' | 'placeholder' | 'maxLength'
 > & {
   disabled: boolean;
   rows: number;
@@ -59,7 +62,8 @@ const getInputState = (variant: InputProps['variant'], state: InputProps['state'
 };
 
 const TextareaField = (props: TextareaFieldProps) => {
-  const { disabled, value, onChange, onFocus, onBlur, name, placeholder, maxLength, rows, className } = props;
+  const { disabled, value, onChange, onFocus, onBlur, onKeyDown, name, placeholder, maxLength, rows, className } =
+    props;
 
   return (
     <textarea
@@ -68,6 +72,7 @@ const TextareaField = (props: TextareaFieldProps) => {
       onChange={onChange}
       onFocus={onFocus}
       onBlur={onBlur}
+      onKeyDown={onKeyDown}
       name={name}
       placeholder={placeholder}
       maxLength={maxLength}
@@ -91,6 +96,7 @@ export const Input = (props: InputProps) => {
     onChange,
     onFocus,
     onBlur,
+    onKeyDown,
     type = 'text',
     name,
     placeholder,
@@ -99,6 +105,7 @@ export const Input = (props: InputProps) => {
     maxLength,
     rows,
     clearButtonLabel = 'clear',
+    blurOnEnter = false,
   } = props;
   const [isFocused, setIsFocused] = useState<boolean>(false);
 
@@ -125,12 +132,23 @@ export const Input = (props: InputProps) => {
 
     if (type === 'number') {
       const isInvalidNumberValue =
-        !OPTIONAL_DIGIT_PATTERN.test(nextValue) || (max !== undefined && nextValue !== '' && Number(nextValue) > max);
+        !OPTIONAL_DIGIT_PATTERN.test(nextValue) ||
+        (maxLength !== undefined && nextValue.length > maxLength) ||
+        (min !== undefined && nextValue !== '' && Number(nextValue) < min) ||
+        (max !== undefined && nextValue !== '' && Number(nextValue) > max);
 
       if (isInvalidNumberValue) return;
     }
 
     onChange(e);
+  };
+
+  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    onKeyDown?.(e);
+
+    if (!blurOnEnter || e.key !== 'Enter' || e.defaultPrevented) return;
+
+    e.currentTarget.blur();
   };
 
   const boxWrapperClassName = [
@@ -199,6 +217,7 @@ export const Input = (props: InputProps) => {
           onChange={handleChange}
           onFocus={handleFocus}
           onBlur={handleBlur}
+          onKeyDown={handleKeyDown}
           name={name}
           placeholder={placeholder}
           maxLength={maxLength}
@@ -218,7 +237,9 @@ export const Input = (props: InputProps) => {
         onChange={handleChange}
         onFocus={handleFocus}
         onBlur={handleBlur}
+        onKeyDown={handleKeyDown}
         type={type}
+        inputMode={type === 'number' ? 'numeric' : undefined}
         name={name}
         placeholder={placeholder}
         min={min}

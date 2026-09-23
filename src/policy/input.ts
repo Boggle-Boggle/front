@@ -2,6 +2,8 @@ export type InputPolicy = {
   description: string;
   minLength?: number;
   maxLength?: number;
+  minValue?: number;
+  maxValue?: number;
   pattern?: RegExp;
   allowLineBreak?: boolean;
 };
@@ -56,6 +58,8 @@ export const CUSTOM_BOOK_TOTAL_PAGES = {
   description: '직접 등록 책 총 페이지 수',
   minLength: 1,
   maxLength: 5,
+  minValue: 1,
+  maxValue: 10000,
   pattern: DIGIT_PATTERN,
   allowLineBreak: false,
 } satisfies InputPolicy;
@@ -105,6 +109,9 @@ export const WITHDRAW_FEEDBACK = {
 export const READING_TOTAL_PAGES = {
   description: '독서기록 총 페이지 수',
   minLength: 1,
+  maxLength: 5,
+  minValue: 1,
+  maxValue: 10000,
   pattern: DIGIT_PATTERN,
   allowLineBreak: false,
 } satisfies InputPolicy;
