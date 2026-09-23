@@ -1,3 +1,4 @@
+import { OPTIONAL_DIGIT_PATTERN } from 'policy/input';
 import { ChangeEvent, FocusEvent, useState } from 'react';
 
 import { IconButton } from 'components/Button';
@@ -119,6 +120,19 @@ export const Input = (props: InputProps) => {
     onBlur?.(e);
   };
 
+  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const nextValue = e.target.value;
+
+    if (type === 'number') {
+      const isInvalidNumberValue =
+        !OPTIONAL_DIGIT_PATTERN.test(nextValue) || (max !== undefined && nextValue !== '' && Number(nextValue) > max);
+
+      if (isInvalidNumberValue) return;
+    }
+
+    onChange(e);
+  };
+
   const boxWrapperClassName = [
     'w-full min-w-0 rounded border',
     multiline ? 'min-h-[6.5rem]' : 'flex h-10 items-center justify-between gap-2.5 px-3 py-2',
@@ -182,7 +196,7 @@ export const Input = (props: InputProps) => {
         <TextareaField
           disabled={isDisabled}
           value={value}
-          onChange={onChange}
+          onChange={handleChange}
           onFocus={handleFocus}
           onBlur={handleBlur}
           name={name}
@@ -201,7 +215,7 @@ export const Input = (props: InputProps) => {
         id={id}
         disabled={isDisabled}
         value={value}
-        onChange={onChange}
+        onChange={handleChange}
         onFocus={handleFocus}
         onBlur={handleBlur}
         type={type}

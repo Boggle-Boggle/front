@@ -6,6 +6,9 @@ export type InputPolicy = {
   allowLineBreak?: boolean;
 };
 
+export const DIGIT_PATTERN = /^\d+$/;
+export const OPTIONAL_DIGIT_PATTERN = /^\d*$/;
+
 export const NICKNAME = {
   description: '회원가입 및 계정 설정 닉네임',
   minLength: 2,
@@ -53,7 +56,7 @@ export const CUSTOM_BOOK_TOTAL_PAGES = {
   description: '직접 등록 책 총 페이지 수',
   minLength: 1,
   maxLength: 5,
-  pattern: /^\d+$/,
+  pattern: DIGIT_PATTERN,
   allowLineBreak: false,
 } satisfies InputPolicy;
 
@@ -102,14 +105,14 @@ export const WITHDRAW_FEEDBACK = {
 export const READING_TOTAL_PAGES = {
   description: '독서기록 총 페이지 수',
   minLength: 1,
-  pattern: /^\d+$/,
+  pattern: DIGIT_PATTERN,
   allowLineBreak: false,
 } satisfies InputPolicy;
 
 export const READING_PROGRESS_VALUE = {
   description: '독서기록 읽은 페이지 또는 퍼센트',
   minLength: 1,
-  pattern: /^\d+$/,
+  pattern: DIGIT_PATTERN,
   allowLineBreak: false,
 } satisfies InputPolicy;
 
