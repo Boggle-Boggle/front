@@ -117,21 +117,20 @@ export const MainPeriodModal = (props: MainPeriodModalProps) => {
           {selectedFilter === 'GROUP' && (
             <div className="mt-2 flex max-h-[160px] flex-col gap-1 overflow-y-auto px-1">
               {bookshelves && bookshelves.length > 0 ? (
-                bookshelves.map((group) => {
-                  const isGroupSelected = selectedBookshelfId === group.id;
-                  return (
-                    <button
-                      key={group.id}
-                      type="button"
-                      onClick={() => setSelectedBookshelfId(group.id)}
-                      className={`h-[42px] shrink-0 w-full items-center justify-center rounded-lg border-[1.5px] text-title4 transition-colors ${
-                        isGroupSelected ? 'border-primary text-primary' : 'border-neutral-20 text-neutral-40'
-                      }`}
-                    >
-                      {group.name}
-                    </button>
-                  );
-                })
+                bookshelves.map((group) => (
+                  <button
+                    key={group.id}
+                    type="button"
+                    onClick={() => setSelectedBookshelfId(group.id)}
+                    className={`h-[42px] w-full shrink-0 items-center justify-center rounded-lg border-[1.5px] text-title4 transition-colors ${
+                      selectedBookshelfId === group.id
+                        ? 'border-primary text-primary'
+                        : 'border-neutral-20 text-neutral-40'
+                    }`}
+                  >
+                    {group.name}
+                  </button>
+                ))
               ) : (
                 <p className="py-2 text-body2 text-neutral-60">{MSG_MAIN_FILTER_NO_GROUP}</p>
               )}
