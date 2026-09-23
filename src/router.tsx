@@ -37,16 +37,6 @@ const Terms = lazy(() => import('pages/Terms'));
 const Login = lazy(() => import('pages/Login'));
 const SignUp = lazy(() => import('pages/SignUp'));
 const NotFound = lazy(() => import('pages/NotFound'));
-// const MyPage = lazy(() => import('pages/MyPage'));
-// const Edit = lazy(() => import('pages/Edit'));
-// const DeleteAccount = lazy(() => import('pages/MyPage/DeleteAccount'));
-// const EditNickname = lazy(() => import('pages/MyPage/EditNickname'));
-// const QnA = lazy(() => import('pages/MyPage/QnA'));
-// const Term = lazy(() => import('pages/MyPage/Term'));
-// const VersionInfo = lazy(() => import('pages/MyPage/VersionInfo'));
-// const Note = lazy(() => import('pages/Note'));
-// const Record = lazy(() => import('pages/Record'));
-// const SignUp = lazy(() => import('pages/SignUp'));
 
 const router = createBrowserRouter([
   {
@@ -67,9 +57,6 @@ const router = createBrowserRouter([
               { path: '/search/trending', element: <Trending /> },
               { path: '/library', element: <Library /> },
               { path: '/mypage', element: <MyPage /> },
-              // { path: 'detail/:detailId', element: <BookDetail /> },
-              // { path: 'record/:recordId', element: <Record /> },
-              // { path: 'edit/:recordId', element: <Edit /> },
             ],
           },
           {
@@ -96,18 +83,10 @@ const router = createBrowserRouter([
               { path: '/mypage/support', element: <MyPageSupport /> },
               { path: '/mypage/appearance', element: <MyPageAppearance /> },
               { path: '/report', element: <Report /> },
-              // 아래 레거시
-              // { path: 'note/write', element: <Note /> },
-              // { path: 'myPage/nickname', element: <EditNickname /> },
-              // { path: 'myPage/terms', element: <Term /> },
-              // { path: 'myPage/VersionInfo', element: <VersionInfo /> },
-              // { path: 'myPage/deleteAccount', element: <DeleteAccount /> },
-              // { path: 'myPage/QnA', element: <QnA /> },
             ],
           },
         ],
       },
-      // 아래 레거시
       { path: '/login', element: <Login /> },
       { path: '/auth', element: <Auth /> },
       { path: '/notes/new', element: <NoteNew /> },
