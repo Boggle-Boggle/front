@@ -36,6 +36,7 @@ const MyPageAppearance = lazy(() => import('pages/MyPage/Appearance'));
 const Terms = lazy(() => import('pages/Terms'));
 const Login = lazy(() => import('pages/Login'));
 const SignUp = lazy(() => import('pages/SignUp'));
+const NotFound = lazy(() => import('pages/NotFound'));
 // const MyPage = lazy(() => import('pages/MyPage'));
 // const Edit = lazy(() => import('pages/Edit'));
 // const DeleteAccount = lazy(() => import('pages/MyPage/DeleteAccount'));
@@ -110,6 +111,7 @@ const router = createBrowserRouter([
       { path: '/login', element: <Login /> },
       { path: '/auth', element: <Auth /> },
       { path: '/notes/new', element: <NoteNew /> },
+      { path: '/notes/:noteId/edit', element: <NoteNew /> },
       { path: '/notes/:noteId', element: <NoteDetail /> },
       { path: '/terms/:termId', element: <Terms /> },
       {
@@ -117,6 +119,7 @@ const router = createBrowserRouter([
         element: <SignUp />,
         children: [{ path: 'terms/:termId', element: <Terms /> }],
       },
+      { path: '*', element: <NotFound /> },
     ],
   },
 ]);
