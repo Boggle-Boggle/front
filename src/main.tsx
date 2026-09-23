@@ -22,7 +22,6 @@ const queryClient = new QueryClient({
 });
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-  // <StrictMode>
   <DeviceProvider>
     <QueryClientProvider client={queryClient}>
       <Suspense fallback={<Loading fullscreen />}>
@@ -30,5 +29,4 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
       </Suspense>
     </QueryClientProvider>
   </DeviceProvider>,
-  // </StrictMode>,
 );
