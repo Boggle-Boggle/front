@@ -30,6 +30,7 @@ export interface ReadingLogInfo {
   status: AddRecordStatus;
   rating: number;
   noteCount: number;
+  totalPagesOverride: number | null;
   progress: Progress | null;
   startDate: string;
   endDate: string | null;

@@ -5,6 +5,8 @@ import { useParams } from 'react-router-dom';
 import { useLayerStore } from 'stores/useLayerStore';
 import { useToastStore } from 'stores/useToastStore';
 
+import { formatToDateInputValue, formatToReadingLogDateTime } from 'utils/date';
+
 import type { ReadingLogProgressType } from 'types';
 
 import { updateReadingLog, type UpdateReadingLogRequest, type ReadingLogInfo } from './api';
@@ -28,6 +30,13 @@ export interface MyInfoTabProps {
   readingLog: ReadingLogInfo;
 }
 
+const getInitialTotalPageCount = (readingLog: ReadingLogInfo) => {
+  if (readingLog.totalPagesOverride) return String(readingLog.totalPagesOverride);
+  if (readingLog.progress?.totalPages) return String(readingLog.progress.totalPages);
+
+  return DEFAULT_TOTAL_PAGE_COUNT;
+};
+
 export const MyInfoTab = ({ readingLog }: MyInfoTabProps) => {
   const [isEdit, setIsEdit] = useState<boolean>(false);
   const [rating, setRating] = useState<number>(readingLog.rating);
@@ -35,21 +44,14 @@ export const MyInfoTab = ({ readingLog }: MyInfoTabProps) => {
     readingLog.bookshelves.map((b) => b.id),
   );
 
-  // API 날짜 형식 (예: 2026-05-01T00:00:00.000+00:00)에서 YYYY-MM-DD 만 추출하여 사용합니다.
-  const [startDate, setStartDate] = useState<string>(() => {
-    return readingLog.startDate ? readingLog.startDate.split('T')[0] : '';
-  });
-  const [endDate, setEndDate] = useState<string>(() => {
-    return readingLog.endDate ? readingLog.endDate.split('T')[0] : '';
-  });
+  const [startDate, setStartDate] = useState<string>(() => formatToDateInputValue(readingLog.startDate));
+  const [endDate, setEndDate] = useState<string>(() => formatToDateInputValue(readingLog.endDate));
 
   const [progressType, setProgressType] = useState<ReadingLogProgressType>(readingLog.progress?.type || 'PAGE');
   const [progressValue, setProgressValue] = useState<string>(
     readingLog.progress ? String(readingLog.progress.value) : '',
   );
-  const [totalPageCount, setTotalPageCount] = useState<string>(
-    readingLog.progress ? String(readingLog.progress.totalPages) : DEFAULT_TOTAL_PAGE_COUNT,
-  );
+  const [totalPageCount, setTotalPageCount] = useState<string>(() => getInitialTotalPageCount(readingLog));
   const [isPrivate, setIsPrivate] = useState<boolean>(readingLog.isHidden);
 
   const { recordId = '' } = useParams<{ recordId: string }>();
@@ -141,14 +143,21 @@ export const MyInfoTab = ({ readingLog }: MyInfoTabProps) => {
       const requestData: UpdateReadingLogRequest = {
         status: readingLog.status,
         rating,
-        startDate: startDate ? `${startDate}T00:00:00.000Z` : '',
-        endDate: endDate ? `${endDate}T00:00:00.000Z` : null,
-        progressType,
-        progressValue: progressValue ? Number(progressValue) : undefined,
-        totalPagesOverride: totalPageCount ? Number(totalPageCount) : undefined,
+        startDate: formatToReadingLogDateTime(startDate),
+        endDate: endDate ? formatToReadingLogDateTime(endDate) : null,
         bookshelfIds: selectedBookshelfIds,
         isHidden: isPrivate,
       };
+
+      if (progressValue !== '') {
+        requestData.progressType = progressType;
+        requestData.progressValue = Number(progressValue);
+      }
+
+      if (totalPageCount !== '') {
+        requestData.totalPagesOverride = Number(totalPageCount);
+      }
+
       updateRecord(requestData);
     } else {
       setIsEdit(true);

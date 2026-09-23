@@ -95,6 +95,20 @@ export const formatToKoreanDate = (dateString?: string | null) => {
   return formatBaseDate(dateString, { separator: 'korean' });
 };
 
+/**
+ * 날짜 입력 컴포넌트에서 사용하는 YYYY-MM-DD 형태로 포맷팅
+ */
+export const formatToDateInputValue = (dateString?: string | null) => {
+  return formatBaseDate(dateString, { separator: '-', fallback: '' });
+};
+
+/**
+ * 날짜 입력값(YYYY-MM-DD)을 독서기록 API 전송용 날짜 문자열로 변환
+ */
+export const formatToReadingLogDateTime = (dateString: string) => {
+  return dateString ? `${dateString}T00:00:00.000Z` : '';
+};
+
 // --- [기존 달력/검사 관련 보존 함수] ---
 
 export const formatDate = (year: number, month: number, day: number) => {
