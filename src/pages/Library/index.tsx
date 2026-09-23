@@ -15,6 +15,8 @@ import { useScrollRestoration } from 'hooks/useScrollRestoration';
 
 import type { ReadingLogStatus } from 'types';
 
+import { STORAGE_KEY } from 'constants/storage';
+
 import { FilterSidebar } from './FilterSidebar';
 import { ReadingSection } from './ReadingSection';
 import { SortActionSheet } from './SortActionSheet';
@@ -44,54 +46,48 @@ const MSG_MYBOOKS_FILTER_READING = '읽고 있는 책';
 const MSG_MYBOOKS_FILTER_STOPPED = '중단한 책';
 const MSG_MYBOOKS_SEARCH_PLACEHOLDER = '서재 안 도서 검색';
 
-const STORAGE_KEY_MYBOOKS_VIEW_TYPE = 'mybooks-view-type';
-const STORAGE_KEY_MYBOOKS_SORT_TYPE = 'mybooks-sort-type';
-const STORAGE_KEY_MYBOOKS_FILTER = 'mybooks-filter';
-const STORAGE_KEY_MYBOOKS_BOOKSHELF_ID = 'mybooks-bookshelf-id';
-const STORAGE_KEY_MYBOOKS_ACTIVE_TAB = 'mybooks-active-tab';
-
 const LAYER_ID_MYBOOKS_FILTER = 'mybooks-filter-sidebar';
 const LAYER_ID_MYBOOKS_SORT = 'mybooks-sort-bottom-sheet';
 
 const getInitialViewType = (): ViewType => {
   if (typeof window === 'undefined') return 'grid';
 
-  const storedViewType = window.localStorage.getItem(STORAGE_KEY_MYBOOKS_VIEW_TYPE);
+  const storedViewType = window.localStorage.getItem(STORAGE_KEY.LIBRARY_VIEW_TYPE);
   return storedViewType === 'list' ? 'list' : 'grid';
 };
 
 const getInitialSortType = (): ReadingLogSort => {
   if (typeof window === 'undefined') return 'START_DATE_DESC';
 
-  const storedSortType = window.localStorage.getItem(STORAGE_KEY_MYBOOKS_SORT_TYPE);
+  const storedSortType = window.localStorage.getItem(STORAGE_KEY.LIBRARY_SORT_TYPE);
   return (storedSortType as ReadingLogSort) || 'START_DATE_DESC';
 };
 
 const getInitialWishlistSortType = (): InterestedBookSort => {
   if (typeof window === 'undefined') return 'RECENT';
 
-  const storedSortType = window.localStorage.getItem('mybooks-wishlist-sort-type');
+  const storedSortType = window.localStorage.getItem(STORAGE_KEY.LIBRARY_WISHLIST_SORT_TYPE);
   return storedSortType === 'OLDEST' ? 'OLDEST' : 'RECENT';
 };
 
 const getInitialFilter = (): ReadingLogStatus => {
   if (typeof window === 'undefined') return 'ALL';
 
-  const storedFilter = window.localStorage.getItem(STORAGE_KEY_MYBOOKS_FILTER);
+  const storedFilter = window.localStorage.getItem(STORAGE_KEY.LIBRARY_FILTER);
   return (storedFilter as ReadingLogStatus) || 'ALL';
 };
 
 const getInitialBookshelfId = (): number | undefined => {
   if (typeof window === 'undefined') return undefined;
 
-  const storedId = window.localStorage.getItem(STORAGE_KEY_MYBOOKS_BOOKSHELF_ID);
+  const storedId = window.localStorage.getItem(STORAGE_KEY.LIBRARY_BOOKSHELF_ID);
   return storedId ? Number(storedId) : undefined;
 };
 
 const getStoredActiveTab = (): TabType => {
   if (typeof window === 'undefined') return 'reading';
 
-  const storedActiveTab = window.sessionStorage.getItem(STORAGE_KEY_MYBOOKS_ACTIVE_TAB);
+  const storedActiveTab = window.sessionStorage.getItem(STORAGE_KEY.LIBRARY_ACTIVE_TAB);
   return storedActiveTab === 'wishlist' ? 'wishlist' : 'reading';
 };
 
@@ -111,22 +107,22 @@ const Library = () => {
   const [bookshelfId, setBookshelfId] = useState<number | undefined>(getInitialBookshelfId);
 
   useEffect(() => {
-    window.localStorage.setItem(STORAGE_KEY_MYBOOKS_SORT_TYPE, sortType);
+    window.localStorage.setItem(STORAGE_KEY.LIBRARY_SORT_TYPE, sortType);
   }, [sortType]);
 
   useEffect(() => {
-    window.sessionStorage.setItem(STORAGE_KEY_MYBOOKS_ACTIVE_TAB, activeTab);
+    window.sessionStorage.setItem(STORAGE_KEY.LIBRARY_ACTIVE_TAB, activeTab);
   }, [activeTab]);
 
   useEffect(() => {
-    window.localStorage.setItem(STORAGE_KEY_MYBOOKS_FILTER, readingFilter);
+    window.localStorage.setItem(STORAGE_KEY.LIBRARY_FILTER, readingFilter);
   }, [readingFilter]);
 
   useEffect(() => {
     if (bookshelfId === undefined) {
-      window.localStorage.removeItem(STORAGE_KEY_MYBOOKS_BOOKSHELF_ID);
+      window.localStorage.removeItem(STORAGE_KEY.LIBRARY_BOOKSHELF_ID);
     } else {
-      window.localStorage.setItem(STORAGE_KEY_MYBOOKS_BOOKSHELF_ID, String(bookshelfId));
+      window.localStorage.setItem(STORAGE_KEY.LIBRARY_BOOKSHELF_ID, String(bookshelfId));
     }
   }, [bookshelfId]);
 
@@ -224,7 +220,7 @@ const Library = () => {
   const handleToggleViewType = () => {
     setViewType((prevViewType) => {
       const nextViewType = prevViewType === 'grid' ? 'list' : 'grid';
-      window.localStorage.setItem(STORAGE_KEY_MYBOOKS_VIEW_TYPE, nextViewType);
+      window.localStorage.setItem(STORAGE_KEY.LIBRARY_VIEW_TYPE, nextViewType);
 
       return nextViewType;
     });

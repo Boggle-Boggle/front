@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { useLocation, useNavigationType } from 'react-router-dom';
 
+import { STORAGE_KEY } from 'constants/storage';
 import { TIME_MS } from 'constants/time';
 
 interface ScrollRestorationOptions {
@@ -17,7 +18,7 @@ export const useScrollRestoration = <T extends HTMLElement>({
   const navigationType = useNavigationType();
 
   // 히스토리 엔트리별로 고유한 key를 발급받아 사용하거나, 별도의 customKey 사용
-  const scrollKey = `scroll_pos:${customKey || location.key}`;
+  const scrollKey = `${STORAGE_KEY.SCROLL_POSITION_PREFIX}${customKey || location.key}`;
 
   useEffect(() => {
     const container = containerRef.current;
