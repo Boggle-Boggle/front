@@ -83,12 +83,12 @@ module.exports = {
 
       keyframes: {
         fadeIn: {
-          '0%': { opacity: '0' },
-          '100%': { opacity: '1' },
+          '0%': { opacity: '0', transform: 'translate(-50%, -48%) scale(0.98)' },
+          '100%': { opacity: '1', transform: 'translate(-50%, -50%) scale(1)' },
         },
         fadeOut: {
-          '0%': { opacity: '1' },
-          '100%': { opacity: '0' },
+          '0%': { opacity: '1', transform: 'translate(-50%, -50%) scale(1)' },
+          '100%': { opacity: '0', transform: 'translate(-50%, -48%) scale(0.98)' },
         },
         slideUp: {
           '0%': { transform: 'translateY(100%)' },
@@ -114,12 +114,12 @@ module.exports = {
       animation: {
         fadeInSlow: 'fadeIn 0.3s ease-out forwards',
         fadeOutSlow: 'fadeOut 0.3s ease-out forwards',
-        fadeIn: 'fadeIn 0.1s ease-out forwards',
-        fadeOut: 'fadeOut 0.1s ease-out forwards',
-        slideUp: 'slideUp 0.1s ease-out forwards',
-        slideDown: 'slideDown 0.1s ease-out forwards',
-        slideLeft: 'slideLeft 0.1s ease-out forwards',
-        slideRight: 'slideRight 0.1s ease-out forwards',
+        fadeIn: 'fadeIn 0.18s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+        fadeOut: 'fadeOut 0.14s ease-in forwards',
+        slideUp: 'slideUp 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+        slideDown: 'slideDown 0.18s ease-in forwards',
+        slideLeft: 'slideLeft 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+        slideRight: 'slideRight 0.18s ease-in forwards',
         toastIn: 'toastIn 0.24s ease-out forwards',
       },
 
