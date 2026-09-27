@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 
+import { shouldThrowToErrorBoundary } from 'policy/error';
 import { useState } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
 
@@ -42,6 +43,7 @@ export const RecordDetailPage = () => {
     queryKey: ['reading-log', recordId],
     queryFn: () => getReadingLogDetail(recordId),
     enabled: !!recordId,
+    throwOnError: shouldThrowToErrorBoundary,
   });
 
   const scrollContainerRef = useScrollRestoration<HTMLDivElement>({
