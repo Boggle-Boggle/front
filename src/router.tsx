@@ -37,11 +37,13 @@ const Terms = lazy(() => import('pages/Terms'));
 const Login = lazy(() => import('pages/Login'));
 const SignUp = lazy(() => import('pages/SignUp'));
 const NotFound = lazy(() => import('pages/NotFound'));
+const RouteErrorFallback = lazy(() => import('pages/RouteErrorFallback'));
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: <App />,
+    errorElement: <RouteErrorFallback />,
     children: [
       {
         path: '/',
