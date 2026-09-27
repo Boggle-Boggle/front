@@ -25,6 +25,16 @@ export interface ApiError {
   traceId?: string;
 }
 
+export const isApiError = (error: unknown): error is ApiError => {
+  if (typeof error !== 'object' || error === null) return false;
+
+  if (!('code' in error) || !('message' in error)) return false;
+
+  const { code, message } = error;
+
+  return typeof code === 'string' && typeof message === 'string';
+};
+
 export interface ApiSuccessResponse<TData = null> {
   data: TData;
   error: null;

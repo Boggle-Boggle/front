@@ -1,27 +1,15 @@
 import type { ApiError, ApiErrorResponse } from 'api.types';
 import axios, { type InternalAxiosRequestConfig } from 'axios';
+import { CLIENT_REQUEST_FAILED_CODE } from 'policy/error';
+
+export { isApiError } from 'api.types';
 
 const API_BASE_URL = import.meta.env.VITE_SERVER_BASE_URL;
 const AUTH_REFRESH_PATH = '/v2/auth/refresh';
 
-const FALLBACK_API_ERROR: ApiError = {
-  code: 'COMMON_UNKNOWN_ERROR',
-  message: '알 수 없는 오류가 발생했습니다.',
-};
-
-const NETWORK_API_ERROR: ApiError = {
-  code: 'COMMON_NETWORK_ERROR',
-  message: '네트워크 연결을 확인해 주세요.',
-};
-
-export const isApiError = (error: unknown): error is ApiError => {
-  if (typeof error !== 'object' || error === null) return false;
-
-  if (!('code' in error) || !('message' in error)) return false;
-
-  const { code, message } = error;
-
-  return typeof code === 'string' && typeof message === 'string';
+const CLIENT_REQUEST_FAILED_ERROR: ApiError = {
+  code: CLIENT_REQUEST_FAILED_CODE,
+  message: '요청을 처리하지 못했습니다. 잠시 후 다시 시도해주세요.',
 };
 
 const createApiError = (apiError: ApiError) => Object.assign(new Error(apiError.message), apiError);
@@ -98,13 +86,13 @@ api.interceptors.response.use(
   (error: unknown) => {
     // 화면과 query/mutation에서는 AxiosError 대신 ApiError(code, message)만 다루도록 통일합니다.
     if (!axios.isAxiosError<ApiErrorResponse>(error)) {
-      return Promise.reject(createApiError(FALLBACK_API_ERROR));
+      return Promise.reject(createApiError(CLIENT_REQUEST_FAILED_ERROR));
     }
 
     const apiError = error.response?.data?.error;
 
     if (apiError) return Promise.reject(createApiError(apiError));
 
-    return Promise.reject(createApiError(NETWORK_API_ERROR));
+    return Promise.reject(createApiError(CLIENT_REQUEST_FAILED_ERROR));
   },
 );
