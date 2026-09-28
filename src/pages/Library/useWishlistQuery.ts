@@ -1,6 +1,6 @@
 import { useInfiniteQuery } from '@tanstack/react-query';
 
-import type { PaginationMockResponse } from 'api.types';
+import type { PaginatedResponse } from 'api.types';
 
 import { useInfiniteScrollObserver } from 'hooks/useInfiniteScrollObserver';
 
@@ -26,7 +26,7 @@ const getWishlistBooks = async (
   searchKeyword: string,
   sortType: InterestedBookSort,
   size = 15,
-): Promise<PaginationMockResponse<MyBook[]>> => {
+): Promise<PaginatedResponse<{ items: MyBook[] }>> => {
   const response = await getInterestedBooks({
     q: searchKeyword.trim() || undefined,
     page,
@@ -35,10 +35,10 @@ const getWishlistBooks = async (
   });
 
   return {
-    pageNum: response.meta.page.page,
-    totalResultCnt: response.meta.page.total,
-    itemsPerPage: response.meta.page.size,
-    items: response.data.items.map(convertInterestedBookToMyBook),
+    ...response,
+    data: {
+      items: response.data.items.map(convertInterestedBookToMyBook),
+    },
   };
 };
 
@@ -47,8 +47,8 @@ export const useWishlistQuery = (searchKeyword: string, sortType: InterestedBook
     queryKey: ['interested-books', 'library', searchKeyword.trim(), sortType],
     queryFn: ({ pageParam }) => getWishlistBooks(pageParam, searchKeyword, sortType, 15),
     getNextPageParam: (lastPage) => {
-      if (lastPage.pageNum < Math.ceil(lastPage.totalResultCnt / lastPage.itemsPerPage)) {
-        return lastPage.pageNum + 1;
+      if (lastPage.meta.page.page < Math.ceil(lastPage.meta.page.total / lastPage.meta.page.size)) {
+        return lastPage.meta.page.page + 1;
       }
       return undefined;
     },

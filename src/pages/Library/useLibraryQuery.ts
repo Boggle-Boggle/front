@@ -1,6 +1,6 @@
 import { useInfiniteQuery } from '@tanstack/react-query';
 
-import type { PaginationMockResponse } from 'api.types';
+import type { PaginatedResponse } from 'api.types';
 
 import { useInfiniteScrollObserver } from 'hooks/useInfiniteScrollObserver';
 
@@ -52,7 +52,7 @@ const getLibraryBooks = async (
   readingFilter: ReadingLogStatus,
   size = 15,
   bookshelfId?: number,
-): Promise<PaginationMockResponse<MyBook[]>> => {
+): Promise<PaginatedResponse<{ items: MyBook[] }>> => {
   const response = await getLibraryReadingLogs({
     page,
     size,
@@ -62,10 +62,10 @@ const getLibraryBooks = async (
   });
 
   return {
-    pageNum: response.meta.page.page,
-    totalResultCnt: response.meta.page.total,
-    itemsPerPage: response.meta.page.size,
-    items: response.data.items.map(convertReadingLogToMyBook),
+    ...response,
+    data: {
+      items: response.data.items.map(convertReadingLogToMyBook),
+    },
   };
 };
 
@@ -79,8 +79,8 @@ export const useLibraryQuery = (
     queryKey: ['reading-logs', 'library', sortType, readingFilter, bookshelfId],
     queryFn: ({ pageParam }) => getLibraryBooks(pageParam, sortType, readingFilter, 15, bookshelfId),
     getNextPageParam: (lastPage) => {
-      if (lastPage.pageNum < Math.ceil(lastPage.totalResultCnt / lastPage.itemsPerPage)) {
-        return lastPage.pageNum + 1;
+      if (lastPage.meta.page.page < Math.ceil(lastPage.meta.page.total / lastPage.meta.page.size)) {
+        return lastPage.meta.page.page + 1;
       }
       return undefined;
     },

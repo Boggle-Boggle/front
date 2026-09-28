@@ -148,11 +148,11 @@ const Library = () => {
   } = useWishlistQuery(searchKeyword, wishlistSortType, activeTab === 'wishlist');
 
   const readingBooks = useMemo(() => {
-    return readingData ? readingData.pages.flatMap((page) => page.items) : [];
+    return readingData ? readingData.pages.flatMap((page) => page.data.items) : [];
   }, [readingData]);
 
   const wishlistBooks = useMemo(() => {
-    return wishlistData ? wishlistData.pages.flatMap((page) => page.items) : [];
+    return wishlistData ? wishlistData.pages.flatMap((page) => page.data.items) : [];
   }, [wishlistData]);
 
   const wishlistScrollRef = useScrollRestoration<HTMLDivElement>({
@@ -201,8 +201,8 @@ const Library = () => {
   const { label } = selectedFilterOption;
   const filterLabel = selectedBookshelf ? selectedBookshelf.name : label;
 
-  const totalCount = readingData?.pages[0]?.totalResultCnt ?? readingBooks.length;
-  const wishlistTotalCount = wishlistData?.pages[0]?.totalResultCnt ?? wishlistBooks.length;
+  const totalCount = readingData?.pages[0]?.meta.page.total ?? readingBooks.length;
+  const wishlistTotalCount = wishlistData?.pages[0]?.meta.page.total ?? wishlistBooks.length;
   const isGridView = viewType === 'grid';
   const viewToggleLabel = isGridView ? MSG_MYBOOKS_ICON_VIEW_TO_LIST : MSG_MYBOOKS_ICON_VIEW_TO_GRID;
   const viewToggleIcon = isGridView ? IconLayoutList : IconLayoutGrid;
