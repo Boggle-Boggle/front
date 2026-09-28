@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 
+import { shouldThrowToErrorBoundary } from 'policy/error';
 import { NICKNAME } from 'policy/input';
 import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -43,7 +44,7 @@ const Account = () => {
     queryKey: ['users', 'me', 'profile'],
     queryFn: getMyPageProfile,
     retry: false,
-    throwOnError: true,
+    throwOnError: shouldThrowToErrorBoundary,
   });
   const { isPending: isChangeNicknamePending, mutate: changeNickname } = useChangeNicknameMutation();
 

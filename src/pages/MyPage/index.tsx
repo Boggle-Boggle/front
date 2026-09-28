@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 
+import { shouldThrowToErrorBoundary } from 'policy/error';
 import { useNavigate } from 'react-router-dom';
 
 import { IconBook, IconGraduation, IconNote } from 'components/icons';
@@ -75,7 +76,7 @@ const MyPage = () => {
     queryKey: ['users', 'me', 'profile'],
     queryFn: getMyPageProfile,
     retry: false,
-    throwOnError: true,
+    throwOnError: shouldThrowToErrorBoundary,
   });
 
   const scrollRef = useScrollRestoration<HTMLDivElement>({

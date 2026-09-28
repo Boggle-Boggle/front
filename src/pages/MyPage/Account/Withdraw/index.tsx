@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 
+import { shouldThrowToErrorBoundary } from 'policy/error';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useLayerStore } from 'stores/useLayerStore';
@@ -35,14 +36,14 @@ const Withdraw = () => {
     queryKey: ['users', 'me', 'profile'],
     queryFn: getMyPageProfile,
     retry: false,
-    throwOnError: true,
+    throwOnError: shouldThrowToErrorBoundary,
   });
 
   const { data: withdrawalReasonItems, isLoading } = useQuery({
     queryKey: ['users', 'me', 'withdrawal-reasons'],
     queryFn: getWithdrawalReasons,
     retry: false,
-    throwOnError: true,
+    throwOnError: shouldThrowToErrorBoundary,
   });
 
   if (isLoading || isProfileLoading || !withdrawalReasonItems || !profile) return <Loading />;
