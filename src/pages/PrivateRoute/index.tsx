@@ -1,3 +1,4 @@
+import { shouldHandleAsAuthRequired } from 'policy/error';
 import { Navigate, Outlet } from 'react-router-dom';
 
 import Loading from 'pages/Loading';
@@ -5,15 +6,18 @@ import Loading from 'pages/Loading';
 import { useGetMeQuery } from '../Auth/useGetMeQuery';
 
 const PrivateRoute = () => {
-  const { isError, isLoading, isSuccess } = useGetMeQuery();
+  const { error, isError, isLoading, isSuccess } = useGetMeQuery();
 
   if (isLoading) return <Loading />;
 
+  if (isError) {
+    if (shouldHandleAsAuthRequired(error)) return <Navigate to="/login" replace />;
+
+    throw error;
+  }
+
   if (isSuccess) return <Outlet />;
-
-  if (isError) return <Navigate to="/login" replace />;
-
-  return <Outlet />;
+  return null;
 };
 
 export default PrivateRoute;
