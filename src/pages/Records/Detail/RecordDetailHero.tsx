@@ -36,9 +36,6 @@ type RecordDetailHeroProps = {
 const HERO_SHELF_PRIMARY_HEIGHT = 42;
 const HERO_SHELF_SECONDARY_HEIGHT = 128;
 const HERO_TITLE_PULL_UP_REM = '-7.0625rem';
-const HERO_BACKGROUND_HEIGHT_REM = 'calc(env(safe-area-inset-top) + 18.0625rem)';
-const HERO_CONTENT_TOP_PADDING_REM = '0.9375rem';
-const HERO_SHELF_OVERLAP_REM = '-1.6875rem';
 
 const MSG_RECORD_DETAIL_MORE = '더보기';
 const MSG_RECORD_DETAIL_RATING = '별점';
@@ -142,7 +139,7 @@ export const RecordDetailHero = (props: RecordDetailHeroProps) => {
     <section className="relative overflow-hidden bg-neutral-0">
       {/* 배경 영역 */}
       {/* 아우터 컨테이너의 bg-[#303030]를 제거하여 서브픽셀 렌더링에 따른 미세한 어두운 경계선 유출을 근본적으로 방지합니다. */}
-      <div ref={backgroundRef} className="absolute inset-x-0 top-0 overflow-hidden" style={{ height: HERO_BACKGROUND_HEIGHT_REM }}>
+      <div ref={backgroundRef} className="absolute inset-x-0 top-0 h-80 overflow-hidden">
         <div className="absolute inset-0 bg-[#303030]">
           <img
             src={resolvedCover}
@@ -158,6 +155,8 @@ export const RecordDetailHero = (props: RecordDetailHeroProps) => {
         {/* 2. 하단 자연스러운 흰색 트랜지션 페이드 그라데이션 */}
         <div className="absolute inset-x-0 bottom-0 h-[60px] bg-gradient-to-t from-white to-transparent opacity-40" />
 
+        {/* 서브픽셀 렌더링 시 발생하는 1px 오차를 완벽히 가리기 위해 하단 마진을 살짝 밀어내고 높이를 키웁니다 (bottom-[-2px] h-[3.9rem]) */}
+        <div className="absolute inset-x-0 bottom-[-2px] h-[3.9rem] bg-white" />
       </div>
 
       <Header
@@ -174,7 +173,7 @@ export const RecordDetailHero = (props: RecordDetailHeroProps) => {
         {/* 헤더의 높이만큼 상단에 여백을 제공하여 투명 헤더와 컨텐츠가 겹치지 않도록 보정 */}
         <div className="mt-safe-top h-header w-full shrink-0" />
 
-        <div className="flex w-full flex-1 flex-col items-center px-mobile" style={{ paddingTop: HERO_CONTENT_TOP_PADDING_REM }}>
+        <div className="flex w-full flex-1 flex-col items-center px-mobile pt-[2.125rem]">
           {/* 책 표지 (피그마 전용 109:152 비율 고정) */}
           <div className="relative z-book w-[7.875rem] shrink-0">
             <BookCover
@@ -188,7 +187,7 @@ export const RecordDetailHero = (props: RecordDetailHeroProps) => {
           </div>
 
           {/* 책 선반 영역 (바깥으로 확장 + negative margin으로 책과 자연스럽게 겹치도록 설정) */}
-          <div className="relative w-[calc(100%+2rem)] shrink-0" style={{ marginTop: HERO_SHELF_OVERLAP_REM }}>
+          <div className="relative w-[calc(100%+2rem)] shrink-0" style={{ marginTop: '-1.5rem' }}>
             <ShelfBase height={HERO_SHELF_PRIMARY_HEIGHT} gradient={HERO_SHELF_PRIMARY_GRADIENT} layerOpacity={1} />
             {/* layerOpacity를 1로 보정하고 투명도를 그라데이션 색상 자체에 녹여 경계선 실선 문제를 완벽히 소멸시킵니다. */}
             <ShelfBase height={HERO_SHELF_SECONDARY_HEIGHT} gradient={HERO_SHELF_SECONDARY_GRADIENT} layerOpacity={1} />
