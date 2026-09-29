@@ -1,7 +1,8 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import Highlight from 'components/Highlight';
+import { Loading } from 'components/Loading';
 import { IconHeadphone } from 'components/icons';
 
 import loginImg from 'assets/img/login.png';
@@ -50,6 +51,7 @@ const LOGIN_BUTTON_ITEMS: LoginButtonItem[] = [
 const Login = () => {
   const navigate = useNavigate();
   const recentLoginProvider = getRecentLoginProvider();
+  const [isLoginPending, setIsLoginPending] = useState(false);
 
   const { isSuccess } = useGetMeQuery();
 
@@ -60,6 +62,9 @@ const Login = () => {
   }, [isSuccess, navigate]);
 
   const handleLogin = (provider: LoginProvider) => {
+    if (isLoginPending) return;
+
+    setIsLoginPending(true);
     window.localStorage.setItem(STORAGE_KEY.RECENT_LOGIN_PROVIDER, provider);
     window.location.replace(getOAuthStartUrl(provider));
   };
@@ -98,6 +103,7 @@ const Login = () => {
                 <button
                   type="button"
                   className="size-[3.375rem] rounded-full shadow-[0px_2px_10px_0px_rgba(0,0,0,0.14)]"
+                  disabled={isLoginPending}
                   onClick={() => handleLogin(provider)}
                 >
                   <img src={logoSrc} alt={alt} className="h-full w-full rounded-full object-cover" />
@@ -116,6 +122,16 @@ const Login = () => {
         <IconHeadphone className="size-icon-sm" />
         {MSG_LOGIN_HELP}
       </a>
+
+      {isLoginPending && (
+        <div
+          role="status"
+          aria-live="polite"
+          className="fixed inset-0 z-layer flex flex-col items-center justify-center gap-3 bg-neutral-0/80"
+        >
+          <Loading />
+        </div>
+      )}
     </section>
   );
 };
