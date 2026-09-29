@@ -8,8 +8,8 @@ import { useLayerStore } from 'stores/useLayerStore';
 
 import { Button } from 'components/Button';
 import { Header } from 'components/Header';
+import { Loading } from 'components/Loading';
 import { IconPen } from 'components/icons';
-import Loading from 'pages/Loading';
 
 import DownloadBackupModal from './DownloadBackupModal';
 import LogoutConfirmModal from './LogoutConfirmModal';
@@ -102,7 +102,7 @@ const Account = () => {
     navigate('/mypage/account/withdraw');
   };
 
-  if (isLoading || !profile) return <Loading />;
+  if (isLoading || !profile) return <Loading fullscreen />;
 
   const loginProviderLabel = LOGIN_PROVIDER_LABEL[profile.providers[0]];
   const trimmedNickname = nickname.trim();

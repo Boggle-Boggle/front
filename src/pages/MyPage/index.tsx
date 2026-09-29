@@ -3,8 +3,8 @@ import { useQuery } from '@tanstack/react-query';
 import { shouldThrowToErrorBoundary } from 'policy/error';
 import { useNavigate } from 'react-router-dom';
 
+import { Loading } from 'components/Loading';
 import { IconBook, IconGraduation, IconNote } from 'components/icons';
-import Loading from 'pages/Loading';
 
 import { useScrollRestoration } from 'hooks/useScrollRestoration';
 
@@ -83,7 +83,7 @@ const MyPage = () => {
     isReady: profile !== undefined,
   });
 
-  if (isLoading || !profile) return <Loading />;
+  if (isLoading || !profile) return <Loading fullscreen />;
 
   const loginProviderLabel = LOGIN_PROVIDER_LABEL[profile.providers[0]];
   const myPageStats = getMyPageStats(profile);

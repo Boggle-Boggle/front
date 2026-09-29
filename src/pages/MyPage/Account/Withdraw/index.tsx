@@ -9,7 +9,7 @@ import { Button } from 'components/Button';
 import { Checkbox } from 'components/Checkbox';
 import { Header } from 'components/Header';
 import { Input } from 'components/Input';
-import Loading from 'pages/Loading';
+import { Loading } from 'components/Loading';
 
 import WithdrawConfirmModal from './WithdrawConfirmModal';
 import { getMyPageProfile } from '../../api';
@@ -46,7 +46,7 @@ const Withdraw = () => {
     throwOnError: shouldThrowToErrorBoundary,
   });
 
-  if (isLoading || isProfileLoading || !withdrawalReasonItems || !profile) return <Loading />;
+  if (isLoading || isProfileLoading || !withdrawalReasonItems || !profile) return <Loading fullscreen />;
 
   const hasSelectedReasons = selectedReasons.length > 0;
   const feedbackTitle = `${profile.nickname}${MSG_WITHDRAW_FEEDBACK_SUFFIX}\n${MSG_WITHDRAW_FEEDBACK_TITLE}`;

@@ -3,9 +3,9 @@ import { useMemo } from 'react';
 
 import loadingAnimationData from 'assets/loading.json';
 
-type LoadingProps = {
+interface LoadingProps {
   fullscreen?: boolean;
-};
+}
 
 const PRIMARY_COLOR_FALLBACK = '#8bcfa7';
 
@@ -75,7 +75,7 @@ export const Loading = (props: LoadingProps) => {
   const { fullscreen = false } = props;
 
   const containerClassName = fullscreen
-    ? 'pointer-events-none fixed inset-0 z-layer flex items-center justify-center'
+    ? 'fixed inset-0 z-layer flex items-center justify-center bg-neutral-0/80'
     : 'flex items-center justify-center';
   const primaryColorHex = getPrimaryColorHex();
   const animationData = useMemo(() => {
@@ -89,7 +89,7 @@ export const Loading = (props: LoadingProps) => {
   }, [primaryColorHex]);
 
   return (
-    <section className={containerClassName}>
+    <section role="status" aria-live="polite" className={containerClassName}>
       <Lottie animationData={animationData} loop className="w-24" />
     </section>
   );

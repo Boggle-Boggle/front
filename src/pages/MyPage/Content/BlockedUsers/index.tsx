@@ -4,8 +4,8 @@ import { useLayerStore } from 'stores/useLayerStore';
 
 import { Button } from 'components/Button';
 import { Header } from 'components/Header';
+import { Loading } from 'components/Loading';
 import { IconCircleBan } from 'components/icons';
-import Loading from 'pages/Loading';
 
 import { UnblockUserConfirmModal } from './UnblockUserConfirmModal';
 import { getMyBlocks } from '../api';
@@ -30,7 +30,7 @@ const BlockedUsers = () => {
     });
   };
 
-  if (isLoading) return <Loading />;
+  if (isLoading) return <Loading fullscreen />;
 
   const blockedUsers = data?.items ?? [];
 

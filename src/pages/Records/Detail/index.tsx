@@ -4,8 +4,8 @@ import { shouldThrowToErrorBoundary } from 'policy/error';
 import { useState } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
 
+import { Loading } from 'components/Loading';
 import { Tabs, type TabItem } from 'components/Tabs';
-import Loading from 'pages/Loading';
 
 import { useScrollRestoration } from 'hooks/useScrollRestoration';
 
@@ -50,7 +50,7 @@ export const RecordDetailPage = () => {
     isReady: !!data,
   });
 
-  if (isLoading) return <Loading />;
+  if (isLoading) return <Loading fullscreen />;
 
   if (isError || !data)
     return (

@@ -3,7 +3,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 
 import { Header } from 'components/Header';
-import Loading from 'pages/Loading';
+import { Loading } from 'components/Loading';
 
 import { updateUserSettings, getUserSettings } from './api';
 import { SectionHeader } from '../shared/SectionHeader';
@@ -35,7 +35,7 @@ const Content = () => {
     },
   });
 
-  if (isLoading || !userSettings) return <Loading />;
+  if (isLoading || !userSettings) return <Loading fullscreen />;
 
   const handleAdultContentChange = () => {
     updateSettings({

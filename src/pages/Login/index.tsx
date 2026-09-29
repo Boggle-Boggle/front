@@ -51,7 +51,7 @@ const LOGIN_BUTTON_ITEMS: LoginButtonItem[] = [
 const Login = () => {
   const navigate = useNavigate();
   const recentLoginProvider = getRecentLoginProvider();
-  const [isLoginPending, setIsLoginPending] = useState(false);
+  const [isLoginPending, setIsLoginPending] = useState<boolean>(false);
 
   const { isSuccess } = useGetMeQuery();
 
@@ -123,15 +123,7 @@ const Login = () => {
         {MSG_LOGIN_HELP}
       </a>
 
-      {isLoginPending && (
-        <div
-          role="status"
-          aria-live="polite"
-          className="fixed inset-0 z-layer flex flex-col items-center justify-center gap-3 bg-neutral-0/80"
-        >
-          <Loading />
-        </div>
-      )}
+      {isLoginPending && <Loading fullscreen />}
     </section>
   );
 };
