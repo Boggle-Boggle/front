@@ -1,5 +1,7 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
+import { useNavigate } from 'react-router-dom';
+
 import IconButton from 'components/Button/IconButton';
 import { IconEllipsisVertical } from 'components/icons';
 import type { PageResponse, ReadingNoteResponse } from 'pages/Records/Detail/api';
@@ -8,7 +10,8 @@ import { formatToDotDateTime } from 'utils/date';
 
 type ReadingNoteCardProps = {
   note: ReadingNoteResponse;
-  onClick: (note: ReadingNoteResponse) => void;
+  bookTitle: string;
+  readingLogId?: string;
   onMenuClick: (event: React.MouseEvent, note: ReadingNoteResponse) => void;
 };
 
@@ -19,17 +22,28 @@ const formatNotePage = (page: PageResponse) => {
 };
 
 export const ReadingNoteCard = (props: ReadingNoteCardProps) => {
-  const { note, onClick, onMenuClick } = props;
+  const { note, bookTitle, readingLogId, onMenuClick } = props;
+  const navigate = useNavigate();
 
   const cardShadow = 'shadow-[0_2px_10px_rgba(0,0,0,0.16)]';
   const noteMetaText = note.page
     ? `${formatToDotDateTime(note.createdAt)} | ${formatNotePage(note.page)}`
     : formatToDotDateTime(note.createdAt);
 
+  const handleCardClick = () => {
+    navigate(`/notes/${note.id}`, {
+      state: {
+        note,
+        bookTitle,
+        readingLogId,
+      },
+    });
+  };
+
   return (
     <li
       className={`mb-5 flex cursor-pointer flex-col rounded-2xl px-4 pb-5 pt-2 text-left ${cardShadow}`}
-      onClick={() => onClick(note)}
+      onClick={handleCardClick}
     >
       <div className="flex items-center justify-between">
         <p className="truncate text-body1 font-medium text-neutral-60">{note.title}</p>

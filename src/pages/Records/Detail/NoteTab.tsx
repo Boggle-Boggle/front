@@ -46,16 +46,6 @@ export const NoteTab = ({ readingLogId, bookTitle }: NoteTabProps) => {
     });
   };
 
-  const handleCardClick = (note: ReadingNoteResponse) => {
-    navigate(`/notes/${note.id}`, {
-      state: {
-        note,
-        bookTitle,
-        readingLogId,
-      },
-    });
-  };
-
   if (isLoading)
     return <div className="flex justify-center py-20 text-body2 text-neutral-60">{MSG_NOTE_TAB_LOADING}</div>;
 
@@ -71,7 +61,13 @@ export const NoteTab = ({ readingLogId, bookTitle }: NoteTabProps) => {
       ) : (
         <ul>
           {notes.map((note) => (
-            <ReadingNoteCard key={note.id} note={note} onClick={handleCardClick} onMenuClick={handleCardMenuClick} />
+            <ReadingNoteCard
+              key={note.id}
+              note={note}
+              bookTitle={bookTitle}
+              readingLogId={readingLogId}
+              onMenuClick={handleCardMenuClick}
+            />
           ))}
         </ul>
       )}
