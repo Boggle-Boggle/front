@@ -1,5 +1,6 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
 
+import { isApiError } from 'api';
 import { useState } from 'react';
 import { useNavigate, useSearchParams, useLocation } from 'react-router-dom';
 import { useLayerStore } from 'stores/useLayerStore';
@@ -28,8 +29,34 @@ import { getAddRecordStatus } from '../shared/recordStatus';
 
 const MSG_ADD_RECORD_SUBMIT = '입력을 끝내고 완료하기';
 const MSG_ADD_RECORD_FAILED = '독서 기록을 저장하지 못했습니다. 다시 시도해주세요.';
+const MSG_ADD_RECORD_INVALID_INPUT = '입력한 독서 기록 정보를 다시 확인해주세요.';
+const MSG_ADD_RECORD_BOOKSHELF_NOT_FOUND = '선택한 그룹을 찾을 수 없습니다. 다시 선택해주세요.';
 const MSG_DATE_SELECT_START = '시작일 선택하기';
 const MSG_DATE_SELECT_END = '종료일 선택하기';
+
+const ADD_RECORD_INPUT_ERROR_CODES = [
+  'COMMON_INVALID_REQUEST',
+  'INVALID_READING_STATUS',
+  'INVALID_RATING',
+  'INVALID_PROGRESS',
+  'INVALID_ISBN13',
+] as const;
+
+const requiresEndDate = (status: AddRecordStatus) => status !== 'READING';
+
+const getAddRecordDatePayload = (status: AddRecordStatus, startDate: string, endDate: string) => ({
+  startDate,
+  endDate: requiresEndDate(status) ? endDate : undefined,
+});
+
+const getAddRecordErrorMessage = (error: unknown) => {
+  if (!isApiError(error)) return MSG_ADD_RECORD_FAILED;
+
+  if (ADD_RECORD_INPUT_ERROR_CODES.some((code) => code === error.code)) return MSG_ADD_RECORD_INVALID_INPUT;
+  if (error.code === 'BOOKSHELF_NOT_FOUND') return MSG_ADD_RECORD_BOOKSHELF_NOT_FOUND;
+
+  return MSG_ADD_RECORD_FAILED;
+};
 
 export const NewRecord = () => {
   const [rating, setRating] = useState<number>(0);
@@ -57,13 +84,13 @@ export const NewRecord = () => {
   const { isPending: isCustomPending, mutate: saveCustomReadingLog } = useMutation({
     mutationFn: createCustomReadingLog,
     onSuccess: ({ id }) => navigate('/records/new/completed', { replace: true, state: { readingLogId: id } }),
-    onError: () => addToast({ description: MSG_ADD_RECORD_FAILED, type: 'error' }),
+    onError: (error) => addToast({ description: getAddRecordErrorMessage(error), type: 'error' }),
   });
 
   const { isPending, mutate: saveReadingLog } = useMutation({
     mutationFn: createReadingLog,
     onSuccess: ({ id }) => navigate('/records/new/completed', { replace: true, state: { readingLogId: id } }),
-    onError: () => addToast({ description: MSG_ADD_RECORD_FAILED, type: 'error' }),
+    onError: (error) => addToast({ description: getAddRecordErrorMessage(error), type: 'error' }),
   });
 
   const totalPageCount =
@@ -83,8 +110,7 @@ export const NewRecord = () => {
         readingLog: {
           status,
           rating,
-          startDate,
-          endDate: status === 'COMPLETED' ? endDate : undefined,
+          ...getAddRecordDatePayload(status, startDate, endDate),
           bookshelfIds: selectedBookshelfIds,
           isHidden,
           // 값이 기입되어 있을 때만 안전하게 인라인 변환 전송 (비어 있으면 undefined 로 가드해 전송 누락)
@@ -104,8 +130,7 @@ export const NewRecord = () => {
       mediaType: bookDetail.mediaType,
       status,
       rating,
-      startDate,
-      endDate,
+      ...getAddRecordDatePayload(status, startDate, endDate),
       bookshelfIds: selectedBookshelfIds,
       isHidden,
       // 값이 기입되어 있을 때만 안전하게 인라인 변환 전송 (비어 있으면 undefined 로 가드해 전송 누락)

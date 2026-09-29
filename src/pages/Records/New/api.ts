@@ -8,8 +8,8 @@ export interface CreateReadingLogRequest {
   mediaType: BookMediaType;
   status: AddRecordStatus;
   rating: number;
-  startDate: string;
-  endDate: string;
+  startDate?: string;
+  endDate?: string;
   progressType?: ReadingLogProgressType;
   progressValue?: number;
   totalPagesOverride?: number;
