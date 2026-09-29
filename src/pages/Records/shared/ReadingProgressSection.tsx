@@ -63,6 +63,13 @@ export const ReadingProgressSection = (props: ReadingProgressSectionProps) => {
     onChangeProgressValue(event.target.value);
   };
 
+  const handleProgressTypeChange = (nextProgressType: ReadingLogProgressType) => {
+    if (nextProgressType === progressType) return;
+
+    onChangeProgressType(nextProgressType);
+    onChangeProgressValue('');
+  };
+
   const handleClearProgressValue = () => onChangeProgressValue('');
 
   return (
@@ -73,7 +80,7 @@ export const ReadingProgressSection = (props: ReadingProgressSectionProps) => {
           <SegmentedControl
             options={READING_PROGRESS_TYPE_OPTIONS}
             value={progressType}
-            onChange={onChangeProgressType}
+            onChange={handleProgressTypeChange}
             ariaLabel={MSG_ADD_RECORD_PROGRESS_TYPE_LABEL}
           />
         )}
