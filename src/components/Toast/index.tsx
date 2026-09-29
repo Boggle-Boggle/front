@@ -25,7 +25,7 @@ export const Toast = (props: ToastProps) => {
   }, []);
 
   const backgroundClass = type === 'info' ? 'bg-information' : type === 'error' ? 'bg-danger' : 'bg-primary';
-  const animationClass = isLeaving ? 'animate-fadeOutSlow' : 'animate-toastIn';
+  const animationClass = isLeaving ? 'animate-toastOut' : 'animate-toastIn';
   const layoutClass = size === 'large' ? 'flex flex-col gap-1' : 'flex items-center gap-1';
   const showTitle = Boolean(title) && size === 'large';
   const icon =

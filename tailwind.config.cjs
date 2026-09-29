@@ -110,6 +110,10 @@ module.exports = {
           '0%': { opacity: '0', transform: 'translateY(0.75rem)' },
           '100%': { opacity: '1', transform: 'translateY(0)' },
         },
+        toastOut: {
+          '0%': { opacity: '1', transform: 'translateY(0)' },
+          '100%': { opacity: '0', transform: 'translateY(0.25rem)' },
+        },
       },
       animation: {
         fadeInSlow: 'fadeIn 0.3s ease-out forwards',
@@ -121,6 +125,7 @@ module.exports = {
         slideLeft: 'slideLeft 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards',
         slideRight: 'slideRight 0.18s ease-in forwards',
         toastIn: 'toastIn 0.24s ease-out forwards',
+        toastOut: 'toastOut 0.3s ease-out forwards',
       },
 
       // 타블렛 반응형(추가 예정)
