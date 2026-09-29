@@ -8,6 +8,7 @@ const BookDetail = lazy(() => import('pages/BookDetail'));
 const RecordDetailPage = lazy(() => import('pages/Records/Detail'));
 const RecordNew = lazy(() => import('pages/Records/New'));
 const RecordNewCompleted = lazy(() => import('pages/Records/New/Completed'));
+const RecordNotes = lazy(() => import('pages/Records/Notes'));
 const NoteNew = lazy(() => import('pages/Notes/New'));
 const NoteDetail = lazy(() => import('pages/Notes/Detail'));
 const Report = lazy(() => import('pages/Report'));
@@ -75,6 +76,7 @@ const router = createBrowserRouter([
                 ],
               },
               { path: '/records/:recordId', element: <RecordDetailPage /> },
+              { path: '/records/:recordId/notes', element: <RecordNotes /> },
               { path: '/mypage/account', element: <MyPageAccount /> },
               { path: '/mypage/about', element: <MyPageAbout /> },
               { path: '/mypage/account/withdraw', element: <MyPageAccountWithdraw /> },
