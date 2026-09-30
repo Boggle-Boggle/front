@@ -102,6 +102,35 @@ if (isApiError(error) && error.code === 'BOOK_NOT_FOUND') {
 - [ ] `throwOnError` 사용처를 확인한다.
 - [ ] 우선 정비할 페이지 후보를 정한다.
 
+#### 현재 현황
+
+| 페이지/영역 | 구조 | API 파일 | Query 방식 | 핵심 Query | 보조 Query | 우선순위 |
+| --- | --- | --- | --- | --- | --- | --- |
+| `BookDetail` | 폴더 | 있음 | 페이지 루트 hook | `useBookDetailQuery` | 리뷰 목록 inline | 높음 |
+| `Records/Detail` | 폴더 | 있음 | inline | 독서기록 상세 | 노트 탭, 책장 목록 | 높음 |
+| `Records/Notes` | 폴더 | `Records/Detail/api.ts` 재사용 | inline | 독서노트 목록, 독서기록 상세 | 없음 | 높음 |
+| `Notes/Detail` | 폴더 | `Records/Detail/api.ts` 재사용 | inline | 독서노트 상세 | 독서기록 상세 제목 조회 | 높음 |
+| `Notes/New` | 폴더 | `Records/Detail/api.ts` 재사용 | inline | 편집 대상 노트 | 없음 | 높음 |
+| `MyPage` | 폴더 | 있음 | inline | 프로필 | 없음 | 중간 |
+| `MyPage/Account` | 폴더 | 있음 | inline + mutation hook | 프로필 | 닉네임 변경 mutation | 중간 |
+| `MyPage/Account/Withdraw` | 폴더 | `MyPage/api.ts`, `Account/api.ts` 재사용 | inline | 프로필, 탈퇴 사유 | 없음 | 중간 |
+| `MyPage/Content` | 폴더 | 있음 | inline | 사용자 설정 | 설정 변경 mutation | 중간 |
+| `MyPage/Content/BlockedUsers` | 폴더 | 상위 `api.ts` 재사용 | inline | 차단 유저 목록 | 없음 | 낮음 |
+| `Library` | 폴더 | 있음 | 페이지 루트 hook + inline | 독서기록/관심도서 목록 | 독서 요약 | 중간 |
+| `SearchResult` | 폴더 | 있음 | 페이지 루트 hook | 검색 결과 | 없음 | 낮음 |
+| `Search` 하위 섹션 | 폴더/섹션 혼재 | 각 섹션별 있음 | 섹션 hook + inline 혼재 | 없음 | 인기/추천/최근 검색 섹션 | 낮음 |
+| `Main` | 폴더 | 있음 | inline | 독서기록 목록 | 책장 임시 조회 | 낮음 |
+| `Records/New` | 폴더 | 있음 | inline | 책장 목록 | 없음 | 중간 |
+| `Auth`, `PrivateRoute`, `Login` | 폴더 | 있음 | 공용 hook | 로그인 사용자 확인 | 없음 | 별도 |
+
+#### 확인된 패턴
+
+- `useQuery`, `useInfiniteQuery`가 페이지 `index.tsx` 안에 inline으로 선언된 곳이 많다.
+- 일부 query hook은 페이지 루트에 위치한다. 새 컨벤션 기준으로는 `queries/`로 이동 대상이다.
+- 몇몇 페이지는 다른 페이지의 `api.ts`를 직접 재사용한다. 정비 시 API 소유 경계를 다시 확인한다.
+- 목록/섹션 query는 페이지 전체 fallback보다 섹션 fallback이 적합한 경우가 많다.
+- 우선 정비 대상은 상세 리소스를 다루는 `BookDetail`, `Records/Detail`, `Records/Notes`, `Notes/Detail`, `Notes/New`로 둔다.
+
 ### 2. Query 선언 규칙 정리
 
 - [ ] inline query를 유지할 페이지를 정한다.
