@@ -36,7 +36,7 @@ export const DEFAULT_ROUTE_ERROR_MESSAGE = {
   description: '잠시 후 다시 시도해주세요.',
 } satisfies ErrorMessage;
 
-// 페이지 핵심 데이터를 더 이상 렌더링할 수 없는 에러인지 판단합니다.
+// 공통 실패로 분류한 query 에러만 RouteErrorFallback으로 전달합니다.
 export const shouldThrowToErrorBoundary = (error: unknown) => {
   if (!isApiError(error)) return true;
 
