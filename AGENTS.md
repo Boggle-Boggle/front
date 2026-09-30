@@ -2,7 +2,7 @@
 
 이 문서는 빼곡 프론트엔드 프로젝트에서 에이전트가 바로 알아야 하는 최소 작업 규칙과 컨벤션 문서의 진입점을 정의한다.
 
-개발 컨벤션의 상세 내용은 `docs/convention` 아래 문서를 기준으로 관리한다.
+개발 컨벤션의 상세 내용은 `docs/conventions` 아래 문서를 기준으로 관리한다.
 
 ## Language
 
@@ -13,11 +13,11 @@
 
 프로젝트 개발 컨벤션은 아래 문서를 우선 참조한다.
 
-- `docs/convention/README.md`
-- `docs/convention/project-structure.md`
-- `docs/convention/components.md`
-- `docs/convention/state-management.md`
-- `docs/convention/code-style.md`
+- `docs/conventions/README.md`
+- `docs/conventions/project-structure.md`
+- `docs/conventions/server-state.md`
+- `docs/conventions/component-structure.md`
+- `docs/conventions/error-handling.md`
 
 ## API 명세
 
@@ -35,7 +35,4 @@
 
 - 이 프로젝트는 네이티브 앱의 웹뷰 안에서 URL 형태로 구동되는 하이브리드 웹앱이다.
 - 네이티브 기능이 필요한 작업은 브리지 연동을 전제로 검토하고, 브리지 미연결 시 동작 방식이나 폴백 여부를 함께 고려한다.
-- 실행 환경 관련 상세 기준은 `docs/convention/project-structure.md`의 `플랫폼 실행 환경` 섹션을 따른다.
-- `legacy` 디렉터리는 보호된 영역이다.
-- `src/legacy/**`, `legacy/**` 아래 파일은 수정하지 않는다.
-- legacy 보호의 상세 규칙은 `docs/convention/project-structure.md`의 `Legacy Protection` 섹션을 따른다.
+- 실행 환경 관련 상세 기준은 `docs/conventions/project-structure.md`의 `플랫폼 실행 환경` 섹션을 따른다.
