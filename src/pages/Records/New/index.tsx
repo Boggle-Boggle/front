@@ -23,6 +23,7 @@ import { PageInfoModal } from '../shared/PageInfoModal';
 import { RatingSection } from '../shared/RatingSection';
 import { ReadingPeriodSection } from '../shared/ReadingPeriodSection';
 import { ReadingProgressSection } from '../shared/ReadingProgressSection';
+import { RecordDetailShelfPreview } from '../shared/RecordDetailShelfPreview';
 import { VisibilitySection } from '../shared/VisibilitySection';
 import { BOOKSHELVES_QUERY_KEY, getBookshelves, type BookshelfItem } from '../shared/api';
 import { getAddRecordStatus } from '../shared/recordStatus';
@@ -77,6 +78,7 @@ export const NewRecord = () => {
   const customBook = location.state?.customBook as CustomBookDto | undefined;
   const customStatus = location.state?.status as AddRecordStatus | undefined;
   const bookDetail = location.state?.bookDetail as BookDetail | undefined;
+  const isShelfPreview = searchParams.get('mode') !== 'form';
   const status = customStatus || getAddRecordStatus(searchParams.get('status'));
 
   const { data: bookshelves = [] } = useQuery({ queryKey: BOOKSHELVES_QUERY_KEY, queryFn: getBookshelves });
@@ -203,6 +205,16 @@ export const NewRecord = () => {
       component: <PageInfoModal initialValue={totalPageCount} onClose={pop} onSubmit={setTotalPageCountOverride} />,
     });
   };
+
+  if (isShelfPreview) {
+    return (
+      <RecordDetailShelfPreview
+        cover={bookDetail?.coverUrl || customBook?.coverUrl}
+        title={bookDetail?.title || customBook?.title}
+        author={bookDetail?.author || customBook?.author}
+      />
+    );
+  }
 
   return (
     <div className="flex h-full flex-col">

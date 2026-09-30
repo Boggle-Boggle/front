@@ -23,6 +23,7 @@ type MainBookCaseItem = {
 
 const MSG_TITLE_SEARCH_PLACEHOLDER = '책 제목을 입력해주세요';
 const MSG_MAIN_BOOKCASE_COUNT = (count: number) => `${count}권 채웠습니다`;
+const MSG_RECORD_DETAIL_PREVIEW = '상세 프리뷰';
 const MAIN_READING_LOGS_PAGE = 1;
 const MAIN_READING_LOGS_PAGE_SIZE = 100;
 
@@ -134,6 +135,14 @@ const Main = () => {
           <BookCase books={processedBooks} onBookClick={(id) => navigate(`/records/${id}`)} />
         </div>
       </div>
+
+      <button
+        type="button"
+        onClick={() => navigate('/records/new')}
+        className="fixed bottom-[calc(env(safe-area-inset-bottom)+5.5rem)] right-4 z-fixedBtn rounded-full bg-neutral-100 px-4 py-3 text-body2 text-neutral-0 shadow-[0_0.25rem_1rem_rgba(0,0,0,0.24)]"
+      >
+        {MSG_RECORD_DETAIL_PREVIEW}
+      </button>
 
       <div className="absolute inset-0 bg-neutral-0 mix-blend-soft-light" />
       <div className="absolute bottom-0 h-48 w-full bg-[linear-gradient(180deg,_var(--color-primary-light)_0%,_rgba(255,255,255,0)_100%)]" />
