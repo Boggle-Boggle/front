@@ -54,15 +54,10 @@ const router = createBrowserRouter([
             element: <WithBottomNavLayout />,
             children: [
               { path: '/', element: <Main /> },
-              {
-                path: '/search',
-                children: [
-                  { index: true, element: <Search /> },
-                  { path: 'most-read', element: <MostRead /> },
-                  { path: 'realtime-popular', element: <RealTimePopular /> },
-                  { path: 'trending', element: <Trending /> },
-                ],
-              },
+              { path: '/search', element: <Search /> },
+              { path: '/search/most-read', element: <MostRead /> },
+              { path: '/search/realtime-popular', element: <RealTimePopular /> },
+              { path: '/search/trending', element: <Trending /> },
               { path: '/library', element: <Library /> },
               { path: '/mypage', element: <MyPage /> },
             ],
