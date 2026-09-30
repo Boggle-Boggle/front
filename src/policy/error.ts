@@ -1,5 +1,10 @@
 import { isApiError } from 'api.types';
 
+// 에러 처리 책임은 아래 기준으로 나눕니다.
+// - 공통 실패: RouteErrorFallback에서 처리합니다.
+// - 인증 실패: PrivateRoute에서 로그인 흐름으로 처리합니다.
+// - 리소스 없음: 각 페이지에서 화면 맥락에 맞게 처리합니다.
+
 export type ErrorMessage = {
   title: string;
   description: string;
