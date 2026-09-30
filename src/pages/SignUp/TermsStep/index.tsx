@@ -64,7 +64,7 @@ export const TermsStep = (props: TermsStepProps) => {
     <>
       <Header title={MSG_SIGNUP_HEADER_TITLE} leftBtn={<BackButton onClick={onPrev} />} />
 
-      <section className="flex h-full flex-col justify-between px-mobile">
+      <section className="flex h-full flex-col justify-between px-mobile pb-safe-bottom">
         <div>
           <Title text={MSG_SIGNUP_TERMS_TITLE} />
           <Description text={MSG_SIGNUP_TERMS_DESCRIPTION} />
