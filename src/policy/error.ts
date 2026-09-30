@@ -5,23 +5,23 @@ import { isApiError } from 'api.types';
 // - 인증 실패: PrivateRoute에서 로그인 흐름으로 처리합니다.
 // - 리소스 없음: 각 페이지에서 화면 맥락에 맞게 처리합니다.
 
-export type ErrorMessage = {
+type ErrorMessage = {
   title: string;
   description: string;
 };
 
 export const CLIENT_REQUEST_FAILED_CODE = 'CLIENT_REQUEST_FAILED';
 
-export const ROUTE_ERROR_CODES = [CLIENT_REQUEST_FAILED_CODE, 'COMMON_INTERNAL_ERROR', 'AUTH_FORBIDDEN'] as const;
+const ROUTE_ERROR_CODES = [CLIENT_REQUEST_FAILED_CODE, 'COMMON_INTERNAL_ERROR', 'AUTH_FORBIDDEN'] as const;
 
-export const AUTH_REQUIRED_ERROR_CODES = [
+const AUTH_REQUIRED_ERROR_CODES = [
   'AUTH_TOKEN_MISSING',
   'AUTH_TOKEN_EXPIRED',
   'AUTH_TOKEN_INVALID',
   'AUTH_REFRESH_INVALID',
 ] as const;
 
-export const ERROR_MESSAGE_BY_CODE = {
+const ERROR_MESSAGE_BY_CODE = {
   [CLIENT_REQUEST_FAILED_CODE]: {
     title: '요청을 처리하지 못했어요',
     description: '잠시 후 다시 시도해주세요.',
@@ -36,7 +36,7 @@ export const ERROR_MESSAGE_BY_CODE = {
   },
 } satisfies Record<(typeof ROUTE_ERROR_CODES)[number], ErrorMessage>;
 
-export const DEFAULT_ROUTE_ERROR_MESSAGE = {
+const DEFAULT_ROUTE_ERROR_MESSAGE = {
   title: '문제가 발생했어요',
   description: '잠시 후 다시 시도해주세요.',
 } satisfies ErrorMessage;
