@@ -70,6 +70,14 @@ export const BookCard = () => {
 - 하위 컴포넌트는 꼭 달라져야 하는 스타일만 명시한다.
 - 반복되는 스타일 조합은 inline class를 계속 늘리기보다 공용 컴포넌트나 토큰화 가능한 형태로 정리한다.
 
+Skeleton 블록은 전역 `.skeleton` 유틸리티를 사용한다.
+
+```tsx
+<div className="skeleton h-4 w-full" />
+```
+
+`.skeleton`에는 기본 배경, radius, shimmer 애니메이션이 포함되어 있다. 개별 skeleton에서는 크기와 위치만 명시한다.
+
 ## 컴포넌트 내부 순서
 
 페이지 컴포넌트 내부는 아래 순서를 따른다.

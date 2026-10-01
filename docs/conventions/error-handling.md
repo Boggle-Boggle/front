@@ -39,15 +39,25 @@
 
 리소스 없음은 전역 에러 정책에 넣지 않는다.
 
-각 페이지가 화면 맥락에 맞게 처리한다.
+각 페이지가 화면 맥락에 맞게 처리하되, 풀페이지 fallback UI는 `ResourceFallback`을 사용한다.
 
 예시:
 
 ```tsx
-if (isApiError(error) && error.code === 'BOOK_NOT_FOUND') {
-  return <BookDetailFallback variant="notFound" />;
+if (isBookDetailError || !bookDetail) {
+  return <ResourceFallback type="bookNotFound" />;
 }
 ```
+
+`ResourceFallback`은 기본 액션으로 `navigate(-1)`을 수행한다.
+홈 이동, 특정 경로 이동처럼 특별한 동작이 필요한 경우에만 `onAction`을 전달한다.
+
+```tsx
+<ResourceFallback type="bookNotFound" onAction={handleMoveHome} />
+```
+
+새 리소스 없음 화면이 필요하면 `ResourceFallback` 내부 메시지 매핑에 type을 추가한다.
+메시지는 locale별 객체 아래에 둔다.
 
 리소스 없음 예시:
 
@@ -81,6 +91,23 @@ if (isApiError(error) && error.code === 'BOOK_NOT_FOUND') {
 - 리스트 첫 로딩
 - 카드형 콘텐츠
 
+페이지 핵심 query의 skeleton은 페이지 전용 컴포넌트로 만든다.
+
+```txt
+BookDetail/
+  components/
+    BookDetailSkeleton.tsx
+```
+
+Skeleton은 실제 화면의 크기, 위치, 간격을 최대한 맞춰 layout shift를 줄인다.
+단, 실제 데이터의 세부 항목 개수나 텍스트 길이를 과하게 따라가지 않는다.
+
+반복되는 skeleton 블록은 전역 `.skeleton` 유틸리티를 사용한다.
+
+```tsx
+<div className="skeleton h-[10.5rem] w-28" />
+```
+
 ### Partial Loading
 
 특정 섹션이나 액션만 로딩 중일 때 사용한다.
@@ -99,7 +126,7 @@ if (isApiError(error) && error.code === 'BOOK_NOT_FOUND') {
 if (isBookDetailLoading) return <BookDetailSkeleton />;
 
 if (isBookDetailError || !bookDetail) {
-  return <BookDetailFallback error={bookDetailError} />;
+  return <ResourceFallback type="bookNotFound" />;
 }
 ```
 
@@ -110,6 +137,7 @@ if (isBookDetailError || !bookDetail) {
 보조 query는 해당 섹션 내부에서 fallback을 처리할 수 있다.
 
 ```tsx
+// prettier-ignore
 <ReviewSection>
   {isReviewError ? <ReviewFallback /> : <ReviewList />}
 </ReviewSection>
@@ -119,4 +147,3 @@ if (isBookDetailError || !bookDetail) {
 
 - 빈 결과: empty state
 - 요청 실패: section fallback 또는 재시도 UI
-
