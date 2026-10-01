@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 
-import { getBookDetail } from '../api';
+import { getBookDetail } from './api';
 
 export const useBookDetailQuery = (isbn13: string) => {
   return useQuery({
