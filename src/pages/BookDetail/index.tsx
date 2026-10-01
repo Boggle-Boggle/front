@@ -13,9 +13,9 @@ import { IconHeart, IconHeartFilled } from 'components/icons';
 import { useHeaderTitleByScroll } from 'hooks/useHeaderTitleByScroll';
 import { useScrollRestoration } from 'hooks/useScrollRestoration';
 
-import { AddRecordStatusBottomSheet } from './AddRecordStatusBottomSheet';
 import { InfoSection } from './InfoSection';
 import { ReviewSection } from './ReviewSection';
+import { AddRecordStatusBottomSheet } from './components/AddRecordStatusBottomSheet';
 import { BookDetailSkeleton } from './components/BookDetailSkeleton';
 import { useBookDetailQuery } from './queries/useBookDetailQuery';
 import { useToggleInterestedBookMutation } from './queries/useToggleInterestedBookMutation';

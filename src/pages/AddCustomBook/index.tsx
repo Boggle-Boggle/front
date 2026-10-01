@@ -18,7 +18,7 @@ import BookCover from 'components/BookCover';
 import { BottomButton } from 'components/Button';
 import { Header } from 'components/Header';
 import { IconCirclePlus } from 'components/icons';
-import { AddRecordStatusBottomSheet } from 'pages/BookDetail/AddRecordStatusBottomSheet';
+import { AddRecordStatusBottomSheet } from 'pages/BookDetail/components/AddRecordStatusBottomSheet';
 
 import type { Book, CustomBookDto } from 'types';
 
