@@ -3,6 +3,8 @@ import type { PaginatedResponse, PaginationParams } from 'api.types';
 
 import type { Book, Nullable, ReadingLogProgressType, ReadingLogStatus } from 'types';
 
+import type { Bookshelf } from './types';
+
 type ReadingLogSort =
   | 'START_DATE_DESC'
   | 'START_DATE_ASC'
@@ -47,4 +49,14 @@ export const getReadingLogs = async (params: GetReadingLogsParams) => {
   });
 
   return response.data;
+};
+
+type BookshelvesResponse = {
+  items: Bookshelf[];
+};
+
+export const getBookshelves = async () => {
+  const response = await api.get<{ data: BookshelvesResponse }>('/v2/bookshelves');
+
+  return response.data.data.items;
 };

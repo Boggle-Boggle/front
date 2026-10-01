@@ -1,6 +1,3 @@
-import { useQuery } from '@tanstack/react-query';
-
-import { api } from 'api';
 import { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useLayerStore from 'stores/useLayerStore';
@@ -12,8 +9,9 @@ import { IconArrowDown } from 'components/icons';
 import { useScrollRestoration } from 'hooks/useScrollRestoration';
 
 import { MainPeriodModal } from './MainPeriodModal';
-import { getReadingLogs, type GetReadingLogsParams } from './api';
-import type { MainPeriodFilterType, Bookshelf } from './types';
+import { useMainBookshelvesQuery } from './queries/useMainBookshelvesQuery';
+import { useMainReadingLogsQuery } from './queries/useMainReadingLogsQuery';
+import type { MainPeriodFilterType } from './types';
 
 type MainBookCaseItem = {
   id: number;
@@ -23,8 +21,6 @@ type MainBookCaseItem = {
 
 const MSG_TITLE_SEARCH_PLACEHOLDER = '책 제목을 입력해주세요';
 const MSG_MAIN_BOOKCASE_COUNT = (count: number) => `${count}권 채웠습니다`;
-const MAIN_READING_LOGS_PAGE = 1;
-const MAIN_READING_LOGS_PAGE_SIZE = 100;
 
 const Main = () => {
   const navigate = useNavigate();
@@ -35,37 +31,16 @@ const Main = () => {
   const [selectedYear, setSelectedYear] = useState<number>(new Date().getFullYear());
   const [selectedMonth, setSelectedMonth] = useState<number>(new Date().getMonth() + 1);
 
-  const { data: readingLogs } = useQuery({
-    queryKey: ['reading-logs', 'list', periodFilter, selectedBookshelfId, selectedYear, selectedMonth],
-    queryFn: () => {
-      const params: GetReadingLogsParams = {
-        page: MAIN_READING_LOGS_PAGE,
-        size: MAIN_READING_LOGS_PAGE_SIZE,
-        sort: 'START_DATE_DESC',
-        status: 'ALL',
-      };
-
-      if (periodFilter === 'GROUP' && selectedBookshelfId) {
-        params.bookshelfId = selectedBookshelfId;
-      } else if (periodFilter === 'PERIOD') {
-        params.year = selectedYear;
-        params.month = selectedMonth;
-      }
-
-      return getReadingLogs(params);
-    },
+  const { data: readingLogs } = useMainReadingLogsQuery({
+    periodFilter,
+    selectedBookshelfId,
+    selectedYear,
+    selectedMonth,
   });
+  const { data: bookshelves } = useMainBookshelvesQuery();
 
   const scrollRef = useScrollRestoration<HTMLDivElement>({
     isReady: readingLogs !== undefined,
-  });
-
-  const { data: bookshelves } = useQuery<Bookshelf[]>({
-    queryKey: ['bookshelves'],
-    queryFn: async () => {
-      const response = await api.get('/v2/bookshelves');
-      return response.data.data.items;
-    },
   });
 
   const handleOpenFilter = () => {
