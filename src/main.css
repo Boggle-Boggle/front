@@ -114,6 +114,30 @@
   }
 }
 
+@layer utilities {
+  .skeleton {
+    @apply relative overflow-hidden rounded bg-neutral-20;
+  }
+
+  .skeleton::before {
+    content: '';
+    @apply absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-neutral-0/40 to-transparent;
+    animation: skeleton-shimmer 1.4s infinite;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .skeleton::before {
+      animation: none;
+    }
+  }
+}
+
+@keyframes skeleton-shimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
 .scrollbar-hide {
   -ms-overflow-style: none;
   scrollbar-width: none;

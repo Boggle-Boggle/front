@@ -10,23 +10,23 @@ export const BookDetailSkeleton = () => {
     <>
       <Header withBack />
 
-      <div className="flex h-full w-full animate-pulse flex-col overflow-y-auto px-mobile pb-safe-bottom">
+      <div className="flex h-full w-full flex-col overflow-y-auto px-mobile pb-safe-bottom">
         <section className="flex flex-col items-center py-5">
-          <div className="h-[10.5rem] w-28 rounded bg-neutral-20" />
-          <div className="mt-4 h-6 w-52 rounded bg-neutral-20" />
-          <div className="mt-2 h-5 w-28 rounded bg-neutral-20" />
+          <div className="skeleton h-[10.5rem] w-28" />
+          <div className="skeleton mt-4 h-6 w-52" />
+          <div className="skeleton mt-2 h-5 w-28" />
         </section>
 
         <div className="mt-2 flex h-12 gap-4">
-          <div className="h-full flex-1 rounded bg-neutral-20" />
-          <div className="h-full flex-1 rounded bg-neutral-20" />
+          <div className="skeleton h-full flex-1" />
+          <div className="skeleton h-full flex-1" />
         </div>
 
         <section className="mt-6 flex flex-col gap-3">
-          <div className="h-5 w-24 rounded bg-neutral-20" />
-          <div className="h-4 w-full rounded bg-neutral-20" />
-          <div className="h-4 w-11/12 rounded bg-neutral-20" />
-          <div className="h-4 w-4/5 rounded bg-neutral-20" />
+          <div className="skeleton h-5 w-24" />
+          <div className="skeleton h-4 w-full" />
+          <div className="skeleton h-4 w-11/12" />
+          <div className="skeleton h-4 w-4/5" />
         </section>
 
         <BottomButton onClick={handleDisabledButtonClick} disabled>
