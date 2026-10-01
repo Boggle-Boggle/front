@@ -43,14 +43,12 @@ export const getWithdrawalReasons = async () => {
   return response.data.data.reasons;
 };
 
-interface DeleteMeWithdrawalReason {
+export interface DeleteMeWithdrawalReason {
   reason: WithdrawalReasonCode;
   customText?: string;
 }
 
-interface DeleteMeRequest {
-  reasons: DeleteMeWithdrawalReason[];
-}
+type DeleteMeRequest = DeleteMeWithdrawalReason[];
 
 export const deleteMe = async (params: DeleteMeRequest) => {
   await api.delete<void>('/v2/users/me', {

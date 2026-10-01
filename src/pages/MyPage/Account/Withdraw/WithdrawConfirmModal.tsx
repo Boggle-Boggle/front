@@ -1,6 +1,6 @@
 import { ActionModal } from 'components/Layer/ActionModal';
 
-import type { WithdrawalReasonCode } from '../api';
+import type { DeleteMeWithdrawalReason, WithdrawalReasonCode } from '../api';
 import { useDeleteMeMutation } from '../useDeleteMeMutation';
 
 type WithdrawConfirmModalProps = {
@@ -15,18 +15,21 @@ const MSG_WITHDRAW_MODAL_DESCRIPTION =
 const MSG_WITHDRAW_MODAL_CANCEL = '뒤로가기';
 const MSG_WITHDRAW_MODAL_CONFIRM = '계정을 삭제합니다';
 
+const getDeleteMeReasons = (reasons: WithdrawalReasonCode[], customText: string): DeleteMeWithdrawalReason[] => {
+  const trimmedCustomText = customText.trim();
+
+  return reasons.map((reason) => ({
+    reason,
+    ...(reason === 'OTHER' && trimmedCustomText.length > 0 ? { customText: trimmedCustomText } : {}),
+  }));
+};
+
 const WithdrawConfirmModal = (props: WithdrawConfirmModalProps) => {
   const { onCancel, reasons, customText } = props;
   const { isPending: isDeleteMePending, mutate: deleteMe } = useDeleteMeMutation();
-  const trimmedCustomText = customText.trim();
 
   const handleConfirm = () => {
-    deleteMe({
-      reasons: reasons.map((reason) => ({
-        reason,
-        ...(trimmedCustomText.length > 0 ? { customText: trimmedCustomText } : {}),
-      })),
-    });
+    deleteMe(getDeleteMeReasons(reasons, customText));
   };
 
   return (
