@@ -61,7 +61,7 @@ export const BookCard = () => {
 
 의미 없는 wrapper는 만들지 않는다.
 
-`div`는 레이아웃, 그룹핑, 스타일 적용처럼 명확한 역할이 있을 때만 사용한다. 기존 semantic element나 이미 존재하는 공용 컴포넌트로 표현할 수 있으면 그것을 우선 사용한다.
+`div`는 레이아웃, 그룹핑, 스타일 적용처럼 명확한 역할이 있을 때만 사용한다. 단순히 `div`를 semantic element로 기계적으로 바꾸지 않는다. 우선 제거할 수 있는 wrapper인지 확인하고, 실제 문서 구조상 의미가 있을 때만 semantic element를 사용한다.
 
 스타일은 최대한 디자인 토큰과 상속을 활용한다.
 
@@ -91,9 +91,7 @@ export const BookCard = () => {
 const BookDetail = () => {
   const navigate = useNavigate();
   const location = useLocation();
-
   const { isbn13 = '' } = useParams();
-
   const { addToast } = useToastStore();
   const { push } = useLayerStore();
 
@@ -122,7 +120,9 @@ const BookDetail = () => {
   const title = bookDetail?.title;
 
   if (isBookDetailLoading) return <BookDetailSkeleton />;
-  if (isBookDetailError || !bookDetail) return <BookDetailFallback error={bookDetailError} />;
+  if (isBookDetailError || !bookDetail) {
+    return <BookDetailFallback error={bookDetailError} onBackClick={handleBackClick} />;
+  }
 
   return <BookDetailContent />;
 };
@@ -130,26 +130,30 @@ const BookDetail = () => {
 
 ## 같은 hook 그룹 내부 순서
 
-같은 hook 그룹 안에서는 단일 반환값을 먼저 선언하고, 구조분해 반환값은 그 아래에 둔다.
+컴포넌트 상단 초기화 구간은 한 줄 선언이면 붙여 쓴다.
 
-단일 반환값과 구조분해 반환값이 섞이면 한 줄을 띄워 읽기 경계를 만든다.
+Router hook과 store hook이 섞여도 모두 한 줄 선언이면 빈 줄을 두지 않는다. 단, state/ref부터는 한 줄을 띄워 화면 내부 상태와 구분한다.
 
 좋은 예:
 
 ```tsx
 const navigate = useNavigate();
-const location = useLocation();
-
 const { recordId = '' } = useParams();
+const { push } = useLayerStore();
+
+const [activeTab, setActiveTab] = useState<DetailTabType>('info');
+const titleRef = useRef<HTMLParagraphElement>(null);
 ```
 
-배열 구조분해도 구조분해 반환값으로 본다.
+초기화 구간 안에서도 여러 줄 객체 인자나 긴 선언이 생기면 읽기 좋게 구간을 나눈다.
 
 ```tsx
 const navigate = useNavigate();
+const scrollContainerRef = useScrollRestoration<HTMLDivElement>({
+  isReady: bookDetail !== undefined,
+});
 
-const [searchParams, setSearchParams] = useSearchParams();
-const { recordId = '' } = useParams();
+const { push } = useLayerStore();
 ```
 
 ## 상태와 ref
@@ -199,6 +203,31 @@ const handleOpenModal = () => {
     component: <ConfirmModal />,
   });
 };
+```
+
+## 짧은 조건문과 호출
+
+한 줄로 읽히는 조건문은 포맷터 폭 안에서 한 줄로 작성한다.
+
+```tsx
+if (!bookDetail) return;
+if (context?.previousDetail) queryClient.setQueryData(['books', 'detail', isbn13], context.previousDetail);
+if (!profile) return <ProfileFallback />;
+```
+
+인자가 짧은 함수 호출도 포맷터 폭 안에서 한 줄로 작성한다. 객체 인자도 한 줄로 읽히면 한 줄로 둔다.
+
+```tsx
+addToast({ description: MSG_BOOK_DETAIL_WISHLIST_FAILED, type: 'error' });
+const scrollContainerRef = useScrollRestoration<HTMLDivElement>({ isReady: bookDetail !== undefined });
+```
+
+조건 분기가 길거나, 인자가 길거나, side effect가 여러 개면 여러 줄로 작성한다. 함수 호출 자체를 한 줄로 유지하고 싶다면 긴 값은 미리 변수로 분리한다.
+
+```tsx
+const successMessage = isInterested ? MSG_DELETE_SUCCESS : MSG_ADD_SUCCESS;
+
+addToast({ description: successMessage, type: 'success' });
 ```
 
 ## Derived render values
