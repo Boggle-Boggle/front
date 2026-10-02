@@ -78,6 +78,7 @@ export const NewRecord = () => {
   const customStatus = location.state?.status as AddRecordStatus | undefined;
   const bookDetail = location.state?.bookDetail as BookDetail | undefined;
   const status = customStatus || getAddRecordStatus(searchParams.get('status'));
+  const isCompletedStatus = status === 'COMPLETED';
 
   const { data: bookshelves = [] } = useQuery({ queryKey: BOOKSHELVES_QUERY_KEY, queryFn: getBookshelves });
 
@@ -95,6 +96,8 @@ export const NewRecord = () => {
 
   const totalPageCount =
     totalPageCountOverride || customBook?.totalPages?.toString() || bookDetail?.totalPages?.toString() || '';
+  const completedProgressValue = progressType === 'PAGE' ? totalPageCount : '100';
+  const resolvedProgressValue = isCompletedStatus ? completedProgressValue : progressValue;
 
   const handleSubmit = () => {
     // 중복 요청 방지
@@ -114,8 +117,8 @@ export const NewRecord = () => {
           bookshelfIds: selectedBookshelfIds,
           isHidden,
           // 값이 기입되어 있을 때만 안전하게 인라인 변환 전송 (비어 있으면 undefined 로 가드해 전송 누락)
-          progressType: progressValue ? progressType : undefined,
-          progressValue: progressValue ? Number(progressValue) : undefined,
+          progressType: resolvedProgressValue ? progressType : undefined,
+          progressValue: resolvedProgressValue ? Number(resolvedProgressValue) : undefined,
         },
       });
 
@@ -134,8 +137,8 @@ export const NewRecord = () => {
       bookshelfIds: selectedBookshelfIds,
       isHidden,
       // 값이 기입되어 있을 때만 안전하게 인라인 변환 전송 (비어 있으면 undefined 로 가드해 전송 누락)
-      progressType: progressValue ? progressType : undefined,
-      progressValue: progressValue ? Number(progressValue) : undefined,
+      progressType: resolvedProgressValue ? progressType : undefined,
+      progressValue: resolvedProgressValue ? Number(resolvedProgressValue) : undefined,
       totalPagesOverride: totalPageCountOverride ? Number(totalPageCountOverride) : undefined,
     });
   };
@@ -220,12 +223,13 @@ export const NewRecord = () => {
         />
         <ReadingProgressSection
           progressType={progressType}
-          progressValue={progressValue}
+          progressValue={resolvedProgressValue}
           totalPageCount={totalPageCount}
           onChangeProgressType={setProgressType}
           onChangeProgressValue={setProgressValue}
           onOpenPageInfo={handleOpenPageInfo}
           isEdit
+          disabled={isCompletedStatus}
         />
         <GroupSection
           bookshelves={bookshelves}

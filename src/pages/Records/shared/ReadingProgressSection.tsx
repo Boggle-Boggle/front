@@ -15,6 +15,7 @@ interface ReadingProgressSectionProps {
   onChangeProgressValue: (progressValue: string) => void;
   onOpenPageInfo: () => void;
   isEdit?: boolean;
+  disabled?: boolean;
 }
 
 const MSG_ADD_RECORD_PROGRESS_TITLE = '지금까지 읽은 독서량';
@@ -49,6 +50,7 @@ export const ReadingProgressSection = (props: ReadingProgressSectionProps) => {
     onChangeProgressValue,
     onOpenPageInfo,
     isEdit = false,
+    disabled = false,
   } = props;
 
   const isPageType = progressType === 'PAGE';
@@ -98,6 +100,7 @@ export const ReadingProgressSection = (props: ReadingProgressSectionProps) => {
           max={maxProgressValue}
           placeholder={progressPlaceholder}
           variant="primary"
+          state={disabled ? 'disabled' : undefined}
         />
       ) : (
         <div className="flex h-12 w-full cursor-default select-none items-center rounded-lg border border-neutral-20 px-4 text-body1">
