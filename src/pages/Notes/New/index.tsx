@@ -1,4 +1,4 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { NOTE_BODY, NOTE_TITLE } from 'policy/input';
 import { ChangeEvent, PointerEvent, SVGProps, useEffect, useRef, useState } from 'react';
@@ -6,7 +6,8 @@ import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useToastStore } from 'stores/useToastStore';
 
 import { Header } from 'components/Header';
-import { createReadingNote, getReadingNote, updateReadingNote } from 'pages/Records/Detail/api';
+import { createReadingNote, updateReadingNote } from 'pages/Notes/shared/api';
+import { useReadingNoteQuery } from 'pages/Notes/shared/queries/useReadingNoteQuery';
 
 const MSG_NOTE_NEW_PAGE_TITLE = '노트 작성하기';
 const MSG_NOTE_EDIT_PAGE_TITLE = '노트 수정하기';
@@ -55,11 +56,7 @@ const NoteNew = () => {
 
   const locationState = location.state as NoteNewLocationState | undefined;
   const isEditMode = !!noteId;
-  const { data: editableNote } = useQuery({
-    queryKey: ['reading-note', noteId],
-    queryFn: () => getReadingNote(noteId ?? ''),
-    enabled: isEditMode && !!noteId,
-  });
+  const { data: editableNote } = useReadingNoteQuery(isEditMode ? noteId : undefined);
 
   const readingLogId =
     locationState?.readingLogId ?? (editableNote?.readingLogId ? String(editableNote.readingLogId) : '');

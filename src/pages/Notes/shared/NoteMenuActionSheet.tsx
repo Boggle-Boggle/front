@@ -5,7 +5,7 @@ import useToastStore from 'stores/useToastStore';
 import { ActionSheet } from 'components/Layer/ActionSheet';
 
 import { NoteDeleteConfirmModal } from './NoteDeleteConfirmModal';
-import { ReadingNoteResponse } from './api';
+import type { ReadingNoteResponse } from './api';
 
 type NoteMenuActionSheetProps = {
   note: ReadingNoteResponse;

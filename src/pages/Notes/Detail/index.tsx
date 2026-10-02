@@ -7,8 +7,9 @@ import useToastStore from 'stores/useToastStore';
 import IconButton from 'components/Button/IconButton';
 import { Header } from 'components/Header';
 import { IconEllipsisVertical } from 'components/icons';
-import { NoteMenuActionSheet } from 'pages/Records/Detail/NoteMenuActionSheet';
-import { getReadingLogDetail, getReadingNote } from 'pages/Records/Detail/api';
+import { NoteMenuActionSheet } from 'pages/Notes/shared/NoteMenuActionSheet';
+import { useReadingNoteQuery } from 'pages/Notes/shared/queries/useReadingNoteQuery';
+import { getReadingLogDetail } from 'pages/Records/Detail/api';
 
 import { formatToDotDateTime } from 'utils/date';
 
@@ -28,11 +29,7 @@ const NoteDetail = () => {
 
   const { bookTitle: stateBookTitle, readingLogId: stateReadingLogId } = (location.state as NoteDetailState) || {};
 
-  const { data: note } = useQuery({
-    queryKey: ['reading-note', noteId],
-    queryFn: () => getReadingNote(noteId ?? ''),
-    enabled: !!noteId,
-  });
+  const { data: note } = useReadingNoteQuery(noteId);
 
   const readingLogId = stateReadingLogId ?? (note?.readingLogId ? String(note.readingLogId) : undefined);
 

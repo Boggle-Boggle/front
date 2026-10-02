@@ -10,9 +10,11 @@ import { Header } from 'components/Header';
 import { BackButton } from 'components/Header/BackButton';
 import { Searchbar } from 'components/Searchbar';
 import { IconEdit, IconSearch } from 'components/icons';
-import { NoteMenuActionSheet } from 'pages/Records/Detail/NoteMenuActionSheet';
-import { getReadingLogDetail, getReadingLogNotes, ReadingNoteResponse } from 'pages/Records/Detail/api';
-import { ReadingNoteCard } from 'pages/Records/shared/ReadingNoteCard';
+import { NoteMenuActionSheet } from 'pages/Notes/shared/NoteMenuActionSheet';
+import { ReadingNoteCard } from 'pages/Notes/shared/ReadingNoteCard';
+import type { ReadingNoteResponse } from 'pages/Notes/shared/api';
+import { useReadingLogNotesQuery } from 'pages/Notes/shared/queries/useReadingLogNotesQuery';
+import { getReadingLogDetail } from 'pages/Records/Detail/api';
 
 type RecordNotesLocationState = {
   bookTitle?: string;
@@ -38,11 +40,7 @@ const RecordNotes = () => {
 
   const locationState = location.state as RecordNotesLocationState | undefined;
 
-  const { data: notes = [], isLoading } = useQuery({
-    queryKey: ['reading-log-notes', recordId],
-    queryFn: () => getReadingLogNotes(recordId ?? ''),
-    enabled: !!recordId,
-  });
+  const { data: notes = [], isLoading } = useReadingLogNotesQuery(recordId);
 
   const { data: readingLogData } = useQuery({
     queryKey: ['reading-log', recordId],

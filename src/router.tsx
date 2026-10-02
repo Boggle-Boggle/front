@@ -8,7 +8,7 @@ const BookDetail = lazy(() => import('pages/BookDetail'));
 const RecordDetailPage = lazy(() => import('pages/Records/Detail'));
 const RecordNew = lazy(() => import('pages/Records/New'));
 const RecordNewCompleted = lazy(() => import('pages/Records/New/Completed'));
-const RecordNotes = lazy(() => import('pages/Records/Notes'));
+const RecordNotes = lazy(() => import('pages/Notes/List'));
 const NoteNew = lazy(() => import('pages/Notes/New'));
 const NoteDetail = lazy(() => import('pages/Notes/Detail'));
 const Report = lazy(() => import('pages/Report'));

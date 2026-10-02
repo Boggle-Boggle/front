@@ -5,7 +5,7 @@ import { Header } from 'components/Header';
 
 import fallbackImage from 'assets/img/withdraw_complete.png';
 
-type ResourceFallbackType = 'bookNotFound';
+type ResourceFallbackType = 'bookNotFound' | 'readingLogNotFound';
 type ResourceFallbackLocale = 'ko';
 
 type ResourceFallbackMessage = {
@@ -31,6 +31,12 @@ const RESOURCE_FALLBACK_MESSAGES: Record<
       imageAlt: '리소스 없음',
       title: '책을 찾을 수 없어요',
       description: '주소가 바뀌었거나, 더 이상 제공되지 않는 책이에요.',
+      actionLabel: '이전으로',
+    },
+    readingLogNotFound: {
+      imageAlt: '리소스 없음',
+      title: '독서 기록을 찾을 수 없어요',
+      description: '삭제되었거나, 더 이상 접근할 수 없는 기록이에요.',
       actionLabel: '이전으로',
     },
   },

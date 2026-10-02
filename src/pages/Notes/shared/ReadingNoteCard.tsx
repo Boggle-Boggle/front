@@ -4,9 +4,10 @@ import { useNavigate } from 'react-router-dom';
 
 import IconButton from 'components/Button/IconButton';
 import { IconEllipsisVertical } from 'components/icons';
-import type { PageResponse, ReadingNoteResponse } from 'pages/Records/Detail/api';
 
 import { formatToDotDateTime } from 'utils/date';
+
+import type { PageResponse, ReadingNoteResponse } from './api';
 
 type ReadingNoteCardProps = {
   note: ReadingNoteResponse;

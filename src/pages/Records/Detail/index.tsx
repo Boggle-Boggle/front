@@ -1,9 +1,8 @@
-import { useQuery } from '@tanstack/react-query';
-
 import { useState } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
 
 import { Loading } from 'components/Loading';
+import { ResourceFallback } from 'components/ResourceFallback';
 import { Tabs, type TabItem } from 'components/Tabs';
 
 import { useScrollRestoration } from 'hooks/useScrollRestoration';
@@ -14,7 +13,7 @@ import { BookInfoTab } from './BookInfoTab';
 import { MyInfoTab } from './MyInfoTab';
 import { NoteTab } from './NoteTab';
 import { RecordDetailHero } from './RecordDetailHero';
-import { getReadingLogDetail } from './api';
+import { useReadingLogDetailQuery } from './queries/useReadingLogDetailQuery';
 
 type DetailTabType = 'info' | 'note' | 'myInfo';
 
@@ -38,52 +37,47 @@ export const RecordDetailPage = () => {
   const location = useLocation();
   const [activeTab, setActiveTab] = useState<DetailTabType>((location.state?.activeTab as DetailTabType) || 'info');
 
-  const { data, isLoading, isError } = useQuery({
-    queryKey: ['reading-log', recordId],
-    queryFn: () => getReadingLogDetail(recordId),
-    enabled: !!recordId,
-  });
+  const {
+    data: readingLogDetail,
+    isLoading: isReadingLogDetailLoading,
+    isError: isReadingLogDetailError,
+  } = useReadingLogDetailQuery(recordId);
 
   const scrollContainerRef = useScrollRestoration<HTMLDivElement>({
-    isReady: !!data,
+    isReady: !!readingLogDetail,
   });
 
-  if (isLoading) return <Loading fullscreen />;
+  if (isReadingLogDetailLoading) return <Loading fullscreen />;
 
-  if (isError || !data)
-    return (
-      <div className="flex h-full items-center justify-center text-body1 text-neutral-60">
-        독서 기록 정보를 불러오는 데 실패했습니다.
-      </div>
-    );
+  if (isReadingLogDetailError || !readingLogDetail) return <ResourceFallback type="readingLogNotFound" />;
 
-  const readingStatusLabel = READING_STATUS_LABEL_BY_CODE[data.readingLog.status] || '읽는중';
+  const readingStatusLabel = READING_STATUS_LABEL_BY_CODE[readingLogDetail.readingLog.status] || '읽는중';
 
   return (
     <div className="h-full overflow-y-auto pb-safe-bottom" ref={scrollContainerRef}>
       <RecordDetailHero
         recordId={recordId}
-        bookId={data.book.id}
-        bookSource={data.book.source}
-        isbn13={data.book.isbn13}
+        bookId={readingLogDetail.book.id}
+        bookSource={readingLogDetail.book.source}
+        isbn13={readingLogDetail.book.isbn13}
         scrollContainerRef={scrollContainerRef}
-        cover={data.book.coverUrl}
-        title={data.book.title}
-        author={data.book.author}
-        publisher={data.book.publisher}
-        isbn={data.book.isbn}
-        description={data.book.description}
-        totalPages={data.book.totalPages}
-        rating={String(data.readingLog.rating)}
+        cover={readingLogDetail.book.coverUrl}
+        title={readingLogDetail.book.title}
+        author={readingLogDetail.book.author}
+        publisher={readingLogDetail.book.publisher}
+        isbn={readingLogDetail.book.isbn}
+        description={readingLogDetail.book.description}
+        totalPages={readingLogDetail.book.totalPages}
+        rating={String(readingLogDetail.readingLog.rating)}
         readingStatus={readingStatusLabel}
-        noteCount={`${data.readingLog.noteCount}개`}
+        noteCount={`${readingLogDetail.readingLog.noteCount}개`}
       />
 
       <div className="px-mobile">
         <Tabs tabs={RECORD_DETAIL_TABS} value={activeTab} onChange={setActiveTab} className="mb-6" />
-        {activeTab === 'info' && <BookInfoTab book={data.book} />}
-        {activeTab === 'note' && <NoteTab readingLogId={recordId} bookTitle={data.book.title} />}
-        {activeTab === 'myInfo' && <MyInfoTab readingLog={data.readingLog} />}
+        {activeTab === 'info' && <BookInfoTab book={readingLogDetail.book} />}
+        {activeTab === 'note' && <NoteTab readingLogId={recordId} bookTitle={readingLogDetail.book.title} />}
+        {activeTab === 'myInfo' && <MyInfoTab readingLog={readingLogDetail.readingLog} />}
       </div>
     </div>
   );

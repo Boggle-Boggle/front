@@ -1,5 +1,3 @@
-import { useQuery } from '@tanstack/react-query';
-
 import { useNavigate } from 'react-router-dom';
 import useLayerStore from 'stores/useLayerStore';
 
@@ -7,10 +5,10 @@ import IconButton from 'components/Button/IconButton';
 import { TextButton } from 'components/Button/TextButton';
 import { Empty } from 'components/Empty';
 import { IconEdit } from 'components/icons';
-import { ReadingNoteCard } from 'pages/Records/shared/ReadingNoteCard';
-
-import { NoteMenuActionSheet } from './NoteMenuActionSheet';
-import { getReadingLogNotes, ReadingNoteResponse } from './api';
+import { NoteMenuActionSheet } from 'pages/Notes/shared/NoteMenuActionSheet';
+import { ReadingNoteCard } from 'pages/Notes/shared/ReadingNoteCard';
+import type { ReadingNoteResponse } from 'pages/Notes/shared/api';
+import { useReadingLogNotesQuery } from 'pages/Notes/shared/queries/useReadingLogNotesQuery';
 
 type NoteTabProps = {
   readingLogId: string;
@@ -27,11 +25,7 @@ export const NoteTab = ({ readingLogId, bookTitle }: NoteTabProps) => {
   const navigate = useNavigate();
   const { push } = useLayerStore();
 
-  const { data: notes = [], isLoading } = useQuery({
-    queryKey: ['reading-log-notes', readingLogId],
-    queryFn: () => getReadingLogNotes(readingLogId),
-    enabled: !!readingLogId,
-  });
+  const { data: notes = [], isLoading } = useReadingLogNotesQuery(readingLogId);
 
   const handleMoreClick = () => {
     navigate(`/records/${readingLogId}/notes`, { state: { bookTitle } });
