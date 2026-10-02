@@ -1,15 +1,14 @@
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useLayerStore } from 'stores/useLayerStore';
-import { useToastStore } from 'stores/useToastStore';
 
 import { formatToDateInputValue, formatToReadingLogDateTime } from 'utils/date';
 
 import type { ReadingLogProgressType } from 'types';
 
-import { updateReadingLog, type UpdateReadingLogRequest, type ReadingLogInfo } from './api';
+import type { UpdateReadingLogRequest, ReadingLogInfo } from './api';
+import { useBookshelvesQuery } from './queries/useBookshelvesQuery';
+import { useUpdateReadingLogMutation } from './queries/useUpdateReadingLogMutation';
 import { DateSelectModal } from '../shared/DateSelectModal';
 import { GroupDeleteConfirmModal } from '../shared/GroupDeleteConfirmModal';
 import { GroupEditModal } from '../shared/GroupEditModal';
@@ -20,7 +19,7 @@ import { RatingSection } from '../shared/RatingSection';
 import { ReadingPeriodSection } from '../shared/ReadingPeriodSection';
 import { ReadingProgressSection } from '../shared/ReadingProgressSection';
 import { VisibilitySection } from '../shared/VisibilitySection';
-import { BOOKSHELVES_QUERY_KEY, getBookshelves, type BookshelfItem } from '../shared/api';
+import type { BookshelfItem } from '../shared/api';
 
 const MSG_DATE_SELECT_START = '시작일 선택하기';
 const MSG_DATE_SELECT_END = '종료일 선택하기';
@@ -55,32 +54,11 @@ export const MyInfoTab = ({ readingLog }: MyInfoTabProps) => {
   const [isPrivate, setIsPrivate] = useState<boolean>(readingLog.isHidden);
 
   const { recordId = '' } = useParams<{ recordId: string }>();
-  const queryClient = useQueryClient();
-  const { addToast } = useToastStore();
-
   const { push, pop } = useLayerStore();
-  const { data: bookshelves = [] } = useQuery({
-    queryKey: BOOKSHELVES_QUERY_KEY,
-    queryFn: getBookshelves,
-  });
-
-  const { mutate: updateRecord, isPending } = useMutation({
-    mutationFn: (data: UpdateReadingLogRequest) => updateReadingLog(recordId, data),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['reading-log', recordId] });
-      queryClient.invalidateQueries({ queryKey: ['reading-logs'] });
-      addToast({
-        description: '독서 정보가 성공적으로 수정되었어요.',
-        type: 'success',
-      });
-      setIsEdit(false);
-    },
-    onError: () => {
-      addToast({
-        description: '독서 정보 수정에 실패했습니다. 다시 시도해 주세요.',
-        type: 'error',
-      });
-    },
+  const { data: bookshelves = [] } = useBookshelvesQuery();
+  const { mutate: updateRecord, isPending: isUpdateRecordPending } = useUpdateReadingLogMutation({
+    recordId,
+    onSuccess: () => setIsEdit(false),
   });
 
   const handleToggleBookshelf = (bookshelfId: number) => {
@@ -166,7 +144,7 @@ export const MyInfoTab = ({ readingLog }: MyInfoTabProps) => {
 
   return (
     <>
-      <MyInfoHeader isEdit={isEdit} disabled={isPending} onToggleEdit={handleToggleEdit} />
+      <MyInfoHeader isEdit={isEdit} disabled={isUpdateRecordPending} onToggleEdit={handleToggleEdit} />
       <div className="flex flex-col gap-9 pb-safe-bottom">
         <RatingSection rating={rating} onChange={setRating} isEdit={isEdit} />
         <ReadingPeriodSection
