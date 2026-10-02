@@ -21,6 +21,7 @@ export interface GetReadingLogsParams extends PaginationParams {
   bookshelfId?: number;
   year?: number;
   month?: number;
+  hidden?: boolean;
 }
 
 type ReadingLogBookResponse = Pick<Book, 'title' | 'author' | 'coverUrl' | 'totalPages'>;
@@ -29,7 +30,6 @@ interface ReadingLogListItemResponse {
   id: number;
   book: ReadingLogBookResponse;
   status: Exclude<ReadingLogStatus, 'ALL'>;
-  isHidden?: boolean;
   rating?: number | null;
   progressType?: Nullable<ReadingLogProgressType>;
   progressValue?: number | null;

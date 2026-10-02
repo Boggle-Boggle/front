@@ -22,6 +22,7 @@ const getMainReadingLogsParams = (params: UseMainReadingLogsQueryParams): GetRea
     size: MAIN_READING_LOGS_PAGE_SIZE,
     sort: 'START_DATE_DESC',
     status: 'ALL',
+    hidden: false,
   };
 
   if (periodFilter === 'GROUP' && selectedBookshelfId) readingLogsParams.bookshelfId = selectedBookshelfId;

@@ -79,13 +79,11 @@ const Main = () => {
   // 1. 책 목록을 최초 로드했을 때 메인 책장용 데이터 구조로 포맷팅합니다.
   const processedBooks = useMemo<MainBookCaseItem[]>(() => {
     return (
-      readingLogs?.data.items
-        .filter(({ isHidden }) => !isHidden)
-        .map(({ book, id }) => ({
-          id,
-          page: book.totalPages ?? 0,
-          title: book.title,
-        })) ?? []
+      readingLogs?.data.items.map(({ book, id }) => ({
+        id,
+        page: book.totalPages ?? 0,
+        title: book.title,
+      })) ?? []
     );
   }, [readingLogs]);
 
