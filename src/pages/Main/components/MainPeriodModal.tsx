@@ -6,7 +6,7 @@ import { ContentModal } from 'components/Layer/ContentModal';
 import { Radio } from 'components/Radio';
 import { WheelPicker, type PickerColumn } from 'components/WheelPicker';
 
-import type { MainPeriodFilterType, Bookshelf } from './types';
+import type { MainPeriodFilterType, Bookshelf } from '../types';
 
 type MainPeriodModalProps = {
   currentFilter: MainPeriodFilterType;

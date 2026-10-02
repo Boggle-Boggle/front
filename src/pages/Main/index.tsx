@@ -8,7 +8,7 @@ import { IconArrowDown } from 'components/icons';
 
 import { useScrollRestoration } from 'hooks/useScrollRestoration';
 
-import { MainPeriodModal } from './MainPeriodModal';
+import { MainPeriodModal } from './components/MainPeriodModal';
 import { MainSkeleton } from './components/MainSkeleton';
 import { useMainBookshelvesQuery } from './queries/useMainBookshelvesQuery';
 import { useMainReadingLogsQuery } from './queries/useMainReadingLogsQuery';
