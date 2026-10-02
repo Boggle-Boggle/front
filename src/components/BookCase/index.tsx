@@ -11,8 +11,18 @@ export type BookCaseBook = {
 
 type BookCaseProps = {
   books: BookCaseBook[];
+  isLoading?: boolean;
   onBookClick?: (id: number) => void;
 };
+
+const SKELETON_SHELF_COUNT = 4;
+const SKELETON_SHELVES: BookCaseBook[][] = Array.from({ length: SKELETON_SHELF_COUNT }, (_, index) => [
+  {
+    id: index,
+    page: 0,
+    title: '',
+  },
+]);
 
 const getShelfBooks = (books: BookCaseBook[], bookcaseWidth: number) => {
   const { currentShelfBooks, shelves: reducedShelves } = books.reduce<{
@@ -56,7 +66,7 @@ const getShelfBooks = (books: BookCaseBook[], bookcaseWidth: number) => {
 };
 
 export const BookCase = (props: BookCaseProps) => {
-  const { books, onBookClick } = props;
+  const { books, isLoading = false, onBookClick } = props;
   const containerRef = useRef<HTMLDivElement>(null);
 
   const remToPx = (rem: number) => {
@@ -94,7 +104,7 @@ export const BookCase = (props: BookCaseProps) => {
 
   // bookcaseWidth = ResizeObserver로 구한 가용 너비 - 책장 내부의 양끝 책 간격(px-[0.625rem] * 2)
   const bookcaseWidth = containerWidth - remToPx(0.625 * 2);
-  const allBooks = getShelfBooks(books, bookcaseWidth);
+  const allBooks = isLoading ? SKELETON_SHELVES : getShelfBooks(books, bookcaseWidth);
 
   const outerHeight = 524 + 126 * (allBooks.length - 4);
   const outerBoxShadow = 'inset 2px 2px 2px rgba(255, 255, 255, 0.6), inset -2px -3px 3px rgba(53, 27, 20, 0.25)';
@@ -119,9 +129,13 @@ export const BookCase = (props: BookCaseProps) => {
             // eslint-disable-next-line react/no-array-index-key
             <div className={shelfSpacingClass} key={`shelf-${idx}`}>
               <div className="h-[5.625rem] px-[0.625rem]">
-                {shelfBooks.map(({ id, page, title }) => (
-                  <Book page={page} title={title} key={id} onClick={() => onBookClick?.(id)} />
-                ))}
+                {shelfBooks.map(({ id, page, title }) => {
+                  if (isLoading) {
+                    return <div className="skeleton inline-block h-full w-full rounded-sm" key={id} />;
+                  }
+
+                  return <Book page={page} title={title} key={id} onClick={() => onBookClick?.(id)} />;
+                })}
               </div>
 
               {idx !== allBooks.length - 1 && (

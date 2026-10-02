@@ -9,6 +9,7 @@ import { IconArrowDown } from 'components/icons';
 import { useScrollRestoration } from 'hooks/useScrollRestoration';
 
 import { MainPeriodModal } from './MainPeriodModal';
+import { MainSkeleton } from './components/MainSkeleton';
 import { useMainBookshelvesQuery } from './queries/useMainBookshelvesQuery';
 import { useMainReadingLogsQuery } from './queries/useMainReadingLogsQuery';
 import type { MainPeriodFilterType } from './types';
@@ -31,7 +32,7 @@ const Main = () => {
   const [selectedYear, setSelectedYear] = useState<number>(new Date().getFullYear());
   const [selectedMonth, setSelectedMonth] = useState<number>(new Date().getMonth() + 1);
 
-  const { data: readingLogs } = useMainReadingLogsQuery({
+  const { data: readingLogs, isLoading: isReadingLogsLoading } = useMainReadingLogsQuery({
     periodFilter,
     selectedBookshelfId,
     selectedYear,
@@ -89,6 +90,8 @@ const Main = () => {
   }, [readingLogs]);
 
   const displayCount = processedBooks.length;
+
+  if (isReadingLogsLoading) return <MainSkeleton />;
 
   return (
     <div className="relative h-full overflow-hidden bg-secondary">
