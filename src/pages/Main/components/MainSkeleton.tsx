@@ -16,7 +16,7 @@ export const MainSkeleton = () => {
         <div className="skeleton mt-4 h-8 w-36" aria-label={MSG_MAIN_TITLE_SKELETON} />
         <div className="skeleton mb-[1.375rem] mt-2 h-5 w-24" aria-label={MSG_MAIN_COUNT_SKELETON} />
         <div className="h-0 flex-grow overflow-y-auto pb-safe-bottom">
-          <BookCase books={[]} isLoading />
+          <BookCase books={[]} isSkeleton />
         </div>
       </div>
 
