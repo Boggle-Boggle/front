@@ -34,6 +34,7 @@ interface ReadingLogListItemResponse {
   progressType?: Nullable<ReadingLogProgressType>;
   progressValue?: number | null;
   progressPercentage?: number | null;
+  totalPagesOverride?: number | null;
   startDate?: string | null;
   endDate?: string | null;
 }
