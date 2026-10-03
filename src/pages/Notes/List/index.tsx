@@ -10,12 +10,13 @@ import { Header } from 'components/Header';
 import { BackButton } from 'components/Header/BackButton';
 import { Searchbar } from 'components/Searchbar';
 import { IconEdit, IconSearch } from 'components/icons';
-import { useScrollRestoration } from 'hooks/useScrollRestoration';
 import { NoteMenuActionSheet } from 'pages/Notes/shared/NoteMenuActionSheet';
 import { ReadingNoteCard } from 'pages/Notes/shared/ReadingNoteCard';
 import type { ReadingNoteResponse } from 'pages/Notes/shared/api';
 import { useReadingLogNotesQuery } from 'pages/Notes/shared/queries/useReadingLogNotesQuery';
 import { getReadingLogDetail } from 'pages/Records/Detail/api';
+
+import { useScrollRestoration } from 'hooks/useScrollRestoration';
 
 type RecordNotesLocationState = {
   bookTitle?: string;
