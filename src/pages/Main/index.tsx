@@ -94,12 +94,15 @@ const Main = () => {
   return (
     <div className="relative h-full overflow-hidden bg-secondary">
       <div className="relative z-background flex h-full flex-col px-mobile pt-safe-top">
-        <Searchbar
-          value=""
-          onChange={() => {}}
-          onFocus={() => navigate('/search', { state: { autoFocus: true } })}
-          placeholder={MSG_TITLE_SEARCH_PLACEHOLDER}
-        />
+        <div className="flex h-12 items-center">
+          <Searchbar
+            className="w-full"
+            value=""
+            onChange={() => {}}
+            onFocus={() => navigate('/search', { state: { autoFocus: true } })}
+            placeholder={MSG_TITLE_SEARCH_PLACEHOLDER}
+          />
+        </div>
         <button type="button" onClick={handleOpenFilter} className="mt-4 flex items-center gap-1 text-left text-title1">
           {getBookcaseTitle()}
 
