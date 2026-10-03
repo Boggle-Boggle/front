@@ -2,7 +2,7 @@ import Highlight from 'components/Highlight';
 
 import { formatToKoreanDate } from 'utils/date';
 
-import type { BookInfo } from './api';
+import type { BookInfo } from '../api';
 
 const MSG_BOOK_INFO_TITLE = '작품 정보';
 const MSG_BOOK_INFO_DETAIL_TITLE = '작품 소개/줄거리';

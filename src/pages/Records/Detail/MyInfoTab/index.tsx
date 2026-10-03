@@ -6,20 +6,20 @@ import { formatToDateInputValue, formatToReadingLogDateTime } from 'utils/date';
 
 import type { ReadingLogProgressType } from 'types';
 
-import type { UpdateReadingLogRequest, ReadingLogInfo } from './api';
-import { useBookshelvesQuery } from './queries/useBookshelvesQuery';
-import { useUpdateReadingLogMutation } from './queries/useUpdateReadingLogMutation';
-import { DateSelectModal } from '../shared/DateSelectModal';
-import { GroupDeleteConfirmModal } from '../shared/GroupDeleteConfirmModal';
-import { GroupEditModal } from '../shared/GroupEditModal';
-import { GroupSection } from '../shared/GroupSection';
-import { MyInfoHeader } from '../shared/MyInfoHeader';
-import { PageInfoModal } from '../shared/PageInfoModal';
-import { RatingSection } from '../shared/RatingSection';
-import { ReadingPeriodSection } from '../shared/ReadingPeriodSection';
-import { ReadingProgressSection } from '../shared/ReadingProgressSection';
-import { VisibilitySection } from '../shared/VisibilitySection';
-import type { BookshelfItem } from '../shared/api';
+import { DateSelectModal } from '../../shared/DateSelectModal';
+import { GroupDeleteConfirmModal } from '../../shared/GroupDeleteConfirmModal';
+import { GroupEditModal } from '../../shared/GroupEditModal';
+import { GroupSection } from '../../shared/GroupSection';
+import { MyInfoHeader } from '../../shared/MyInfoHeader';
+import { PageInfoModal } from '../../shared/PageInfoModal';
+import { RatingSection } from '../../shared/RatingSection';
+import { ReadingPeriodSection } from '../../shared/ReadingPeriodSection';
+import { ReadingProgressSection } from '../../shared/ReadingProgressSection';
+import { VisibilitySection } from '../../shared/VisibilitySection';
+import type { BookshelfItem } from '../../shared/api';
+import type { UpdateReadingLogRequest, ReadingLogInfo } from '../api';
+import { useBookshelvesQuery } from '../queries/useBookshelvesQuery';
+import { useUpdateReadingLogMutation } from '../queries/useUpdateReadingLogMutation';
 
 const MSG_DATE_SELECT_START = '시작일 선택하기';
 const MSG_DATE_SELECT_END = '종료일 선택하기';
