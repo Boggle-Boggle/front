@@ -1,11 +1,14 @@
 import { NOTE_BODY, NOTE_TITLE } from 'policy/input';
-import { ChangeEvent, PointerEvent, SVGProps, useEffect, useRef, useState } from 'react';
+import { ChangeEvent, PointerEvent, useEffect, useRef, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
 
 import { Header } from 'components/Header';
 import { useCreateReadingNoteMutation } from 'pages/Notes/shared/queries/useCreateReadingNoteMutation';
 import { useReadingNoteQuery } from 'pages/Notes/shared/queries/useReadingNoteQuery';
 import { useUpdateReadingNoteMutation } from 'pages/Notes/shared/queries/useUpdateReadingNoteMutation';
+
+import { KeyboardDismissButton } from './components/KeyboardDismissButton';
+import { NoteEditorFields } from './components/NoteEditorFields';
 
 const MSG_NOTE_NEW_PAGE_TITLE = '노트 작성하기';
 const MSG_NOTE_EDIT_PAGE_TITLE = '노트 수정하기';
@@ -20,21 +23,6 @@ const MSG_NOTE_NEW_CHARACTER_COUNT_SUFFIX = '자';
 type NoteNewLocationState = {
   readingLogId?: string;
 };
-
-// TODO: 피그마 시안으로 교체
-const KeyboardDismissIcon = (props: SVGProps<SVGSVGElement>) => (
-  <svg viewBox="0 0 32 32" fill="none" aria-hidden="true" {...props}>
-    <rect x="4" y="5" width="24" height="15" rx="2.5" stroke="currentColor" strokeWidth="2.4" />
-    <path
-      d="M9 10h.01M13.5 10h.01M18 10h.01M22.5 10h.01M11.25 14h.01M15.75 14h.01M20.25 14h.01"
-      stroke="currentColor"
-      strokeWidth="2.6"
-      strokeLinecap="round"
-    />
-    <path d="M13 17h6" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" />
-    <path d="m11 24 5 5 5-5" stroke="currentColor" strokeWidth="2.8" strokeLinecap="round" strokeLinejoin="round" />
-  </svg>
-);
 
 const NoteNew = () => {
   const [title, setTitle] = useState<string>('');
@@ -126,47 +114,30 @@ const NoteNew = () => {
         }
       />
 
-      <section className="flex min-h-0 flex-1 flex-col overflow-y-auto pt-4">
-        <input
-          value={title}
-          onChange={handleTitleChange}
-          minLength={NOTE_TITLE.minLength}
-          maxLength={NOTE_TITLE.maxLength}
-          placeholder={MSG_NOTE_NEW_TITLE_PLACEHOLDER}
-          aria-label={MSG_NOTE_NEW_TITLE_ARIA_LABEL}
-          className="mb-3 w-full px-mobile text-title3 text-neutral-80 outline-none placeholder:text-neutral-40"
-        />
-
-        <textarea
-          ref={bodyTextareaRef}
-          value={body}
-          onChange={handleBodyChange}
-          onFocus={handleBodyFocus}
-          onBlur={handleBodyBlur}
-          minLength={NOTE_BODY.minLength}
-          maxLength={NOTE_BODY.maxLength}
-          placeholder={MSG_NOTE_NEW_BODY_PLACEHOLDER}
-          aria-label={MSG_NOTE_NEW_BODY_ARIA_LABEL}
-          className="min-h-[1.25rem] flex-1 resize-none overflow-hidden break-words px-mobile text-caption2 text-neutral-80 outline-none placeholder:text-neutral-40"
-          rows={1}
-        />
-      </section>
+      <NoteEditorFields
+        title={title}
+        body={body}
+        bodyTextareaRef={bodyTextareaRef}
+        titleMinLength={NOTE_TITLE.minLength}
+        titleMaxLength={NOTE_TITLE.maxLength}
+        bodyMinLength={NOTE_BODY.minLength}
+        bodyMaxLength={NOTE_BODY.maxLength}
+        titlePlaceholder={MSG_NOTE_NEW_TITLE_PLACEHOLDER}
+        bodyPlaceholder={MSG_NOTE_NEW_BODY_PLACEHOLDER}
+        titleAriaLabel={MSG_NOTE_NEW_TITLE_ARIA_LABEL}
+        bodyAriaLabel={MSG_NOTE_NEW_BODY_ARIA_LABEL}
+        onTitleChange={handleTitleChange}
+        onBodyChange={handleBodyChange}
+        onBodyFocus={handleBodyFocus}
+        onBodyBlur={handleBodyBlur}
+      />
 
       <footer className="px-mobile pb-safe-bottom">
         <p className="mb-1 text-right text-caption2 text-neutral-60">{noteCharacterCountText}</p>
       </footer>
 
       {isBodyFocused && (
-        <div className="fixed inset-x-0 bottom-2 z-fixedBtn mx-auto flex max-w-mobile justify-end px-mobile">
-          <button
-            type="button"
-            aria-label={MSG_NOTE_NEW_DISMISS_KEYBOARD}
-            onPointerDown={handleKeyboardDismissPointerDown}
-            className="grid size-11 place-items-center rounded-full bg-neutral-100 text-neutral-0 shadow-[0_0.25rem_1rem_rgba(0,0,0,0.18)]"
-          >
-            <KeyboardDismissIcon className="size-7" />
-          </button>
-        </div>
+        <KeyboardDismissButton label={MSG_NOTE_NEW_DISMISS_KEYBOARD} onPointerDown={handleKeyboardDismissPointerDown} />
       )}
     </div>
   );
