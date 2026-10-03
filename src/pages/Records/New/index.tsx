@@ -9,7 +9,6 @@ import { getTodayDateString } from 'utils/date';
 
 import type { AddRecordStatus, BookDetail, CustomBookDto, ReadingLogProgressType } from 'types';
 
-import { useBookshelvesQuery } from './queries/useBookshelvesQuery';
 import { useCreateCustomReadingLogMutation } from './queries/useCreateCustomReadingLogMutation';
 import { useCreateReadingLogMutation } from './queries/useCreateReadingLogMutation';
 import { DateSelectModal } from '../shared/DateSelectModal';
@@ -22,6 +21,7 @@ import { ReadingPeriodSection } from '../shared/ReadingPeriodSection';
 import { ReadingProgressSection } from '../shared/ReadingProgressSection';
 import { VisibilitySection } from '../shared/VisibilitySection';
 import type { BookshelfItem } from '../shared/api';
+import { useBookshelvesQuery } from '../shared/queries/useBookshelvesQuery';
 import { getAddRecordStatus } from '../shared/recordStatus';
 
 const MSG_ADD_RECORD_SUBMIT = '입력을 끝내고 완료하기';

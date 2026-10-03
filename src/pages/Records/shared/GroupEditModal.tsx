@@ -1,5 +1,3 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-
 import { ChangeEvent, useState } from 'react';
 import { useToastStore } from 'stores/useToastStore';
 
@@ -9,7 +7,9 @@ import { Input } from 'components/Input';
 import { ContentModal } from 'components/Layer/ContentModal';
 import { IconCircleDeleteFilled, IconPen } from 'components/icons';
 
-import { BOOKSHELVES_QUERY_KEY, createBookshelf, getBookshelves, type BookshelfItem } from './api';
+import type { BookshelfItem } from './api';
+import { useBookshelvesQuery } from './queries/useBookshelvesQuery';
+import { useCreateBookshelfMutation } from './queries/useCreateBookshelfMutation';
 
 type GroupEditModalProps = {
   onClose: () => void;
@@ -21,7 +21,6 @@ const MSG_GROUP_INPUT_PLACEHOLDER = '내가 만든 그룹';
 const MSG_GROUP_DELETE = '그룹 삭제';
 const MSG_GROUP_MODIFY = '그룹 수정';
 const MSG_GROUP_SUBMIT = '완료';
-const MSG_GROUP_SAVE_FAILED = '그룹을 저장하지 못했습니다. 다시 시도해주세요.';
 const MSG_GROUP_LIMIT_EXCEEDED = '그룹 책장은 20개 까지 생성할 수 있어요';
 
 export const GroupEditModal = (props: GroupEditModalProps) => {
@@ -29,27 +28,10 @@ export const GroupEditModal = (props: GroupEditModalProps) => {
 
   const [groupName, setGroupName] = useState<string>('');
 
-  const queryClient = useQueryClient();
   const { addToast } = useToastStore();
 
-  const { data: bookshelves = [] } = useQuery({
-    queryKey: BOOKSHELVES_QUERY_KEY,
-    queryFn: getBookshelves,
-  });
-
-  const { isPending: isCreatePending, mutate: createGroup } = useMutation({
-    mutationFn: createBookshelf,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: BOOKSHELVES_QUERY_KEY });
-      onClose();
-    },
-    onError: () => {
-      addToast({
-        description: MSG_GROUP_SAVE_FAILED,
-        type: 'error',
-      });
-    },
-  });
+  const { data: bookshelves = [] } = useBookshelvesQuery();
+  const { isPending: isCreatePending, mutate: createGroup } = useCreateBookshelfMutation({ onSuccess: onClose });
 
   const handleChangeGroupName = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setGroupName(event.target.value);

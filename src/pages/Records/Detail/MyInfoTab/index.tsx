@@ -17,8 +17,8 @@ import { ReadingPeriodSection } from '../../shared/ReadingPeriodSection';
 import { ReadingProgressSection } from '../../shared/ReadingProgressSection';
 import { VisibilitySection } from '../../shared/VisibilitySection';
 import type { BookshelfItem } from '../../shared/api';
+import { useBookshelvesQuery } from '../../shared/queries/useBookshelvesQuery';
 import type { UpdateReadingLogRequest, ReadingLogInfo } from '../api';
-import { useBookshelvesQuery } from '../queries/useBookshelvesQuery';
 import { useUpdateReadingLogMutation } from '../queries/useUpdateReadingLogMutation';
 
 const MSG_DATE_SELECT_START = '시작일 선택하기';
