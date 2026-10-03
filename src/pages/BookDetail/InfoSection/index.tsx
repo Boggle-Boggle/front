@@ -1,7 +1,7 @@
 import { Empty } from 'components/Empty';
 import Highlight from 'components/Highlight';
 
-import adultContentGuideImage from 'assets/img/adult-content-guide.png';
+import adultContentGuideImage from 'assets/book-detail/adult-content-guide-illustration.png';
 
 type InfoSectionProps = {
   publisher: string;

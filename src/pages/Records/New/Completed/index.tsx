@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { Button } from 'components/Button';
 import Highlight from 'components/Highlight';
 
-import completionImage from 'assets/img/add-record-completion.png';
+import completionImage from 'assets/records/record-add-complete-illustration.png';
 
 const MSG_ADD_RECORD_COMPLETE_PREFIX = '나의 책이';
 const MSG_ADD_RECORD_COMPLETE_SUFFIX = '추가 되었습니다!';

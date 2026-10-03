@@ -5,7 +5,7 @@ import Highlight from 'components/Highlight';
 import { Loading } from 'components/Loading';
 import { IconHeadphone } from 'components/icons';
 
-import loginImg from 'assets/img/login.png';
+import loginImg from 'assets/login/login-illustration.png';
 import appleLogoImg from 'assets/logo/apple.png';
 import googleLogoImg from 'assets/logo/google.png';
 import kakaoLogoImg from 'assets/logo/kakao.png';

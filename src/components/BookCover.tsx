@@ -2,8 +2,8 @@ import { ReactNode } from 'react';
 
 import { Badge } from 'components/Badge';
 
-import adultContentImage from 'assets/img/adult_content.png';
-import noImage from 'assets/img/no_image.png';
+import adultContentImage from 'assets/book/adult-content-cover.png';
+import noImage from 'assets/book/book-cover-placeholder.png';
 
 type ReadingStatusBadge = 'reading' | 'read' | 'stopped';
 type BookCoverStyle = 'clear' | 'mockup';

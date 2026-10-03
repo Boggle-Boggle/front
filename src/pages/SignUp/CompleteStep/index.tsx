@@ -1,7 +1,7 @@
 import { BottomButton } from 'components/Button';
 import Highlight from 'components/Highlight';
 
-import signupCompleteImage from 'assets/img/signup_complete.png';
+import signupCompleteImage from 'assets/signup/signup-complete-illustration.png';
 
 type CompleteStepProps = {
   onComplete: () => void;
