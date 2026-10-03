@@ -107,7 +107,9 @@ const Main = () => {
         </button>
         <p className="mb-[1.375rem] text-body1 text-neutral-60">{MSG_MAIN_BOOKCASE_COUNT(displayCount)}</p>
         <div ref={scrollRef} className="h-0 flex-grow overflow-y-auto pb-safe-bottom">
-          <BookCase books={processedBooks} onBookClick={(id) => navigate(`/records/${id}`)} />
+          <div className="flex min-h-full flex-col justify-end pb-[4.5rem]">
+            <BookCase books={processedBooks} onBookClick={(id) => navigate(`/records/${id}`)} />
+          </div>
         </div>
       </div>
 
