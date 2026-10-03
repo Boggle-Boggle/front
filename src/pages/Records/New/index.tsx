@@ -1,20 +1,17 @@
-import { useMutation, useQuery } from '@tanstack/react-query';
-
-import { isApiError } from 'api';
 import { useState } from 'react';
-import { useNavigate, useSearchParams, useLocation } from 'react-router-dom';
+import { useSearchParams, useLocation } from 'react-router-dom';
 import { useLayerStore } from 'stores/useLayerStore';
-import { useToastStore } from 'stores/useToastStore';
 
 import { BottomButton } from 'components/Button';
 import { Header } from 'components/Header';
-import { createCustomReadingLog } from 'pages/AddCustomBook/api';
 
 import { getTodayDateString } from 'utils/date';
 
 import type { AddRecordStatus, BookDetail, CustomBookDto, ReadingLogProgressType } from 'types';
 
-import { createReadingLog } from './api';
+import { useBookshelvesQuery } from './queries/useBookshelvesQuery';
+import { useCreateCustomReadingLogMutation } from './queries/useCreateCustomReadingLogMutation';
+import { useCreateReadingLogMutation } from './queries/useCreateReadingLogMutation';
 import { DateSelectModal } from '../shared/DateSelectModal';
 import { GroupDeleteConfirmModal } from '../shared/GroupDeleteConfirmModal';
 import { GroupEditModal } from '../shared/GroupEditModal';
@@ -24,23 +21,12 @@ import { RatingSection } from '../shared/RatingSection';
 import { ReadingPeriodSection } from '../shared/ReadingPeriodSection';
 import { ReadingProgressSection } from '../shared/ReadingProgressSection';
 import { VisibilitySection } from '../shared/VisibilitySection';
-import { BOOKSHELVES_QUERY_KEY, getBookshelves, type BookshelfItem } from '../shared/api';
+import type { BookshelfItem } from '../shared/api';
 import { getAddRecordStatus } from '../shared/recordStatus';
 
 const MSG_ADD_RECORD_SUBMIT = '입력을 끝내고 완료하기';
-const MSG_ADD_RECORD_FAILED = '독서 기록을 저장하지 못했습니다. 다시 시도해주세요.';
-const MSG_ADD_RECORD_INVALID_INPUT = '입력한 독서 기록 정보를 다시 확인해주세요.';
-const MSG_ADD_RECORD_BOOKSHELF_NOT_FOUND = '선택한 그룹을 찾을 수 없습니다. 다시 선택해주세요.';
 const MSG_DATE_SELECT_START = '시작일 선택하기';
 const MSG_DATE_SELECT_END = '종료일 선택하기';
-
-const ADD_RECORD_INPUT_ERROR_CODES = [
-  'COMMON_INVALID_REQUEST',
-  'INVALID_READING_STATUS',
-  'INVALID_RATING',
-  'INVALID_PROGRESS',
-  'INVALID_ISBN13',
-] as const;
 
 const requiresEndDate = (status: AddRecordStatus) => status !== 'READING';
 
@@ -48,15 +34,6 @@ const getAddRecordDatePayload = (status: AddRecordStatus, startDate: string, end
   startDate,
   endDate: requiresEndDate(status) ? endDate : undefined,
 });
-
-const getAddRecordErrorMessage = (error: unknown) => {
-  if (!isApiError(error)) return MSG_ADD_RECORD_FAILED;
-
-  if (ADD_RECORD_INPUT_ERROR_CODES.some((code) => code === error.code)) return MSG_ADD_RECORD_INVALID_INPUT;
-  if (error.code === 'BOOKSHELF_NOT_FOUND') return MSG_ADD_RECORD_BOOKSHELF_NOT_FOUND;
-
-  return MSG_ADD_RECORD_FAILED;
-};
 
 export const NewRecord = () => {
   const [rating, setRating] = useState<number>(0);
@@ -68,11 +45,9 @@ export const NewRecord = () => {
   const [startDate, setStartDate] = useState<string>(getTodayDateString);
   const [endDate, setEndDate] = useState<string>(getTodayDateString);
 
-  const navigate = useNavigate();
   const location = useLocation();
   const [searchParams] = useSearchParams();
   const { push, pop } = useLayerStore();
-  const { addToast } = useToastStore();
 
   const customBook = location.state?.customBook as CustomBookDto | undefined;
   const customStatus = location.state?.status as AddRecordStatus | undefined;
@@ -80,19 +55,10 @@ export const NewRecord = () => {
   const status = customStatus || getAddRecordStatus(searchParams.get('status'));
   const isCompletedStatus = status === 'COMPLETED';
 
-  const { data: bookshelves = [] } = useQuery({ queryKey: BOOKSHELVES_QUERY_KEY, queryFn: getBookshelves });
-
-  const { isPending: isCustomPending, mutate: saveCustomReadingLog } = useMutation({
-    mutationFn: createCustomReadingLog,
-    onSuccess: ({ id }) => navigate('/records/new/completed', { replace: true, state: { readingLogId: id } }),
-    onError: (error) => addToast({ description: getAddRecordErrorMessage(error), type: 'error' }),
-  });
-
-  const { isPending, mutate: saveReadingLog } = useMutation({
-    mutationFn: createReadingLog,
-    onSuccess: ({ id }) => navigate('/records/new/completed', { replace: true, state: { readingLogId: id } }),
-    onError: (error) => addToast({ description: getAddRecordErrorMessage(error), type: 'error' }),
-  });
+  const { data: bookshelves = [] } = useBookshelvesQuery();
+  const { isPending: isCreateCustomReadingLogPending, mutate: saveCustomReadingLog } =
+    useCreateCustomReadingLogMutation();
+  const { isPending: isCreateReadingLogPending, mutate: saveReadingLog } = useCreateReadingLogMutation();
 
   const totalPageCount =
     totalPageCountOverride || customBook?.totalPages?.toString() || bookDetail?.totalPages?.toString() || '';
@@ -101,7 +67,7 @@ export const NewRecord = () => {
 
   const handleSubmit = () => {
     // 중복 요청 방지
-    if (isCustomPending || isPending) return;
+    if (isCreateCustomReadingLogPending || isCreateReadingLogPending) return;
 
     if (customBook) {
       // [분기 A] 사용자가 직접 입력(수동)한 도서 정보를 짊어지고 진입한 경우
@@ -243,8 +209,8 @@ export const NewRecord = () => {
 
       <BottomButton
         onClick={handleSubmit}
-        disabled={isPending || isCustomPending}
-        loading={isPending || isCustomPending}
+        disabled={isCreateReadingLogPending || isCreateCustomReadingLogPending}
+        loading={isCreateReadingLogPending || isCreateCustomReadingLogPending}
       >
         {MSG_ADD_RECORD_SUBMIT}
       </BottomButton>
