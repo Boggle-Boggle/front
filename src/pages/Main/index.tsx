@@ -113,7 +113,7 @@ const Main = () => {
         </div>
       </div>
 
-      <div className="absolute inset-0 bg-neutral-0 mix-blend-soft-light" />
+      <div className="absolute inset-0 bg-neutral-0/80" />
       <div className="absolute bottom-0 h-36 w-full bg-[linear-gradient(180deg,_var(--color-primary-light)_0%,_rgba(255,255,255,0)_100%)]" />
     </div>
   );
