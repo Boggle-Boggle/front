@@ -12,8 +12,8 @@ import { useHeaderTitleByScroll } from 'hooks/useHeaderTitleByScroll';
 import noImage from 'assets/img/no_image.png';
 
 import { RecordMenuActionSheet } from './RecordMenuActionSheet';
-import type { BookInfo } from './api';
-import { useHeroHeaderContrast } from './useHeroHeaderContrast';
+import type { BookInfo } from '../api';
+import { useHeroHeaderContrast } from '../useHeroHeaderContrast';
 
 type RecordDetailHeroProps = {
   recordId: string | number;

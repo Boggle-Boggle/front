@@ -4,7 +4,7 @@ import { useLayerStore } from 'stores/useLayerStore';
 import { ActionSheet } from 'components/Layer/ActionSheet';
 
 import { RecordDeleteConfirmModal } from './RecordDeleteConfirmModal';
-import type { BookInfo } from './api';
+import type { BookInfo } from '../api';
 
 type EditableCustomBook = {
   id?: string | number;

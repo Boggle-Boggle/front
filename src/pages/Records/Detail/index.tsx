@@ -12,7 +12,7 @@ import { READING_STATUS_LABEL_BY_CODE } from 'types';
 import { BookInfoTab } from './BookInfoTab';
 import { MyInfoTab } from './MyInfoTab';
 import { NoteTab } from './NoteTab';
-import { RecordDetailHero } from './RecordDetailHero';
+import { RecordDetailHero } from './components/RecordDetailHero';
 import { useReadingLogDetailQuery } from './queries/useReadingLogDetailQuery';
 
 type DetailTabType = 'info' | 'note' | 'myInfo';

@@ -2,7 +2,7 @@ import { useLayerStore } from 'stores/useLayerStore';
 
 import { ActionModal } from 'components/Layer/ActionModal';
 
-import { useDeleteReadingLogMutation } from './queries/useDeleteReadingLogMutation';
+import { useDeleteReadingLogMutation } from '../queries/useDeleteReadingLogMutation';
 
 type RecordDeleteConfirmModalProps = {
   recordId: string | number;
