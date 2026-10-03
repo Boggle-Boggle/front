@@ -1,5 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 
+import { shouldThrowToErrorBoundary } from 'policy/error';
+
 import { getReadingLogNotes } from '../api';
 
 export const useReadingLogNotesQuery = (readingLogId?: string | number) => {
@@ -7,5 +9,6 @@ export const useReadingLogNotesQuery = (readingLogId?: string | number) => {
     queryKey: ['reading-log-notes', readingLogId],
     queryFn: () => getReadingLogNotes(readingLogId ?? ''),
     enabled: Boolean(readingLogId),
+    throwOnError: shouldThrowToErrorBoundary,
   });
 };

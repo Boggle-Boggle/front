@@ -6,6 +6,8 @@ import IconButton from 'components/Button/IconButton';
 import { Empty } from 'components/Empty';
 import { Header } from 'components/Header';
 import { BackButton } from 'components/Header/BackButton';
+import { Loading } from 'components/Loading';
+import { ResourceFallback } from 'components/ResourceFallback';
 import { Searchbar } from 'components/Searchbar';
 import { IconEdit, IconSearch } from 'components/icons';
 import { NoteMenuActionSheet } from 'pages/Notes/shared/NoteMenuActionSheet';
@@ -20,7 +22,6 @@ type RecordNotesLocationState = {
   bookTitle?: string;
 };
 
-const MSG_RECORD_NOTES_LOADING = '노트를 불러오는 중입니다...';
 const MSG_RECORD_NOTES_COUNT_SUFFIX = '개의 독서 노트가 있습니다';
 const MSG_RECORD_NOTES_EMPTY = '등록된 독서 노트가 없어요.\n첫 노트를 작성해 보세요!';
 const MSG_RECORD_NOTES_SEARCH_EMPTY = '검색 결과가 없어요.';
@@ -40,9 +41,13 @@ const RecordNotes = () => {
 
   const locationState = location.state as RecordNotesLocationState | undefined;
 
-  const { data: notes = [], isLoading } = useReadingLogNotesQuery(recordId);
+  const {
+    data: notes = [],
+    isLoading: isReadingLogNotesLoading,
+    isError: isReadingLogNotesError,
+  } = useReadingLogNotesQuery(recordId);
   const scrollContainerRef = useScrollRestoration<HTMLElement>({
-    isReady: !isLoading,
+    isReady: !isReadingLogNotesLoading,
   });
 
   const { data: readingLogTitle } = useReadingLogTitleQuery({
@@ -81,6 +86,10 @@ const RecordNotes = () => {
     });
   };
 
+  if (isReadingLogNotesLoading) return <Loading fullscreen />;
+
+  if (isReadingLogNotesError) return <ResourceFallback type="readingLogNotFound" />;
+
   return (
     <div className="flex h-full min-h-0 flex-col overflow-hidden">
       {isSearchMode ? (
@@ -104,28 +113,22 @@ const RecordNotes = () => {
       )}
 
       <section ref={scrollContainerRef} className="min-h-0 flex-1 overflow-y-auto px-mobile pb-24 pt-6">
-        {isLoading ? (
-          <div className="flex justify-center py-20 text-body2 text-neutral-60">{MSG_RECORD_NOTES_LOADING}</div>
-        ) : (
-          <>
-            <p className="mb-6 text-caption1 text-neutral-60">{notesCountText}</p>
+        <p className="mb-6 text-caption1 text-neutral-60">{notesCountText}</p>
 
-            {filteredNotes.length === 0 ? (
-              <Empty text={emptyText} />
-            ) : (
-              <ul>
-                {filteredNotes.map((note) => (
-                  <ReadingNoteCard
-                    key={note.id}
-                    note={note}
-                    bookTitle={bookTitle}
-                    readingLogId={recordId}
-                    onMenuClick={handleCardMenuClick}
-                  />
-                ))}
-              </ul>
-            )}
-          </>
+        {filteredNotes.length === 0 ? (
+          <Empty text={emptyText} />
+        ) : (
+          <ul>
+            {filteredNotes.map((note) => (
+              <ReadingNoteCard
+                key={note.id}
+                note={note}
+                bookTitle={bookTitle}
+                readingLogId={recordId}
+                onMenuClick={handleCardMenuClick}
+              />
+            ))}
+          </ul>
         )}
       </section>
 
