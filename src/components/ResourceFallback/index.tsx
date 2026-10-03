@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Button } from 'components/Button';
 import { Header } from 'components/Header';
 
-import fallbackImage from 'assets/resource-fallback/resource-not-found-illustration.png';
+import fallbackImage from 'assets/resource-fallback/resource-not-found-illustration.svg';
 
 type ResourceFallbackType = 'bookNotFound' | 'readingLogNotFound';
 type ResourceFallbackLocale = 'ko';

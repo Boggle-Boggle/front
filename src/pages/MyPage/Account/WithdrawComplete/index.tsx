@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { BottomButton } from 'components/Button';
 import Highlight from 'components/Highlight';
 
-import withdrawCompleteImage from 'assets/my-page/withdraw-complete-illustration.png';
+import withdrawCompleteImage from 'assets/my-page/withdraw-complete-illustration.svg';
 
 const MSG_WITHDRAW_COMPLETE_TITLE_FIRST = '그동안 빼곡을';
 const MSG_WITHDRAW_COMPLETE_TITLE_SECOND = '사용해주셔서 감사합니다';

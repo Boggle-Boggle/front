@@ -8,7 +8,7 @@ import { IconBook, IconGraduation, IconNote } from 'components/icons';
 
 import { useScrollRestoration } from 'hooks/useScrollRestoration';
 
-import profileImage from 'assets/my-page/default-profile-illustration.png';
+import profileImage from 'assets/my-page/default-profile-illustration.svg';
 
 import SettingListItem from './SettingListItem';
 import { getMyPageProfile, type MyPageProfileResponse } from './api';
