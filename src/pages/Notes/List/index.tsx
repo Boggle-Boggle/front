@@ -1,5 +1,3 @@
-import { useQuery } from '@tanstack/react-query';
-
 import { useMemo, useState } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import useLayerStore from 'stores/useLayerStore';
@@ -14,7 +12,7 @@ import { NoteMenuActionSheet } from 'pages/Notes/shared/NoteMenuActionSheet';
 import { ReadingNoteCard } from 'pages/Notes/shared/ReadingNoteCard';
 import type { ReadingNoteResponse } from 'pages/Notes/shared/api';
 import { useReadingLogNotesQuery } from 'pages/Notes/shared/queries/useReadingLogNotesQuery';
-import { getReadingLogDetail } from 'pages/Records/Detail/api';
+import { useReadingLogTitleQuery } from 'pages/Notes/shared/queries/useReadingLogTitleQuery';
 
 import { useScrollRestoration } from 'hooks/useScrollRestoration';
 
@@ -47,10 +45,9 @@ const RecordNotes = () => {
     isReady: !isLoading,
   });
 
-  const { data: readingLogData } = useQuery({
-    queryKey: ['reading-log', recordId],
-    queryFn: () => getReadingLogDetail(recordId ?? ''),
-    enabled: !locationState?.bookTitle && !!recordId,
+  const { data: readingLogTitle } = useReadingLogTitleQuery({
+    readingLogId: recordId,
+    enabled: !locationState?.bookTitle,
   });
 
   const filteredNotes = useMemo(() => {
@@ -63,7 +60,7 @@ const RecordNotes = () => {
     });
   }, [notes, searchKeyword]);
 
-  const bookTitle = locationState?.bookTitle || readingLogData?.book.title || DEFAULT_RECORD_NOTES_TITLE;
+  const bookTitle = locationState?.bookTitle || readingLogTitle || DEFAULT_RECORD_NOTES_TITLE;
   const notesCountText = `${filteredNotes.length}${MSG_RECORD_NOTES_COUNT_SUFFIX}`;
   const emptyText = searchKeyword.trim() ? MSG_RECORD_NOTES_SEARCH_EMPTY : MSG_RECORD_NOTES_EMPTY;
 

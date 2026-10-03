@@ -1,5 +1,3 @@
-import { useQuery } from '@tanstack/react-query';
-
 import { useLocation, useParams } from 'react-router-dom';
 import useLayerStore from 'stores/useLayerStore';
 import useToastStore from 'stores/useToastStore';
@@ -8,8 +6,8 @@ import IconButton from 'components/Button/IconButton';
 import { Header } from 'components/Header';
 import { IconEllipsisVertical } from 'components/icons';
 import { NoteMenuActionSheet } from 'pages/Notes/shared/NoteMenuActionSheet';
+import { useReadingLogTitleQuery } from 'pages/Notes/shared/queries/useReadingLogTitleQuery';
 import { useReadingNoteQuery } from 'pages/Notes/shared/queries/useReadingNoteQuery';
-import { getReadingLogDetail } from 'pages/Records/Detail/api';
 
 import { formatToDotDateTime } from 'utils/date';
 
@@ -33,14 +31,12 @@ const NoteDetail = () => {
 
   const readingLogId = stateReadingLogId ?? (note?.readingLogId ? String(note.readingLogId) : undefined);
 
-  // React Query를 사용하여 상위 독서기록상세에서 책 제목을 비동기 조회 (Prop Drilling 소거)
-  const { data: readingLogData } = useQuery({
-    queryKey: ['reading-log', readingLogId],
-    queryFn: () => getReadingLogDetail(readingLogId ?? ''),
-    enabled: !stateBookTitle && !!readingLogId,
+  const { data: readingLogTitle } = useReadingLogTitleQuery({
+    readingLogId,
+    enabled: !stateBookTitle,
   });
 
-  const bookTitle = stateBookTitle || readingLogData?.book.title || '독서 노트';
+  const bookTitle = stateBookTitle || readingLogTitle || '독서 노트';
 
   const handleMoreClick = () => {
     if (!note) {
