@@ -180,7 +180,7 @@ const NoteNew = () => {
         }
       />
 
-      <section className="flex flex-1 flex-col overflow-y-auto pt-4">
+      <section className="min-h-0 flex flex-1 flex-col overflow-y-auto pt-4">
         <input
           value={title}
           onChange={handleTitleChange}

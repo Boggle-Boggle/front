@@ -10,6 +10,7 @@ import { Header } from 'components/Header';
 import { BackButton } from 'components/Header/BackButton';
 import { Searchbar } from 'components/Searchbar';
 import { IconEdit, IconSearch } from 'components/icons';
+import { useScrollRestoration } from 'hooks/useScrollRestoration';
 import { NoteMenuActionSheet } from 'pages/Notes/shared/NoteMenuActionSheet';
 import { ReadingNoteCard } from 'pages/Notes/shared/ReadingNoteCard';
 import type { ReadingNoteResponse } from 'pages/Notes/shared/api';
@@ -41,6 +42,9 @@ const RecordNotes = () => {
   const locationState = location.state as RecordNotesLocationState | undefined;
 
   const { data: notes = [], isLoading } = useReadingLogNotesQuery(recordId);
+  const scrollContainerRef = useScrollRestoration<HTMLElement>({
+    isReady: !isLoading,
+  });
 
   const { data: readingLogData } = useQuery({
     queryKey: ['reading-log', recordId],
@@ -101,7 +105,7 @@ const RecordNotes = () => {
         />
       )}
 
-      <section className="min-h-0 flex-1 overflow-y-auto px-mobile pb-24 pt-6">
+      <section ref={scrollContainerRef} className="min-h-0 flex-1 overflow-y-auto px-mobile pb-24 pt-6">
         {isLoading ? (
           <div className="flex justify-center py-20 text-body2 text-neutral-60">{MSG_RECORD_NOTES_LOADING}</div>
         ) : (
