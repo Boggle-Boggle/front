@@ -1,13 +1,11 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-
 import { NOTE_BODY, NOTE_TITLE } from 'policy/input';
 import { ChangeEvent, PointerEvent, SVGProps, useEffect, useRef, useState } from 'react';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import { useToastStore } from 'stores/useToastStore';
+import { useLocation, useParams } from 'react-router-dom';
 
 import { Header } from 'components/Header';
-import { createReadingNote, updateReadingNote } from 'pages/Notes/shared/api';
+import { useCreateReadingNoteMutation } from 'pages/Notes/shared/queries/useCreateReadingNoteMutation';
 import { useReadingNoteQuery } from 'pages/Notes/shared/queries/useReadingNoteQuery';
+import { useUpdateReadingNoteMutation } from 'pages/Notes/shared/queries/useUpdateReadingNoteMutation';
 
 const MSG_NOTE_NEW_PAGE_TITLE = '노트 작성하기';
 const MSG_NOTE_EDIT_PAGE_TITLE = '노트 수정하기';
@@ -18,10 +16,6 @@ const MSG_NOTE_NEW_TITLE_ARIA_LABEL = '노트 제목';
 const MSG_NOTE_NEW_BODY_ARIA_LABEL = '노트 본문';
 const MSG_NOTE_NEW_DISMISS_KEYBOARD = '키보드 닫기';
 const MSG_NOTE_NEW_CHARACTER_COUNT_SUFFIX = '자';
-const MSG_NOTE_NEW_SUCCESS = '독서 노트가 저장되었습니다.';
-const MSG_NOTE_NEW_FAILED = '독서 노트를 저장하지 못했습니다. 다시 시도해 주세요.';
-const MSG_NOTE_EDIT_SUCCESS = '독서 노트가 수정되었습니다.';
-const MSG_NOTE_EDIT_FAILED = '독서 노트를 수정하지 못했습니다. 다시 시도해 주세요.';
 
 type NoteNewLocationState = {
   readingLogId?: string;
@@ -48,11 +42,8 @@ const NoteNew = () => {
   const [isBodyFocused, setIsBodyFocused] = useState<boolean>(false);
   const bodyTextareaRef = useRef<HTMLTextAreaElement>(null);
 
-  const navigate = useNavigate();
   const location = useLocation();
   const { noteId } = useParams();
-  const queryClient = useQueryClient();
-  const { addToast } = useToastStore();
 
   const locationState = location.state as NoteNewLocationState | undefined;
   const isEditMode = !!noteId;
@@ -61,56 +52,11 @@ const NoteNew = () => {
   const readingLogId =
     locationState?.readingLogId ?? (editableNote?.readingLogId ? String(editableNote.readingLogId) : '');
 
-  const { mutate: saveNote, isPending: isCreatePending } = useMutation({
-    mutationFn: (data: { title: string; body: string }) => {
-      return createReadingNote(readingLogId, {
-        title: data.title,
-        body: data.body,
-        page: null,
-        tagIds: [],
-      });
-    },
-
-    onSuccess: () => {
-      addToast({ description: MSG_NOTE_NEW_SUCCESS, type: 'success' });
-      queryClient.invalidateQueries({ queryKey: ['reading-log-notes', readingLogId] });
-      navigate(`/records/${readingLogId}`, { state: { activeTab: 'note' }, replace: true });
-    },
-    onError: () => addToast({ description: MSG_NOTE_NEW_FAILED, type: 'error' }),
-  });
-
-  const { mutate: editNote, isPending: isUpdatePending } = useMutation({
-    mutationFn: (data: { title: string; body: string }) => {
-      return updateReadingNote(noteId ?? '', {
-        title: data.title,
-        body: data.body,
-        page: editableNote?.page ?? null,
-        tagIds: editableNote?.tags.map((tag) => tag.id) ?? [],
-      });
-    },
-
-    onSuccess: () => {
-      addToast({ description: MSG_NOTE_EDIT_SUCCESS, type: 'success' });
-      queryClient.invalidateQueries({ queryKey: ['reading-note', noteId] });
-      if (readingLogId) queryClient.invalidateQueries({ queryKey: ['reading-log-notes', readingLogId] });
-      navigate(`/notes/${noteId}`, {
-        state: {
-          note: {
-            ...editableNote,
-            id: Number(noteId),
-            readingLogId: editableNote?.readingLogId ?? (readingLogId ? Number(readingLogId) : null),
-            title: title.trim(),
-            body: body.trim(),
-            page: editableNote?.page ?? null,
-            tags: editableNote?.tags ?? [],
-            createdAt: editableNote?.createdAt ?? new Date().toISOString(),
-          },
-          readingLogId,
-        },
-        replace: true,
-      });
-    },
-    onError: () => addToast({ description: MSG_NOTE_EDIT_FAILED, type: 'error' }),
+  const { mutate: saveNote, isPending: isCreatePending } = useCreateReadingNoteMutation(readingLogId);
+  const { mutate: editNote, isPending: isUpdatePending } = useUpdateReadingNoteMutation({
+    noteId: noteId ?? '',
+    readingLogId,
+    editableNote,
   });
 
   const isPending = isCreatePending || isUpdatePending;
