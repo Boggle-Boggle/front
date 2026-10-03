@@ -5,7 +5,7 @@ import { Header } from 'components/Header';
 
 import fallbackImage from 'assets/resource-fallback/resource-not-found-illustration.svg';
 
-type ResourceFallbackType = 'bookNotFound' | 'readingLogNotFound';
+type ResourceFallbackType = 'bookNotFound' | 'readingLogNotFound' | 'readingNoteNotFound';
 type ResourceFallbackLocale = 'ko';
 
 type ResourceFallbackMessage = {
@@ -37,6 +37,12 @@ const RESOURCE_FALLBACK_MESSAGES: Record<
       imageAlt: '리소스 없음',
       title: '독서 기록을 찾을 수 없어요',
       description: '삭제되었거나, 더 이상 접근할 수 없는 기록이에요.',
+      actionLabel: '이전으로',
+    },
+    readingNoteNotFound: {
+      imageAlt: '리소스 없음',
+      title: '독서 노트를 찾을 수 없어요',
+      description: '삭제되었거나, 더 이상 접근할 수 없는 노트예요.',
       actionLabel: '이전으로',
     },
   },

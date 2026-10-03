@@ -1,9 +1,10 @@
 import { useLocation, useParams } from 'react-router-dom';
 import useLayerStore from 'stores/useLayerStore';
-import useToastStore from 'stores/useToastStore';
 
 import IconButton from 'components/Button/IconButton';
 import { Header } from 'components/Header';
+import { Loading } from 'components/Loading';
+import { ResourceFallback } from 'components/ResourceFallback';
 import { IconEllipsisVertical } from 'components/icons';
 import { NoteMenuActionSheet } from 'pages/Notes/shared/NoteMenuActionSheet';
 import { useReadingLogTitleQuery } from 'pages/Notes/shared/queries/useReadingLogTitleQuery';
@@ -23,11 +24,10 @@ const NoteDetail = () => {
   const location = useLocation();
   const { noteId } = useParams();
   const { push } = useLayerStore();
-  const { addToast } = useToastStore();
 
   const { bookTitle: stateBookTitle, readingLogId: stateReadingLogId } = (location.state as NoteDetailState) || {};
 
-  const { data: note } = useReadingNoteQuery(noteId);
+  const { data: note, isLoading: isReadingNoteLoading, isError: isReadingNoteError } = useReadingNoteQuery(noteId);
 
   const readingLogId = stateReadingLogId ?? (note?.readingLogId ? String(note.readingLogId) : undefined);
 
@@ -38,18 +38,16 @@ const NoteDetail = () => {
 
   const bookTitle = stateBookTitle || readingLogTitle || '독서 노트';
 
-  const handleMoreClick = () => {
-    if (!note) {
-      addToast({ type: 'info', description: '노트 정보가 존재하지 않습니다.' });
-      return;
-    }
+  if (isReadingNoteLoading) return <Loading fullscreen />;
 
+  if (isReadingNoteError || !note) return <ResourceFallback type="readingNoteNotFound" />;
+
+  const handleMoreClick = () => {
     push({
       id: `note-menu-action-sheet-${note.id}`,
       component: <NoteMenuActionSheet note={note} readingLogId={readingLogId} />,
     });
   };
-  if (!note) return null;
 
   return (
     <>
