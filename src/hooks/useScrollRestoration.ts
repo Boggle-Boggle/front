@@ -2,12 +2,14 @@ import { useEffect, useRef } from 'react';
 import { useLocation, useNavigationType } from 'react-router-dom';
 
 import { STORAGE_KEY } from 'constants/storage';
-import { TIME_MS } from 'constants/time';
 
 interface ScrollRestorationOptions {
   customKey?: string;
   isReady?: boolean;
 }
+
+const RESTORE_RETRY_DURATION_MS = 500;
+const RESTORE_RETRY_INTERVAL_MS = 50;
 
 export const useScrollRestoration = <T extends HTMLElement>({
   customKey,
@@ -29,15 +31,26 @@ export const useScrollRestoration = <T extends HTMLElement>({
       const savedPosition = sessionStorage.getItem(scrollKey);
       if (savedPosition) {
         const targetScrollTop = parseInt(savedPosition, 10);
-        container.scrollTop = targetScrollTop;
+        let timer: ReturnType<typeof setTimeout> | undefined;
+        const startedAt = Date.now();
 
-        // 자식 컴포넌트 렌더링 및 레이아웃 잡히는 지연 시간 대비 안전 장치
-        const timer = setTimeout(() => {
-          if (container) {
-            container.scrollTop = targetScrollTop;
+        const restoreScrollTop = () => {
+          container.scrollTop = targetScrollTop;
+
+          const maxScrollTop = container.scrollHeight - container.clientHeight;
+          const restoredScrollTop = Math.min(targetScrollTop, maxScrollTop);
+          const isRestored = targetScrollTop <= 0 || container.scrollTop >= restoredScrollTop;
+
+          if (!isRestored && Date.now() - startedAt < RESTORE_RETRY_DURATION_MS) {
+            timer = setTimeout(restoreScrollTop, RESTORE_RETRY_INTERVAL_MS);
           }
-        }, TIME_MS.MS_50);
-        return () => clearTimeout(timer);
+        };
+
+        restoreScrollTop();
+
+        return () => {
+          if (timer) clearTimeout(timer);
+        };
       }
     } else {
       // 새로운 페이지 진입(PUSH/REPLACE) 시에는 스크롤 초기화
@@ -56,6 +69,7 @@ export const useScrollRestoration = <T extends HTMLElement>({
 
     container.addEventListener('scroll', handleScroll);
     return () => {
+      sessionStorage.setItem(scrollKey, container.scrollTop.toString());
       container.removeEventListener('scroll', handleScroll);
     };
   }, [scrollKey]);
