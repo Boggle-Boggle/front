@@ -1,10 +1,11 @@
 import { useQuery } from '@tanstack/react-query';
 
 import { shouldThrowToErrorBoundary } from 'policy/error';
-import { NICKNAME } from 'policy/input';
+import { NICKNAME_VALIDATION_MESSAGE_BY_ERROR, parseNickname } from 'policy/nickname';
 import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useLayerStore } from 'stores/useLayerStore';
+import { useToastStore } from 'stores/useToastStore';
 
 import { Button } from 'components/Button';
 import { Header } from 'components/Header';
@@ -36,6 +37,7 @@ const LAYER_ID_ACCOUNT_LOGOUT_CONFIRM_MODAL = 'account-logout-confirm-modal';
 const Account = () => {
   const navigate = useNavigate();
   const { push, pop } = useLayerStore();
+  const { addToast } = useToastStore();
   const [isEditingNickname, setIsEditingNickname] = useState<boolean>(false);
   const [nickname, setNickname] = useState<string>('');
   const nicknameInputRef = useRef<HTMLInputElement>(null);
@@ -64,9 +66,17 @@ const Account = () => {
   const handleCompleteNicknameEdit = () => {
     if (!profile) return;
 
-    const trimmedNickname = nickname.trim();
-    if (!trimmedNickname || isChangeNicknamePending) return;
-    if (trimmedNickname === profile.nickname) {
+    const { normalizedNickname, error } = parseNickname(nickname);
+    if (isChangeNicknamePending) return;
+    if (error) {
+      addToast({
+        description: NICKNAME_VALIDATION_MESSAGE_BY_ERROR[error],
+        type: 'error',
+      });
+      return;
+    }
+
+    if (normalizedNickname === profile.nickname) {
       setIsEditingNickname(false);
 
       return;
@@ -75,7 +85,7 @@ const Account = () => {
     setIsEditingNickname(false);
 
     changeNickname(
-      { nickname: trimmedNickname },
+      { nickname: normalizedNickname },
       {
         onError: () => {
           setNickname(profile.nickname);
@@ -105,8 +115,8 @@ const Account = () => {
   if (isLoading || !profile) return <Loading fullscreen />;
 
   const loginProviderLabel = LOGIN_PROVIDER_LABEL[profile.providers[0]];
-  const trimmedNickname = nickname.trim();
-  const isNicknameChangeDisabled = !trimmedNickname || isChangeNicknamePending;
+  const { normalizedNickname } = parseNickname(nickname);
+  const isNicknameChangeDisabled = !normalizedNickname || isChangeNicknamePending;
   const nicknameInputSize = Math.max(
     Array.from(nickname).reduce((size, character) => size + (character.charCodeAt(0) > 255 ? 2 : 1), 0),
     1,
@@ -126,7 +136,6 @@ const Account = () => {
                 aria-label={MSG_ACCOUNT_NICKNAME_INPUT_LABEL}
                 value={nickname}
                 onChange={handleChangeNickname}
-                maxLength={NICKNAME.maxLength}
                 size={nicknameInputSize}
                 className="min-w-4 max-w-[12rem] bg-transparent text-center text-title1 outline-none"
               />

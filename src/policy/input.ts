@@ -11,13 +11,6 @@ export type InputPolicy = {
 export const DIGIT_PATTERN = /^\d+$/;
 export const OPTIONAL_DIGIT_PATTERN = /^\d*$/;
 
-export const NICKNAME = {
-  description: '회원가입 및 계정 설정 닉네임',
-  minLength: 2,
-  maxLength: 15,
-  allowLineBreak: false,
-} satisfies InputPolicy;
-
 export const SEARCH_KEYWORD = {
   description: '도서 검색어',
   allowLineBreak: false,
@@ -124,7 +117,6 @@ export const READING_PROGRESS_VALUE = {
 } satisfies InputPolicy;
 
 export const INPUT_POLICY = {
-  NICKNAME,
   SEARCH_KEYWORD,
   LIBRARY_SEARCH_KEYWORD,
   CUSTOM_BOOK_TITLE,

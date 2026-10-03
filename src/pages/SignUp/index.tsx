@@ -1,8 +1,7 @@
+import { NICKNAME_VALIDATION_MESSAGE_BY_ERROR, parseNickname } from 'policy/nickname';
 import { useState } from 'react';
 import { Outlet, useNavigate, useOutlet } from 'react-router-dom';
 import { useToastStore } from 'stores/useToastStore';
-
-import validateNickname from 'utils/validateNickname';
 
 import { CompleteStep } from './CompleteStep';
 import { NicknameStep } from './NicknameStep';
@@ -18,8 +17,6 @@ const STEP = {
 } as const;
 
 type Step = (typeof STEP)[keyof typeof STEP];
-
-const MSG_SIGNUP_NICKNAME_INVALID = '사용할 수 없는 닉네임입니다. 다시 확인해주세요.';
 
 const SignUp = () => {
   const outlet = useOutlet();
@@ -46,17 +43,17 @@ const SignUp = () => {
   };
 
   const handleNicknameNext = () => {
-    const trimmedNickname = nickname.trim();
+    const { normalizedNickname, error } = parseNickname(nickname);
 
-    if (!validateNickname(trimmedNickname)) {
+    if (error) {
       addToast({
-        description: MSG_SIGNUP_NICKNAME_INVALID,
+        description: NICKNAME_VALIDATION_MESSAGE_BY_ERROR[error],
         type: 'error',
       });
       return;
     }
 
-    checkNicknameAvailability(trimmedNickname, {
+    checkNicknameAvailability(normalizedNickname, {
       onSuccess: (isAvailable) => {
         if (!isAvailable) return;
 
@@ -70,9 +67,11 @@ const SignUp = () => {
   const handleTermsPrev = () => setStep(STEP.NICKNAME);
 
   const handleTermsNext = () => {
+    const { normalizedNickname } = parseNickname(nickname);
+
     completeSignup(
       {
-        nickname: nickname.trim(),
+        nickname: normalizedNickname,
         agreements: terms.map((term) => ({
           termsId: term.termsId,
           agreed: agreedTermIds.includes(term.termsId),

@@ -1,5 +1,3 @@
-import { NICKNAME } from 'policy/input';
-
 import { BottomButton } from 'components/Button';
 import { Header } from 'components/Header';
 import { Input, type InputChangeEvent } from 'components/Input';
@@ -43,7 +41,6 @@ export const NicknameStep = (props: NicknameStepProps) => {
           appearance="line"
           margin="mt-6"
           placeholder={MSG_SIGNUP_NICKNAME_PLACEHOLDER}
-          maxLength={NICKNAME.maxLength}
           value={nickname}
           onChange={handleChangeNickname}
           onClear={handleClearNickname}
