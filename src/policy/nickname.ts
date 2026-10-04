@@ -1,4 +1,4 @@
-const NICKNAME_PATTERN = /^[가-힣a-zA-Z0-9]+$/;
+const NICKNAME_PATTERN = /^[가-힣ㄱ-ㅎㅏ-ㅣa-zA-Z0-9]+$/;
 const NICKNAME_MAX_BYTE_LENGTH = 45;
 
 export type NicknameValidationError = 'EMPTY' | 'INVALID_CHARSET' | 'TOO_LONG';
