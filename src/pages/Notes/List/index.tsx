@@ -3,12 +3,9 @@ import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import useLayerStore from 'stores/useLayerStore';
 
 import IconButton from 'components/Button/IconButton';
-import { Header } from 'components/Header';
-import { BackButton } from 'components/Header/BackButton';
 import { Loading } from 'components/Loading';
 import { ResourceFallback } from 'components/ResourceFallback';
-import { Searchbar } from 'components/Searchbar';
-import { IconEdit, IconSearch } from 'components/icons';
+import { IconEdit } from 'components/icons';
 import { NoteMenuActionSheet } from 'pages/Notes/shared/NoteMenuActionSheet';
 import type { ReadingNoteResponse } from 'pages/Notes/shared/api';
 import { useReadingLogNotesQuery } from 'pages/Notes/shared/queries/useReadingLogNotesQuery';
@@ -17,6 +14,7 @@ import { useReadingLogTitleQuery } from 'pages/Notes/shared/queries/useReadingLo
 import { useScrollRestoration } from 'hooks/useScrollRestoration';
 
 import { NoteListContent } from './components/NoteListContent';
+import { NoteListHeader } from './components/NoteListHeader';
 
 type RecordNotesLocationState = {
   bookTitle?: string;
@@ -92,25 +90,16 @@ const RecordNotes = () => {
 
   return (
     <div className="flex h-full min-h-0 flex-col overflow-hidden">
-      {isSearchMode ? (
-        <div className="flex w-full items-center justify-start pr-mobile pt-safe-top">
-          <BackButton onClick={handleCloseSearchMode} />
-          <Searchbar
-            value={searchKeyword}
-            onChange={setSearchKeyword}
-            placeholder={MSG_RECORD_NOTES_SEARCH_PLACEHOLDER}
-            className="grow"
-          />
-        </div>
-      ) : (
-        <Header
-          title={bookTitle}
-          withBack
-          rightBtn={
-            <IconButton onClick={handleOpenSearchMode} label={MSG_RECORD_NOTES_SEARCH_ARIA_LABEL} icon={IconSearch} />
-          }
-        />
-      )}
+      <NoteListHeader
+        isSearchMode={isSearchMode}
+        bookTitle={bookTitle}
+        searchKeyword={searchKeyword}
+        searchPlaceholder={MSG_RECORD_NOTES_SEARCH_PLACEHOLDER}
+        searchAriaLabel={MSG_RECORD_NOTES_SEARCH_ARIA_LABEL}
+        onSearchKeywordChange={setSearchKeyword}
+        onOpenSearchMode={handleOpenSearchMode}
+        onCloseSearchMode={handleCloseSearchMode}
+      />
 
       <section ref={scrollContainerRef} className="min-h-0 flex-1 overflow-y-auto px-mobile pb-24 pt-6">
         <NoteListContent
