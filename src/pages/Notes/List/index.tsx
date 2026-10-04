@@ -3,7 +3,6 @@ import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import useLayerStore from 'stores/useLayerStore';
 
 import IconButton from 'components/Button/IconButton';
-import { Empty } from 'components/Empty';
 import { Header } from 'components/Header';
 import { BackButton } from 'components/Header/BackButton';
 import { Loading } from 'components/Loading';
@@ -11,12 +10,13 @@ import { ResourceFallback } from 'components/ResourceFallback';
 import { Searchbar } from 'components/Searchbar';
 import { IconEdit, IconSearch } from 'components/icons';
 import { NoteMenuActionSheet } from 'pages/Notes/shared/NoteMenuActionSheet';
-import { ReadingNoteCard } from 'pages/Notes/shared/ReadingNoteCard';
 import type { ReadingNoteResponse } from 'pages/Notes/shared/api';
 import { useReadingLogNotesQuery } from 'pages/Notes/shared/queries/useReadingLogNotesQuery';
 import { useReadingLogTitleQuery } from 'pages/Notes/shared/queries/useReadingLogTitleQuery';
 
 import { useScrollRestoration } from 'hooks/useScrollRestoration';
+
+import { NoteListContent } from './components/NoteListContent';
 
 type RecordNotesLocationState = {
   bookTitle?: string;
@@ -113,23 +113,14 @@ const RecordNotes = () => {
       )}
 
       <section ref={scrollContainerRef} className="min-h-0 flex-1 overflow-y-auto px-mobile pb-24 pt-6">
-        <p className="mb-6 text-caption1 text-neutral-60">{notesCountText}</p>
-
-        {filteredNotes.length === 0 ? (
-          <Empty text={emptyText} />
-        ) : (
-          <ul>
-            {filteredNotes.map((note) => (
-              <ReadingNoteCard
-                key={note.id}
-                note={note}
-                bookTitle={bookTitle}
-                readingLogId={recordId}
-                onMenuClick={handleCardMenuClick}
-              />
-            ))}
-          </ul>
-        )}
+        <NoteListContent
+          notes={filteredNotes}
+          notesCountText={notesCountText}
+          emptyText={emptyText}
+          bookTitle={bookTitle}
+          readingLogId={recordId}
+          onCardMenuClick={handleCardMenuClick}
+        />
       </section>
 
       {/* 독서노트 작성 플로팅 */}
