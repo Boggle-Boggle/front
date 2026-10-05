@@ -136,9 +136,8 @@ export const RecordDetailHero = (props: RecordDetailHeroProps) => {
   };
 
   return (
-    <section className="relative overflow-hidden bg-neutral-0">
+    <section className="relative overflow-hidden">
       {/* 배경 영역 */}
-      {/* 아우터 컨테이너의 bg-[#303030]를 제거하여 서브픽셀 렌더링에 따른 미세한 어두운 경계선 유출을 근본적으로 방지합니다. */}
       <div ref={backgroundRef} className="absolute inset-x-0 top-0 h-80 overflow-hidden">
         <div className="absolute inset-0 bg-[#303030]">
           <img
