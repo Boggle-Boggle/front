@@ -147,11 +147,7 @@ export const RecordDetailHero = (props: RecordDetailHeroProps) => {
             className="h-full w-full scale-110 object-cover opacity-80 blur-[15px]"
           />
         </div>
-
-        {/* 1. 이미지 위에 확실하게 얹혀 피그마의 안쪽 그림자를 완벽히 재현하는 오버레이 */}
         <div className="pointer-events-none absolute inset-0 mix-blend-multiply shadow-[inset_0_26px_60.6px_5px_rgba(0,0,0,0.16)]" />
-
-        {/* <div className="absolute inset-x-0 bottom-[-2px] h-[3.9rem] bg-white" /> */}
       </div>
 
       <Header
@@ -165,9 +161,6 @@ export const RecordDetailHero = (props: RecordDetailHeroProps) => {
 
       {/* 메인 컨텐츠 영역 */}
       <div className="relative z-book flex h-full flex-col items-center">
-        {/* 헤더의 높이만큼 상단에 여백을 제공하여 투명 헤더와 컨텐츠가 겹치지 않도록 보정 */}
-        <div className="mt-safe-top h-header w-full shrink-0" />
-
         <div className="flex w-full flex-1 flex-col items-center px-mobile pt-[2.125rem]">
           {/* 책 표지 (피그마 전용 109:152 비율 고정) */}
           <div className="relative z-book w-[7.875rem] shrink-0">
@@ -182,7 +175,7 @@ export const RecordDetailHero = (props: RecordDetailHeroProps) => {
           </div>
 
           {/* 책 선반 영역 (바깥으로 확장 + negative margin으로 책과 자연스럽게 겹치도록 설정) */}
-          <div className="relative w-[calc(100%+2rem)] shrink-0">
+          <div className="relative w-[calc(100%+2rem)] shrink-0 bg-white">
             <ShelfBase height={HERO_SHELF_PRIMARY_HEIGHT} gradient={HERO_SHELF_PRIMARY_GRADIENT} layerOpacity={1} />
             <ShelfBase height={HERO_SHELF_SECONDARY_HEIGHT} gradient={HERO_SHELF_SECONDARY_GRADIENT} layerOpacity={1} />
           </div>
