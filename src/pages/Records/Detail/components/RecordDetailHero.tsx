@@ -151,17 +151,13 @@ export const RecordDetailHero = (props: RecordDetailHeroProps) => {
         {/* 1. 이미지 위에 확실하게 얹혀 피그마의 안쪽 그림자를 완벽히 재현하는 오버레이 */}
         <div className="pointer-events-none absolute inset-0 mix-blend-multiply shadow-[inset_0_26px_60.6px_5px_rgba(0,0,0,0.16)]" />
 
-        {/* 2. 하단 자연스러운 흰색 트랜지션 페이드 그라데이션 */}
-        <div className="absolute inset-x-0 bottom-0 h-[60px] bg-gradient-to-t from-white to-transparent opacity-40" />
-
-        {/* 서브픽셀 렌더링 시 발생하는 1px 오차를 완벽히 가리기 위해 하단 마진을 살짝 밀어내고 높이를 키웁니다 (bottom-[-2px] h-[3.9rem]) */}
-        <div className="absolute inset-x-0 bottom-[-2px] h-[3.9rem] bg-white" />
+        {/* <div className="absolute inset-x-0 bottom-[-2px] h-[3.9rem] bg-white" /> */}
       </div>
 
       <Header
         className={headerClassName}
         withBack
-        withSpacer={false}
+        withSpacer
         transparent={!isVisible}
         title={headerTitle}
         rightBtn={<IconButton onClick={handleMoreClick} label={MSG_RECORD_DETAIL_MORE} icon={IconEllipsisVertical} />}
@@ -188,7 +184,6 @@ export const RecordDetailHero = (props: RecordDetailHeroProps) => {
           {/* 책 선반 영역 (바깥으로 확장 + negative margin으로 책과 자연스럽게 겹치도록 설정) */}
           <div className="relative w-[calc(100%+2rem)] shrink-0">
             <ShelfBase height={HERO_SHELF_PRIMARY_HEIGHT} gradient={HERO_SHELF_PRIMARY_GRADIENT} layerOpacity={1} />
-            {/* layerOpacity를 1로 보정하고 투명도를 그라데이션 색상 자체에 녹여 경계선 실선 문제를 완벽히 소멸시킵니다. */}
             <ShelfBase height={HERO_SHELF_SECONDARY_HEIGHT} gradient={HERO_SHELF_SECONDARY_GRADIENT} layerOpacity={1} />
           </div>
 
