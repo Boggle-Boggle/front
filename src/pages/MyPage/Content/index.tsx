@@ -1,11 +1,10 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-
 import { useNavigate } from 'react-router-dom';
 
 import { Header } from 'components/Header';
 import { Loading } from 'components/Loading';
 
-import { updateUserSettings, getUserSettings } from './api';
+import { useUpdateUserSettingsMutation } from '../queries/useUpdateUserSettingsMutation';
+import { useUserSettingsQuery } from '../queries/useUserSettingsQuery';
 import { SectionHeader } from '../shared/SectionHeader';
 import { SectionLink } from '../shared/SectionLink';
 import { SectionToggle } from '../shared/SectionToggle';
@@ -21,21 +20,10 @@ const MSG_CONTENT_BLOCKED_USERS = '차단한 유저 확인하기';
 
 const Content = () => {
   const navigate = useNavigate();
-  const queryClient = useQueryClient();
+  const { data: userSettings, isLoading: isUserSettingsLoading } = useUserSettingsQuery();
+  const { mutate: updateSettings } = useUpdateUserSettingsMutation();
 
-  const { data: userSettings, isLoading } = useQuery({
-    queryKey: ['users', 'me', 'settings'],
-    queryFn: getUserSettings,
-  });
-
-  const { mutate: updateSettings } = useMutation({
-    mutationFn: updateUserSettings,
-    onSuccess: (updatedSettings) => {
-      queryClient.setQueryData(['users', 'me', 'settings'], updatedSettings);
-    },
-  });
-
-  if (isLoading || !userSettings) return <Loading fullscreen />;
+  if (isUserSettingsLoading || !userSettings) return <Loading fullscreen />;
 
   const handleAdultContentChange = () => {
     updateSettings({

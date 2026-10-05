@@ -1,6 +1,3 @@
-import { useQuery } from '@tanstack/react-query';
-
-import { shouldThrowToErrorBoundary } from 'policy/error';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useLayerStore } from 'stores/useLayerStore';
@@ -12,8 +9,9 @@ import { Input } from 'components/Input';
 import { Loading } from 'components/Loading';
 
 import WithdrawConfirmModal from './WithdrawConfirmModal';
-import { getMyPageProfile } from '../../api';
-import { getWithdrawalReasons, type WithdrawalReasonCode } from '../api';
+import { useMyPageProfileQuery } from '../../queries/useMyPageProfileQuery';
+import { useWithdrawalReasonsQuery } from '../../queries/useWithdrawalReasonsQuery';
+import type { WithdrawalReasonCode } from '../api';
 
 const MSG_WITHDRAW_TITLE = '회원탈퇴';
 const MSG_WITHDRAW_HEADING = '빼곡을 떠나시나요?';
@@ -32,21 +30,12 @@ const Withdraw = () => {
   const [selectedReasons, setSelectedReasons] = useState<WithdrawalReasonCode[]>([]);
   const [feedback, setFeedback] = useState<string>('');
 
-  const { data: profile, isLoading: isProfileLoading } = useQuery({
-    queryKey: ['users', 'me', 'profile'],
-    queryFn: getMyPageProfile,
-    retry: false,
-    throwOnError: shouldThrowToErrorBoundary,
-  });
+  const { data: profile, isLoading: isMyPageProfileLoading } = useMyPageProfileQuery();
+  const { data: withdrawalReasonItems, isLoading: isWithdrawalReasonsLoading } = useWithdrawalReasonsQuery();
 
-  const { data: withdrawalReasonItems, isLoading } = useQuery({
-    queryKey: ['users', 'me', 'withdrawal-reasons'],
-    queryFn: getWithdrawalReasons,
-    retry: false,
-    throwOnError: shouldThrowToErrorBoundary,
-  });
-
-  if (isLoading || isProfileLoading || !withdrawalReasonItems || !profile) return <Loading fullscreen />;
+  if (isWithdrawalReasonsLoading || isMyPageProfileLoading || !withdrawalReasonItems || !profile) {
+    return <Loading fullscreen />;
+  }
 
   const hasSelectedReasons = selectedReasons.length > 0;
   const feedbackTitle = `${profile.nickname}${MSG_WITHDRAW_FEEDBACK_SUFFIX}\n${MSG_WITHDRAW_FEEDBACK_TITLE}`;

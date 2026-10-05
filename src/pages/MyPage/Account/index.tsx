@@ -1,6 +1,3 @@
-import { useQuery } from '@tanstack/react-query';
-
-import { shouldThrowToErrorBoundary } from 'policy/error';
 import { NICKNAME_VALIDATION_MESSAGE_BY_ERROR, parseNickname } from 'policy/nickname';
 import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -15,7 +12,7 @@ import { IconPen } from 'components/icons';
 import DownloadBackupModal from './DownloadBackupModal';
 import LogoutConfirmModal from './LogoutConfirmModal';
 import { useChangeNicknameMutation } from './useChangeNicknameMutation';
-import { getMyPageProfile } from '../api';
+import { useMyPageProfileQuery } from '../queries/useMyPageProfileQuery';
 import { SectionButton } from '../shared/SectionButton';
 import { SectionHeader } from '../shared/SectionHeader';
 import { LOGIN_PROVIDER_LABEL } from '../shared/loginProvider';
@@ -42,12 +39,7 @@ const Account = () => {
   const [nickname, setNickname] = useState<string>('');
   const nicknameInputRef = useRef<HTMLInputElement>(null);
 
-  const { data: profile, isLoading } = useQuery({
-    queryKey: ['users', 'me', 'profile'],
-    queryFn: getMyPageProfile,
-    retry: false,
-    throwOnError: shouldThrowToErrorBoundary,
-  });
+  const { data: profile, isLoading: isMyPageProfileLoading } = useMyPageProfileQuery();
   const { isPending: isChangeNicknamePending, mutate: changeNickname } = useChangeNicknameMutation();
 
   useEffect(() => {
@@ -112,7 +104,7 @@ const Account = () => {
     navigate('/mypage/account/withdraw');
   };
 
-  if (isLoading || !profile) return <Loading fullscreen />;
+  if (isMyPageProfileLoading || !profile) return <Loading fullscreen />;
 
   const loginProviderLabel = LOGIN_PROVIDER_LABEL[profile.providers[0]];
   const { normalizedNickname } = parseNickname(nickname);

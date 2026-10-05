@@ -1,6 +1,3 @@
-import { useQuery } from '@tanstack/react-query';
-
-import { shouldThrowToErrorBoundary } from 'policy/error';
 import { useNavigate } from 'react-router-dom';
 
 import { Loading } from 'components/Loading';
@@ -11,7 +8,8 @@ import { useScrollRestoration } from 'hooks/useScrollRestoration';
 import profileImage from 'assets/my-page/default-profile-illustration.svg';
 
 import SettingListItem from './SettingListItem';
-import { getMyPageProfile, type MyPageProfileResponse } from './api';
+import type { MyPageProfileResponse } from './api';
+import { useMyPageProfileQuery } from './queries/useMyPageProfileQuery';
 import StatItem from './shared/StatItem';
 import { LOGIN_PROVIDER_LABEL } from './shared/loginProvider';
 
@@ -72,18 +70,13 @@ const MY_PAGE_MENU_ITEMS: MyPageMenuItem[] = [
 
 const MyPage = () => {
   const navigate = useNavigate();
-  const { data: profile, isLoading } = useQuery({
-    queryKey: ['users', 'me', 'profile'],
-    queryFn: getMyPageProfile,
-    retry: false,
-    throwOnError: shouldThrowToErrorBoundary,
-  });
+  const { data: profile, isLoading: isMyPageProfileLoading } = useMyPageProfileQuery();
 
   const scrollRef = useScrollRestoration<HTMLDivElement>({
     isReady: profile !== undefined,
   });
 
-  if (isLoading || !profile) return <Loading fullscreen />;
+  if (isMyPageProfileLoading || !profile) return <Loading fullscreen />;
 
   const loginProviderLabel = LOGIN_PROVIDER_LABEL[profile.providers[0]];
   const myPageStats = getMyPageStats(profile);
