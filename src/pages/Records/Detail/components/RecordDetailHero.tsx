@@ -35,6 +35,7 @@ type RecordDetailHeroProps = {
 
 const HERO_SHELF_PRIMARY_HEIGHT = 42;
 const HERO_SHELF_SECONDARY_HEIGHT = 128;
+const HERO_COVER_SHELF_OVERLAP = HERO_SHELF_PRIMARY_HEIGHT / 2;
 const HERO_TITLE_PULL_UP_REM = '-7.0625rem';
 
 const MSG_RECORD_DETAIL_MORE = '더보기';
@@ -174,8 +175,11 @@ export const RecordDetailHero = (props: RecordDetailHeroProps) => {
             />
           </div>
 
-          {/* 책 선반 영역 (바깥으로 확장 + negative margin으로 책과 자연스럽게 겹치도록 설정) */}
-          <div className="relative w-[calc(100%+2rem)] shrink-0 bg-white">
+          {/* 책 선반 영역 (바깥으로 확장 + 책 하단이 첫 번째 선반의 중앙에 오도록 겹침 설정) */}
+          <div
+            className="relative w-[calc(100%+2rem)] shrink-0 bg-white"
+            style={{ marginTop: -HERO_COVER_SHELF_OVERLAP }}
+          >
             <ShelfBase height={HERO_SHELF_PRIMARY_HEIGHT} gradient={HERO_SHELF_PRIMARY_GRADIENT} layerOpacity={1} />
             <ShelfBase height={HERO_SHELF_SECONDARY_HEIGHT} gradient={HERO_SHELF_SECONDARY_GRADIENT} layerOpacity={1} />
           </div>
