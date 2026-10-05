@@ -186,7 +186,7 @@ export const RecordDetailHero = (props: RecordDetailHeroProps) => {
           </div>
 
           {/* 책 선반 영역 (바깥으로 확장 + negative margin으로 책과 자연스럽게 겹치도록 설정) */}
-          <div className="relative w-[calc(100%+2rem)] shrink-0" style={{ marginTop: '-1.5rem' }}>
+          <div className="relative w-[calc(100%+2rem)] shrink-0">
             <ShelfBase height={HERO_SHELF_PRIMARY_HEIGHT} gradient={HERO_SHELF_PRIMARY_GRADIENT} layerOpacity={1} />
             {/* layerOpacity를 1로 보정하고 투명도를 그라데이션 색상 자체에 녹여 경계선 실선 문제를 완벽히 소멸시킵니다. */}
             <ShelfBase height={HERO_SHELF_SECONDARY_HEIGHT} gradient={HERO_SHELF_SECONDARY_GRADIENT} layerOpacity={1} />
