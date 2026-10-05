@@ -1,5 +1,3 @@
-import { useInfiniteQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-
 import { useState } from 'react';
 import { useLayerStore } from 'stores/useLayerStore';
 import { useToastStore } from 'stores/useToastStore';
@@ -8,12 +6,14 @@ import { TextButton } from 'components/Button';
 import { Empty } from 'components/Empty';
 import { InfiniteScrollTrigger } from 'components/InfiniteScrollTrigger';
 import { IconArrowDown } from 'components/icons';
+import { useBookReviewsInfiniteQuery } from 'pages/BookDetail/queries/useBookReviewsInfiniteQuery';
+import { useToggleBookReviewLikeMutation } from 'pages/BookDetail/queries/useToggleBookReviewLikeMutation';
 
 import { useInfiniteScrollObserver } from 'hooks/useInfiniteScrollObserver';
 
 import { ReviewItem } from './ReviewItem';
 import { ReviewSortActionSheet } from './SortActionSheet';
-import { getBookReviews, likeBookReview, unlikeBookReview, REVIEW_SORT_OPTIONS, type ReviewSortType } from '../../api';
+import { REVIEW_SORT_OPTIONS, type ReviewSortType } from '../../api';
 
 const MSG_REVIEW_PAGE_TITLE = '빼곡한 리뷰';
 const MSG_REVIEW_EMPTY = '아직 작성된 리뷰가 없어요';
@@ -27,26 +27,19 @@ type ReviewListProps = {
 export const ReviewList = ({ isbn13 }: ReviewListProps) => {
   const { push } = useLayerStore();
   const { addToast } = useToastStore();
-  const queryClient = useQueryClient();
-
   const [sortType, setSortType] = useState<ReviewSortType>('RECENT');
 
-  // 리액트 쿼리 무한 스크롤 조회 연동
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } = useInfiniteQuery({
-    queryKey: ['books', isbn13, 'reviews', sortType],
-    queryFn: ({ pageParam }) => getBookReviews({ isbn13, page: pageParam, size: 10, sort: sortType }),
-    getNextPageParam: (lastPage, allPages) => {
-      const loadedCount = allPages.flatMap((page) => page.reviews).length;
-      if (loadedCount < lastPage.totalReviewCount) return allPages.length + 1;
+  const {
+    data: bookReviews,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    isLoading: isBookReviewsLoading,
+  } = useBookReviewsInfiniteQuery(isbn13, sortType);
+  const toggleBookReviewLikeMutation = useToggleBookReviewLikeMutation(isbn13);
 
-      return undefined;
-    },
-    initialPageParam: 1,
-    enabled: Boolean(isbn13),
-  });
-
-  const allReviews = data ? data.pages.flatMap((page) => page.reviews) : [];
-  const totalReviewCount = data?.pages[0]?.totalReviewCount || 0;
+  const allReviews = bookReviews ? bookReviews.pages.flatMap((page) => page.reviews) : [];
+  const totalReviewCount = bookReviews?.pages[0]?.totalReviewCount || 0;
 
   const { observerTarget } = useInfiniteScrollObserver({
     enabled: Boolean(hasNextPage && !isFetchingNextPage),
@@ -60,28 +53,16 @@ export const ReviewList = ({ isbn13 }: ReviewListProps) => {
     });
   };
 
-  // 리뷰 좋아요 Mutation
-  const toggleLikeMutation = useMutation({
-    mutationFn: ({ reviewId, isLiked }: { reviewId: string; isLiked: boolean }) =>
-      isLiked ? unlikeBookReview(reviewId) : likeBookReview(reviewId),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['books', isbn13, 'reviews'] });
-    },
-  });
-
   const handleToggleLike = (reviewId: string) => {
     const review = allReviews.find((r) => String(r.id) === reviewId);
-    if (!review || toggleLikeMutation.isPending) return;
+    if (!review || toggleBookReviewLikeMutation.isPending) return;
 
     if (review.isMine) {
-      addToast({
-        description: MSG_REVIEW_MY_LIKE_FORBIDDEN,
-        type: 'error',
-      });
+      addToast({ description: MSG_REVIEW_MY_LIKE_FORBIDDEN, type: 'error' });
       return;
     }
 
-    toggleLikeMutation.mutate({
+    toggleBookReviewLikeMutation.mutate({
       reviewId,
       isLiked: review.isLiked,
     });
@@ -103,7 +84,7 @@ export const ReviewList = ({ isbn13 }: ReviewListProps) => {
         />
       </div>
 
-      {totalReviewCount === 0 && !isLoading ? (
+      {totalReviewCount === 0 && !isBookReviewsLoading ? (
         <Empty text={MSG_REVIEW_EMPTY} />
       ) : (
         <>
