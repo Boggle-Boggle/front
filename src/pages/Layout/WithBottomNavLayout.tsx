@@ -4,11 +4,13 @@ import BottomNavigator from './BottomNavigator';
 
 const WithBottomNavLayout = () => {
   return (
-    <section className="flex h-dvh w-full flex-col overflow-hidden">
+    <section className="relative flex h-dvh w-full flex-col overflow-hidden">
       <div className="min-h-0 w-full flex-1 overflow-hidden">
         <Outlet />
       </div>
-      <BottomNavigator />
+      <div className="absolute bottom-0 left-0 z-navigator flex w-full justify-center">
+        <BottomNavigator />
+      </div>
     </section>
   );
 };
