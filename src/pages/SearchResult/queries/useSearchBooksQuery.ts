@@ -2,16 +2,10 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 
 import { getNextPageParam } from 'utils/pagination';
 
-import { getSearchBooks, type SearchMediaType } from './api';
+import { getSearchBooks, type SearchMediaType } from '../api';
 
 export const useSearchBooksQuery = (query: string, type: SearchMediaType) => {
-  const {
-    data,
-    fetchNextPage,
-    hasNextPage,
-    isFetchingNextPage,
-    isLoading,
-  } = useInfiniteQuery({
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } = useInfiniteQuery({
     queryKey: ['books', 'search', query, type],
     queryFn: ({ pageParam }) =>
       getSearchBooks({
