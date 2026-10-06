@@ -4,6 +4,7 @@ import { Loading } from 'components/Loading';
 import { IconBook, IconGraduation, IconNote } from 'components/icons';
 
 import { useScrollRestoration } from 'hooks/useScrollRestoration';
+import { getStoredThemeColor } from 'utils/theme';
 
 import profileImage from 'assets/my-page/default-profile-illustration.svg';
 
@@ -11,7 +12,7 @@ import SettingListItem from './SettingListItem';
 import type { MyPageProfileResponse } from './api';
 import { useMyPageProfileQuery } from './queries/useMyPageProfileQuery';
 import StatItem from './shared/StatItem';
-import { LOGIN_PROVIDER_LABEL } from './shared/loginProvider';
+import { LOGIN_PROVIDER_LABEL, LOGIN_PROVIDER_LOGO_SRC } from './shared/loginProvider';
 
 const MSG_MY_PAGE_PROFILE_IMAGE_ALT = '프로필 일러스트';
 const MSG_MY_PAGE_NICKNAME_SUFFIX = ' 님';
@@ -79,13 +80,15 @@ const MyPage = () => {
   if (isMyPageProfileLoading || !profile) return <Loading fullscreen />;
 
   const loginProviderLabel = LOGIN_PROVIDER_LABEL[profile.providers[0]];
+  const loginProviderLogoSrc = LOGIN_PROVIDER_LOGO_SRC[profile.providers[0]];
   const myPageStats = getMyPageStats(profile);
+  const themeColor = getStoredThemeColor();
 
   return (
     <div ref={scrollRef} className="h-full overflow-y-auto bg-neutral-0">
       <div className="relative h-auto overflow-hidden bg-neutral-0 pb-6 pt-safe-top">
         {/* 동그라미 세알 */}
-        <div className="absolute inset-0">
+        <div key={themeColor} className="absolute inset-0">
           <div className="opacity-76 absolute right-[-4.35rem] top-[-6.5625rem] h-[18.75rem] w-[18.75rem] rounded-full bg-[radial-gradient(circle_at_34%_38%,color-mix(in_srgb,var(--color-primary)_96%,transparent)_0%,color-mix(in_srgb,var(--color-secondary-light)_90%,transparent)_100%)] blur-[1rem]" />
           <div className="absolute -left-[2.65rem] top-[7.6875rem] h-[11.275rem] w-[11.275rem] rounded-full bg-[radial-gradient(circle_at_42%_40%,color-mix(in_srgb,var(--color-primary)_92%,transparent)_0%,color-mix(in_srgb,var(--color-secondary-light)_82%,transparent)_100%)] opacity-80 blur-[0.95rem]" />
           <div className="opacity-72 absolute left-[2.55rem] top-[14.625rem] h-[23.5rem] w-[23.5rem] rounded-full bg-[radial-gradient(circle_at_40%_36%,color-mix(in_srgb,var(--color-primary)_84%,transparent)_0%,color-mix(in_srgb,var(--color-secondary-light)_94%,transparent)_72%)] blur-[0.95rem]" />
@@ -105,7 +108,15 @@ const MyPage = () => {
             {profile.nickname}
             {MSG_MY_PAGE_NICKNAME_SUFFIX}
           </h1>
-          <p className="pt-[0.125rem] text-caption1">* {loginProviderLabel}로 로그인 중</p>
+          <p className="flex items-center gap-1 pt-[0.125rem] text-caption1">
+            <img
+              src={loginProviderLogoSrc}
+              alt=""
+              aria-hidden
+              className="size-[1em] shrink-0 rounded-full object-cover"
+            />
+            {loginProviderLabel}로 로그인 중
+          </p>
 
           {/* 카드 */}
           <div className="grid w-full grid-cols-3 gap-2 pt-4">
