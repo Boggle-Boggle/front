@@ -6,9 +6,9 @@ import { useToastStore } from 'stores/useToastStore';
 import { CompleteStep } from './CompleteStep';
 import { NicknameStep } from './NicknameStep';
 import { TermsStep } from './TermsStep';
-import { useCreateSignupCompleteMutation } from './useCreateSignupCompleteMutation';
-import { useGetLatestTermsMutation } from './useGetLatestTermsMutation';
-import { useGetNicknameAvailabilityMutation } from './useGetNicknameAvailabilityMutation';
+import { useCreateSignupCompleteMutation } from './queries/useCreateSignupCompleteMutation';
+import { useGetLatestTermsMutation } from './queries/useGetLatestTermsMutation';
+import { useGetNicknameAvailabilityMutation } from './queries/useGetNicknameAvailabilityMutation';
 
 const STEP = {
   NICKNAME: 'NICKNAME',

@@ -2,7 +2,7 @@ import { useMutation } from '@tanstack/react-query';
 
 import { useToastStore } from 'stores/useToastStore';
 
-import { getLatestTerms } from '../Terms/api';
+import { getLatestTerms } from '../../Terms/api';
 
 const MSG_SIGNUP_TERMS_LOAD_FAILED = '약관 정보를 불러오지 못했습니다. 다시 시도해주세요.';
 

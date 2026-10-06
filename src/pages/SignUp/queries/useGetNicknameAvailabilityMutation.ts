@@ -3,7 +3,7 @@ import { useMutation } from '@tanstack/react-query';
 import { isApiError } from 'api';
 import { useToastStore } from 'stores/useToastStore';
 
-import { getNicknameAvailability } from './api';
+import { getNicknameAvailability } from '../api';
 
 const MSG_SIGNUP_NICKNAME_DUPLICATED = '이미 사용 중인 닉네임입니다.';
 const MSG_SIGNUP_NICKNAME_INVALID = '사용할 수 없는 닉네임입니다. 다시 확인해주세요.';
