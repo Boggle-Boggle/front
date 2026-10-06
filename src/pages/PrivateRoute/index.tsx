@@ -3,7 +3,7 @@ import { Navigate, Outlet } from 'react-router-dom';
 
 import { Loading } from 'components/Loading';
 
-import { useGetMeQuery } from '../Auth/useGetMeQuery';
+import { useGetMeQuery } from '../Auth/queries/useGetMeQuery';
 
 const PrivateRoute = () => {
   const { error, isError, isLoading, isSuccess } = useGetMeQuery();

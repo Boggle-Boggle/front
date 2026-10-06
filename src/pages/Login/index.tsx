@@ -14,7 +14,7 @@ import { STORAGE_KEY } from 'constants/storage';
 
 import { getOAuthStartUrl } from './api';
 import type { LoginProvider } from './api';
-import { useGetMeQuery } from '../Auth/useGetMeQuery';
+import { useGetMeQuery } from '../Auth/queries/useGetMeQuery';
 
 type LoginButtonItem = {
   provider: LoginProvider;
