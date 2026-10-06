@@ -1,10 +1,8 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-
 import { useLayerStore } from 'stores/useLayerStore';
 
 import { ActionModal } from 'components/Layer/ActionModal';
 
-import { deleteRecentSearch } from './api';
+import { useClearRecentSearchesMutation } from './queries/useClearRecentSearchesMutation';
 
 type ClearAllConfirmModalProps = {
   keywords: string[];
@@ -18,17 +16,7 @@ const MSG_RECENT_SEARCH_CLEAR_CONFIRM = '네';
 export const ClearAllConfirmModal = (props: ClearAllConfirmModalProps) => {
   const { keywords } = props;
   const { pop } = useLayerStore();
-  const queryClient = useQueryClient();
-
-  const { mutate: clearRecentSearches, isPending } = useMutation({
-    mutationFn: async () => {
-      await Promise.all(keywords.map((keyword) => deleteRecentSearch(keyword)));
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['books', 'recent-searches'] });
-      pop();
-    },
-  });
+  const { mutate: clearRecentSearches, isPending } = useClearRecentSearchesMutation(keywords, pop);
 
   const handleClose = () => pop();
 

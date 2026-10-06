@@ -1,17 +1,12 @@
-import { useQuery } from '@tanstack/react-query';
-
 import { Link } from 'react-router-dom';
 
-import { getPopularKeywords } from './api';
+import { usePopularKeywordsQuery } from './queries/usePopularKeywordsQuery';
 import { Title } from '../shared/Title';
 
 const MSG_SEARCH_POPULAR = '인기 검색어';
 
 export const PopularSearchSection = () => {
-  const { data: popularKeywords } = useQuery({
-    queryKey: ['discovery', 'popular-keywords'],
-    queryFn: getPopularKeywords,
-  });
+  const { data: popularKeywords } = usePopularKeywordsQuery();
 
   if (!popularKeywords || popularKeywords.length === 0) return null;
 
