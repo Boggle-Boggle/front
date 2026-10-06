@@ -11,7 +11,7 @@ import { IconPen } from 'components/icons';
 
 import DownloadBackupModal from './DownloadBackupModal';
 import LogoutConfirmModal from './LogoutConfirmModal';
-import { useChangeNicknameMutation } from './useChangeNicknameMutation';
+import { useChangeNicknameMutation } from './queries/useChangeNicknameMutation';
 import { useMyPageProfileQuery } from '../queries/useMyPageProfileQuery';
 import { SectionButton } from '../shared/SectionButton';
 import { SectionHeader } from '../shared/SectionHeader';

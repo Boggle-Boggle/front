@@ -3,8 +3,8 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { isApiError } from 'api';
 import { useToastStore } from 'stores/useToastStore';
 
-import { changeNickname } from './api';
-import type { MyPageProfileResponse } from '../api';
+import type { MyPageProfileResponse } from '../../api';
+import { changeNickname } from '../api';
 
 const MSG_ACCOUNT_NICKNAME_CHANGE_SUCCESS = '닉네임이 변경되었습니다.';
 const MSG_ACCOUNT_NICKNAME_DUPLICATED = '이미 사용 중인 닉네임입니다.';

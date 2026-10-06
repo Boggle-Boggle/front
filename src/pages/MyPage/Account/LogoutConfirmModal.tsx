@@ -1,6 +1,6 @@
 import { ActionModal } from 'components/Layer/ActionModal';
 
-import { useCreateLogoutMutation } from './useCreateLogoutMutation';
+import { useCreateLogoutMutation } from './queries/useCreateLogoutMutation';
 
 type LogoutConfirmModalProps = {
   onCancel: () => void;

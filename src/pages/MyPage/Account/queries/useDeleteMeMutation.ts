@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useLayerStore } from 'stores/useLayerStore';
 import { useToastStore } from 'stores/useToastStore';
 
-import { deleteMe } from './api';
+import { deleteMe } from '../api';
 
 const MSG_DELETE_ME_FAILED = '계정 삭제에 실패했습니다. 다시 시도해주세요.';
 const ROUTE_ACCOUNT_WITHDRAW_COMPLETE = '/mypage/account/withdraw-complete';

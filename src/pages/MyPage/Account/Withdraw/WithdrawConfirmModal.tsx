@@ -1,7 +1,7 @@
 import { ActionModal } from 'components/Layer/ActionModal';
 
 import type { DeleteMeWithdrawalReason, WithdrawalReasonCode } from '../api';
-import { useDeleteMeMutation } from '../useDeleteMeMutation';
+import { useDeleteMeMutation } from '../queries/useDeleteMeMutation';
 
 type WithdrawConfirmModalProps = {
   onCancel: () => void;
