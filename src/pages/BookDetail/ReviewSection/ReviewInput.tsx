@@ -1,21 +1,14 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-
-import { isApiError } from 'api';
 import { REVIEW_CONTENT } from 'policy/input';
 import { ChangeEvent, useState, useRef, useEffect } from 'react';
-import { useToastStore } from 'stores/useToastStore';
 
 import { Button } from 'components/Button';
 import { Checkbox } from 'components/Checkbox';
 
-import { createBookReview } from '../api';
+import { useCreateBookReviewMutation } from '../queries/useCreateBookReviewMutation';
 
 const MSG_REVIEW_SUBMIT = '등록하기';
 const MSG_REVIEW_SPOILER_LABEL = '스포일러가 포함됨';
 const MSG_REVIEW_TEXTAREA_PLACEHOLDER = '리뷰를 남겨 주세요. 최대 700자까지 작성할 수 있어요.';
-const MSG_REVIEW_NOT_ELIGIBLE = '읽지 않은 책에는 리뷰를 남길 수 없습니다.';
-const MSG_REVIEW_CREATE_FAILED = '리뷰 등록에 실패했습니다. 다시 시도해 주세요.';
-const REVIEW_NOT_ELIGIBLE_ERROR_CODE = 'REVIEW_NOT_ELIGIBLE';
 const REVIEW_SPOILER_CHECKBOX_ID = 'review-spoiler-checkbox';
 
 type ReviewInputProps = {
@@ -26,26 +19,10 @@ export const ReviewInput = ({ isbn13 }: ReviewInputProps) => {
   const [content, setContent] = useState<string>('');
   const [isSpoilerChecked, setIsSpoilerChecked] = useState<boolean>(false);
 
-  const queryClient = useQueryClient();
   const textareaRef = useRef<HTMLTextAreaElement>(null);
-  const { addToast } = useToastStore();
-
-  const createReviewMutation = useMutation({
-    mutationFn: createBookReview,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['books', isbn13, 'reviews'] });
-      setContent('');
-      setIsSpoilerChecked(false);
-    },
-    onError: (error) => {
-      addToast({
-        type: 'error',
-        description:
-          isApiError(error) && error.code === REVIEW_NOT_ELIGIBLE_ERROR_CODE
-            ? MSG_REVIEW_NOT_ELIGIBLE
-            : MSG_REVIEW_CREATE_FAILED,
-      });
-    },
+  const createReviewMutation = useCreateBookReviewMutation(() => {
+    setContent('');
+    setIsSpoilerChecked(false);
   });
 
   const handleChangeContent = (event: ChangeEvent<HTMLTextAreaElement>) => {
