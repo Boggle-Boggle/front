@@ -118,8 +118,8 @@ module.exports = {
       animation: {
         fadeInSlow: 'fadeIn 0.3s ease-out forwards',
         fadeOutSlow: 'fadeOut 0.3s ease-out forwards',
-        fadeIn: 'fadeIn 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards',
-        fadeOut: 'fadeOut 0.18s ease-in forwards',
+        fadeIn: 'fadeIn 3s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+        fadeOut: 'fadeOut 3s ease-in forwards',
         slideUp: 'slideUp 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards',
         slideDown: 'slideDown 0.18s ease-in forwards',
         slideLeft: 'slideLeft 0.22s cubic-bezier(0.16, 1, 0.3, 1) forwards',
