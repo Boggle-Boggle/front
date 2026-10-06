@@ -148,6 +148,7 @@ export const MyInfoTab = ({ readingLog }: MyInfoTabProps) => {
       <div className="flex flex-col gap-9 pb-safe-bottom">
         <RatingSection rating={rating} onChange={setRating} isEdit={isEdit} />
         <ReadingPeriodSection
+          status={readingLog.status}
           startDate={startDate}
           endDate={endDate}
           onOpenStartDate={handleOpenStartDate}
