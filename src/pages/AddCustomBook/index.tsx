@@ -1,5 +1,3 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-
 import {
   CUSTOM_BOOK_AUTHOR,
   CUSTOM_BOOK_DESCRIPTION,
@@ -22,7 +20,7 @@ import { AddRecordStatusBottomSheet } from 'pages/BookDetail/components/AddRecor
 
 import type { Book, CustomBookDto } from 'types';
 
-import { updateCustomBook, type UpdateCustomBookRequest } from './api';
+import { useUpdateCustomBookMutation } from './queries/useUpdateCustomBookMutation';
 import { CoverImageUrlModal } from './shared/CoverImageUrlModal';
 import { FormField } from './shared/FormField';
 
@@ -30,8 +28,6 @@ const MSG_ADD_CUSTOM_BOOK_PAGE_TITLE = '직접 등록하기';
 const MSG_EDIT_CUSTOM_BOOK_PAGE_TITLE = '내가 등록한 책 정보 수정하기';
 const MSG_ADD_CUSTOM_BOOK_SUBMIT = '독서 기록 추가하기';
 const MSG_EDIT_CUSTOM_BOOK_SUBMIT = '수정 완료하기';
-const MSG_EDIT_CUSTOM_BOOK_SUCCESS = '책 정보가 수정되었습니다.';
-const MSG_EDIT_CUSTOM_BOOK_FAILED = '책 정보 수정에 실패했습니다.';
 const MSG_EDIT_CUSTOM_BOOK_INVALID = '수정할 책 정보를 찾을 수 없습니다.';
 const MSG_ADD_CUSTOM_BOOK_TITLE = '책 제목';
 const MSG_ADD_CUSTOM_BOOK_TITLE_PLACEHOLDER = '책 제목을 입력해주세요';
@@ -70,7 +66,6 @@ export const AddCustomBook = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { addToast } = useToastStore();
-  const queryClient = useQueryClient();
 
   const editState = location.state as EditCustomBookState | null;
   const isEditMode = editState?.mode === 'edit';
@@ -99,19 +94,7 @@ export const AddCustomBook = () => {
   const { push } = useLayerStore();
   const coverUrl = watch('coverUrl');
 
-  const { mutate: mutateCustomBook, isPending: isUpdatingCustomBook } = useMutation({
-    mutationFn: ({ bookId, request }: { bookId: string | number; request: UpdateCustomBookRequest }) =>
-      updateCustomBook(bookId, request),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['reading-log', editState?.recordId] });
-      queryClient.invalidateQueries({ queryKey: ['reading-logs'] });
-      addToast({ type: 'success', description: MSG_EDIT_CUSTOM_BOOK_SUCCESS });
-      navigate(-1);
-    },
-    onError: () => {
-      addToast({ type: 'error', description: MSG_EDIT_CUSTOM_BOOK_FAILED });
-    },
-  });
+  const { mutate: updateCustomBook, isPending: isUpdatingCustomBook } = useUpdateCustomBookMutation(() => navigate(-1));
 
   useEffect(() => {
     if (isEditMode) trigger();
@@ -124,8 +107,9 @@ export const AddCustomBook = () => {
         return;
       }
 
-      mutateCustomBook({
+      updateCustomBook({
         bookId: editCustomBook.id,
+        recordId: editState.recordId,
         request: {
           title: formData.title.trim(),
           author: formData.author.trim(),
