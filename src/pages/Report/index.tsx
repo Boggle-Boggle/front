@@ -1,14 +1,13 @@
-import { useMutation } from '@tanstack/react-query';
-
 import { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useToastStore } from 'stores/useToastStore';
 
 import { Button } from 'components/Button';
 import { Header } from 'components/Header';
 import { BackButton } from 'components/Header/BackButton';
 
-import { blockUserInReport, REPORT_REASONS_INFO, reportReview, type ReviewReportReasonType } from './api';
+import { REPORT_REASONS_INFO, type ReviewReportReasonType } from './api';
+import { useBlockUserInReportMutation } from './queries/useBlockUserInReportMutation';
+import { useReportReviewMutation } from './queries/useReportReviewMutation';
 
 const MSG_REPORT_PAGE_TITLE = '문제 신고하기';
 const MSG_REPORT_REASON_QUESTION = '어떠한 문제가 발생하였나요?';
@@ -20,17 +19,12 @@ const MSG_REPORT_BLOCK_DESCRIPTION =
   '차단하면 상대방의 리뷰나 활동이 더 이상 내 목록에 보이지 않아요. 다만, 내 리뷰나 활동은 여전히 상대방에게 보일 수 있어요.';
 const MSG_REPORT_BLOCK_BUTTON = '이 유저를 차단하기';
 const MSG_REPORT_BLOCKED_BUTTON = '차단 완료됨';
-const MSG_REPORT_BLOCK_SUCCESS_TOAST = '해당 유저가 차단되었습니다.';
-const MSG_REPORT_SUCCESS_TOAST = '신고가 정상 접수되었습니다.';
-const MSG_REPORT_FAILED_TOAST = '신고 접수에 실패했습니다.';
-const MSG_REPORT_BLOCK_FAILED_TOAST = '유저 차단에 실패했습니다.';
 
 type ReportStep = 'reason' | 'complete';
 
 export const Report = () => {
   const navigate = useNavigate();
   const { state } = useLocation();
-  const { addToast } = useToastStore();
 
   const { reviewId, userId } = (state || {}) as { reviewId?: number; userId?: number };
 
@@ -39,46 +33,15 @@ export const Report = () => {
 
   const isCompleteStep = step === 'complete';
 
-  const reportMutation = useMutation({
-    mutationFn: reportReview,
-    onSuccess: () => {
-      addToast({
-        description: MSG_REPORT_SUCCESS_TOAST,
-        type: 'success',
-      });
-      setStep('complete');
-    },
-    onError: (error: unknown) => {
-      const message = error instanceof Error ? error.message : MSG_REPORT_FAILED_TOAST;
-      addToast({
-        description: message,
-        type: 'error',
-      });
-    },
-  });
-
-  const blockMutation = useMutation({
-    mutationFn: blockUserInReport,
-    onSuccess: () => {
-      addToast({
-        description: MSG_REPORT_BLOCK_SUCCESS_TOAST,
-        type: 'success',
-      });
-      setIsBlocked(true);
-    },
-    onError: (error: unknown) => {
-      const message = error instanceof Error ? error.message : MSG_REPORT_BLOCK_FAILED_TOAST;
-      addToast({
-        description: message,
-        type: 'error',
-      });
-    },
-  });
+  const { mutate: reportReview, isPending: isReportReviewPending } = useReportReviewMutation(() => setStep('complete'));
+  const { mutate: blockUserInReport, isPending: isBlockUserInReportPending } = useBlockUserInReportMutation(() =>
+    setIsBlocked(true),
+  );
 
   const handleReasonClick = (reason: ReviewReportReasonType) => {
-    if (!reviewId || reportMutation.isPending) return;
+    if (!reviewId || isReportReviewPending) return;
 
-    reportMutation.mutate({
+    reportReview({
       reviewId,
       body: {
         reason,
@@ -90,8 +53,8 @@ export const Report = () => {
   const handleBackClick = () => navigate(-1);
 
   const handleBlockUserClick = () => {
-    if (!userId || blockMutation.isPending || isBlocked) return;
-    blockMutation.mutate(userId);
+    if (!userId || isBlockUserInReportPending || isBlocked) return;
+    blockUserInReport(userId);
   };
 
   return (
@@ -112,7 +75,7 @@ export const Report = () => {
                   <button
                     type="button"
                     onClick={() => handleReasonClick(item.type)}
-                    disabled={reportMutation.isPending}
+                    disabled={isReportReviewPending}
                     className="h-[3.375rem] w-full border-b border-neutral-20 text-start text-title4 first:border-t disabled:opacity-50"
                   >
                     {item.label}
@@ -135,7 +98,7 @@ export const Report = () => {
               <Button
                 onClick={handleBlockUserClick}
                 variant={isBlocked ? 'grey' : 'warning'}
-                disabled={isBlocked || blockMutation.isPending}
+                disabled={isBlocked || isBlockUserInReportPending}
               >
                 {isBlocked ? MSG_REPORT_BLOCKED_BUTTON : MSG_REPORT_BLOCK_BUTTON}
               </Button>
