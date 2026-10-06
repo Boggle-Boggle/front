@@ -5,7 +5,6 @@ import { useLayerStore } from 'stores/useLayerStore';
 import { TextButton } from 'components/Button';
 import { BackButton } from 'components/Header/BackButton';
 import { InfiniteScrollTrigger } from 'components/InfiniteScrollTrigger';
-import { Loading } from 'components/Loading';
 import { Searchbar } from 'components/Searchbar';
 import { IconArrowDown } from 'components/icons';
 
@@ -15,6 +14,7 @@ import { useScrollRestoration } from 'hooks/useScrollRestoration';
 import { SearchFilterActionSheet, type SearchFilterType } from './SearchFilterActionSheet';
 import { SearchResultItem } from './SearchResultItem';
 import type { SearchMediaType } from './api';
+import { SearchResultSkeleton } from './components/SearchResultSkeleton';
 import { useSearchBooksQuery } from './queries/useSearchBooksQuery';
 
 const MSG_SEARCH_RESULT_COUNT = (count: number) => `${count}개의 검색 결과가 있습니다`;
@@ -105,19 +105,14 @@ const SearchResult = () => {
   const totalCount = data?.pages[0]?.meta.page.total || 0;
   const searchFilterLabel = SEARCH_FILTER_OPTION_BY_FILTER[searchFilter].label;
 
-  if (isLoading) {
+  if (isLoading)
     return (
-      <div className="flex h-full w-full flex-col pb-safe-bottom pt-safe-top">
-        <div className="flex w-full items-center justify-start gap-2 pb-4 pr-mobile">
-          <BackButton />
-          <Searchbar value={localQuery} onChange={handleSearchChange} onSubmit={handleSearchSubmit} className="grow" />
-        </div>
-        <div className="flex flex-1 items-center justify-center">
-          <Loading />
-        </div>
-      </div>
+      <SearchResultSkeleton
+        query={localQuery}
+        onSearchChange={handleSearchChange}
+        onSearchSubmit={handleSearchSubmit}
+      />
     );
-  }
 
   return (
     <div className="flex h-full w-full flex-col pb-safe-bottom pt-safe-top">

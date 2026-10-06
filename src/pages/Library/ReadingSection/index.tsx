@@ -2,11 +2,11 @@ import { RefObject } from 'react';
 
 import { TextButton } from 'components/Button';
 import { InfiniteScrollTrigger } from 'components/InfiniteScrollTrigger';
-import { Loading } from 'components/Loading';
 import { IconArrowDown, IconMenu } from 'components/icons';
 
 import { ReadingBooksGrid } from './ReadingBooksGrid';
 import { ReadingBooksList } from './ReadingBooksList';
+import { ReadingSectionSkeleton } from './ReadingSectionSkeleton';
 import type { MyBook } from '../queries/useLibraryQuery';
 
 type ReadingSectionProps = {
@@ -39,6 +39,8 @@ export const ReadingSection = (props: ReadingSectionProps) => {
   } = props;
   const isGridView = viewMode === 'grid';
 
+  if (isLoading) return <ReadingSectionSkeleton viewMode={viewMode} />;
+
   return (
     <>
       <div className="flex items-center justify-between px-mobile pb-6">
@@ -59,7 +61,6 @@ export const ReadingSection = (props: ReadingSectionProps) => {
           isFetching={isFetchingNextPage}
         />
       </div>
-      {isLoading && <Loading />}
     </>
   );
 };
