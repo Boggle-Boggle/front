@@ -22,13 +22,13 @@
 
 query 선언 방식은 에러 처리 정비 전에 먼저 통일한다.
 
-현재 검토 중인 방향은 페이지 컴포넌트에서 `useQuery`, `useInfiniteQuery`를 직접 선언하지 않고, 페이지/섹션 전용 custom hook으로 분리하는 것이다.
+페이지 컴포넌트에서 `useQuery`, `useInfiniteQuery`, `useMutation`을 직접 선언하지 않고, 페이지/섹션 전용 custom hook으로 분리하는 방향으로 정한다.
 
-이 방향을 확정하기 전에 아래 기준을 먼저 정한다.
+query/mutation hook은 기본적으로 해당 페이지 또는 섹션의 `queries/` 아래에 둔다. 여러 페이지가 같은 도메인 서버 상태를 공유하면 해당 도메인의 `shared/queries/`에 둔다.
 
 - 페이지 폴더 기본 구조
-- query hook 파일 위치
-- query hook 이름 규칙
+- query hook 파일 위치: `queries/`
+- query hook 이름 규칙: `use{Domain}{Query|Mutation}`
 - `api.ts`와 query hook의 책임 경계
 - `index.tsx`가 담당할 UI 상태 분기 범위
 
@@ -70,9 +70,7 @@ return <PageContent data={data} />;
 보조 query의 실패는 해당 섹션 내부 fallback으로 처리할 수 있다.
 
 ```tsx
-<section>
-  {isReviewError ? <ReviewFallback /> : <ReviewList />}
-</section>
+<section>{isReviewError ? <ReviewFallback /> : <ReviewList />}</section>
 ```
 
 ### 리소스 없음은 페이지 맥락에 맞춘다
@@ -93,84 +91,86 @@ if (isApiError(error) && error.code === 'BOOK_NOT_FOUND') {
 
 ### 1. 현재 query 사용 현황 파악
 
-- [ ] 라우트 페이지가 폴더 구조(`PageName/index.tsx`)인지 단일 파일(`PageName.tsx`)인지 목록화한다.
-- [ ] 각 페이지 폴더에 `api.ts`가 있는지 확인한다.
-- [ ] `useQuery`, `useInfiniteQuery` 사용처를 목록화한다.
-- [ ] custom hook으로 감싸진 query와 inline query를 구분한다.
-- [ ] custom hook 파일 위치와 이름 패턴을 목록화한다.
-- [ ] 각 query를 페이지 핵심 query와 보조 query로 분류한다.
-- [ ] `throwOnError` 사용처를 확인한다.
-- [ ] 우선 정비할 페이지 후보를 정한다.
+- [x] 라우트 페이지가 폴더 구조(`PageName/index.tsx`)인지 단일 파일(`PageName.tsx`)인지 목록화한다.
+- [x] 각 페이지 폴더에 `api.ts`가 있는지 확인한다.
+- [x] `useQuery`, `useInfiniteQuery` 사용처를 목록화한다.
+- [x] custom hook으로 감싸진 query와 inline query를 구분한다.
+- [x] custom hook 파일 위치와 이름 패턴을 목록화한다.
+- [x] 각 query를 페이지 핵심 query와 보조 query로 분류한다.
+- [x] `throwOnError` 사용처를 확인한다.
+- [x] 우선 정비할 페이지 후보를 정한다.
 
 #### 현재 현황
 
-| 페이지/영역 | 구조 | API 파일 | Query 방식 | 핵심 Query | 보조 Query | 우선순위 |
-| --- | --- | --- | --- | --- | --- | --- |
-| `BookDetail` | 폴더 | 있음 | 페이지 루트 hook | `useBookDetailQuery` | 리뷰 목록 inline | 높음 |
-| `Records/Detail` | 폴더 | 있음 | inline | 독서기록 상세 | 노트 탭, 책장 목록 | 높음 |
-| `Records/Notes` | 폴더 | `Records/Detail/api.ts` 재사용 | inline | 독서노트 목록, 독서기록 상세 | 없음 | 높음 |
-| `Notes/Detail` | 폴더 | `Records/Detail/api.ts` 재사용 | inline | 독서노트 상세 | 독서기록 상세 제목 조회 | 높음 |
-| `Notes/New` | 폴더 | `Records/Detail/api.ts` 재사용 | inline | 편집 대상 노트 | 없음 | 높음 |
-| `MyPage` | 폴더 | 있음 | inline | 프로필 | 없음 | 중간 |
-| `MyPage/Account` | 폴더 | 있음 | inline + mutation hook | 프로필 | 닉네임 변경 mutation | 중간 |
-| `MyPage/Account/Withdraw` | 폴더 | `MyPage/api.ts`, `Account/api.ts` 재사용 | inline | 프로필, 탈퇴 사유 | 없음 | 중간 |
-| `MyPage/Content` | 폴더 | 있음 | inline | 사용자 설정 | 설정 변경 mutation | 중간 |
-| `MyPage/Content/BlockedUsers` | 폴더 | 상위 `api.ts` 재사용 | inline | 차단 유저 목록 | 없음 | 낮음 |
-| `Library` | 폴더 | 있음 | 페이지 루트 hook + inline | 독서기록/관심도서 목록 | 독서 요약 | 중간 |
-| `SearchResult` | 폴더 | 있음 | 페이지 루트 hook | 검색 결과 | 없음 | 낮음 |
-| `Search` 하위 섹션 | 폴더/섹션 혼재 | 각 섹션별 있음 | 섹션 hook + inline 혼재 | 없음 | 인기/추천/최근 검색 섹션 | 낮음 |
-| `Main` | 폴더 | 있음 | inline | 독서기록 목록 | 책장 임시 조회 | 낮음 |
-| `Records/New` | 폴더 | 있음 | inline | 책장 목록 | 없음 | 중간 |
-| `Auth`, `PrivateRoute`, `Login` | 폴더 | 있음 | 공용 hook | 로그인 사용자 확인 | 없음 | 별도 |
+| 페이지/영역                     | 구조           | API 파일                                 | Query 방식                                | 핵심 Query                 | 보조 Query                               | 우선순위 |
+| ------------------------------- | -------------- | ---------------------------------------- | ----------------------------------------- | -------------------------- | ---------------------------------------- | -------- |
+| `BookDetail`                    | 폴더           | 있음                                     | `queries/` hook                           | `useBookDetailQuery`       | 리뷰 목록/작성/삭제/좋아요/차단 mutation | 완료     |
+| `Records/Detail`                | 폴더           | 있음                                     | `queries/` hook                           | `useReadingLogDetailQuery` | 노트 탭, 독서기록 수정/삭제 mutation     | 완료     |
+| `Notes/Detail`                  | 폴더           | `Notes/shared/api.ts`                    | `Notes/shared/queries` hook               | 독서노트 상세              | 독서기록 제목 조회                       | 완료     |
+| `Notes/New`                     | 폴더           | `Notes/shared/api.ts`                    | `Notes/shared/queries` hook               | 편집 대상 노트             | 생성/수정 mutation                       | 완료     |
+| `Notes/List`                    | 폴더           | `Notes/shared/api.ts`                    | `Notes/shared/queries` hook               | 독서노트 목록              | 헤더/목록 컴포넌트 분리                  | 완료     |
+| `MyPage`                        | 폴더           | 있음                                     | `queries/` hook                           | 프로필                     | 없음                                     | 완료     |
+| `MyPage/Account`                | 폴더           | 있음                                     | `Account/queries`, `MyPage/queries` hook  | 프로필                     | 닉네임/로그아웃/탈퇴 mutation            | 완료     |
+| `MyPage/Account/Withdraw`       | 폴더           | `MyPage/api.ts`, `Account/api.ts` 재사용 | `queries/` hook                           | 프로필, 탈퇴 사유          | 탈퇴 mutation                            | 완료     |
+| `MyPage/Content`                | 폴더           | 있음                                     | `queries/` hook                           | 사용자 설정                | 설정 변경 mutation                       | 완료     |
+| `MyPage/Content/BlockedUsers`   | 폴더           | 상위 `api.ts` 재사용                     | `queries/` hook                           | 차단 유저 목록             | 차단 해제 mutation                       | 완료     |
+| `Library`                       | 폴더           | 있음                                     | `queries/` hook                           | 독서기록/관심도서 목록     | 독서 요약, 관심도서 정렬/토글            | 완료     |
+| `SearchResult`                  | 폴더           | 있음                                     | `queries/` hook                           | 검색 결과                  | 없음                                     | 완료     |
+| `Search` 하위 섹션              | 폴더/섹션 혼재 | 각 섹션별 있음                           | `queries/` hook                           | 없음                       | 인기/추천/최근 검색 섹션                 | 완료     |
+| `Main`                          | 폴더           | 있음                                     | `queries/` hook                           | 독서기록 목록              | 책장 조회                                | 완료     |
+| `Records/New`                   | 폴더           | 있음                                     | `queries/`, `Records/shared/queries` hook | 책장 목록                  | 독서기록 생성 mutation                   | 완료     |
+| `AddCustomBook`                 | 폴더           | 있음                                     | `queries/` hook                           | 없음                       | 커스텀 도서 수정 mutation                | 완료     |
+| `Report`                        | 폴더           | 있음                                     | `queries/` hook                           | 없음                       | 신고/차단 mutation                       | 완료     |
+| `Auth`, `PrivateRoute`, `Login` | 폴더           | 있음                                     | `Auth/queries` hook                       | 로그인 사용자 확인         | 없음                                     | 완료     |
 
 #### 확인된 패턴
 
-- `useQuery`, `useInfiniteQuery`가 페이지 `index.tsx` 안에 inline으로 선언된 곳이 많다.
-- 일부 query hook은 페이지 루트에 위치한다. 새 컨벤션 기준으로는 `queries/`로 이동 대상이다.
-- 몇몇 페이지는 다른 페이지의 `api.ts`를 직접 재사용한다. 정비 시 API 소유 경계를 다시 확인한다.
+- 페이지 컴포넌트와 주요 UI 컴포넌트의 inline query/mutation은 대부분 `queries/` 또는 `shared/queries/`로 분리했다.
+- 페이지 루트에 있던 주요 query/mutation hook은 `queries/`로 이동했다.
+- `Notes/shared/queries`, `Records/shared/queries`처럼 도메인 공유 서버 상태는 `shared/queries`에 둔다.
 - 목록/섹션 query는 페이지 전체 fallback보다 섹션 fallback이 적합한 경우가 많다.
-- 우선 정비 대상은 상세 리소스를 다루는 `BookDetail`, `Records/Detail`, `Records/Notes`, `Notes/Detail`, `Notes/New`로 둔다.
+- 남은 정비는 신규 코드에 같은 구조를 반복 적용하고, 페이지별 로딩/빈값/리소스 없음 UX를 다듬는 단계다.
 
 ### 2. Query 선언 규칙 정리
 
-- [ ] inline query를 유지할 페이지를 정한다.
-- [ ] custom hook으로 분리할 query를 정한다.
-- [ ] custom hook 이름은 페이지/도메인 맥락이 드러나게 정한다.
-- [ ] query option이 페이지마다 흩어져 있으면 한 위치로 모은다.
+- [x] inline query를 유지할 페이지를 정한다.
+- [x] custom hook으로 분리할 query를 정한다.
+- [x] custom hook 이름은 페이지/도메인 맥락이 드러나게 정한다.
+- [x] query option이 페이지마다 흩어져 있으면 한 위치로 모은다.
 
 ### 3. 공통 실패 처리 확인
 
-- [ ] `policy/error.ts`의 공통 실패 코드가 아래 범위만 포함하는지 확인한다.
+- [x] `policy/error.ts`의 공통 실패 코드가 아래 범위만 포함하는지 확인한다.
   - `CLIENT_REQUEST_FAILED`
   - `COMMON_INTERNAL_ERROR`
   - `AUTH_FORBIDDEN`
-- [ ] 인증 실패 코드는 `PrivateRoute`에서 처리되는지 확인한다.
-- [ ] 리소스 없음 코드는 전역 route error에 포함하지 않는다.
+- [x] 인증 실패 코드는 `PrivateRoute`에서 처리되는지 확인한다.
+- [x] 리소스 없음 코드는 전역 route error에 포함하지 않는다.
 
 ### 4. 페이지 핵심 query 상태 분기 정리
 
-- [ ] 핵심 query는 컴포넌트 상단에서 loading 상태를 먼저 처리한다.
-- [ ] 핵심 query의 error/data 없음 상태를 정상 JSX 전에 처리한다.
-- [ ] 정상 JSX 내부에서 핵심 query error 분기를 반복하지 않는다.
+- [x] 핵심 query는 컴포넌트 상단에서 loading 상태를 먼저 처리한다.
+- [x] 핵심 query의 error/data 없음 상태를 정상 JSX 전에 처리한다.
+- [x] 정상 JSX 내부에서 핵심 query error 분기를 반복하지 않는다.
 - [ ] 에러 상태에서는 불가능한 액션 버튼을 노출하지 않는다.
 
 ### 5. 리소스 없음 처리 추가
 
-- [ ] `BOOK_NOT_FOUND`를 도서 상세 페이지에서 처리한다.
-- [ ] `READING_LOG_NOT_FOUND`를 독서기록 상세 페이지에서 처리한다.
-- [ ] `READING_NOTE_NOT_FOUND`를 노트 상세/편집 페이지에서 처리할지 검토한다.
+- [x] `BOOK_NOT_FOUND`를 도서 상세 페이지에서 처리한다.
+- [x] `READING_LOG_NOT_FOUND`를 독서기록 상세 페이지에서 처리한다.
+- [x] `READING_NOTE_NOT_FOUND`를 노트 상세/편집 페이지에서 처리할지 검토한다.
 - [ ] `TERMS_NOT_FOUND`는 서버 약관 상세 query가 생길 때 처리한다.
-- [ ] 리소스 없음 메시지는 페이지 맥락에 맞게 작성한다.
+- [x] 리소스 없음 메시지는 페이지 맥락에 맞게 작성한다.
 
 ### 6. 보조 query fallback 정리
 
-- [ ] 목록/섹션 query는 전체 페이지를 막지 않는 방향으로 처리한다.
+- [x] 목록/섹션 query는 전체 페이지를 막지 않는 방향으로 처리한다.
 - [ ] 빈 결과와 요청 실패를 구분한다.
-- [ ] 빈 결과는 empty state로, 요청 실패는 섹션 fallback 또는 재시도 UI로 처리한다.
+- [x] 빈 결과는 empty state로, 요청 실패는 섹션 fallback 또는 재시도 UI로 처리한다.
 
 ### 7. 검증
 
-- [ ] `pnpm exec tsc -b`를 실행한다.
+- [x] `pnpm exec tsc -b`를 실행한다.
 - [ ] 라우터 없음 URL에서 `NotFound`가 표시되는지 확인한다.
 - [ ] 인증 없는 보호 라우트 진입 시 `/login`으로 이동하는지 확인한다.
 - [ ] 공통 실패가 `RouteErrorFallback`으로 표시되는지 확인한다.
