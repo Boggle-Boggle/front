@@ -1,5 +1,3 @@
-import { useQuery } from '@tanstack/react-query';
-
 import { useLayerStore } from 'stores/useLayerStore';
 
 import { Button } from 'components/Button';
@@ -8,7 +6,7 @@ import { Loading } from 'components/Loading';
 import { IconCircleBan } from 'components/icons';
 
 import { UnblockUserConfirmModal } from './UnblockUserConfirmModal';
-import { getMyBlocks } from '../api';
+import { useBlockedUsersQuery } from '../../queries/useBlockedUsersQuery';
 
 const MSG_BLOCKED_USERS_TITLE = '차단한 유저 확인하기';
 const MSG_BLOCKED_USERS_SUFFIX = ' 님';
@@ -18,10 +16,7 @@ const MSG_BLOCKED_USERS_EMPTY = '차단한 유저가 없습니다.';
 const BlockedUsers = () => {
   const { push } = useLayerStore();
 
-  const { data, isLoading } = useQuery({
-    queryKey: ['users', 'me', 'blocks'],
-    queryFn: () => getMyBlocks(),
-  });
+  const { data, isLoading: isBlockedUsersLoading } = useBlockedUsersQuery();
 
   const handleOpenUnblockConfirmModal = (userId: number) => {
     push({
@@ -30,7 +25,7 @@ const BlockedUsers = () => {
     });
   };
 
-  if (isLoading) return <Loading fullscreen />;
+  if (isBlockedUsersLoading) return <Loading fullscreen />;
 
   const blockedUsers = data?.items ?? [];
 
