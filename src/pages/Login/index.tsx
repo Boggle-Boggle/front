@@ -93,7 +93,7 @@ const Login = () => {
             return (
               <li key={provider} className="relative flex flex-col items-center">
                 {isRecent && (
-                  <div className="absolute left-1/2 top-[calc(100%+0.625rem)] flex w-20 -translate-x-1/2 flex-col items-center drop-shadow-[0_2px_8px_rgba(0,0,0,0.12)]">
+                  <div className="absolute left-1/2 top-[calc(100%+0.375rem)] flex w-20 -translate-x-1/2 flex-col items-center drop-shadow-[0_2px_8px_rgba(0,0,0,0.12)]">
                     <div className="h-0 w-0 border-x-[0.375rem] border-b-[0.5625rem] border-x-transparent border-b-neutral-0" />
                     <div className="-mt-px flex h-9 w-full items-center justify-center rounded-lg bg-neutral-0 px-2 text-caption1 text-neutral-80">
                       {MSG_LOGIN_RECENT}
