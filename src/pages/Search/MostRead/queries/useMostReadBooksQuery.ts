@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 
 import { TIME_MS } from 'constants/time';
 
-import { getMostReadBooks } from './api';
+import { getMostReadBooks } from '../api';
 
 export const useMostReadBooksQuery = () => {
   return useQuery({

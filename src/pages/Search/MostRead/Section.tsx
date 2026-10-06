@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 
-import { useMostReadBooksQuery } from './useMostReadBooksQuery';
+import { useMostReadBooksQuery } from './queries/useMostReadBooksQuery';
 import { HorizontalBookList } from '../shared/HorizontalBookList';
 import { Title } from '../shared/Title';
 

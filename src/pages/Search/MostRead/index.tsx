@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import BookCover from 'components/BookCover';
 import { Header } from 'components/Header';
 
-import { useMostReadBooksQuery } from './useMostReadBooksQuery';
+import { useMostReadBooksQuery } from './queries/useMostReadBooksQuery';
 
 const MSG_SEARCH_MOST_READ_TITLE = '가장 많이 읽힌 책';
 

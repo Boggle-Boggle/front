@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 
-import { useTrendingBooksQuery } from './useTrendingBooksQuery';
+import { useTrendingBooksQuery } from './queries/useTrendingBooksQuery';
 import { HorizontalBookList } from '../shared/HorizontalBookList';
 import { Title } from '../shared/Title';
 

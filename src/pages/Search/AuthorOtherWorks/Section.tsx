@@ -2,7 +2,7 @@ import { Link, useNavigate } from 'react-router-dom';
 
 import BookCover from 'components/BookCover';
 
-import { useAuthorOtherWorksQuery } from './useAuthorOtherWorksQuery';
+import { useAuthorOtherWorksQuery } from './queries/useAuthorOtherWorksQuery';
 import { Title } from '../shared/Title';
 
 const MSG_SEARCH_AUTHOR_OTHER_WORKS_TITLE = '{author}의 다른 작품';

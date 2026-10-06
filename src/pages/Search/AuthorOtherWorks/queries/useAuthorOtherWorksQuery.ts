@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 
 import { TIME_MS } from 'constants/time';
 
-import { getAuthorRecommendation } from './api';
+import { getAuthorRecommendation } from '../api';
 
 export const useAuthorOtherWorksQuery = () => {
   return useQuery({

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import BookCover from 'components/BookCover';
 import { Header } from 'components/Header';
 
-import { useTrendingBooksQuery } from './useTrendingBooksQuery';
+import { useTrendingBooksQuery } from './queries/useTrendingBooksQuery';
 
 const MSG_SEARCH_TRENDING_TITLE = '요즘 주목받고 있는 책';
 const MSG_SEARCH_LOADING = '로딩중';

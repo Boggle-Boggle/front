@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import BookCover from 'components/BookCover';
 import { ScrollFadeOverlay } from 'components/ScrollFadeOverlay';
 
-import { useRealTimePopularBooksQuery } from './useRealTimePopularBooksQuery';
+import { useRealTimePopularBooksQuery } from './queries/useRealTimePopularBooksQuery';
 import { Title } from '../shared/Title';
 
 const MSG_SEARCH_REALTIME_POPULAR_TITLE = '실시간 인기 도서';
