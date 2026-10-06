@@ -6,7 +6,7 @@ import { useInfiniteScrollObserver } from 'hooks/useInfiniteScrollObserver';
 
 import { READING_STATUS_LABEL_BY_CODE, type ReadingLogStatus, type ReadingStatusLabel } from 'types';
 
-import { getLibraryReadingLogs, type ReadingLogListItemResponse, type ReadingLogSort } from './api';
+import { getLibraryReadingLogs, type ReadingLogListItemResponse, type ReadingLogSort } from '../api';
 
 export type MyBook = {
   id: number;

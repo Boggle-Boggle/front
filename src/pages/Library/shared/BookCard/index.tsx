@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import BookCover from 'components/BookCover';
 import { StarRating } from 'components/StarRating';
 
-import { MyBook } from '../../useLibraryQuery';
+import type { MyBook } from '../../queries/useLibraryQuery';
 
 type BookCardProps = {
   book: MyBook;

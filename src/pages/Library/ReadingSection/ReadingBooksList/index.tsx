@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import BookCover from 'components/BookCover';
 import { ShelfBase } from 'components/ShelfBase';
 import { StarRating } from 'components/StarRating';
-import { MyBook } from 'pages/Library/useLibraryQuery';
+import type { MyBook } from 'pages/Library/queries/useLibraryQuery';
 
 import { formatToShortDotDate } from 'utils/date';
 

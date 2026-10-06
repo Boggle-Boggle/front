@@ -1,5 +1,3 @@
-import { useQuery } from '@tanstack/react-query';
-
 import { useState, useMemo, useEffect } from 'react';
 import { useNavigationType } from 'react-router-dom';
 import { useLayerStore } from 'stores/useLayerStore';
@@ -22,9 +20,10 @@ import { ReadingSection } from './ReadingSection';
 import { SortActionSheet } from './SortActionSheet';
 import { WishlistSection } from './WishlistSection';
 import { WishlistSortActionSheet } from './WishlistSortActionSheet';
-import { getReadingLogSummary, type InterestedBookSort, type ReadingLogSort } from './api';
-import { useLibraryQuery } from './useLibraryQuery';
-import { useWishlistQuery } from './useWishlistQuery';
+import type { InterestedBookSort, ReadingLogSort } from './api';
+import { useLibraryQuery } from './queries/useLibraryQuery';
+import { useReadingLogSummaryQuery } from './queries/useReadingLogSummaryQuery';
+import { useWishlistQuery } from './queries/useWishlistQuery';
 
 type TabType = 'reading' | 'wishlist';
 type ViewType = 'grid' | 'list';
@@ -135,10 +134,7 @@ const Library = () => {
     isFetchingNextPage: isFetchingNextReadingPage,
   } = useLibraryQuery(sortType, readingFilter, bookshelfId, activeTab === 'reading');
 
-  const { data: readingLogSummary, isLoading: isReadingLogSummaryLoading } = useQuery({
-    queryKey: ['reading-logs', 'summary'],
-    queryFn: getReadingLogSummary,
-  });
+  const { data: readingLogSummary, isLoading: isReadingLogSummaryLoading } = useReadingLogSummaryQuery();
   const {
     data: wishlistData,
     observerTarget: wishlistObserverTarget,

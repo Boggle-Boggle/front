@@ -4,8 +4,8 @@ import type { PaginatedResponse } from 'api.types';
 
 import { useInfiniteScrollObserver } from 'hooks/useInfiniteScrollObserver';
 
-import { getInterestedBooks, type InterestedBookItemResponse, type InterestedBookSort } from './api';
 import type { MyBook } from './useLibraryQuery';
+import { getInterestedBooks, type InterestedBookItemResponse, type InterestedBookSort } from '../api';
 
 const convertInterestedBookToMyBook = (book: InterestedBookItemResponse): MyBook => ({
   id: book.bookId,

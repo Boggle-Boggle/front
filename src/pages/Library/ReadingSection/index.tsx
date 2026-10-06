@@ -7,7 +7,7 @@ import { IconArrowDown, IconMenu } from 'components/icons';
 
 import { ReadingBooksGrid } from './ReadingBooksGrid';
 import { ReadingBooksList } from './ReadingBooksList';
-import { MyBook } from '../useLibraryQuery';
+import type { MyBook } from '../queries/useLibraryQuery';
 
 type ReadingSectionProps = {
   books: MyBook[];
