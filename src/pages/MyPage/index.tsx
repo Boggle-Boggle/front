@@ -4,7 +4,6 @@ import { Loading } from 'components/Loading';
 import { IconBook, IconGraduation, IconNote } from 'components/icons';
 
 import { useScrollRestoration } from 'hooks/useScrollRestoration';
-import { getStoredThemeColor } from 'utils/theme';
 
 import profileImage from 'assets/my-page/default-profile-illustration.svg';
 
@@ -82,13 +81,12 @@ const MyPage = () => {
   const loginProviderLabel = LOGIN_PROVIDER_LABEL[profile.providers[0]];
   const loginProviderLogoSrc = LOGIN_PROVIDER_LOGO_SRC[profile.providers[0]];
   const myPageStats = getMyPageStats(profile);
-  const themeColor = getStoredThemeColor();
 
   return (
     <div ref={scrollRef} className="h-full overflow-y-auto bg-neutral-0">
       <div className="relative h-auto overflow-hidden bg-neutral-0 pb-6 pt-safe-top">
         {/* 동그라미 세알 */}
-        <div key={themeColor} className="absolute inset-0">
+        <div className="absolute inset-0">
           <div className="opacity-76 absolute right-[-4.35rem] top-[-6.5625rem] h-[18.75rem] w-[18.75rem] rounded-full bg-[radial-gradient(circle_at_34%_38%,color-mix(in_srgb,var(--color-primary)_96%,transparent)_0%,color-mix(in_srgb,var(--color-secondary-light)_90%,transparent)_100%)] blur-[1rem]" />
           <div className="absolute -left-[2.65rem] top-[7.6875rem] h-[11.275rem] w-[11.275rem] rounded-full bg-[radial-gradient(circle_at_42%_40%,color-mix(in_srgb,var(--color-primary)_92%,transparent)_0%,color-mix(in_srgb,var(--color-secondary-light)_82%,transparent)_100%)] opacity-80 blur-[0.95rem]" />
           <div className="opacity-72 absolute left-[2.55rem] top-[14.625rem] h-[23.5rem] w-[23.5rem] rounded-full bg-[radial-gradient(circle_at_40%_36%,color-mix(in_srgb,var(--color-primary)_84%,transparent)_0%,color-mix(in_srgb,var(--color-secondary-light)_94%,transparent)_72%)] blur-[0.95rem]" />

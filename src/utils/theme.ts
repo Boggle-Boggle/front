@@ -27,14 +27,9 @@ const isThemeColor = (value: string | null): value is ThemeColor => {
   return THEME_COLORS.some((themeColor) => themeColor === value);
 };
 
-export const getStoredThemeColor = () => {
-  const storedThemeColor = window.localStorage.getItem(STORAGE_KEY.THEME_COLOR);
-
-  return isThemeColor(storedThemeColor) ? storedThemeColor : DEFAULT_THEME_COLOR;
-};
-
 export const applyStoredThemeColor = () => {
-  const themeColor = getStoredThemeColor();
+  const storedThemeColor = window.localStorage.getItem(STORAGE_KEY.THEME_COLOR);
+  const themeColor = isThemeColor(storedThemeColor) ? storedThemeColor : DEFAULT_THEME_COLOR;
 
   document.documentElement.dataset.theme = themeColor;
 
