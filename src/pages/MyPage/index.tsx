@@ -1,6 +1,5 @@
 import { useNavigate } from 'react-router-dom';
 
-import { Loading } from 'components/Loading';
 import { IconBook, IconGraduation, IconNote } from 'components/icons';
 
 import { useScrollRestoration } from 'hooks/useScrollRestoration';
@@ -9,6 +8,7 @@ import profileImage from 'assets/my-page/default-profile-illustration.svg';
 
 import SettingListItem from './SettingListItem';
 import type { MyPageProfileResponse } from './api';
+import { MyPageSkeleton } from './components/MyPageSkeleton';
 import { useMyPageProfileQuery } from './queries/useMyPageProfileQuery';
 import StatItem from './shared/StatItem';
 import { LOGIN_PROVIDER_LABEL, LOGIN_PROVIDER_LOGO_SRC } from './shared/loginProvider';
@@ -76,7 +76,7 @@ const MyPage = () => {
     isReady: profile !== undefined,
   });
 
-  if (isMyPageProfileLoading || !profile) return <Loading fullscreen />;
+  if (isMyPageProfileLoading || !profile) return <MyPageSkeleton />;
 
   const loginProviderLabel = LOGIN_PROVIDER_LABEL[profile.providers[0]];
   const loginProviderLogoSrc = LOGIN_PROVIDER_LOGO_SRC[profile.providers[0]];
