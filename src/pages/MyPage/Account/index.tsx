@@ -6,11 +6,11 @@ import { useToastStore } from 'stores/useToastStore';
 
 import { Button } from 'components/Button';
 import { Header } from 'components/Header';
-import { Loading } from 'components/Loading';
 import { IconPen } from 'components/icons';
 
 import DownloadBackupModal from './DownloadBackupModal';
 import LogoutConfirmModal from './LogoutConfirmModal';
+import { AccountSkeleton } from './components/AccountSkeleton';
 import { useChangeNicknameMutation } from './queries/useChangeNicknameMutation';
 import { useMyPageProfileQuery } from '../queries/useMyPageProfileQuery';
 import { SectionButton } from '../shared/SectionButton';
@@ -104,7 +104,7 @@ const Account = () => {
     navigate('/mypage/account/withdraw');
   };
 
-  if (isMyPageProfileLoading || !profile) return <Loading fullscreen />;
+  if (isMyPageProfileLoading || !profile) return <AccountSkeleton />;
 
   const loginProviderLabel = LOGIN_PROVIDER_LABEL[profile.providers[0]];
   const { normalizedNickname } = parseNickname(nickname);
