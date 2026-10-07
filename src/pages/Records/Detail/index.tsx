@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
 
-import { Loading } from 'components/Loading';
 import { ResourceFallback } from 'components/ResourceFallback';
 import { Tabs, type TabItem } from 'components/Tabs';
 
@@ -13,6 +12,7 @@ import { BookInfoTab } from './BookInfoTab';
 import { MyInfoTab } from './MyInfoTab';
 import { NoteTab } from './NoteTab';
 import { RecordDetailHero } from './components/RecordDetailHero';
+import { RecordDetailSkeleton } from './components/RecordDetailSkeleton';
 import { useReadingLogDetailQuery } from './queries/useReadingLogDetailQuery';
 
 type DetailTabType = 'info' | 'note' | 'myInfo';
@@ -47,7 +47,7 @@ export const RecordDetailPage = () => {
     isReady: !!readingLogDetail,
   });
 
-  if (isReadingLogDetailLoading) return <Loading fullscreen />;
+  if (isReadingLogDetailLoading) return <RecordDetailSkeleton />;
 
   if (isReadingLogDetailError || !readingLogDetail) return <ResourceFallback type="readingLogNotFound" />;
 
