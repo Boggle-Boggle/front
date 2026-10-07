@@ -7,6 +7,7 @@ import { InfiniteScrollTrigger } from 'components/InfiniteScrollTrigger';
 import { ToggleButton } from 'components/ToggleButton';
 import { IconArrowDown, IconHeart, IconHeartFilled } from 'components/icons';
 
+import { WishlistSectionSkeleton } from './WishlistSectionSkeleton';
 import type { MyBook } from '../queries/useLibraryQuery';
 import { useToggleWishlistBookMutation } from '../queries/useToggleWishlistBookMutation';
 
@@ -22,7 +23,6 @@ type WishlistSectionProps = {
   onOpenSortLayer: () => void;
 };
 
-const MSG_MYBOOKS_LOADING = '불러오는 중...';
 const MSG_MYBOOKS_WISHLIST_COUNT_SUFFIX = '개의 관심도서가 있어요';
 const MSG_MYBOOKS_WISHLIST_ARIA_LABEL_KO = '{title} 관심 도서';
 const MSG_MYBOOKS_WISHLIST_ARIA_LABEL_EN = '{title} wishlist book';
@@ -85,6 +85,8 @@ export const WishlistSection = (props: WishlistSectionProps) => {
     });
   };
 
+  if (isLoading) return <WishlistSectionSkeleton />;
+
   return (
     <>
       <div className="flex items-center justify-between px-mobile pb-3">
@@ -133,11 +135,6 @@ export const WishlistSection = (props: WishlistSectionProps) => {
           hasNextPage={hasNextPage}
           isFetching={isFetchingNextPage}
         />
-        {isLoading && (
-          <div className="flex justify-center py-4">
-            <span className="text-caption1 text-neutral-60">{MSG_MYBOOKS_LOADING}</span>
-          </div>
-        )}
       </div>
     </>
   );
