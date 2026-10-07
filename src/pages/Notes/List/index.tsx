@@ -3,7 +3,6 @@ import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import useLayerStore from 'stores/useLayerStore';
 
 import IconButton from 'components/Button/IconButton';
-import { Loading } from 'components/Loading';
 import { ResourceFallback } from 'components/ResourceFallback';
 import { IconEdit } from 'components/icons';
 import { NoteMenuActionSheet } from 'pages/Notes/shared/NoteMenuActionSheet';
@@ -15,6 +14,7 @@ import { useScrollRestoration } from 'hooks/useScrollRestoration';
 
 import { NoteListContent } from './components/NoteListContent';
 import { NoteListHeader } from './components/NoteListHeader';
+import { NoteListSkeleton } from './components/NoteListSkeleton';
 
 type RecordNotesLocationState = {
   bookTitle?: string;
@@ -84,7 +84,7 @@ const RecordNotes = () => {
     });
   };
 
-  if (isReadingLogNotesLoading) return <Loading fullscreen />;
+  if (isReadingLogNotesLoading) return <NoteListSkeleton />;
 
   if (isReadingLogNotesError) return <ResourceFallback type="readingLogNotFound" />;
 
