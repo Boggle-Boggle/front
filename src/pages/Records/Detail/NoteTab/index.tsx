@@ -10,13 +10,14 @@ import { ReadingNoteCard } from 'pages/Notes/shared/ReadingNoteCard';
 import type { ReadingNoteResponse } from 'pages/Notes/shared/api';
 import { useReadingLogNotesQuery } from 'pages/Notes/shared/queries/useReadingLogNotesQuery';
 
+import { NoteTabSkeleton } from './NoteTabSkeleton';
+
 type NoteTabProps = {
   readingLogId: string;
   bookTitle: string;
 };
 
 const MSG_NOTE_TAB_MORE_TEXT = '노트 전체보기';
-const MSG_NOTE_TAB_LOADING = '노트를 불러오는 중입니다...';
 const MSG_NOTE_TAB_COUNT_SUFFIX = '개의 독서 노트가 있습니다';
 const MSG_NOTE_TAB_EMPTY = '등록된 독서 노트가 없어요.\n첫 노트를 작성해 보세요!';
 const MSG_NOTE_TAB_WRITE_ARIA_LABEL = '독서 노트 작성';
@@ -40,8 +41,7 @@ export const NoteTab = ({ readingLogId, bookTitle }: NoteTabProps) => {
     });
   };
 
-  if (isLoading)
-    return <div className="flex justify-center py-20 text-body2 text-neutral-60">{MSG_NOTE_TAB_LOADING}</div>;
+  if (isLoading) return <NoteTabSkeleton />;
 
   return (
     <section className="pb-safe-bottom">
