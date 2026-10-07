@@ -6,9 +6,9 @@ import { Button } from 'components/Button';
 import { Checkbox } from 'components/Checkbox';
 import { Header } from 'components/Header';
 import { Input } from 'components/Input';
-import { Loading } from 'components/Loading';
 
 import WithdrawConfirmModal from './WithdrawConfirmModal';
+import { WithdrawSkeleton } from './components/WithdrawSkeleton';
 import { useMyPageProfileQuery } from '../../queries/useMyPageProfileQuery';
 import { useWithdrawalReasonsQuery } from '../../queries/useWithdrawalReasonsQuery';
 import type { WithdrawalReasonCode } from '../api';
@@ -34,7 +34,7 @@ const Withdraw = () => {
   const { data: withdrawalReasonItems, isLoading: isWithdrawalReasonsLoading } = useWithdrawalReasonsQuery();
 
   if (isWithdrawalReasonsLoading || isMyPageProfileLoading || !withdrawalReasonItems || !profile) {
-    return <Loading fullscreen />;
+    return <WithdrawSkeleton />;
   }
 
   const hasSelectedReasons = selectedReasons.length > 0;
