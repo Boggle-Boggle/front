@@ -1,8 +1,8 @@
 import { useNavigate } from 'react-router-dom';
 
 import { Header } from 'components/Header';
-import { Loading } from 'components/Loading';
 
+import { ContentSkeleton } from './components/ContentSkeleton';
 import { useUpdateUserSettingsMutation } from '../queries/useUpdateUserSettingsMutation';
 import { useUserSettingsQuery } from '../queries/useUserSettingsQuery';
 import { SectionHeader } from '../shared/SectionHeader';
@@ -23,7 +23,7 @@ const Content = () => {
   const { data: userSettings, isLoading: isUserSettingsLoading } = useUserSettingsQuery();
   const { mutate: updateSettings } = useUpdateUserSettingsMutation();
 
-  if (isUserSettingsLoading || !userSettings) return <Loading fullscreen />;
+  if (isUserSettingsLoading || !userSettings) return <ContentSkeleton />;
 
   const handleAdultContentChange = () => {
     updateSettings({
