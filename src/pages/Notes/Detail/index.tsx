@@ -3,7 +3,6 @@ import useLayerStore from 'stores/useLayerStore';
 
 import IconButton from 'components/Button/IconButton';
 import { Header } from 'components/Header';
-import { Loading } from 'components/Loading';
 import { ResourceFallback } from 'components/ResourceFallback';
 import { IconEllipsisVertical } from 'components/icons';
 import { NoteMenuActionSheet } from 'pages/Notes/shared/NoteMenuActionSheet';
@@ -11,6 +10,7 @@ import { useReadingLogTitleQuery } from 'pages/Notes/shared/queries/useReadingLo
 import { useReadingNoteQuery } from 'pages/Notes/shared/queries/useReadingNoteQuery';
 
 import { NoteDetailContent } from './components/NoteDetailContent';
+import { NoteDetailSkeleton } from './components/NoteDetailSkeleton';
 
 const MSG_NOTE_DETAIL_MORE = '노트 더보기';
 
@@ -37,7 +37,7 @@ const NoteDetail = () => {
 
   const bookTitle = stateBookTitle || readingLogTitle || '독서 노트';
 
-  if (isReadingNoteLoading) return <Loading fullscreen />;
+  if (isReadingNoteLoading) return <NoteDetailSkeleton />;
 
   if (isReadingNoteError || !note) return <ResourceFallback type="readingNoteNotFound" />;
 
