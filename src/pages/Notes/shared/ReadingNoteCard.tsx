@@ -57,9 +57,7 @@ export const ReadingNoteCard = (props: ReadingNoteCardProps) => {
         />
       </div>
 
-      <p className="whitespace-pre-wrap break-words pb-3 pt-1 font-serif text-[14px] leading-[1.6] tracking-[-0.28px] text-neutral-80">
-        {note.body}
-      </p>
+      <p className="text-noteSerif whitespace-pre-wrap break-words pb-3 pt-1 font-serif text-neutral-80">{note.body}</p>
 
       <p className="text-caption2 text-neutral-60">{noteMetaText}</p>
     </li>

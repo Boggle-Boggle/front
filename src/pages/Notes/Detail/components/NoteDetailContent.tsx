@@ -15,7 +15,7 @@ export const NoteDetailContent = (props: NoteDetailContentProps) => {
   return (
     <div className="flex h-full flex-col px-mobile">
       <h1 className="pb-3 pt-5 text-title3 text-neutral-80">{title || DEFAULT_NOTE_TITLE}</h1>
-      <p className="whitespace-pre-wrap text-left font-serif text-[14px] leading-[1.6] tracking-[-0.28px] text-neutral-80">
+      <p className="text-noteSerif whitespace-pre-wrap text-left font-serif text-neutral-80">
         {body || DEFAULT_NOTE_BODY}
       </p>
       <p className="pt-4 text-caption2 text-neutral-60">{formatToDotDateTime(createdAt)}</p>

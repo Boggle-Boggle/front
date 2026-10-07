@@ -32,8 +32,8 @@ module.exports = {
       },
 
       fontSize: {
-        h1: ['1.75rem', { fontWeight: '700', lineHeight: '130%' }],
-        h2: ['1.75rem', { fontWeight: '300', lineHeight: '130%' }],
+        h1: ['1.75rem', { fontWeight: '700', lineHeight: '130%', letterSpacing: '0.084px' }],
+        h2: ['1.75rem', { fontWeight: '300', lineHeight: '130%', letterSpacing: '0.084px' }],
         h3: ['1.375rem', { fontWeight: '300', lineHeight: '135%' }],
         title1: ['1.375rem', { fontWeight: '700', lineHeight: '140%' }],
         title2: ['1.25rem', { fontWeight: '700', lineHeight: '140%' }],
@@ -43,7 +43,9 @@ module.exports = {
         body2: ['0.875rem', { fontWeight: '700', lineHeight: '140%' }],
         caption1: ['0.875rem', { fontWeight: '500', lineHeight: '140%' }],
         caption2: ['0.875rem', { fontWeight: '300', lineHeight: '140%' }],
-        caption3: ['0.75rem', { fontWeight: '300', lineHeight: '120%' }],
+        caption3: ['0.75rem', { fontWeight: '500', lineHeight: '120%' }],
+        noteSerif: ['1rem', { fontWeight: '400', lineHeight: '160%', letterSpacing: '-0.32px' }],
+        noteSerifBold: ['1rem', { fontWeight: '700', lineHeight: '160%', letterSpacing: '-0.32px' }],
       },
 
       spacing: {
