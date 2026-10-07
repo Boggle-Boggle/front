@@ -2,10 +2,10 @@ import { useLayerStore } from 'stores/useLayerStore';
 
 import { Button } from 'components/Button';
 import { Header } from 'components/Header';
-import { Loading } from 'components/Loading';
 import { IconCircleBan } from 'components/icons';
 
 import { UnblockUserConfirmModal } from './UnblockUserConfirmModal';
+import { BlockedUsersSkeleton } from './components/BlockedUsersSkeleton';
 import { useBlockedUsersQuery } from '../../queries/useBlockedUsersQuery';
 
 const MSG_BLOCKED_USERS_TITLE = '차단한 유저 확인하기';
@@ -25,7 +25,7 @@ const BlockedUsers = () => {
     });
   };
 
-  if (isBlockedUsersLoading) return <Loading fullscreen />;
+  if (isBlockedUsersLoading) return <BlockedUsersSkeleton />;
 
   const blockedUsers = data?.items ?? [];
 
