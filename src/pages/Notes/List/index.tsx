@@ -20,7 +20,7 @@ type RecordNotesLocationState = {
   bookTitle?: string;
 };
 
-const MSG_RECORD_NOTES_COUNT_SUFFIX = '개의 독서 노트가 있습니다';
+const MSG_RECORD_NOTES_COUNT_SUFFIX = '개의 독서 노트가 있어요';
 const MSG_RECORD_NOTES_EMPTY = '등록된 독서 노트가 없어요.\n첫 노트를 작성해 보세요!';
 const MSG_RECORD_NOTES_SEARCH_EMPTY = '검색 결과가 없어요.';
 const MSG_RECORD_NOTES_SEARCH_ARIA_LABEL = '노트 검색';

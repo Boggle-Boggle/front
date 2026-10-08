@@ -20,9 +20,9 @@ type MainBookCaseItem = {
   title: string;
 };
 
-const MSG_TITLE_SEARCH_PLACEHOLDER = '책 제목을 입력해주세요';
+const MSG_TITLE_SEARCH_PLACEHOLDER = '책 제목을 입력해 주세요';
 const MSG_MAIN_BOOKCASE_COUNT = (filledShelfCount: number, bookCount: number) =>
-  `${filledShelfCount}칸(${bookCount}권) 채웠습니다`;
+  `${filledShelfCount}칸(${bookCount}권) 채웠어요`;
 
 const Main = () => {
   const navigate = useNavigate();

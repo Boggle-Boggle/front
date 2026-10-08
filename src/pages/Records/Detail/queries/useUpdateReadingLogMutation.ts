@@ -5,7 +5,7 @@ import { useToastStore } from 'stores/useToastStore';
 import { updateReadingLog, type UpdateReadingLogRequest } from '../api';
 
 const MSG_UPDATE_READING_LOG_SUCCESS = '독서 정보가 성공적으로 수정되었어요.';
-const MSG_UPDATE_READING_LOG_FAILED = '독서 정보 수정에 실패했습니다. 다시 시도해 주세요.';
+const MSG_UPDATE_READING_LOG_FAILED = '독서 정보 수정에 실패했어요. 다시 시도해 주세요.';
 
 type UseUpdateReadingLogMutationParams = {
   recordId: string;

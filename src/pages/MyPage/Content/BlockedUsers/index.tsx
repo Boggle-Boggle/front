@@ -11,7 +11,7 @@ import { useBlockedUsersQuery } from '../../queries/useBlockedUsersQuery';
 const MSG_BLOCKED_USERS_TITLE = '차단한 유저 확인하기';
 const MSG_BLOCKED_USERS_SUFFIX = ' 님';
 const MSG_BLOCKED_USERS_STATUS = '차단됨';
-const MSG_BLOCKED_USERS_EMPTY = '차단한 유저가 없습니다.';
+const MSG_BLOCKED_USERS_EMPTY = '차단한 유저가 없어요.';
 
 const BlockedUsers = () => {
   const { push } = useLayerStore();

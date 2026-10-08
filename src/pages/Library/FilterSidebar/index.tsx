@@ -107,7 +107,7 @@ export const FilterSidebar = (props: FilterSidebarProps) => {
               );
             })
           ) : (
-            <div className="py-3 text-body1 text-neutral-60">생성된 그룹책장이 없습니다.</div>
+            <div className="py-3 text-body1 text-neutral-60">생성된 그룹책장이 없어요.</div>
           )}
 
           <TextButton

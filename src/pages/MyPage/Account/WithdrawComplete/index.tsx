@@ -6,8 +6,8 @@ import Highlight from 'components/Highlight';
 import withdrawCompleteImage from 'assets/my-page/withdraw-complete-illustration.svg';
 
 const MSG_WITHDRAW_COMPLETE_TITLE_FIRST = '그동안 빼곡을';
-const MSG_WITHDRAW_COMPLETE_TITLE_SECOND = '사용해주셔서 감사합니다';
-const MSG_WITHDRAW_COMPLETE_DESCRIPTION = '다시 찾아주시길 기다리고 있겠습니다';
+const MSG_WITHDRAW_COMPLETE_TITLE_SECOND = '사용해 주셔서 감사해요';
+const MSG_WITHDRAW_COMPLETE_DESCRIPTION = '다시 찾아주시길 기다릴게요';
 const MSG_WITHDRAW_COMPLETE_BUTTON = '회원가입 페이지로';
 const MSG_WITHDRAW_COMPLETE_IMAGE_ALT = '회원 탈퇴 완료';
 

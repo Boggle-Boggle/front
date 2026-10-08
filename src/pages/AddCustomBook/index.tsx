@@ -28,19 +28,19 @@ const MSG_ADD_CUSTOM_BOOK_PAGE_TITLE = '직접 등록하기';
 const MSG_EDIT_CUSTOM_BOOK_PAGE_TITLE = '내가 등록한 책 정보 수정하기';
 const MSG_ADD_CUSTOM_BOOK_SUBMIT = '독서 기록 추가하기';
 const MSG_EDIT_CUSTOM_BOOK_SUBMIT = '수정 완료하기';
-const MSG_EDIT_CUSTOM_BOOK_INVALID = '수정할 책 정보를 찾을 수 없습니다.';
+const MSG_EDIT_CUSTOM_BOOK_INVALID = '수정할 책 정보를 찾을 수 없어요.';
 const MSG_ADD_CUSTOM_BOOK_TITLE = '책 제목';
-const MSG_ADD_CUSTOM_BOOK_TITLE_PLACEHOLDER = '책 제목을 입력해주세요';
+const MSG_ADD_CUSTOM_BOOK_TITLE_PLACEHOLDER = '책 제목을 입력해 주세요';
 const MSG_ADD_CUSTOM_BOOK_AUTHOR = '저자 이름';
-const MSG_ADD_CUSTOM_BOOK_AUTHOR_PLACEHOLDER = '저자 이름을 입력해주세요';
+const MSG_ADD_CUSTOM_BOOK_AUTHOR_PLACEHOLDER = '저자 이름을 입력해 주세요';
 const MSG_ADD_CUSTOM_BOOK_PUBLISHER = '출판사';
-const MSG_ADD_CUSTOM_BOOK_PUBLISHER_PLACEHOLDER = '출판사를 입력해주세요';
+const MSG_ADD_CUSTOM_BOOK_PUBLISHER_PLACEHOLDER = '출판사를 입력해 주세요';
 const MSG_ADD_CUSTOM_BOOK_ISBN = 'ISBN';
 const MSG_ADD_CUSTOM_BOOK_ISBN_PLACEHOLDER = 'ISBN 코드';
 const MSG_ADD_CUSTOM_BOOK_TOTAL_PAGE = '총 페이지 수';
 const MSG_ADD_CUSTOM_BOOK_TOTAL_PAGE_PLACEHOLDER = '총 페이지 수';
 const MSG_ADD_CUSTOM_BOOK_PLOT = '작품 소개/줄거리';
-const MSG_ADD_CUSTOM_BOOK_PLOT_PLACEHOLDER = '작품 소개/줄거리 입력해주세요';
+const MSG_ADD_CUSTOM_BOOK_PLOT_PLACEHOLDER = '작품 소개/줄거리를 입력해 주세요';
 const LAYER_ID_ADD_CUSTOM_BOOK_COVER_IMAGE_URL_MODAL = 'add-custom-book-cover-image-url-modal';
 
 /**

@@ -4,7 +4,7 @@ import { useToastStore } from 'stores/useToastStore';
 
 import { BOOKSHELVES_QUERY_KEY, createBookshelf } from '../api';
 
-const MSG_CREATE_BOOKSHELF_FAILED = '그룹을 저장하지 못했습니다. 다시 시도해주세요.';
+const MSG_CREATE_BOOKSHELF_FAILED = '그룹을 저장하지 못했어요. 다시 시도해 주세요.';
 
 type UseCreateBookshelfMutationParams = {
   onSuccess?: () => void;

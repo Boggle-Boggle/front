@@ -11,7 +11,7 @@ type GroupDeleteConfirmModalProps = {
 
 const MSG_RECORD_GROUP_DELETE_TITLE = '그룹 삭제하기';
 const MSG_RECORD_GROUP_DELETE_DESCRIPTION =
-  '정말 이 그룹을 삭제하시겠습니까?\n그룹이 삭제되어도 독서기록은 삭제되지 않습니다.';
+  '정말 이 그룹을 삭제하시겠어요?\n그룹이 삭제되어도 독서기록은 삭제되지 않아요.';
 const MSG_RECORD_GROUP_DELETE_CANCEL = '아니오';
 const MSG_RECORD_GROUP_DELETE_CONFIRM = '삭제하기';
 

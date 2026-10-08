@@ -4,8 +4,8 @@ import { useToastStore } from 'stores/useToastStore';
 
 import { blockUser } from '../api';
 
-const MSG_BLOCK_USER_SUCCESS_TOAST = '해당 유저가 차단되었습니다.';
-const MSG_BLOCK_USER_FAILED_TOAST = '유저 차단에 실패했습니다.';
+const MSG_BLOCK_USER_SUCCESS_TOAST = '해당 유저가 차단되었어요.';
+const MSG_BLOCK_USER_FAILED_TOAST = '유저 차단에 실패했어요.';
 
 type BlockReviewUserParams = {
   userId: number;

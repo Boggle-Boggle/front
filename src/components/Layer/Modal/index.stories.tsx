@@ -17,7 +17,7 @@ export const Primitive: Story = {
     children: (
       <div className="flex flex-col gap-4">
         <h2 className="text-title2">Primitive Modal</h2>
-        <p className="text-body1 text-neutral-60">기존 사용처와 호환되는 기본 쉘입니다.</p>
+        <p className="text-body1 text-neutral-60">기존 사용처와 호환되는 기본 쉘이에요.</p>
       </div>
     ),
   },

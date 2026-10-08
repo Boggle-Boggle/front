@@ -4,7 +4,7 @@ import type { ChangeEvent, FormEvent } from 'react';
 import Cancel from 'components/icons/Cancel';
 import Search from 'components/icons/Search';
 
-const MSG_SEARCH_PLACEHOLDER = '책 제목을 입력해주세요';
+const MSG_SEARCH_PLACEHOLDER = '책 제목을 입력해 주세요';
 
 type SearchbarProps = {
   value: string;

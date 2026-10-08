@@ -11,7 +11,7 @@ type StarRatingProps = {
 };
 
 const MSG_RATING_ARIA_LABEL = '{max}점 만점에 {value}점';
-const MSG_RATING_EDIT_ARIA_LABEL = '별점을 선택하세요. 현재 {value}점';
+const MSG_RATING_EDIT_ARIA_LABEL = '별점을 선택해 주세요. 현재 {value}점';
 
 const STAR_FILL_COLOR = '#FFE23C';
 const STAR_EMPTY_COLOR = '#EEEEEE';

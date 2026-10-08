@@ -7,7 +7,7 @@ import { SearchSectionSkeleton } from '../../../shared/SearchSectionSkeleton';
 import { Title } from '../../../shared/Title';
 
 const MSG_SEARCH_AUTHOR_OTHER_WORKS_TITLE = '{author}의 다른 작품';
-const MSG_SEARCH_AUTHOR_OTHER_WORKS_EMPTY_DESCRIPTION = '이 도서의 요약 설명이 존재하지 않습니다.';
+const MSG_SEARCH_AUTHOR_OTHER_WORKS_EMPTY_DESCRIPTION = '이 도서의 요약 설명이 없어요.';
 
 export const AuthorOtherWorksSection = () => {
   const navigate = useNavigate();

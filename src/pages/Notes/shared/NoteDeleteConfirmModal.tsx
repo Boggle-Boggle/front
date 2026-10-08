@@ -12,7 +12,7 @@ type NoteDeleteConfirmModalProps = {
 };
 
 const MSG_NOTE_DELETE_CONFIRM_TITLE = '독서 노트 삭제하기';
-const MSG_NOTE_DELETE_CONFIRM_DESC = '정말로 이 노트를 삭제하시겠어요? 한번 삭제한 노트는 복구할 수 없습니다.';
+const MSG_NOTE_DELETE_CONFIRM_DESC = '정말 이 노트를 삭제하시겠어요? 한번 삭제한 노트는 복구할 수 없어요.';
 const MSG_NOTE_DELETE_CANCEL = '아니오';
 const MSG_NOTE_DELETE_CONFIRM = '네';
 

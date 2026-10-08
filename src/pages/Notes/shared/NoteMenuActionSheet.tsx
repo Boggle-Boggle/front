@@ -44,9 +44,9 @@ export const NoteMenuActionSheet = (props: NoteMenuActionSheetProps) => {
   const handleCopy = async () => {
     try {
       await navigator.clipboard.writeText(note.body);
-      addToast({ type: 'success', description: '노트가 클립보드에 복사되었습니다.' });
+      addToast({ type: 'success', description: '노트가 클립보드에 복사되었어요.' });
     } catch {
-      addToast({ type: 'error', description: '클립보드 복사에 실패했습니다.' });
+      addToast({ type: 'error', description: '클립보드 복사에 실패했어요.' });
     }
   };
 

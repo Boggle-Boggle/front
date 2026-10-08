@@ -31,7 +31,7 @@ const MSG_MAIN_FILTER_GROUP_DESC = '완독한 책을 그룹별로 볼 수 있어
 const MSG_MAIN_FILTER_PERIOD_TITLE = '기간별로 보기';
 const MSG_MAIN_FILTER_PERIOD_DESC = '완독한 책을 기간별로 볼 수 있어요';
 
-const MSG_MAIN_FILTER_NO_GROUP = '생성된 그룹책장이 없습니다.';
+const MSG_MAIN_FILTER_NO_GROUP = '생성된 그룹책장이 없어요.';
 const MSG_MAIN_FILTER_CONFIRM = '확인';
 
 export const MainPeriodModal = (props: MainPeriodModalProps) => {

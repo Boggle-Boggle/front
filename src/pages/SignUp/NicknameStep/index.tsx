@@ -13,10 +13,10 @@ type NicknameStepProps = {
 };
 
 const MSG_SIGNUP_HEADER_TITLE = '회원가입';
-const MSG_SIGNUP_NICKNAME_TITLE = '빼곡에서 사용하실\n닉네임을 만들어주세요!';
+const MSG_SIGNUP_NICKNAME_TITLE = '빼곡에서 사용하실\n닉네임을 만들어 주세요!';
 const MSG_SIGNUP_NICKNAME_DESCRIPTION =
   '다른 이용자에게 불쾌감을 줄 수 있는 단어나 욕설, 선정적 표현은 신고가 누적 될 경우 닉네임이 변경 될 수 있어요.';
-const MSG_SIGNUP_NICKNAME_PLACEHOLDER = '닉네임을 입력해주세요';
+const MSG_SIGNUP_NICKNAME_PLACEHOLDER = '닉네임을 입력해 주세요';
 const MSG_SIGNUP_NICKNAME_LIMIT = '글자수 한글 15자/영문 45자 제한';
 const MSG_SIGNUP_NICKNAME_NEXT = '다음으로';
 const MSG_SIGNUP_NICKNAME_CLEAR_LABEL = '닉네임 입력 초기화';

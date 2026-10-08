@@ -7,9 +7,9 @@ type LogoutConfirmModalProps = {
 };
 
 const MSG_LOGOUT_TITLE = '로그아웃하기';
-const MSG_LOGOUT_DESCRIPTION = '정말로 로그아웃 하시겠습니까?';
+const MSG_LOGOUT_DESCRIPTION = '정말 로그아웃하시겠어요?';
 const MSG_LOGOUT_CANCEL = '아니오';
-const MSG_LOGOUT_CONFIRM = '로그아웃 합니다';
+const MSG_LOGOUT_CONFIRM = '로그아웃합니다';
 
 const LogoutConfirmModal = (props: LogoutConfirmModalProps) => {
   const { onCancel } = props;

@@ -10,8 +10,8 @@ import { validateImageUrl } from './utils';
 const MSG_ADD_CUSTOM_BOOK_COVER_IMAGE_URL_MODAL_TITLE = '이미지 URL로 입력하기';
 const MSG_ADD_CUSTOM_BOOK_COVER_IMAGE_URL_MODAL_PLACEHOLDER = 'https://image.example.com/book-cover';
 const MSG_ADD_CUSTOM_BOOK_COVER_IMAGE_URL_MODAL_SUBMIT = '완료하기';
-const MSG_ADD_CUSTOM_BOOK_COVER_IMAGE_URL_INVALID = 'https://로 시작하는 이미지 URL을 입력해주세요.';
-const MSG_ADD_CUSTOM_BOOK_COVER_IMAGE_URL_LOAD_FAILED = '이미지를 불러오지 못했습니다. 다른 URL을 입력해주세요.';
+const MSG_ADD_CUSTOM_BOOK_COVER_IMAGE_URL_INVALID = 'https://로 시작하는 이미지 URL을 입력해 주세요.';
+const MSG_ADD_CUSTOM_BOOK_COVER_IMAGE_URL_LOAD_FAILED = '이미지를 불러오지 못했어요. 다른 URL을 입력해 주세요.';
 
 type CoverImageUrlModalProps = {
   initialValue: string;

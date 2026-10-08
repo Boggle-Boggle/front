@@ -7,9 +7,9 @@ const WITHDRAW_REASON_SKELETON_ITEMS = Array.from({ length: 4 }, (_, index) => `
 const MSG_WITHDRAW_TITLE = '회원탈퇴';
 const MSG_WITHDRAW_HEADING = '빼곡을 떠나시나요?';
 const MSG_WITHDRAW_DESCRIPTION =
-  '빼곡 서비스를 그동안 사용해주셔서 감사합니다.\n사용자님께서 어플을 사용하면서 느끼셨던 점을 저희에게 공유해주시면 더욱 훌륭한 서비스를 제공할 수 있도록 노력하겠습니다.';
-const MSG_WITHDRAW_FEEDBACK_TITLE = '소중한 피드백을 알려주세요';
-const MSG_WITHDRAW_FEEDBACK_PLACEHOLDER = '더 나은 빼곡을 위해 아쉬웠던 점을 알려주세요';
+  '그동안 빼곡 서비스를 사용해 주셔서 감사해요.\n사용자님께서 어플을 사용하면서 느끼셨던 점을 공유해 주시면 더 좋은 서비스를 만들기 위해 노력할게요.';
+const MSG_WITHDRAW_FEEDBACK_TITLE = '소중한 피드백을 알려 주세요';
+const MSG_WITHDRAW_FEEDBACK_PLACEHOLDER = '더 나은 빼곡을 위해 아쉬웠던 점을 알려 주세요';
 const MSG_WITHDRAW_BACK = '뒤로가기';
 const MSG_WITHDRAW_CONFIRM = '계정을 삭제합니다';
 

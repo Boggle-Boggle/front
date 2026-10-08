@@ -17,7 +17,7 @@ import { REVIEW_SORT_OPTIONS, type ReviewSortType } from '../../api';
 
 const MSG_REVIEW_PAGE_TITLE = '빼곡한 리뷰';
 const MSG_REVIEW_EMPTY = '아직 작성된 리뷰가 없어요';
-const MSG_REVIEW_MY_LIKE_FORBIDDEN = '자기가 쓴 리뷰에는 좋아요를 누를 수 없습니다.';
+const MSG_REVIEW_MY_LIKE_FORBIDDEN = '자기가 쓴 리뷰에는 좋아요를 누를 수 없어요.';
 const LAYER_ID_BOOK_DETAIL_REVIEW_SORT = 'book-detail-review-sort-bottom-sheet';
 
 type ReviewListProps = {

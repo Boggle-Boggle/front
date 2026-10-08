@@ -26,7 +26,7 @@ type Story = StoryObj<typeof meta>;
 
 const toastArgs: ComponentProps<typeof Toast> = {
   type: 'info',
-  description: '사용자에게 알림을 줍니다. 내용을 삽입하세요.',
+  description: '사용자에게 알림을 줘요. 내용을 삽입해 주세요.',
   title: 'INFO Notifications',
   size: 'small',
   dismissible: false,

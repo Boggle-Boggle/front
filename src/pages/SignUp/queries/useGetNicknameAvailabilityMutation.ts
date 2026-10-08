@@ -5,9 +5,9 @@ import { useToastStore } from 'stores/useToastStore';
 
 import { getNicknameAvailability } from '../api';
 
-const MSG_SIGNUP_NICKNAME_DUPLICATED = '이미 사용 중인 닉네임입니다.';
-const MSG_SIGNUP_NICKNAME_INVALID = '사용할 수 없는 닉네임입니다. 다시 확인해주세요.';
-const MSG_SIGNUP_NICKNAME_CHECK_FAILED = '닉네임 확인에 실패했습니다. 다시 시도해주세요.';
+const MSG_SIGNUP_NICKNAME_DUPLICATED = '이미 사용 중인 닉네임이에요.';
+const MSG_SIGNUP_NICKNAME_INVALID = '사용할 수 없는 닉네임이에요. 다시 확인해 주세요.';
+const MSG_SIGNUP_NICKNAME_CHECK_FAILED = '닉네임 확인에 실패했어요. 다시 시도해 주세요.';
 
 export const useGetNicknameAvailabilityMutation = () => {
   const { addToast } = useToastStore();

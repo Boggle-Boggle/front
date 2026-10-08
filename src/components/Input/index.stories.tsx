@@ -24,7 +24,7 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    placeholder: '내용을 입력해주세요',
+    placeholder: '내용을 입력해 주세요',
     value: '',
     onChange: noop,
   },
@@ -56,7 +56,7 @@ export const Disabled: Story = {
 
 export const PrimaryColor: Story = {
   args: {
-    placeholder: '내용을 입력해주세요',
+    placeholder: '내용을 입력해 주세요',
     value: '',
     onChange: noop,
     variant: 'primary',
@@ -73,7 +73,7 @@ export const PrimaryColorFocus: Story = {
 
 export const WithClearButton: Story = {
   args: {
-    value: '텍스트를 지울 수 있습니다',
+    value: '텍스트를 지울 수 있어요',
     onChange: noop,
     onClear: noop,
   },
@@ -82,7 +82,7 @@ export const WithClearButton: Story = {
 export const Line: Story = {
   args: {
     appearance: 'line',
-    placeholder: '닉네임을 입력해주세요',
+    placeholder: '닉네임을 입력해 주세요',
     value: '',
     onChange: noop,
   },
@@ -110,7 +110,7 @@ export const LineDisabled: Story = {
 export const LineWithClearButton: Story = {
   args: {
     appearance: 'line',
-    value: '텍스트를 지울 수 있습니다',
+    value: '텍스트를 지울 수 있어요',
     onChange: noop,
     onClear: noop,
   },

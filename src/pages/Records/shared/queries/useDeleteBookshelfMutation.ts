@@ -4,7 +4,7 @@ import { useToastStore } from 'stores/useToastStore';
 
 import { BOOKSHELVES_QUERY_KEY, deleteBookshelf } from '../api';
 
-const MSG_DELETE_BOOKSHELF_FAILED = '그룹을 삭제하지 못했습니다. 다시 시도해주세요.';
+const MSG_DELETE_BOOKSHELF_FAILED = '그룹을 삭제하지 못했어요. 다시 시도해 주세요.';
 
 type UseDeleteBookshelfMutationParams = {
   onSuccess?: (bookshelfId: number) => void;

@@ -20,8 +20,8 @@ type TermsStepProps = {
 };
 
 const MSG_SIGNUP_HEADER_TITLE = '회원가입';
-const MSG_SIGNUP_TERMS_TITLE = '빼곡에 가입하시려면\n이용약관에 동의해주세요!';
-const MSG_SIGNUP_TERMS_DESCRIPTION = '회원가입을 마치기 전에 빼곡의 이용약관을 확인해주세요';
+const MSG_SIGNUP_TERMS_TITLE = '빼곡에 가입하시려면\n이용약관에 동의해 주세요!';
+const MSG_SIGNUP_TERMS_DESCRIPTION = '회원가입을 마치기 전에 빼곡의 이용약관을 확인해 주세요';
 const MSG_SIGNUP_TERMS_AGREE_ALL = '모든 약관에 동의합니다';
 const MSG_SIGNUP_TERMS_REQUIRED = '필수';
 const MSG_SIGNUP_TERMS_SUBMIT = '회원가입 완료하기';

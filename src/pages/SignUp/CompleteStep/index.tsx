@@ -9,7 +9,7 @@ type CompleteStepProps = {
 
 const MSG_SIGNUP_COMPLETE_TITLE_FIRST = '빼곡에 오신 것을';
 const MSG_SIGNUP_COMPLETE_TITLE_SECOND = '진심으로';
-const MSG_SIGNUP_COMPLETE_TITLE_THIRD = '환영합니다!';
+const MSG_SIGNUP_COMPLETE_TITLE_THIRD = '환영해요!';
 const MSG_SIGNUP_COMPLETE_DESCRIPTION = '빼곡에서 즐거운 독서 생활을 즐겨보세요!';
 const MSG_SIGNUP_COMPLETE_BUTTON = '내 책장에 책 꽂으러 가기';
 const MSG_SIGNUP_COMPLETE_IMAGE_ALT = '회원가입 완료';

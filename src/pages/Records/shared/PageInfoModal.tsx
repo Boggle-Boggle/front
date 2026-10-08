@@ -13,7 +13,7 @@ type PageInfoModalProps = {
 
 const MSG_PAGE_INFO_TITLE = '페이지 정보 수정';
 const MSG_PAGE_INFO_LABEL = '총 페이지 수 (선택)';
-const MSG_PAGE_INFO_PLACEHOLDER = '페이지 정보를 가져올 수 없습니다';
+const MSG_PAGE_INFO_PLACEHOLDER = '페이지 정보를 가져올 수 없어요';
 const MSG_MODAL_DONE = '완료';
 
 export const PageInfoModal = (props: PageInfoModalProps) => {

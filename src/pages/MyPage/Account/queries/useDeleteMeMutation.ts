@@ -6,7 +6,7 @@ import { useToastStore } from 'stores/useToastStore';
 
 import { deleteMe } from '../api';
 
-const MSG_DELETE_ME_FAILED = '계정 삭제에 실패했습니다. 다시 시도해주세요.';
+const MSG_DELETE_ME_FAILED = '계정 삭제에 실패했어요. 다시 시도해 주세요.';
 const ROUTE_ACCOUNT_WITHDRAW_COMPLETE = '/mypage/account/withdraw-complete';
 
 export const useDeleteMeMutation = () => {

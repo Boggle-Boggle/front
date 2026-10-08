@@ -22,7 +22,7 @@ const baseArgs: ComponentProps<typeof Searchbar> = {
   value: '',
   onChange: () => {},
   onSubmit: () => {},
-  placeholder: '책 제목을 입력해주세요',
+  placeholder: '책 제목을 입력해 주세요',
   isSearched: false,
 };
 

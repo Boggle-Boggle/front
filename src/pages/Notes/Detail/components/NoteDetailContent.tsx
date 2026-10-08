@@ -6,8 +6,8 @@ type NoteDetailContentProps = {
   createdAt: string;
 };
 
-const DEFAULT_NOTE_TITLE = '등록된 제목이 없습니다.';
-const DEFAULT_NOTE_BODY = '등록된 내용이 없습니다.';
+const DEFAULT_NOTE_TITLE = '등록된 제목이 없어요.';
+const DEFAULT_NOTE_BODY = '등록된 내용이 없어요.';
 
 export const NoteDetailContent = (props: NoteDetailContentProps) => {
   const { title, body, createdAt } = props;

@@ -6,7 +6,7 @@ import Highlight from 'components/Highlight';
 import completionImage from 'assets/records/record-add-complete-illustration.svg';
 
 const MSG_ADD_RECORD_COMPLETE_PREFIX = '나의 책이';
-const MSG_ADD_RECORD_COMPLETE_SUFFIX = '추가 되었습니다!';
+const MSG_ADD_RECORD_COMPLETE_SUFFIX = '추가되었어요!';
 const MSG_ADD_RECORD_WRITE_NOTE = '바로 독서 노트 작성하기';
 const MSG_ADD_RECORD_CONTINUE = '이어서 도서 등록하기';
 

@@ -16,8 +16,8 @@ const handleClick = () => {};
 
 export const Default: Story = {
   args: {
-    title: '타이틀을 입력해주세요',
-    description: '내용을 입력해주세요',
+    title: '타이틀을 입력해 주세요',
+    description: '내용을 입력해 주세요',
     cancelLabel: '아니오',
     confirmLabel: '네',
     onCancel: handleClick,

@@ -19,6 +19,6 @@ export const Default: Story = {};
 
 export const CustomText: Story = {
   args: {
-    text: '포함된 책장이 없습니다.\n책장을 새로 추가해 보세요!',
+    text: '포함된 책장이 없어요.\n책장을 새로 추가해 보세요!',
   },
 };

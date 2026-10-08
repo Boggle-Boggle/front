@@ -17,7 +17,7 @@ import type { SearchMediaType } from './api';
 import { SearchResultSkeleton } from './components/SearchResultSkeleton';
 import { useSearchBooksQuery } from './queries/useSearchBooksQuery';
 
-const MSG_SEARCH_RESULT_COUNT = (count: number) => `${count}개의 검색 결과가 있습니다`;
+const MSG_SEARCH_RESULT_COUNT = (count: number) => `${count}개의 검색 결과가 있어요`;
 const MSG_SEARCH_FILTER_PAPER = '종이책 검색';
 const MSG_SEARCH_FILTER_EBOOK = '전자책 검색';
 const LAYER_ID_SEARCH_FILTER = 'search-filter-bottom-sheet';
@@ -136,7 +136,7 @@ const SearchResult = () => {
       <div ref={scrollContainerRef} className="flex-1 overflow-y-auto px-mobile">
         {searchResults.length === 0 ? (
           <div className="flex h-full w-full items-center justify-center py-20 text-body2 text-neutral-60">
-            검색 결과가 없습니다.
+            검색 결과가 없어요.
           </div>
         ) : (
           <ul className="flex w-full flex-col divide-y divide-neutral-20">

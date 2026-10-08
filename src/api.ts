@@ -9,7 +9,7 @@ const AUTH_REFRESH_PATH = '/v2/auth/refresh';
 
 const CLIENT_REQUEST_FAILED_ERROR: ApiError = {
   code: CLIENT_REQUEST_FAILED_CODE,
-  message: '요청을 처리하지 못했습니다. 잠시 후 다시 시도해주세요.',
+  message: '요청을 처리하지 못했어요. 잠시 후 다시 시도해 주세요.',
 };
 
 const createApiError = (apiError: ApiError) => Object.assign(new Error(apiError.message), apiError);

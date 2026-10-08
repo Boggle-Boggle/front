@@ -5,8 +5,8 @@ import useToastStore from 'stores/useToastStore';
 
 import { updateReadingNote, type ReadingNoteResponse } from '../api';
 
-const MSG_NOTE_EDIT_SUCCESS = '독서 노트가 수정되었습니다.';
-const MSG_NOTE_EDIT_FAILED = '독서 노트를 수정하지 못했습니다. 다시 시도해 주세요.';
+const MSG_NOTE_EDIT_SUCCESS = '독서 노트가 수정되었어요.';
+const MSG_NOTE_EDIT_FAILED = '독서 노트를 수정하지 못했어요. 다시 시도해 주세요.';
 
 type UpdateReadingNoteForm = {
   title: string;

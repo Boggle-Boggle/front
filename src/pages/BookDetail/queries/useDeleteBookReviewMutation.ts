@@ -4,8 +4,8 @@ import { useToastStore } from 'stores/useToastStore';
 
 import { deleteBookReview } from '../api';
 
-const MSG_DELETE_REVIEW_SUCCESS_TOAST = '리뷰가 성공적으로 삭제되었어요.';
-const MSG_DELETE_REVIEW_FAILED_TOAST = '리뷰 삭제에 실패했습니다.';
+const MSG_DELETE_REVIEW_SUCCESS_TOAST = '리뷰가 삭제되었어요.';
+const MSG_DELETE_REVIEW_FAILED_TOAST = '리뷰 삭제에 실패했어요.';
 
 type DeleteBookReviewParams = {
   reviewId: string;

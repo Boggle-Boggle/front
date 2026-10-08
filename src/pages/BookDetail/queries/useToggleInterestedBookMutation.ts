@@ -6,9 +6,9 @@ import type { BookDetail } from 'types';
 
 import { addInterestedBook, deleteInterestedBookByIsbn13 } from '../api';
 
-const MSG_BOOK_DETAIL_WISHLIST_FAILED = '관심도서 처리에 실패했습니다.';
-const MSG_BOOK_DETAIL_WISHLIST_ADD_SUCCESS = '관심도서에 등록되었습니다.';
-const MSG_BOOK_DETAIL_WISHLIST_DELETE_SUCCESS = '관심도서에서 해제되었습니다.';
+const MSG_BOOK_DETAIL_WISHLIST_FAILED = '관심도서 처리에 실패했어요.';
+const MSG_BOOK_DETAIL_WISHLIST_ADD_SUCCESS = '관심도서에 등록되었어요.';
+const MSG_BOOK_DETAIL_WISHLIST_DELETE_SUCCESS = '관심도서에서 해제되었어요.';
 
 type ToggleInterestedBookParams = {
   isbn13: string;

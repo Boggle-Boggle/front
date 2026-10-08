@@ -6,11 +6,11 @@ import { useToastStore } from 'stores/useToastStore';
 import type { MyPageProfileResponse } from '../../api';
 import { changeNickname } from '../api';
 
-const MSG_ACCOUNT_NICKNAME_CHANGE_SUCCESS = '닉네임이 변경되었습니다.';
-const MSG_ACCOUNT_NICKNAME_DUPLICATED = '이미 사용 중인 닉네임입니다.';
-const MSG_ACCOUNT_NICKNAME_INVALID = '사용할 수 없는 닉네임입니다. 다시 확인해주세요.';
-const MSG_ACCOUNT_NICKNAME_UNCHANGED = '현재 닉네임과 동일합니다.';
-const MSG_ACCOUNT_NICKNAME_CHANGE_FAILED = '닉네임 변경에 실패했습니다. 다시 시도해주세요.';
+const MSG_ACCOUNT_NICKNAME_CHANGE_SUCCESS = '닉네임이 변경되었어요.';
+const MSG_ACCOUNT_NICKNAME_DUPLICATED = '이미 사용 중인 닉네임이에요.';
+const MSG_ACCOUNT_NICKNAME_INVALID = '사용할 수 없는 닉네임이에요. 다시 확인해 주세요.';
+const MSG_ACCOUNT_NICKNAME_UNCHANGED = '현재 닉네임과 같아요.';
+const MSG_ACCOUNT_NICKNAME_CHANGE_FAILED = '닉네임 변경에 실패했어요. 다시 시도해 주세요.';
 
 export const useChangeNicknameMutation = () => {
   const queryClient = useQueryClient();

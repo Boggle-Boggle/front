@@ -6,8 +6,8 @@ import { useToastStore } from 'stores/useToastStore';
 
 import { deleteReadingLog } from '../api';
 
-const MSG_DELETE_READING_LOG_SUCCESS = '독서기록이 정상적으로 삭제되었습니다.';
-const MSG_DELETE_READING_LOG_FAILED = '삭제에 실패했습니다. 다시 시도해 주세요.';
+const MSG_DELETE_READING_LOG_SUCCESS = '독서기록이 삭제되었어요.';
+const MSG_DELETE_READING_LOG_FAILED = '삭제에 실패했어요. 다시 시도해 주세요.';
 
 type UseDeleteReadingLogMutationParams = {
   recordId: string | number;

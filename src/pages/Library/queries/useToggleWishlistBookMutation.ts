@@ -5,10 +5,10 @@ import { useToastStore } from 'stores/useToastStore';
 
 import { addInterestedBook, deleteInterestedBook } from '../api';
 
-const MSG_MYBOOKS_WISHLIST_DELETE_SUCCESS = '관심도서에서 해제되었습니다.';
-const MSG_MYBOOKS_WISHLIST_DELETE_FAILED = '관심도서 해제에 실패했습니다.';
-const MSG_MYBOOKS_WISHLIST_ADD_SUCCESS = '관심도서에 등록되었습니다.';
-const MSG_MYBOOKS_WISHLIST_ADD_FAILED = '관심도서 등록에 실패했습니다.';
+const MSG_MYBOOKS_WISHLIST_DELETE_SUCCESS = '관심도서에서 해제되었어요.';
+const MSG_MYBOOKS_WISHLIST_DELETE_FAILED = '관심도서 해제에 실패했어요.';
+const MSG_MYBOOKS_WISHLIST_ADD_SUCCESS = '관심도서에 등록되었어요.';
+const MSG_MYBOOKS_WISHLIST_ADD_FAILED = '관심도서 등록에 실패했어요.';
 
 type ToggleWishlistBookParams = {
   isbn13: string;

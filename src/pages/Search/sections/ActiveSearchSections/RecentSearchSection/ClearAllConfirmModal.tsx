@@ -9,7 +9,7 @@ type ClearAllConfirmModalProps = {
 };
 
 const MSG_RECENT_SEARCH_CLEAR_TITLE = '최근 검색어를 전체 삭제하시겠어요?';
-const MSG_RECENT_SEARCH_CLEAR_DESCRIPTION = '삭제된 검색어는 복구되지 않습니다.';
+const MSG_RECENT_SEARCH_CLEAR_DESCRIPTION = '삭제된 검색어는 복구되지 않아요.';
 const MSG_RECENT_SEARCH_CLEAR_CANCEL = '아니오';
 const MSG_RECENT_SEARCH_CLEAR_CONFIRM = '네';
 

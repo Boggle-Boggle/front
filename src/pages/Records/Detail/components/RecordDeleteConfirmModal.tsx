@@ -11,7 +11,7 @@ type RecordDeleteConfirmModalProps = {
 
 const MSG_RECORD_ACTION_DELETE_CONFIRM_TITLE = '독서기록을 삭제하시겠어요?';
 const MSG_RECORD_ACTION_DELETE_CONFIRM_DESC =
-  '이 독서기록에 등록하신 모든 정보가 삭제되며 복구할 수 없습니다.\n정말로 삭제하시겠습니까?';
+  '이 독서기록에 등록하신 모든 정보가 삭제되며 복구할 수 없어요.\n정말 삭제하시겠어요?';
 const MSG_RECORD_ACTION_CANCEL = '아니오';
 const MSG_RECORD_ACTION_CONFIRM = '삭제합니다';
 

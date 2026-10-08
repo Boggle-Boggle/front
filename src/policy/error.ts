@@ -24,11 +24,11 @@ const AUTH_REQUIRED_ERROR_CODES = [
 const ERROR_MESSAGE_BY_CODE = {
   [CLIENT_REQUEST_FAILED_CODE]: {
     title: '요청을 처리하지 못했어요',
-    description: '잠시 후 다시 시도해주세요.',
+    description: '잠시 후 다시 시도해 주세요.',
   },
   COMMON_INTERNAL_ERROR: {
     title: '문제가 발생했어요',
-    description: '잠시 후 다시 시도해주세요.',
+    description: '잠시 후 다시 시도해 주세요.',
   },
   AUTH_FORBIDDEN: {
     title: '접근할 수 없어요',
@@ -38,7 +38,7 @@ const ERROR_MESSAGE_BY_CODE = {
 
 const DEFAULT_ROUTE_ERROR_MESSAGE = {
   title: '문제가 발생했어요',
-  description: '잠시 후 다시 시도해주세요.',
+  description: '잠시 후 다시 시도해 주세요.',
 } satisfies ErrorMessage;
 
 // 공통 실패로 분류한 query 에러만 RouteErrorFallback으로 전달합니다.

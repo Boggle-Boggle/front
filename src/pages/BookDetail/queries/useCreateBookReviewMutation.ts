@@ -5,8 +5,8 @@ import { useToastStore } from 'stores/useToastStore';
 
 import { createBookReview } from '../api';
 
-const MSG_REVIEW_NOT_ELIGIBLE = '읽지 않은 책에는 리뷰를 남길 수 없습니다.';
-const MSG_REVIEW_CREATE_FAILED = '리뷰 등록에 실패했습니다. 다시 시도해 주세요.';
+const MSG_REVIEW_NOT_ELIGIBLE = '읽지 않은 책에는 리뷰를 남길 수 없어요.';
+const MSG_REVIEW_CREATE_FAILED = '리뷰 등록에 실패했어요. 다시 시도해 주세요.';
 const REVIEW_NOT_ELIGIBLE_ERROR_CODE = 'REVIEW_NOT_ELIGIBLE';
 
 export const useCreateBookReviewMutation = (onSuccess?: () => void) => {

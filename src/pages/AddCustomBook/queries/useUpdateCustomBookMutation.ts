@@ -4,8 +4,8 @@ import { useToastStore } from 'stores/useToastStore';
 
 import { updateCustomBook, type UpdateCustomBookRequest } from '../api';
 
-const MSG_EDIT_CUSTOM_BOOK_SUCCESS = '책 정보가 수정되었습니다.';
-const MSG_EDIT_CUSTOM_BOOK_FAILED = '책 정보 수정에 실패했습니다.';
+const MSG_EDIT_CUSTOM_BOOK_SUCCESS = '책 정보가 수정되었어요.';
+const MSG_EDIT_CUSTOM_BOOK_FAILED = '책 정보 수정에 실패했어요.';
 
 type UpdateCustomBookParams = {
   bookId: string | number;

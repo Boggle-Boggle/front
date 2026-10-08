@@ -10,11 +10,11 @@ import { useBlockUserInReportMutation } from './queries/useBlockUserInReportMuta
 import { useReportReviewMutation } from './queries/useReportReviewMutation';
 
 const MSG_REPORT_PAGE_TITLE = '문제 신고하기';
-const MSG_REPORT_REASON_QUESTION = '어떠한 문제가 발생하였나요?';
-const MSG_REPORT_COMPLETE_TITLE = '문제를 알려주셔서 감사합니다';
+const MSG_REPORT_REASON_QUESTION = '어떤 문제가 발생했나요?';
+const MSG_REPORT_COMPLETE_TITLE = '문제를 알려주셔서 감사해요';
 const MSG_REPORT_COMPLETE_DESCRIPTION =
   '신고해주신 내용은 꼼꼼히 확인할게요. 문제가 있다고 판단되면 해당 유저/리뷰는 조치 대상이 될 수 있어요.';
-const MSG_REPORT_BLOCK_QUESTION = '추가로 해당 유저를 차단하시겠습니까?';
+const MSG_REPORT_BLOCK_QUESTION = '추가로 해당 유저를 차단하시겠어요?';
 const MSG_REPORT_BLOCK_DESCRIPTION =
   '차단하면 상대방의 리뷰나 활동이 더 이상 내 목록에 보이지 않아요. 다만, 내 리뷰나 활동은 여전히 상대방에게 보일 수 있어요.';
 const MSG_REPORT_BLOCK_BUTTON = '이 유저를 차단하기';

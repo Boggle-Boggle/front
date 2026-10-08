@@ -18,7 +18,7 @@ type NoteTabProps = {
 };
 
 const MSG_NOTE_TAB_MORE_TEXT = '노트 전체보기';
-const MSG_NOTE_TAB_COUNT_SUFFIX = '개의 독서 노트가 있습니다';
+const MSG_NOTE_TAB_COUNT_SUFFIX = '개의 독서 노트가 있어요';
 const MSG_NOTE_TAB_EMPTY = '등록된 독서 노트가 없어요.\n첫 노트를 작성해 보세요!';
 const MSG_NOTE_TAB_WRITE_ARIA_LABEL = '독서 노트 작성';
 

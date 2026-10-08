@@ -11,7 +11,7 @@ type WithdrawConfirmModalProps = {
 
 const MSG_WITHDRAW_MODAL_TITLE = '회원 탈퇴 완료하기';
 const MSG_WITHDRAW_MODAL_DESCRIPTION =
-  '회원 탈퇴 시 그동안의 이용 기록과 개인 정보가 모두 삭제되며, 복구가 어려우니 불편하시더라도 잠시만 신중히 고민해 주세요.';
+  '회원 탈퇴 시 그동안의 이용 기록과 개인 정보가 모두 삭제되며, 복구가 어려워요. 불편하시더라도 잠시만 신중히 고민해 주세요.';
 const MSG_WITHDRAW_MODAL_CANCEL = '뒤로가기';
 const MSG_WITHDRAW_MODAL_CONFIRM = '계정을 삭제합니다';
 
