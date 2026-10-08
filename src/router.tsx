@@ -2,6 +2,10 @@ import { lazy } from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 import App from './App';
+import Library from './pages/Library';
+import Main from './pages/Main';
+import MyPage from './pages/MyPage';
+import Search from './pages/Search';
 
 const Auth = lazy(() => import('pages/Auth'));
 const BookDetail = lazy(() => import('pages/BookDetail'));
@@ -16,15 +20,11 @@ const WithBottomNavLayout = lazy(() => import('pages/Layout/WithBottomNavLayout'
 const WithoutBottomNavLayout = lazy(() => import('pages/Layout/WithoutBottomNavLayout'));
 const PrivateRoute = lazy(() => import('pages/PrivateRoute'));
 
-const Main = lazy(() => import('pages/Main'));
-const MyPage = lazy(() => import('pages/MyPage'));
-const Search = lazy(() => import('pages/Search'));
 const MostRead = lazy(() => import('pages/Search/MostRead'));
 const RealTimePopular = lazy(() => import('pages/Search/RealTimePopular'));
 const Trending = lazy(() => import('pages/Search/Trending'));
 const SearchResult = lazy(() => import('pages/SearchResult'));
 const AddCustomBook = lazy(() => import('pages/AddCustomBook'));
-const Library = lazy(() => import('pages/Library'));
 const MyPageAccount = lazy(() => import('pages/MyPage/Account'));
 const MyPageAbout = lazy(() => import('pages/MyPage/About'));
 const MyPageAccountWithdraw = lazy(() => import('pages/MyPage/Account/Withdraw'));
