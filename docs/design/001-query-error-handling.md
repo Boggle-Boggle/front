@@ -2,7 +2,7 @@
 
 ## 문서 목적
 
-이 문서는 서버 상태를 사용하는 페이지에서 로딩, 에러, 리소스 없음 상태를 일관되게 정리하기 위한 설계 방향과 실행 계획을 정의한다.
+이 문서는 서버 상태를 사용하는 페이지에서 로딩, 빈 결과, 에러, 리소스 없음 상태를 일관되게 정리하기 위한 설계 방향과 실행 계획을 정의한다.
 
 이 문서는 현재 코드베이스를 정비하기 위한 설계 및 체크리스트다. 정비가 끝난 뒤 반복 적용할 기준은 `docs/conventions/server-state.md`, `docs/conventions/component-structure.md`, `docs/conventions/error-handling.md`에 반영할 수 있다.
 
@@ -14,6 +14,7 @@
 - 인증 실패: `PrivateRoute`에서 로그인 흐름으로 처리한다.
 - 공통 실패: `RouteErrorFallback`에서 처리한다.
 - 리소스 없음: 각 페이지에서 화면 맥락에 맞게 처리한다.
+- 빈 결과: 요청은 성공했지만 표시할 데이터가 없는 상태로 보고 empty state에서 처리한다.
 - 비즈니스 에러: 해당 mutation/query 사용처 가까이에서 처리한다.
 
 ## 정비 원칙
@@ -51,6 +52,24 @@ query/mutation hook은 기본적으로 해당 페이지 또는 섹션의 `querie
 - 최근 검색어 목록
 - 일부 설정/부가 정보 목록
 
+### Loading은 Skeleton을 기본값으로 둔다
+
+페이지 구조를 유지할 수 있는 화면은 fullscreen loading 대신 skeleton을 사용한다.
+
+페이지 핵심 query의 loading은 페이지 전용 skeleton 컴포넌트로 처리한다.
+
+```tsx
+if (isBookDetailLoading) return <BookDetailSkeleton />;
+```
+
+보조 query의 loading은 해당 섹션 전용 skeleton으로 처리한다.
+
+```tsx
+if (isRecentSearchesLoading) return <RecentSearchSkeleton />;
+```
+
+인증 확인처럼 화면 골격을 아직 보여줄 수 없는 경우에만 fullscreen loading을 사용한다.
+
 ### 상태 분기는 JSX 본문에 섞지 않는다
 
 페이지 핵심 query의 로딩, 에러, 리소스 없음 분기는 컴포넌트 상단에서 early return으로 처리한다.
@@ -58,13 +77,11 @@ query/mutation hook은 기본적으로 해당 페이지 또는 섹션의 `querie
 정상 렌더 JSX는 가능한 한 data가 존재한다는 전제로 작성한다.
 
 ```tsx
-if (isLoading) return <Loading fullscreen />;
+if (isBookDetailLoading) return <BookDetailSkeleton />;
 
-if (isError || !data) {
-  return <PageFallback error={error} />;
-}
+if (isBookDetailError || !bookDetail) return <ResourceFallback type="bookNotFound" />;
 
-return <PageContent data={data} />;
+return <BookDetailContent bookDetail={bookDetail} />;
 ```
 
 보조 query의 실패는 해당 섹션 내부 fallback으로 처리할 수 있다.
@@ -73,19 +90,37 @@ return <PageContent data={data} />;
 <section>{isReviewError ? <ReviewFallback /> : <ReviewList />}</section>
 ```
 
+### Empty와 Error를 구분한다
+
+빈 결과는 요청 자체가 성공한 상태다.
+
+배열 길이가 0이거나 검색 결과가 없을 때는 `Empty` 또는 화면 맥락에 맞는 empty component를 사용한다.
+
+```tsx
+if (reviews.length === 0) return <Empty text={MSG_REVIEW_EMPTY} />;
+```
+
+요청 실패는 빈 결과로 처리하지 않는다.
+
+보조 query가 실패했을 때는 섹션 fallback, 재시도 UI, 또는 섹션 숨김 중 하나를 화면 맥락에 맞게 선택한다.
+
+```tsx
+if (isReviewError) return <ReviewSectionFallback />;
+```
+
 ### 리소스 없음은 페이지 맥락에 맞춘다
 
 리소스 없음은 전역 에러 정책에 넣지 않는다.
 
-각 페이지에서 `isApiError(error)`와 서버 에러 코드를 사용해 직접 분기한다.
+각 페이지에서 화면 맥락에 맞게 처리하고, 풀페이지 리소스 없음 화면은 `ResourceFallback`을 사용한다.
 
 예시:
 
 ```tsx
-if (isApiError(error) && error.code === 'BOOK_NOT_FOUND') {
-  return <BookDetailNotFound />;
-}
+if (isBookDetailError || !bookDetail) return <ResourceFallback type="bookNotFound" />;
 ```
+
+서버 에러 코드별 세부 분기가 필요하면 해당 페이지 또는 helper 함수에서 `isApiError(error)`와 서버 에러 코드를 사용한다.
 
 ## 실행 체크리스트
 
@@ -129,7 +164,8 @@ if (isApiError(error) && error.code === 'BOOK_NOT_FOUND') {
 - 페이지 루트에 있던 주요 query/mutation hook은 `queries/`로 이동했다.
 - `Notes/shared/queries`, `Records/shared/queries`처럼 도메인 공유 서버 상태는 `shared/queries`에 둔다.
 - 목록/섹션 query는 페이지 전체 fallback보다 섹션 fallback이 적합한 경우가 많다.
-- 남은 정비는 신규 코드에 같은 구조를 반복 적용하고, 페이지별 로딩/빈값/리소스 없음 UX를 다듬는 단계다.
+- loading 상태는 주요 페이지/섹션에 skeleton을 적용하는 방향으로 정리했다.
+- 남은 정비는 empty와 error를 분리하고, 페이지별 빈값/리소스 없음/섹션 실패 UX를 다듬는 단계다.
 
 ### 2. Query 선언 규칙 정리
 
@@ -149,7 +185,7 @@ if (isApiError(error) && error.code === 'BOOK_NOT_FOUND') {
 
 ### 4. 페이지 핵심 query 상태 분기 정리
 
-- [x] 핵심 query는 컴포넌트 상단에서 loading 상태를 먼저 처리한다.
+- [x] 핵심 query는 컴포넌트 상단에서 loading skeleton을 먼저 처리한다.
 - [x] 핵심 query의 error/data 없음 상태를 정상 JSX 전에 처리한다.
 - [x] 정상 JSX 내부에서 핵심 query error 분기를 반복하지 않는다.
 - [ ] 에러 상태에서는 불가능한 액션 버튼을 노출하지 않는다.
@@ -162,13 +198,22 @@ if (isApiError(error) && error.code === 'BOOK_NOT_FOUND') {
 - [ ] `TERMS_NOT_FOUND`는 서버 약관 상세 query가 생길 때 처리한다.
 - [x] 리소스 없음 메시지는 페이지 맥락에 맞게 작성한다.
 
-### 6. 보조 query fallback 정리
+### 6. Empty 상태 정리
+
+- [ ] 빈 결과를 보여줄 페이지/섹션을 목록화한다.
+- [ ] 빈 결과 문구를 화면 맥락에 맞게 정리한다.
+- [ ] 빈 결과를 요청 실패 fallback으로 사용하지 않는다.
+- [ ] 공통 `Empty`로 충분한 곳과 전용 empty component가 필요한 곳을 구분한다.
+
+### 7. 보조 query fallback 정리
 
 - [x] 목록/섹션 query는 전체 페이지를 막지 않는 방향으로 처리한다.
 - [ ] 빈 결과와 요청 실패를 구분한다.
 - [x] 빈 결과는 empty state로, 요청 실패는 섹션 fallback 또는 재시도 UI로 처리한다.
+- [ ] 섹션 실패 시 재시도 액션이 필요한 곳을 정한다.
+- [ ] 섹션 실패 시 숨겨도 되는 보조 콘텐츠를 정한다.
 
-### 7. 검증
+### 8. 검증
 
 - [x] `pnpm exec tsc -b`를 실행한다.
 - [ ] 라우터 없음 URL에서 `NotFound`가 표시되는지 확인한다.
