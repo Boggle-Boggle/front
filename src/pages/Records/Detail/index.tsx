@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useParams, useLocation } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
 import { ResourceFallback } from 'components/ResourceFallback';
 import { Tabs, type TabItem } from 'components/Tabs';
@@ -32,10 +32,17 @@ const RECORD_DETAIL_TABS: TabItem<DetailTabType>[] = [
   },
 ];
 
+const getDetailTabType = (value: unknown): DetailTabType => {
+  if (value === 'note' || value === 'myInfo') return value;
+  return 'info';
+};
+
 export const RecordDetailPage = () => {
+  const navigate = useNavigate();
   const { recordId = '' } = useParams();
   const location = useLocation();
-  const [activeTab, setActiveTab] = useState<DetailTabType>((location.state?.activeTab as DetailTabType) || 'info');
+
+  const [activeTab, setActiveTab] = useState<DetailTabType>(() => getDetailTabType(location.state?.activeTab));
 
   const {
     data: readingLogDetail,
@@ -46,6 +53,11 @@ export const RecordDetailPage = () => {
   const scrollContainerRef = useScrollRestoration<HTMLDivElement>({
     isReady: !!readingLogDetail,
   });
+
+  const handleChangeDetailTab = (nextTab: DetailTabType) => {
+    setActiveTab(nextTab);
+    navigate('.', { replace: true, state: { ...location.state, activeTab: nextTab } });
+  };
 
   if (isReadingLogDetailLoading) return <RecordDetailSkeleton />;
 
@@ -74,7 +86,7 @@ export const RecordDetailPage = () => {
       />
 
       <div className="px-mobile">
-        <Tabs tabs={RECORD_DETAIL_TABS} value={activeTab} onChange={setActiveTab} className="mb-6" />
+        <Tabs tabs={RECORD_DETAIL_TABS} value={activeTab} onChange={handleChangeDetailTab} className="mb-6" />
         {activeTab === 'info' && <BookInfoTab book={readingLogDetail.book} />}
         {activeTab === 'note' && <NoteTab readingLogId={recordId} bookTitle={readingLogDetail.book.title} />}
         {activeTab === 'myInfo' && (
