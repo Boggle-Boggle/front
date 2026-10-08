@@ -13,6 +13,7 @@ type CalendarDatePickerProps =
       onChange: (date: Date) => void;
       mode?: CalendarDatePickerMode;
       onModeChange?: (mode: CalendarDatePickerMode) => void;
+      onMonthYearChange?: (year: number, month: number) => void;
       minDate?: Date;
       maxDate?: Date;
     }
@@ -23,6 +24,7 @@ type CalendarDatePickerProps =
       onChange: (startDate: Date | null, endDate: Date | null) => void;
       mode?: CalendarDatePickerMode;
       onModeChange?: (mode: CalendarDatePickerMode) => void;
+      onMonthYearChange?: (year: number, month: number) => void;
       minDate?: Date;
       maxDate?: Date;
     };
@@ -46,6 +48,18 @@ const getDateKey = (date: Date) => {
   const day = `${date.getDate()}`.padStart(2, '0');
 
   return `${year}-${month}-${day}`;
+};
+
+const isDateSelectable = (date: Date, minDate?: Date, maxDate?: Date) => {
+  const dateKey = getDateKey(date);
+  const minKey = minDate instanceof Date ? getDateKey(minDate) : '';
+  const maxKey = maxDate instanceof Date ? getDateKey(maxDate) : '';
+
+  if (!dateKey) return false;
+  if (minKey && dateKey < minKey) return false;
+  if (maxKey && dateKey > maxKey) return false;
+
+  return true;
 };
 
 const getCalendarDates = (
@@ -110,7 +124,14 @@ const getCalendarDates = (
 };
 
 export const CalendarDatePicker = (props: CalendarDatePickerProps) => {
-  const { type = 'single', mode: externalMode, onModeChange: externalOnModeChange, minDate, maxDate } = props;
+  const {
+    type = 'single',
+    mode: externalMode,
+    onModeChange: externalOnModeChange,
+    onMonthYearChange,
+    minDate,
+    maxDate,
+  } = props;
   const isRange = type === 'range';
 
   // 현재 그리드에 보여지는 연/월 네비게이션 상태
@@ -161,10 +182,11 @@ export const CalendarDatePicker = (props: CalendarDatePickerProps) => {
         // 캘린더에서 휠 피커로 진입할 때
         setPickerYear(visibleYear);
         setPickerMonth(visibleMonth);
+        if (onMonthYearChange) onMonthYearChange(visibleYear, visibleMonth);
       }
       prevModeRef.current = mode;
     }
-  }, [mode, pickerYear, pickerMonth, visibleYear, visibleMonth]);
+  }, [mode, onMonthYearChange, pickerYear, pickerMonth, visibleYear, visibleMonth]);
 
   const calendarDates = useMemo(() => {
     if (type === 'range') {
@@ -200,18 +222,9 @@ export const CalendarDatePicker = (props: CalendarDatePickerProps) => {
         value: pickerYear,
         onChange: (value) => {
           if (typeof value !== 'number') return;
+
           setPickerYear(value);
-
-          if (type !== 'range') {
-            const singleProps = props as { selectedDate: Date; onChange: (date: Date) => void };
-            const { selectedDate, onChange } = singleProps;
-            const currentDay = selectedDate.getDate();
-
-            const maxDayInNewMonth = new Date(value, pickerMonth + 1, 0).getDate();
-            const safeDay = Math.min(currentDay, maxDayInNewMonth);
-
-            onChange(new Date(value, pickerMonth, safeDay));
-          }
+          if (onMonthYearChange) onMonthYearChange(value, pickerMonth);
         },
       },
       {
@@ -220,25 +233,18 @@ export const CalendarDatePicker = (props: CalendarDatePickerProps) => {
         value: pickerMonth,
         onChange: (value) => {
           if (typeof value !== 'number') return;
+
           setPickerMonth(value);
-
-          if (type !== 'range') {
-            const singleProps = props as { selectedDate: Date; onChange: (date: Date) => void };
-            const { selectedDate, onChange } = singleProps;
-            const currentDay = selectedDate.getDate();
-
-            const maxDayInNewMonth = new Date(pickerYear, value + 1, 0).getDate();
-            const safeDay = Math.min(currentDay, maxDayInNewMonth);
-
-            onChange(new Date(pickerYear, value, safeDay));
-          }
+          if (onMonthYearChange) onMonthYearChange(pickerYear, value);
         },
       },
     ],
-    [pickerMonth, pickerYear, yearItems, type, props],
+    [onMonthYearChange, pickerMonth, pickerYear, yearItems],
   );
 
   const handleSelectDate = (date: Date) => {
+    if (!isDateSelectable(date, minDate, maxDate)) return;
+
     if (type === 'range') {
       const rangeProps = props as {
         startDate: Date | null;

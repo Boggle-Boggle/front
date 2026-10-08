@@ -8,6 +8,7 @@ export type CalendarDate = {
   isInBetween?: boolean;
   isSelected?: boolean;
   hasRangeConnection?: boolean;
+  isDisabled?: boolean;
 };
 
 type CalendarDayButtonProps = {
@@ -34,16 +35,19 @@ const formatDateSelectButtonText = (date: Date) => {
 
 const CalendarDayButton = (props: CalendarDayButtonProps) => {
   const { calendarDate, onSelectDate } = props;
-  const { date, isCurrentMonth, isToday, isStart, isEnd, isInBetween, isSelected, hasRangeConnection } = calendarDate;
+  const { date, isCurrentMonth, isToday, isStart, isEnd, isInBetween, isSelected, hasRangeConnection, isDisabled } =
+    calendarDate;
 
   const handleClick = () => {
+    if (isDisabled) return;
+
     onSelectDate(date);
   };
 
-  const isHighlighted = isSelected || isStart || isEnd;
-  const dateTextClassName = isCurrentMonth ? 'text-neutral-80' : 'text-neutral-40';
+  const isHighlighted = !isDisabled && (isSelected || isStart || isEnd);
+  const dateTextClassName = isDisabled ? 'text-neutral-40' : isCurrentMonth ? 'text-neutral-80' : 'text-neutral-40';
   const circleTextClassName = isHighlighted ? 'text-neutral-0' : dateTextClassName;
-  const todayLabelClassName = isCurrentMonth ? 'text-neutral-80' : 'text-neutral-40';
+  const todayLabelClassName = isDisabled ? 'text-neutral-40' : isCurrentMonth ? 'text-neutral-80' : 'text-neutral-40';
 
   // 피그마 시안(2282-20745)에 따른 시작일/종료일 개별 배경색 지정
   const circleBgClassName = isHighlighted ? 'bg-primary' : '';
@@ -53,18 +57,18 @@ const CalendarDayButton = (props: CalendarDayButtonProps) => {
       {/* 날짜 숫자 컨테이너 (높이 30px 고정하여 기간배경 중심 정렬) */}
       <div className="relative flex h-[1.875rem] w-full items-center justify-center">
         {/* 기간 선택 연결 배경 (시작일과 종료일이 모두 성립한 hasRangeConnection 일 때만 띠를 활성화) */}
-        {isInBetween && hasRangeConnection && (
+        {!isDisabled && isInBetween && hasRangeConnection && (
           <div className="absolute inset-y-0 left-0 right-0 bg-primary opacity-20" />
         )}
         {isStart &&
           isEnd &&
           // 시작일과 종료일이 같은 날인 경우 배경 생략
           null}
-        {isStart && !isEnd && hasRangeConnection && (
+        {!isDisabled && isStart && !isEnd && hasRangeConnection && (
           // 시작일이고 종료일이 뒤에 성립되어 있을 때: 동그라미 우측 1/2 지점부터 우측 끝까지 반투명 배경 채움
           <div className="absolute inset-y-0 left-1/2 right-0 bg-primary opacity-20" />
         )}
-        {isEnd && !isStart && hasRangeConnection && (
+        {!isDisabled && isEnd && !isStart && hasRangeConnection && (
           // 종료일이고 시작일이 앞에 성립되어 있을 때: 좌측 끝부터 동그라미의 1/2 지점까지 반투명 배경 채움
           <div className="absolute inset-y-0 left-0 right-1/2 bg-primary opacity-20" />
         )}
@@ -73,8 +77,9 @@ const CalendarDayButton = (props: CalendarDayButtonProps) => {
         <button
           type="button"
           aria-label={formatDateSelectButtonText(date)}
+          disabled={isDisabled}
           onClick={handleClick}
-          className={`relative z-10 grid size-[1.875rem] place-items-center rounded-full text-caption1 ${circleTextClassName} ${circleBgClassName} outline-none transition-colors`}
+          className={`relative z-10 grid size-[1.875rem] place-items-center rounded-full text-caption1 ${circleTextClassName} ${circleBgClassName} outline-none transition-colors disabled:cursor-not-allowed`}
         >
           {date.getDate()}
         </button>
