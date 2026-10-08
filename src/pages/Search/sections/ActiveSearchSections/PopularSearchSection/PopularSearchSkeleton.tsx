@@ -1,4 +1,4 @@
-import { Title } from '../shared/Title';
+import { Title } from '../../../shared/Title';
 
 const POPULAR_SEARCH_SKELETON_ITEMS = Array.from({ length: 10 }, (_, index) => `popular-search-skeleton-${index}`);
 const MSG_SEARCH_POPULAR = '인기 검색어';

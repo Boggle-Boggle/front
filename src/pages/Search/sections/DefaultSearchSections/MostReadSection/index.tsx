@@ -1,9 +1,9 @@
 import { useNavigate } from 'react-router-dom';
 
 import { useMostReadBooksQuery } from './queries/useMostReadBooksQuery';
-import { HorizontalBookList } from '../shared/HorizontalBookList';
-import { SearchSectionSkeleton } from '../shared/SearchSectionSkeleton';
-import { Title } from '../shared/Title';
+import { HorizontalBookList } from '../../../shared/HorizontalBookList';
+import { SearchSectionSkeleton } from '../../../shared/SearchSectionSkeleton';
+import { Title } from '../../../shared/Title';
 
 const MSG_MOST_READ = '가장 많이 읽힌 책';
 

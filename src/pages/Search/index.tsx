@@ -7,12 +7,8 @@ import BookPlus from 'components/icons/BookPlus';
 
 import { useScrollRestoration } from 'hooks/useScrollRestoration';
 
-import { AuthorOtherWorksSection } from './AuthorOtherWorks/Section';
-import { MostReadSection } from './MostRead/Section';
-import { PopularSearchSection } from './PopularSearch/Section';
-import { RealTimePopularSection } from './RealTimePopular/Section';
-import { RecentSearchSection } from './RecentSearch/Section';
-import { TrendingSection } from './Trending/Section';
+import { ActiveSearchSections } from './sections/ActiveSearchSections';
+import { DefaultSearchSections } from './sections/DefaultSearchSections';
 
 const MSG_SEARCH_ADD_BOOK_LABEL = '도서 추가';
 
@@ -54,19 +50,7 @@ const Search = () => {
         <IconButton label={MSG_SEARCH_ADD_BOOK_LABEL} icon={BookPlus} onClick={handleAddCustomBook} />
       </div>
       <div ref={scrollRef} className="mt-5 min-h-0 w-full flex-1 overflow-y-auto">
-        {isSearched ? (
-          <>
-            <RecentSearchSection />
-            <PopularSearchSection />
-          </>
-        ) : (
-          <>
-            <MostReadSection />
-            <TrendingSection />
-            <RealTimePopularSection />
-            <AuthorOtherWorksSection />
-          </>
-        )}
+        {isSearched ? <ActiveSearchSections /> : <DefaultSearchSections />}
       </div>
     </div>
   );

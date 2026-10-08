@@ -6,8 +6,8 @@ import { Divider } from 'components/Divider';
 import { Header } from 'components/Header';
 import Highlight from 'components/Highlight';
 
-import { useRealTimePopularBooksQuery } from './queries/useRealTimePopularBooksQuery';
-import { SearchBookRankingPageSkeleton } from '../shared/SearchBookSkeleton';
+import { useRealTimePopularBooksQuery } from '../../sections/DefaultSearchSections/RealTimePopularSection/queries/useRealTimePopularBooksQuery';
+import { SearchBookRankingPageSkeleton } from '../../shared/SearchBookSkeleton';
 
 const MSG_SEARCH_REALTIME_POPULAR_TITLE = '실시간 인기 도서';
 const MSG_SEARCH_REALTIME_POPULAR_RANK_LABEL = '{rank}위';

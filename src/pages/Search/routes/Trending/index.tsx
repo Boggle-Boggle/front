@@ -3,22 +3,22 @@ import { Link } from 'react-router-dom';
 import BookCover from 'components/BookCover';
 import { Header } from 'components/Header';
 
-import { useMostReadBooksQuery } from './queries/useMostReadBooksQuery';
-import { SearchBookGridPageSkeleton } from '../shared/SearchBookSkeleton';
+import { useTrendingBooksQuery } from '../../sections/DefaultSearchSections/TrendingSection/queries/useTrendingBooksQuery';
+import { SearchBookGridPageSkeleton } from '../../shared/SearchBookSkeleton';
 
-const MSG_SEARCH_MOST_READ_TITLE = '가장 많이 읽힌 책';
+const MSG_SEARCH_TRENDING_TITLE = '요즘 주목받고 있는 책';
 
-const mostReadTitle = <span className="text-body1 font-medium text-neutral-80">{MSG_SEARCH_MOST_READ_TITLE}</span>;
+const trendingTitle = <span className="text-body1 font-medium text-neutral-80">{MSG_SEARCH_TRENDING_TITLE}</span>;
 
-const MostRead = () => {
-  const { data, isLoading } = useMostReadBooksQuery();
+const Trending = () => {
+  const { data, isLoading } = useTrendingBooksQuery();
   const books = data?.items ?? [];
 
-  if (isLoading) return <SearchBookGridPageSkeleton title={mostReadTitle} />;
+  if (isLoading) return <SearchBookGridPageSkeleton title={trendingTitle} />;
 
   return (
     <div className="flex h-full w-full flex-col pb-safe-bottom">
-      <Header title={mostReadTitle} withBack />
+      <Header title={trendingTitle} withBack />
 
       <div className="flex-1 overflow-y-auto px-mobile pb-6 pt-5">
         <ul className="grid grid-cols-3 gap-x-2 gap-y-9">
@@ -37,4 +37,4 @@ const MostRead = () => {
   );
 };
 
-export default MostRead;
+export default Trending;

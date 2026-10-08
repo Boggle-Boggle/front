@@ -1,6 +1,6 @@
 import { TextButton } from 'components/Button';
 
-import { Title } from '../shared/Title';
+import { Title } from '../../../shared/Title';
 
 const RECENT_SEARCH_SKELETON_ITEMS = Array.from({ length: 5 }, (_, index) => `recent-search-skeleton-${index}`);
 const MSG_SEARCH_RECENT = '최근 검색어';

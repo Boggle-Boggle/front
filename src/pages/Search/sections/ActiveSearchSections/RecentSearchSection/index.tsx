@@ -8,7 +8,7 @@ import { RecentSearchChip } from './RecentSearchChip';
 import { RecentSearchSkeleton } from './RecentSearchSkeleton';
 import { useRecentSearchesQuery } from './queries/useRecentSearchesQuery';
 import { useRemoveRecentSearchMutation } from './queries/useRemoveRecentSearchMutation';
-import { Title } from '../shared/Title';
+import { Title } from '../../../shared/Title';
 
 const MSG_SEARCH_RECENT = '최근 검색어';
 const MSG_SEARCH_RECENT_CLEAR_ALL = '전체 삭제';
