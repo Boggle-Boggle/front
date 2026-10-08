@@ -2,14 +2,15 @@ import { lazy } from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 import App from './App';
+import BookDetailPage from './pages/BookDetail';
 import Library from './pages/Library';
 import Main from './pages/Main';
 import MyPage from './pages/MyPage';
+import ReadingRecordDetailPage from './pages/Records/Detail';
 import Search from './pages/Search';
+import SearchResult from './pages/SearchResult';
 
 const Auth = lazy(() => import('pages/Auth'));
-const BookDetail = lazy(() => import('pages/BookDetail'));
-const RecordDetailPage = lazy(() => import('pages/Records/Detail'));
 const RecordNew = lazy(() => import('pages/Records/New'));
 const RecordNewCompleted = lazy(() => import('pages/Records/New/Completed'));
 const RecordNotes = lazy(() => import('pages/Notes/List'));
@@ -23,7 +24,6 @@ const PrivateRoute = lazy(() => import('pages/PrivateRoute'));
 const MostRead = lazy(() => import('pages/Search/MostRead'));
 const RealTimePopular = lazy(() => import('pages/Search/RealTimePopular'));
 const Trending = lazy(() => import('pages/Search/Trending'));
-const SearchResult = lazy(() => import('pages/SearchResult'));
 const AddCustomBook = lazy(() => import('pages/AddCustomBook'));
 const MyPageAccount = lazy(() => import('pages/MyPage/Account'));
 const MyPageAbout = lazy(() => import('pages/MyPage/About'));
@@ -66,7 +66,7 @@ const router = createBrowserRouter([
             element: <WithoutBottomNavLayout />,
             children: [
               { path: '/search/result', element: <SearchResult /> },
-              { path: '/books/:isbn13', element: <BookDetail /> },
+              { path: '/books/:isbn13', element: <BookDetailPage /> },
               {
                 path: '/records/new',
                 children: [
@@ -75,7 +75,7 @@ const router = createBrowserRouter([
                   { path: 'completed', element: <RecordNewCompleted /> },
                 ],
               },
-              { path: '/records/:recordId', element: <RecordDetailPage /> },
+              { path: '/records/:recordId', element: <ReadingRecordDetailPage /> },
               { path: '/records/:recordId/notes', element: <RecordNotes /> },
               { path: '/mypage/account', element: <MyPageAccount /> },
               { path: '/mypage/about', element: <MyPageAbout /> },
