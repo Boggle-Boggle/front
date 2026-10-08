@@ -8,7 +8,7 @@ const WithBottomNavLayout = () => {
       <div className="min-h-0 w-full flex-1 overflow-hidden">
         <Outlet />
       </div>
-      <div className="absolute bottom-0 left-0 z-navigator flex w-full justify-center">
+      <div className="z-navigator flex w-full shrink-0 justify-center">
         <BottomNavigator />
       </div>
     </section>
