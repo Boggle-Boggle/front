@@ -102,6 +102,12 @@ BookDetail/
 Skeleton은 실제 화면의 크기, 위치, 간격을 최대한 맞춰 layout shift를 줄인다.
 단, 실제 데이터의 세부 항목 개수나 텍스트 길이를 과하게 따라가지 않는다.
 
+Skeleton은 서버 데이터가 필요한 영역에만 적용한다.
+
+- 서버 응답이 필요한 텍스트, 숫자, 이미지, 리스트 아이템은 skeleton으로 대체한다.
+- Header, 섹션 제목, 정적 버튼, 정적 설명 문구, 고정 배경처럼 데이터와 무관한 UI는 가능한 한 실제 UI를 유지한다.
+- 고정 아이콘은 skeleton으로 대체하지 않는다. 레이아웃 유지가 필요하면 동일한 크기의 빈 영역만 둔다.
+
 반복되는 skeleton 블록은 전역 `.skeleton` 유틸리티를 사용한다.
 
 ```tsx
@@ -131,6 +137,14 @@ if (isBookDetailError || !bookDetail) {
 ```
 
 정상 JSX 내부에서 페이지 핵심 query의 error 분기를 반복하지 않는다.
+
+로딩 skeleton도 정상 JSX 내부 조건 분기로 섞지 않는다.
+
+```tsx
+if (isRecentSearchesLoading) return <RecentSearchSkeleton />;
+
+return <RecentSearchContent />;
+```
 
 ## 보조 query 상태 처리
 

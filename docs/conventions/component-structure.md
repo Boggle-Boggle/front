@@ -78,6 +78,22 @@ Skeleton 블록은 전역 `.skeleton` 유틸리티를 사용한다.
 
 `.skeleton`에는 기본 배경, radius, shimmer 애니메이션이 포함되어 있다. 개별 skeleton에서는 크기와 위치만 명시한다.
 
+Skeleton 컴포넌트는 실제 화면 골격을 유지하되, 데이터 의존 영역만 skeleton 블록으로 대체한다.
+
+고정 Header, 정적 섹션 제목, 정적 버튼, 정적 안내 문구, 배경 장식, 고정 아이콘처럼 서버 데이터가 필요 없는 UI는 가능한 한 실제 UI를 그대로 사용한다.
+
+```tsx
+<Header title="계정 설정하기" withBack />
+<div className="skeleton h-8 w-32" />
+<Button disabled onClick={noop}>닉네임 변경</Button>
+```
+
+아이콘이 서버 데이터와 무관하면 skeleton으로 그리지 않는다. 아이콘 자리 때문에 레이아웃이 흔들리면 같은 크기의 빈 요소만 둔다.
+
+```tsx
+<div className="size-icon-md" />
+```
+
 ## 컴포넌트 내부 순서
 
 페이지 컴포넌트 내부는 아래 순서를 따른다.
