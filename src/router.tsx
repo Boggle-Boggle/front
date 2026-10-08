@@ -1,44 +1,40 @@
-import { lazy } from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 import App from './App';
+import AddCustomBookPage from './pages/AddCustomBook';
+import Auth from './pages/Auth';
 import BookDetailPage from './pages/BookDetail';
+import WithBottomNavLayout from './pages/Layout/WithBottomNavLayout';
+import WithoutBottomNavLayout from './pages/Layout/WithoutBottomNavLayout';
 import Library from './pages/Library';
+import Login from './pages/Login';
 import Main from './pages/Main';
 import MyPage from './pages/MyPage';
+import MyPageAbout from './pages/MyPage/About';
+import MyPageAccount from './pages/MyPage/Account';
+import MyPageAccountWithdraw from './pages/MyPage/Account/Withdraw';
+import MyPageAccountWithdrawComplete from './pages/MyPage/Account/WithdrawComplete';
+import MyPageAppearance from './pages/MyPage/Appearance';
+import MyPageContent from './pages/MyPage/Content';
+import MyPageContentBlockedUsers from './pages/MyPage/Content/BlockedUsers';
+import MyPageSupport from './pages/MyPage/Support';
+import NotFound from './pages/NotFound';
+import NoteDetail from './pages/Notes/Detail';
+import RecordNotes from './pages/Notes/List';
+import NoteNew from './pages/Notes/New';
+import PrivateRoute from './pages/PrivateRoute';
 import ReadingRecordDetailPage from './pages/Records/Detail';
+import RecordNew from './pages/Records/New';
+import RecordNewCompleted from './pages/Records/New/Completed';
+import ReportPage from './pages/Report';
+import RouteErrorFallback from './pages/RouteErrorFallback';
 import Search from './pages/Search';
+import MostRead from './pages/Search/MostRead';
+import RealTimePopular from './pages/Search/RealTimePopular';
+import Trending from './pages/Search/Trending';
 import SearchResult from './pages/SearchResult';
-
-const Auth = lazy(() => import('pages/Auth'));
-const RecordNew = lazy(() => import('pages/Records/New'));
-const RecordNewCompleted = lazy(() => import('pages/Records/New/Completed'));
-const RecordNotes = lazy(() => import('pages/Notes/List'));
-const NoteNew = lazy(() => import('pages/Notes/New'));
-const NoteDetail = lazy(() => import('pages/Notes/Detail'));
-const Report = lazy(() => import('pages/Report'));
-const WithBottomNavLayout = lazy(() => import('pages/Layout/WithBottomNavLayout'));
-const WithoutBottomNavLayout = lazy(() => import('pages/Layout/WithoutBottomNavLayout'));
-const PrivateRoute = lazy(() => import('pages/PrivateRoute'));
-
-const MostRead = lazy(() => import('pages/Search/MostRead'));
-const RealTimePopular = lazy(() => import('pages/Search/RealTimePopular'));
-const Trending = lazy(() => import('pages/Search/Trending'));
-const AddCustomBook = lazy(() => import('pages/AddCustomBook'));
-const MyPageAccount = lazy(() => import('pages/MyPage/Account'));
-const MyPageAbout = lazy(() => import('pages/MyPage/About'));
-const MyPageAccountWithdraw = lazy(() => import('pages/MyPage/Account/Withdraw'));
-const MyPageAccountWithdrawComplete = lazy(() => import('pages/MyPage/Account/WithdrawComplete'));
-const MyPageContent = lazy(() => import('pages/MyPage/Content'));
-const MyPageContentBlockedUsers = lazy(() => import('pages/MyPage/Content/BlockedUsers'));
-// const MyPageContentMyReviews = lazy(() => import('pages/MyPage/Content/MyReviews'));
-const MyPageSupport = lazy(() => import('pages/MyPage/Support'));
-const MyPageAppearance = lazy(() => import('pages/MyPage/Appearance'));
-const Terms = lazy(() => import('pages/Terms'));
-const Login = lazy(() => import('pages/Login'));
-const SignUp = lazy(() => import('pages/SignUp'));
-const NotFound = lazy(() => import('pages/NotFound'));
-const RouteErrorFallback = lazy(() => import('pages/RouteErrorFallback'));
+import SignUp from './pages/SignUp';
+import Terms from './pages/Terms';
 
 const router = createBrowserRouter([
   {
@@ -71,7 +67,7 @@ const router = createBrowserRouter([
                 path: '/records/new',
                 children: [
                   { index: true, element: <RecordNew /> },
-                  { path: 'custom-book', element: <AddCustomBook /> },
+                  { path: 'custom-book', element: <AddCustomBookPage /> },
                   { path: 'completed', element: <RecordNewCompleted /> },
                 ],
               },
@@ -86,7 +82,7 @@ const router = createBrowserRouter([
               // { path: '/mypage/content/reviews', element: <MyPageContentMyReviews /> },
               { path: '/mypage/support', element: <MyPageSupport /> },
               { path: '/mypage/appearance', element: <MyPageAppearance /> },
-              { path: '/report', element: <Report /> },
+              { path: '/report', element: <ReportPage /> },
               { path: '/notes/new', element: <NoteNew /> },
               { path: '/notes/:noteId/edit', element: <NoteNew /> },
               { path: '/notes/:noteId', element: <NoteDetail /> },

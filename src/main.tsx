@@ -1,6 +1,5 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
-import { Suspense } from 'react';
 import ReactDOM from 'react-dom/client';
 import { DeviceProvider } from 'stores/useDeviceStore';
 
@@ -22,9 +21,7 @@ const queryClient = new QueryClient({
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <DeviceProvider>
     <QueryClientProvider client={queryClient}>
-      <Suspense fallback={null}>
-        <AppRouter />
-      </Suspense>
+      <AppRouter />
     </QueryClientProvider>
   </DeviceProvider>,
 );
