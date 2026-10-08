@@ -4,6 +4,7 @@ import BookCover from 'components/BookCover';
 import { ScrollFadeOverlay } from 'components/ScrollFadeOverlay';
 
 import { useRealTimePopularBooksQuery } from './queries/useRealTimePopularBooksQuery';
+import { SearchSectionSkeleton } from '../shared/SearchSectionSkeleton';
 import { Title } from '../shared/Title';
 
 const MSG_SEARCH_REALTIME_POPULAR_TITLE = '실시간 인기 도서';
@@ -19,7 +20,7 @@ export const RealTimePopularSection = () => {
 
   const books = data?.items ?? [];
 
-  if (isLoading) return null;
+  if (isLoading) return <SearchSectionSkeleton title={MSG_SEARCH_REALTIME_POPULAR_TITLE} variant="rankingBooks" />;
 
   return (
     <>

@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import BookCover from 'components/BookCover';
 
 import { useAuthorOtherWorksQuery } from './queries/useAuthorOtherWorksQuery';
+import { SearchSectionSkeleton } from '../shared/SearchSectionSkeleton';
 import { Title } from '../shared/Title';
 
 const MSG_SEARCH_AUTHOR_OTHER_WORKS_TITLE = '{author}의 다른 작품';
@@ -12,7 +13,8 @@ export const AuthorOtherWorksSection = () => {
   const navigate = useNavigate();
   const { data, isLoading } = useAuthorOtherWorksQuery();
 
-  if (isLoading || !data) return null;
+  if (isLoading) return <SearchSectionSkeleton variant="featuredBook" />;
+  if (!data) return null;
 
   const { author, isbn13, title, coverUrl, description } = data;
   const titleText = MSG_SEARCH_AUTHOR_OTHER_WORKS_TITLE.replace('{author}', author);
