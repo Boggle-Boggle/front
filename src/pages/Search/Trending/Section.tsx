@@ -14,7 +14,6 @@ export const TrendingSection = () => {
   const handleLoadMore = () => navigate('/search/trending');
 
   const books = data?.items ?? [];
-  return <SearchSectionSkeleton title={MSG_TRENDING} variant="horizontalBooks" />;
 
   if (isLoading) return <SearchSectionSkeleton title={MSG_TRENDING} variant="horizontalBooks" />;
   if (books.length === 0) return null;
