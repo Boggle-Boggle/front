@@ -12,7 +12,7 @@ import {
 } from 'components/icons';
 
 import { useBottomOverlayHeight } from 'hooks/useBottomOverlayHeight';
-import { useKeyboardStatus } from 'hooks/useKeyboardStatus';
+import { useKeyboard } from 'hooks/useKeyboard';
 
 const Navigator = [
   {
@@ -43,7 +43,7 @@ const Navigator = [
 
 const BottomNavigator = () => {
   const bottomNavigatorRef = useRef<HTMLDivElement>(null);
-  const isKeyboardActive = useKeyboardStatus();
+  const { isKeyboardActive } = useKeyboard();
   useBottomOverlayHeight(bottomNavigatorRef, !isKeyboardActive);
 
   if (isKeyboardActive) return null;

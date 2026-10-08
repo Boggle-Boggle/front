@@ -7,6 +7,8 @@ import { useCreateReadingNoteMutation } from 'pages/Notes/shared/queries/useCrea
 import { useReadingNoteQuery } from 'pages/Notes/shared/queries/useReadingNoteQuery';
 import { useUpdateReadingNoteMutation } from 'pages/Notes/shared/queries/useUpdateReadingNoteMutation';
 
+import { useKeyboard } from 'hooks/useKeyboard';
+
 import { KeyboardDismissButton } from './components/KeyboardDismissButton';
 import { NoteEditorFields } from './components/NoteEditorFields';
 
@@ -46,12 +48,34 @@ const NoteNew = () => {
     readingLogId,
     editableNote,
   });
+  const { bottomInset } = useKeyboard();
+
+  useEffect(() => {
+    if (!bodyTextareaRef.current) return;
+
+    bodyTextareaRef.current.style.height = 'auto';
+    bodyTextareaRef.current.style.height = `${bodyTextareaRef.current.scrollHeight}px`;
+  }, [body]);
+
+  useEffect(() => {
+    if (!editableNote) return;
+
+    setTitle(editableNote.title);
+    setBody(editableNote.body);
+  }, [editableNote]);
+
+  const handleBodyFocus = () => setIsBodyFocused(true);
+
+  const handleBodyBlur = () => setIsBodyFocused(false);
+
+  const handleKeyboardDismissPointerDown = (event: PointerEvent<HTMLButtonElement>) => {
+    event.preventDefault(); // 버튼 터치로 포커스가 다시 이동하지 않도록 기본 동작 방지
+    bodyTextareaRef.current?.blur(); // 본문 입력창 포커스 해제
+    setIsBodyFocused(false); // 키보드 닫기 버튼 숨김 처리
+  };
 
   const isPending = isCreatePending || isUpdatePending;
   const isSubmitEnabled = title.trim().length > 0 && body.trim().length > 0 && !isPending;
-
-  const characterCount = title.length + body.length;
-  const noteCharacterCountText = `${characterCount.toLocaleString()} / ${NOTE_BODY.maxLength.toLocaleString()}${MSG_NOTE_NEW_CHARACTER_COUNT_SUFFIX}`;
 
   const handleSubmitClick = () => {
     if (!isSubmitEnabled) return;
@@ -71,29 +95,8 @@ const NoteNew = () => {
     setBody(event.target.value.slice(0, NOTE_BODY.maxLength));
   };
 
-  const handleBodyFocus = () => setIsBodyFocused(true);
-
-  const handleBodyBlur = () => setIsBodyFocused(false);
-
-  const handleKeyboardDismissPointerDown = (event: PointerEvent<HTMLButtonElement>) => {
-    event.preventDefault(); // 버튼 터치로 포커스가 다시 이동하지 않도록 기본 동작 방지
-    bodyTextareaRef.current?.blur(); // 본문 입력창 포커스 해제
-    setIsBodyFocused(false); // 키보드 닫기 버튼 숨김 처리
-  };
-
-  useEffect(() => {
-    if (!bodyTextareaRef.current) return;
-
-    bodyTextareaRef.current.style.height = 'auto';
-    bodyTextareaRef.current.style.height = `${bodyTextareaRef.current.scrollHeight}px`;
-  }, [body]);
-
-  useEffect(() => {
-    if (!editableNote) return;
-
-    setTitle(editableNote.title);
-    setBody(editableNote.body);
-  }, [editableNote]);
+  const characterCount = title.length + body.length;
+  const noteCharacterCountText = `${characterCount.toLocaleString()} / ${NOTE_BODY.maxLength.toLocaleString()}${MSG_NOTE_NEW_CHARACTER_COUNT_SUFFIX}`;
 
   return (
     <div className="flex h-full flex-col bg-neutral-0">
@@ -137,7 +140,11 @@ const NoteNew = () => {
       </footer>
 
       {isBodyFocused && (
-        <KeyboardDismissButton label={MSG_NOTE_NEW_DISMISS_KEYBOARD} onPointerDown={handleKeyboardDismissPointerDown} />
+        <KeyboardDismissButton
+          label={MSG_NOTE_NEW_DISMISS_KEYBOARD}
+          bottomInset={bottomInset}
+          onPointerDown={handleKeyboardDismissPointerDown}
+        />
       )}
     </div>
   );

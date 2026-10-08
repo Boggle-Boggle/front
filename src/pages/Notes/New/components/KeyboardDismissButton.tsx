@@ -2,6 +2,7 @@ import { PointerEvent, SVGProps } from 'react';
 
 type KeyboardDismissButtonProps = {
   label: string;
+  bottomInset: number;
   onPointerDown: (event: PointerEvent<HTMLButtonElement>) => void;
 };
 
@@ -20,10 +21,13 @@ const KeyboardDismissIcon = (props: SVGProps<SVGSVGElement>) => (
 );
 
 export const KeyboardDismissButton = (props: KeyboardDismissButtonProps) => {
-  const { label, onPointerDown } = props;
+  const { label, bottomInset, onPointerDown } = props;
 
   return (
-    <div className="fixed inset-x-0 bottom-2 z-fixedBtn mx-auto flex max-w-mobile justify-end px-mobile">
+    <div
+      className="fixed inset-x-0 z-fixedBtn mx-auto flex max-w-mobile justify-end px-mobile"
+      style={{ bottom: `calc(${bottomInset}px + 0.5rem)` }}
+    >
       <button
         type="button"
         aria-label={label}
