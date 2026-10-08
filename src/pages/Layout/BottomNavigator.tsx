@@ -1,3 +1,4 @@
+import { useRef } from 'react';
 import { NavLink } from 'react-router-dom';
 
 import {
@@ -10,6 +11,7 @@ import {
   IconLibraryFilled,
 } from 'components/icons';
 
+import { useBottomOverlayHeight } from 'hooks/useBottomOverlayHeight';
 import { useKeyboardStatus } from 'hooks/useKeyboardStatus';
 
 const Navigator = [
@@ -40,12 +42,17 @@ const Navigator = [
 ];
 
 const BottomNavigator = () => {
+  const bottomNavigatorRef = useRef<HTMLDivElement>(null);
   const isKeyboardActive = useKeyboardStatus();
+  useBottomOverlayHeight(bottomNavigatorRef, !isKeyboardActive);
 
-  if (isKeyboardActive) return;
+  if (isKeyboardActive) return null;
 
   return (
-    <div className="w-full max-w-mobile rounded-t-2xl border-t border-neutral-20 bg-neutral-0 pb-safe-bottom">
+    <div
+      ref={bottomNavigatorRef}
+      className="w-full max-w-mobile rounded-t-2xl border-t border-neutral-20 bg-neutral-0 pb-safe-bottom"
+    >
       <ul className="grid h-14 w-full grid-cols-4 items-center text-xs">
         {Navigator.map(({ caption, url, icon, activeIcon }) => (
           <li className="size-full" key={caption}>

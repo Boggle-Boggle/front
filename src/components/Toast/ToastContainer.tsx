@@ -1,4 +1,5 @@
 import { useLayoutEffect, useRef } from 'react';
+import { useBottomOverlayStore } from 'stores/useBottomOverlayStore';
 import { useToastStore } from 'stores/useToastStore';
 
 import { TIME_MS } from 'constants/time';
@@ -7,8 +8,11 @@ import { Toast } from '.';
 
 export const ToastContainer = () => {
   const { toasts } = useToastStore();
+  const { bottomOverlayHeight } = useBottomOverlayStore();
   const toastElementByIdRef = useRef(new Map<string, HTMLDivElement>());
   const toastRectByIdRef = useRef(new Map<string, DOMRect>());
+  const bottomOffset =
+    bottomOverlayHeight > 0 ? `calc(${bottomOverlayHeight}px + 1rem)` : 'calc(env(safe-area-inset-bottom) + 1rem)';
 
   useLayoutEffect(() => {
     const previousRectById = toastRectByIdRef.current;
@@ -40,7 +44,10 @@ export const ToastContainer = () => {
   }, [toasts]);
 
   return (
-    <section className="fixed bottom-[4.5rem] z-toast flex w-full max-w-mobile flex-col gap-1 px-mobile">
+    <section
+      className="fixed z-toast flex w-full max-w-mobile flex-col gap-1 px-mobile"
+      style={{ bottom: bottomOffset }}
+    >
       {toasts.map((toast) => {
         return (
           <div
