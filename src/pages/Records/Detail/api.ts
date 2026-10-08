@@ -11,13 +11,12 @@ export interface BookInfo
   publishedDate: string | null;
   isbn?: string | null;
   isbn13: string | null;
-  totalPages: number | null;
+  totalPages: number;
 }
 
 export interface Progress {
   type: ReadingLogProgressType;
   value: number;
-  totalPages: number;
   percentage: number;
 }
 

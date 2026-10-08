@@ -77,7 +77,9 @@ export const RecordDetailPage = () => {
         <Tabs tabs={RECORD_DETAIL_TABS} value={activeTab} onChange={setActiveTab} className="mb-6" />
         {activeTab === 'info' && <BookInfoTab book={readingLogDetail.book} />}
         {activeTab === 'note' && <NoteTab readingLogId={recordId} bookTitle={readingLogDetail.book.title} />}
-        {activeTab === 'myInfo' && <MyInfoTab readingLog={readingLogDetail.readingLog} />}
+        {activeTab === 'myInfo' && (
+          <MyInfoTab readingLog={readingLogDetail.readingLog} totalPages={readingLogDetail.book.totalPages} />
+        )}
       </div>
     </div>
   );

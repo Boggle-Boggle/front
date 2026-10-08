@@ -23,20 +23,19 @@ import { useUpdateReadingLogMutation } from '../queries/useUpdateReadingLogMutat
 
 const MSG_DATE_SELECT_START = '시작일 선택하기';
 const MSG_DATE_SELECT_END = '종료일 선택하기';
-const DEFAULT_TOTAL_PAGE_COUNT = '120';
 
 export interface MyInfoTabProps {
   readingLog: ReadingLogInfo;
+  totalPages: number;
 }
 
-const getInitialTotalPageCount = (readingLog: ReadingLogInfo) => {
+const getInitialTotalPageCount = (readingLog: ReadingLogInfo, totalPages: number) => {
   if (readingLog.totalPagesOverride) return String(readingLog.totalPagesOverride);
-  if (readingLog.progress?.totalPages) return String(readingLog.progress.totalPages);
 
-  return DEFAULT_TOTAL_PAGE_COUNT;
+  return String(totalPages);
 };
 
-export const MyInfoTab = ({ readingLog }: MyInfoTabProps) => {
+export const MyInfoTab = ({ readingLog, totalPages }: MyInfoTabProps) => {
   const [isEdit, setIsEdit] = useState<boolean>(false);
   const [rating, setRating] = useState<number>(readingLog.rating);
   const [selectedBookshelfIds, setSelectedBookshelfIds] = useState<number[]>(() =>
@@ -50,7 +49,7 @@ export const MyInfoTab = ({ readingLog }: MyInfoTabProps) => {
   const [progressValue, setProgressValue] = useState<string>(
     readingLog.progress ? String(readingLog.progress.value) : '',
   );
-  const [totalPageCount, setTotalPageCount] = useState<string>(() => getInitialTotalPageCount(readingLog));
+  const [totalPageCount, setTotalPageCount] = useState<string>(() => getInitialTotalPageCount(readingLog, totalPages));
   const [isPrivate, setIsPrivate] = useState<boolean>(readingLog.isHidden);
 
   const { recordId = '' } = useParams<{ recordId: string }>();
