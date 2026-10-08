@@ -4,8 +4,6 @@ import { Suspense } from 'react';
 import ReactDOM from 'react-dom/client';
 import { DeviceProvider } from 'stores/useDeviceStore';
 
-import { Loading } from 'components/Loading';
-
 import { applyStoredThemeColor } from 'utils/theme';
 
 import AppRouter from './router';
@@ -24,7 +22,7 @@ const queryClient = new QueryClient({
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <DeviceProvider>
     <QueryClientProvider client={queryClient}>
-      <Suspense fallback={<Loading fullscreen />}>
+      <Suspense fallback={null}>
         <AppRouter />
       </Suspense>
     </QueryClientProvider>
