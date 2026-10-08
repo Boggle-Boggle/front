@@ -1,13 +1,15 @@
 import { Link } from 'react-router-dom';
 
+import { PopularSearchSkeleton } from './PopularSearchSkeleton';
 import { usePopularKeywordsQuery } from './queries/usePopularKeywordsQuery';
 import { Title } from '../shared/Title';
 
 const MSG_SEARCH_POPULAR = '인기 검색어';
 
 export const PopularSearchSection = () => {
-  const { data: popularKeywords } = usePopularKeywordsQuery();
+  const { data: popularKeywords, isLoading } = usePopularKeywordsQuery();
 
+  if (isLoading) return <PopularSearchSkeleton />;
   if (!popularKeywords || popularKeywords.length === 0) return null;
 
   const leftColumn = popularKeywords.slice(0, 5);

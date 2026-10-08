@@ -5,6 +5,7 @@ import { TextButton } from 'components/Button';
 
 import { ClearAllConfirmModal } from './ClearAllConfirmModal';
 import { RecentSearchChip } from './RecentSearchChip';
+import { RecentSearchSkeleton } from './RecentSearchSkeleton';
 import { useRecentSearchesQuery } from './queries/useRecentSearchesQuery';
 import { useRemoveRecentSearchMutation } from './queries/useRemoveRecentSearchMutation';
 import { Title } from '../shared/Title';
@@ -35,6 +36,8 @@ export const RecentSearchSection = () => {
 
   const isClearDisabled = isRecentSearchesLoading || isRemoveRecentSearchPending || recentSearches.length === 0;
 
+  if (isRecentSearchesLoading) return <RecentSearchSkeleton />;
+
   return (
     <section className="w-full">
       <Title
@@ -51,7 +54,7 @@ export const RecentSearchSection = () => {
       />
 
       <div className="w-full overflow-hidden pb-8">
-        {!isRecentSearchesLoading && recentSearches.length === 0 && (
+        {recentSearches.length === 0 && (
           <p className="px-mobile text-left text-caption1 text-neutral-40">{MSG_SEARCH_RECENT_EMPTY}</p>
         )}
 
