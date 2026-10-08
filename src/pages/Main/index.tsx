@@ -21,7 +21,8 @@ type MainBookCaseItem = {
 };
 
 const MSG_TITLE_SEARCH_PLACEHOLDER = '책 제목을 입력해주세요';
-const MSG_MAIN_BOOKCASE_COUNT = (count: number) => `${count}권 채웠습니다`;
+const MSG_MAIN_BOOKCASE_COUNT = (filledShelfCount: number, bookCount: number) =>
+  `${filledShelfCount}칸(${bookCount}권) 채웠습니다`;
 
 const Main = () => {
   const navigate = useNavigate();
@@ -31,6 +32,7 @@ const Main = () => {
   const [selectedBookshelfId, setSelectedBookshelfId] = useState<number | null>(null);
   const [selectedYear, setSelectedYear] = useState<number>(new Date().getFullYear());
   const [selectedMonth, setSelectedMonth] = useState<number>(new Date().getMonth() + 1);
+  const [filledShelfCount, setFilledShelfCount] = useState<number>(0);
 
   const { data: readingLogs, isLoading: isReadingLogsLoading } = useMainReadingLogsQuery({
     periodFilter,
@@ -87,7 +89,7 @@ const Main = () => {
     );
   }, [readingLogs]);
 
-  const displayCount = processedBooks.length;
+  const displayBookCount = processedBooks.length;
 
   if (isReadingLogsLoading) return <MainSkeleton />;
 
@@ -108,10 +110,16 @@ const Main = () => {
 
           <IconArrowDown className="ml-1 size-icon-sm text-neutral-60" />
         </button>
-        <p className="mb-[1.375rem] text-body1 text-neutral-60">{MSG_MAIN_BOOKCASE_COUNT(displayCount)}</p>
+        <p className="mb-[1.375rem] text-body1 text-neutral-60">
+          {MSG_MAIN_BOOKCASE_COUNT(filledShelfCount, displayBookCount)}
+        </p>
         <div ref={scrollRef} className="scrollbar-hide h-0 flex-grow overflow-y-auto pb-safe-bottom">
           <div className="flex min-h-full flex-col justify-end pb-[4.5rem]">
-            <BookCase books={processedBooks} onBookClick={(id) => navigate(`/records/${id}`)} />
+            <BookCase
+              books={processedBooks}
+              onFilledShelfCountChange={setFilledShelfCount}
+              onBookClick={(id) => navigate(`/records/${id}`)}
+            />
           </div>
         </div>
       </div>

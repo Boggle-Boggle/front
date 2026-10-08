@@ -12,6 +12,7 @@ export type BookCaseBook = {
 type BookCaseProps = {
   books: BookCaseBook[];
   isSkeleton?: boolean;
+  onFilledShelfCountChange?: (count: number) => void;
   onBookClick?: (id: number) => void;
 };
 
@@ -66,7 +67,7 @@ const getShelfBooks = (books: BookCaseBook[], bookcaseWidth: number) => {
 };
 
 export const BookCase = (props: BookCaseProps) => {
-  const { books, isSkeleton = false, onBookClick } = props;
+  const { books, isSkeleton = false, onFilledShelfCountChange, onBookClick } = props;
   const containerRef = useRef<HTMLDivElement>(null);
 
   const remToPx = (rem: number) => {
@@ -105,6 +106,11 @@ export const BookCase = (props: BookCaseProps) => {
   // bookcaseWidth = ResizeObserver로 구한 가용 너비 - 책장 내부의 양끝 책 간격(px-[0.625rem] * 2)
   const bookcaseWidth = containerWidth - remToPx(0.625 * 2);
   const allBooks = isSkeleton ? SKELETON_SHELVES : getShelfBooks(books, bookcaseWidth);
+  const filledShelfCount = isSkeleton ? 0 : allBooks.filter((shelfBooks) => shelfBooks.length > 0).length;
+
+  useEffect(() => {
+    onFilledShelfCountChange?.(filledShelfCount);
+  }, [filledShelfCount, onFilledShelfCountChange]);
 
   const outerHeight = 524 + 126 * (allBooks.length - 4);
   const outerBoxShadow = 'inset 2px 2px 2px rgba(255, 255, 255, 0.6), inset -2px -3px 3px rgba(53, 27, 20, 0.25)';
