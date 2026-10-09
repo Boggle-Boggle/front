@@ -32,7 +32,7 @@ export const KeyboardDismissButton = (props: KeyboardDismissButtonProps) => {
         type="button"
         aria-label={label}
         onPointerDown={onPointerDown}
-        className="grid size-11 place-items-center rounded-full bg-neutral-100 text-neutral-0 shadow-[0_0.25rem_1rem_rgba(0,0,0,0.18)]"
+        className="grid size-11 place-items-center rounded-full bg-primary text-neutral-0 shadow-[0_0.25rem_1rem_rgba(0,0,0,0.18)]"
       >
         <KeyboardDismissIcon className="size-7" />
       </button>
