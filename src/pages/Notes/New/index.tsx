@@ -1,8 +1,9 @@
 import { NOTE_BODY, NOTE_TITLE } from 'policy/input';
 import { ChangeEvent, PointerEvent, useEffect, useRef, useState } from 'react';
-import { useLocation, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 
 import { Header } from 'components/Header';
+import { BackButton } from 'components/Header/BackButton';
 import { useCreateReadingNoteMutation } from 'pages/Notes/shared/queries/useCreateReadingNoteMutation';
 import { useReadingNoteQuery } from 'pages/Notes/shared/queries/useReadingNoteQuery';
 import { useUpdateReadingNoteMutation } from 'pages/Notes/shared/queries/useUpdateReadingNoteMutation';
@@ -23,24 +24,29 @@ const MSG_NOTE_NEW_DISMISS_KEYBOARD = '키보드 닫기';
 const MSG_NOTE_NEW_CHARACTER_COUNT_SUFFIX = '자';
 
 type NoteNewLocationState = {
-  readingLogId?: string;
+  readingLogId?: string | number;
 };
 
 const NoteNew = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { noteId } = useParams();
+
   const [title, setTitle] = useState<string>('');
   const [body, setBody] = useState<string>('');
   const [isBodyFocused, setIsBodyFocused] = useState<boolean>(false);
   const bodyTextareaRef = useRef<HTMLTextAreaElement>(null);
-
-  const location = useLocation();
-  const { noteId } = useParams();
 
   const locationState = location.state as NoteNewLocationState | undefined;
   const isEditMode = !!noteId;
   const { data: editableNote } = useReadingNoteQuery(isEditMode ? noteId : undefined);
 
   const readingLogId =
-    locationState?.readingLogId ?? (editableNote?.readingLogId ? String(editableNote.readingLogId) : '');
+    locationState?.readingLogId !== undefined
+      ? String(locationState.readingLogId)
+      : editableNote?.readingLogId
+        ? String(editableNote.readingLogId)
+        : '';
 
   const { mutate: saveNote, isPending: isCreatePending } = useCreateReadingNoteMutation(readingLogId);
   const { mutate: editNote, isPending: isUpdatePending } = useUpdateReadingNoteMutation({
@@ -67,6 +73,15 @@ const NoteNew = () => {
   const handleBodyFocus = () => setIsBodyFocused(true);
 
   const handleBodyBlur = () => setIsBodyFocused(false);
+
+  const handleBackClick = () => {
+    if (!readingLogId) {
+      navigate(-1);
+      return;
+    }
+
+    navigate(`/records/${readingLogId}`, { replace: true, state: { activeTab: 'note' } });
+  };
 
   const handleKeyboardDismissPointerDown = (event: PointerEvent<HTMLButtonElement>) => {
     event.preventDefault(); // 버튼 터치로 포커스가 다시 이동하지 않도록 기본 동작 방지
@@ -102,7 +117,7 @@ const NoteNew = () => {
     <div className="flex h-full flex-col bg-neutral-0">
       <Header
         title={isEditMode ? MSG_NOTE_EDIT_PAGE_TITLE : MSG_NOTE_NEW_PAGE_TITLE}
-        withBack
+        leftBtn={<BackButton onClick={handleBackClick} />}
         rightBtn={
           <button
             type="button"
