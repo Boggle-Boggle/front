@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useLayerStore } from 'stores/useLayerStore';
 
-import { formatToDateInputValue, formatToReadingLogDateTime } from 'utils/date';
+import { formatToDateInputValue } from 'utils/date';
 
 import type { ReadingLogProgressType } from 'types';
 
@@ -120,8 +120,8 @@ export const MyInfoTab = ({ readingLog, totalPages }: MyInfoTabProps) => {
       const requestData: UpdateReadingLogRequest = {
         status: readingLog.status,
         rating,
-        startDate: formatToReadingLogDateTime(startDate),
-        endDate: endDate ? formatToReadingLogDateTime(endDate) : null,
+        startDate,
+        endDate: endDate || null,
         bookshelfIds: selectedBookshelfIds,
         isHidden: isPrivate,
       };
