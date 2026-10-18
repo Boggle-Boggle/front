@@ -1,3 +1,9 @@
+import {
+  getReadingLogEndDatePolicy,
+  getReadingLogStartDatePolicy,
+  isReadingLogEndDateRequired,
+  isValidReadingLogPeriod,
+} from 'policy/date';
 import { useState } from 'react';
 import { useSearchParams, useLocation } from 'react-router-dom';
 import { useLayerStore } from 'stores/useLayerStore';
@@ -28,11 +34,9 @@ const MSG_ADD_RECORD_SUBMIT = '입력을 끝내고 완료하기';
 const MSG_DATE_SELECT_START = '시작일 선택하기';
 const MSG_DATE_SELECT_END = '종료일 선택하기';
 
-const requiresEndDate = (status: AddRecordStatus) => status !== 'READING';
-
 const getAddRecordDatePayload = (status: AddRecordStatus, startDate: string, endDate: string) => ({
   startDate,
-  endDate: requiresEndDate(status) ? endDate : undefined,
+  endDate: isReadingLogEndDateRequired(status) ? endDate : undefined,
 });
 
 export const NewRecord = () => {
@@ -68,6 +72,7 @@ export const NewRecord = () => {
   const handleSubmit = () => {
     // 중복 요청 방지
     if (isCreateCustomReadingLogPending || isCreateReadingLogPending) return;
+    if (!isValidReadingLogPeriod(status, startDate, endDate)) return;
 
     if (customBook) {
       // [분기 A] 사용자가 직접 입력(수동)한 도서 정보를 짊어지고 진입한 경우
@@ -119,15 +124,22 @@ export const NewRecord = () => {
 
   const handleTogglePrivate = () => setIsHidden((prev) => !prev);
 
+  const handleChangeStartDate = (nextStartDate: string) => {
+    setStartDate(nextStartDate);
+    if (isReadingLogEndDateRequired(status) && endDate < nextStartDate) setEndDate(nextStartDate);
+  };
+
   const handleOpenStartDate = () => {
+    const { maxDate } = getReadingLogStartDatePolicy();
+
     push({
       id: 'book-record-start-date-modal',
       component: (
         <DateSelectModal
           title={MSG_DATE_SELECT_START}
           initialDate={startDate}
-          maxDate={getTodayDateString()}
-          onSubmit={setStartDate}
+          maxDate={maxDate}
+          onSubmit={handleChangeStartDate}
           onClose={pop}
         />
       ),
@@ -135,14 +147,16 @@ export const NewRecord = () => {
   };
 
   const handleOpenEndDate = () => {
+    const { minDate, maxDate } = getReadingLogEndDatePolicy(startDate);
+
     push({
       id: 'book-record-end-date-modal',
       component: (
         <DateSelectModal
           title={MSG_DATE_SELECT_END}
           initialDate={endDate}
-          minDate={startDate}
-          maxDate={getTodayDateString()}
+          minDate={minDate}
+          maxDate={maxDate}
           onSubmit={setEndDate}
           onClose={pop}
         />

@@ -1,3 +1,9 @@
+import {
+  getReadingLogEndDatePolicy,
+  getReadingLogStartDatePolicy,
+  isReadingLogEndDateRequired,
+  isValidReadingLogPeriod,
+} from 'policy/date';
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useLayerStore } from 'stores/useLayerStore';
@@ -74,20 +80,42 @@ export const MyInfoTab = ({ readingLog, totalPages }: MyInfoTabProps) => {
     setIsPrivate((prev) => !prev);
   };
 
+  const handleChangeStartDate = (nextStartDate: string) => {
+    setStartDate(nextStartDate);
+    if (isReadingLogEndDateRequired(readingLog.status) && endDate < nextStartDate) setEndDate(nextStartDate);
+  };
+
   const handleOpenStartDate = () => {
+    const { maxDate } = getReadingLogStartDatePolicy();
+
     push({
       id: 'book-record-detail-start-date-modal',
       component: (
-        <DateSelectModal title={MSG_DATE_SELECT_START} initialDate={startDate} onSubmit={setStartDate} onClose={pop} />
+        <DateSelectModal
+          title={MSG_DATE_SELECT_START}
+          initialDate={startDate}
+          maxDate={maxDate}
+          onSubmit={handleChangeStartDate}
+          onClose={pop}
+        />
       ),
     });
   };
 
   const handleOpenEndDate = () => {
+    const { minDate, maxDate } = getReadingLogEndDatePolicy(startDate);
+
     push({
       id: 'book-record-detail-end-date-modal',
       component: (
-        <DateSelectModal title={MSG_DATE_SELECT_END} initialDate={endDate} onSubmit={setEndDate} onClose={pop} />
+        <DateSelectModal
+          title={MSG_DATE_SELECT_END}
+          initialDate={endDate}
+          minDate={minDate}
+          maxDate={maxDate}
+          onSubmit={setEndDate}
+          onClose={pop}
+        />
       ),
     });
   };
@@ -117,11 +145,13 @@ export const MyInfoTab = ({ readingLog, totalPages }: MyInfoTabProps) => {
 
   const handleToggleEdit = () => {
     if (isEdit) {
+      if (!isValidReadingLogPeriod(readingLog.status, startDate, endDate)) return;
+
       const requestData: UpdateReadingLogRequest = {
         status: readingLog.status,
         rating,
         startDate,
-        endDate: endDate || null,
+        endDate: isReadingLogEndDateRequired(readingLog.status) ? endDate : null,
         bookshelfIds: selectedBookshelfIds,
         isHidden: isPrivate,
       };
