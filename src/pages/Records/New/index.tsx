@@ -130,7 +130,7 @@ export const NewRecord = () => {
   };
 
   const handleOpenStartDate = () => {
-    const { maxDate } = getReadingLogStartDatePolicy();
+    const { minDate, maxDate } = getReadingLogStartDatePolicy();
 
     push({
       id: 'book-record-start-date-modal',
@@ -138,6 +138,7 @@ export const NewRecord = () => {
         <DateSelectModal
           title={MSG_DATE_SELECT_START}
           initialDate={startDate}
+          minDate={minDate}
           maxDate={maxDate}
           onSubmit={handleChangeStartDate}
           onClose={pop}

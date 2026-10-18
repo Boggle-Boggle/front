@@ -102,6 +102,32 @@ export const formatToDateInputValue = (dateString?: string | null) => {
   return formatBaseDate(dateString, { separator: '-', fallback: '' });
 };
 
+export const parseDateInputValue = (dateString?: string | null) => {
+  if (!dateString) return null;
+
+  const [yearString, monthString, dayString] = dateString.split('-');
+  const year = Number(yearString);
+  const month = Number(monthString);
+  const day = Number(dayString);
+  const date = new Date(year, month - 1, day);
+
+  if (
+    !yearString ||
+    !monthString ||
+    !dayString ||
+    !Number.isInteger(year) ||
+    !Number.isInteger(month) ||
+    !Number.isInteger(day) ||
+    date.getFullYear() !== year ||
+    date.getMonth() !== month - 1 ||
+    date.getDate() !== day
+  ) {
+    return null;
+  }
+
+  return date;
+};
+
 /**
  * 날짜 입력값(YYYY-MM-DD)을 독서기록 API 전송용 날짜 문자열로 변환
  */

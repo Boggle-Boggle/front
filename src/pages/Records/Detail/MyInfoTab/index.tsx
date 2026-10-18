@@ -86,7 +86,7 @@ export const MyInfoTab = ({ readingLog, totalPages }: MyInfoTabProps) => {
   };
 
   const handleOpenStartDate = () => {
-    const { maxDate } = getReadingLogStartDatePolicy();
+    const { minDate, maxDate } = getReadingLogStartDatePolicy();
 
     push({
       id: 'book-record-detail-start-date-modal',
@@ -94,6 +94,7 @@ export const MyInfoTab = ({ readingLog, totalPages }: MyInfoTabProps) => {
         <DateSelectModal
           title={MSG_DATE_SELECT_START}
           initialDate={startDate}
+          minDate={minDate}
           maxDate={maxDate}
           onSubmit={handleChangeStartDate}
           onClose={pop}

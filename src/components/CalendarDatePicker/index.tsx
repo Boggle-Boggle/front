@@ -1,3 +1,4 @@
+import { isDateInRange } from 'policy/date';
 import { useEffect, useMemo, useRef, useState } from 'react';
 
 import { TextButton } from 'components/Button';
@@ -50,18 +51,6 @@ const getDateKey = (date: Date) => {
   return `${year}-${month}-${day}`;
 };
 
-const isDateSelectable = (date: Date, minDate?: Date, maxDate?: Date) => {
-  const dateKey = getDateKey(date);
-  const minKey = minDate instanceof Date ? getDateKey(minDate) : '';
-  const maxKey = maxDate instanceof Date ? getDateKey(maxDate) : '';
-
-  if (!dateKey) return false;
-  if (minKey && dateKey < minKey) return false;
-  if (maxKey && dateKey > maxKey) return false;
-
-  return true;
-};
-
 const getCalendarDates = (
   year: number,
   month: number,
@@ -104,9 +93,10 @@ const getCalendarDates = (
       isInBetween = startKey !== null && endKey !== null && dateKey > startKey && dateKey < endKey;
     }
 
-    let isDisabled = false;
-    if (minKey && dateKey < minKey) isDisabled = true;
-    if (maxKey && dateKey > maxKey) isDisabled = true;
+    const isDisabled = !isDateInRange(dateKey, {
+      minDate: minKey ?? undefined,
+      maxDate: maxKey ?? undefined,
+    });
 
     return {
       date,
@@ -243,7 +233,14 @@ export const CalendarDatePicker = (props: CalendarDatePickerProps) => {
   );
 
   const handleSelectDate = (date: Date) => {
-    if (!isDateSelectable(date, minDate, maxDate)) return;
+    if (
+      !isDateInRange(getDateKey(date), {
+        minDate: minDate instanceof Date ? getDateKey(minDate) : undefined,
+        maxDate: maxDate instanceof Date ? getDateKey(maxDate) : undefined,
+      })
+    ) {
+      return;
+    }
 
     if (type === 'range') {
       const rangeProps = props as {
@@ -259,7 +256,7 @@ export const CalendarDatePicker = (props: CalendarDatePickerProps) => {
         const startKey = getDateKey(startDate);
         const clickedKey = getDateKey(date);
 
-        if (clickedKey < startKey) {
+        if (!isDateInRange(clickedKey, { minDate: startKey })) {
           onChange(date, null);
         } else {
           onChange(startDate, date);

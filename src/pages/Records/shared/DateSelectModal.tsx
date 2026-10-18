@@ -1,8 +1,11 @@
+import { clampDateToRange, isDateInRange } from 'policy/date';
 import { useState } from 'react';
 
 import { Button } from 'components/Button';
 import { CalendarDatePicker } from 'components/CalendarDatePicker';
 import { ContentModal } from 'components/Layer/ContentModal';
+
+import { parseDateInputValue } from 'utils/date';
 
 type DateSelectModalProps = {
   title: string;
@@ -23,34 +26,21 @@ const formatDateString = (date: Date) => {
   return `${yyyy}-${mm}-${dd}`;
 };
 
-const isDateInRange = (date: Date, minDate?: Date, maxDate?: Date) => {
-  const dateString = formatDateString(date);
-  const minDateString = minDate ? formatDateString(minDate) : '';
-  const maxDateString = maxDate ? formatDateString(maxDate) : '';
+const getInitialSelectedDate = (initialDate?: string, minDate?: string, maxDate?: string) => {
+  const parsedDate = parseDateInputValue(initialDate);
+  const fallbackDate = parseDateInputValue(maxDate) ?? parseDateInputValue(minDate) ?? new Date();
+  if (!parsedDate) return fallbackDate;
 
-  if (minDateString && dateString < minDateString) return false;
-  if (maxDateString && dateString > maxDateString) return false;
-
-  return true;
-};
-
-const getInitialSelectedDate = (initialDate?: string, minDate?: Date, maxDate?: Date) => {
-  const parsedDate = initialDate ? new Date(initialDate) : new Date();
-  const fallbackDate = maxDate ?? minDate ?? new Date();
-  const initialSelectedDate = Number.isNaN(parsedDate.getTime()) ? fallbackDate : parsedDate;
-
-  if (minDate && formatDateString(initialSelectedDate) < formatDateString(minDate)) return minDate;
-  if (maxDate && formatDateString(initialSelectedDate) > formatDateString(maxDate)) return maxDate;
-
-  return initialSelectedDate;
+  const clampedDate = clampDateToRange(formatDateString(parsedDate), { minDate, maxDate });
+  return parseDateInputValue(clampedDate) ?? fallbackDate;
 };
 
 export const DateSelectModal = (props: DateSelectModalProps) => {
   const { title, initialDate, minDate, maxDate, onSubmit, onClose } = props;
-  const parsedMinDate = minDate ? new Date(minDate) : undefined;
-  const parsedMaxDate = maxDate ? new Date(maxDate) : undefined;
+  const parsedMinDate = parseDateInputValue(minDate) ?? undefined;
+  const parsedMaxDate = parseDateInputValue(maxDate) ?? undefined;
   const [selectedDate, setSelectedDate] = useState<Date>(() =>
-    getInitialSelectedDate(initialDate, parsedMinDate, parsedMaxDate),
+    getInitialSelectedDate(initialDate, minDate, maxDate),
   );
 
   // 캘린더 데이트피커의 현재 뷰 모드 상태 (기본은 달력 모드)
@@ -85,13 +75,13 @@ export const DateSelectModal = (props: DateSelectModalProps) => {
       return;
     }
 
-    if (!isDateInRange(selectedDate, parsedMinDate, parsedMaxDate)) return;
+    if (!isDateInRange(formatDateString(selectedDate), { minDate, maxDate })) return;
 
     onSubmit(formatDateString(selectedDate));
     onClose();
   };
 
-  const isSelectedDateValid = isDateInRange(selectedDate, parsedMinDate, parsedMaxDate);
+  const isSelectedDateValid = isDateInRange(formatDateString(selectedDate), { minDate, maxDate });
 
   return (
     <ContentModal title={title} onClose={onClose}>
