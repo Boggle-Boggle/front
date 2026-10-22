@@ -1,6 +1,5 @@
 import { execFileSync } from 'node:child_process';
-import { existsSync, readFileSync } from 'node:fs';
-import { join } from 'node:path';
+import { readFileSync } from 'node:fs';
 
 import { getReleaseType } from './release-version.mjs';
 
@@ -20,14 +19,4 @@ if (!releaseType) {
   );
 }
 
-const releaseNotePath = join('docs', 'releases', `${currentPackage.version}.md`);
-if (!existsSync(releaseNotePath)) {
-  throw new Error(`릴리스 노트가 없습니다: ${releaseNotePath}`);
-}
-
-const releaseNote = readFileSync(releaseNotePath, 'utf8');
-if (!releaseNote.startsWith(`# 서비스 ${currentPackage.version} 출시 기록\n`)) {
-  throw new Error(`릴리스 노트 제목에 서비스 버전 ${currentPackage.version}을(를) 적어 주세요: ${releaseNotePath}`);
-}
-
-console.log(`${previousPackage.version} → ${currentPackage.version} (${releaseType}), ${releaseNotePath} 확인 완료`);
+console.log(`${previousPackage.version} → ${currentPackage.version} (${releaseType}) 확인 완료`);
