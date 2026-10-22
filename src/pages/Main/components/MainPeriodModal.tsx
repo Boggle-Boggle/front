@@ -34,6 +34,10 @@ const MSG_MAIN_FILTER_PERIOD_DESC = '완독한 책을 기간별로 볼 수 있�
 const MSG_MAIN_FILTER_NO_GROUP = '생성된 그룹책장이 없어요.';
 const MSG_MAIN_FILTER_CONFIRM = '확인';
 
+const COLLAPSIBLE_TRANSITION_CLASS = 'duration-300 ease-in-out motion-reduce:transition-none';
+const GROUP_LIST_CLASS = `flex flex-col gap-1 overflow-y-auto px-1 transition-[max-height,margin-top,opacity] ${COLLAPSIBLE_TRANSITION_CLASS}`;
+const PERIOD_PICKER_CLASS = `flex w-full justify-center overflow-hidden transition-[max-height,margin-top,padding,opacity] ${COLLAPSIBLE_TRANSITION_CLASS}`;
+
 export const MainPeriodModal = (props: MainPeriodModalProps) => {
   const { currentFilter, currentBookshelfId, currentYear, currentMonth, onConfirm, bookshelves } = props;
   const { pop } = useLayerStore();
@@ -79,6 +83,8 @@ export const MainPeriodModal = (props: MainPeriodModalProps) => {
       onChange: (val) => setSelectedMonth(val as number),
     },
   ];
+  const isGroupSelected = selectedFilter === 'GROUP';
+  const isPeriodSelected = selectedFilter === 'PERIOD';
 
   return (
     <ContentModal title="책장 보기 옵션" onClose={pop}>
@@ -114,28 +120,32 @@ export const MainPeriodModal = (props: MainPeriodModalProps) => {
           </Radio>
 
           {/* 하위 그룹 목록 스크롤 영역 */}
-          {selectedFilter === 'GROUP' && (
-            <div className="mt-2 flex max-h-[160px] flex-col gap-1 overflow-y-auto px-1">
-              {bookshelves && bookshelves.length > 0 ? (
-                bookshelves.map((group) => (
-                  <button
-                    key={group.id}
-                    type="button"
-                    onClick={() => setSelectedBookshelfId(group.id)}
-                    className={`h-[42px] w-full shrink-0 items-center justify-center rounded-lg border-[1.5px] text-title4 transition-colors ${
-                      selectedBookshelfId === group.id
-                        ? 'border-primary text-primary'
-                        : 'border-neutral-20 text-neutral-40'
-                    }`}
-                  >
-                    {group.name}
-                  </button>
-                ))
-              ) : (
-                <p className="py-2 text-body2 text-neutral-60">{MSG_MAIN_FILTER_NO_GROUP}</p>
-              )}
-            </div>
-          )}
+          <div
+            aria-hidden={!isGroupSelected}
+            ref={(element) => element?.toggleAttribute('inert', !isGroupSelected)}
+            className={`${GROUP_LIST_CLASS} ${
+              isGroupSelected ? 'mt-2 max-h-[160px] opacity-100' : 'mt-0 max-h-0 opacity-0'
+            }`}
+          >
+            {bookshelves && bookshelves.length > 0 ? (
+              bookshelves.map((group) => (
+                <button
+                  key={group.id}
+                  type="button"
+                  onClick={() => setSelectedBookshelfId(group.id)}
+                  className={`h-[42px] w-full shrink-0 items-center justify-center rounded-lg border-[1.5px] text-title4 transition-colors ${
+                    selectedBookshelfId === group.id
+                      ? 'border-primary text-primary'
+                      : 'border-neutral-20 text-neutral-40'
+                  }`}
+                >
+                  {group.name}
+                </button>
+              ))
+            ) : (
+              <p className="py-2 text-body2 text-neutral-60">{MSG_MAIN_FILTER_NO_GROUP}</p>
+            )}
+          </div>
         </div>
 
         {/* 기간별로 보기 */}
@@ -153,11 +163,15 @@ export const MainPeriodModal = (props: MainPeriodModalProps) => {
           </Radio>
 
           {/* 하위 기간 선택 WheelPicker 영역 */}
-          {selectedFilter === 'PERIOD' && (
-            <div className="mt-4 flex w-full justify-center py-2">
-              <WheelPicker columns={pickerColumns} />
-            </div>
-          )}
+          <div
+            aria-hidden={!isPeriodSelected}
+            ref={(element) => element?.toggleAttribute('inert', !isPeriodSelected)}
+            className={`${PERIOD_PICKER_CLASS} ${
+              isPeriodSelected ? 'mt-4 max-h-[216px] py-2 opacity-100' : 'mt-0 max-h-0 py-0 opacity-0'
+            }`}
+          >
+            <WheelPicker columns={pickerColumns} />
+          </div>
         </div>
       </div>
 
