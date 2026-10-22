@@ -151,6 +151,10 @@ const Library = () => {
     return wishlistData ? wishlistData.pages.flatMap((page) => page.data.items) : [];
   }, [wishlistData]);
 
+  const readingScrollRef = useScrollRestoration<HTMLDivElement>({
+    isReady: activeTab === 'reading' && !isReadingLoading,
+  });
+
   const wishlistScrollRef = useScrollRestoration<HTMLDivElement>({
     customKey: `library_wishlist_scroll_top_${searchKeyword.trim()}`,
     isReady: activeTab === 'wishlist' && wishlistBooks.length > 0,
@@ -318,6 +322,7 @@ const Library = () => {
           hasNextPage={hasNextReadingPage}
           isFetchingNextPage={isFetchingNextReadingPage}
           observerTarget={searchKeyword.trim() ? { current: null } : readingObserverTarget}
+          scrollContainerRef={readingScrollRef}
           onOpenFilterLayer={handleOpenFilterLayer}
           onOpenSortLayer={handleOpenSortLayer}
         />

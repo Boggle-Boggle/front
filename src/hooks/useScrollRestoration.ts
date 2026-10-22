@@ -61,7 +61,7 @@ export const useScrollRestoration = <T extends HTMLElement>({
   // 스크롤 이벤트 발생 시 현재 위치 저장
   useEffect(() => {
     const container = containerRef.current;
-    if (!container) return;
+    if (!container || !isReady) return;
 
     const handleScroll = () => {
       sessionStorage.setItem(scrollKey, container.scrollTop.toString());
@@ -72,7 +72,7 @@ export const useScrollRestoration = <T extends HTMLElement>({
       sessionStorage.setItem(scrollKey, container.scrollTop.toString());
       container.removeEventListener('scroll', handleScroll);
     };
-  }, [scrollKey]);
+  }, [scrollKey, isReady]);
 
   return containerRef;
 };

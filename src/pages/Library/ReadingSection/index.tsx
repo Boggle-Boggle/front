@@ -19,6 +19,7 @@ type ReadingSectionProps = {
   hasNextPage?: boolean;
   isFetchingNextPage?: boolean;
   observerTarget: RefObject<HTMLDivElement>;
+  scrollContainerRef: RefObject<HTMLDivElement>;
   onOpenFilterLayer: () => void;
   onOpenSortLayer: () => void;
 };
@@ -34,6 +35,7 @@ export const ReadingSection = (props: ReadingSectionProps) => {
     hasNextPage,
     isFetchingNextPage,
     observerTarget,
+    scrollContainerRef,
     onOpenFilterLayer,
     onOpenSortLayer,
   } = props;
@@ -52,7 +54,7 @@ export const ReadingSection = (props: ReadingSectionProps) => {
         <TextButton variant="filled" size="sm" rightIcon={IconArrowDown} onClick={onOpenSortLayer} text={sortLabel} />
       </div>
 
-      <div className="min-h-0 flex-1 overflow-y-auto">
+      <div ref={scrollContainerRef} className="min-h-0 flex-1 overflow-y-auto">
         {isGridView && <ReadingBooksGrid books={books} />}
         {!isGridView && <ReadingBooksList books={books} />}
         <InfiniteScrollTrigger
