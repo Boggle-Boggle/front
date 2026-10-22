@@ -64,12 +64,12 @@ export const useScrollRestoration = <T extends HTMLElement>({
     if (!container || !isReady) return;
 
     const handleScroll = () => {
+      if (!container.isConnected) return;
       sessionStorage.setItem(scrollKey, container.scrollTop.toString());
     };
 
     container.addEventListener('scroll', handleScroll);
     return () => {
-      sessionStorage.setItem(scrollKey, container.scrollTop.toString());
       container.removeEventListener('scroll', handleScroll);
     };
   }, [scrollKey, isReady]);
