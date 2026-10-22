@@ -38,7 +38,7 @@ jobs:
       - name: Test release version rules
         run: node --test scripts/check-release.test.mjs
 
-      - name: Check service version and release note
+      - name: Check service version
         env:
           BASE_SHA: ${{ github.event.pull_request.base.sha }}
         run: node scripts/check-release.mjs
