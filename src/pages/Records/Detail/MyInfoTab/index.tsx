@@ -8,9 +8,11 @@ import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useLayerStore } from 'stores/useLayerStore';
 
-import { formatToDateInputValue } from 'utils/date';
+import { AddRecordStatusBottomSheet } from 'pages/BookDetail/components/AddRecordStatusBottomSheet';
 
-import type { ReadingLogProgressType } from 'types';
+import { formatToDateInputValue, getTodayDateString } from 'utils/date';
+
+import type { AddRecordStatus, ReadingLogProgressType } from 'types';
 
 import { DateSelectModal } from '../../shared/DateSelectModal';
 import { GroupDeleteConfirmModal } from '../../shared/GroupDeleteConfirmModal';
@@ -43,6 +45,7 @@ const getInitialTotalPageCount = (readingLog: ReadingLogInfo, totalPages: number
 
 export const MyInfoTab = ({ readingLog, totalPages }: MyInfoTabProps) => {
   const [isEdit, setIsEdit] = useState<boolean>(false);
+  const [selectedStatus, setSelectedStatus] = useState<AddRecordStatus>(readingLog.status);
   const [rating, setRating] = useState<number>(readingLog.rating);
   const [selectedBookshelfIds, setSelectedBookshelfIds] = useState<number[]>(() =>
     readingLog.bookshelves.map((b) => b.id),
@@ -82,7 +85,22 @@ export const MyInfoTab = ({ readingLog, totalPages }: MyInfoTabProps) => {
 
   const handleChangeStartDate = (nextStartDate: string) => {
     setStartDate(nextStartDate);
-    if (isReadingLogEndDateRequired(readingLog.status) && endDate < nextStartDate) setEndDate(nextStartDate);
+    if (isReadingLogEndDateRequired(selectedStatus) && endDate < nextStartDate) setEndDate(nextStartDate);
+  };
+
+  const handleSelectStatus = (status: AddRecordStatus) => {
+    setSelectedStatus(status);
+    if (isReadingLogEndDateRequired(status) && !endDate) setEndDate(getTodayDateString());
+    setIsEdit(true);
+  };
+
+  const handleOpenStatusSelect = () => {
+    push({
+      id: 'book-record-detail-status-bottom-sheet',
+      component: (
+        <AddRecordStatusBottomSheet mode="edit" initialStatus={selectedStatus} onSubmit={handleSelectStatus} />
+      ),
+    });
   };
 
   const handleOpenStartDate = () => {
@@ -146,13 +164,13 @@ export const MyInfoTab = ({ readingLog, totalPages }: MyInfoTabProps) => {
 
   const handleToggleEdit = () => {
     if (isEdit) {
-      if (!isValidReadingLogPeriod(readingLog.status, startDate, endDate)) return;
+      if (!isValidReadingLogPeriod(selectedStatus, startDate, endDate)) return;
 
       const requestData: UpdateReadingLogRequest = {
-        status: readingLog.status,
+        status: selectedStatus,
         rating,
         startDate,
-        endDate: isReadingLogEndDateRequired(readingLog.status) ? endDate : null,
+        endDate: isReadingLogEndDateRequired(selectedStatus) ? endDate : null,
         bookshelfIds: selectedBookshelfIds,
         isHidden: isPrivate,
       };
@@ -167,9 +185,10 @@ export const MyInfoTab = ({ readingLog, totalPages }: MyInfoTabProps) => {
       }
 
       updateRecord(requestData);
-    } else {
-      setIsEdit(true);
+
+      return;
     }
+    handleOpenStatusSelect();
   };
 
   return (
@@ -178,7 +197,7 @@ export const MyInfoTab = ({ readingLog, totalPages }: MyInfoTabProps) => {
       <div className="flex flex-col gap-9 pb-safe-bottom">
         <RatingSection rating={rating} onChange={setRating} isEdit={isEdit} />
         <ReadingPeriodSection
-          status={readingLog.status}
+          status={selectedStatus}
           startDate={startDate}
           endDate={endDate}
           onOpenStartDate={handleOpenStartDate}

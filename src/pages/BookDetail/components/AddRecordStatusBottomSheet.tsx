@@ -12,11 +12,15 @@ const MSG_ADD_RECORD_STATUS_TITLE = '이 책에 대한 독서기록을 작성할
 const MSG_ADD_RECORD_STATUS_DESCRIPTION = '책을 얼마나 읽으셨나요?';
 const MSG_ADD_RECORD_STATUS_HELP = '* 나중에 수정할 수 있어요';
 const MSG_ADD_RECORD_STATUS_SUBMIT = '책 추가하기';
+const MSG_EDIT_RECORD_STATUS_TITLE = '독서 상태를 수정할까요?';
+const MSG_EDIT_RECORD_STATUS_SUBMIT = '수정하기';
 
 type AddRecordStatusBottomSheetProps = {
   isbn13?: string;
   bookDetail?: BookDetail;
   onSubmit?: (status: AddRecordStatus) => void;
+  mode?: 'add' | 'edit';
+  initialStatus?: AddRecordStatus;
 };
 
 const preloadImage = (src: string) =>
@@ -33,8 +37,8 @@ const preloadImage = (src: string) =>
   });
 
 export const AddRecordStatusBottomSheet = (props: AddRecordStatusBottomSheetProps) => {
-  const { isbn13, bookDetail, onSubmit } = props;
-  const [selectedStatus, setSelectedStatus] = useState<AddRecordStatus>('COMPLETED');
+  const { isbn13, bookDetail, onSubmit, mode = 'add', initialStatus = 'COMPLETED' } = props;
+  const [selectedStatus, setSelectedStatus] = useState<AddRecordStatus>(initialStatus);
   const [isImageReady, setIsImageReady] = useState<boolean>(false);
   const navigate = useNavigate();
   const { pop } = useLayerStore();
@@ -55,10 +59,10 @@ export const AddRecordStatusBottomSheet = (props: AddRecordStatusBottomSheetProp
     setSelectedStatus(status);
   };
 
-  const handleAddBookClick = () => {
+  const handleSubmit = () => {
     pop();
     if (onSubmit) onSubmit(selectedStatus);
-    if (isbn13) {
+    if (mode === 'add' && isbn13) {
       navigate(`/records/new?isbn13=${isbn13}&status=${selectedStatus}`, {
         state: { bookDetail },
       });
@@ -68,7 +72,7 @@ export const AddRecordStatusBottomSheet = (props: AddRecordStatusBottomSheetProp
   return (
     <BottomSheet>
       <div className="px-mobile">
-        <p className="text-title4">{MSG_ADD_RECORD_STATUS_TITLE}</p>
+        <p className="text-title4">{mode === 'edit' ? MSG_EDIT_RECORD_STATUS_TITLE : MSG_ADD_RECORD_STATUS_TITLE}</p>
         <p className="text-body1 text-neutral-80">{MSG_ADD_RECORD_STATUS_DESCRIPTION}</p>
 
         <ul
@@ -96,8 +100,10 @@ export const AddRecordStatusBottomSheet = (props: AddRecordStatusBottomSheetProp
           })}
         </ul>
 
-        <p className="pb-1 text-caption1 text-information">{MSG_ADD_RECORD_STATUS_HELP}</p>
-        <Button onClick={handleAddBookClick}>{MSG_ADD_RECORD_STATUS_SUBMIT}</Button>
+        {mode === 'add' && <p className="pb-1 text-caption1 text-information">{MSG_ADD_RECORD_STATUS_HELP}</p>}
+        <Button onClick={handleSubmit}>
+          {mode === 'edit' ? MSG_EDIT_RECORD_STATUS_SUBMIT : MSG_ADD_RECORD_STATUS_SUBMIT}
+        </Button>
       </div>
     </BottomSheet>
   );
