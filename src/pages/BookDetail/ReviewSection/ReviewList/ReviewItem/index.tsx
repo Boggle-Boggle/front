@@ -1,4 +1,4 @@
-import { useState, KeyboardEvent } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useLayerStore } from 'stores/useLayerStore';
 
@@ -27,6 +27,10 @@ const MSG_USER_LEVEL_DEFAULT = '빼곡 독서가';
 const MSG_USER_LEVEL_SUFFIX = '권 독서가';
 const MSG_MY_REVIEW_OPTIONS = '삭제';
 
+const SPOILER_TRANSITION_CLASS = 'duration-300 ease-in-out motion-reduce:transition-none';
+const SPOILER_BUTTON_CLASS = `flex w-full items-center justify-center overflow-hidden whitespace-pre-line rounded-lg border border-dashed bg-neutral-0 text-center text-caption1 text-neutral-40 transition-[max-height,min-height,padding,opacity,transform,border-color] ${SPOILER_TRANSITION_CLASS}`;
+const SPOILER_CONTENT_CLASS = `grid transition-[grid-template-rows,opacity] ${SPOILER_TRANSITION_CLASS}`;
+
 export const ReviewItem = (props: ReviewItemProps) => {
   const { review, onToggleLike, isMyReview = false } = props;
   const [isOpenSpoiler, setIsOpenSpoiler] = useState<boolean>(false);
@@ -38,7 +42,6 @@ export const ReviewItem = (props: ReviewItemProps) => {
   const formattedDate = formatToDotDate(createdAt);
   const readBookCount = author.readBookCount ?? author.totalReadCount ?? 0;
   const userLevel = readBookCount > 0 ? `${readBookCount}${MSG_USER_LEVEL_SUFFIX}` : MSG_USER_LEVEL_DEFAULT;
-  const shouldShowContent = !isSpoiler || isOpenSpoiler;
 
   const handleReportClick = () => {
     navigate('/report', { state: { reviewId: id, userId: author.userId } });
@@ -76,12 +79,14 @@ export const ReviewItem = (props: ReviewItemProps) => {
     onToggleLike?.(String(id));
   };
 
-  const handleKeyDownSpoiler = (event: KeyboardEvent<HTMLDivElement>) => {
-    if (event.key === 'Enter' || event.key === ' ') {
-      event.preventDefault();
-      setIsOpenSpoiler(true);
-    }
-  };
+  const spoilerButtonClassName = `${SPOILER_BUTTON_CLASS} ${
+    isOpenSpoiler
+      ? 'pointer-events-none max-h-0 min-h-0 scale-95 border-transparent p-0 opacity-0'
+      : 'max-h-40 min-h-[5.5rem] scale-100 border-neutral-40 p-4 opacity-100'
+  }`;
+  const spoilerContentClassName = `${SPOILER_CONTENT_CLASS} ${
+    isOpenSpoiler ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'
+  }`;
 
   return (
     <li className="py-mobile text-body2">
@@ -102,28 +107,20 @@ export const ReviewItem = (props: ReviewItemProps) => {
       {!isSpoiler ? (
         <p className="whitespace-pre-wrap break-words text-body1">{content}</p>
       ) : (
-        <div className="grid transition-all duration-300">
-          <p
-            className={`col-start-1 row-start-1 whitespace-pre-wrap break-words text-body1 transition-opacity duration-300 ${
-              shouldShowContent ? 'opacity-100' : 'opacity-0'
-            }`}
-          >
-            {content}
-          </p>
-          <div
-            role="button"
-            tabIndex={0}
+        <>
+          <button
+            type="button"
+            disabled={isOpenSpoiler}
+            aria-hidden={isOpenSpoiler}
             onClick={() => setIsOpenSpoiler(true)}
-            onKeyDown={handleKeyDownSpoiler}
-            className={`col-start-1 row-start-1 flex cursor-pointer items-center justify-center overflow-hidden whitespace-pre-line rounded-lg border border-dashed bg-neutral-0 text-center text-caption1 text-neutral-40 transition-all duration-300 ${
-              shouldShowContent
-                ? 'pointer-events-none max-h-0 scale-95 border-transparent p-0 opacity-0'
-                : 'max-h-40 min-h-[5.5rem] scale-100 border-neutral-40 p-4 opacity-100'
-            }`}
+            className={spoilerButtonClassName}
           >
             {MSG_REVIEW_SPOILER}
+          </button>
+          <div aria-hidden={!isOpenSpoiler} className={spoilerContentClassName}>
+            <p className="min-h-0 overflow-hidden whitespace-pre-wrap break-words text-body1">{content}</p>
           </div>
-        </div>
+        </>
       )}
 
       {/* 바텀영역 */}
