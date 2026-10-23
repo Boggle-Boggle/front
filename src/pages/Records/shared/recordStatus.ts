@@ -1,8 +1,8 @@
 import type { AddRecordStatus } from 'types';
 
-import completedImage from 'assets/records/record-status-completed-illustration.svg';
-import droppedImage from 'assets/records/record-status-dropped-illustration.svg';
-import readingImage from 'assets/records/record-status-reading-illustration.svg';
+import completedImage from 'assets/records/record-status-completed-illustration.webp';
+import droppedImage from 'assets/records/record-status-dropped-illustration.webp';
+import readingImage from 'assets/records/record-status-reading-illustration.webp';
 
 export type AddRecordStatusOption = {
   id: AddRecordStatus;
