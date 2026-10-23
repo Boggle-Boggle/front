@@ -90,7 +90,8 @@ const NoteNew = () => {
   };
 
   const isPending = isCreatePending || isUpdatePending;
-  const isSubmitEnabled = title.trim().length > 0 && body.trim().length > 0 && !isPending;
+  const isSubmitEnabled =
+    title.trim().length > 0 && body.trim().length > 0 && !isPending && (!isEditMode || !!editableNote);
 
   const handleSubmitClick = () => {
     if (!isSubmitEnabled) return;
@@ -148,6 +149,7 @@ const NoteNew = () => {
         onBodyChange={handleBodyChange}
         onBodyFocus={handleBodyFocus}
         onBodyBlur={handleBodyBlur}
+        disabled={isEditMode && !editableNote}
       />
 
       <footer className="px-mobile pb-safe-bottom">
