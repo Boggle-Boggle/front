@@ -63,7 +63,7 @@ export const MyInfoTab = ({ readingLog, totalPages }: MyInfoTabProps) => {
 
   const { recordId = '' } = useParams<{ recordId: string }>();
   const { push, pop } = useLayerStore();
-  const { data: bookshelves = [], isLoading: isBookshelvesLoading } = useBookshelvesQuery();
+  const { data: bookshelves = [] } = useBookshelvesQuery();
   const { mutate: updateRecord, isPending: isUpdateRecordPending } = useUpdateReadingLogMutation({
     recordId,
     onSuccess: () => setIsEdit(false),
@@ -218,7 +218,6 @@ export const MyInfoTab = ({ readingLog, totalPages }: MyInfoTabProps) => {
           selectedBookshelfIds={selectedBookshelfIds}
           onOpenGroupEdit={handleOpenGroupEdit}
           onToggleBookshelf={handleToggleBookshelf}
-          isLoading={isBookshelvesLoading}
           isEdit={isEdit}
         />
         <VisibilitySection checked={isPrivate} onChange={handleTogglePrivate} isEdit={isEdit} />
