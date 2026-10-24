@@ -1,4 +1,5 @@
 import { ReactNode } from 'react';
+import { useLayerStore } from 'stores/useLayerStore';
 
 import useLayer from 'hooks/useLayer';
 
@@ -11,7 +12,8 @@ type ModalProps = {
 
 export const Modal = (props: ModalProps) => {
   const { children, className = '' } = props;
-  const { mounted, visible, handleAnimationEnd, handleClose } = useLayer();
+  const { pop } = useLayerStore();
+  const { mounted, visible, handleAnimationEnd } = useLayer();
   const containerClassName = `absolute left-1/2 top-1/2 z-layer w-[calc(100%-2rem)] max-w-mobile -translate-x-1/2 -translate-y-1/2 rounded-[1.25rem] bg-neutral-0 p-5 shadow-[0_0.125rem_1.25rem_rgba(0,0,0,0.16)] ${
     visible ? 'animate-fadeIn' : 'animate-fadeOut'
   } ${className}`;
@@ -19,7 +21,7 @@ export const Modal = (props: ModalProps) => {
   return (
     mounted && (
       <>
-        <LayerBackground onClose={handleClose} />
+        <LayerBackground onClose={pop} />
         <div onAnimationEnd={handleAnimationEnd} className={containerClassName}>
           {children}
         </div>
