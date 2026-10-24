@@ -14,6 +14,8 @@ type NoteEditorFieldsProps = {
   bodyAriaLabel: string;
   onTitleChange: (event: ChangeEvent<HTMLInputElement>) => void;
   onBodyChange: (event: ChangeEvent<HTMLTextAreaElement>) => void;
+  onTitleFocus: () => void;
+  onTitleBlur: () => void;
   onBodyFocus: () => void;
   onBodyBlur: () => void;
   disabled?: boolean;
@@ -34,6 +36,8 @@ export const NoteEditorFields = (props: NoteEditorFieldsProps) => {
     bodyAriaLabel,
     onTitleChange,
     onBodyChange,
+    onTitleFocus,
+    onTitleBlur,
     onBodyFocus,
     onBodyBlur,
     disabled = false,
@@ -45,6 +49,8 @@ export const NoteEditorFields = (props: NoteEditorFieldsProps) => {
         disabled={disabled}
         value={title}
         onChange={onTitleChange}
+        onFocus={onTitleFocus}
+        onBlur={onTitleBlur}
         minLength={titleMinLength}
         maxLength={titleMaxLength}
         placeholder={titlePlaceholder}
