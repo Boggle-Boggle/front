@@ -15,7 +15,6 @@ type BookCoverProps = {
   ratio?: number;
   rounded?: 'sm' | 'lg';
   isAdult?: boolean;
-  isSkeleton?: boolean;
   readingStatusBadge?: ReadingStatusBadge;
   shadowLeftBar?: boolean;
   shadowRightTriangle?: boolean;
@@ -94,7 +93,6 @@ export const BookCover = (props: BookCoverProps) => {
     label = '',
     variant,
     isAdult = false,
-    isSkeleton = false,
     readingStatusBadge,
     shadowLeftBar = false,
     shadowRightTriangle = false,
@@ -103,13 +101,8 @@ export const BookCover = (props: BookCoverProps) => {
     className = '',
     rounded = 'lg',
   } = props;
-  const roundedClass = getBookCoverRoundedClass(rounded);
-
-  if (isSkeleton) {
-    return <div className={`skeleton ${roundedClass} ${className}`} style={{ aspectRatio: ratio }} />;
-  }
-
   const resolvedStyle = getBookCoverStyle(variant, shadowLeftBar, shadowRightTriangle);
+  const roundedClass = getBookCoverRoundedClass(rounded);
   const resolvedUrl = isAdult ? adultContentImage : url || noImage;
   const frameClass =
     resolvedStyle === 'mockup'

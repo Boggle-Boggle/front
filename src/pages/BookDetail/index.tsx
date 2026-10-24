@@ -6,7 +6,6 @@ import BookCover from 'components/BookCover';
 import { BottomButton } from 'components/Button';
 import { Header } from 'components/Header';
 import { ResourceFallback } from 'components/ResourceFallback';
-import { Skeleton } from 'components/Skeleton';
 import { Tabs, TabItem } from 'components/Tabs';
 import { ToggleButton } from 'components/ToggleButton';
 import { IconHeart, IconHeartFilled } from 'components/icons';
@@ -18,6 +17,7 @@ import { useScrollRestoration } from 'hooks/useScrollRestoration';
 import { InfoSection } from './InfoSection';
 import { ReviewSection } from './ReviewSection';
 import { AddRecordStatusBottomSheet } from './components/AddRecordStatusBottomSheet';
+import { BookDetailSkeleton } from './components/BookDetailSkeleton';
 import { useBookDetailQuery } from './queries/useBookDetailQuery';
 import { useToggleInterestedBookMutation } from './queries/useToggleInterestedBookMutation';
 
@@ -71,10 +71,12 @@ export const BookDetail = () => {
 
   const handleChangeDetailTab = setActiveTab;
 
-  if (isBookDetailError || (!isBookDetailLoading && !bookDetail)) return <ResourceFallback type="bookNotFound" />;
+  if (isBookDetailLoading) return <BookDetailSkeleton />;
 
-  const title = isVisible ? bookDetail?.title : '';
-  const isAdultBook = Boolean(bookDetail?.isAdult && bookDetail.hideAdultContent);
+  if (isBookDetailError || !bookDetail) return <ResourceFallback type="bookNotFound" />;
+
+  const title = isVisible ? bookDetail.title : '';
+  const isAdultBook = bookDetail.isAdult && bookDetail.hideAdultContent;
 
   return (
     <>
@@ -84,53 +86,39 @@ export const BookDetail = () => {
         rightBtn={
           <ToggleButton
             variant="iconText"
-            selected={bookDetail?.isInterested ?? false}
+            selected={bookDetail.isInterested}
             onClick={handleWishlistClick}
             icon={IconHeart}
             selectedIcon={IconHeartFilled}
             label="관심 도서"
             className="mr-2"
-            disabled={isBookDetailLoading}
           />
         }
       />
 
       <div ref={scrollContainerRef} className="flex h-full w-full flex-col overflow-y-auto px-mobile pb-safe-bottom">
         <section className="flex flex-col items-center py-5 text-center">
-          <BookCover
-            className="w-28"
-            url={bookDetail?.coverUrl}
-            variant="clear"
-            isAdult={isAdultBook}
-            isSkeleton={isBookDetailLoading}
-          />
+          <BookCover className="w-28" url={bookDetail.coverUrl} variant="clear" isAdult={isAdultBook} />
           <p ref={titleRef} className="pt-4 text-title2">
-            {isBookDetailLoading ? <Skeleton className="h-7 w-52" /> : bookDetail?.title}
+            {bookDetail.title}
           </p>
-          <p className="h-5 text-body2 text-neutral-60">
-            {isBookDetailLoading ? <Skeleton className="h-5 w-28" /> : bookDetail?.author}
-          </p>
+          <p className="text-body2 text-neutral-60">{bookDetail.author}</p>
         </section>
 
         <Tabs tabs={BOOK_DETAIL_TABS} value={activeTab} onChange={handleChangeDetailTab} />
         {activeTab === 'info' && (
           <InfoSection
-            publisher={bookDetail?.publisher}
-            category={bookDetail?.category}
-            publishedDate={bookDetail?.publishedDate}
-            isbn13={bookDetail?.isbn13}
-            description={bookDetail?.description}
+            publisher={bookDetail.publisher}
+            category={bookDetail.category}
+            publishedDate={bookDetail.publishedDate}
+            isbn13={bookDetail.isbn13}
+            description={bookDetail.description}
             isAdultBook={isAdultBook}
-            isLoading={isBookDetailLoading}
           />
         )}
         {activeTab === 'review' && <ReviewSection />}
 
-        {!isKeyboardActive && (
-          <BottomButton onClick={handleAddRecordClick} disabled={isBookDetailLoading}>
-            {MSG_BOOK_DETAIL_ADD_RECORD}
-          </BottomButton>
-        )}
+        {!isKeyboardActive && <BottomButton onClick={handleAddRecordClick}>{MSG_BOOK_DETAIL_ADD_RECORD}</BottomButton>}
       </div>
     </>
   );
