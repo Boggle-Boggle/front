@@ -1,4 +1,5 @@
 import { Empty } from 'components/Empty';
+import { Skeleton } from 'components/Skeleton';
 import { IconPlus } from 'components/icons';
 
 import { SectionTitle } from './SectionTitle';
@@ -10,21 +11,30 @@ type GroupSectionProps = {
   onOpenGroupEdit: () => void;
   onToggleBookshelf: (bookshelfId: number) => void;
   isEdit?: boolean;
+  isLoading?: boolean;
 };
 
 const MSG_GROUP_SECTION_TITLE = '그룹 책장';
 const MSG_NEW_GROUP_ADD = '새 그룹 만들기';
 const MSG_NO_INCLUDED_GROUPS = '그룹 책장이 없어요.';
+const GROUP_PLACEHOLDERS = ['first', 'second', 'third'];
 
 export const GroupSection = (props: GroupSectionProps) => {
-  const { bookshelves, selectedBookshelfIds, onOpenGroupEdit, onToggleBookshelf, isEdit = false } = props;
+  const {
+    bookshelves,
+    selectedBookshelfIds,
+    onOpenGroupEdit,
+    onToggleBookshelf,
+    isEdit = false,
+    isLoading = false,
+  } = props;
 
   const visibleBookshelves = isEdit ? bookshelves : bookshelves.filter((b) => selectedBookshelfIds.includes(b.id));
 
   return (
     <section className="w-full" data-isedit={isEdit}>
       <SectionTitle title={MSG_GROUP_SECTION_TITLE} />
-      <ul className="mt-3 flex flex-col gap-2">
+      <ul className="mt-3 flex flex-col gap-2" aria-busy={isLoading}>
         {isEdit && (
           <li className="w-full">
             <button
@@ -38,26 +48,30 @@ export const GroupSection = (props: GroupSectionProps) => {
           </li>
         )}
 
-        {visibleBookshelves.map((bookshelf) => {
-          const isSelected = selectedBookshelfIds.includes(bookshelf.id);
+        {isLoading ? (
+          GROUP_PLACEHOLDERS.map((item) => <Skeleton key={item} className="h-[2.625rem] w-full rounded-lg" />)
+        ) : !isEdit && visibleBookshelves.length === 0 ? (
+          <Empty text={MSG_NO_INCLUDED_GROUPS} />
+        ) : (
+          visibleBookshelves.map((bookshelf) => {
+            const isSelected = selectedBookshelfIds.includes(bookshelf.id);
 
-          return (
-            <li key={bookshelf.id} className="w-full">
-              <button
-                type="button"
-                onClick={isEdit ? () => onToggleBookshelf(bookshelf.id) : undefined}
-                disabled={!isEdit}
-                className={`flex h-[2.625rem] w-full items-center justify-center rounded-lg border-[1.5px] px-4 text-title4 font-bold transition-all ${
-                  isEdit ? 'cursor-pointer' : 'cursor-default'
-                } ${isSelected ? 'border-primary bg-neutral-0 text-primary' : 'border-neutral-20 text-neutral-80'}`}
-              >
-                {bookshelf.name}
-              </button>
-            </li>
-          );
-        })}
-
-        {!isEdit && visibleBookshelves.length === 0 && <Empty text={MSG_NO_INCLUDED_GROUPS} />}
+            return (
+              <li key={bookshelf.id} className="w-full">
+                <button
+                  type="button"
+                  onClick={isEdit ? () => onToggleBookshelf(bookshelf.id) : undefined}
+                  disabled={!isEdit}
+                  className={`flex h-[2.625rem] w-full items-center justify-center rounded-lg border-[1.5px] px-4 text-title4 font-bold transition-all ${
+                    isEdit ? 'cursor-pointer' : 'cursor-default'
+                  } ${isSelected ? 'border-primary bg-neutral-0 text-primary' : 'border-neutral-20 text-neutral-80'}`}
+                >
+                  {bookshelf.name}
+                </button>
+              </li>
+            );
+          })
+        )}
       </ul>
     </section>
   );

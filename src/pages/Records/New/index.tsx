@@ -59,7 +59,7 @@ export const NewRecord = () => {
   const status = customStatus || getAddRecordStatus(searchParams.get('status'));
   const isCompletedStatus = status === 'COMPLETED';
 
-  const { data: bookshelves = [] } = useBookshelvesQuery();
+  const { data: bookshelves = [], isLoading: isBookshelvesLoading } = useBookshelvesQuery();
   const { isPending: isCreateCustomReadingLogPending, mutate: saveCustomReadingLog } =
     useCreateCustomReadingLogMutation();
   const { isPending: isCreateReadingLogPending, mutate: saveReadingLog } = useCreateReadingLogMutation();
@@ -217,6 +217,7 @@ export const NewRecord = () => {
           selectedBookshelfIds={selectedBookshelfIds}
           onOpenGroupEdit={handleOpenGroupEdit}
           onToggleBookshelf={handleToggleBookshelf}
+          isLoading={isBookshelvesLoading}
           isEdit
         />
         <VisibilitySection checked={isHidden} onChange={handleTogglePrivate} isEdit />

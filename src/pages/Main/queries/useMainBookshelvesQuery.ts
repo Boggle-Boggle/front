@@ -8,6 +8,7 @@ export const useMainBookshelvesQuery = () => {
   return useQuery({
     queryKey: ['bookshelves'],
     queryFn: getBookshelves,
+    staleTime: Infinity,
     throwOnError: shouldThrowToErrorBoundary,
   });
 };
