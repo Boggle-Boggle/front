@@ -1,5 +1,3 @@
-import profileImage from 'assets/my-page/default-profile-illustration.webp';
-
 const MY_PAGE_STAT_SKELETON_ITEMS = Array.from({ length: 3 }, (_, index) => `my-page-stat-skeleton-${index}`);
 const MY_PAGE_MENU_SKELETON_ITEMS = Array.from({ length: 5 }, (_, index) => `my-page-menu-skeleton-${index}`);
 
@@ -16,16 +14,7 @@ export const MyPageSkeleton = () => {
         <div className="relative mx-6 mt-6 flex h-[19.3125rem] flex-col items-center justify-center overflow-hidden rounded-3xl bg-neutral-80/20 px-4 text-neutral-0 shadow-[inset_0.125rem_0.125rem_0.125rem_rgba(255,255,255,0.6)] backdrop-blur-[1.25rem]">
           <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(255,255,255,0.18)_0%,rgba(255,255,255,0)_42%)]" />
 
-          <div className="size-24 overflow-hidden rounded-full bg-neutral-0">
-            <img
-              src={profileImage}
-              alt=""
-              aria-hidden
-              loading="eager"
-              fetchPriority="high"
-              className="size-full object-cover"
-            />
-          </div>
+          <div className="skeleton size-24 rounded-full" />
           <div className="skeleton mt-[0.625rem] h-7 w-32" />
           <div className="skeleton mt-[0.125rem] h-4 w-28" />
 
