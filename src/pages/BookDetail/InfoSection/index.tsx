@@ -1,15 +1,17 @@
 import { Empty } from 'components/Empty';
 import Highlight from 'components/Highlight';
+import { Skeleton } from 'components/Skeleton';
 
 import adultContentGuideImage from 'assets/book-detail/adult-content-guide-illustration.webp';
 
 type InfoSectionProps = {
-  publisher: string;
-  category: string;
-  publishedDate: string;
-  isbn13: string;
-  description: string | null;
+  publisher?: string;
+  category?: string;
+  publishedDate?: string;
+  isbn13?: string;
+  description?: string | null;
   isAdultBook?: boolean;
+  isLoading?: boolean;
 };
 
 const MSG_BOOK_DETAIL_INFO_TITLE = '작품 정보 ';
@@ -19,7 +21,7 @@ const MSG_BOOK_DETAIL_ADULT_CONTENT =
   "해당 작품은 민감한 콘텐츠예요.\n열람을 원하시면 [설정] > [콘텐츠 설정]에서 '민감한 콘텐츠 가리기'를 꺼 주세요.";
 
 export const InfoSection = (props: InfoSectionProps) => {
-  const { publisher, category, publishedDate, isbn13, description, isAdultBook = false } = props;
+  const { publisher, category, publishedDate, isbn13, description, isAdultBook = false, isLoading = false } = props;
   const hasDescription = Boolean(description?.trim());
   const bookInfoItems = [
     { label: '출판사', value: publisher },
@@ -35,13 +37,23 @@ export const InfoSection = (props: InfoSectionProps) => {
         {bookInfoItems.map((item) => (
           <li key={item.label} className="pb-1 text-caption1 text-neutral-80">
             <span className="text-body2">{item.label} : </span>
-            <span className="break-words">{item.value}</span>
+            {isLoading ? (
+              <Skeleton className="h-4 w-28" />
+            ) : (
+              <span className="break-words">{item.value}</span>
+            )}
           </li>
         ))}
       </ul>
       <Highlight text={MSG_BOOK_DETAIL_PLOT_TITLE} className="w-fit pt-6 text-title4" />
       <div className="pt-3">
-        {isAdultBook ? (
+        {isLoading ? (
+          <div className="flex flex-col gap-2">
+            <Skeleton className="h-4 w-full" />
+            <Skeleton className="h-4 w-11/12" />
+            <Skeleton className="h-4 w-4/5" />
+          </div>
+        ) : isAdultBook ? (
           <>
             <img className="m-auto size-[13.4375rem]" src={adultContentGuideImage} alt="" />
             <p className="whitespace-pre-line break-keep text-caption1 text-neutral-80">
