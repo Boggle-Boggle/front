@@ -16,11 +16,11 @@ export default defineConfig({
   ],
   server: {
     https: true,
-    host: 'front.bbaegok.store',
+    host: 'local.bbaegok.com',
     port: 5173,
 
     cors: {
-      origin: 'front.bbaegok.store',
+      origin: 'local.bbaegok.com',
       credentials: true,
     },
   },
