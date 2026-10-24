@@ -4,12 +4,12 @@ import useLayerStore from 'stores/useLayerStore';
 
 import { BookCase } from 'components/BookCase';
 import { Searchbar } from 'components/Searchbar';
+import { Skeleton } from 'components/Skeleton';
 import { IconArrowDown } from 'components/icons';
 
 import { useScrollRestoration } from 'hooks/useScrollRestoration';
 
 import { MainPeriodModal } from './components/MainPeriodModal';
-import { MainSkeleton } from './components/MainSkeleton';
 import { useMainBookshelvesQuery } from './queries/useMainBookshelvesQuery';
 import { useMainReadingLogsQuery } from './queries/useMainReadingLogsQuery';
 import type { MainPeriodFilterType } from './types';
@@ -91,8 +91,6 @@ const Main = () => {
 
   const displayBookCount = processedBooks.length;
 
-  if (isReadingLogsLoading) return <MainSkeleton />;
-
   return (
     <div className="relative h-full overflow-hidden bg-secondary">
       <div className="relative z-background flex h-full flex-col px-mobile pt-safe-top">
@@ -110,13 +108,18 @@ const Main = () => {
 
           <IconArrowDown className="ml-1 size-icon-sm text-neutral-60" />
         </button>
-        <p className="mb-[1.375rem] text-body1 text-neutral-60">
-          {MSG_MAIN_BOOKCASE_COUNT(filledShelfCount, displayBookCount)}
+        <p className="mb-[1.375rem] h-5 text-body1 text-neutral-60">
+          {isReadingLogsLoading ? (
+            <Skeleton className="h-5 w-24" />
+          ) : (
+            MSG_MAIN_BOOKCASE_COUNT(filledShelfCount, displayBookCount)
+          )}
         </p>
         <div ref={scrollRef} className="scrollbar-hide h-0 flex-grow overflow-y-auto pb-safe-bottom">
           <div className="flex min-h-full flex-col justify-end pb-[4.5rem]">
             <BookCase
               books={processedBooks}
+              isSkeleton={isReadingLogsLoading}
               onFilledShelfCountChange={setFilledShelfCount}
               onBookClick={(id) => navigate(`/records/${id}`)}
             />
