@@ -5,7 +5,6 @@ import { useToastStore } from 'stores/useToastStore';
 import { TextButton } from 'components/Button';
 import { Empty } from 'components/Empty';
 import { InfiniteScrollTrigger } from 'components/InfiniteScrollTrigger';
-import { Skeleton } from 'components/Skeleton';
 import { IconArrowDown } from 'components/icons';
 import { useBookReviewsInfiniteQuery } from 'pages/BookDetail/queries/useBookReviewsInfiniteQuery';
 import { useToggleBookReviewLikeMutation } from 'pages/BookDetail/queries/useToggleBookReviewLikeMutation';
@@ -13,7 +12,6 @@ import { useToggleBookReviewLikeMutation } from 'pages/BookDetail/queries/useTog
 import { useInfiniteScrollObserver } from 'hooks/useInfiniteScrollObserver';
 
 import { ReviewItem } from './ReviewItem';
-import { ReviewListSkeleton } from './ReviewListSkeleton';
 import { ReviewSortActionSheet } from './SortActionSheet';
 import { REVIEW_SORT_OPTIONS, type ReviewSortType } from '../../api';
 
@@ -37,7 +35,6 @@ export const ReviewList = ({ isbn13 }: ReviewListProps) => {
     hasNextPage,
     isFetchingNextPage,
     isLoading: isBookReviewsLoading,
-    isFetching: isBookReviewsFetching,
   } = useBookReviewsInfiniteQuery(isbn13, sortType);
   const toggleBookReviewLikeMutation = useToggleBookReviewLikeMutation(isbn13);
 
@@ -45,7 +42,7 @@ export const ReviewList = ({ isbn13 }: ReviewListProps) => {
   const totalReviewCount = bookReviews?.pages[0]?.totalReviewCount || 0;
 
   const { observerTarget } = useInfiniteScrollObserver({
-    enabled: Boolean(hasNextPage && !isBookReviewsFetching),
+    enabled: Boolean(hasNextPage && !isFetchingNextPage),
     onIntersect: fetchNextPage,
   });
 
@@ -74,9 +71,8 @@ export const ReviewList = ({ isbn13 }: ReviewListProps) => {
   return (
     <>
       <div className="flex items-center justify-between pb-3 pt-7">
-        <p className="flex items-center gap-1 text-title4">
-          {MSG_REVIEW_PAGE_TITLE}
-          {isBookReviewsLoading ? <Skeleton className="h-5 w-8" /> : <span>({totalReviewCount})</span>}
+        <p className="text-title4">
+          {MSG_REVIEW_PAGE_TITLE} ({totalReviewCount})
         </p>
 
         <TextButton
@@ -88,9 +84,7 @@ export const ReviewList = ({ isbn13 }: ReviewListProps) => {
         />
       </div>
 
-      {isBookReviewsLoading ? (
-        <ReviewListSkeleton />
-      ) : totalReviewCount === 0 ? (
+      {totalReviewCount === 0 && !isBookReviewsLoading ? (
         <Empty text={MSG_REVIEW_EMPTY} />
       ) : (
         <>
