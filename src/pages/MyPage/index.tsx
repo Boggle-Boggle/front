@@ -4,7 +4,7 @@ import { IconBook, IconGraduation, IconNote } from 'components/icons';
 
 import { useScrollRestoration } from 'hooks/useScrollRestoration';
 
-import profileImage from 'assets/my-page/default-profile-illustration.svg';
+import profileImage from 'assets/my-page/default-profile-illustration.webp';
 
 import SettingListItem from './SettingListItem';
 import type { MyPageProfileResponse } from './api';

@@ -1,8 +1,8 @@
-import { TextButton } from 'components/Button';
+// import { TextButton } from 'components/Button';
 import { Divider } from 'components/Divider';
 import { SideBar } from 'components/Layer/SideBar';
 import { Radio } from 'components/Radio';
-import { IconCirclePlus } from 'components/icons';
+// import { IconCirclePlus } from 'components/icons';
 
 import type { ReadingLogStatus } from 'types';
 
@@ -25,7 +25,7 @@ type FilterSidebarProps = {
 
 const MSG_MYBOOKS_FILTER_TITLE = '보기 설정하기';
 const MSG_MYBOOKS_FILTER_GROUP_VIEW = '그룹 책장 보기';
-const MSG_MYBOOKS_FILTER_CREATE_GROUP = '새 그룹 만들기';
+// const MSG_MYBOOKS_FILTER_CREATE_GROUP = '새 그룹 만들기';
 const NAME_MYBOOKS_FILTER_RADIO = 'mybooks-filter';
 
 export const FilterSidebar = (props: FilterSidebarProps) => {
@@ -48,7 +48,7 @@ export const FilterSidebar = (props: FilterSidebarProps) => {
     onApplyFilter('ALL', nextBookshelfId);
   };
 
-  const handleCreateGroup = () => undefined;
+  // const handleCreateGroup = () => undefined;
 
   return (
     <SideBar>
@@ -110,13 +110,13 @@ export const FilterSidebar = (props: FilterSidebarProps) => {
             <div className="py-3 text-body1 text-neutral-60">생성된 그룹책장이 없어요.</div>
           )}
 
-          <TextButton
+          {/* <TextButton
             text={MSG_MYBOOKS_FILTER_CREATE_GROUP}
             leftIcon={IconCirclePlus}
             onClick={handleCreateGroup}
             className="justify-starts my-2 flex w-full rounded-lg bg-neutral-20 py-2 text-title3 text-neutral-60"
             size="lg"
-          />
+          /> */}
         </div>
       </div>
     </SideBar>

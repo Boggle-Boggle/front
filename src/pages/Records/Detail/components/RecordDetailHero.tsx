@@ -9,7 +9,7 @@ import { IconEllipsisVertical } from 'components/icons';
 
 import { useHeaderTitleByScroll } from 'hooks/useHeaderTitleByScroll';
 
-import noImage from 'assets/book/book-cover-placeholder.svg';
+import noImage from 'assets/book/book-cover-placeholder.webp';
 
 import { RecordMenuActionSheet } from './RecordMenuActionSheet';
 import { useHeroHeaderContrast } from './useHeroHeaderContrast';

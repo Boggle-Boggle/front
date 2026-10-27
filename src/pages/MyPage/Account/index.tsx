@@ -8,7 +8,7 @@ import { Button } from 'components/Button';
 import { Header } from 'components/Header';
 import { IconPen } from 'components/icons';
 
-import DownloadBackupModal from './DownloadBackupModal';
+// import DownloadBackupModal from './DownloadBackupModal';
 import LogoutConfirmModal from './LogoutConfirmModal';
 import { AccountSkeleton } from './components/AccountSkeleton';
 import { useChangeNicknameMutation } from './queries/useChangeNicknameMutation';
@@ -23,12 +23,12 @@ const MSG_ACCOUNT_LOGIN_STATUS = '로그인 중';
 const MSG_ACCOUNT_NICKNAME_CHANGE = '닉네임 변경';
 const MSG_ACCOUNT_NICKNAME_CHANGE_COMPLETE = '변경 완료!';
 const MSG_ACCOUNT_NICKNAME_INPUT_LABEL = '닉네임 입력';
-const MSG_ACCOUNT_RECORD_DOWNLOAD = '빼곡 기록 다운로드';
-const MSG_ACCOUNT_RECORD_BACKUP_DOWNLOAD = '백업 기록 다운로드';
+// const MSG_ACCOUNT_RECORD_DOWNLOAD = '빼곡 기록 다운로드';
+// const MSG_ACCOUNT_RECORD_BACKUP_DOWNLOAD = '백업 기록 다운로드';
 const MSG_ACCOUNT_LOGIN_MANAGEMENT = '로그인 관리';
 const MSG_ACCOUNT_LOGOUT = '이 계정에서 로그아웃 하기';
 const MSG_ACCOUNT_DELETE = '이 계정을 삭제하기';
-const LAYER_ID_ACCOUNT_DOWNLOAD_BACKUP_MODAL = 'account-download-backup-modal';
+// const LAYER_ID_ACCOUNT_DOWNLOAD_BACKUP_MODAL = 'account-download-backup-modal';
 const LAYER_ID_ACCOUNT_LOGOUT_CONFIRM_MODAL = 'account-logout-confirm-modal';
 
 const Account = () => {
@@ -86,12 +86,13 @@ const Account = () => {
     );
   };
 
-  const handleOpenDownloadBackupModal = () => {
-    push({
-      id: LAYER_ID_ACCOUNT_DOWNLOAD_BACKUP_MODAL,
-      component: <DownloadBackupModal onCancel={pop} onConfirm={pop} />,
-    });
-  };
+  // 백업 기록 다운로드는 이번 배포 범위에서 제외한다.
+  // const handleOpenDownloadBackupModal = () => {
+  //   push({
+  //     id: LAYER_ID_ACCOUNT_DOWNLOAD_BACKUP_MODAL,
+  //     component: <DownloadBackupModal onCancel={pop} onConfirm={pop} />,
+  //   });
+  // };
 
   const handleOpenLogoutConfirmModal = () => {
     push({
@@ -155,10 +156,11 @@ const Account = () => {
           </Button>
         </div>
 
+        {/* 백업 기록 다운로드는 이번 배포 범위에서 제외한다.
         <SectionHeader title={MSG_ACCOUNT_RECORD_DOWNLOAD} />
         <div className="flex flex-col gap-2 px-mobile pb-8">
           <SectionButton onClick={handleOpenDownloadBackupModal}>{MSG_ACCOUNT_RECORD_BACKUP_DOWNLOAD}</SectionButton>
-        </div>
+        </div> */}
 
         <SectionHeader title={MSG_ACCOUNT_LOGIN_MANAGEMENT} />
         <div className="flex flex-col gap-2 px-mobile">

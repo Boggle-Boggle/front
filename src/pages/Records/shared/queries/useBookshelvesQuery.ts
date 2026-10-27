@@ -6,5 +6,6 @@ export const useBookshelvesQuery = () => {
   return useQuery({
     queryKey: BOOKSHELVES_QUERY_KEY,
     queryFn: getBookshelves,
+    staleTime: Infinity,
   });
 };

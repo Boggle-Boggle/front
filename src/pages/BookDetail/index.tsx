@@ -11,6 +11,7 @@ import { ToggleButton } from 'components/ToggleButton';
 import { IconHeart, IconHeartFilled } from 'components/icons';
 
 import { useHeaderTitleByScroll } from 'hooks/useHeaderTitleByScroll';
+import { useKeyboard } from 'hooks/useKeyboard';
 import { useScrollRestoration } from 'hooks/useScrollRestoration';
 
 import { InfoSection } from './InfoSection';
@@ -50,6 +51,7 @@ export const BookDetail = () => {
 
   const scrollContainerRef = useScrollRestoration<HTMLDivElement>({ isReady: bookDetail !== undefined });
   const { isVisible } = useHeaderTitleByScroll({ rootRef: scrollContainerRef, targetRef: titleRef });
+  const { isKeyboardActive } = useKeyboard();
 
   const handleWishlistClick = () => {
     if (!bookDetail) return;
@@ -116,7 +118,7 @@ export const BookDetail = () => {
         )}
         {activeTab === 'review' && <ReviewSection />}
 
-        <BottomButton onClick={handleAddRecordClick}>{MSG_BOOK_DETAIL_ADD_RECORD}</BottomButton>
+        {!isKeyboardActive && <BottomButton onClick={handleAddRecordClick}>{MSG_BOOK_DETAIL_ADD_RECORD}</BottomButton>}
       </div>
     </>
   );

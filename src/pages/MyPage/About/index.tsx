@@ -4,6 +4,7 @@ import { Header } from 'components/Header';
 
 import { TERM_ID, TERMS_OF_SERVICE_TITLE, PRIVACY_POLICY_TITLE } from 'constants/terms';
 
+import { version as serviceVersion } from '../../../../package.json';
 import { SectionHeader } from '../shared/SectionHeader';
 import { SectionLink } from '../shared/SectionLink';
 import { SectionValue } from '../shared/SectionValue';
@@ -11,8 +12,7 @@ import { SectionValue } from '../shared/SectionValue';
 const MSG_ABOUT_TITLE = '앱 정보';
 const MSG_ABOUT_TERMS_SECTION = '어플 사용 약관';
 const MSG_ABOUT_APP_INFO_SECTION = '앱 정보';
-const MSG_ABOUT_VERSION = '버전 정보';
-const MSG_ABOUT_VERSION_VALUE = '버전 1.0.6';
+const MSG_ABOUT_VERSION = '서비스 버전';
 // todo: 추후배포
 // const MSG_ABOUT_WEB = '웹으로 이동하기';
 
@@ -37,7 +37,7 @@ const About = () => {
         />
 
         <SectionHeader title={MSG_ABOUT_APP_INFO_SECTION} />
-        <SectionValue label={MSG_ABOUT_VERSION} value={MSG_ABOUT_VERSION_VALUE} />
+        <SectionValue label={MSG_ABOUT_VERSION} value={serviceVersion} />
         {/* todo: 추후배포 */}
         {/* <SectionLink label={MSG_ABOUT_WEB} onClick={() => {}} /> */}
       </div>

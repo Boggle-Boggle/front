@@ -5,11 +5,12 @@ import Highlight from 'components/Highlight';
 import { Loading } from 'components/Loading';
 import { IconHeadphone } from 'components/icons';
 
-import loginImg from 'assets/login/login-illustration.png';
+import loginImg from 'assets/login/login-illustration.webp';
 import appleLogoImg from 'assets/logo/apple.png';
 import googleLogoImg from 'assets/logo/google.png';
 import kakaoLogoImg from 'assets/logo/kakao.png';
 
+import { EXTERNAL_LINK } from 'constants/externalLinks';
 import { STORAGE_KEY } from 'constants/storage';
 
 import { getOAuthStartUrl } from './api';
@@ -116,7 +117,7 @@ const Login = () => {
 
       {/* 가입/로그인 오류 문의 */}
       <a
-        href={import.meta.env.VITE_INQUIRY_GOOGLE_FORM_URL}
+        href={EXTERNAL_LINK.INQUIRY}
         className="absolute bottom-[calc(env(safe-area-inset-bottom)+0.625rem)] left-1/2 flex -translate-x-1/2 items-center gap-0.5 text-caption2 text-neutral-60"
       >
         <IconHeadphone className="size-icon-sm" />

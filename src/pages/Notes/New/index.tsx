@@ -34,7 +34,7 @@ const NoteNew = () => {
 
   const [title, setTitle] = useState<string>('');
   const [body, setBody] = useState<string>('');
-  const [isBodyFocused, setIsBodyFocused] = useState<boolean>(false);
+  const [isEditorFocused, setIsEditorFocused] = useState<boolean>(false);
   const bodyTextareaRef = useRef<HTMLTextAreaElement>(null);
 
   const locationState = location.state as NoteNewLocationState | undefined;
@@ -70,9 +70,9 @@ const NoteNew = () => {
     setBody(editableNote.body);
   }, [editableNote]);
 
-  const handleBodyFocus = () => setIsBodyFocused(true);
+  const handleEditorFocus = () => setIsEditorFocused(true);
 
-  const handleBodyBlur = () => setIsBodyFocused(false);
+  const handleEditorBlur = () => setIsEditorFocused(false);
 
   const handleBackClick = () => {
     if (!readingLogId) {
@@ -85,12 +85,13 @@ const NoteNew = () => {
 
   const handleKeyboardDismissPointerDown = (event: PointerEvent<HTMLButtonElement>) => {
     event.preventDefault(); // 버튼 터치로 포커스가 다시 이동하지 않도록 기본 동작 방지
-    bodyTextareaRef.current?.blur(); // 본문 입력창 포커스 해제
-    setIsBodyFocused(false); // 키보드 닫기 버튼 숨김 처리
+    if (document.activeElement instanceof HTMLElement) document.activeElement.blur();
+    setIsEditorFocused(false); // 키보드 닫기 버튼 숨김 처리
   };
 
   const isPending = isCreatePending || isUpdatePending;
-  const isSubmitEnabled = title.trim().length > 0 && body.trim().length > 0 && !isPending;
+  const isSubmitEnabled =
+    title.trim().length > 0 && body.trim().length > 0 && !isPending && (!isEditMode || !!editableNote);
 
   const handleSubmitClick = () => {
     if (!isSubmitEnabled) return;
@@ -146,15 +147,18 @@ const NoteNew = () => {
         bodyAriaLabel={MSG_NOTE_NEW_BODY_ARIA_LABEL}
         onTitleChange={handleTitleChange}
         onBodyChange={handleBodyChange}
-        onBodyFocus={handleBodyFocus}
-        onBodyBlur={handleBodyBlur}
+        onTitleFocus={handleEditorFocus}
+        onTitleBlur={handleEditorBlur}
+        onBodyFocus={handleEditorFocus}
+        onBodyBlur={handleEditorBlur}
+        disabled={isEditMode && !editableNote}
       />
 
       <footer className="px-mobile pb-safe-bottom">
         <p className="mb-1 text-right text-caption2 text-neutral-60">{noteCharacterCountText}</p>
       </footer>
 
-      {isBodyFocused && (
+      {isEditorFocused && (
         <KeyboardDismissButton
           label={MSG_NOTE_NEW_DISMISS_KEYBOARD}
           bottomInset={bottomInset}
