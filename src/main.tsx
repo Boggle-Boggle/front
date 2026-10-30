@@ -5,6 +5,7 @@ import ReactDOM from 'react-dom/client';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import { DeviceProvider } from 'stores/useDeviceStore';
 
+import UpdateRequiredModal from 'components/UpdateRequiredModal';
 import Auth from 'pages/Auth';
 import BookDetail from 'pages/BookDetail';
 import Edit from 'pages/Edit';
@@ -71,6 +72,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         <Suspense fallback={<Loading />}>
           <RouterProvider router={router} />
         </Suspense>
+        <UpdateRequiredModal />
       </QueryClientProvider>
     </DeviceProvider>
   </React.StrictMode>,
