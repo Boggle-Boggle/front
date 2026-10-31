@@ -6,7 +6,7 @@ import { useDeleteReadingLogMutation } from '../queries/useDeleteReadingLogMutat
 
 type RecordDeleteConfirmModalProps = {
   recordId: string | number;
-  isbn13?: string | null;
+  itemId?: number | null;
 };
 
 const MSG_RECORD_ACTION_DELETE_CONFIRM_TITLE = '독서기록을 삭제하시겠어요?';
@@ -16,9 +16,9 @@ const MSG_RECORD_ACTION_CANCEL = '아니오';
 const MSG_RECORD_ACTION_CONFIRM = '삭제합니다';
 
 export const RecordDeleteConfirmModal = (props: RecordDeleteConfirmModalProps) => {
-  const { recordId, isbn13 } = props;
+  const { recordId, itemId } = props;
   const { pop } = useLayerStore();
-  const { mutate: deleteLog, isPending: isDeleteLogPending } = useDeleteReadingLogMutation({ recordId, isbn13 });
+  const { mutate: deleteLog, isPending: isDeleteLogPending } = useDeleteReadingLogMutation({ recordId, itemId });
 
   const handleClose = () => pop();
 

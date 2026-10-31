@@ -3,8 +3,8 @@ import type { ApiSuccessResponse } from 'api.types';
 
 export interface PopularBookItem {
   rank: number;
-  bookId: number;
-  isbn13: string;
+  itemId: number;
+  isbn13: string | null;
   title: string;
   author: string;
   coverUrl: string | null;

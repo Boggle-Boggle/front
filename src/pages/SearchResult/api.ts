@@ -9,7 +9,8 @@ interface GetSearchBooksParams extends Omit<PaginationParams, 'size'> {
 }
 
 export interface SearchBook {
-  isbn13: string;
+  itemId: number;
+  isbn13: string | null;
   title: string;
   author: string;
   publisher: string;

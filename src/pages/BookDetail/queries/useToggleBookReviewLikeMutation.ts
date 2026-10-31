@@ -13,7 +13,7 @@ type ToggleBookReviewLikeParams = {
   isLiked: boolean;
 };
 
-export const useToggleBookReviewLikeMutation = (isbn13: string) => {
+export const useToggleBookReviewLikeMutation = (itemId: number) => {
   const queryClient = useQueryClient();
   const { addToast } = useToastStore();
 
@@ -21,7 +21,7 @@ export const useToggleBookReviewLikeMutation = (isbn13: string) => {
     mutationFn: ({ reviewId, isLiked }: ToggleBookReviewLikeParams) =>
       isLiked ? unlikeBookReview(reviewId) : likeBookReview(reviewId),
     onSuccess: (_data, { isLiked }) => {
-      queryClient.invalidateQueries({ queryKey: ['books', isbn13, 'reviews'] });
+      queryClient.invalidateQueries({ queryKey: ['books', itemId, 'reviews'] });
       addToast({ description: isLiked ? MSG_REVIEW_UNLIKE_SUCCESS : MSG_REVIEW_LIKE_SUCCESS, type: 'success' });
     },
     onError: () => addToast({ description: MSG_REVIEW_LIKE_FAILED, type: 'error' }),

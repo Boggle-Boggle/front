@@ -75,7 +75,12 @@ const Login = () => {
       <header className="relative flex flex-col items-center text-neutral-80">
         <Highlight text={MSG_LOGIN_TITLE_MAIN} className="text-h3" />
         <h1 className="mt-1 text-h1">{MSG_LOGIN_TITLE_SUB}</h1>
-        <img src={loginImg} alt="로그인 화면 일러스트" className="absolute top-24 z-background h-auto w-full" />
+        <img
+          src={loginImg}
+          alt="로그인 화면 일러스트"
+          fetchPriority="high"
+          className="absolute top-24 z-background h-auto w-full"
+        />
       </header>
 
       {/* SNS 로 간편로그인 */}

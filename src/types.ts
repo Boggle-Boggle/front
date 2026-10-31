@@ -60,11 +60,12 @@ export type CustomBookDto = Partial<Omit<Book, 'isAdult' | 'category' | 'publish
  * 백엔드 v2 표준 공용 도서(Book) 스펙 인터페이스
  */
 export interface Book {
+  itemId: number;
   title: string;
   author: string;
   publisher: string;
   publishedDate: string;
-  isbn13: string;
+  isbn13: string | null;
   coverUrl: string | null;
   description: string | null;
   category: string;

@@ -98,9 +98,9 @@ export const NewRecord = () => {
 
     if (!bookDetail) return;
 
-    // [분기 B] 일반 검색(알라딘) 연동 도서 정보로 진입하여 기록을 추가하는 경우
+    // [분기 B] 검색 도서 정보로 진입하여 기록을 추가하는 경우
     saveReadingLog({
-      isbn13: bookDetail.isbn13,
+      itemId: bookDetail.itemId,
       mediaType: bookDetail.mediaType,
       status,
       rating,

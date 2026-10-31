@@ -11,11 +11,11 @@ const MSG_DELETE_READING_LOG_FAILED = '삭제에 실패했어요. 다시 시도�
 
 type UseDeleteReadingLogMutationParams = {
   recordId: string | number;
-  isbn13?: string | null;
+  itemId?: number | null;
 };
 
 export const useDeleteReadingLogMutation = (params: UseDeleteReadingLogMutationParams) => {
-  const { recordId, isbn13 } = params;
+  const { recordId, itemId } = params;
   const { pop } = useLayerStore();
   const { addToast } = useToastStore();
   const queryClient = useQueryClient();
@@ -28,7 +28,7 @@ export const useDeleteReadingLogMutation = (params: UseDeleteReadingLogMutationP
 
       queryClient.invalidateQueries({ queryKey: ['reading-logs'] });
       queryClient.invalidateQueries({ queryKey: ['library'] });
-      if (isbn13) queryClient.invalidateQueries({ queryKey: ['books', 'detail', isbn13] });
+      if (itemId) queryClient.invalidateQueries({ queryKey: ['books', 'detail', itemId] });
 
       addToast({ type: 'success', description: MSG_DELETE_READING_LOG_SUCCESS });
       navigate('/library', { replace: true });

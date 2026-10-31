@@ -28,8 +28,8 @@ export const RealTimePopularSection = () => {
       <section className="relative w-full pb-10">
         <ol className="scrollbar-hide grid snap-x snap-mandatory scroll-px-mobile grid-flow-col grid-rows-3 gap-x-2 gap-y-4 overflow-x-auto scroll-smooth px-mobile">
           {books.map((book) => (
-            <li key={book.isbn13} className="flex h-28 w-80 snap-start items-center">
-              <Link to={`/books/${book.isbn13}`} className="flex w-full items-center">
+            <li key={book.itemId} className="flex h-28 w-80 snap-start items-center">
+              <Link to={`/books/${book.itemId}`} className="flex w-full items-center">
                 <span className="flex w-10 shrink-0 items-center justify-center text-title3">
                   {getRankLabel(book.rank)}
                 </span>

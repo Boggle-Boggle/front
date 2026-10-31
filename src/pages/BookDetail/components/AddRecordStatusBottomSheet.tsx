@@ -16,7 +16,7 @@ const MSG_EDIT_RECORD_STATUS_TITLE = '독서 상태를 수정할까요?';
 const MSG_EDIT_RECORD_STATUS_SUBMIT = '수정하기';
 
 type AddRecordStatusBottomSheetProps = {
-  isbn13?: string;
+  itemId?: number;
   bookDetail?: BookDetail;
   onSubmit?: (status: AddRecordStatus) => void;
   mode?: 'add' | 'edit';
@@ -24,7 +24,7 @@ type AddRecordStatusBottomSheetProps = {
 };
 
 export const AddRecordStatusBottomSheet = (props: AddRecordStatusBottomSheetProps) => {
-  const { isbn13, bookDetail, onSubmit, mode = 'add', initialStatus = 'COMPLETED' } = props;
+  const { itemId, bookDetail, onSubmit, mode = 'add', initialStatus = 'COMPLETED' } = props;
   const [selectedStatus, setSelectedStatus] = useState<AddRecordStatus>(initialStatus);
   const navigate = useNavigate();
   const { pop } = useLayerStore();
@@ -36,8 +36,8 @@ export const AddRecordStatusBottomSheet = (props: AddRecordStatusBottomSheetProp
   const handleSubmit = () => {
     pop();
     if (onSubmit) onSubmit(selectedStatus);
-    if (mode === 'add' && isbn13) {
-      navigate(`/records/new?isbn13=${isbn13}&status=${selectedStatus}`, {
+    if (mode === 'add' && itemId) {
+      navigate(`/records/new?itemId=${itemId}&status=${selectedStatus}`, {
         state: { bookDetail },
       });
     }

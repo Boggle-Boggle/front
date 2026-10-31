@@ -40,13 +40,14 @@ const BOOK_DETAIL_TABS: TabItem<DetailTabType>[] = [
 ];
 
 export const BookDetail = () => {
-  const { isbn13 = '' } = useParams();
+  const { itemId = '' } = useParams();
+  const parsedItemId = Number(itemId);
   const { push } = useLayerStore();
 
   const [activeTab, setActiveTab] = useState<DetailTabType>('info');
   const titleRef = useRef<HTMLParagraphElement>(null);
 
-  const { data: bookDetail, isLoading: isBookDetailLoading, isError: isBookDetailError } = useBookDetailQuery(isbn13);
+  const { data: bookDetail, isLoading: isBookDetailLoading, isError: isBookDetailError } = useBookDetailQuery(parsedItemId);
   const { mutate: toggleInterestedBook } = useToggleInterestedBookMutation();
 
   const scrollContainerRef = useScrollRestoration<HTMLDivElement>({ isReady: bookDetail !== undefined });
@@ -57,7 +58,7 @@ export const BookDetail = () => {
     if (!bookDetail) return;
 
     toggleInterestedBook({
-      isbn13: bookDetail.isbn13,
+      itemId: bookDetail.itemId,
       isInterested: bookDetail.isInterested,
     });
   };
@@ -65,7 +66,7 @@ export const BookDetail = () => {
   const handleAddRecordClick = () => {
     push({
       id: LAYER_ID_BOOK_DETAIL_ADD_RECORD_STATUS,
-      component: <AddRecordStatusBottomSheet isbn13={isbn13} bookDetail={bookDetail} />,
+      component: <AddRecordStatusBottomSheet itemId={parsedItemId} bookDetail={bookDetail} />,
     });
   };
 
@@ -73,7 +74,9 @@ export const BookDetail = () => {
 
   if (isBookDetailLoading) return <BookDetailSkeleton />;
 
-  if (isBookDetailError || !bookDetail) return <ResourceFallback type="bookNotFound" />;
+  if (!Number.isSafeInteger(parsedItemId) || parsedItemId <= 0 || isBookDetailError || !bookDetail) {
+    return <ResourceFallback type="bookNotFound" />;
+  }
 
   const title = isVisible ? bookDetail.title : '';
   const isAdultBook = bookDetail.isAdult && bookDetail.hideAdultContent;

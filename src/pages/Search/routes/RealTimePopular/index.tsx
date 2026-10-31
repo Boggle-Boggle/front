@@ -26,9 +26,9 @@ const RealTimePopular = () => {
 
       <ul className="flex-1 overflow-y-auto px-mobile">
         {books.map((book, index) => (
-          <Fragment key={book.isbn13}>
+          <Fragment key={book.itemId}>
             <li className="flex items-center py-5">
-              <Link to={`/books/${book.isbn13}`} className="flex w-full items-center">
+              <Link to={`/books/${book.itemId}`} className="flex w-full items-center">
                 {book.rank <= 3 ? (
                   <Highlight text={getRankLabel(book.rank)} className="w-10 shrink-0 text-center text-body2" />
                 ) : (

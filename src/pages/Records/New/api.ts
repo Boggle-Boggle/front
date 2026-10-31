@@ -4,7 +4,7 @@ import type { ApiSuccessResponse } from 'api.types';
 import type { AddRecordStatus, BookMediaType, ReadingLogProgressType } from 'types';
 
 export interface CreateReadingLogRequest {
-  isbn13: string;
+  itemId: number;
   mediaType: BookMediaType;
   status: AddRecordStatus;
   rating: number;

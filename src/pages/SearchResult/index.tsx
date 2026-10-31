@@ -141,7 +141,7 @@ const SearchResult = () => {
         ) : (
           <ul className="flex w-full flex-col divide-y divide-neutral-20">
             {searchResults.map((book) => (
-              <li key={book.isbn13}>
+              <li key={book.itemId}>
                 <SearchResultItem book={book} />
               </li>
             ))}

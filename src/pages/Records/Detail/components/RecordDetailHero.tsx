@@ -19,7 +19,7 @@ type RecordDetailHeroProps = {
   recordId: string | number;
   bookId?: string | number;
   bookSource: BookInfo['source'];
-  isbn13: string | null;
+  itemId: number | null;
   cover: string | null;
   title: string;
   author: string;
@@ -78,7 +78,7 @@ export const RecordDetailHero = (props: RecordDetailHeroProps) => {
     recordId,
     bookId,
     bookSource,
-    isbn13,
+    itemId,
     cover,
     title,
     author,
@@ -120,7 +120,7 @@ export const RecordDetailHero = (props: RecordDetailHeroProps) => {
         <RecordMenuActionSheet
           recordId={recordId}
           bookSource={bookSource}
-          isbn13={isbn13}
+          itemId={itemId}
           customBook={{
             id: bookId,
             title,
