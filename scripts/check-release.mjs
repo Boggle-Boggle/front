@@ -14,8 +14,8 @@ const releaseType = getReleaseType(previousPackage.version, currentPackage.versi
 
 if (!releaseType) {
   throw new Error(
-    `서비스 버전 ${previousPackage.version} → ${currentPackage.version}은(는) 허용된 증가가 아닙니다. ` +
-      '첫 출시는 2.0.0, 이후 출시는 MAJOR/MINOR/PATCH 중 한 자리만 한 단계 올려 주세요.',
+    `서비스 버전 ${previousPackage.version} → ${currentPackage.version}은(는) 허용된 변경이 아닙니다. ` +
+      '2.0.0 유지 또는 MAJOR/MINOR/PATCH 중 한 자리만 한 단계 올려 주세요.',
   );
 }
 

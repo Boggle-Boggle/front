@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useLayerStore from 'stores/useLayerStore';
 
@@ -9,9 +9,11 @@ import { IconArrowDown } from 'components/icons';
 import { useScrollRestoration } from 'hooks/useScrollRestoration';
 
 import { MainPeriodModal } from './components/MainPeriodModal';
+import { MainRenewalNoticeModal } from './components/MainRenewalNoticeModal';
 import { MainSkeleton } from './components/MainSkeleton';
 import { useMainBookshelvesQuery } from './queries/useMainBookshelvesQuery';
 import { useMainReadingLogsQuery } from './queries/useMainReadingLogsQuery';
+import { shouldShowMainRenewalNotice } from './renewalNoticeStorage';
 import type { MainPeriodFilterType } from './types';
 
 type MainBookCaseItem = {
@@ -45,6 +47,13 @@ const Main = () => {
   const scrollRef = useScrollRestoration<HTMLDivElement>({
     isReady: readingLogs !== undefined,
   });
+
+  useEffect(() => {
+    if (isReadingLogsLoading) return;
+    if (!shouldShowMainRenewalNotice()) return;
+
+    push({ id: 'main-renewal-notice-modal', component: <MainRenewalNoticeModal /> });
+  }, [isReadingLogsLoading, push]);
 
   const handleOpenFilter = () => {
     push({
