@@ -5,6 +5,7 @@ export const STORAGE_KEY = {
   LIBRARY_SORT_TYPE: 'mybooks-sort-type',
   LIBRARY_VIEW_TYPE: 'mybooks-view-type',
   LIBRARY_WISHLIST_SORT_TYPE: 'mybooks-wishlist-sort-type',
+  MAIN_RENEWAL_NOTICE_DISMISSED_UNTIL: 'main-renewal-notice-dismissed-until',
   RECENT_LOGIN_PROVIDER: 'recent-login-provider',
   SCROLL_POSITION_PREFIX: 'scroll_pos:',
   THEME_COLOR: 'theme-color',
