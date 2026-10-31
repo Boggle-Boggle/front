@@ -4,6 +4,6 @@ import type { ApiSuccessResponse } from 'api.types';
 import type { PopularBooksResponse } from '../MostReadSection/api';
 
 export const getTrendingBooks = async () => {
-  const response = await api.get<ApiSuccessResponse<PopularBooksResponse>>('/v2/discovery/trending-books');
+  const response = await api.get<ApiSuccessResponse<PopularBooksResponse>>('/v2/discovery/spotlight-books');
   return response.data.data;
 };
