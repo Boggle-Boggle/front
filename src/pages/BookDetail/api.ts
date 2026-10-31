@@ -3,18 +3,18 @@ import type { ApiSuccessResponse } from 'api.types';
 
 import type { BookDetail } from 'types';
 
-export const getBookDetail = async (isbn13: string) => {
-  const response = await api.get<ApiSuccessResponse<BookDetail>>(`/v2/books/${isbn13}`);
+export const getBookDetail = async (itemId: number) => {
+  const response = await api.get<ApiSuccessResponse<BookDetail>>(`/v2/books/item/${itemId}`);
 
   return response.data.data;
 };
 
-export const addInterestedBook = async (isbn13: string) => {
-  await api.post('/v2/interested-books', { isbn13 });
+export const addInterestedBook = async (itemId: number) => {
+  await api.post('/v2/interested-books', { itemId });
 };
 
-export const deleteInterestedBookByIsbn13 = async (isbn13: string) => {
-  await api.delete(`/v2/interested-books/${isbn13}`);
+export const deleteInterestedBookByItemId = async (itemId: number) => {
+  await api.delete(`/v2/interested-books/${itemId}`);
 };
 
 export type ReviewSortType = 'RECENT' | 'OLDEST' | 'POPULAR';
@@ -52,15 +52,15 @@ export interface ReviewListResponse {
 }
 
 export interface GetBookReviewsRequest {
-  isbn13: string;
+  itemId: number;
   page?: number;
   size?: number;
   sort?: ReviewSortType;
 }
 
 export const getBookReviews = async (params: GetBookReviewsRequest) => {
-  const { isbn13, ...queryParams } = params;
-  const response = await api.get<ApiSuccessResponse<ReviewListResponse>>(`/v2/books/${isbn13}/reviews`, {
+  const { itemId, ...queryParams } = params;
+  const response = await api.get<ApiSuccessResponse<ReviewListResponse>>(`/v2/books/item/${itemId}/reviews`, {
     params: queryParams,
   });
 
@@ -68,14 +68,14 @@ export const getBookReviews = async (params: GetBookReviewsRequest) => {
 };
 
 export interface CreateBookReviewRequest {
-  isbn13: string;
+  itemId: number;
   content: string;
   isSpoiler: boolean;
 }
 
 export const createBookReview = async (params: CreateBookReviewRequest) => {
-  const { isbn13, ...body } = params;
-  const response = await api.post<ApiSuccessResponse<null>>(`/v2/books/${isbn13}/reviews`, body);
+  const { itemId, ...body } = params;
+  const response = await api.post<ApiSuccessResponse<null>>(`/v2/books/item/${itemId}/reviews`, body);
 
   return response.data.data;
 };

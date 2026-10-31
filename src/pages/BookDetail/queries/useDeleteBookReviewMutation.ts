@@ -9,7 +9,7 @@ const MSG_DELETE_REVIEW_FAILED_TOAST = '리뷰 삭제에 실패했어요.';
 
 type DeleteBookReviewParams = {
   reviewId: string;
-  isbn13: string;
+  itemId: number;
 };
 
 export const useDeleteBookReviewMutation = (onSuccess?: () => void) => {
@@ -18,9 +18,9 @@ export const useDeleteBookReviewMutation = (onSuccess?: () => void) => {
 
   return useMutation({
     mutationFn: ({ reviewId }: DeleteBookReviewParams) => deleteBookReview(reviewId),
-    onSuccess: (_data, { isbn13 }) => {
+    onSuccess: (_data, { itemId }) => {
       addToast({ description: MSG_DELETE_REVIEW_SUCCESS_TOAST, type: 'success' });
-      queryClient.invalidateQueries({ queryKey: ['books', isbn13, 'reviews'] });
+      queryClient.invalidateQueries({ queryKey: ['books', itemId, 'reviews'] });
       onSuccess?.();
     },
     onError: () => {

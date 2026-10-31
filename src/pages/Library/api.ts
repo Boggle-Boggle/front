@@ -21,7 +21,9 @@ export interface GetReadingLogsParams extends PaginationParams {
   month?: number;
 }
 
-type ReadingLogBookResponse = Pick<Book, 'title' | 'author' | 'coverUrl' | 'totalPages' | 'isAdult' | 'isbn13'>;
+type ReadingLogBookResponse = Pick<Book, 'title' | 'author' | 'coverUrl' | 'totalPages' | 'isAdult' | 'isbn13'> & {
+  itemId: number | null;
+};
 
 export interface ReadingLogListItemResponse {
   id: number;
@@ -55,8 +57,7 @@ export interface GetInterestedBooksParams extends PaginationParams {
 
 export type InterestedBookSort = 'RECENT' | 'OLDEST';
 
-export type InterestedBookItemResponse = Pick<Book, 'isbn13' | 'title' | 'author' | 'coverUrl'> & {
-  bookId: number;
+export type InterestedBookItemResponse = Pick<Book, 'itemId' | 'isbn13' | 'title' | 'author' | 'coverUrl'> & {
   createdAt: string;
 };
 
@@ -73,12 +74,12 @@ export const getInterestedBooks = async (params: GetInterestedBooksParams) => {
   return response.data;
 };
 
-export const deleteInterestedBook = async (isbn13: string) => {
-  await api.delete(`/v2/interested-books/${isbn13}`);
+export const deleteInterestedBook = async (itemId: number) => {
+  await api.delete(`/v2/interested-books/${itemId}`);
 };
 
-export const addInterestedBook = async (isbn13: string) => {
-  await api.post('/v2/interested-books', { isbn13 });
+export const addInterestedBook = async (itemId: number) => {
+  await api.post('/v2/interested-books', { itemId });
 };
 
 export interface BookshelfItemResponse {

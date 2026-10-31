@@ -62,7 +62,7 @@ const router = createBrowserRouter([
             element: <WithoutBottomNavLayout />,
             children: [
               { path: '/search/result', element: <SearchResult /> },
-              { path: '/books/:isbn13', element: <BookDetailPage /> },
+              { path: '/books/:itemId', element: <BookDetailPage /> },
               {
                 path: '/records/new',
                 children: [

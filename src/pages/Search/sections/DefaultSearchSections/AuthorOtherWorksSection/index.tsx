@@ -16,7 +16,7 @@ export const AuthorOtherWorksSection = () => {
   if (isLoading) return <SearchSectionSkeleton variant="featuredBook" />;
   if (!data) return null;
 
-  const { author, isbn13, title, coverUrl, description } = data;
+  const { author, itemId, title, coverUrl, description } = data;
   const titleText = MSG_SEARCH_AUTHOR_OTHER_WORKS_TITLE.replace('{author}', author);
 
   const handleLoadMore = () => navigate(`/search/result?q=${encodeURIComponent(author)}`);
@@ -26,7 +26,7 @@ export const AuthorOtherWorksSection = () => {
       <Title text={titleText} onLoadMore={handleLoadMore} />
       <ul className="mb-3 flex justify-center px-mobile">
         <li className="flex h-[11.625rem] w-full rounded-[16px] border-[1px] border-neutral-20 shadow-[0_0.375rem_0.9375rem_0_#A0B1C040]">
-          <Link to={`/books/${isbn13}`} className="flex h-full w-full min-w-0 gap-5 p-6">
+          <Link to={`/books/${itemId}`} className="flex h-full w-full min-w-0 gap-5 p-6">
             <div className="shrink-0">
               <BookCover className="w-[6.25rem]" url={coverUrl} variant="clear" />
             </div>

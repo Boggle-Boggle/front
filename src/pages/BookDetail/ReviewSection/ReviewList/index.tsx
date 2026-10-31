@@ -21,10 +21,10 @@ const MSG_REVIEW_MY_LIKE_FORBIDDEN = '자기가 쓴 리뷰에는 좋아요를 �
 const LAYER_ID_BOOK_DETAIL_REVIEW_SORT = 'book-detail-review-sort-bottom-sheet';
 
 type ReviewListProps = {
-  isbn13: string;
+  itemId: number;
 };
 
-export const ReviewList = ({ isbn13 }: ReviewListProps) => {
+export const ReviewList = ({ itemId }: ReviewListProps) => {
   const { push } = useLayerStore();
   const { addToast } = useToastStore();
   const [sortType, setSortType] = useState<ReviewSortType>('RECENT');
@@ -35,8 +35,8 @@ export const ReviewList = ({ isbn13 }: ReviewListProps) => {
     hasNextPage,
     isFetchingNextPage,
     isLoading: isBookReviewsLoading,
-  } = useBookReviewsInfiniteQuery(isbn13, sortType);
-  const toggleBookReviewLikeMutation = useToggleBookReviewLikeMutation(isbn13);
+  } = useBookReviewsInfiniteQuery(itemId, sortType);
+  const toggleBookReviewLikeMutation = useToggleBookReviewLikeMutation(itemId);
 
   const allReviews = bookReviews ? bookReviews.pages.flatMap((page) => page.reviews) : [];
   const totalReviewCount = bookReviews?.pages[0]?.totalReviewCount || 0;

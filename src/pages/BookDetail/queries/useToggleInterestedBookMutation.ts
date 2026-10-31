@@ -4,14 +4,14 @@ import { useToastStore } from 'stores/useToastStore';
 
 import type { BookDetail } from 'types';
 
-import { addInterestedBook, deleteInterestedBookByIsbn13 } from '../api';
+import { addInterestedBook, deleteInterestedBookByItemId } from '../api';
 
 const MSG_BOOK_DETAIL_WISHLIST_FAILED = '관심도서 처리에 실패했어요.';
 const MSG_BOOK_DETAIL_WISHLIST_ADD_SUCCESS = '관심도서에 등록되었어요.';
 const MSG_BOOK_DETAIL_WISHLIST_DELETE_SUCCESS = '관심도서에서 해제되었어요.';
 
 type ToggleInterestedBookParams = {
-  isbn13: string;
+  itemId: number;
   isInterested: boolean;
 };
 
@@ -30,20 +30,20 @@ export const useToggleInterestedBookMutation = () => {
   const { addToast } = useToastStore();
 
   return useMutation<void, Error, ToggleInterestedBookParams, ToggleInterestedBookContext>({
-    mutationFn: async ({ isbn13, isInterested }) => {
+    mutationFn: async ({ itemId, isInterested }) => {
       if (isInterested) {
-        await deleteInterestedBookByIsbn13(isbn13);
+        await deleteInterestedBookByItemId(itemId);
         return;
       }
 
-      await addInterestedBook(isbn13);
+      await addInterestedBook(itemId);
     },
-    onMutate: async ({ isbn13, isInterested }) => {
-      await queryClient.cancelQueries({ queryKey: ['books', 'detail', isbn13] });
+    onMutate: async ({ itemId, isInterested }) => {
+      await queryClient.cancelQueries({ queryKey: ['books', 'detail', itemId] });
 
-      const previousDetail = queryClient.getQueryData<BookDetail>(['books', 'detail', isbn13]);
+      const previousDetail = queryClient.getQueryData<BookDetail>(['books', 'detail', itemId]);
 
-      queryClient.setQueryData<BookDetail>(['books', 'detail', isbn13], (prev) => {
+      queryClient.setQueryData<BookDetail>(['books', 'detail', itemId], (prev) => {
         if (!prev) return prev;
 
         return { ...prev, isInterested: !isInterested };
@@ -51,8 +51,8 @@ export const useToggleInterestedBookMutation = () => {
 
       return { previousDetail };
     },
-    onError: (_error, { isbn13 }, context) => {
-      if (context?.previousDetail) queryClient.setQueryData(['books', 'detail', isbn13], context.previousDetail);
+    onError: (_error, { itemId }, context) => {
+      if (context?.previousDetail) queryClient.setQueryData(['books', 'detail', itemId], context.previousDetail);
 
       addToast({ description: MSG_BOOK_DETAIL_WISHLIST_FAILED, type: 'error' });
     },
@@ -61,8 +61,8 @@ export const useToggleInterestedBookMutation = () => {
 
       addToast({ description: successMessage, type: 'success' });
     },
-    onSettled: (_data, _error, { isbn13 }) => {
-      queryClient.invalidateQueries({ queryKey: ['books', 'detail', isbn13] });
+    onSettled: (_data, _error, { itemId }) => {
+      queryClient.invalidateQueries({ queryKey: ['books', 'detail', itemId] });
       queryClient.invalidateQueries({ queryKey: ['interested-books'] });
     },
   });

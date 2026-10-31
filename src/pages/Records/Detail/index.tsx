@@ -71,7 +71,7 @@ export const RecordDetailPage = () => {
         recordId={recordId}
         bookId={readingLogDetail.book.id}
         bookSource={readingLogDetail.book.source}
-        isbn13={readingLogDetail.book.isbn13}
+        itemId={readingLogDetail.book.itemId}
         scrollContainerRef={scrollContainerRef}
         cover={readingLogDetail.book.coverUrl}
         title={readingLogDetail.book.title}

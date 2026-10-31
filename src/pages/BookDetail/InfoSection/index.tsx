@@ -7,7 +7,7 @@ type InfoSectionProps = {
   publisher: string;
   category: string;
   publishedDate: string;
-  isbn13: string;
+  isbn13: string | null;
   description: string | null;
   isAdultBook?: boolean;
 };
@@ -25,7 +25,7 @@ export const InfoSection = (props: InfoSectionProps) => {
     { label: '출판사', value: publisher },
     { label: '분야', value: category },
     { label: '발행일자', value: publishedDate },
-    { label: 'ISBN', value: isbn13 },
+    { label: 'ISBN', value: isbn13 || '-' },
   ];
 
   return (

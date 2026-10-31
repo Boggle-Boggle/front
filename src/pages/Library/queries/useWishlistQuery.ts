@@ -8,7 +8,7 @@ import type { MyBook } from './useLibraryQuery';
 import { getInterestedBooks, type InterestedBookItemResponse, type InterestedBookSort } from '../api';
 
 const convertInterestedBookToMyBook = (book: InterestedBookItemResponse): MyBook => ({
-  id: book.bookId,
+  id: book.itemId,
   title: book.title,
   cover: book.coverUrl ?? '',
   isAdult: false,
@@ -19,6 +19,7 @@ const convertInterestedBookToMyBook = (book: InterestedBookItemResponse): MyBook
   author: book.author,
   createdAt: book.createdAt,
   isbn13: book.isbn13,
+  itemId: book.itemId,
 });
 
 const getWishlistBooks = async (

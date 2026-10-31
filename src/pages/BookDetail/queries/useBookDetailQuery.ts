@@ -4,11 +4,11 @@ import { shouldThrowToErrorBoundary } from 'policy/error';
 
 import { getBookDetail } from '../api';
 
-export const useBookDetailQuery = (isbn13: string) => {
+export const useBookDetailQuery = (itemId: number) => {
   return useQuery({
-    queryKey: ['books', 'detail', isbn13],
-    queryFn: () => getBookDetail(isbn13),
-    enabled: Boolean(isbn13),
+    queryKey: ['books', 'detail', itemId],
+    queryFn: () => getBookDetail(itemId),
+    enabled: Number.isSafeInteger(itemId) && itemId > 0,
     throwOnError: shouldThrowToErrorBoundary,
   });
 };

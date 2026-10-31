@@ -16,9 +16,9 @@ export const useCreateBookReviewMutation = (onSuccess?: () => void) => {
 
   return useMutation({
     mutationFn: createBookReview,
-    onSuccess: (_data, { isbn13 }) => {
+    onSuccess: (_data, { itemId }) => {
       addToast({ description: MSG_REVIEW_CREATE_SUCCESS, type: 'success' });
-      queryClient.invalidateQueries({ queryKey: ['books', isbn13, 'reviews'] });
+      queryClient.invalidateQueries({ queryKey: ['books', itemId, 'reviews'] });
       onSuccess?.();
     },
     onError: (error) => {

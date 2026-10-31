@@ -21,7 +21,8 @@ export type MyBook = {
   createdAt?: string;
   startDate?: string | null;
   endDate?: string | null;
-  isbn13?: string;
+  itemId?: number | null;
+  isbn13?: string | null;
 };
 
 const getProgressPercentage = (readingLog: ReadingLogListItemResponse) => {
@@ -44,6 +45,7 @@ const convertReadingLogToMyBook = (readingLog: ReadingLogListItemResponse): MyBo
   startDate: readingLog.startDate,
   endDate: readingLog.endDate,
   isbn13: readingLog.book.isbn13,
+  itemId: readingLog.book.itemId,
 });
 
 const getLibraryBooks = async (

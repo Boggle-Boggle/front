@@ -6,6 +6,7 @@ import type { AddRecordStatus, Book, BookSource, ReadingLogProgressType } from '
 export interface BookInfo
   extends Pick<Book, 'title' | 'author' | 'publisher' | 'coverUrl' | 'description' | 'isAdult'> {
   id: number;
+  itemId: number | null;
   source: BookSource;
   category: string | null;
   publishedDate: string | null;

@@ -4,12 +4,13 @@ import { ReviewInput } from './ReviewInput';
 import { ReviewList } from './ReviewList';
 
 export const ReviewSection = () => {
-  const { isbn13 = '' } = useParams();
+  const { itemId = '' } = useParams();
+  const parsedItemId = Number(itemId);
 
   return (
     <div className="flex w-full flex-col">
-      <ReviewInput isbn13={isbn13} />
-      <ReviewList isbn13={isbn13} />
+      <ReviewInput itemId={parsedItemId} />
+      <ReviewList itemId={parsedItemId} />
     </div>
   );
 };

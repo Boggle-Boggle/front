@@ -52,36 +52,36 @@ export const WishlistSection = (props: WishlistSectionProps) => {
     sortLabel,
     onOpenSortLayer,
   } = props;
-  const [unlikedIsbnSet, setUnlikedIsbnSet] = useState<Set<string>>(() => new Set());
+  const [unlikedItemIdSet, setUnlikedItemIdSet] = useState<Set<number>>(() => new Set());
   const toggleWishlistBookMutation = useToggleWishlistBookMutation({
-    onAddMutate: (isbn13) => {
-      setUnlikedIsbnSet((prev) => {
+    onAddMutate: (itemId) => {
+      setUnlikedItemIdSet((prev) => {
         const next = new Set(prev);
-        next.delete(isbn13);
+        next.delete(itemId);
         return next;
       });
     },
-    onDeleteMutate: (isbn13) => {
-      setUnlikedIsbnSet((prev) => new Set(prev).add(isbn13));
+    onDeleteMutate: (itemId) => {
+      setUnlikedItemIdSet((prev) => new Set(prev).add(itemId));
     },
-    onAddError: (isbn13) => {
-      setUnlikedIsbnSet((prev) => new Set(prev).add(isbn13));
+    onAddError: (itemId) => {
+      setUnlikedItemIdSet((prev) => new Set(prev).add(itemId));
     },
-    onDeleteError: (isbn13) => {
-      setUnlikedIsbnSet((prev) => {
+    onDeleteError: (itemId) => {
+      setUnlikedItemIdSet((prev) => {
         const next = new Set(prev);
-        next.delete(isbn13);
+        next.delete(itemId);
         return next;
       });
     },
   });
 
-  const handleToggleWishlist = (isbn13?: string) => () => {
-    if (!isbn13) return;
+  const handleToggleWishlist = (itemId?: number | null) => () => {
+    if (!itemId) return;
 
     toggleWishlistBookMutation.mutate({
-      isbn13,
-      isInterested: !unlikedIsbnSet.has(isbn13),
+      itemId,
+      isInterested: !unlikedItemIdSet.has(itemId),
     });
   };
 
@@ -105,7 +105,7 @@ export const WishlistSection = (props: WishlistSectionProps) => {
               className="flex items-center justify-between gap-4 border-b border-neutral-20 py-4 last:border-b-0"
             >
               <Link
-                to={book.isbn13 ? `/books/${book.isbn13}` : '#'}
+                to={book.itemId ? `/books/${book.itemId}` : '#'}
                 className="flex min-w-0 flex-1 items-stretch self-stretch text-left"
               >
                 <BookCover className="w-20 shrink-0" url={book.cover} label={book.title} variant="clear" rounded="sm" />
@@ -120,8 +120,8 @@ export const WishlistSection = (props: WishlistSectionProps) => {
 
               <ToggleButton
                 variant="icon"
-                selected={!book.isbn13 || !unlikedIsbnSet.has(book.isbn13)}
-                onClick={handleToggleWishlist(book.isbn13)}
+                selected={!book.itemId || !unlikedItemIdSet.has(book.itemId)}
+                onClick={handleToggleWishlist(book.itemId)}
                 icon={IconHeart}
                 selectedIcon={IconHeartFilled}
                 className="shrink-0"

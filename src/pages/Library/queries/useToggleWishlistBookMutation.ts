@@ -11,15 +11,15 @@ const MSG_MYBOOKS_WISHLIST_ADD_SUCCESS = '관심도서에 등록되었어요.';
 const MSG_MYBOOKS_WISHLIST_ADD_FAILED = '관심도서 등록에 실패했어요.';
 
 type ToggleWishlistBookParams = {
-  isbn13: string;
+  itemId: number;
   isInterested: boolean;
 };
 
 type ToggleWishlistBookMutationOptions = {
-  onAddMutate?: (isbn13: string) => void;
-  onDeleteMutate?: (isbn13: string) => void;
-  onAddError?: (isbn13: string) => void;
-  onDeleteError?: (isbn13: string) => void;
+  onAddMutate?: (itemId: number) => void;
+  onDeleteMutate?: (itemId: number) => void;
+  onAddError?: (itemId: number) => void;
+  onDeleteError?: (itemId: number) => void;
 };
 
 export const useToggleWishlistBookMutation = (options: ToggleWishlistBookMutationOptions = {}) => {
@@ -33,30 +33,30 @@ export const useToggleWishlistBookMutation = (options: ToggleWishlistBookMutatio
   }, [queryClient]);
 
   return useMutation({
-    mutationFn: ({ isbn13, isInterested }: ToggleWishlistBookParams) =>
-      isInterested ? deleteInterestedBook(isbn13) : addInterestedBook(isbn13),
-    onMutate: ({ isbn13, isInterested }) => {
+    mutationFn: ({ itemId, isInterested }: ToggleWishlistBookParams) =>
+      isInterested ? deleteInterestedBook(itemId) : addInterestedBook(itemId),
+    onMutate: ({ itemId, isInterested }) => {
       if (isInterested) {
-        options.onDeleteMutate?.(isbn13);
+        options.onDeleteMutate?.(itemId);
         return;
       }
 
-      options.onAddMutate?.(isbn13);
+      options.onAddMutate?.(itemId);
     },
-    onSuccess: (_data, { isbn13, isInterested }) => {
-      queryClient.invalidateQueries({ queryKey: ['books', 'detail', isbn13] });
+    onSuccess: (_data, { itemId, isInterested }) => {
+      queryClient.invalidateQueries({ queryKey: ['books', 'detail', itemId] });
 
       const description = isInterested ? MSG_MYBOOKS_WISHLIST_DELETE_SUCCESS : MSG_MYBOOKS_WISHLIST_ADD_SUCCESS;
       addToast({ description, type: 'success' });
     },
-    onError: (_error, { isbn13, isInterested }) => {
+    onError: (_error, { itemId, isInterested }) => {
       if (isInterested) {
-        options.onDeleteError?.(isbn13);
+        options.onDeleteError?.(itemId);
         addToast({ description: MSG_MYBOOKS_WISHLIST_DELETE_FAILED, type: 'error' });
         return;
       }
 
-      options.onAddError?.(isbn13);
+      options.onAddError?.(itemId);
       addToast({ description: MSG_MYBOOKS_WISHLIST_ADD_FAILED, type: 'error' });
     },
   });

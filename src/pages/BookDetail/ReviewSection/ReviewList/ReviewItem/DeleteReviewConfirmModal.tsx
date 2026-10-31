@@ -15,7 +15,7 @@ type DeleteReviewConfirmModalProps = {
 
 export const DeleteReviewConfirmModal = ({ reviewId }: DeleteReviewConfirmModalProps) => {
   const { pop } = useLayerStore();
-  const { isbn13 = '' } = useParams();
+  const { itemId = '' } = useParams();
   const { mutate: deleteReview } = useDeleteBookReviewMutation(pop);
 
   return (
@@ -25,7 +25,7 @@ export const DeleteReviewConfirmModal = ({ reviewId }: DeleteReviewConfirmModalP
       cancelLabel={MSG_DELETE_REVIEW_MODAL_CANCEL}
       confirmLabel={MSG_DELETE_REVIEW_MODAL_CONFIRM}
       onCancel={pop}
-      onConfirm={() => deleteReview({ reviewId, isbn13 })}
+      onConfirm={() => deleteReview({ reviewId, itemId: Number(itemId) })}
       confirmVariant="warning"
     />
   );

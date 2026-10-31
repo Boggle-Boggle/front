@@ -3,7 +3,8 @@ import type { ApiSuccessResponse } from 'api.types';
 
 export interface AuthorRecommendationResponse {
   author: string;
-  isbn13: string;
+  itemId: number;
+  isbn13: string | null;
   title: string;
   coverUrl: string | null;
   description: string | null;

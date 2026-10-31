@@ -21,7 +21,8 @@ export interface BlockListResponse {
 }
 
 export interface MyReviewBook {
-  isbn13: string;
+  itemId: number;
+  isbn13: string | null;
   title?: string | null;
   coverUrl?: string | null;
 }

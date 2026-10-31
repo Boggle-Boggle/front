@@ -15,12 +15,12 @@ type BlockUserConfirmModalProps = {
 
 export const BlockUserConfirmModal = ({ userId }: BlockUserConfirmModalProps) => {
   const { pop } = useLayerStore();
-  const { isbn13 = '' } = useParams();
+  const { itemId = '' } = useParams();
   const blockReviewUserMutation = useBlockReviewUserMutation(pop);
 
   const handleClose = () => pop();
 
-  const handleConfirm = () => blockReviewUserMutation.mutate({ userId, isbn13 });
+  const handleConfirm = () => blockReviewUserMutation.mutate({ userId, itemId: Number(itemId) });
 
   return (
     <ActionModal

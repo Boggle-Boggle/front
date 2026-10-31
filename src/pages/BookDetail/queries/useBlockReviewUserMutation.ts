@@ -9,7 +9,7 @@ const MSG_BLOCK_USER_FAILED_TOAST = '유저 차단에 실패했어요.';
 
 type BlockReviewUserParams = {
   userId: number;
-  isbn13: string;
+  itemId: number;
 };
 
 export const useBlockReviewUserMutation = (onSuccess?: () => void) => {
@@ -18,9 +18,9 @@ export const useBlockReviewUserMutation = (onSuccess?: () => void) => {
 
   return useMutation({
     mutationFn: ({ userId }: BlockReviewUserParams) => blockUser(userId),
-    onSuccess: (_data, { isbn13 }) => {
+    onSuccess: (_data, { itemId }) => {
       addToast({ description: MSG_BLOCK_USER_SUCCESS_TOAST, type: 'error' });
-      queryClient.invalidateQueries({ queryKey: ['books', isbn13, 'reviews'] });
+      queryClient.invalidateQueries({ queryKey: ['books', itemId, 'reviews'] });
       onSuccess?.();
     },
     onError: () => {

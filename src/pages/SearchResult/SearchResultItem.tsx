@@ -10,10 +10,10 @@ type SearchResultItemProps = {
 
 export const SearchResultItem = (props: SearchResultItemProps) => {
   const { book } = props;
-  const { title, author, publisher, coverUrl, isbn13 } = book;
+  const { title, author, publisher, coverUrl, itemId } = book;
 
   return (
-    <Link to={`/books/${isbn13}`} className="flex w-full gap-5 py-4">
+    <Link to={`/books/${itemId}`} className="flex w-full gap-5 py-4">
       {/* TODO: 폴백 이미지 */}
       <BookCover className="w-20" url={coverUrl} label={title} variant="mockup" rounded="sm" isAdult={book.isAdult} />
       <div className="flex flex-1 flex-col justify-start">

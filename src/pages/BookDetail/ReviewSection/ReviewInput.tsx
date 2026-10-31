@@ -12,10 +12,10 @@ const MSG_REVIEW_TEXTAREA_PLACEHOLDER = '리뷰를 남겨 주세요. 최대 700�
 const REVIEW_SPOILER_CHECKBOX_ID = 'review-spoiler-checkbox';
 
 type ReviewInputProps = {
-  isbn13: string;
+  itemId: number;
 };
 
-export const ReviewInput = ({ isbn13 }: ReviewInputProps) => {
+export const ReviewInput = ({ itemId }: ReviewInputProps) => {
   const [content, setContent] = useState<string>('');
   const [isSpoilerChecked, setIsSpoilerChecked] = useState<boolean>(false);
 
@@ -37,7 +37,7 @@ export const ReviewInput = ({ isbn13 }: ReviewInputProps) => {
     if (!content.trim() || createReviewMutation.isPending) return;
 
     createReviewMutation.mutate({
-      isbn13,
+      itemId,
       content: content.trim(),
       isSpoiler: isSpoilerChecked,
     });

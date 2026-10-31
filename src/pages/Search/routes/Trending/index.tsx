@@ -23,8 +23,8 @@ const Trending = () => {
       <div className="flex-1 overflow-y-auto px-mobile pb-6 pt-5">
         <ul className="grid grid-cols-3 gap-x-2 gap-y-9">
           {books.map((book) => (
-            <li key={book.isbn13} className="w-full">
-              <Link to={`/books/${book.isbn13}`} className="w-full">
+            <li key={book.itemId} className="w-full">
+              <Link to={`/books/${book.itemId}`} className="w-full">
                 <BookCover className="w-full" url={book.coverUrl} variant="clear" />
                 <p className="text-neutral-90 line-clamp-2 pt-2 text-title4">{book.title}</p>
                 <p className="line-clamp-1 text-caption1 text-neutral-40">{book.author}</p>
