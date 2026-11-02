@@ -1,4 +1,5 @@
 export const STORAGE_KEY = {
+  MAIN_BOOKSHELF_FILTER: 'main-bookshelf-filter',
   LIBRARY_ACTIVE_TAB: 'mybooks-active-tab',
   LIBRARY_BOOKSHELF_ID: 'mybooks-bookshelf-id',
   LIBRARY_FILTER: 'mybooks-filter',
