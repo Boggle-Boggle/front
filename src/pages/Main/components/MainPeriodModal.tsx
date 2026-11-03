@@ -12,12 +12,12 @@ type MainPeriodModalProps = {
   currentFilter: MainPeriodFilterType;
   currentBookshelfId: number | null;
   currentYear: number;
-  currentMonth: number;
+  currentMonth: number | null;
   onConfirm: (params: {
     filter: MainPeriodFilterType;
     bookshelfId: number | null;
     year: number;
-    month: number;
+    month: number | null;
   }) => void;
   bookshelves?: Bookshelf[];
 };
@@ -44,7 +44,7 @@ export const MainPeriodModal = (props: MainPeriodModalProps) => {
   const [selectedFilter, setSelectedFilter] = useState<MainPeriodFilterType>(currentFilter);
   const [selectedBookshelfId, setSelectedBookshelfId] = useState<number | null>(currentBookshelfId);
   const [selectedYear, setSelectedYear] = useState<number>(currentYear);
-  const [selectedMonth, setSelectedMonth] = useState<number>(currentMonth);
+  const [selectedMonth, setSelectedMonth] = useState<number | null>(currentMonth);
 
   const handleConfirm = () => {
     onConfirm({
@@ -68,19 +68,24 @@ export const MainPeriodModal = (props: MainPeriodModalProps) => {
     const m = i + 1;
     return { value: m, label: `${m}월` };
   });
+  months.push({ value: 0, label: '전체' });
 
   const pickerColumns: PickerColumn[] = [
     {
       key: 'year',
       items: years,
       value: selectedYear,
-      onChange: (val) => setSelectedYear(val as number),
+      onChange: (val) => {
+        if (typeof val === 'number') setSelectedYear(val);
+      },
     },
     {
       key: 'month',
       items: months,
-      value: selectedMonth,
-      onChange: (val) => setSelectedMonth(val as number),
+      value: selectedMonth ?? 0,
+      onChange: (val) => {
+        if (typeof val === 'number') setSelectedMonth(val === 0 ? null : val);
+      },
     },
   ];
   const isGroupSelected = selectedFilter === 'GROUP';

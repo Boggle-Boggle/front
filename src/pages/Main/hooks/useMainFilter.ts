@@ -8,7 +8,7 @@ type MainFilterSelection = {
   filter: MainPeriodFilterType;
   bookshelfId: number | null;
   year: number;
-  month: number;
+  month: number | null;
 };
 
 const getStoredMainFilter = (): MainFilterSelection => {
@@ -32,7 +32,8 @@ const getStoredMainFilter = (): MainFilterSelection => {
     const { filter, bookshelfId, year, month } = parsed as Record<string, unknown>;
     const validBookshelfId = typeof bookshelfId === 'number' && Number.isSafeInteger(bookshelfId) && bookshelfId > 0;
     const validYear = typeof year === 'number' && Number.isInteger(year) && year >= 2000 && year <= now.getFullYear();
-    const validMonth = typeof month === 'number' && Number.isInteger(month) && month >= 1 && month <= 12;
+    const validMonth =
+      month === null || (typeof month === 'number' && Number.isInteger(month) && month >= 1 && month <= 12);
 
     if (filter !== 'ALL' && filter !== 'GROUP' && filter !== 'PERIOD') return defaultSelection;
     return {

@@ -80,7 +80,7 @@ const Main = () => {
       return activeBookshelf ? `${activeBookshelf.name} 책장` : '그룹별 책장';
     }
     if (periodFilter === 'PERIOD') {
-      return `${selectedYear}년 ${selectedMonth}월 책장`;
+      return selectedMonth === null ? `${selectedYear}년 전체 책장` : `${selectedYear}년 ${selectedMonth}월 책장`;
     }
     return '전체 책장';
   };

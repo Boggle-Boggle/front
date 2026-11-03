@@ -12,7 +12,7 @@ type UseMainReadingLogsQueryParams = {
   periodFilter: MainPeriodFilterType;
   selectedBookshelfId: number | null;
   selectedYear: number;
-  selectedMonth: number;
+  selectedMonth: number | null;
 };
 
 const getMainReadingLogsParams = (params: UseMainReadingLogsQueryParams): GetReadingLogsParams => {
@@ -28,7 +28,7 @@ const getMainReadingLogsParams = (params: UseMainReadingLogsQueryParams): GetRea
   if (periodFilter === 'GROUP' && selectedBookshelfId) readingLogsParams.bookshelfId = selectedBookshelfId;
   if (periodFilter === 'PERIOD') {
     readingLogsParams.year = selectedYear;
-    readingLogsParams.month = selectedMonth;
+    if (selectedMonth !== null) readingLogsParams.month = selectedMonth;
   }
 
   return readingLogsParams;
