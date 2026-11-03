@@ -11,10 +11,10 @@ import { useScrollRestoration } from 'hooks/useScrollRestoration';
 import { MainPeriodModal } from './components/MainPeriodModal';
 import { MainRenewalNoticeModal } from './components/MainRenewalNoticeModal';
 import { MainSkeleton } from './components/MainSkeleton';
+import { useMainFilter } from './hooks/useMainFilter';
 import { useMainBookshelvesQuery } from './queries/useMainBookshelvesQuery';
 import { useMainReadingLogsQuery } from './queries/useMainReadingLogsQuery';
 import { shouldShowMainRenewalNotice } from './renewalNoticeStorage';
-import type { MainPeriodFilterType } from './types';
 
 type MainBookCaseItem = {
   id: number;
@@ -30,11 +30,14 @@ const Main = () => {
   const navigate = useNavigate();
   const { push } = useLayerStore();
 
-  const [periodFilter, setPeriodFilter] = useState<MainPeriodFilterType>('ALL');
-  const [selectedBookshelfId, setSelectedBookshelfId] = useState<number | null>(null);
-  const [selectedYear, setSelectedYear] = useState<number>(new Date().getFullYear());
-  const [selectedMonth, setSelectedMonth] = useState<number>(new Date().getMonth() + 1);
+  const { filterSelection, updateFilterSelection } = useMainFilter();
   const [filledShelfCount, setFilledShelfCount] = useState<number>(0);
+  const {
+    filter: periodFilter,
+    bookshelfId: selectedBookshelfId,
+    year: selectedYear,
+    month: selectedMonth,
+  } = filterSelection;
 
   const { data: readingLogs, isLoading: isReadingLogsLoading } = useMainReadingLogsQuery({
     periodFilter,
@@ -64,12 +67,7 @@ const Main = () => {
           currentBookshelfId={selectedBookshelfId}
           currentYear={selectedYear}
           currentMonth={selectedMonth}
-          onConfirm={({ filter, bookshelfId, year, month }) => {
-            setPeriodFilter(filter);
-            setSelectedBookshelfId(bookshelfId);
-            setSelectedYear(year);
-            setSelectedMonth(month);
-          }}
+          onConfirm={updateFilterSelection}
           bookshelves={bookshelves}
         />
       ),
@@ -82,7 +80,7 @@ const Main = () => {
       return activeBookshelf ? `${activeBookshelf.name} 책장` : '그룹별 책장';
     }
     if (periodFilter === 'PERIOD') {
-      return `${selectedYear}년 ${selectedMonth}월 책장`;
+      return selectedMonth === null ? `${selectedYear}년 전체 책장` : `${selectedYear}년 ${selectedMonth}월 책장`;
     }
     return '전체 책장';
   };

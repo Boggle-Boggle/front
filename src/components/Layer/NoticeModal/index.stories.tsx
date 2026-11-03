@@ -9,7 +9,7 @@ const meta = {
   component: NoticeModal,
   tags: ['autodocs'],
   argTypes: {
-    dismissPeriod: { control: 'select', options: ['day', 'week', 'month'] },
+    dismissOption: { control: 'select', options: ['day', 'week', 'month', 'never'] },
   },
 } satisfies Meta<typeof NoticeModal>;
 
@@ -23,7 +23,7 @@ export const Default: Story = {
   args: {
     onClose: handleClick,
     onDismiss: handleClick,
-    dismissPeriod: 'day',
+    dismissOption: 'day',
     children: <div className="grid h-full place-items-center bg-neutral-20 text-body1">프로모션 콘텐츠</div>,
   },
   render: (args) => <NoticeModal {...args} />,
@@ -33,7 +33,7 @@ export const RenewalNotice: Story = {
   args: {
     onClose: handleClick,
     onDismiss: handleClick,
-    dismissPeriod: 'day',
+    dismissOption: 'never',
     children: <img src={renewalNoticeImage} alt="빼곡이 새로워졌어요" className="h-full w-full object-cover" />,
   },
   render: (args) => <NoticeModal {...args} />,
