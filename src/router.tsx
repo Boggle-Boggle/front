@@ -7,6 +7,7 @@ import BookDetailPage from './pages/BookDetail';
 import WithBottomNavLayout from './pages/Layout/WithBottomNavLayout';
 import WithoutBottomNavLayout from './pages/Layout/WithoutBottomNavLayout';
 import Library from './pages/Library';
+import GroupEditPage from './pages/Library/GroupEdit';
 import Login from './pages/Login';
 import Main from './pages/Main';
 import MyPage from './pages/MyPage';
@@ -62,6 +63,7 @@ const router = createBrowserRouter([
             element: <WithoutBottomNavLayout />,
             children: [
               { path: '/search/result', element: <SearchResult /> },
+              { path: '/library/groups/edit', element: <GroupEditPage /> },
               { path: '/books/:itemId', element: <BookDetailPage /> },
               {
                 path: '/records/new',
