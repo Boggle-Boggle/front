@@ -68,7 +68,7 @@ export const TextButton = (props: TextButtonProps) => {
       className={`inline-flex items-center justify-center ${sizeClass} ${gapClass} ${paddingByVariantClass} ${variantClass} ${className}`}
     >
       {LeftIcon && <LeftIcon className="size-icon-sm" />}
-      <span>{text}</span>
+      <span className="min-w-0 truncate">{text}</span>
       {RightIcon && <RightIcon className="size-icon-sm" />}
     </button>
   );
