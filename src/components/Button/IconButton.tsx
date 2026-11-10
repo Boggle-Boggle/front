@@ -6,15 +6,17 @@ type IconButtonProps = {
   icon?: ElementType;
   onClick: MouseEventHandler<HTMLButtonElement>;
   size?: 'xxs' | 'xs' | 'sm' | 'md';
+  disabled?: boolean;
   className?: string;
 };
 
 const IconButton = (props: IconButtonProps) => {
-  const { label, align = 'center', icon: Icon, onClick, size = 'md', className } = props;
+  const { label, align = 'center', icon: Icon, onClick, size = 'md', disabled = false, className } = props;
 
   const alignClass = `${align === 'left' ? 'justify-start' : align === 'right' ? 'justify-end' : 'justify-center'}`;
   const sizeClass = size === 'xxs' ? 'size-4' : size === 'xs' ? 'size-6' : size === 'sm' ? 'size-9' : 'size-12';
-  const iconSizeClass = size === 'xxs' ? 'size-icon-xs' : size === 'xs' || size === 'md' ? 'size-icon-md' : 'size-icon-sm';
+  const iconSizeClass =
+    size === 'xxs' ? 'size-icon-xs' : size === 'xs' || size === 'md' ? 'size-icon-md' : 'size-icon-sm';
 
   return (
     <button
@@ -22,6 +24,7 @@ const IconButton = (props: IconButtonProps) => {
       type="button"
       aria-label={label}
       onClick={onClick}
+      disabled={disabled}
     >
       {Icon && <Icon className={iconSizeClass} />}
     </button>

@@ -1,5 +1,5 @@
 import { useState, useMemo, useEffect } from 'react';
-import { useNavigationType } from 'react-router-dom';
+import { useNavigate, useNavigationType } from 'react-router-dom';
 import { useLayerStore } from 'stores/useLayerStore';
 
 import { IconButton } from 'components/Button';
@@ -91,6 +91,7 @@ const getStoredActiveTab = (): TabType => {
 };
 
 const Library = () => {
+  const navigate = useNavigate();
   const navigationType = useNavigationType();
   const [isSearchMode, setIsSearchMode] = useState<boolean>(false);
   const [searchKeyword, setSearchKeyword] = useState<string>('');
@@ -233,6 +234,11 @@ const Library = () => {
       pop();
     };
 
+    const handleEditGroups = () => {
+      pop();
+      navigate('/library/groups/edit');
+    };
+
     push({
       id: LAYER_ID_MYBOOKS_FILTER,
       component: (
@@ -241,6 +247,7 @@ const Library = () => {
           filterOptions={filterOptions}
           bookshelves={bookshelves}
           onApplyFilter={handleApplyFilter}
+          onEditGroups={handleEditGroups}
           selectedBookshelfId={bookshelfId}
           isLoadingBookshelves={isReadingLogSummaryLoading}
         />

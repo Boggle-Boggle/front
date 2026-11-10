@@ -1,8 +1,7 @@
-// import { TextButton } from 'components/Button';
+import { TextButton } from 'components/Button';
 import { Divider } from 'components/Divider';
 import { SideBar } from 'components/Layer/SideBar';
 import { Radio } from 'components/Radio';
-// import { IconCirclePlus } from 'components/icons';
 
 import type { ReadingLogStatus } from 'types';
 
@@ -19,13 +18,14 @@ type FilterSidebarProps = {
   filterOptions: FilterOption[];
   bookshelves: BookshelfCountResponse[];
   onApplyFilter: (filter: ReadingLogStatus, bookshelfId?: number) => void;
+  onEditGroups: () => void;
   selectedBookshelfId?: number;
   isLoadingBookshelves?: boolean;
 };
 
 const MSG_MYBOOKS_FILTER_TITLE = '보기 설정하기';
 const MSG_MYBOOKS_FILTER_GROUP_VIEW = '그룹 책장 보기';
-// const MSG_MYBOOKS_FILTER_CREATE_GROUP = '새 그룹 만들기';
+const MSG_MYBOOKS_FILTER_EDIT = '편집';
 const NAME_MYBOOKS_FILTER_RADIO = 'mybooks-filter';
 
 export const FilterSidebar = (props: FilterSidebarProps) => {
@@ -34,6 +34,7 @@ export const FilterSidebar = (props: FilterSidebarProps) => {
     filterOptions,
     bookshelves,
     onApplyFilter,
+    onEditGroups,
     selectedBookshelfId,
     isLoadingBookshelves = false,
   } = props;
@@ -47,8 +48,6 @@ export const FilterSidebar = (props: FilterSidebarProps) => {
 
     onApplyFilter('ALL', nextBookshelfId);
   };
-
-  // const handleCreateGroup = () => undefined;
 
   return (
     <SideBar>
@@ -83,7 +82,10 @@ export const FilterSidebar = (props: FilterSidebarProps) => {
         <Divider className="my-4 shrink-0 border-neutral-20" />
 
         {/* 그룹 보기 */}
-        <p className="shrink-0 text-title3">{MSG_MYBOOKS_FILTER_GROUP_VIEW}</p>
+        <div className="flex shrink-0 items-center justify-between">
+          <p className="text-title3">{MSG_MYBOOKS_FILTER_GROUP_VIEW}</p>
+          <TextButton onClick={onEditGroups} text={MSG_MYBOOKS_FILTER_EDIT} size="sm" />
+        </div>
         <div className="mt-2 min-h-0 flex-1 overflow-y-auto overflow-x-hidden overscroll-contain">
           {isLoadingBookshelves ? (
             <div className="py-3 text-body1 text-neutral-60">로딩 중...</div>
@@ -109,14 +111,6 @@ export const FilterSidebar = (props: FilterSidebarProps) => {
           ) : (
             <div className="py-3 text-body1 text-neutral-60">생성된 그룹책장이 없어요.</div>
           )}
-
-          {/* <TextButton
-            text={MSG_MYBOOKS_FILTER_CREATE_GROUP}
-            leftIcon={IconCirclePlus}
-            onClick={handleCreateGroup}
-            className="justify-starts my-2 flex w-full rounded-lg bg-neutral-20 py-2 text-title3 text-neutral-60"
-            size="lg"
-          /> */}
         </div>
       </div>
     </SideBar>
