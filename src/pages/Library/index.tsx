@@ -21,6 +21,7 @@ import { SortActionSheet } from './SortActionSheet';
 import { WishlistSection } from './WishlistSection';
 import { WishlistSortActionSheet } from './WishlistSortActionSheet';
 import type { InterestedBookSort, ReadingLogSort } from './api';
+import { useLibrarySort } from './hooks/useLibrarySort';
 import { useLibraryQuery } from './queries/useLibraryQuery';
 import { useReadingLogSummaryQuery } from './queries/useReadingLogSummaryQuery';
 import { useWishlistQuery } from './queries/useWishlistQuery';
@@ -55,20 +56,6 @@ const getInitialViewType = (): ViewType => {
   return storedViewType === 'list' ? 'list' : 'grid';
 };
 
-const getInitialSortType = (): ReadingLogSort => {
-  if (typeof window === 'undefined') return 'START_DATE_DESC';
-
-  const storedSortType = window.localStorage.getItem(STORAGE_KEY.LIBRARY_SORT_TYPE);
-  return (storedSortType as ReadingLogSort) || 'START_DATE_DESC';
-};
-
-const getInitialWishlistSortType = (): InterestedBookSort => {
-  if (typeof window === 'undefined') return 'RECENT';
-
-  const storedSortType = window.localStorage.getItem(STORAGE_KEY.LIBRARY_WISHLIST_SORT_TYPE);
-  return storedSortType === 'OLDEST' ? 'OLDEST' : 'RECENT';
-};
-
 const getInitialFilter = (): ReadingLogStatus => {
   if (typeof window === 'undefined') return 'ALL';
 
@@ -96,19 +83,13 @@ const Library = () => {
   const [isSearchMode, setIsSearchMode] = useState<boolean>(false);
   const [searchKeyword, setSearchKeyword] = useState<string>('');
 
-  // TODO: 여러 정렬 기준 훅으로 분리
   const [activeTab, setActiveTab] = useState<TabType>(() =>
     navigationType === 'POP' ? getStoredActiveTab() : 'reading',
   );
   const [viewType, setViewType] = useState<ViewType>(getInitialViewType);
   const [readingFilter, setReadingFilter] = useState<ReadingLogStatus>(getInitialFilter);
-  const [sortType, setSortType] = useState<ReadingLogSort>(getInitialSortType);
-  const [wishlistSortType, setWishlistSortType] = useState<InterestedBookSort>(getInitialWishlistSortType);
   const [bookshelfId, setBookshelfId] = useState<number | undefined>(getInitialBookshelfId);
-
-  useEffect(() => {
-    window.localStorage.setItem(STORAGE_KEY.LIBRARY_SORT_TYPE, sortType);
-  }, [sortType]);
+  const { readingSort, wishlistSort, selectReadingSort, selectWishlistSort } = useLibrarySort();
 
   useEffect(() => {
     window.sessionStorage.setItem(STORAGE_KEY.LIBRARY_ACTIVE_TAB, activeTab);
@@ -133,7 +114,7 @@ const Library = () => {
     isLoading: isReadingLoading,
     hasNextPage: hasNextReadingPage,
     isFetchingNextPage: isFetchingNextReadingPage,
-  } = useLibraryQuery(sortType, readingFilter, bookshelfId, activeTab === 'reading');
+  } = useLibraryQuery(readingSort, readingFilter, bookshelfId, activeTab === 'reading');
 
   const { data: readingLogSummary, isLoading: isReadingLogSummaryLoading } = useReadingLogSummaryQuery();
   const {
@@ -142,7 +123,7 @@ const Library = () => {
     isLoading: isWishlistLoading,
     hasNextPage: hasNextWishlistPage,
     isFetchingNextPage: isFetchingNextWishlistPage,
-  } = useWishlistQuery(searchKeyword, wishlistSortType, activeTab === 'wishlist');
+  } = useWishlistQuery(searchKeyword, wishlistSort, activeTab === 'wishlist');
 
   const readingBooks = useMemo(() => {
     return readingData ? readingData.pages.flatMap((page) => page.data.items) : [];
@@ -261,12 +242,12 @@ const Library = () => {
       component:
         activeTab === 'wishlist' ? (
           <WishlistSortActionSheet
-            selectedSort={wishlistSortType}
+            selectedSort={wishlistSort}
             searchKeyword={searchKeyword}
-            onSelectSort={setWishlistSortType}
+            onSelectSort={selectWishlistSort}
           />
         ) : (
-          <SortActionSheet selectedSort={sortType} onSelectSort={setSortType} />
+          <SortActionSheet selectedSort={readingSort} onSelectSort={selectReadingSort} />
         ),
     });
   };
@@ -323,7 +304,7 @@ const Library = () => {
           books={filteredReadingBooks}
           totalCount={searchKeyword.trim() ? filteredReadingBooks.length : totalCount}
           filterLabel={filterLabel}
-          sortLabel={sortLabelByType[sortType] ?? MSG_MYBOOKS_SORT_READ_LATEST}
+          sortLabel={sortLabelByType[readingSort] ?? MSG_MYBOOKS_SORT_READ_LATEST}
           viewMode={viewType}
           isLoading={isReadingLoading}
           hasNextPage={hasNextReadingPage}
@@ -344,7 +325,7 @@ const Library = () => {
           isFetchingNextPage={isFetchingNextWishlistPage}
           observerTarget={wishlistObserverTarget}
           scrollContainerRef={wishlistScrollRef}
-          sortLabel={wishlistSortLabelByType[wishlistSortType]}
+          sortLabel={wishlistSortLabelByType[wishlistSort]}
           onOpenSortLayer={handleOpenSortLayer}
         />
       )}
