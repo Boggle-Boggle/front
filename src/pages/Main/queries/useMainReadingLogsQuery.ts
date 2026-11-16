@@ -21,7 +21,7 @@ const getMainReadingLogsParams = (params: UseMainReadingLogsQueryParams): GetRea
     page: MAIN_READING_LOGS_PAGE,
     size: MAIN_READING_LOGS_PAGE_SIZE,
     sort: 'START_DATE_DESC',
-    status: 'ALL',
+    status: 'COMPLETED',
     hidden: false,
   };
 

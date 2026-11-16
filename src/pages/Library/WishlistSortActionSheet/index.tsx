@@ -1,7 +1,5 @@
 import { ActionSheet } from 'components/Layer/ActionSheet';
 
-import { STORAGE_KEY } from 'constants/storage';
-
 import { type InterestedBookSort } from '../api';
 import { useInvalidateWishlistQuery } from '../queries/useInvalidateWishlistQuery';
 
@@ -18,7 +16,6 @@ export const WishlistSortActionSheet = (props: WishlistSortActionSheetProps) => 
   const handleSelectSort = (nextSort: InterestedBookSort) => {
     if (nextSort === selectedSort) return;
 
-    window.localStorage.setItem(STORAGE_KEY.LIBRARY_WISHLIST_SORT_TYPE, nextSort);
     onSelectSort(nextSort);
     invalidateWishlist(nextSort);
   };

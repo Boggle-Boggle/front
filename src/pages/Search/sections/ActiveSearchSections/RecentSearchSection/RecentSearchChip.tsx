@@ -15,13 +15,7 @@ export const RecentSearchChip = (props: RecentSearchChipProps) => {
 
   return (
     <div className="inline-flex h-[1.875rem] items-center gap-[2px] rounded-full border border-neutral-20 bg-neutral-0 pl-[10px] pr-2.5">
-      <TextButton
-        onClick={onClick}
-        variant="default"
-        size="xs"
-        text={keyword}
-        className="max-w-40 truncate font-medium"
-      />
+      <TextButton onClick={onClick} variant="default" size="xs" text={keyword} className="max-w-40 font-medium" />
       <IconButton
         label={MSG_SEARCH_RECENT_REMOVE}
         icon={Cancel}

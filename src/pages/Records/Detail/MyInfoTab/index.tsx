@@ -46,7 +46,7 @@ const getInitialTotalPageCount = (readingLog: ReadingLogInfo, totalPages: number
 export const MyInfoTab = ({ readingLog, totalPages }: MyInfoTabProps) => {
   const [isEdit, setIsEdit] = useState<boolean>(false);
   const [selectedStatus, setSelectedStatus] = useState<AddRecordStatus>(readingLog.status);
-  const [rating, setRating] = useState<number>(readingLog.rating);
+  const [rating, setRating] = useState<number>(readingLog.rating ?? 0);
   const [selectedBookshelfIds, setSelectedBookshelfIds] = useState<number[]>(() =>
     readingLog.bookshelves.map((b) => b.id),
   );

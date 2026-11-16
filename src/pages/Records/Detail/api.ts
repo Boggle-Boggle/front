@@ -28,7 +28,7 @@ export interface BookshelfSummary {
 
 export interface ReadingLogInfo {
   status: AddRecordStatus;
-  rating: number;
+  rating: number | null;
   noteCount: number;
   totalPagesOverride: number | null;
   progress: Progress | null;
