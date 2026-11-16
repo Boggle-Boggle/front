@@ -3,12 +3,14 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import ReactDOM from 'react-dom/client';
 import { DeviceProvider } from 'stores/useDeviceStore';
 
+import { initializeAnalytics } from 'utils/analytics';
 import { applyStoredThemeColor } from 'utils/theme';
 
 import AppRouter from './router';
 import './main.css';
 
 applyStoredThemeColor();
+initializeAnalytics();
 
 const queryClient = new QueryClient({
   defaultOptions: {
