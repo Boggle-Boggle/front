@@ -69,7 +69,7 @@ export const NoteEditorFields = (props: NoteEditorFieldsProps) => {
         maxLength={bodyMaxLength}
         placeholder={bodyPlaceholder}
         aria-label={bodyAriaLabel}
-        className="min-h-[1.25rem] flex-1 resize-none overflow-hidden break-words px-mobile text-caption2 text-neutral-80 outline-none placeholder:text-neutral-40"
+        className="min-h-0 flex-1 resize-none overflow-y-auto break-words px-mobile text-caption2 text-neutral-80 outline-none placeholder:text-neutral-40"
         rows={1}
       />
     </section>

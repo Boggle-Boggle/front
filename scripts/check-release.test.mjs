@@ -8,6 +8,11 @@ test('첫 v2 출시는 0.0.0에서 2.0.0으로 설정한다', () => {
   assert.equal(getReleaseType('0.0.0', '0.0.1'), null);
 });
 
+test('버전 관리 시작 전 2.0.0은 유지할 수 있다', () => {
+  assert.equal(getReleaseType('2.0.0', '2.0.0'), 'pre-versioning');
+  assert.equal(getReleaseType('2.0.0', '2.0.1'), 'patch');
+});
+
 test('이후 출시는 한 단계 증가하고 하위 자리를 초기화한다', () => {
   assert.equal(getReleaseType('2.1.2', '2.1.3'), 'patch');
   assert.equal(getReleaseType('2.1.2', '2.2.0'), 'minor');

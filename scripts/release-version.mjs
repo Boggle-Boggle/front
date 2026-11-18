@@ -19,6 +19,7 @@ export const getReleaseType = (previousVersion, nextVersion) => {
   const [nextMajor, nextMinor, nextPatch] = next;
 
   if (previousVersion === '0.0.0') return nextVersion === '2.0.0' ? 'initial' : null;
+  if (previousVersion === '2.0.0' && nextVersion === '2.0.0') return 'pre-versioning';
   if (nextMajor === previousMajor + 1 && nextMinor === 0 && nextPatch === 0) return 'major';
   if (nextMajor === previousMajor && nextMinor === previousMinor + 1 && nextPatch === 0) return 'minor';
   if (nextMajor === previousMajor && nextMinor === previousMinor && nextPatch === previousPatch + 1) {
