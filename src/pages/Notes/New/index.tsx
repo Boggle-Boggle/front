@@ -35,6 +35,7 @@ const NoteNew = () => {
   const [title, setTitle] = useState<string>('');
   const [body, setBody] = useState<string>('');
   const [isEditorFocused, setIsEditorFocused] = useState<boolean>(false);
+  const titleTextareaRef = useRef<HTMLTextAreaElement>(null);
   const bodyTextareaRef = useRef<HTMLTextAreaElement>(null);
 
   const locationState = location.state as NoteNewLocationState | undefined;
@@ -55,6 +56,13 @@ const NoteNew = () => {
     editableNote,
   });
   const { bottomInset } = useKeyboard();
+
+  useEffect(() => {
+    if (!titleTextareaRef.current) return;
+
+    titleTextareaRef.current.style.height = 'auto';
+    titleTextareaRef.current.style.height = `${titleTextareaRef.current.scrollHeight}px`;
+  }, [title]);
 
   useEffect(() => {
     if (!bodyTextareaRef.current) return;
@@ -103,7 +111,7 @@ const NoteNew = () => {
     saveNote({ title: title.trim(), body: body.trim() });
   };
 
-  const handleTitleChange = (event: ChangeEvent<HTMLInputElement>) => {
+  const handleTitleChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
     setTitle(event.target.value.slice(0, NOTE_TITLE.maxLength));
   };
 
@@ -136,6 +144,7 @@ const NoteNew = () => {
       <NoteEditorFields
         title={title}
         body={body}
+        titleTextareaRef={titleTextareaRef}
         bodyTextareaRef={bodyTextareaRef}
         titleMinLength={NOTE_TITLE.minLength}
         titleMaxLength={NOTE_TITLE.maxLength}

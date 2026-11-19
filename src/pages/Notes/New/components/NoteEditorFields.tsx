@@ -3,6 +3,7 @@ import { ChangeEvent, RefObject } from 'react';
 type NoteEditorFieldsProps = {
   title: string;
   body: string;
+  titleTextareaRef: RefObject<HTMLTextAreaElement>;
   bodyTextareaRef: RefObject<HTMLTextAreaElement>;
   titleMinLength: number;
   titleMaxLength: number;
@@ -12,7 +13,7 @@ type NoteEditorFieldsProps = {
   bodyPlaceholder: string;
   titleAriaLabel: string;
   bodyAriaLabel: string;
-  onTitleChange: (event: ChangeEvent<HTMLInputElement>) => void;
+  onTitleChange: (event: ChangeEvent<HTMLTextAreaElement>) => void;
   onBodyChange: (event: ChangeEvent<HTMLTextAreaElement>) => void;
   onTitleFocus: () => void;
   onTitleBlur: () => void;
@@ -25,6 +26,7 @@ export const NoteEditorFields = (props: NoteEditorFieldsProps) => {
   const {
     title,
     body,
+    titleTextareaRef,
     bodyTextareaRef,
     titleMinLength,
     titleMaxLength,
@@ -45,8 +47,9 @@ export const NoteEditorFields = (props: NoteEditorFieldsProps) => {
 
   return (
     <section className="flex min-h-0 flex-1 flex-col overflow-y-auto pt-4">
-      <input
+      <textarea
         disabled={disabled}
+        ref={titleTextareaRef}
         value={title}
         onChange={onTitleChange}
         onFocus={onTitleFocus}
@@ -55,7 +58,8 @@ export const NoteEditorFields = (props: NoteEditorFieldsProps) => {
         maxLength={titleMaxLength}
         placeholder={titlePlaceholder}
         aria-label={titleAriaLabel}
-        className="mb-3 w-full px-mobile text-title3 text-neutral-80 outline-none placeholder:text-neutral-40"
+        rows={1}
+        className="mb-3 min-h-0 w-full resize-none break-words px-mobile text-title3 text-neutral-80 outline-none placeholder:text-neutral-40"
       />
 
       <textarea
