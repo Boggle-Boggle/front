@@ -120,19 +120,24 @@ const Main = () => {
         <p className="mb-[1.375rem] text-body1 text-neutral-60">
           {MSG_MAIN_BOOKCASE_COUNT(filledShelfCount, displayBookCount)}
         </p>
-        <div ref={scrollRef} className="scrollbar-hide h-0 flex-grow overflow-y-auto pb-safe-bottom">
-          <div className="flex min-h-full flex-col justify-end pb-[4.5rem]">
-            <BookCase
-              books={processedBooks}
-              onFilledShelfCountChange={setFilledShelfCount}
-              onBookClick={(id) => navigate(`/records/${id}`)}
-            />
+        <div
+          ref={scrollRef}
+          className="scrollbar-hide -mx-mobile h-0 flex-grow overflow-x-hidden overflow-y-auto px-mobile pb-safe-bottom"
+        >
+          <div className="relative flex min-h-full flex-col justify-end pb-[4.5rem]">
+            <div className="relative z-background">
+              <BookCase
+                books={processedBooks}
+                onFilledShelfCountChange={setFilledShelfCount}
+                onBookClick={(id) => navigate(`/records/${id}`)}
+              />
+            </div>
+            <div className="pointer-events-none absolute -inset-x-mobile bottom-0 h-36 bg-[linear-gradient(180deg,_var(--color-primary-light)_0%,_rgba(255,255,255,0)_100%)]" />
           </div>
         </div>
       </div>
 
       <div className="absolute inset-0 bg-neutral-0/80" />
-      <div className="absolute bottom-0 h-36 w-full bg-[linear-gradient(180deg,_var(--color-primary-light)_0%,_rgba(255,255,255,0)_100%)]" />
     </div>
   );
 };
