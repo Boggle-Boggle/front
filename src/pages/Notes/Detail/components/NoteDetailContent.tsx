@@ -13,8 +13,10 @@ export const NoteDetailContent = (props: NoteDetailContentProps) => {
   const { title, body, createdAt } = props;
 
   return (
-    <div className="min-h-0 flex-1 overflow-y-auto px-mobile pb-safe-bottom">
-      <h1 className="pb-3 pt-5 text-title3 text-neutral-80">{title || DEFAULT_NOTE_TITLE}</h1>
+    <div className="min-h-0 min-w-0 flex-1 overflow-x-hidden overflow-y-auto px-mobile pb-safe-bottom">
+      <h1 className="pb-3 pt-5 text-title3 text-neutral-80 [overflow-wrap:anywhere]">
+        {title || DEFAULT_NOTE_TITLE}
+      </h1>
       <p className="text-noteSerif whitespace-pre-wrap break-words text-left font-serif text-neutral-80">
         {body || DEFAULT_NOTE_BODY}
       </p>
